@@ -280,7 +280,7 @@ const BirthForm = forwardRef<BirthFormHandle, Props>(function BirthForm({ onSubm
   }
 
   return (
-    <form onSubmit={handleSubmit} className="bg-[#0b2037] text-[#f9e9ce] rounded-2xl border border-[#b68d58]/60 p-4 sm:p-7 shadow-xl shadow-black/20">
+    <form onSubmit={handleSubmit} className="bg-[#0a1b2c] text-[#f9e9ce] rounded-2xl border border-[#b68d58]/25 p-4 sm:p-7 shadow-xl shadow-black/20">
       <div className="w-full">
         {/* Compact birth form for the English-first experience */}
         <div className="w-full min-w-0">
@@ -378,7 +378,7 @@ const BirthForm = forwardRef<BirthFormHandle, Props>(function BirthForm({ onSubm
                       className={`min-h-10 px-4 text-base rounded-md transition-all ${
                         gender === g
                           ? 'bg-[#e9bf81] text-[#10243b] shadow-sm font-medium'
-                          : 'text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200'
+                          : 'text-[#c6b9a7] hover:text-[#f3d49d]'
                       }`}
                     >
                       {g === 'M' ? t('form.male') : t('form.female')}
@@ -540,9 +540,9 @@ const BirthForm = forwardRef<BirthFormHandle, Props>(function BirthForm({ onSubm
           {/* 계산 버튼 */}
           <button
             type="submit"
-            className="mt-5 w-full h-11 bg-gray-800 dark:bg-gray-200 text-white dark:text-gray-900 text-base font-medium rounded-lg hover:bg-gray-700 dark:hover:bg-gray-300 active:scale-[0.98] transition-all"
+            className="mt-7 w-full min-h-14 bg-gradient-to-r from-[#f5d7a3] to-[#dda767] text-[#08192b] text-base font-semibold rounded-xl active:scale-[0.98] transition-all shadow-lg shadow-black/25"
           >
-            {t('form.calculate')}
+            Generate My Report →
           </button>
 
           <p className="mt-3 text-center text-sm text-[#d7b98a] leading-relaxed">
