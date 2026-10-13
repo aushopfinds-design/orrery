@@ -7,7 +7,8 @@ const zh: Record<string, string> = {
   'app.profileManage': '档案管理',
   'app.tab.saju': '四柱八字',
   'app.tab.ziwei': '紫微斗数',
-  'app.tab.natal': '出生星盘',
+  'app.tab.natal': '出生星盘',  'app.tab.reading': '英文命理报告',
+
   'app.copyAll': 'AI 解读用',
   'app.copyAllSub': '全部复制',
   'app.intro': '简介',
