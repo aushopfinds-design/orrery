@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import type { BirthInput } from '@orrery/core/types'
 import { calculateSaju } from '@orrery/core/saju'
 import CopyButton from '../CopyButton.tsx'
@@ -11,7 +11,9 @@ interface Props {
 export default function ReadingView({ input }: Props) {
   const report = useMemo(() => buildEnglishReading(calculateSaju(input)), [input])
   const issueDate = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })
-  const reportId = `SS-${input.year}${String(input.month).padStart(2, '0')}${String(input.day).padStart(2, '0')}-${Math.abs(Math.round((input.longitude ?? 0) * 1000)).toString(36).toUpperCase()}`
+  // Preview IDs are random and are not payment or fulfilment identifiers.
+  // Paid orders must receive server-generated, securely stored identifiers.
+  const [reportId] = useState(() => `PREVIEW-${crypto.randomUUID().slice(0, 12).toUpperCase()}`)
 
   return (
     <article lang="en" aria-label="Personal Saju reading" className="space-y-8 pb-8 text-[#14243a]">\n      <div className="relative overflow-hidden rounded-3xl bg-[#071b33] text-white border-2 border-[#c9a05e] px-6 py-12 sm:py-20 text-center shadow-2xl" style={{backgroundImage:"linear-gradient(180deg,rgba(4,17,33,.1),#071b33),url(/saju-moon-mountains.svg)",backgroundPosition:"center",backgroundSize:"cover"}}>\n        <div className="absolute inset-3 rounded-2xl border border-[#e8c27d]/70 pointer-events-none" />\n        <p className="relative text-xs tracking-[.3em] text-[#f0ce90]">✦ SAJU STORY ✦</p>\n        <p className="relative mt-5 text-sm tracking-widest text-[#f0ce90]">PERSONAL LIFE READING</p>\n        <h1 className="relative mt-4 font-serif text-4xl sm:text-6xl font-semibold">Your Life, Your Story</h1>\n        <p className="relative mt-4 text-sm sm:text-base text-slate-200">A personal journey through your strengths, relationships and the chapters ahead.</p>\n        <div className="relative mt-10 inline-block rounded-full border border-[#d8b37c] px-5 py-2 text-sm text-[#f0ce90]">{report.birthSummary}</div>\n      </div>
@@ -77,12 +79,12 @@ export default function ReadingView({ input }: Props) {
       <section className="relative overflow-hidden rounded-3xl border-2 border-[#cba366] bg-[#081c35] text-white p-6 sm:p-12 text-center shadow-2xl">
         <div className="absolute inset-3 border border-[#d9b67b]/70 rounded-2xl pointer-events-none" />
         <p className="relative text-xs tracking-[.3em] text-[#e8c488]">✦ SAJU STORY ✦</p>
-        <h3 className="relative mt-5 font-serif text-3xl text-[#f6e5c2]">Certificate of Personal Reading</h3>
+        <h3 className="relative mt-5 font-serif text-3xl text-[#f6e5c2]">Personal Reading Preview</h3>
         <p className="relative mt-4 max-w-lg mx-auto leading-7 text-slate-200">This personalised Saju report was prepared and issued by SAJU STORY using the birth details supplied. It offers a traditional interpretation for personal reflection.</p>
         <div className="relative my-8 mx-auto w-36 h-36 rounded-full border-[6px] border-double border-[#e5b86d] bg-gradient-to-br from-[#fff1bc] via-[#b77a27] to-[#f6d88e] flex flex-col items-center justify-center text-[#41250c] shadow-[0_0_36px_rgba(235,184,95,.5)]">
           <span className="text-4xl">✦</span><span className="text-sm font-serif font-bold">SAJU STORY</span><span className="text-[10px] tracking-widest">ISSUED</span>
         </div>
-        <p className="relative font-serif text-xl text-[#f6e5c2]">Officially Issued by SAJU STORY</p>
+        <p className="relative font-serif text-xl text-[#f6e5c2]">Preview prepared by SAJU STORY</p>
         <p className="relative mt-4 text-xs text-slate-300">Report reference: {reportId} · Issued: {issueDate}</p>
         <p className="relative mt-6 text-xs text-[#e8c488]">YOUR STORY IS STILL BEING WRITTEN</p>
       </section>
