@@ -62,14 +62,14 @@ const initialLatitude = saved?.latitude ?? SEOUL.lat
 const initialLongitude = saved?.longitude ?? SEOUL.lon
 
 const selectClass =
-  'w-full h-10 pl-3 pr-8 border border-gray-200 dark:border-gray-700 rounded-lg text-base text-gray-800 dark:text-gray-100 bg-white dark:bg-gray-900 ' +
+  'w-full min-h-12 pl-3 pr-8 border border-gray-200 dark:border-gray-700 rounded-lg text-base text-gray-800 dark:text-gray-100 bg-white dark:bg-gray-900 ' +
   'appearance-none bg-[length:16px_16px] bg-[position:right_8px_center] bg-no-repeat ' +
   "bg-[url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2020%2020%22%20fill%3D%22%239ca3af%22%3E%3Cpath%20fill-rule%3D%22evenodd%22%20d%3D%22M5.23%207.21a.75.75%200%20011.06.02L10%2011.168l3.71-3.938a.75.75%200%20111.08%201.04l-4.25%204.5a.75.75%200%2001-1.08%200l-4.25-4.5a.75.75%200%2001.02-1.06z%22%20clip-rule%3D%22evenodd%22%2F%3E%3C%2Fsvg%3E')] " +
   'focus:outline-none focus:ring-2 focus:ring-gray-800/20 dark:focus:ring-gray-200/20 focus:border-gray-400 dark:focus:border-gray-500 ' +
   'transition-all disabled:opacity-40 disabled:bg-gray-50 dark:disabled:bg-gray-800'
 
 const inputClass =
-  'w-full h-10 px-3 border border-gray-200 dark:border-gray-700 rounded-lg text-base text-gray-800 dark:text-gray-100 bg-white dark:bg-gray-900 ' +
+  'w-full min-h-12 px-3 border border-gray-200 dark:border-gray-700 rounded-lg text-base text-gray-800 dark:text-gray-100 bg-white dark:bg-gray-900 ' +
   'focus:outline-none focus:ring-2 focus:ring-gray-800/20 dark:focus:ring-gray-200/20 focus:border-gray-400 dark:focus:border-gray-500 transition-all'
 
 
@@ -280,14 +280,14 @@ const BirthForm = forwardRef<BirthFormHandle, Props>(function BirthForm({ onSubm
   }
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white dark:bg-gray-900 rounded-2xl border border-stone-200 dark:border-gray-700 p-5 sm:p-7 shadow-xl shadow-slate-900/10">
+    <form onSubmit={handleSubmit} className="bg-white dark:bg-gray-900 rounded-2xl border border-stone-200 dark:border-gray-700 p-4 sm:p-7 shadow-xl shadow-slate-900/10">
       <div className="w-full">
         {/* Compact birth form for the English-first experience */}
         <div className="w-full min-w-0">
           {/* 생년월일 */}
           <fieldset>
             <legend className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">{t('form.birthDate')}</legend>
-            <div className="grid grid-cols-3 gap-2">
+            <div className="grid grid-cols-3 gap-1.5 sm:gap-2">
               <select
                 value={year}
                 onChange={e => setYear(Number(e.target.value))}
@@ -345,7 +345,7 @@ const BirthForm = forwardRef<BirthFormHandle, Props>(function BirthForm({ onSubm
                 <span className="text-sm text-gray-500 dark:text-gray-400">{t('form.unknown')}</span>
               </label>
             </div>
-            <div className="grid grid-cols-2 sm:grid-cols-[1fr_1fr_auto] gap-2 items-end">
+            <div className="grid grid-cols-2 gap-2 items-end">
               <select
                 value={hour}
                 onChange={e => setHour(Number(e.target.value))}
@@ -369,13 +369,13 @@ const BirthForm = forwardRef<BirthFormHandle, Props>(function BirthForm({ onSubm
 
               {/* 성별 — segmented control */}
               <div>
-                <div className="inline-flex h-10 rounded-lg bg-gray-100 dark:bg-gray-800 p-1">
+                <div className="inline-flex min-h-12 w-full sm:w-auto rounded-lg bg-gray-100 dark:bg-gray-800 p-1">
                   {(['M', 'F'] as const).map(g => (
                     <button
                       key={g}
                       type="button"
                       onClick={() => setGender(g)}
-                      className={`px-4 text-base rounded-md transition-all ${
+                      className={`min-h-10 px-4 text-base rounded-md transition-all ${
                         gender === g
                           ? 'bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 shadow-sm font-medium'
                           : 'text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200'
