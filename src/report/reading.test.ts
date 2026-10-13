@@ -9,7 +9,11 @@ const base: BirthInput = {
 }
 
 describe('English reading integration', () => {
-  it('matches an externally documented 1998 chart and discloses the Korean hour rule', () => {
+  // Independent reference: https://www.chinesecalendaronline.com/zh/1998/3/25.htm
+  // Its standard-clock 03:00–04:59 hour is 庚寅; this engine's Korean half-hour
+  // convention returns 己丑 at 03:00. The disagreement is intentional but must
+  // remain visible to users and be independently reviewed before paid launch.
+  it('matches independent 1998 year/month/day pillars and discloses hour convention difference', () => {
     const report = buildEnglishReading(calculateSaju(base), 2026)
     expect(report.pillarSummary).toContain('Year: 戊寅')
     expect(report.pillarSummary).toContain('Month: 乙卯')
@@ -19,6 +23,7 @@ describe('English reading integration', () => {
     expect(report.caveats.join(' ')).toContain('03:00')
   })
 
+  // Independent reference: https://calendar.8s8s.net/calendar/1980/1980_3_25.html
   it('uses a different calculation and description for a different birth date', () => {
     const first = buildEnglishReading(calculateSaju(base), 2026)
     const second = buildEnglishReading(calculateSaju({
