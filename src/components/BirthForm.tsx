@@ -202,23 +202,32 @@ const BirthForm = forwardRef<BirthFormHandle, Props>(function BirthForm({ onSubm
     apply(stepCoordinate(baseValue, e.key === 'ArrowUp' ? 1 : -1))
   }
 
+  // React permits guarded state adjustment during render when an incoming
+  // snapshot changes. Side effects remain in the effect below.
+  const [appliedExternalState, setAppliedExternalState] = useState<SavedFormState | null>(null)
+  if (externalState && externalState !== appliedExternalState) {
+    setAppliedExternalState(externalState)
+    setYear(externalState.year)
+    setMonth(externalState.month)
+    setDay(externalState.day)
+    setHour(externalState.hour)
+    setMinute(externalState.minute)
+    setGender(externalState.gender)
+    setUnknownTime(externalState.unknownTime)
+    setJasiMethod(externalState.jasiMethod)
+    setSelectedCity(externalState.city)
+    setManualCoords(externalState.manualCoords)
+    setLatitude(externalState.latitude)
+    setLongitude(externalState.longitude)
+    setLatitudeInput(formatCoordinate(externalState.latitude))
+    setLongitudeInput(formatCoordinate(externalState.longitude))
+    setTimezoneError(null)
+  }
+
   useEffect(() => {
     if (!externalState) return
-    const s = externalState
-    setYear(s.year)
-    setMonth(s.month)
-    setDay(s.day)
-    setHour(s.hour)
-    setMinute(s.minute)
-    setGender(s.gender)
-    setUnknownTime(s.unknownTime)
-    setJasiMethod(s.jasiMethod)
-    setSelectedCity(s.city)
-    setManualCoords(s.manualCoords)
-    syncCoordinates(s.latitude, s.longitude)
-    setTimezoneError(null)
     onExternalStateConsumed?.()
-    const birthInput = buildBirthInput(s)
+    const birthInput = buildBirthInput(externalState)
     if (birthInput) onSubmit(birthInput)
   }, [externalState]) // eslint-disable-line react-hooks/exhaustive-deps
 
