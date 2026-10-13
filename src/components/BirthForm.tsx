@@ -134,6 +134,8 @@ const BirthForm = forwardRef<BirthFormHandle, Props>(function BirthForm({ onSubm
   }
 
   function buildBirthInput(state: SavedFormState): BirthInput | null {
+    if (state.month < 1 || state.month > 12 || state.day < 1 ||
+        state.day > new Date(state.year, state.month, 0).getDate()) return null
     const effectiveStateTimezone = inferTimeZoneFromCoordinates(state.latitude, state.longitude)
     if (getTimezoneValidationError(state)) return null
     if (!effectiveStateTimezone) return null
@@ -277,6 +279,10 @@ const BirthForm = forwardRef<BirthFormHandle, Props>(function BirthForm({ onSubm
     const state: SavedFormState = {
       year, month, day, hour, minute, gender, unknownTime, jasiMethod,
       city: selectedCity, manualCoords, latitude: resolvedLatitude, longitude: resolvedLongitude,
+    }
+    if (state.day < 1 || state.day > new Date(state.year, state.month, 0).getDate()) {
+      setTimezoneError('Please choose a valid calendar date.')
+      return
     }
     const validationError = getTimezoneValidationError(state)
     if (validationError) {
