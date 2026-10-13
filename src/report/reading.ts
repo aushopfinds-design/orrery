@@ -78,6 +78,7 @@ export interface EnglishReading {
   dayMaster: string
   sections: ReadingSection[]
   periods: ReadingPeriod[]
+  monthly: ReadingPeriod[]
   caveats: string[]
   fullText: string
 }
@@ -229,6 +230,33 @@ export function buildEnglishReading(result: SajuResult, asOfYear = new Date().ge
   ]
 
   const periods = getActivePeriods(result, asOfYear)
+  // Twelve chart-informed reflection chapters. These are NOT monthly fortune
+  // pillars or forecasts; do not market them as month-specific predictive readings.
+  const monthNames = Array.from({ length: 12 }, (_, i) =>
+    new Date(Date.UTC(asOfYear, i, 1)).toLocaleString('en-US', { month: 'long', timeZone: 'UTC' }))
+  const monthly: ReadingPeriod[] = monthNames.map((name, i) => {
+    const themes = [
+      { headline: 'A Fresh Direction', action: self.practice },
+      { headline: 'Closer Connections', action: 'talk openly about ' + relationshipQuestion },
+      { headline: 'Work That Fits You', action: monthGod?.step ?? 'identify the conditions where you do your best work' },
+      { headline: 'Your Money Habits', action: 'review one real expense and its trade-offs' },
+      { headline: 'Finding Your Pace', action: 'notice when ' + self.caution.toLowerCase() },
+      { headline: 'Learning and Growth', action: 'choose a skill and practice it for two weeks' },
+      { headline: 'People and Boundaries', action: 'make one request clearly rather than hoping others will guess' },
+      { headline: 'What Matters Most', action: yearGod?.step ?? 'name one long-term priority' },
+      { headline: 'Your Working Style', action: 'test one small change to your daily routine' },
+      { headline: 'Love and Trust', action: 'ask someone close what helps them feel heard' },
+      { headline: 'Looking Ahead', action: 'write down what you want to keep and what you want to change' },
+      { headline: 'Your Year in Review', action: 'compare what worked with what you expected' },
+    ]
+    const theme = themes[i]
+    return {
+      period: name + ' ' + asOfYear,
+      pillar: '',
+      headline: theme.headline,
+      text: 'A personal reflection inspired by your ' + self.name + ' birth-day theme and the patterns discussed in this report. This month, try to ' + theme.action + '. Keep what is useful and ignore what does not fit. This is a guided monthly exercise, not a prediction based on the monthly solar-term pillar.',
+    }
+  })
   const caveats = [
     'The input is interpreted as a Gregorian (solar-calendar) birth date. Place, historical time zone and birth time can change the calculated chart.',
     input.timezone === 'Asia/Seoul' || !input.timezone
@@ -257,7 +285,9 @@ export function buildEnglishReading(result: SajuResult, asOfYear = new Date().ge
     ...sections.flatMap(x => [x.heading, ...x.paragraphs]),
     '07 · Your Life Timeline',
     ...periods.map(p => p.period + ' (' + p.pillar + ') — ' + p.headline + ': ' + p.text),
+    '08 · Your Twelve-Month Reflection Guide',
+    ...monthly.map(m => m.period + ' — ' + m.headline + ': ' + m.text),
     'How to read this report', ...caveats,
   ].join('\n\n')
-  return { headline, subtitle, birthSummary, pillarSummary, dayMaster: self.name, sections, periods, caveats, fullText }
+  return { headline, subtitle, birthSummary, pillarSummary, dayMaster: self.name, sections, periods, monthly, caveats, fullText }
 }
