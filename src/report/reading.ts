@@ -173,12 +173,15 @@ export function buildEnglishReading(result: SajuResult, asOfYear = new Date().ge
           + self.approach + ' This is a lens for reflection, not a fixed personality label.',
         'This reading combines the symbol for your birth day with the one for your birth month. The first helps frame your personal style; the second adds a theme about work, routines and the environment around you. That combination is more personal than a reading based only on your birth year.',
         fiveElementReading,
+        'Your personal reflection: ' + self.caution + ' Notice whether this feels familiar in a recent decision. The chart offers a symbolic starting point, not knowledge of your personal history.',
+        'One small experiment: ' + self.practice + ' Try it for a week, then decide whether it genuinely helps.',
       ],
     },
     {
       heading: '02 · Career: Where You Can Thrive',
       paragraphs: [
         describeGod(month.stemSipsin, 'month'),
+        'Compare possible roles by the work environment, not just the title: autonomy, pace, expectations and the kind of progress you can see. This gives you a practical way to test whether the traditional work theme fits.',
         'Your practical strength to test is this: ' + self.practice
           + ' Your potential blind spot is equally specific: ' + self.caution
           + ' Neither statement guarantees a career outcome.',
@@ -188,6 +191,7 @@ export function buildEnglishReading(result: SajuResult, asOfYear = new Date().ge
       heading: '03 · Money: Your Habits and Opportunities',
       paragraphs: [
         moneyTheme,
+        'A useful money habit is to write down one specific goal and its actual cost. Consider what you can afford each month before taking on a new commitment.',
         'The symbol connected with your birth month emphasizes '
           + (monthGod?.title.toLowerCase() ?? 'your everyday choices')
           + '. When considering a purchase, business idea or career change, compare the up-front cost, ongoing obligations and what you would give up. This is a practical decision tool, not a forecast of profit.',
