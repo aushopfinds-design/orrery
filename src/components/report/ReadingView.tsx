@@ -18,12 +18,14 @@ export default function ReadingView({ input }: Props) {
         <h2 className="text-2xl sm:text-3xl font-semibold leading-tight text-gray-900 dark:text-white">{report.headline}</h2>
         <p className="mt-3 text-gray-600 dark:text-gray-300 leading-relaxed">{report.subtitle}</p>
         <p className="mt-4 text-xs text-gray-500 dark:text-gray-400">{report.birthSummary}</p>
-        <div className="mt-5 flex flex-wrap gap-2" aria-label="Calculated four pillars">
+        <div className="mt-5 rounded-xl bg-amber-50 dark:bg-amber-950/20 p-4"><p className="text-sm font-semibold text-amber-900 dark:text-amber-200">Start with your story</p><p className="mt-1 text-sm leading-6 text-stone-700 dark:text-stone-300">Explore your personality, relationships, work, money and the changing themes of your life below. You do not need to understand traditional Saju terms to enjoy this reading.</p></div>
+        <details className="mt-4 rounded-xl border border-stone-200 dark:border-gray-700 p-3"><summary className="cursor-pointer text-sm font-medium text-gray-600 dark:text-gray-300">See my traditional birth chart (optional)</summary><div className="mt-3 flex flex-wrap gap-2" aria-label="Calculated four pillars">
           {report.pillarSummary.map(item => (
             <span key={item} className="text-sm rounded-lg px-3 py-2 bg-stone-100 text-stone-800 dark:bg-gray-800 dark:text-gray-200">{item}</span>
           ))}
         </div>
-        <div className="mt-5 flex items-center justify-between flex-wrap gap-2 border-t border-stone-200 dark:border-gray-800 pt-4">
+        </div></details>
+        <div className="mt-5 flex items-center justify-end flex-wrap gap-2 border-t border-stone-200 dark:border-gray-800 pt-4">
           <span className="text-sm font-medium text-gray-700 dark:text-gray-200">Your Day Master: {report.dayMaster}</span>
           <CopyButton label="Copy this report" getText={() => report.fullText} />
         </div>
@@ -55,11 +57,11 @@ export default function ReadingView({ input }: Props) {
       </section>
 
       <aside className="rounded-xl p-5 bg-stone-100 dark:bg-gray-800 text-gray-700 dark:text-gray-200" aria-label="Reading limitations">
-        <h3 className="font-semibold mb-2">How this reading was calculated</h3>
+        <details><summary className="cursor-pointer font-semibold mb-2">How was this reading calculated? (optional)</summary>
         <ul className="list-disc pl-5 space-y-2 text-sm leading-6">
           {report.caveats.map(note => <li key={note}>{note}</li>)}
         </ul>
-        <p className="text-xs text-gray-500 dark:text-gray-400 mt-3">Preview version · No payment has been taken.</p>
+        </details><p className="text-xs text-gray-500 dark:text-gray-400 mt-3">Traditional interpretation for reflection, not a guaranteed prediction. Preview version · No payment has been taken.</p>
       </aside>
     </article>
   )
