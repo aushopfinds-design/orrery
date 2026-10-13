@@ -210,8 +210,7 @@ export function calcNutation(tjd: number): [number, number] {
       if (j !== 0) {
         let k = j
         if (j < 0) k = -k
-        const su = ss[m][k - 1]
-        if (j < 0) su = -su
+        const su = j < 0 ? -ss[m][k - 1] : ss[m][k - 1]
         const cu = cc[m][k - 1]
         if (k1 === 0) {
           sv = su
