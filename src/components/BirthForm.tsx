@@ -62,14 +62,14 @@ const initialLatitude = saved?.latitude ?? SEOUL.lat
 const initialLongitude = saved?.longitude ?? SEOUL.lon
 
 const selectClass =
-  'w-full min-h-12 pl-3 pr-8 border border-gray-200 dark:border-gray-700 rounded-lg text-base text-gray-800 dark:text-gray-100 bg-white dark:bg-gray-900 ' +
+  'w-full min-h-12 pl-3 pr-8 border border-[#a88353]/60 rounded-lg text-base text-[#f9e9ce] bg-[#10243b] ' +
   'appearance-none bg-[length:16px_16px] bg-[position:right_8px_center] bg-no-repeat ' +
   "bg-[url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2020%2020%22%20fill%3D%22%239ca3af%22%3E%3Cpath%20fill-rule%3D%22evenodd%22%20d%3D%22M5.23%207.21a.75.75%200%20011.06.02L10%2011.168l3.71-3.938a.75.75%200%20111.08%201.04l-4.25%204.5a.75.75%200%2001-1.08%200l-4.25-4.5a.75.75%200%2001.02-1.06z%22%20clip-rule%3D%22evenodd%22%2F%3E%3C%2Fsvg%3E')] " +
   'focus:outline-none focus:ring-2 focus:ring-gray-800/20 dark:focus:ring-gray-200/20 focus:border-gray-400 dark:focus:border-gray-500 ' +
   'transition-all disabled:opacity-40 disabled:bg-gray-50 dark:disabled:bg-gray-800'
 
 const inputClass =
-  'w-full min-h-12 px-3 border border-gray-200 dark:border-gray-700 rounded-lg text-base text-gray-800 dark:text-gray-100 bg-white dark:bg-gray-900 ' +
+  'w-full min-h-12 px-3 border border-[#a88353]/60 rounded-lg text-base text-[#f9e9ce] bg-[#10243b] ' +
   'focus:outline-none focus:ring-2 focus:ring-gray-800/20 dark:focus:ring-gray-200/20 focus:border-gray-400 dark:focus:border-gray-500 transition-all'
 
 
@@ -280,13 +280,13 @@ const BirthForm = forwardRef<BirthFormHandle, Props>(function BirthForm({ onSubm
   }
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white dark:bg-gray-900 rounded-2xl border border-stone-200 dark:border-gray-700 p-4 sm:p-7 shadow-xl shadow-slate-900/10">
+    <form onSubmit={handleSubmit} className="bg-[#0b2037] text-[#f9e9ce] rounded-2xl border border-[#b68d58]/60 p-4 sm:p-7 shadow-xl shadow-black/20">
       <div className="w-full">
         {/* Compact birth form for the English-first experience */}
         <div className="w-full min-w-0">
           {/* 생년월일 */}
           <fieldset>
-            <legend className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">{t('form.birthDate')}</legend>
+            <legend className="text-sm font-medium text-[#d7b98a] mb-2">{t('form.birthDate')}</legend>
             <div className="grid grid-cols-3 gap-1.5 sm:gap-2">
               <select
                 value={year}
@@ -333,7 +333,7 @@ const BirthForm = forwardRef<BirthFormHandle, Props>(function BirthForm({ onSubm
           {/* 시간 + 성별 */}
           <fieldset className="mt-4">
             <div className="flex items-center justify-between mb-2">
-              <legend className="text-sm font-medium text-gray-500 dark:text-gray-400">{t('form.time')}</legend>
+              <legend className="text-sm font-medium text-[#d7b98a]">{t('form.time')}</legend>
               <label className="flex items-center gap-1.5 cursor-pointer">
                 <input
                   type="checkbox"
@@ -342,7 +342,7 @@ const BirthForm = forwardRef<BirthFormHandle, Props>(function BirthForm({ onSubm
                   className="sr-only peer"
                 />
                 <div className="w-8 h-[18px] bg-gray-200 dark:bg-gray-700 rounded-full peer-checked:bg-gray-800 dark:peer-checked:bg-gray-200 relative transition-colors after:content-[''] after:absolute after:top-[3px] after:left-[3px] after:w-3 after:h-3 after:bg-white after:rounded-full after:transition-transform peer-checked:after:translate-x-3.5" />
-                <span className="text-sm text-gray-500 dark:text-gray-400">{t('form.unknown')}</span>
+                <span className="text-sm text-[#d7b98a]">{t('form.unknown')}</span>
               </label>
             </div>
             <div className="grid grid-cols-2 gap-2 items-end">
@@ -369,7 +369,7 @@ const BirthForm = forwardRef<BirthFormHandle, Props>(function BirthForm({ onSubm
 
               {/* 성별 — segmented control */}
               <div>
-                <div className="inline-flex min-h-12 w-full sm:w-auto rounded-lg bg-gray-100 dark:bg-gray-800 p-1">
+                <div className="inline-flex min-h-12 w-full sm:w-auto rounded-lg bg-[#10243b] p-1">
                   {(['M', 'F'] as const).map(g => (
                     <button
                       key={g}
@@ -377,7 +377,7 @@ const BirthForm = forwardRef<BirthFormHandle, Props>(function BirthForm({ onSubm
                       onClick={() => setGender(g)}
                       className={`min-h-10 px-4 text-base rounded-md transition-all ${
                         gender === g
-                          ? 'bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 shadow-sm font-medium'
+                          ? 'bg-[#e9bf81] text-[#10243b] shadow-sm font-medium'
                           : 'text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200'
                       }`}
                     >
@@ -391,8 +391,8 @@ const BirthForm = forwardRef<BirthFormHandle, Props>(function BirthForm({ onSubm
 
           {/* 위치 */}
           <fieldset className="mt-4">
-            <legend className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">{t('form.birthPlace')}</legend>
-            <div className="inline-flex h-10 rounded-lg bg-gray-100 dark:bg-gray-800 p-1 mb-2">
+            <legend className="text-sm font-medium text-[#d7b98a] mb-2">{t('form.birthPlace')}</legend>
+            <div className="inline-flex h-10 rounded-lg bg-[#10243b] p-1 mb-2">
               <button
                 type="button"
                 onClick={() => {
@@ -404,7 +404,7 @@ const BirthForm = forwardRef<BirthFormHandle, Props>(function BirthForm({ onSubm
                 }}
                 className={`px-4 text-base rounded-md transition-all ${
                   !manualCoords
-                    ? 'bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 shadow-sm font-medium'
+                    ? 'bg-[#e9bf81] text-[#10243b] shadow-sm font-medium'
                     : 'text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200'
                 }`}
               >
@@ -418,7 +418,7 @@ const BirthForm = forwardRef<BirthFormHandle, Props>(function BirthForm({ onSubm
                 }}
                 className={`px-4 text-base rounded-md transition-all ${
                   manualCoords
-                    ? 'bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 shadow-sm font-medium'
+                    ? 'bg-[#e9bf81] text-[#10243b] shadow-sm font-medium'
                     : 'text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200'
                 }`}
               >
@@ -428,7 +428,7 @@ const BirthForm = forwardRef<BirthFormHandle, Props>(function BirthForm({ onSubm
             {manualCoords ? (
               <div className="grid grid-cols-2 gap-2">
                 <div>
-                  <label className="block text-sm text-gray-400 dark:text-gray-500 mb-1">{t('form.latitude')}</label>
+                  <label className="block text-sm text-[#d7b98a] mb-1">{t('form.latitude')}</label>
                   <input
                     type="text"
                     inputMode="decimal"
@@ -442,7 +442,7 @@ const BirthForm = forwardRef<BirthFormHandle, Props>(function BirthForm({ onSubm
                   />
                 </div>
                 <div>
-                  <label className="block text-sm text-gray-400 dark:text-gray-500 mb-1">{t('form.longitude')}</label>
+                  <label className="block text-sm text-[#d7b98a] mb-1">{t('form.longitude')}</label>
                   <input
                     type="text"
                     inputMode="decimal"
@@ -459,18 +459,18 @@ const BirthForm = forwardRef<BirthFormHandle, Props>(function BirthForm({ onSubm
             ) : (
               <>
                 <CityCombobox selectedCity={selectedCity} onSelect={handleCitySelect} />
-                <p className="mt-1.5 text-sm text-gray-400 dark:text-gray-500 leading-relaxed">
+                <p className="mt-1.5 text-sm text-[#d7b98a] leading-relaxed">
                   {locationSummary}
                 </p>
               </>
             )}
             {manualCoords && (
-              <p className="mt-1.5 text-sm text-gray-400 dark:text-gray-500 leading-relaxed">
+              <p className="mt-1.5 text-sm text-[#d7b98a] leading-relaxed">
                 {locationSummary}
               </p>
             )}
             {timezoneDisplayLabel && (
-              <p className="mt-1.5 text-sm text-gray-400 dark:text-gray-500 leading-relaxed">
+              <p className="mt-1.5 text-sm text-[#d7b98a] leading-relaxed">
                 {t('form.timezoneDefault')} {timezoneDisplayLabel}
                 {isDstActive && (
                   <span className="block text-xs mt-0.5">
@@ -492,7 +492,7 @@ const BirthForm = forwardRef<BirthFormHandle, Props>(function BirthForm({ onSubm
               <button
                 type="button"
                 onClick={() => setShowAdvanced(v => !v)}
-                className="flex items-center gap-1 text-sm text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
+                className="flex items-center gap-1 text-sm text-[#d7b98a] hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
               >
                 <svg
                   className={`w-3 h-3 transition-transform ${showAdvanced ? 'rotate-90' : ''}`}
@@ -507,8 +507,8 @@ const BirthForm = forwardRef<BirthFormHandle, Props>(function BirthForm({ onSubm
               </button>
               {showAdvanced && (
                 <fieldset className="mt-2">
-                  <legend className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">{t('form.jasiMethod')}</legend>
-                  <div className="inline-flex h-10 rounded-lg bg-gray-100 dark:bg-gray-800 p-1">
+                  <legend className="text-sm font-medium text-[#d7b98a] mb-2">{t('form.jasiMethod')}</legend>
+                  <div className="inline-flex h-10 rounded-lg bg-[#10243b] p-1">
                     {([
                       { value: 'unified' as const, label: t('form.unified') },
                       { value: 'split' as const, label: t('form.split') },
@@ -519,7 +519,7 @@ const BirthForm = forwardRef<BirthFormHandle, Props>(function BirthForm({ onSubm
                         onClick={() => setJasiMethod(opt.value)}
                         className={`px-4 text-base rounded-md transition-all ${
                           jasiMethod === opt.value
-                            ? 'bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 shadow-sm font-medium'
+                            ? 'bg-[#e9bf81] text-[#10243b] shadow-sm font-medium'
                             : 'text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200'
                         }`}
                       >
@@ -527,7 +527,7 @@ const BirthForm = forwardRef<BirthFormHandle, Props>(function BirthForm({ onSubm
                       </button>
                     ))}
                   </div>
-                  <p className="mt-1.5 text-sm text-gray-400 dark:text-gray-500 leading-relaxed">
+                  <p className="mt-1.5 text-sm text-[#d7b98a] leading-relaxed">
                     {jasiMethod === 'unified'
                       ? t('form.unifiedDesc')
                       : t('form.splitDesc')}
@@ -545,7 +545,7 @@ const BirthForm = forwardRef<BirthFormHandle, Props>(function BirthForm({ onSubm
             {t('form.calculate')}
           </button>
 
-          <p className="mt-3 text-center text-sm text-gray-400 dark:text-gray-500 leading-relaxed">
+          <p className="mt-3 text-center text-sm text-[#d7b98a] leading-relaxed">
             🔒 {t('form.privacy1')}<br />
             {t('form.privacy2')}
           </p>
