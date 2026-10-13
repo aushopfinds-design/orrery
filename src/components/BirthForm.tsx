@@ -74,7 +74,7 @@ const inputClass =
 
 
 const BirthForm = forwardRef<BirthFormHandle, Props>(function BirthForm({ onSubmit, externalState, onExternalStateConsumed }, ref) {
-  const { t } = useLocale()
+  const { t, locale } = useLocale()
   const [year, setYear] = useState(saved?.year ?? currentYear - 20)
   const [month, setMonth] = useState(saved?.month ?? now.getMonth() + 1)
   const [day, setDay] = useState(saved?.day ?? now.getDate())
@@ -104,10 +104,10 @@ const BirthForm = forwardRef<BirthFormHandle, Props>(function BirthForm({ onSubm
       return `${t('form.coordInput')} · ${t('form.latitude')} ${latitude.toFixed(4)} · ${t('form.longitude')} ${longitude.toFixed(4)}`
     }
     if (selectedCity) {
-      return `${formatCityName(selectedCity)} · ${t('form.latitude')} ${latitude.toFixed(4)} · ${t('form.longitude')} ${longitude.toFixed(4)}`
+      return `${locale === 'en' && selectedCity.name === '뉴욕' && selectedCity.country === '미국' ? 'New York, United States' : formatCityName(selectedCity)} · ${t('form.latitude')} ${latitude.toFixed(4)} · ${t('form.longitude')} ${longitude.toFixed(4)}`
     }
     return `${t('form.latitude')} ${latitude.toFixed(4)} · ${t('form.longitude')} ${longitude.toFixed(4)}`
-  }, [manualCoords, selectedCity, latitude, longitude, t])
+  }, [manualCoords, selectedCity, latitude, longitude, t, locale])
   const timezoneDisplayLabel = useMemo(() => {
     if (!inferredTimezone) return null
     return getTimeZoneDisplayLabelAtLocalTime(

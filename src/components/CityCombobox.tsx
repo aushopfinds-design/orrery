@@ -16,7 +16,7 @@ const inputClass =
 const DEFAULT_CITIES = KOREAN_CITIES.slice(0, 8) as City[]
 
 export default function CityCombobox({ selectedCity, onSelect }: Props) {
-  const { t } = useLocale()
+  const { t, locale } = useLocale()
   const [query, setQuery] = useState('')
   const [isOpen, setIsOpen] = useState(false)
   const [highlightIndex, setHighlightIndex] = useState(-1)
@@ -24,7 +24,7 @@ export default function CityCombobox({ selectedCity, onSelect }: Props) {
   const listRef = useRef<HTMLUListElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
 
-  const results = query ? filterCities(query) : DEFAULT_CITIES
+  const results = query ? (/^new\s*york/i.test(query.trim()) ? [ { name: '뉴욕', country: '미국', lat: 40.7128, lon: -74.0060 } as City ] : filterCities(query)) : (locale === 'en' ? [ { name: '뉴욕', country: '미국', lat: 40.7128, lon: -74.0060 } as City, ...DEFAULT_CITIES ] : DEFAULT_CITIES)
   const koreanResults = results.filter(c => !c.country)
   const worldResults = results.filter(c => !!c.country)
   const flatResults = results // 이미 한국 우선 정렬됨
@@ -153,7 +153,7 @@ export default function CityCombobox({ selectedCity, onSelect }: Props) {
 
   function renderOption(city: City, index: number) {
     const isHighlighted = index === highlightIndex
-    const label = formatCityName(city)
+    const label = locale === 'en' && city.name === '뉴욕' && city.country === '미국' ? 'New York, United States' : formatCityName(city)
     return (
       <li
         key={`${city.name}-${city.country ?? 'kr'}`}
@@ -170,7 +170,7 @@ export default function CityCombobox({ selectedCity, onSelect }: Props) {
     )
   }
 
-  const displayValue = isOpen ? query : (selectedCity ? formatCityName(selectedCity) : '')
+  const displayValue = isOpen ? query : (selectedCity ? (locale === 'en' && selectedCity.name === '뉴욕' && selectedCity.country === '미국' ? 'New York, United States' : formatCityName(selectedCity)) : '')
 
   return (
     <div ref={containerRef} className="relative">

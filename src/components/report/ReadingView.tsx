@@ -26,6 +26,12 @@ export default function ReadingView({ input }: Props) {
         <p className="relative mt-4 text-sm sm:text-base text-slate-200">A personal journey through your strengths, relationships and the chapters ahead.</p>
         <div className="relative mt-10 inline-block rounded-full border border-[#d8b37c] px-5 py-2 text-sm text-[#f0ce90]">{report.birthSummary}</div>
       </div>
+      {!input.unknownTime && input.timezone && input.timezone !== 'Asia/Seoul' && input.longitude == null && (
+        <div role="alert" className="rounded-xl border-2 border-amber-400 bg-amber-950/70 px-5 py-4 text-amber-100">
+          <p className="font-semibold">Birthplace information needed</p>
+          <p className="mt-2 text-sm leading-6">Your birthplace longitude is missing. The hour pillar may be incorrect because the calculator used a fallback longitude. Please enter your birthplace before relying on this reading or purchasing a report.</p>
+        </div>
+      )}
       <div className="print:hidden flex flex-col items-end gap-2">
         <button type="button" onClick={() => { setShowPrintHelp(true); window.print() }} className="rounded-full bg-[#14243a] px-6 py-3 text-sm font-semibold text-[#f6e5c2] shadow-md">Save or Print PDF</button>
         {showPrintHelp && <p role="status" className="max-w-sm text-right text-xs leading-5 text-slate-300">In the print window, select “Save as PDF” as the destination. For the best appearance, enable background graphics. This is a preview, not a paid order.</p>}
