@@ -39,24 +39,27 @@ export default function App() {
   return (
     <div className="min-h-screen bg-[#f8f7f5] text-[#10223b]">
       <header className="relative overflow-hidden bg-[#071b33] text-white">
-        <div className="absolute inset-0 opacity-70" style={{background:'radial-gradient(circle at 76% 42%, #d2a15d 0%, #6e6b77 13%, #16324c 33%, #071b33 70%)'}} />
-        <div className="absolute inset-0 bg-cover bg-[position:70%_center] sm:bg-center opacity-65" style={{backgroundImage:"url(/saju-moon-mountains.svg)"}} />\n        <div className="absolute inset-0 bg-gradient-to-r from-[#071b33]/95 via-[#071b33]/65 to-[#071b33]/10" />\n        <div className="absolute inset-0 opacity-20" style={{backgroundImage:'radial-gradient(#fff 1px, transparent 1px)',backgroundSize:'44px 44px'}} />
-        <nav className="relative z-10 max-w-6xl mx-auto px-5 py-5 flex items-center justify-between">
-          <a href="#" className="flex items-center gap-3 text-[#f2d19c]" aria-label="Destiny Code home"><img src="/destiny-code-emblem.svg" alt="" className="h-12 w-12 sm:h-14 sm:w-14" /><span className="font-serif text-lg sm:text-2xl tracking-[.08em]">DESTINY CODE</span></a>
-          <a href="#birth-details" className="rounded-full bg-[#e6bc7c] px-5 py-2 text-sm font-semibold text-[#10223b]">Get My Reading →</a>
+        <div className="pointer-events-none absolute inset-0 opacity-35" style={{background:'radial-gradient(circle at 88% 22%, #a67b45 0%, #142b47 25%, #071b33 62%)'}} />
+        <div className="pointer-events-none absolute inset-0 opacity-10" style={{backgroundImage:'radial-gradient(#f4d6a1 1px, transparent 1px)',backgroundSize:'48px 48px'}} />
+        <nav className="relative z-10 mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-3 sm:px-6 sm:py-5">
+          <a href="#" className="flex min-w-0 items-center gap-2.5 text-[#f2d19c]" aria-label="Destiny Code home">
+            <img src="/destiny-code-emblem.svg" alt="" className="h-11 w-11 shrink-0 sm:h-14 sm:w-14" />
+            <span className="min-w-0"><span className="block font-serif text-base tracking-[.08em] sm:text-2xl">DESTINY CODE</span><span className="block text-[9px] tracking-[.18em] sm:text-xs">YOUR LIFE. DECODED.</span></span>
+          </a>
+          <a href="#birth-details" className="shrink-0 rounded-full border border-[#c9a36a]/70 px-3 py-2 text-xs font-semibold text-[#f2d19c] sm:bg-[#e6bc7c] sm:px-5 sm:text-sm sm:text-[#10223b]">Start Reading →</a>
         </nav>
-        <div className="relative z-10 max-w-6xl mx-auto px-5 pt-12 pb-28 sm:pt-20 sm:pb-32">
-          <p className="text-xs sm:text-sm tracking-[0.22em] uppercase text-[#e9c48c]">YOUR LIFE. DECODED.</p>
-          <h1 className="font-serif text-4xl sm:text-6xl leading-tight mt-5 max-w-2xl">Discover What Your Birth Date <span className="text-[#e9c48c]">Reveals About You</span></h1>
-          <p className="mt-5 max-w-xl text-lg text-slate-200 leading-relaxed">A personalised birth-chart reading to explore your personality, love, career, money and the chapters ahead.</p>
-          <p className="mt-7 text-sm text-[#e9c48c]">Personal insights · Clear explanations · Practical guidance</p>
+        <div className="relative z-10 mx-auto max-w-6xl px-5 pb-20 pt-6 sm:px-6 sm:pb-28 sm:pt-16">
+          <p className="text-[10px] font-medium tracking-[.19em] text-[#e9c48c] sm:text-sm">ANCIENT WISDOM · MODERN INSIGHT</p>
+          <h1 className="mt-3 max-w-xl font-serif text-[2.25rem] leading-[1.14] tracking-tight sm:mt-5 sm:text-6xl">Your Life. <span className="text-[#e9c48c]">Decoded.</span></h1>
+          <p className="mt-3 max-w-lg text-[15px] leading-6 text-slate-200 sm:mt-5 sm:text-lg">Discover what your birth chart says about your personality, relationships and life path — in plain English.</p>
+          <p className="mt-4 text-xs text-[#e9c48c] sm:mt-7 sm:text-sm">Personal insights · Clear explanations · Practical guidance</p>
         </div>
       </header>
-      <main className="max-w-6xl mx-auto px-4 sm:px-6 pb-16">
-        <section id="birth-details" className="relative -mt-12 z-20 max-w-4xl mx-auto">
-          <div className="text-center mb-5">
-            <h2 className="font-serif text-3xl text-[#10223b]">Enter Your Birth Details</h2>
-            <p className="mt-2 text-sm text-slate-600">Start your personal reading. Birth time and location help make it more specific.</p>
+      <main className="mx-auto max-w-6xl px-3 pb-16 sm:px-6">
+        <section id="birth-details" className="relative z-20 mx-auto -mt-12 max-w-4xl scroll-mt-3 sm:-mt-14">
+          <div className="mb-3 px-2 text-center sm:mb-5">
+            <h2 className="font-serif text-[1.65rem] text-[#10223b] sm:text-3xl">Start Your Personal Reading</h2>
+            <p className="mt-1 text-sm text-slate-600">Enter your birth details to begin.</p>
           </div>
         <BirthForm
           ref={birthFormRef}
@@ -78,10 +81,10 @@ export default function App() {
         </div>
 
         </section>
-        {!birthInput && <section className="py-16">
+        {!birthInput && <section className="py-10 sm:py-16">
           <p className="text-center text-xs tracking-[0.2em] text-[#ad7a38] uppercase">What you'll discover</p>
           <h2 className="text-center font-serif text-3xl sm:text-4xl mt-3 mb-9">A Clear Guide to Your Life</h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 min-[420px]:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
             {[
               ['✦','Your Personality','Understand your strengths, habits and hidden potential.'],
               ['♡','Love & Relationships','Explore how you connect and communicate.'],
@@ -90,7 +93,7 @@ export default function App() {
               ['↗','Life Timeline','Explore the themes of different life chapters.'],
               ['◷','Next 12 Months','Discover traditional themes for the year ahead.'],
             ].map(([symbol,title,description])=><div key={title} className="rounded-2xl border border-[#e8e3dc] bg-white overflow-hidden shadow-sm">
-              <div className="h-24 sm:h-32 relative overflow-hidden bg-[#0b2741]" style={{backgroundImage:"linear-gradient(125deg, rgba(7,27,51,.3), rgba(211,161,95,.1)), url(/saju-moon-mountains.svg)",backgroundSize:"cover",backgroundPosition: title === "Love & Relationships" ? "75% 30%" : title === "Life Timeline" ? "35% 60%" : "center"}}><div className="absolute bottom-2 left-3 rounded-full bg-white/90 px-3 py-1 text-xl text-[#ad7a38]">{symbol}</div></div><div className="p-4 sm:p-6">
+              <div className="h-16 sm:h-24 relative overflow-hidden bg-[#0b2741]" style={{backgroundImage:"linear-gradient(125deg, rgba(7,27,51,.3), rgba(211,161,95,.1)), url(/saju-moon-mountains.svg)",backgroundSize:"cover",backgroundPosition: title === "Love & Relationships" ? "75% 30%" : title === "Life Timeline" ? "35% 60%" : "center"}}><div className="absolute bottom-2 left-3 rounded-full bg-white/90 px-3 py-1 text-xl text-[#ad7a38]">{symbol}</div></div><div className="p-4 sm:p-6">
               <h3 className="font-serif text-lg font-semibold">{title}</h3>
               <p className="mt-2 text-sm leading-relaxed text-slate-600">{description}</p></div>
             </div>)}
