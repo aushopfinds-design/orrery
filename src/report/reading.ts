@@ -266,7 +266,7 @@ export function buildEnglishReading(result: SajuResult, asOfYear = new Date().ge
       text: 'On the 15th of ' + name + ', the calculated solar-term month pillar is ' + monthPillar
         + (monthlySymbol ? ' (' + monthlySymbol.title + ')' : '') + '. In Saju this symbol invites reflection on '
         + (monthlySymbol?.lens ?? 'how your current priorities fit your circumstances') + '. '
-        + 'Try this practical exercise: ' + theme.action.replace(/[.!?]+$/, '') + '. This is not a prediction of events, and the solar-term pillar may change within the calendar month.
+        + 'Try this practical exercise: ' + theme.action.replace(/[.!?]+$/, '') + '. This is not a prediction of events, and the solar-term pillar may change within the calendar month.'
     }
   })
   const caveats = [
