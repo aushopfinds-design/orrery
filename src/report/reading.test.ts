@@ -66,6 +66,15 @@ describe('English reading integration', () => {
     }
   })
 
+  it('grounds twelve monthly reflections in calculated mid-month solar-term pillars', () => {
+    const report = buildEnglishReading(calculateSaju(base), 2026)
+    expect(report.monthly).toHaveLength(12)
+    expect(report.monthly.every(m => /^[甲乙丙丁戊己庚辛壬癸][子丑寅卯辰巳午未申酉戌亥]$/.test(m.pillar))).toBe(true)
+    expect(new Set(report.monthly.map(m => m.pillar)).size).toBeGreaterThanOrEqual(10)
+    expect(report.monthly.every(m => m.text.includes(m.pillar))).toBe(true)
+    expect(report.caveats.join(' ')).toContain('15th')
+  })
+
   it('warns if an overseas birth chart has no longitude', () => {
     const report = buildEnglishReading(calculateSaju({
       year: 1993, month: 3, day: 12, hour: 12, minute: 0,
