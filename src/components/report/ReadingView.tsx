@@ -26,7 +26,14 @@ export default function ReadingView({ input }: Props) {
         <div className="relative mt-10 inline-block rounded-full border border-[#d8b37c] px-5 py-2 text-sm text-[#f0ce90]">{report.birthSummary}</div>
       </div>
       <div className="flex justify-end print:hidden"><button type="button" onClick={() => window.print()} className="rounded-full bg-[#14243a] px-6 py-3 text-sm font-semibold text-[#f6e5c2] shadow-md">Save or Print PDF</button></div>
-      <header className="rounded-2xl bg-[#0b2037] border border-[#a88353]/70 p-5 sm:p-9 shadow-sm">
+      <div className="px-1 pt-2">
+        <h2 className="font-serif text-3xl text-[#f5e6ce] sm:text-4xl">Your Destiny Report</h2>
+        <p className="mt-2 text-sm leading-6 text-slate-300">A personalized guide to your life's journey and potential.</p>
+        <nav aria-label="Report sections" className="mt-5 grid grid-cols-5 gap-1 rounded-xl bg-[#0b2037] p-2 text-center">
+          {[['♙','Overview','#report-overview'],['♡','Love','#report-love'],['♧','Career','#report-career'],['◈','Money','#report-money'],['✧','Life Path','#report-timeline']].map(([symbol,label,href]) => <a key={label} href={href} className="flex min-h-16 flex-col items-center justify-center rounded-lg text-[#eac18a] hover:bg-[#e9bf81]/15 focus:bg-[#e9bf81]/20"><span className="text-xl">{symbol}</span><span className="mt-1 text-[10px] text-[#f5e6ce]">{label}</span></a>)}
+        </nav>
+      </div>
+      <header id="report-overview" className="scroll-mt-5 rounded-2xl bg-[#0b2037] border border-[#a88353]/70 p-5 sm:p-9 shadow-sm">
         <p className="text-xs uppercase tracking-[0.22em] font-semibold text-amber-700 dark:text-amber-400 mb-2">Personal Birth-Chart Reading · English</p>
         <h2 className="text-2xl sm:text-3xl font-semibold leading-tight text-[#f5e6ce]">{report.headline}</h2>
         <p className="mt-3 text-slate-200 leading-relaxed">{report.subtitle}</p>
@@ -45,7 +52,7 @@ export default function ReadingView({ input }: Props) {
       </header>
 
       {report.sections.map(section => (
-        <section key={section.heading} className="bg-[#0b2037] border border-[#a88353]/70 rounded-2xl p-5 sm:p-9 shadow-sm">
+        <section key={section.heading} id={/love|relationship/i.test(section.heading) ? "report-love" : /career|work/i.test(section.heading) ? "report-career" : /money|finance/i.test(section.heading) ? "report-money" : undefined} className="bg-[#0b2037] border border-[#a88353]/70 rounded-2xl p-5 sm:p-9 shadow-sm">
           <p className="text-xs tracking-[.2em] text-[#a97939] mb-2">✦ DESTINY CODE · PERSONAL INSIGHTS</p><h3 className="font-serif text-2xl sm:text-3xl font-semibold text-[#f4d19b] mb-5">{section.heading}</h3>
           <div className="space-y-3 text-[15px] leading-7 text-slate-200">
             {section.paragraphs.map((paragraph, index) => <div key={index} className="space-y-3">{index === 0 ? <p className="font-semibold text-[#f4d19b] text-lg leading-8 border-l-4 border-[#d4a45e] pl-4">{paragraph}</p> : <p>{paragraph}</p>}</div>)}
@@ -53,14 +60,14 @@ export default function ReadingView({ input }: Props) {
         </section>
       ))}
 
-      <section className="bg-[#0b2037] border border-[#a88353]/70 rounded-xl p-5 sm:p-6">
+      <section id="report-timeline" className="scroll-mt-5 bg-[#0b2037] border border-[#a88353]/70 rounded-xl p-5 sm:p-6">
         <p className="text-xs tracking-widest text-[#a97939] mb-2">✦ YOUR LIFE CHAPTERS</p><h3 className="font-serif text-2xl font-semibold text-[#f4d19b] mb-2">07 · Your Life Timeline</h3>
         <p className="text-sm leading-6 text-slate-300 mb-4">These are different traditional themes for each period, not fixed predictions of what will happen.</p>
         {report.periods.length ? (
           <div className="space-y-4">
             {report.periods.map(period => (
-              <div key={period.period} className="border-l-2 border-amber-600 dark:border-amber-400 pl-4 py-1">
-                <p className="text-xs font-semibold tracking-wide text-amber-800 dark:text-amber-300">{period.period} · {period.pillar}</p>
+              <div key={period.period} className="relative border-l-2 border-[#e5b878] pl-6 py-4 before:absolute before:-left-[8px] before:top-6 before:h-[14px] before:w-[14px] before:rounded-full before:border-2 before:border-[#f4d19b] before:bg-[#b78649] before:shadow-[0_0_16px_#e5b878]">
+                <p className="text-xs font-semibold tracking-wide text-[#eac18a]">{period.period} · {period.pillar}</p>
                 <h4 className="font-semibold text-[#f5e6ce] my-1">{period.headline}</h4>
                 <p className="text-[15px] leading-7 text-slate-200">{period.text}</p>
               </div>
