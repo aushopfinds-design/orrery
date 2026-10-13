@@ -14,7 +14,6 @@ export interface City {
 // 한국어 초성 검색
 // =============================================
 
-const INITIALS = 'ㄱㄲㄴㄷㄸㄹㅁㅂㅃㅅㅆㅇㅈㅉㅊㅋㅌㅍㅎ'
 
 /** 자모 코드포인트 → 초성 인덱스 */
 const JAMO_TO_INITIAL: Record<number, number> = {
