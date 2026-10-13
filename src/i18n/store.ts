@@ -19,17 +19,6 @@ function isLocale(v: string | null | undefined): v is Locale {
   return v != null && VALID.has(v)
 }
 
-function detectBrowserLocale(): Locale {
-  if (typeof navigator === 'undefined') return DEFAULT_LOCALE
-  const candidates = navigator.languages?.length ? navigator.languages : [navigator.language]
-  for (const lang of candidates) {
-    if (typeof lang !== 'string') continue
-    const code = lang.split('-')[0].toLowerCase()
-    if (isLocale(code)) return code
-  }
-  return DEFAULT_LOCALE
-}
-
 function readStored(): string | null {
   try {
     return typeof localStorage === 'undefined' ? null : localStorage.getItem(STORAGE_KEY)
