@@ -92,6 +92,13 @@ describe('English reading integration', () => {
     expect(report.periods[0].pillar).toBe(result.daewoon[0].ganzi)
   })
 
+  it('does not present an expired ten-year cycle as current beyond the calculated range', () => {
+    const result = calculateSaju(base)
+    const last = result.daewoon[result.daewoon.length - 1]
+    const report = buildEnglishReading(result, last.startDate.getUTCFullYear() + 10)
+    expect(report.periods).toHaveLength(0)
+  })
+
   it('warns if an overseas birth chart has no longitude', () => {
     const report = buildEnglishReading(calculateSaju({
       year: 1993, month: 3, day: 12, hour: 12, minute: 0,
