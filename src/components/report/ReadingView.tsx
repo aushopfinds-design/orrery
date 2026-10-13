@@ -15,6 +15,7 @@ export default function ReadingView({ input }: Props) {
 
   return (
     <article lang="en" aria-label="Personal Saju reading" className="space-y-8 pb-8 text-[#14243a]">\n      <div className="relative overflow-hidden rounded-3xl bg-[#071b33] text-white border-2 border-[#c9a05e] px-6 py-12 sm:py-20 text-center shadow-2xl" style={{backgroundImage:"linear-gradient(180deg,rgba(4,17,33,.1),#071b33),url(/saju-moon-mountains.svg)",backgroundPosition:"center",backgroundSize:"cover"}}>\n        <div className="absolute inset-3 rounded-2xl border border-[#e8c27d]/70 pointer-events-none" />\n        <p className="relative text-xs tracking-[.3em] text-[#f0ce90]">✦ SAJU STORY ✦</p>\n        <p className="relative mt-5 text-sm tracking-widest text-[#f0ce90]">PERSONAL LIFE READING</p>\n        <h1 className="relative mt-4 font-serif text-4xl sm:text-6xl font-semibold">Your Life, Your Story</h1>\n        <p className="relative mt-4 text-sm sm:text-base text-slate-200">A personal journey through your strengths, relationships and the chapters ahead.</p>\n        <div className="relative mt-10 inline-block rounded-full border border-[#d8b37c] px-5 py-2 text-sm text-[#f0ce90]">{report.birthSummary}</div>\n      </div>
+      <div className="flex justify-end print:hidden"><button type="button" onClick={() => window.print()} className="rounded-full bg-[#14243a] px-6 py-3 text-sm font-semibold text-[#f6e5c2] shadow-md">Save or Print PDF</button></div>
       <header className="rounded-2xl bg-[#fffaf2] border border-[#d7b77b] p-5 sm:p-9 shadow-sm">
         <p className="text-xs uppercase tracking-[0.22em] font-semibold text-amber-700 dark:text-amber-400 mb-2">Personal Saju Reading · English</p>
         <h2 className="text-2xl sm:text-3xl font-semibold leading-tight text-gray-900 dark:text-white">{report.headline}</h2>
@@ -56,6 +57,21 @@ export default function ReadingView({ input }: Props) {
             ))}
           </div>
         ) : <p className="text-sm text-gray-600 dark:text-gray-300">Ten-year cycles are not available for this birth record.</p>}
+      </section>
+
+      <section className="bg-[#fffaf2] border border-[#d7b77b] rounded-2xl p-5 sm:p-9 shadow-sm">
+        <p className="text-xs tracking-[.2em] text-[#a97939] mb-2">✦ A YEAR OF REFLECTION</p>
+        <h3 className="font-serif text-2xl sm:text-3xl font-semibold text-[#14243a] mb-3">08 · Your Twelve-Month Guide</h3>
+        <p className="text-sm leading-6 text-stone-600 mb-6">Twelve practical, birth-chart-inspired reflections. These are not calculated monthly fortune predictions.</p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {report.monthly.map(month => (
+            <div key={month.period} className="rounded-xl border border-[#dec99f] bg-white/70 p-4 break-inside-avoid">
+              <p className="text-xs uppercase tracking-widest text-[#956f36]">{month.period}</p>
+              <h4 className="font-serif text-xl font-semibold mt-2 text-[#14243a]">{month.headline}</h4>
+              <p className="mt-2 text-sm leading-6 text-stone-700">{month.text}</p>
+            </div>
+          ))}
+        </div>
       </section>
 
       <section className="relative overflow-hidden rounded-3xl border-2 border-[#cba366] bg-[#081c35] text-white p-6 sm:p-12 text-center shadow-2xl">
