@@ -52,7 +52,7 @@ function applyDocumentLang(locale: Locale): void {
 
 function getInitial(): Locale {
   const stored = readStored()
-  return isLocale(stored) ? stored : detectBrowserLocale()
+  return isLocale(stored) ? stored : DEFAULT_LOCALE
 }
 
 let currentLocale: Locale = getInitial()
