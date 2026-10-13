@@ -34,7 +34,7 @@ export function calcMeanNode(tjd: number): number {
 
   // Chapront et al. expression for Omega (mean ascending node)
   // in degrees
-  let omega = 125.0445479
+  const omega = 125.0445479
     - 1934.1362891 * T
     + 0.0020754 * T2
     + T3 / 467441.0
