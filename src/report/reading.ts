@@ -169,9 +169,9 @@ export function buildEnglishReading(result: SajuResult, asOfYear = new Date().ge
     {
       heading: '01 · Who You Really Are',
       paragraphs: [
-        'Your birth date is linked to the ' + self.name + ' symbol in traditional Saju. It describes one possible way you approach challenges and relationships. '
+        'In traditional Korean Saju, the day you were born is associated with ' + self.name + ' energy. Think of it as a way to reflect on how you respond to challenges and people—not a label that defines you. '
           + self.approach + ' This is a lens for reflection, not a fixed personality label.',
-        'This reading combines the symbol for your birth day with the one for your birth month. The first helps frame your personal style; the second adds a theme about work, routines and the environment around you. That combination is more personal than a reading based only on your birth year.',
+        'Your birth day suggests how you tend to approach life. Your birth month adds a different angle: the habits and working environments that may suit you. We look at both rather than treating everyone born in the same year alike.',
         fiveElementReading,
         'Your personal reflection: ' + self.caution + ' Notice whether this feels familiar in a recent decision. The chart offers a symbolic starting point, not knowledge of your personal history.',
         'One small experiment: ' + self.practice + ' Try it for a week, then decide whether it genuinely helps.',
@@ -200,20 +200,20 @@ export function buildEnglishReading(result: SajuResult, asOfYear = new Date().ge
     {
       heading: '04 · Love: How You Connect With Others',
       paragraphs: [
-        'The relationship symbol associated with your birth day highlights a question worth exploring: ' + relationshipQuestion + '. Think about how this shows up when you disagree, need reassurance or want more personal space.',
-        'Your personal style may shape the way you communicate: ' + self.approach
+        'When it comes to love and close friendships, your birth chart raises a useful question: ' + relationshipQuestion + '. Think about how this shows up when you disagree, need reassurance or want more personal space.',
+        'How you approach people may also affect the way you communicate: ' + self.approach
           + ' If that feels familiar, try explaining this need directly to someone close to you. Your chart cannot tell you what another person thinks or guarantee romantic compatibility.',
       ],
     },
     {
       heading: '05 · The Side of You Others May Not See',
       paragraphs: [
-        'The symbol associated with your birth year brings in the theme of '
+        'The year you were born adds a theme about '
           + (yearGod?.title.toLowerCase() ?? 'your wider social world') + '. '
           + 'You can use it to reflect on the expectations around you, but it does not determine your family relationships.',
         input.unknownTime
           ? 'Your birth hour was not provided, so we have deliberately left the hour-pillar interpretation out. This reading is based on three pillars, and some details may change if the time is added.'
-          : 'Your recorded birth time adds a theme of '
+          : 'Your birth time adds another possible theme: '
             + (hourGod?.title.toLowerCase() ?? 'long-term priorities')
             + '. Consider whether it matches what you hope to build over the coming years. It does not promise a particular outcome.',
       ],
