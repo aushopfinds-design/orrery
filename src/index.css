@@ -88,8 +88,17 @@ dialog[open] { border: none; }
     print-color-adjust: exact;
     -webkit-print-color-adjust: exact;
   }
-  .printable-reading section,
-  .printable-reading header,
+  /* Long reading sections must be allowed to span A4 pages. */
+  .printable-reading h1,
+  .printable-reading h2,
+  .printable-reading h3 {
+    break-after: avoid-page;
+  }
+  .printable-reading p,
+  .printable-reading li {
+    orphans: 3;
+    widows: 3;
+  }
   .printable-reading .break-inside-avoid {
     break-inside: avoid-page;
   }
