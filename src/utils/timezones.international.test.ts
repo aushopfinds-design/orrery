@@ -45,6 +45,20 @@ describe('Birthplace time zone and DST safety across four countries', () => {
     }
   })
 
+  it('matches independent historical DST transition instants', () => {
+    const historical = [
+      // US emergency year-round DST began in January 1974.
+      { tz: 'America/New_York', y: 1974, m: 1, d: 6, h: 1, min: 59, utc: '1974-01-06T06:59:00.000Z' },
+      { tz: 'America/New_York', y: 1974, m: 1, d: 6, h: 3, min: 0, utc: '1974-01-06T07:00:00.000Z' },
+      // Australia/Sydney spring-forward on 1986-10-19.
+      { tz: 'Australia/Sydney', y: 1986, m: 10, d: 19, h: 1, min: 59, utc: '1986-10-18T15:59:00.000Z' },
+      { tz: 'Australia/Sydney', y: 1986, m: 10, d: 19, h: 3, min: 0, utc: '1986-10-18T16:00:00.000Z' },
+    ]
+    for (const c of historical) {
+      expect(resolveLocalDateTimeToUtc(c.y, c.m, c.d, c.h, c.min, c.tz).toISOString()).toBe(c.utc)
+    }
+  })
+
   it('preserves exact UTC moments on both sides of spring-forward gaps', () => {
     const edges = [
       { tz: 'America/New_York', y: 2026, m: 3, d: 8, h: 1, min: 59, utc: '2026-03-08T06:59:00.000Z' },
