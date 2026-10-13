@@ -75,6 +75,15 @@ describe('English reading integration', () => {
     expect(report.caveats.join(' ')).toContain('15th')
   })
 
+  it('changes monthly headline themes when the day master changes', () => {
+    const first = buildEnglishReading(calculateSaju(base), 2026)
+    const second = buildEnglishReading(calculateSaju({
+      ...base, year: 1980, month: 3, day: 25, hour: 12,
+    }), 2026)
+    expect(first.monthly.map(m => m.pillar)).toEqual(second.monthly.map(m => m.pillar))
+    expect(first.monthly.some((m, i) => m.headline !== second.monthly[i].headline)).toBe(true)
+  })
+
   it('warns if an overseas birth chart has no longitude', () => {
     const report = buildEnglishReading(calculateSaju({
       year: 1993, month: 3, day: 12, hour: 12, minute: 0,
