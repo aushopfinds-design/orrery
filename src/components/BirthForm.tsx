@@ -62,14 +62,14 @@ const initialLatitude = saved?.latitude ?? NEW_YORK.lat
 const initialLongitude = saved?.longitude ?? NEW_YORK.lon
 
 const selectClass =
-  'w-full min-h-12 pl-3 pr-8 border border-[#a88353]/60 rounded-lg text-base text-[#f9e9ce] bg-[#10243b] ' +
+  'w-full min-w-0 min-h-12 pl-3 pr-8 border border-[#a88353]/60 rounded-lg text-base text-[#f9e9ce] bg-[#10243b] ' +
   'appearance-none bg-[length:16px_16px] bg-[position:right_8px_center] bg-no-repeat ' +
   "bg-[url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2020%2020%22%20fill%3D%22%239ca3af%22%3E%3Cpath%20fill-rule%3D%22evenodd%22%20d%3D%22M5.23%207.21a.75.75%200%20011.06.02L10%2011.168l3.71-3.938a.75.75%200%20111.08%201.04l-4.25%204.5a.75.75%200%2001-1.08%200l-4.25-4.5a.75.75%200%2001.02-1.06z%22%20clip-rule%3D%22evenodd%22%2F%3E%3C%2Fsvg%3E')] " +
   'focus:outline-none focus:ring-2 focus:ring-gray-800/20 dark:focus:ring-gray-200/20 focus:border-gray-400 dark:focus:border-gray-500 ' +
   'transition-all disabled:opacity-40 disabled:bg-gray-50 dark:disabled:bg-gray-800'
 
 const inputClass =
-  'w-full min-h-12 px-3 border border-[#a88353]/60 rounded-lg text-base text-[#f9e9ce] bg-[#10243b] ' +
+  'w-full min-w-0 min-h-12 px-3 border border-[#a88353]/60 rounded-lg text-base text-[#f9e9ce] bg-[#10243b] ' +
   'focus:outline-none focus:ring-2 focus:ring-gray-800/20 dark:focus:ring-gray-200/20 focus:border-gray-400 dark:focus:border-gray-500 transition-all'
 
 
@@ -91,6 +91,9 @@ const BirthForm = forwardRef<BirthFormHandle, Props>(function BirthForm({ onSubm
   const [latitudeInput, setLatitudeInput] = useState(() => formatCoordinate(initialLatitude))
   const [longitudeInput, setLongitudeInput] = useState(() => formatCoordinate(initialLongitude))
   const [timezoneError, setTimezoneError] = useState<string | null>(null)
+
+  const daysInSelectedMonth = new Date(year, month, 0).getDate()
+  if (day > daysInSelectedMonth) setDay(daysInSelectedMonth)
 
   const inferredTimezone = useMemo(
     () => inferTimeZoneFromCoordinates(latitude, longitude),
@@ -288,7 +291,7 @@ const BirthForm = forwardRef<BirthFormHandle, Props>(function BirthForm({ onSubm
   }
 
   return (
-    <form onSubmit={handleSubmit} className="bg-[#0a1b2c] text-[#f9e9ce] rounded-2xl border border-[#b68d58]/25 p-4 sm:p-7 shadow-xl shadow-black/20">
+    <form onSubmit={handleSubmit} className="w-full min-w-0 bg-[#0a1b2c] text-[#f9e9ce] rounded-2xl border border-[#b68d58]/25 p-4 sm:p-7 shadow-xl shadow-black/20">
       <div className="w-full">
         {/* Compact birth form for the English-first experience */}
         <div className="w-full min-w-0">
@@ -320,7 +323,7 @@ const BirthForm = forwardRef<BirthFormHandle, Props>(function BirthForm({ onSubm
                 onChange={e => setDay(Number(e.target.value))}
                 className={selectClass}
               >
-                {Array.from({ length: 31 }, (_, i) => (
+                {Array.from({ length: daysInSelectedMonth }, (_, i) => (
                   <option key={i + 1} value={i + 1}>{`${i + 1}${t('form.daySuffix')}`}</option>
                 ))}
               </select>
