@@ -114,6 +114,8 @@ function getActivePeriods(result: SajuResult, asOfYear: number): ReadingPeriod[]
   for (let i = 0; i < cycles.length; i++) {
     if (cycles[i].startDate.getUTCFullYear() <= asOfYear) index = i
   }
+  // Do not present an expired final cycle as if it still covered the requested year.
+  if (index === cycles.length - 1 && asOfYear > cycles[index].startDate.getUTCFullYear() + 9) return []
   const firstIndex = Math.max(0, index)
   return cycles.slice(firstIndex, firstIndex + 3).map((cycle, i) => {
     const start = cycle.startDate.getUTCFullYear()
