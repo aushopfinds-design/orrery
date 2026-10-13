@@ -190,9 +190,7 @@ export function buildEnglishReading(result: SajuResult, asOfYear = new Date().ge
       paragraphs: [
         describeGod(month.stemSipsin, 'month'),
         'Compare possible roles by the work environment, not just the title: autonomy, pace, expectations and the kind of progress you can see. This gives you a practical way to test whether the traditional work theme fits.',
-        'Your practical strength to test is this: ' + self.practice
-          + ' Your potential blind spot is equally specific: ' + self.caution
-          + ' Neither statement guarantees a career outcome.',
+        'The birth-month ' + month.pillar.stem + ' symbol suggests ' + (monthGod?.lens ?? 'practical work habits') + '. Your ' + self.name + ' day stem adds a different perspective: ' + self.approach + ' Compare both with your real work experience rather than treating them as a guaranteed career outcome.',
       ],
     },
     {
@@ -209,8 +207,7 @@ export function buildEnglishReading(result: SajuResult, asOfYear = new Date().ge
       heading: '04 · Love: How You Connect With Others',
       paragraphs: [
         'When it comes to love and close friendships, your birth chart raises a useful question: ' + relationshipQuestion + '. Think about how this shows up when you disagree, need reassurance or want more personal space.',
-        'How you approach people may also affect the way you communicate: ' + self.approach
-          + ' If that feels familiar, try explaining this need directly to someone close to you. Your chart cannot tell you what another person thinks or guarantee romantic compatibility.',
+        'Your relationship-seat day branch is ' + day.pillar.branch + '. In this tradition it points toward the question of ' + relationshipQuestion + '. Ask your partner or a close friend how they experience that question; the chart cannot know their thoughts or guarantee compatibility.',
       ],
     },
     {
@@ -269,7 +266,7 @@ export function buildEnglishReading(result: SajuResult, asOfYear = new Date().ge
       text: 'On the 15th of ' + name + ', the calculated solar-term month pillar is ' + monthPillar
         + (monthlySymbol ? ' (' + monthlySymbol.title + ')' : '') + '. In Saju this symbol invites reflection on '
         + (monthlySymbol?.lens ?? 'how your current priorities fit your circumstances') + '. '
-        + 'Try this practical exercise: ' + theme.action + '. This is not a prediction of events, and the solar-term pillar may change within the calendar month.',
+        + 'Try this practical exercise: ' + theme.action.replace(/[.!?]+$/, '') + '. This is not a prediction of events, and the solar-term pillar may change within the calendar month.
     }
   })
   const caveats = [
