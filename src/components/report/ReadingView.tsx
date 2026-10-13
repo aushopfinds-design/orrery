@@ -16,15 +16,23 @@ export default function ReadingView({ input }: Props) {
   const [reportId] = useState(() => `PREVIEW-${crypto.randomUUID().slice(0, 12).toUpperCase()}`)
 
   return (
-    <article lang="en" aria-label="Personal Saju reading" className="space-y-8 pb-8 text-[#14243a]">\n      <div className="relative overflow-hidden rounded-3xl bg-[#071b33] text-white border-2 border-[#c9a05e] px-6 py-12 sm:py-20 text-center shadow-2xl" style={{backgroundImage:"linear-gradient(180deg,rgba(4,17,33,.1),#071b33),url(/saju-moon-mountains.svg)",backgroundPosition:"center",backgroundSize:"cover"}}>\n        <div className="absolute inset-3 rounded-2xl border border-[#e8c27d]/70 pointer-events-none" />\n        <img src="/destiny-code-emblem.svg" alt="Destiny Code gold tree and crescent emblem" className="relative mx-auto h-28 w-28 sm:h-36 sm:w-36" /><p className="relative mt-3 text-xs tracking-[.3em] text-[#f0ce90]">DESTINY CODE</p>\n        <p className="relative mt-5 text-sm tracking-widest text-[#f0ce90]">PERSONAL LIFE READING</p>\n        <h1 className="relative mt-4 font-serif text-4xl sm:text-6xl font-semibold">YOUR LIFE. DECODED.</h1>\n        <p className="relative mt-4 text-sm sm:text-base text-slate-200">A personal journey through your strengths, relationships and the chapters ahead.</p>\n        <div className="relative mt-10 inline-block rounded-full border border-[#d8b37c] px-5 py-2 text-sm text-[#f0ce90]">{report.birthSummary}</div>\n      </div>
+    <article lang="en" aria-label="Personal Saju reading" className="space-y-6 pb-8 text-[#f5e6ce]">
+      <div className="relative overflow-hidden rounded-3xl bg-[#071b33] text-white border-2 border-[#c9a05e] px-6 py-12 sm:py-20 text-center shadow-2xl" style={{backgroundImage:"linear-gradient(180deg,rgba(4,17,33,.1),#071b33),url(/saju-moon-mountains.svg)",backgroundPosition:"center",backgroundSize:"cover"}}>
+        <div className="absolute inset-3 rounded-2xl border border-[#e8c27d]/70 pointer-events-none" />
+        <img src="/destiny-code-emblem.svg" alt="Destiny Code gold tree and crescent emblem" className="relative mx-auto h-28 w-28 sm:h-36 sm:w-36" /><p className="relative mt-3 text-xs tracking-[.3em] text-[#f0ce90]">DESTINY CODE</p>
+        <p className="relative mt-5 text-sm tracking-widest text-[#f0ce90]">PERSONAL LIFE READING</p>
+        <h1 className="relative mt-4 font-serif text-4xl sm:text-6xl font-semibold">YOUR LIFE. DECODED.</h1>
+        <p className="relative mt-4 text-sm sm:text-base text-slate-200">A personal journey through your strengths, relationships and the chapters ahead.</p>
+        <div className="relative mt-10 inline-block rounded-full border border-[#d8b37c] px-5 py-2 text-sm text-[#f0ce90]">{report.birthSummary}</div>
+      </div>
       <div className="flex justify-end print:hidden"><button type="button" onClick={() => window.print()} className="rounded-full bg-[#14243a] px-6 py-3 text-sm font-semibold text-[#f6e5c2] shadow-md">Save or Print PDF</button></div>
-      <header className="rounded-2xl bg-[#fffaf2] border border-[#d7b77b] p-5 sm:p-9 shadow-sm">
+      <header className="rounded-2xl bg-[#0b2037] border border-[#a88353]/70 p-5 sm:p-9 shadow-sm">
         <p className="text-xs uppercase tracking-[0.22em] font-semibold text-amber-700 dark:text-amber-400 mb-2">Personal Birth-Chart Reading · English</p>
-        <h2 className="text-2xl sm:text-3xl font-semibold leading-tight text-gray-900 dark:text-white">{report.headline}</h2>
-        <p className="mt-3 text-gray-600 dark:text-gray-300 leading-relaxed">{report.subtitle}</p>
+        <h2 className="text-2xl sm:text-3xl font-semibold leading-tight text-[#f5e6ce]">{report.headline}</h2>
+        <p className="mt-3 text-slate-200 leading-relaxed">{report.subtitle}</p>
         <p className="mt-4 text-xs text-gray-500 dark:text-gray-400">{report.birthSummary}</p>
-        <div className="mt-5 rounded-xl bg-amber-50 dark:bg-amber-950/20 p-4"><p className="text-sm font-semibold text-amber-900 dark:text-amber-200">Start with your story</p><p className="mt-1 text-sm leading-6 text-stone-700 dark:text-stone-300">Explore your personality, relationships, work, money and the changing themes of your life below. You do not need to understand traditional Saju terms to enjoy this reading.</p></div>
-        <details className="mt-4 rounded-xl border border-stone-200 dark:border-gray-700 p-3"><summary className="cursor-pointer text-sm font-medium text-gray-600 dark:text-gray-300">See my traditional birth chart (optional)</summary><div className="mt-3 flex flex-wrap gap-2" aria-label="Calculated four pillars">
+        <div className="mt-5 rounded-xl bg-amber-50 dark:bg-amber-950/20 p-4"><p className="text-sm font-semibold text-amber-900 dark:text-amber-200">Start with your story</p><p className="mt-1 text-sm leading-6 text-slate-200">Explore your personality, relationships, work, money and the changing themes of your life below. You do not need to understand traditional Saju terms to enjoy this reading.</p></div>
+        <details className="mt-4 rounded-xl border border-stone-200 dark:border-gray-700 p-3"><summary className="cursor-pointer text-sm font-medium text-slate-200">See my traditional birth chart (optional)</summary><div className="mt-3 flex flex-wrap gap-2" aria-label="Calculated four pillars">
           {report.pillarSummary.map(item => (
             <span key={item} className="text-sm rounded-lg px-3 py-2 bg-stone-100 text-stone-800 dark:bg-gray-800 dark:text-gray-200">{item}</span>
           ))}
@@ -37,40 +45,40 @@ export default function ReadingView({ input }: Props) {
       </header>
 
       {report.sections.map(section => (
-        <section key={section.heading} className="bg-[#fffaf2] border border-[#d7b77b] rounded-2xl p-5 sm:p-9 shadow-sm">
-          <p className="text-xs tracking-[.2em] text-[#a97939] mb-2">✦ DESTINY CODE · PERSONAL INSIGHTS</p><h3 className="font-serif text-2xl sm:text-3xl font-semibold text-[#14243a] mb-5">{section.heading}</h3>
-          <div className="space-y-3 text-[15px] leading-7 text-gray-700 dark:text-gray-300">
-            {section.paragraphs.map((paragraph, index) => <div key={index} className="space-y-3">{index === 0 ? <p className="font-semibold text-[#14243a] text-lg leading-8 border-l-4 border-[#d4a45e] pl-4">{paragraph}</p> : <p>{paragraph}</p>}</div>)}
+        <section key={section.heading} className="bg-[#0b2037] border border-[#a88353]/70 rounded-2xl p-5 sm:p-9 shadow-sm">
+          <p className="text-xs tracking-[.2em] text-[#a97939] mb-2">✦ DESTINY CODE · PERSONAL INSIGHTS</p><h3 className="font-serif text-2xl sm:text-3xl font-semibold text-[#f4d19b] mb-5">{section.heading}</h3>
+          <div className="space-y-3 text-[15px] leading-7 text-slate-200">
+            {section.paragraphs.map((paragraph, index) => <div key={index} className="space-y-3">{index === 0 ? <p className="font-semibold text-[#f4d19b] text-lg leading-8 border-l-4 border-[#d4a45e] pl-4">{paragraph}</p> : <p>{paragraph}</p>}</div>)}
           </div>
         </section>
       ))}
 
-      <section className="bg-white dark:bg-gray-900 border border-stone-200 dark:border-gray-800 rounded-xl p-5 sm:p-6">
-        <p className="text-xs tracking-widest text-[#a97939] mb-2">✦ YOUR LIFE CHAPTERS</p><h3 className="font-serif text-2xl font-semibold text-[#14243a] mb-2">07 · Your Life Timeline</h3>
-        <p className="text-sm leading-6 text-gray-600 dark:text-gray-400 mb-4">These are different traditional themes for each period, not fixed predictions of what will happen.</p>
+      <section className="bg-[#0b2037] border border-[#a88353]/70 rounded-xl p-5 sm:p-6">
+        <p className="text-xs tracking-widest text-[#a97939] mb-2">✦ YOUR LIFE CHAPTERS</p><h3 className="font-serif text-2xl font-semibold text-[#f4d19b] mb-2">07 · Your Life Timeline</h3>
+        <p className="text-sm leading-6 text-slate-300 mb-4">These are different traditional themes for each period, not fixed predictions of what will happen.</p>
         {report.periods.length ? (
           <div className="space-y-4">
             {report.periods.map(period => (
               <div key={period.period} className="border-l-2 border-amber-600 dark:border-amber-400 pl-4 py-1">
                 <p className="text-xs font-semibold tracking-wide text-amber-800 dark:text-amber-300">{period.period} · {period.pillar}</p>
-                <h4 className="font-semibold text-gray-900 dark:text-white my-1">{period.headline}</h4>
-                <p className="text-[15px] leading-7 text-gray-700 dark:text-gray-300">{period.text}</p>
+                <h4 className="font-semibold text-[#f5e6ce] my-1">{period.headline}</h4>
+                <p className="text-[15px] leading-7 text-slate-200">{period.text}</p>
               </div>
             ))}
           </div>
-        ) : <p className="text-sm text-gray-600 dark:text-gray-300">Ten-year cycles are not available for this birth record.</p>}
+        ) : <p className="text-sm text-slate-200">Ten-year cycles are not available for this birth record.</p>}
       </section>
 
-      <section className="bg-[#fffaf2] border border-[#d7b77b] rounded-2xl p-5 sm:p-9 shadow-sm">
+      <section className="bg-[#0b2037] border border-[#a88353]/70 rounded-2xl p-5 sm:p-9 shadow-sm">
         <p className="text-xs tracking-[.2em] text-[#a97939] mb-2">✦ A YEAR OF REFLECTION</p>
-        <h3 className="font-serif text-2xl sm:text-3xl font-semibold text-[#14243a] mb-3">08 · Your Twelve-Month Guide</h3>
-        <p className="text-sm leading-6 text-stone-600 mb-6">Twelve practical, birth-chart-inspired reflections. These are not calculated monthly fortune predictions.</p>
+        <h3 className="font-serif text-2xl sm:text-3xl font-semibold text-[#f4d19b] mb-3">08 · Your Twelve-Month Guide</h3>
+        <p className="text-sm leading-6 text-slate-300 mb-6">Twelve practical, birth-chart-inspired reflections. These are not calculated monthly fortune predictions.</p>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {report.monthly.map(month => (
-            <div key={month.period} className="rounded-xl border border-[#dec99f] bg-white/70 p-4 break-inside-avoid">
-              <p className="text-xs uppercase tracking-widest text-[#956f36]">{month.period}</p>
-              <h4 className="font-serif text-xl font-semibold mt-2 text-[#14243a]">{month.headline}</h4>
-              <p className="mt-2 text-sm leading-6 text-stone-700">{month.text}</p>
+            <div key={month.period} className="rounded-xl border border-[#dec99f] bg-[#10243b] p-4 break-inside-avoid">
+              <p className="text-xs uppercase tracking-widest text-[#f4d19b]">{month.period}</p>
+              <h4 className="font-serif text-xl font-semibold mt-2 text-[#f4d19b]">{month.headline}</h4>
+              <p className="mt-2 text-sm leading-6 text-slate-200">{month.text}</p>
             </div>
           ))}
         </div>
