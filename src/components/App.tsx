@@ -1,5 +1,6 @@
 import { useCallback, useRef, useState } from 'react'
 import BirthForm from './BirthForm.tsx'
+import ProductCatalog from './ProductCatalog.tsx'
 import type { BirthFormHandle, SavedFormState } from './BirthForm.tsx'
 import ProfileModal from './ProfileModal.tsx'
 import CopyButton from './CopyButton.tsx'
@@ -49,7 +50,7 @@ export default function App() {
             <span><span className="block font-serif text-lg tracking-[.045em] sm:text-2xl">FATE KEY</span><span className="block text-[8px] tracking-[.21em] text-[#d8bb8c]">YOUR LIFE. DECODED.</span></span>
           </a>
           <button type="button" aria-label="Open menu" aria-expanded={menuOpen} onClick={() => setMenuOpen(v => !v)} className="flex h-11 w-11 items-center justify-center rounded-lg border border-[#a7814b]/30 text-2xl text-[#edc88e]">☰</button>
-          {menuOpen && <div className="absolute right-5 top-[78px] z-30 flex w-48 flex-col rounded-xl border border-[#a7814b]/50 bg-[#0b2037] p-3 shadow-2xl"><a className="p-3" href="#birth-details" onClick={() => setMenuOpen(false)}>Birth Details</a><a className="p-3" href="#discover" onClick={() => setMenuOpen(false)}>Discover</a></div>}
+          {menuOpen && <div className="absolute right-5 top-[78px] z-30 flex w-48 flex-col rounded-xl border border-[#a7814b]/50 bg-[#0b2037] p-3 shadow-2xl"><a className="p-3" href="#birth-details" onClick={() => setMenuOpen(false)}>Birth Details</a><a className="p-3" href="#discover" onClick={() => setMenuOpen(false)}>Discover</a><a className="p-3" href="#reports" onClick={() => setMenuOpen(false)}>Our Reports</a></div>}
         </nav>
         <div className="relative z-10 mx-auto flex min-h-[590px] max-w-6xl flex-col justify-center px-7 pb-14 pt-10 sm:min-h-[570px] sm:px-10">
           <p className="max-w-[230px] text-[11px] font-medium leading-5 tracking-[.26em] text-[#e7bc7e]">ANCIENT WISDOM.<br/>MODERN INSIGHT.</p>
@@ -113,6 +114,7 @@ export default function App() {
             <p className="mt-3 text-xs text-slate-400">Inspired by traditional Korean birth-chart interpretation, not a scientific prediction of future events.</p>
           </div>
         </section>}
+        <ProductCatalog />
         {birthInput && (
           <>
             {/* Show the plain-English reading first; expert calculations remain available in separate tabs. */}
