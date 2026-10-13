@@ -21,7 +21,7 @@ type Tab = 'saju' | 'ziwei' | 'natal' | 'reading'
 
 export default function App() {
   const { t } = useLocale()
-  const [tab, setTab] = useState<Tab>('saju')
+  const [tab, setTab] = useState<Tab>('reading')
   const [birthInput, setBirthInput] = useState<BirthInput | null>(null)
   const [profileModalOpen, setProfileModalOpen] = useState(false)
   const [externalFormState, setExternalFormState] = useState<SavedFormState | null>(null)
@@ -84,7 +84,7 @@ export default function App() {
 
         {birthInput && (
           <>
-            {/* 탭 네비게이션 */}
+            {/* Show the plain-English reading first; expert calculations remain available in separate tabs. */}
             <div ref={resultsRef} className="flex items-center border-b border-gray-200 dark:border-gray-700 mt-6 mb-4 overflow-x-auto">
               <button
                 className={`px-2 sm:px-4 py-2 text-sm sm:text-base font-medium whitespace-nowrap border-b-2 transition-colors ${
