@@ -11,7 +11,6 @@
  */
 
 const J2000 = 2451545.0
-const DEG_TO_RAD = Math.PI / 180
 
 function degnorm(x: number): number {
   let y = x % 360.0
