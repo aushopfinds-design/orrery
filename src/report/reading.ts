@@ -128,7 +128,7 @@ function getActivePeriods(result: SajuResult, asOfYear: number): ReadingPeriod[]
       period: start + '–' + (start + 9),
       pillar: cycle.ganzi,
       headline: accent,
-      text: transitions[i] + ' In this traditional cycle, the main theme is ' + focus + '. A grounded experiment is to ' + suggestion
+      text: transitions[i] + ' The ten-year cycle ' + cycle.ganzi + ' highlights ' + focus + '. A grounded experiment is to ' + suggestion
         + '. This is a theme to reflect on, not a prediction that an event will occur.',
     }
   })
