@@ -71,3 +71,29 @@ body {
 dialog::backdrop { background: rgba(0, 0, 0, 0.4); }
 dialog[open] { border: none; }
 
+
+
+/* Preview PDF: print only the reading, never the birth form or site navigation. */
+@media print {
+  @page { size: A4; margin: 14mm; }
+  body { background: #fff !important; }
+  body * { visibility: hidden !important; }
+  .printable-reading, .printable-reading * { visibility: visible !important; }
+  .printable-reading {
+    position: absolute;
+    inset: 0 auto auto 0;
+    width: 100%;
+    padding: 0 !important;
+    color: #111827 !important;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+  .printable-reading section,
+  .printable-reading header,
+  .printable-reading .break-inside-avoid {
+    break-inside: avoid-page;
+  }
+  .printable-reading nav,
+  .printable-reading button,
+  .printable-reading aside { display: none !important; }
+}
