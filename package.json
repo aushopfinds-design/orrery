@@ -13,7 +13,8 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "generate-icons": "bun scripts/generate-icons.ts",
-    "generate-og-image": "bun scripts/generate-og-image.ts"
+    "generate-og-image": "bun scripts/generate-og-image.ts",
+    "test": "vitest run"
   },
   "dependencies": {
     "@photostructure/tz-lookup": "^11.2.0",
