@@ -7,7 +7,8 @@ const ja: Record<string, string> = {
   'app.profileManage': 'プロフィール管理',
   'app.tab.saju': '四柱八字',
   'app.tab.ziwei': '紫微斗数',
-  'app.tab.natal': '出生チャート',
+  'app.tab.natal': '出生チャート',  'app.tab.reading': '英語の鑑定レポート',
+
   'app.copyAll': 'AI 鑑定用',
   'app.copyAllSub': 'すべてコピー',
   'app.intro': '紹介',
