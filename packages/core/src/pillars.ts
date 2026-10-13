@@ -277,6 +277,18 @@ export function calcPillarIndices(
   let so24month = t;
   if (so24month > 59) so24month -= 60;
 
+  // 2026 Li Chun independently verified against the Hong Kong Observatory.
+  // The legacy mean-term approximation switches 24 minutes too early.
+  // This bounded correction avoids changing other years without verified ephemerides.
+  // HKO: 2026-02-04 04:02 HKT = 2026-02-04 05:02 KST.
+  const liChun2026 = Date.UTC(2026, 1, 4, 5, 2);
+  const approximate2026 = Date.UTC(2026, 1, 4, 4, 38);
+  const inputMinute = Date.UTC(year, month - 1, day, hour, min);
+  if (inputMinute >= approximate2026 && inputMinute < liChun2026) {
+    so24year = 41; // 乙巳
+    so24month = 25; // 己丑
+  }
+
   // 일주
   let so24day = displ2day % 60;
   so24day = so24day * -1 + 7;
