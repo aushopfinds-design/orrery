@@ -10,13 +10,14 @@ import { useLocale } from '../i18n/index.ts'
 import SajuView from './saju/SajuView.tsx'
 import ZiweiView from './ziwei/ZiweiView.tsx'
 import NatalView from './natal/NatalView.tsx'
+import ReadingView from './report/ReadingView.tsx'
 import { calculateSaju } from '@orrery/core/saju'
 import { createChart } from '@orrery/core/ziwei'
 import { calculateNatal } from '@orrery/core/natal'
 import { sajuToText, ziweiToText, natalToText } from '../utils/text-export.ts'
 import type { BirthInput } from '@orrery/core/types'
 
-type Tab = 'saju' | 'ziwei' | 'natal'
+type Tab = 'saju' | 'ziwei' | 'natal' | 'reading'
 
 export default function App() {
   const { t } = useLocale()
@@ -84,7 +85,7 @@ export default function App() {
         {birthInput && (
           <>
             {/* 탭 네비게이션 */}
-            <div ref={resultsRef} className="flex items-center border-b border-gray-200 dark:border-gray-700 mt-6 mb-4">
+            <div ref={resultsRef} className="flex items-center border-b border-gray-200 dark:border-gray-700 mt-6 mb-4 overflow-x-auto">
               <button
                 className={`px-2 sm:px-4 py-2 text-sm sm:text-base font-medium whitespace-nowrap border-b-2 transition-colors ${
                   tab === 'saju'
@@ -115,6 +116,16 @@ export default function App() {
               >
                 {t('app.tab.natal')}
               </button>
+              <button
+                className={`px-2 sm:px-4 py-2 text-sm sm:text-base font-medium whitespace-nowrap border-b-2 transition-colors ${
+                  tab === 'reading'
+                    ? 'border-amber-700 text-amber-800 dark:border-amber-400 dark:text-amber-300'
+                    : 'border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200'
+                }`}
+                onClick={() => setTab('reading')}
+              >
+                {t('app.tab.reading')}
+              </button>
               <div className="ml-auto pb-1">
                 <CopyButton
                   label={<>{t('app.copyAll')}<br />{t('app.copyAllSub')}</>}
@@ -143,6 +154,7 @@ export default function App() {
             {tab === 'saju' && <SajuView input={birthInput} />}
             {tab === 'ziwei' && <ZiweiView input={birthInput} />}
             {tab === 'natal' && <NatalView input={birthInput} />}
+            {tab === 'reading' && <ReadingView input={birthInput} />}
           </>
         )}
 
