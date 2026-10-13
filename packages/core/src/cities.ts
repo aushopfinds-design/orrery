@@ -330,8 +330,11 @@ export const WORLD_CITIES: readonly City[] = [
   { name: '오클랜드', country: '뉴질랜드', lat: -36.8485, lon: 174.7633 },
 ] as const
 
-/** 기본값: 서울 */
+/** Seoul city reference. */
 export const SEOUL = KOREAN_CITIES[0]
+
+/** Default birthplace for the English-first experience. */
+export const NEW_YORK: City = { name: '뉴욕', country: '미국', lat: 40.7128, lon: -74.0060 }
 
 // =============================================
 // 검색 / 필터링
