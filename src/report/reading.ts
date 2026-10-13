@@ -168,11 +168,11 @@ export function buildEnglishReading(result: SajuResult, asOfYear = new Date().ge
 
   const sections: ReadingSection[] = [
     {
-      heading: '01 · Who You Really Are',
+      heading: '01 · Your Core Personality Themes',
       paragraphs: [
         'In traditional Korean Saju, the day you were born is associated with ' + self.name + ' energy. Think of it as a way to reflect on how you respond to challenges and people—not a label that defines you. '
           + self.approach + ' This is a lens for reflection, not a fixed personality label.',
-        'Your birth day suggests how you tend to approach life. Your birth month adds a different angle: the habits and working environments that may suit you. We look at both rather than treating everyone born in the same year alike.',
+        'Your day stem is ' + self.name + ', while your month stem is ' + month.pillar.stem + ' (' + (monthGod?.title ?? 'a traditional supporting theme') + '). We read these together rather than treating everyone born in the same year alike. The month symbol offers a second question to test against your real work habits.',
         fiveElementReading,
         'Your personal reflection: ' + self.caution + ' Notice whether this feels familiar in a recent decision. The chart offers a symbolic starting point, not knowledge of your personal history.',
         'One small experiment: ' + self.practice + ' Try it for a week, then decide whether it genuinely helps.',
