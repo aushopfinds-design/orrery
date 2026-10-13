@@ -42,13 +42,13 @@ export default function App() {
         <div className="absolute inset-0 opacity-70" style={{background:'radial-gradient(circle at 76% 42%, #d2a15d 0%, #6e6b77 13%, #16324c 33%, #071b33 70%)'}} />
         <div className="absolute inset-0 bg-cover bg-[position:70%_center] sm:bg-center opacity-65" style={{backgroundImage:"url(/saju-moon-mountains.svg)"}} />\n        <div className="absolute inset-0 bg-gradient-to-r from-[#071b33]/95 via-[#071b33]/65 to-[#071b33]/10" />\n        <div className="absolute inset-0 opacity-20" style={{backgroundImage:'radial-gradient(#fff 1px, transparent 1px)',backgroundSize:'44px 44px'}} />
         <nav className="relative z-10 max-w-6xl mx-auto px-5 py-5 flex items-center justify-between">
-          <a href="#" className="font-serif text-xl tracking-wider text-[#f2d19c]">✦ SAJU STORY</a>
+          <a href="#" className="flex items-center gap-3 text-[#f2d19c]" aria-label="Destiny Code home"><img src="/destiny-code-emblem.svg" alt="" className="h-12 w-12 sm:h-14 sm:w-14" /><span className="font-serif text-lg sm:text-2xl tracking-[.08em]">DESTINY CODE</span></a>
           <a href="#birth-details" className="rounded-full bg-[#e6bc7c] px-5 py-2 text-sm font-semibold text-[#10223b]">Get My Reading →</a>
         </nav>
         <div className="relative z-10 max-w-6xl mx-auto px-5 pt-12 pb-28 sm:pt-20 sm:pb-32">
-          <p className="text-xs sm:text-sm tracking-[0.22em] uppercase text-[#e9c48c]">Ancient wisdom · Modern insight</p>
+          <p className="text-xs sm:text-sm tracking-[0.22em] uppercase text-[#e9c48c]">YOUR LIFE. DECODED.</p>
           <h1 className="font-serif text-4xl sm:text-6xl leading-tight mt-5 max-w-2xl">Discover What Your Birth Date <span className="text-[#e9c48c]">Reveals About You</span></h1>
-          <p className="mt-5 max-w-xl text-lg text-slate-200 leading-relaxed">A personalised Saju reading to explore your personality, love, career, money and the chapters ahead.</p>
+          <p className="mt-5 max-w-xl text-lg text-slate-200 leading-relaxed">A personalised birth-chart reading to explore your personality, love, career, money and the chapters ahead.</p>
           <p className="mt-7 text-sm text-[#e9c48c]">Personal insights · Clear explanations · Practical guidance</p>
         </div>
       </header>
@@ -99,7 +99,7 @@ export default function App() {
             <p className="text-xs tracking-widest uppercase text-[#ad7a38]">Sample report</p>
             <h3 className="font-serif text-2xl mt-2">A Reading You Can Actually Understand</h3>
             <p className="mt-3 text-slate-600 leading-relaxed max-w-2xl">Your report explains the traditional symbols behind your chart in everyday English, then offers questions and practical ideas to help you reflect. Every reading is based on your birth details.</p>
-            <p className="mt-3 text-xs text-slate-500">Saju is a traditional interpretation, not a scientific prediction of future events.</p>
+            <p className="mt-3 text-xs text-slate-500">Inspired by traditional Korean birth-chart interpretation, not a scientific prediction of future events.</p>
           </div>
         </section>}
         {birthInput && (
@@ -181,7 +181,7 @@ export default function App() {
 
       </main>
       <footer className="text-center text-xs text-slate-500 bg-[#eeeae4] py-8 px-4">
-        <p>SAJU STORY · Traditional Saju insights for reflection, not guaranteed outcomes.</p>
+        <p>DESTINY CODE · Traditional Saju insights for reflection, not guaranteed outcomes.</p>
         <p className="mt-2">Calculation engine attribution: <a className="underline" href="https://github.com/rath/orrery" target="_blank" rel="noopener noreferrer">Orrery open-source project</a>.</p>
       </footer>
       <ProfileModal
