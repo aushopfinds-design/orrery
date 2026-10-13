@@ -7,7 +7,8 @@ const ko: Record<string, string> = {
   'app.profileManage': '프로필 관리',
   'app.tab.saju': '사주팔자',
   'app.tab.ziwei': '자미두수',
-  'app.tab.natal': '출생차트',
+  'app.tab.natal': '출생차트',  'app.tab.reading': '영어 사주 리포트',
+
   'app.copyAll': 'AI 해석용',
   'app.copyAllSub': '전부 복사',
   'app.intro': '소개글',
