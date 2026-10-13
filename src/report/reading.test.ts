@@ -84,6 +84,14 @@ describe('English reading integration', () => {
     expect(first.monthly.some((m, i) => m.headline !== second.monthly[i].headline)).toBe(true)
   })
 
+  it('labels a ten-year period before its start as upcoming, not current', () => {
+    const result = calculateSaju(base)
+    const firstStart = result.daewoon[0].startDate.getUTCFullYear()
+    const report = buildEnglishReading(result, firstStart - 1)
+    expect(report.periods[0].text).toContain('has not started yet')
+    expect(report.periods[0].pillar).toBe(result.daewoon[0].ganzi)
+  })
+
   it('warns if an overseas birth chart has no longitude', () => {
     const report = buildEnglishReading(calculateSaju({
       year: 1993, month: 3, day: 12, hour: 12, minute: 0,
