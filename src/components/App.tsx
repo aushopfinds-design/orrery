@@ -2,10 +2,7 @@ import { useCallback, useRef, useState } from 'react'
 import BirthForm from './BirthForm.tsx'
 import type { BirthFormHandle, SavedFormState } from './BirthForm.tsx'
 import ProfileModal from './ProfileModal.tsx'
-import Guide from './Guide.tsx'
 import CopyButton from './CopyButton.tsx'
-import ThemeToggle from './ThemeToggle.tsx'
-import LanguageMenu from './LanguageMenu.tsx'
 import { useLocale } from '../i18n/index.ts'
 import SajuView from './saju/SajuView.tsx'
 import ZiweiView from './ziwei/ZiweiView.tsx'
@@ -40,36 +37,34 @@ export default function App() {
   }, [])
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-gray-100 relative">
-      <ThemeToggle />
-      <LanguageMenu />
-      <a
-        href="https://github.com/rath/orrery"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="fixed top-0 right-0 z-50"
-        aria-label="View source on GitHub"
-      >
-        <svg width="60" height="60" viewBox="0 0 250 250" className="fill-gray-700 text-white" aria-hidden="true">
-          <path d="M0 0l115 115h15l12 27 108 108V0z" />
-          <path d="M128.3 109c-14.5-9.3-9.3-19.4-9.3-19.4 3-6.9 1.5-11 1.5-11-1.3-6.6 2.9-2.3 2.9-2.3 3.9 4.6 2.1 11 2.1 11-2.6 10.3 5.1 14.6 8.9 15.9" fill="currentColor" style={{ transformOrigin: '130px 106px' }} />
-          <path d="M115 115c-.1.1 3.7 1.5 4.8.4l13.9-13.8c3.2-2.4 6.2-3.2 8.5-3 -8.4-10.6-14.7-24.2 1.6-40.6 4.7-4.6 10.2-6.8 15.9-7 .6-1.6 3.5-7.4 11.7-10.9 0 0 4.7 2.4 7.4 16.1 4.3 2.4 8.4 5.6 12.1 9.2 3.6 3.6 6.8 7.8 9.2 12.2 13.7 2.6 16.2 7.3 16.2 7.3-3.6 8.2-9.4 11.1-10.9 11.7-.3 5.8-2.4 11.2-7.1 15.9-16.4 16.4-29.4 11.6-36.4 8.8 .2 2.8-1 6.8-5 10.8L141 136.5c-1.2 1.2.6 5.4.8 5.3z" fill="currentColor" />
-        </svg>
-      </a>
-      <main className="max-w-2xl mx-auto px-4 py-6">
-        <div className="text-center mb-6">
-          <p className="text-base text-gray-500 dark:text-gray-400 tracking-wide">
-            {t('app.subtitle1')}<br className="sm:hidden" /> <span className="font-medium text-gray-700 dark:text-gray-200">{t('app.subtitle.tool')}</span> {t('app.subtitle2')}
-          </p>
-          <p className="text-sm text-gray-400 dark:text-gray-500 mt-1">{t('app.subtitle3')}</p>
+    <div className="min-h-screen bg-[#f8f7f5] text-[#10223b]">
+      <header className="relative overflow-hidden bg-[#071b33] text-white">
+        <div className="absolute inset-0 opacity-70" style={{background:'radial-gradient(circle at 76% 42%, #d2a15d 0%, #6e6b77 13%, #16324c 33%, #071b33 70%)'}} />
+        <div className="absolute inset-0 opacity-20" style={{backgroundImage:'radial-gradient(#fff 1px, transparent 1px)',backgroundSize:'44px 44px'}} />
+        <nav className="relative z-10 max-w-6xl mx-auto px-5 py-5 flex items-center justify-between">
+          <a href="#" className="font-serif text-xl tracking-wider text-[#f2d19c]">✦ SAJU STORY</a>
+          <a href="#birth-details" className="rounded-full bg-[#e6bc7c] px-5 py-2 text-sm font-semibold text-[#10223b]">Get My Reading →</a>
+        </nav>
+        <div className="relative z-10 max-w-6xl mx-auto px-5 pt-12 pb-24 sm:pt-20 sm:pb-32">
+          <p className="text-xs sm:text-sm tracking-[0.22em] uppercase text-[#e9c48c]">Ancient wisdom · Modern insight</p>
+          <h1 className="font-serif text-4xl sm:text-6xl leading-tight mt-5 max-w-2xl">Discover What Your Birth Date <span className="text-[#e9c48c]">Reveals About You</span></h1>
+          <p className="mt-5 max-w-xl text-lg text-slate-200 leading-relaxed">A personalised Saju reading to explore your personality, love, career, money and the chapters ahead.</p>
+          <p className="mt-7 text-sm text-[#e9c48c]">Personal insights · Clear explanations · Practical guidance</p>
         </div>
+      </header>
+      <main className="max-w-6xl mx-auto px-4 sm:px-6 pb-16">
+        <section id="birth-details" className="relative -mt-12 z-20 max-w-4xl mx-auto">
+          <div className="text-center mb-5">
+            <h2 className="font-serif text-3xl text-[#10223b]">Enter Your Birth Details</h2>
+            <p className="mt-2 text-sm text-slate-600">Start your personal reading. Birth time and location help make it more specific.</p>
+          </div>
         <BirthForm
           ref={birthFormRef}
           onSubmit={handleSubmit}
           externalState={externalFormState}
           onExternalStateConsumed={() => setExternalFormState(null)}
         />
-        <div className="flex justify-end mt-2">
+        <div className="hidden">
           <button
             type="button"
             onClick={() => setProfileModalOpen(true)}
@@ -82,10 +77,35 @@ export default function App() {
           </button>
         </div>
 
+        </section>
+        {!birthInput && <section className="py-16">
+          <p className="text-center text-xs tracking-[0.2em] text-[#ad7a38] uppercase">What you'll discover</p>
+          <h2 className="text-center font-serif text-3xl sm:text-4xl mt-3 mb-9">A Clear Guide to Your Life</h2>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+            {[
+              ['✦','Your Personality','Understand your strengths, habits and hidden potential.'],
+              ['♡','Love & Relationships','Explore how you connect and communicate.'],
+              ['$','Money & Success','Reflect on your choices and financial habits.'],
+              ['◇','Career & Purpose','Find work styles and environments that may suit you.'],
+              ['↗','Life Timeline','Explore the themes of different life chapters.'],
+              ['◷','Next 12 Months','Discover traditional themes for the year ahead.'],
+            ].map(([symbol,title,description])=><div key={title} className="rounded-2xl border border-[#e8e3dc] bg-white p-5 sm:p-7 shadow-sm">
+              <div className="mb-4 text-3xl text-[#bd914e]">{symbol}</div>
+              <h3 className="font-serif text-lg font-semibold">{title}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-slate-600">{description}</p>
+            </div>)}
+          </div>
+          <div className="mt-12 rounded-2xl bg-[#f0ebe4] p-7 sm:p-10">
+            <p className="text-xs tracking-widest uppercase text-[#ad7a38]">Sample report</p>
+            <h3 className="font-serif text-2xl mt-2">A Reading You Can Actually Understand</h3>
+            <p className="mt-3 text-slate-600 leading-relaxed max-w-2xl">Your report explains the traditional symbols behind your chart in everyday English, then offers questions and practical ideas to help you reflect. Every reading is based on your birth details.</p>
+            <p className="mt-3 text-xs text-slate-500">Saju is a traditional interpretation, not a scientific prediction of future events.</p>
+          </div>
+        </section>}
         {birthInput && (
           <>
             {/* Show the plain-English reading first; expert calculations remain available in separate tabs. */}
-            <div ref={resultsRef} className="flex items-center border-b border-gray-200 dark:border-gray-700 mt-6 mb-4 overflow-x-auto">
+            <div ref={resultsRef} className="flex items-center border-b border-gray-200 dark:border-gray-700 mt-10 mb-4 overflow-x-auto">
               <button
                 className={`px-2 sm:px-4 py-2 text-sm sm:text-base font-medium whitespace-nowrap border-b-2 transition-colors ${
                   tab === 'saju'
@@ -158,10 +178,11 @@ export default function App() {
           </>
         )}
 
-        <Guide />
+
       </main>
-      <footer className="text-center text-xs text-gray-400 dark:text-gray-500 py-6">
-        <p>&copy; 2026 Jang-Ho Hwang &middot; <a href="https://x.com/xrath" target="_blank" rel="noopener noreferrer" className="hover:text-gray-600 dark:hover:text-gray-300">@xrath</a> &middot; <a href="https://x.com/xrath/status/2022548658562937028" target="_blank" rel="noopener noreferrer" className="hover:text-gray-600 dark:hover:text-gray-300">{t('app.intro')}</a></p>
+      <footer className="text-center text-xs text-slate-500 bg-[#eeeae4] py-8 px-4">
+        <p>SAJU STORY · Traditional Saju insights for reflection, not guaranteed outcomes.</p>
+        <p className="mt-2">Calculation engine attribution: <a className="underline" href="https://github.com/rath/orrery" target="_blank" rel="noopener noreferrer">Orrery open-source project</a>.</p>
       </footer>
       <ProfileModal
         open={profileModalOpen}
