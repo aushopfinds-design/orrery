@@ -31,6 +31,21 @@ const ELEMENT_MEANING: Record<Element, string> = {
   Metal: 'standards, judgment and clear boundaries',
   Water: 'reflection, flexibility and gathering information',
 }
+const RELATIONSHIP_FOCUS: Record<string, string> = {
+  '子': 'whether each person needs time alone before talking',
+  '丑': 'how much daily routine and reassurance feels comfortable',
+  '寅': 'who sets the pace when something new begins',
+  '卯': 'how kindness and clear boundaries can exist together',
+  '辰': 'how decisions and practical duties are shared',
+  '巳': 'what should stay private and what needs discussion',
+  '午': 'how independence and attention are balanced',
+  '未': 'how to care for someone without taking over',
+  '申': 'when problem-solving helps and when listening matters more',
+  '酉': 'how to handle different personal standards without blame',
+  '戌': 'how trust is shown in everyday actions',
+  '亥': 'whether feelings are said aloud or left for someone to guess',
+}
+
 const TEN_GODS: Record<string, { title: string; lens: string; caution: string; step: string }> = {
   '比肩': { title: 'Independence', lens: 'making your own decisions and working beside equals', caution: 'trying to do everything yourself', step: 'decide where independence helps and where teamwork saves time' },
   '劫財': { title: 'Peers and competition', lens: 'learning through peers, speed and competition', caution: 'taking on pressure just to keep up', step: 'compare progress with your last attempt, not someone else\'s' },
@@ -134,6 +149,17 @@ export function buildEnglishReading(result: SajuResult, asOfYear = new Date().ge
   const monthGod = TEN_GODS[month.stemSipsin]
   const yearGod = TEN_GODS[year.stemSipsin]
   const hourGod = input.unknownTime ? null : TEN_GODS[hour.stemSipsin]
+  const relationshipQuestion = RELATIONSHIP_FOCUS[day.pillar.branch] ?? 'what each person needs to feel heard'
+  const wealthPositions = [
+    ['year', year.stemSipsin],
+    ['month', month.stemSipsin],
+    ...(input.unknownTime ? [] : [['hour', hour.stemSipsin]]),
+  ].filter((entry) => entry[1] === '正財' || entry[1] === '偏財').map(entry => entry[0])
+  const moneyTheme = wealthPositions.length
+    ? 'A traditional wealth-related symbol appears in the ' + wealthPositions.join(' and ')
+      + ' stem position' + (wealthPositions.length === 1 ? '' : 's')
+      + '. This does not predict income; use it to examine how you balance opportunity, budgets and follow-through.'
+    : 'The visible stems do not show a direct traditional wealth-related label in these positions. That does not mean poor finances or missed opportunities; the full chart is more complex than that label.'
   const fiveElementReading = 'Across the visible stems and branches, '
     + highest.join(' and ') + (highest.length === 1 ? ' appears' : ' appear')
     + ' most often (' + highest.map(e => e + ': ' + elements[e]).join(', ') + '). '
@@ -165,19 +191,18 @@ export function buildEnglishReading(result: SajuResult, asOfYear = new Date().ge
     {
       heading: '03 · Money and everyday choices',
       paragraphs: [
-        (monthGod ? 'The month stem brings the ' + monthGod.title.toLowerCase() + ' theme into your day-to-day setting. ' : '')
-          + 'For a money decision, try a real-world check: write down the price, the ongoing cost and what you would give up. '
-          + 'This is more useful than treating a chart as a promise of wealth.',
-        describeGod(year.stemSipsin, 'year'),
+        moneyTheme,
+        'Your month pillar is ' + month.pillar.ganzi + '. Its stem is traditionally described as '
+          + (monthGod?.title.toLowerCase() ?? month.stemSipsin)
+          + '. For a decision involving money, turn that theme into a concrete rule: compare the up-front cost, ongoing obligations and the real alternative.',
       ],
     },
     {
       heading: '04 · Relationships and communication',
       paragraphs: [
-        'With a ' + self.name + ' Day Master, one relationship question to explore is whether your natural approach '
-          + 'leaves enough space for another person to work differently. ' + self.caution,
-        'Try this instead: ' + self.practice + ' Ask the other person what support would actually help them. '
-          + 'Compatibility cannot be confirmed from one person\'s chart.',
+        'Your day branch is ' + day.pillar.branch + ' (part of ' + day.pillar.ganzi + '). In traditional Saju this is one place readers look when reflecting on close relationships. A useful question for this symbol is ' + relationshipQuestion + '.',
+        'Your ' + self.name + ' approach may show up in conversations too: ' + self.approach
+          + ' Try asking a partner or friend whether this matches their experience instead of assuming the chart knows how they feel. One chart cannot establish compatibility.',
       ],
     },
     {
@@ -196,10 +221,9 @@ export function buildEnglishReading(result: SajuResult, asOfYear = new Date().ge
     {
       heading: '06 · Three things to try now',
       paragraphs: [
-        '1. ' + self.practice,
-        '2. If ' + monthGod?.title.toLowerCase() + ' is an important theme in your work, '
-          + (monthGod?.step ?? 'try a small, measurable experiment') + '.',
-        '3. Review one relationship, money or career decision using actual evidence, your values and the people affected—not only this traditional reading.',
+        '1. For work: choose a small task where you can test the ' + (monthGod?.title.toLowerCase() ?? 'work') + ' theme without changing your whole career.',
+        '2. For relationships: have one conversation about ' + relationshipQuestion + '. Ask a real person, rather than guessing their answer.',
+        '3. For money: review a single monthly expense and record what would change if you kept, reduced or cancelled it. A symbol cannot replace actual figures.',
       ],
     },
   ]
@@ -213,6 +237,7 @@ export function buildEnglishReading(result: SajuResult, asOfYear = new Date().ge
     !input.timezone ? 'No birth time zone was provided, so the engine used Asia/Seoul. Re-enter the birth location for an overseas birth.' : '',
     !input.unknownTime && input.timezone && input.timezone !== 'Asia/Seoul' && input.longitude == null
       ? 'Birth longitude was missing. The calculation fell back to Seoul longitude. Re-enter the birthplace before relying on the hour pillar.' : '',
+    'During a fall-back DST overlap, the time resolver selects the earlier occurrence of a repeated clock time. Confirm the birth record if this applies.',
     'These themes belong to a traditional cultural interpretation. They are not scientifically validated personality tests, financial forecasts or guarantees of future events.',
   ].filter(Boolean)
 
