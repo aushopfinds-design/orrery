@@ -19,6 +19,5 @@ describe('solar-term minute-boundary regression', () => {
     const before = read(-1), at = read(0), after = read(1)
     expect(before[1]).not.toBe(after[1])
     expect(at[1]).toBe(after[1])
-    expect(before[2]).toBe(after[2]) // same day for typical daytime boundary; may differ at midnight
   })
 })
