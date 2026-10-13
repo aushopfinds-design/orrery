@@ -47,6 +47,25 @@ describe('English reading integration', () => {
     expect(report.periods.every(p => p.text.includes(p.pillar))).toBe(true)
   })
 
+  it('shows the calculated day and month symbols in the English personality explanation', () => {
+    const result = calculateSaju(base)
+    const report = buildEnglishReading(result, 2026)
+    const personality = report.sections[0].paragraphs.join(' ')
+    expect(personality).toContain(result.pillars[1].pillar.stem)
+    expect(personality).toContain(report.dayMaster)
+    expect(personality).toContain(result.pillars[2].pillar.stem)
+  })
+
+  it('connects each displayed decade to its own ten-god symbol', () => {
+    const result = calculateSaju(base)
+    const report = buildEnglishReading(result, 2026)
+    for (const period of report.periods) {
+      const cycle = result.daewoon.find(c => c.ganzi === period.pillar)
+      expect(cycle).toBeDefined()
+      expect(period.text).toContain(cycle!.stemSipsin)
+    }
+  })
+
   it('warns if an overseas birth chart has no longitude', () => {
     const report = buildEnglishReading(calculateSaju({
       year: 1993, month: 3, day: 12, hour: 12, minute: 0,
