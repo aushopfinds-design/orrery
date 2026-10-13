@@ -110,18 +110,21 @@ function getElements(result: SajuResult): Record<Element, number> {
 function getActivePeriods(result: SajuResult, asOfYear: number): ReadingPeriod[] {
   const cycles = result.daewoon
   if (!cycles.length) return []
-  let index = 0
+  let index = -1
   for (let i = 0; i < cycles.length; i++) {
     if (cycles[i].startDate.getUTCFullYear() <= asOfYear) index = i
   }
-  return cycles.slice(index, index + 3).map((cycle, i) => {
+  const firstIndex = Math.max(0, index)
+  return cycles.slice(firstIndex, firstIndex + 3).map((cycle, i) => {
     const start = cycle.startDate.getUTCFullYear()
     const god = TEN_GODS[cycle.stemSipsin]
     const accent = god?.title ?? 'Change and reflection'
     const focus = god?.lens ?? 'noticing which habits are still useful'
     const suggestion = god?.step ?? 'review what is working before changing direction'
     const transitions = [
-      'For the current chapter, examine where this theme is already visible in your choices.',
+      index < 0
+        ? 'This chapter has not started yet. Consider which habits might prepare you for its theme.'
+        : 'For the current chapter, examine where this theme is already visible in your choices.',
       'For the following chapter, compare the new theme with the habits you developed earlier.',
       'For the later chapter, consider what this theme would ask you to keep, release or learn.',
     ]
@@ -211,12 +214,12 @@ export function buildEnglishReading(result: SajuResult, asOfYear = new Date().ge
     {
       heading: '05 · The Side of You Others May Not See',
       paragraphs: [
-        'The year you were born adds a theme about '
+        'The year pillar adds a traditional theme about '
           + (yearGod?.title.toLowerCase() ?? 'your wider social world') + '. '
           + 'You can use it to reflect on the expectations around you, but it does not determine your family relationships.',
         input.unknownTime
           ? 'Your birth hour was not provided, so we have deliberately left the hour-pillar interpretation out. This reading is based on three pillars, and some details may change if the time is added.'
-          : 'Your birth time adds another possible theme: '
+          : 'Your hour pillar adds another possible theme: '
             + (hourGod?.title.toLowerCase() ?? 'long-term priorities')
             + '. Consider whether it matches what you hope to build over the coming years. It does not promise a particular outcome.',
       ],
