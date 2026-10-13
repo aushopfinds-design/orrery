@@ -76,11 +76,6 @@ export default function DaewoonTable({
   const sewoonScrollRef = useRef<HTMLDivElement>(null)
   const sewoonActiveRef = useRef<HTMLDivElement>(null)
 
-  // 사주 재계산 시 선택 초기화
-  useEffect(() => {
-    setSelectedIdx(activeIdx)
-  }, [daewoon])
-
   useEffect(() => {
     if (activeRef.current && scrollRef.current) {
       const container = scrollRef.current
