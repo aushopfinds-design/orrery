@@ -19,6 +19,7 @@ type Tab = 'saju' | 'ziwei' | 'natal' | 'reading'
 export default function App() {
   const { t } = useLocale()
   const [tab, setTab] = useState<Tab>('reading')
+  const [menuOpen, setMenuOpen] = useState(false)
   const [birthInput, setBirthInput] = useState<BirthInput | null>(null)
   const [profileModalOpen, setProfileModalOpen] = useState(false)
   const [externalFormState, setExternalFormState] = useState<SavedFormState | null>(null)
@@ -38,28 +39,35 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-[#061629] text-[#f7e8d0]">
-      <header className="relative overflow-hidden bg-[#061629] text-white">
-        <div className="pointer-events-none absolute inset-0 opacity-35" style={{background:'radial-gradient(circle at 88% 22%, #a67b45 0%, #142b47 25%, #071b33 62%)'}} />
-        <div className="pointer-events-none absolute inset-0 opacity-10" style={{backgroundImage:'radial-gradient(#f4d6a1 1px, transparent 1px)',backgroundSize:'48px 48px'}} />
-        <nav className="relative z-10 mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-3 sm:px-6 sm:py-5">
-          <a href="#" className="flex min-w-0 items-center gap-2.5 text-[#f2d19c]" aria-label="Destiny Code home">
-            <img src="/destiny-code-emblem.svg" alt="" className="h-11 w-11 shrink-0 sm:h-14 sm:w-14" />
-            <span className="min-w-0"><span className="block font-serif text-base tracking-[.08em] sm:text-2xl">DESTINY CODE</span><span className="block text-[9px] tracking-[.18em] sm:text-xs">YOUR LIFE. DECODED.</span></span>
+      <header className="relative overflow-hidden bg-[#03111f] text-white">
+        <div className="pointer-events-none absolute inset-0" style={{backgroundImage:'linear-gradient(100deg,rgba(2,12,24,.94) 12%,rgba(2,12,24,.75) 60%,rgba(7,30,50,.7)),url(/saju-moon-mountains.svg)',backgroundSize:'cover',backgroundPosition:'center'}} />
+        <div className="pointer-events-none absolute right-[-55px] top-24 h-60 w-60 rounded-full border border-[#b78b50]/20 sm:right-[10%]" />
+        <div className="pointer-events-none absolute right-2 top-32 h-40 w-40 rounded-full border border-[#b78b50]/20" />
+        <nav className="relative z-10 mx-auto flex max-w-6xl items-center justify-between gap-3 px-5 py-5 sm:px-6">
+          <a href="#" className="flex items-center gap-2 text-[#e9c48c]" aria-label="Destiny Code home">
+            <img src="/destiny-code-emblem.svg" alt="" className="h-14 w-14 shrink-0 sm:h-16 sm:w-16" />
+            <span><span className="block font-serif text-lg tracking-[.045em] sm:text-2xl">DESTINY CODE</span><span className="block text-[8px] tracking-[.21em] text-[#d8bb8c]">YOUR LIFE. DECODED.</span></span>
           </a>
-          <a href="#birth-details" className="shrink-0 rounded-full border border-[#c9a36a]/70 px-3 py-2 text-xs font-semibold text-[#f2d19c] sm:bg-[#e6bc7c] sm:px-5 sm:text-sm sm:text-[#10223b]">Start Reading →</a>
+          <button type="button" aria-label="Open menu" aria-expanded={menuOpen} onClick={() => setMenuOpen(v => !v)} className="flex h-11 w-11 items-center justify-center rounded-lg border border-[#a7814b]/30 text-2xl text-[#edc88e]">☰</button>
+          {menuOpen && <div className="absolute right-5 top-[78px] z-30 flex w-48 flex-col rounded-xl border border-[#a7814b]/50 bg-[#0b2037] p-3 shadow-2xl"><a className="p-3" href="#birth-details" onClick={() => setMenuOpen(false)}>Birth Details</a><a className="p-3" href="#discover" onClick={() => setMenuOpen(false)}>Discover</a></div>}
         </nav>
-        <div className="relative z-10 mx-auto max-w-6xl px-6 pb-14 pt-12 sm:px-6 sm:pb-28 sm:pt-16">
-          <p className="text-[10px] font-medium tracking-[.19em] text-[#e9c48c] sm:text-sm">ANCIENT WISDOM · MODERN INSIGHT</p>
-          <h1 className="mt-5 max-w-2xl font-serif text-[2.65rem] leading-[1.12] tracking-tight sm:mt-5 sm:text-6xl">Understand Yourself.<br/><span className="text-[#e9c48c]">Create a Brighter Tomorrow.</span></h1>
-          <p className="mt-6 max-w-lg text-[15px] leading-7 text-slate-200 sm:mt-5 sm:text-lg">Discover what your birth chart says about your personality, relationships and life path — in plain English.</p>
-          <p className="mt-4 text-xs text-[#e9c48c] sm:mt-7 sm:text-sm">SELF DISCOVERY  ✦  LOVE & RELATIONSHIPS  ✦  CAREER & MONEY</p>
+        <div className="relative z-10 mx-auto flex min-h-[590px] max-w-6xl flex-col justify-center px-7 pb-14 pt-10 sm:min-h-[570px] sm:px-10">
+          <p className="max-w-[230px] text-[11px] font-medium leading-5 tracking-[.26em] text-[#e7bc7e]">ANCIENT WISDOM.<br/>MODERN INSIGHT.</p>
+          <h1 className="mt-5 max-w-[460px] font-serif text-[2.9rem] leading-[1.1] tracking-tight text-[#fff9ed] sm:text-6xl">Understand<br/>Yourself.<br/>Create a <span className="text-[#e9bd7f]">Brighter Tomorrow.</span></h1>
+          <p className="mt-6 max-w-[370px] text-[15px] leading-7 text-slate-200">Discover your unique path with a personalized destiny report based on your birth date and time.</p>
+          <a href="#birth-details" className="mt-8 flex min-h-14 w-full max-w-[380px] items-center justify-center gap-3 rounded-xl bg-gradient-to-r from-[#f5d7a3] to-[#dda767] px-5 text-base font-semibold text-[#08192b] shadow-lg shadow-black/30">Get Your Personal Report <span aria-hidden="true">→</span></a>
+          <div className="mt-10 grid max-w-[380px] grid-cols-3 gap-3 text-center text-[#e9bd7f]">
+            <div><span className="block text-2xl">✦</span><span className="mt-2 block text-[10px] leading-4 tracking-wide">SELF<br/>DISCOVERY</span></div>
+            <div><span className="block text-2xl">♡</span><span className="mt-2 block text-[10px] leading-4 tracking-wide">LOVE &<br/>RELATIONSHIPS</span></div>
+            <div><span className="block text-2xl">♧</span><span className="mt-2 block text-[10px] leading-4 tracking-wide">CAREER &<br/>MONEY</span></div>
+          </div>
         </div>
       </header>
       <main className="mx-auto max-w-6xl px-4 pb-16 sm:px-6">
-        <section id="birth-details" className="relative z-20 mx-auto mt-1 max-w-3xl scroll-mt-3 sm:-mt-14">
-          <div className="mb-3 px-2 text-center sm:mb-5">
-            <h2 className="font-serif text-[1.85rem] text-[#f2d19c] sm:text-3xl">Start Your Personal Reading</h2>
-            <p className="mt-1 text-sm text-slate-300">Enter your birth details to begin.</p>
+        <section id="birth-details" className="relative z-20 mx-auto max-w-2xl scroll-mt-3 pt-12 sm:pt-16">
+          <div className="mb-6 px-2 sm:mb-8">
+            <h2 className="font-serif text-[2.1rem] text-[#f5e6ce] sm:text-4xl">Your Birth Details</h2>
+            <p className="mt-2 max-w-sm text-[15px] leading-6 text-slate-300">Enter your information to receive your personalized destiny report.</p>
           </div>
         <BirthForm
           ref={birthFormRef}
@@ -81,7 +89,7 @@ export default function App() {
         </div>
 
         </section>
-        {!birthInput && <section className="py-10 sm:py-16">
+        {!birthInput && <section id="discover" className="py-10 sm:py-16">
           <p className="text-center text-xs tracking-[0.2em] text-[#e9c48c] uppercase">What you'll discover</p>
           <h2 className="text-center font-serif text-3xl text-[#f7e8d0] sm:text-4xl mt-3 mb-9">A Clear Guide to Your Life</h2>
           <div className="grid grid-cols-1 min-[420px]:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
@@ -108,7 +116,7 @@ export default function App() {
         {birthInput && (
           <>
             {/* Show the plain-English reading first; expert calculations remain available in separate tabs. */}
-            <div ref={resultsRef} className="flex items-center border-b border-gray-200 dark:border-gray-700 mt-10 mb-4 overflow-x-auto">
+            <div ref={resultsRef} className="flex items-center gap-2 border-b border-[#b58b52]/40 mt-10 mb-5 overflow-x-auto pb-2">
               <button
                 className={`px-2 sm:px-4 py-2 text-sm sm:text-base font-medium whitespace-nowrap border-b-2 transition-colors ${
                   tab === 'saju'
