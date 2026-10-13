@@ -260,7 +260,7 @@ export function buildEnglishReading(result: SajuResult, asOfYear = new Date().ge
     return {
       period: name + ' ' + asOfYear,
       pillar: monthPillar,
-      headline: theme.headline,
+      headline: monthlySymbol ? monthlySymbol.title + ' · ' + theme.headline : theme.headline,
       text: 'On the 15th of ' + name + ', the calculated solar-term month pillar is ' + monthPillar
         + (monthlySymbol ? ' (' + monthlySymbol.title + ')' : '') + '. In Saju this symbol invites reflection on '
         + (monthlySymbol?.lens ?? 'how your current priorities fit your circumstances') + '. '
@@ -277,6 +277,7 @@ export function buildEnglishReading(result: SajuResult, asOfYear = new Date().ge
       ? 'Birth longitude was missing. The calculation fell back to Seoul longitude. Re-enter the birthplace before relying on the hour pillar.' : '',
     'During a fall-back DST overlap, the time resolver selects the earlier occurrence of a repeated clock time. Confirm the birth record if this applies.',
     'Each monthly chapter uses the solar-term month pillar calculated for the 15th of that calendar month. It is not a full-month event forecast; solar-term boundaries can change the pillar during the month.',
+    'Monthly headlines combine a calculated traditional symbol with a guided exercise. A matching headline does not mean two people will experience the same events.',
     'These themes belong to a traditional cultural interpretation. They are not scientifically validated personality tests, financial forecasts or guarantees of future events.',
   ].filter(Boolean)
 
