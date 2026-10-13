@@ -17,7 +17,6 @@ import {
   parseCoordinateDraft,
   stepCoordinate,
 } from '../utils/coordinate-input.ts'
-import logo from '../assets/icon-512.png'
 
 export interface BirthFormHandle {
   getCurrentState(): SavedFormState
@@ -281,19 +280,9 @@ const BirthForm = forwardRef<BirthFormHandle, Props>(function BirthForm({ onSubm
   }
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-700 p-5 shadow-sm dark:shadow-none">
-      <div className="flex flex-col items-center md:flex-row md:items-start gap-5">
-        {/* 로고 */}
-        <div className="flex flex-col items-center shrink-0">
-          <img
-            src={logo}
-            alt="혼천의"
-            className="w-48 md:w-64"
-          />
-          <span className="text-base text-gray-400 dark:text-gray-500 font-hanja -mt-1">혼천의(渾天儀)</span>
-        </div>
-
-        {/* 폼 필드 전체 */}
+    <form onSubmit={handleSubmit} className="bg-white dark:bg-gray-900 rounded-2xl border border-stone-200 dark:border-gray-700 p-5 sm:p-7 shadow-xl shadow-slate-900/10">
+      <div className="w-full">
+        {/* Compact birth form for the English-first experience */}
         <div className="w-full min-w-0">
           {/* 생년월일 */}
           <fieldset>
