@@ -33,24 +33,24 @@ export default function ReadingView({ input }: Props) {
       <div className="px-1 pt-2">
         <h2 className="font-serif text-3xl text-[#f5e6ce] sm:text-4xl">Your Destiny Report</h2>
         <p className="mt-2 text-sm leading-6 text-slate-300">A personalized guide to your life's journey and potential.</p>
-        <nav aria-label="Report sections" className="mt-5 grid grid-cols-5 gap-1 rounded-xl bg-[#0b2037] p-2 text-center">
-          {[['♙','Overview','#report-overview'],['♡','Love','#report-love'],['♧','Career','#report-career'],['◈','Money','#report-money'],['✧','Life Path','#report-timeline']].map(([symbol,label,href]) => <a key={label} href={href} className="flex min-h-16 flex-col items-center justify-center rounded-lg text-[#eac18a] hover:bg-[#e9bf81]/15 focus:bg-[#e9bf81]/20"><span className="text-xl">{symbol}</span><span className="mt-1 text-[10px] text-[#f5e6ce]">{label}</span></a>)}
+        <nav aria-label="Report sections" className="mt-5 grid grid-cols-5 gap-0.5 sm:gap-1 rounded-xl bg-[#0b2037] p-2 text-center">
+          {[['♙','Overview','#report-overview'],['♡','Love','#report-love'],['♧','Career','#report-career'],['◈','Money','#report-money'],['✧','Life Path','#report-timeline']].map(([symbol,label,href]) => <a key={label} href={href} className="flex min-h-16 flex-col items-center justify-center rounded-lg text-[#eac18a] hover:bg-[#e9bf81]/15 focus:bg-[#e9bf81]/20"><span className="text-xl">{symbol}</span><span className="mt-1 text-[9px] leading-tight sm:text-[10px] text-[#f5e6ce]">{label}</span></a>)}
         </nav>
       </div>
       <header id="report-overview" className="scroll-mt-5 rounded-2xl bg-[#0b2037] border border-[#a88353]/70 p-5 sm:p-9 shadow-sm">
-        <p className="text-xs uppercase tracking-[0.22em] font-semibold text-amber-700 dark:text-amber-400 mb-2">Personal Birth-Chart Reading · English</p>
+        <p className="text-xs uppercase tracking-[0.22em] font-semibold text-[#f1c989] mb-2">Personal Birth-Chart Reading · English</p>
         <h2 className="text-2xl sm:text-3xl font-semibold leading-tight text-[#f5e6ce]">{report.headline}</h2>
         <p className="mt-3 text-slate-200 leading-relaxed">{report.subtitle}</p>
-        <p className="mt-4 text-xs text-gray-500 dark:text-gray-400">{report.birthSummary}</p>
-        <div className="mt-5 rounded-xl bg-amber-50 dark:bg-amber-950/20 p-4"><p className="text-sm font-semibold text-amber-900 dark:text-amber-200">Start with your story</p><p className="mt-1 text-sm leading-6 text-slate-200">Explore your personality, relationships, work, money and the changing themes of your life below. You do not need to understand traditional Saju terms to enjoy this reading.</p></div>
-        <details className="mt-4 rounded-xl border border-stone-200 dark:border-gray-700 p-3"><summary className="cursor-pointer text-sm font-medium text-slate-200">See my traditional birth chart (optional)</summary><div className="mt-3 flex flex-wrap gap-2" aria-label="Calculated four pillars">
+        <p className="mt-4 text-xs text-slate-300">{report.birthSummary}</p>
+        <div className="mt-5 rounded-xl bg-[#193149] border border-[#9f8054]/60 p-4"><p className="text-sm font-semibold text-[#f4d19b]">Start with your story</p><p className="mt-1 text-sm leading-6 text-slate-200">Explore your personality, relationships, work, money and the changing themes of your life below. You do not need to understand traditional Saju terms to enjoy this reading.</p></div>
+        <details className="mt-4 rounded-xl border border-[#8c765b]/70 p-3"><summary className="cursor-pointer text-sm font-medium text-slate-200">See my traditional birth chart (optional)</summary><div className="mt-3 flex flex-wrap gap-2" aria-label="Calculated four pillars">
           {report.pillarSummary.map(item => (
             <span key={item} className="text-sm rounded-lg px-3 py-2 bg-stone-100 text-stone-800 dark:bg-gray-800 dark:text-gray-200">{item}</span>
           ))}
         </div>
         </details>
-        <div className="mt-5 flex items-center justify-end flex-wrap gap-2 border-t border-stone-200 dark:border-gray-800 pt-4">
-          <span className="text-sm font-medium text-gray-700 dark:text-gray-200">Your Day Master: {report.dayMaster}</span>
+        <div className="mt-5 flex items-center justify-end flex-wrap gap-2 border-t border-[#8c765b]/70 pt-4">
+          <span className="text-sm font-medium text-slate-200">Your Day Master: {report.dayMaster}</span>
           <CopyButton label="Copy this report" getText={() => report.fullText} />
         </div>
       </header>
