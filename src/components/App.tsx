@@ -37,8 +37,8 @@ export default function App() {
   }, [])
 
   return (
-    <div className="min-h-screen bg-[#f8f7f5] text-[#10223b]">
-      <header className="relative overflow-hidden bg-[#071b33] text-white">
+    <div className="min-h-screen bg-[#061629] text-[#f7e8d0]">
+      <header className="relative overflow-hidden bg-[#061629] text-white">
         <div className="pointer-events-none absolute inset-0 opacity-35" style={{background:'radial-gradient(circle at 88% 22%, #a67b45 0%, #142b47 25%, #071b33 62%)'}} />
         <div className="pointer-events-none absolute inset-0 opacity-10" style={{backgroundImage:'radial-gradient(#f4d6a1 1px, transparent 1px)',backgroundSize:'48px 48px'}} />
         <nav className="relative z-10 mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-3 sm:px-6 sm:py-5">
@@ -48,18 +48,18 @@ export default function App() {
           </a>
           <a href="#birth-details" className="shrink-0 rounded-full border border-[#c9a36a]/70 px-3 py-2 text-xs font-semibold text-[#f2d19c] sm:bg-[#e6bc7c] sm:px-5 sm:text-sm sm:text-[#10223b]">Start Reading →</a>
         </nav>
-        <div className="relative z-10 mx-auto max-w-6xl px-5 pb-20 pt-6 sm:px-6 sm:pb-28 sm:pt-16">
+        <div className="relative z-10 mx-auto max-w-6xl px-6 pb-14 pt-12 sm:px-6 sm:pb-28 sm:pt-16">
           <p className="text-[10px] font-medium tracking-[.19em] text-[#e9c48c] sm:text-sm">ANCIENT WISDOM · MODERN INSIGHT</p>
-          <h1 className="mt-3 max-w-xl font-serif text-[2.25rem] leading-[1.14] tracking-tight sm:mt-5 sm:text-6xl">Your Life. <span className="text-[#e9c48c]">Decoded.</span></h1>
-          <p className="mt-3 max-w-lg text-[15px] leading-6 text-slate-200 sm:mt-5 sm:text-lg">Discover what your birth chart says about your personality, relationships and life path — in plain English.</p>
-          <p className="mt-4 text-xs text-[#e9c48c] sm:mt-7 sm:text-sm">Personal insights · Clear explanations · Practical guidance</p>
+          <h1 className="mt-5 max-w-2xl font-serif text-[2.65rem] leading-[1.12] tracking-tight sm:mt-5 sm:text-6xl">Understand Yourself.<br/><span className="text-[#e9c48c]">Create a Brighter Tomorrow.</span></h1>
+          <p className="mt-6 max-w-lg text-[15px] leading-7 text-slate-200 sm:mt-5 sm:text-lg">Discover what your birth chart says about your personality, relationships and life path — in plain English.</p>
+          <p className="mt-4 text-xs text-[#e9c48c] sm:mt-7 sm:text-sm">SELF DISCOVERY  ✦  LOVE & RELATIONSHIPS  ✦  CAREER & MONEY</p>
         </div>
       </header>
-      <main className="mx-auto max-w-6xl px-3 pb-16 sm:px-6">
-        <section id="birth-details" className="relative z-20 mx-auto -mt-12 max-w-4xl scroll-mt-3 sm:-mt-14">
+      <main className="mx-auto max-w-6xl px-4 pb-16 sm:px-6">
+        <section id="birth-details" className="relative z-20 mx-auto mt-1 max-w-3xl scroll-mt-3 sm:-mt-14">
           <div className="mb-3 px-2 text-center sm:mb-5">
-            <h2 className="font-serif text-[1.65rem] text-[#10223b] sm:text-3xl">Start Your Personal Reading</h2>
-            <p className="mt-1 text-sm text-slate-600">Enter your birth details to begin.</p>
+            <h2 className="font-serif text-[1.85rem] text-[#f2d19c] sm:text-3xl">Start Your Personal Reading</h2>
+            <p className="mt-1 text-sm text-slate-300">Enter your birth details to begin.</p>
           </div>
         <BirthForm
           ref={birthFormRef}
@@ -82,8 +82,8 @@ export default function App() {
 
         </section>
         {!birthInput && <section className="py-10 sm:py-16">
-          <p className="text-center text-xs tracking-[0.2em] text-[#ad7a38] uppercase">What you'll discover</p>
-          <h2 className="text-center font-serif text-3xl sm:text-4xl mt-3 mb-9">A Clear Guide to Your Life</h2>
+          <p className="text-center text-xs tracking-[0.2em] text-[#e9c48c] uppercase">What you'll discover</p>
+          <h2 className="text-center font-serif text-3xl text-[#f7e8d0] sm:text-4xl mt-3 mb-9">A Clear Guide to Your Life</h2>
           <div className="grid grid-cols-1 min-[420px]:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
             {[
               ['✦','Your Personality','Understand your strengths, habits and hidden potential.'],
@@ -92,17 +92,17 @@ export default function App() {
               ['◇','Career & Purpose','Find work styles and environments that may suit you.'],
               ['↗','Life Timeline','Explore the themes of different life chapters.'],
               ['◷','Next 12 Months','Discover traditional themes for the year ahead.'],
-            ].map(([symbol,title,description])=><div key={title} className="rounded-2xl border border-[#e8e3dc] bg-white overflow-hidden shadow-sm">
+            ].map(([symbol,title,description])=><div key={title} className="rounded-2xl border border-[#967244]/55 bg-[#0b2037] overflow-hidden shadow-sm">
               <div className="h-16 sm:h-24 relative overflow-hidden bg-[#0b2741]" style={{backgroundImage:"linear-gradient(125deg, rgba(7,27,51,.3), rgba(211,161,95,.1)), url(/saju-moon-mountains.svg)",backgroundSize:"cover",backgroundPosition: title === "Love & Relationships" ? "75% 30%" : title === "Life Timeline" ? "35% 60%" : "center"}}><div className="absolute bottom-2 left-3 rounded-full bg-white/90 px-3 py-1 text-xl text-[#ad7a38]">{symbol}</div></div><div className="p-4 sm:p-6">
-              <h3 className="font-serif text-lg font-semibold">{title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-slate-600">{description}</p></div>
+              <h3 className="font-serif text-lg font-semibold text-[#f3d49d]">{title}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-slate-200">{description}</p></div>
             </div>)}
           </div>
-          <div className="mt-12 rounded-2xl bg-[#f0ebe4] p-7 sm:p-10">
-            <p className="text-xs tracking-widest uppercase text-[#ad7a38]">Sample report</p>
-            <h3 className="font-serif text-2xl mt-2">A Reading You Can Actually Understand</h3>
-            <p className="mt-3 text-slate-600 leading-relaxed max-w-2xl">Your report explains the traditional symbols behind your chart in everyday English, then offers questions and practical ideas to help you reflect. Every reading is based on your birth details.</p>
-            <p className="mt-3 text-xs text-slate-500">Inspired by traditional Korean birth-chart interpretation, not a scientific prediction of future events.</p>
+          <div className="mt-12 rounded-2xl border border-[#967244]/60 bg-[#0b2037] p-7 sm:p-10">
+            <p className="text-xs tracking-widest uppercase text-[#e9c48c]">Sample report</p>
+            <h3 className="font-serif text-2xl mt-2 text-[#f7e8d0]">A Reading You Can Actually Understand</h3>
+            <p className="mt-3 text-slate-200 leading-relaxed max-w-2xl">Your report explains the traditional symbols behind your chart in everyday English, then offers questions and practical ideas to help you reflect. Every reading is based on your birth details.</p>
+            <p className="mt-3 text-xs text-slate-400">Inspired by traditional Korean birth-chart interpretation, not a scientific prediction of future events.</p>
           </div>
         </section>}
         {birthInput && (
@@ -183,7 +183,7 @@ export default function App() {
 
 
       </main>
-      <footer className="text-center text-xs text-slate-500 bg-[#eeeae4] py-8 px-4">
+      <footer className="text-center text-xs text-slate-300 bg-[#04101e] py-8 px-4">
         <p>DESTINY CODE · Traditional Saju insights for reflection, not guaranteed outcomes.</p>
         <p className="mt-2">Calculation engine attribution: <a className="underline" href="https://github.com/rath/orrery" target="_blank" rel="noopener noreferrer">Orrery open-source project</a>.</p>
       </footer>
