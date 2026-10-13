@@ -94,7 +94,10 @@ function getElements(result: SajuResult): Record<Element, number> {
 function getActivePeriods(result: SajuResult, asOfYear: number): ReadingPeriod[] {
   const cycles = result.daewoon
   if (!cycles.length) return []
-  const index = Math.max(0, cycles.findLastIndex(x => x.startDate.getUTCFullYear() <= asOfYear))
+  let index = 0
+  for (let i = 0; i < cycles.length; i++) {
+    if (cycles[i].startDate.getUTCFullYear() <= asOfYear) index = i
+  }
   return cycles.slice(index, index + 3).map((cycle, i) => {
     const start = cycle.startDate.getUTCFullYear()
     const god = TEN_GODS[cycle.stemSipsin]
