@@ -7,7 +7,8 @@ const de: Record<string, string> = {
   'app.profileManage': 'Profile verwalten',
   'app.tab.saju': 'Saju (四柱八字)',
   'app.tab.ziwei': 'Zi Wei Dou Shu (紫微斗数)',
-  'app.tab.natal': 'Geburtshoroskop',
+  'app.tab.natal': 'Geburtshoroskop',  'app.tab.reading': 'Englischer Bericht',
+
   'app.copyAll': 'Für KI-Deutung',
   'app.copyAllSub': 'Alles kopieren',
   'app.intro': 'Info',
