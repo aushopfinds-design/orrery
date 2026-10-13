@@ -120,15 +120,16 @@ function getActivePeriods(result: SajuResult, asOfYear: number): ReadingPeriod[]
     const focus = god?.lens ?? 'noticing which habits are still useful'
     const suggestion = god?.step ?? 'review what is working before changing direction'
     const transitions = [
-      'Use this period to review what has already become part of your everyday life.',
-      'The next period offers a different question to think through.',
-      'Farther ahead, look at what you want to protect or build on.',
+      'For the current chapter, examine where this theme is already visible in your choices.',
+      'For the following chapter, compare the new theme with the habits you developed earlier.',
+      'For the later chapter, consider what this theme would ask you to keep, release or learn.',
     ]
     return {
       period: start + '–' + (start + 9),
       pillar: cycle.ganzi,
       headline: accent,
-      text: transitions[i] + ' The ten-year cycle ' + cycle.ganzi + ' highlights ' + focus + '. A grounded experiment is to ' + suggestion
+      text: transitions[i] + ' The ten-year cycle ' + cycle.ganzi + ' carries the ' + cycle.stemSipsin
+        + ' symbol (' + accent + '), associated here with ' + focus + '. A grounded experiment is to ' + suggestion
         + '. This is a theme to reflect on, not a prediction that an event will occur.',
     }
   })
