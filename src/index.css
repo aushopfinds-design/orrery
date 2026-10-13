@@ -96,4 +96,7 @@ dialog[open] { border: none; }
   .printable-reading nav,
   .printable-reading button,
   .printable-reading aside { display: none !important; }
+  .printable-reading details:not([open]) > :not(summary) { display: none !important; }
+  .printable-reading details > summary { display: none !important; }
+  .printable-reading details { display: none !important; }
 }
