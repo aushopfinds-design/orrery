@@ -161,6 +161,19 @@ describe('English reading quality smoke tests: 20 distinct birth profiles', () =
     expect(new Set(personality).size).toBeGreaterThanOrEqual(10)
   })
 
+  it('provides twelve individually grounded monthly readings for every profile', () => {
+    for (const reading of readings) {
+      expect(reading.monthly).toHaveLength(12)
+      expect(reading.monthly.every(m => m.pillar.length === 2 && m.text.includes(m.pillar))).toBe(true)
+      expect(new Set(reading.monthly.map(m => m.pillar)).size).toBeGreaterThanOrEqual(10)
+    }
+  })
+
+  it('does not reuse the same twelve monthly interpretations across all profiles', () => {
+    const signatures = readings.map(r => r.monthly.map(m => m.headline + ' ' + m.text).join(' '))
+    expect(new Set(signatures).size).toBeGreaterThanOrEqual(10)
+  })
+
   it('never invents an hour pillar when birth time is unknown', () => {
     for (const reading of readings) {
       expect(reading.pillarSummary[3]).toContain('Unknown')
