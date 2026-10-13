@@ -24,7 +24,7 @@ export default function ReadingView({ input }: Props) {
             <span key={item} className="text-sm rounded-lg px-3 py-2 bg-stone-100 text-stone-800 dark:bg-gray-800 dark:text-gray-200">{item}</span>
           ))}
         </div>
-        </div></details>
+        </details>
         <div className="mt-5 flex items-center justify-end flex-wrap gap-2 border-t border-stone-200 dark:border-gray-800 pt-4">
           <span className="text-sm font-medium text-gray-700 dark:text-gray-200">Your Day Master: {report.dayMaster}</span>
           <CopyButton label="Copy this report" getText={() => report.fullText} />
