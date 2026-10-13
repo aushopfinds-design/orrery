@@ -90,9 +90,8 @@ function formatDate(input: BirthInput): string {
 function describeGod(god: string, place: string): string {
   const info = TEN_GODS[god]
   if (!info) return 'This part of the chart is best explored alongside the other pillars rather than on its own.'
-  return 'In the ' + place + ' pillar, the traditional ' + info.title.toLowerCase()
-    + ' theme points toward ' + info.lens + '. The useful question is whether you are currently '
-    + info.caution + '. One practical response is to ' + info.step + '.'
+  return 'A symbol connected with your ' + place + ' of birth highlights ' + info.lens + '. The possible downside is '
+    + info.caution + '. A useful next step is to ' + info.step + '.'
 }
 
 function getElements(result: SajuResult): Record<Element, number> {
@@ -128,8 +127,7 @@ function getActivePeriods(result: SajuResult, asOfYear: number): ReadingPeriod[]
       period: start + '–' + (start + 9),
       pillar: cycle.ganzi,
       headline: accent,
-      text: transitions[i] + ' In this traditional cycle, ' + cycle.ganzi
-        + ' is associated here with ' + focus + '. A grounded experiment is to ' + suggestion
+      text: transitions[i] + ' In this traditional cycle, the main theme is ' + focus + '. A grounded experiment is to ' + suggestion
         + '. This is a theme to reflect on, not a prediction that an event will occur.',
     }
   })
@@ -156,10 +154,9 @@ export function buildEnglishReading(result: SajuResult, asOfYear = new Date().ge
     ...(input.unknownTime ? [] : [['hour', hour.stemSipsin]]),
   ].filter((entry) => entry[1] === '正財' || entry[1] === '偏財').map(entry => entry[0])
   const moneyTheme = wealthPositions.length
-    ? 'A traditional wealth-related symbol appears in the ' + wealthPositions.join(' and ')
-      + ' stem position' + (wealthPositions.length === 1 ? '' : 's')
-      + '. This does not predict income; use it to examine how you balance opportunity, budgets and follow-through.'
-    : 'The visible stems do not show a direct traditional wealth-related label in these positions. That does not mean poor finances or missed opportunities; the full chart is more complex than that label.'
+    ? 'Your chart includes a traditional money-related symbol connected with your ' + wealthPositions.join(' and ')
+      + ' birth information. This is not a prediction of wealth. It is an invitation to look at how you balance opportunity, budgets and follow-through.'
+    : 'A particular traditional money symbol does not appear in the main positions checked here. That says nothing reliable about whether you will be wealthy. Your financial choices and circumstances matter far more than a missing symbol.'
   const fiveElementReading = 'Across the visible stems and branches, '
     + highest.join(' and ') + (highest.length === 1 ? ' appears' : ' appear')
     + ' most often (' + highest.map(e => e + ': ' + elements[e]).join(', ') + '). '
@@ -170,17 +167,16 @@ export function buildEnglishReading(result: SajuResult, asOfYear = new Date().ge
 
   const sections: ReadingSection[] = [
     {
-      heading: '01 · Your starting point',
+      heading: '01 · Who You Really Are',
       paragraphs: [
-        'Your Day Master is ' + self.name + ' (' + day.pillar.stem + '). Saju uses the heavenly stem of your day pillar as a starting symbol for how you approach life. '
+        'Your birth date is linked to the ' + self.name + ' symbol in traditional Saju. It describes one possible way you approach challenges and relationships. '
           + self.approach + ' This is a lens for reflection, not a fixed personality label.',
-        'The day pillar is ' + day.pillar.ganzi + ' and the month pillar is ' + month.pillar.ganzi
-          + '. That pairing is why this reading uses your personal approach alongside your work-and-environment theme rather than giving everyone born in the same year the same story.',
+        'This reading combines the symbol for your birth day with the one for your birth month. The first helps frame your personal style; the second adds a theme about work, routines and the environment around you. That combination is more personal than a reading based only on your birth year.',
         fiveElementReading,
       ],
     },
     {
-      heading: '02 · Work and direction',
+      heading: '02 · Career: Where You Can Thrive',
       paragraphs: [
         describeGod(month.stemSipsin, 'month'),
         'Your practical strength to test is this: ' + self.practice
@@ -189,37 +185,37 @@ export function buildEnglishReading(result: SajuResult, asOfYear = new Date().ge
       ],
     },
     {
-      heading: '03 · Money and everyday choices',
+      heading: '03 · Money: Your Habits and Opportunities',
       paragraphs: [
         moneyTheme,
-        'Your month pillar is ' + month.pillar.ganzi + '. Its stem is traditionally described as '
-          + (monthGod?.title.toLowerCase() ?? month.stemSipsin)
-          + '. For a decision involving money, turn that theme into a concrete rule: compare the up-front cost, ongoing obligations and the real alternative.',
+        'The symbol connected with your birth month emphasizes '
+          + (monthGod?.title.toLowerCase() ?? 'your everyday choices')
+          + '. When considering a purchase, business idea or career change, compare the up-front cost, ongoing obligations and what you would give up. This is a practical decision tool, not a forecast of profit.',
       ],
     },
     {
-      heading: '04 · Relationships and communication',
+      heading: '04 · Love: How You Connect With Others',
       paragraphs: [
-        'Your day branch is ' + day.pillar.branch + ' (part of ' + day.pillar.ganzi + '). In traditional Saju this is one place readers look when reflecting on close relationships. A useful question for this symbol is ' + relationshipQuestion + '.',
-        'Your ' + self.name + ' approach may show up in conversations too: ' + self.approach
-          + ' Try asking a partner or friend whether this matches their experience instead of assuming the chart knows how they feel. One chart cannot establish compatibility.',
+        'The relationship symbol associated with your birth day highlights a question worth exploring: ' + relationshipQuestion + '. Think about how this shows up when you disagree, need reassurance or want more personal space.',
+        'Your personal style may shape the way you communicate: ' + self.approach
+          + ' If that feels familiar, try explaining this need directly to someone close to you. Your chart cannot tell you what another person thinks or guarantee romantic compatibility.',
       ],
     },
     {
-      heading: '05 · What other people may see',
+      heading: '05 · The Side of You Others May Not See',
       paragraphs: [
-        'The year stem is ' + year.pillar.stem + ' and its traditional relationship to your Day Master is '
-          + (yearGod?.title.toLowerCase() ?? year.stemSipsin) + '. '
-          + 'In Saju, the year pillar is often used for the wider background around a person, not a verdict about their family.',
+        'The symbol associated with your birth year brings in the theme of '
+          + (yearGod?.title.toLowerCase() ?? 'your wider social world') + '. '
+          + 'You can use it to reflect on the expectations around you, but it does not determine your family relationships.',
         input.unknownTime
           ? 'Your birth hour was not provided, so we have deliberately left the hour-pillar interpretation out. This reading is based on three pillars, and some details may change if the time is added.'
-          : 'The hour pillar is ' + hour.pillar.ganzi + '. Its stem carries a '
-            + (hourGod?.title.toLowerCase() ?? hour.stemSipsin)
-            + ' theme. You can use it as a prompt for your longer-term priorities, not a promise about later life.',
+          : 'Your recorded birth time adds a theme of '
+            + (hourGod?.title.toLowerCase() ?? 'long-term priorities')
+            + '. Consider whether it matches what you hope to build over the coming years. It does not promise a particular outcome.',
       ],
     },
     {
-      heading: '06 · Three things to try now',
+      heading: '06 · Your Personal Action Plan',
       paragraphs: [
         '1. For work: choose a small task where you can test the ' + (monthGod?.title.toLowerCase() ?? 'work') + ' theme without changing your whole career.',
         '2. For relationships: have one conversation about ' + relationshipQuestion + '. Ask a real person, rather than guessing their answer.',
@@ -250,12 +246,12 @@ export function buildEnglishReading(result: SajuResult, asOfYear = new Date().ge
     'Day: ' + day.pillar.ganzi,
     'Hour: ' + (input.unknownTime ? 'Unknown' : hour.pillar.ganzi),
   ]
-  const headline = 'Your Saju, explained in everyday English'
-  const subtitle = 'A chart-based reflection on your strengths, choices, relationships and next chapters.'
+  const headline = 'Your Life Story, Through the Lens of Saju'
+  const subtitle = 'Discover what your traditional birth chart suggests about your personality, love, work, money and the chapters ahead.'
   const fullText = [
     headline, subtitle, birthSummary, pillarSummary.join(' · '),
     ...sections.flatMap(x => [x.heading, ...x.paragraphs]),
-    '07 · Your ten-year chapters',
+    '07 · Your Life Timeline',
     ...periods.map(p => p.period + ' (' + p.pillar + ') — ' + p.headline + ': ' + p.text),
     'How to read this report', ...caveats,
   ].join('\n\n')
