@@ -156,24 +156,23 @@ const BirthForm = forwardRef<BirthFormHandle, Props>(function BirthForm({ onSubm
     }),
   }))
 
-  useEffect(() => {
-    setTimezoneError(null)
-  }, [latitude, longitude])
-
   function syncCoordinates(nextLatitude: number, nextLongitude: number) {
     setLatitude(nextLatitude)
     setLongitude(nextLongitude)
+    setTimezoneError(null)
     setLatitudeInput(formatCoordinate(nextLatitude))
     setLongitudeInput(formatCoordinate(nextLongitude))
   }
 
   function applyLatitude(nextLatitude: number) {
     setLatitude(nextLatitude)
+    setTimezoneError(null)
     setLatitudeInput(formatCoordinate(nextLatitude))
   }
 
   function applyLongitude(nextLongitude: number) {
     setLongitude(nextLongitude)
+    setTimezoneError(null)
     setLongitudeInput(formatCoordinate(nextLongitude))
   }
 
