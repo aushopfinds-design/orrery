@@ -10,10 +10,12 @@ interface Props {
 
 export default function ReadingView({ input }: Props) {
   const report = useMemo(() => buildEnglishReading(calculateSaju(input)), [input])
+  const issueDate = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })
+  const reportId = `SS-${input.year}${String(input.month).padStart(2, '0')}${String(input.day).padStart(2, '0')}-${Math.abs(Math.round(input.longitude * 1000)).toString(36).toUpperCase()}`
 
   return (
-    <article lang="en" aria-label="Personal Saju reading" className="space-y-5 pb-8">
-      <header className="rounded-2xl bg-white dark:bg-gray-900 border border-stone-200 dark:border-gray-800 p-5 sm:p-7 shadow-sm">
+    <article lang="en" aria-label="Personal Saju reading" className="space-y-8 pb-8 text-[#14243a]">\n      <div className="relative overflow-hidden rounded-3xl bg-[#071b33] text-white border-2 border-[#c9a05e] px-6 py-12 sm:py-20 text-center shadow-2xl" style={{backgroundImage:"linear-gradient(180deg,rgba(4,17,33,.1),#071b33),url(/saju-moon-mountains.svg)",backgroundPosition:"center",backgroundSize:"cover"}}>\n        <div className="absolute inset-3 rounded-2xl border border-[#e8c27d]/70 pointer-events-none" />\n        <p className="relative text-xs tracking-[.3em] text-[#f0ce90]">✦ SAJU STORY ✦</p>\n        <p className="relative mt-5 text-sm tracking-widest text-[#f0ce90]">PERSONAL LIFE READING</p>\n        <h1 className="relative mt-4 font-serif text-4xl sm:text-6xl font-semibold">Your Life, Your Story</h1>\n        <p className="relative mt-4 text-sm sm:text-base text-slate-200">A personal journey through your strengths, relationships and the chapters ahead.</p>\n        <div className="relative mt-10 inline-block rounded-full border border-[#d8b37c] px-5 py-2 text-sm text-[#f0ce90]">{report.birthSummary}</div>\n      </div>
+      <header className="rounded-2xl bg-[#fffaf2] border border-[#d7b77b] p-5 sm:p-9 shadow-sm">
         <p className="text-xs uppercase tracking-[0.22em] font-semibold text-amber-700 dark:text-amber-400 mb-2">Personal Saju Reading · English</p>
         <h2 className="text-2xl sm:text-3xl font-semibold leading-tight text-gray-900 dark:text-white">{report.headline}</h2>
         <p className="mt-3 text-gray-600 dark:text-gray-300 leading-relaxed">{report.subtitle}</p>
@@ -32,16 +34,16 @@ export default function ReadingView({ input }: Props) {
       </header>
 
       {report.sections.map(section => (
-        <section key={section.heading} className="bg-white dark:bg-gray-900 border border-stone-200 dark:border-gray-800 rounded-xl p-5 sm:p-6">
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">{section.heading}</h3>
+        <section key={section.heading} className="bg-[#fffaf2] border border-[#d7b77b] rounded-2xl p-5 sm:p-9 shadow-sm">
+          <p className="text-xs tracking-[.2em] text-[#a97939] mb-2">✦ SAJU STORY · PERSONAL INSIGHTS</p><h3 className="font-serif text-2xl sm:text-3xl font-semibold text-[#14243a] mb-5">{section.heading}</h3>
           <div className="space-y-3 text-[15px] leading-7 text-gray-700 dark:text-gray-300">
-            {section.paragraphs.map((paragraph, index) => <p key={index}>{paragraph}</p>)}
+            {section.paragraphs.map((paragraph, index) => <div key={index} className="space-y-3">{index === 0 ? <p className="font-semibold text-[#14243a] text-lg leading-8 border-l-4 border-[#d4a45e] pl-4">{paragraph}</p> : <p>{paragraph}</p>}</div>)}
           </div>
         </section>
       ))}
 
       <section className="bg-white dark:bg-gray-900 border border-stone-200 dark:border-gray-800 rounded-xl p-5 sm:p-6">
-        <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">07 · Your ten-year chapters</h3>
+        <p className="text-xs tracking-widest text-[#a97939] mb-2">✦ YOUR LIFE CHAPTERS</p><h3 className="font-serif text-2xl font-semibold text-[#14243a] mb-2">07 · Your Life Timeline</h3>
         <p className="text-sm leading-6 text-gray-600 dark:text-gray-400 mb-4">These are different traditional themes for each period, not fixed predictions of what will happen.</p>
         {report.periods.length ? (
           <div className="space-y-4">
@@ -56,6 +58,18 @@ export default function ReadingView({ input }: Props) {
         ) : <p className="text-sm text-gray-600 dark:text-gray-300">Ten-year cycles are not available for this birth record.</p>}
       </section>
 
+      <section className="relative overflow-hidden rounded-3xl border-2 border-[#cba366] bg-[#081c35] text-white p-6 sm:p-12 text-center shadow-2xl">
+        <div className="absolute inset-3 border border-[#d9b67b]/70 rounded-2xl pointer-events-none" />
+        <p className="relative text-xs tracking-[.3em] text-[#e8c488]">✦ SAJU STORY ✦</p>
+        <h3 className="relative mt-5 font-serif text-3xl text-[#f6e5c2]">Certificate of Personal Reading</h3>
+        <p className="relative mt-4 max-w-lg mx-auto leading-7 text-slate-200">This personalised Saju report was prepared and issued by SAJU STORY using the birth details supplied. It offers a traditional interpretation for personal reflection.</p>
+        <div className="relative my-8 mx-auto w-36 h-36 rounded-full border-[6px] border-double border-[#e5b86d] bg-gradient-to-br from-[#fff1bc] via-[#b77a27] to-[#f6d88e] flex flex-col items-center justify-center text-[#41250c] shadow-[0_0_36px_rgba(235,184,95,.5)]">
+          <span className="text-4xl">✦</span><span className="text-sm font-serif font-bold">SAJU STORY</span><span className="text-[10px] tracking-widest">ISSUED</span>
+        </div>
+        <p className="relative font-serif text-xl text-[#f6e5c2]">Officially Issued by SAJU STORY</p>
+        <p className="relative mt-4 text-xs text-slate-300">Report reference: {reportId} · Issued: {issueDate}</p>
+        <p className="relative mt-6 text-xs text-[#e8c488]">YOUR STORY IS STILL BEING WRITTEN</p>
+      </section>
       <aside className="rounded-xl p-5 bg-stone-100 dark:bg-gray-800 text-gray-700 dark:text-gray-200" aria-label="Reading limitations">
         <details><summary className="cursor-pointer font-semibold mb-2">How was this reading calculated? (optional)</summary>
         <ul className="list-disc pl-5 space-y-2 text-sm leading-6">
