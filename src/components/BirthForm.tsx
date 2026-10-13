@@ -2,7 +2,7 @@ import { useState, useMemo, useEffect, useImperativeHandle, forwardRef } from 'r
 import type { BirthInput, Gender, JasiMethod } from '@orrery/core/types'
 import { isKoreanDaylightTime, isKoreanHistoricalTimeAnomaly } from '@orrery/core/natal'
 import type { City } from '@orrery/core/cities'
-import { SEOUL, formatCityName } from '@orrery/core/cities'
+import { NEW_YORK, formatCityName } from '@orrery/core/cities'
 import CityCombobox from './CityCombobox.tsx'
 import { useLocale } from '../i18n/index.ts'
 import {
@@ -58,8 +58,8 @@ function loadSaved(): SavedFormState | null {
 const now = new Date()
 const currentYear = now.getFullYear()
 const saved = loadSaved()
-const initialLatitude = saved?.latitude ?? SEOUL.lat
-const initialLongitude = saved?.longitude ?? SEOUL.lon
+const initialLatitude = saved?.latitude ?? NEW_YORK.lat
+const initialLongitude = saved?.longitude ?? NEW_YORK.lon
 
 const selectClass =
   'w-full min-h-12 pl-3 pr-8 border border-[#a88353]/60 rounded-lg text-base text-[#f9e9ce] bg-[#10243b] ' +
@@ -84,7 +84,7 @@ const BirthForm = forwardRef<BirthFormHandle, Props>(function BirthForm({ onSubm
   const [unknownTime, setUnknownTime] = useState(saved?.unknownTime ?? false)
   const [jasiMethod, setJasiMethod] = useState<JasiMethod>(saved?.jasiMethod ?? 'unified')
   const [showAdvanced, setShowAdvanced] = useState(false)
-  const [selectedCity, setSelectedCity] = useState<City | null>(saved?.city ?? SEOUL)
+  const [selectedCity, setSelectedCity] = useState<City | null>(saved?.city ?? NEW_YORK)
   const [manualCoords, setManualCoords] = useState(saved?.manualCoords ?? false)
   const [latitude, setLatitude] = useState(initialLatitude)
   const [longitude, setLongitude] = useState(initialLongitude)
