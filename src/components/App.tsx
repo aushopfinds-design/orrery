@@ -44,9 +44,9 @@ export default function App() {
         <div className="pointer-events-none absolute right-[-55px] top-24 h-60 w-60 rounded-full border border-[#b78b50]/20 sm:right-[10%]" />
         <div className="pointer-events-none absolute right-2 top-32 h-40 w-40 rounded-full border border-[#b78b50]/20" />
         <nav className="relative z-10 mx-auto flex max-w-6xl items-center justify-between gap-3 px-5 py-5 sm:px-6">
-          <a href="#" className="flex items-center gap-2 text-[#e9c48c]" aria-label="Destiny Code home">
+          <a href="#" className="flex items-center gap-2 text-[#e9c48c]" aria-label="FATE KEY home">
             <img src="/destiny-code-emblem.svg" alt="" className="h-14 w-14 shrink-0 sm:h-16 sm:w-16" />
-            <span><span className="block font-serif text-lg tracking-[.045em] sm:text-2xl">DESTINY CODE</span><span className="block text-[8px] tracking-[.21em] text-[#d8bb8c]">YOUR LIFE. DECODED.</span></span>
+            <span><span className="block font-serif text-lg tracking-[.045em] sm:text-2xl">FATE KEY</span><span className="block text-[8px] tracking-[.21em] text-[#d8bb8c]">YOUR LIFE. DECODED.</span></span>
           </a>
           <button type="button" aria-label="Open menu" aria-expanded={menuOpen} onClick={() => setMenuOpen(v => !v)} className="flex h-11 w-11 items-center justify-center rounded-lg border border-[#a7814b]/30 text-2xl text-[#edc88e]">☰</button>
           {menuOpen && <div className="absolute right-5 top-[78px] z-30 flex w-48 flex-col rounded-xl border border-[#a7814b]/50 bg-[#0b2037] p-3 shadow-2xl"><a className="p-3" href="#birth-details" onClick={() => setMenuOpen(false)}>Birth Details</a><a className="p-3" href="#discover" onClick={() => setMenuOpen(false)}>Discover</a></div>}
@@ -192,7 +192,7 @@ export default function App() {
 
       </main>
       <footer className="text-center text-xs text-slate-300 bg-[#04101e] py-8 px-4">
-        <p>DESTINY CODE · Traditional Saju insights for reflection, not guaranteed outcomes.</p>
+        <p>FATE KEY · Traditional Saju insights for reflection, not guaranteed outcomes.</p>
         <p className="mt-2">Calculation engine attribution: <a className="underline" href="https://github.com/rath/orrery" target="_blank" rel="noopener noreferrer">Orrery open-source project</a>.</p>
       </footer>
       <ProfileModal
