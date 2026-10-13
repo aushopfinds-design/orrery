@@ -62,17 +62,10 @@ export default function ProfileModal({ open, onClose, getCurrentFormState, onSel
   const fileInputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
-    if (open) {
-      setProfiles(loadProfiles())
-      setSavingNew(false)
-      setNewName('')
-      setEditingId(null)
-      setConfirmDeleteId(null)
-      setError(null)
-      dialogRef.current?.showModal()
-    } else {
-      dialogRef.current?.close()
-    }
+    const dialog = dialogRef.current
+    if (!dialog) return
+    if (open && !dialog.open) dialog.showModal()
+    if (!open && dialog.open) dialog.close()
   }, [open])
 
   useEffect(() => {
