@@ -1,4 +1,5 @@
 import type { BirthInput, SajuResult } from '@orrery/core/types'
+import { getFourPillars, getRelation } from '@orrery/core/pillars'
 
 type Element = 'Wood' | 'Fire' | 'Earth' | 'Metal' | 'Water'
 
@@ -231,8 +232,8 @@ export function buildEnglishReading(result: SajuResult, asOfYear = new Date().ge
   ]
 
   const periods = getActivePeriods(result, asOfYear)
-  // Twelve chart-informed reflection chapters. These are NOT monthly fortune
-  // pillars or forecasts; do not market them as month-specific predictive readings.
+  // Twelve chart-informed reflections anchored to a calculated mid-month pillar.
+  // A representative date is not a full calendar-month forecast.
   const monthNames = Array.from({ length: 12 }, (_, i) =>
     new Date(Date.UTC(asOfYear, i, 1)).toLocaleString('en-US', { month: 'long', timeZone: 'UTC' }))
   const monthly: ReadingPeriod[] = monthNames.map((name, i) => {
@@ -251,11 +252,19 @@ export function buildEnglishReading(result: SajuResult, asOfYear = new Date().ge
       { headline: 'Your Year in Review', action: 'compare what worked with what you expected' },
     ]
     const theme = themes[i]
+    // The 15th is a representative date, not a claim that a solar month
+    // begins on the first day of its Gregorian calendar month.
+    const monthPillar = getFourPillars(asOfYear, i + 1, 15, 12, 0)[1]
+    const monthlyGod = getRelation(day.pillar.stem, monthPillar[0])?.hanja ?? ''
+    const monthlySymbol = TEN_GODS[monthlyGod]
     return {
       period: name + ' ' + asOfYear,
-      pillar: '',
+      pillar: monthPillar,
       headline: theme.headline,
-      text: 'A personal reflection inspired by your ' + self.name + ' birth-day theme and the patterns discussed in this report. This month, try to ' + theme.action + '. Keep what is useful and ignore what does not fit. This is a guided monthly exercise, not a prediction based on the monthly solar-term pillar.',
+      text: 'On the 15th of ' + name + ', the calculated solar-term month pillar is ' + monthPillar
+        + (monthlySymbol ? ' (' + monthlySymbol.title + ')' : '') + '. In Saju this symbol invites reflection on '
+        + (monthlySymbol?.lens ?? 'how your current priorities fit your circumstances') + '. '
+        + 'Try this practical exercise: ' + theme.action + '. This is not a prediction of events, and the solar-term pillar may change within the calendar month.',
     }
   })
   const caveats = [
@@ -267,6 +276,7 @@ export function buildEnglishReading(result: SajuResult, asOfYear = new Date().ge
     !input.unknownTime && input.timezone && input.timezone !== 'Asia/Seoul' && input.longitude == null
       ? 'Birth longitude was missing. The calculation fell back to Seoul longitude. Re-enter the birthplace before relying on the hour pillar.' : '',
     'During a fall-back DST overlap, the time resolver selects the earlier occurrence of a repeated clock time. Confirm the birth record if this applies.',
+    'Each monthly chapter uses the solar-term month pillar calculated for the 15th of that calendar month. It is not a full-month event forecast; solar-term boundaries can change the pillar during the month.',
     'These themes belong to a traditional cultural interpretation. They are not scientifically validated personality tests, financial forecasts or guarantees of future events.',
   ].filter(Boolean)
 
@@ -287,7 +297,7 @@ export function buildEnglishReading(result: SajuResult, asOfYear = new Date().ge
     '07 · Your Life Timeline',
     ...periods.map(p => p.period + ' (' + p.pillar + ') — ' + p.headline + ': ' + p.text),
     '08 · Your Twelve-Month Reflection Guide',
-    ...monthly.map(m => m.period + ' — ' + m.headline + ': ' + m.text),
+    ...monthly.map(m => m.period + ' (' + m.pillar + ') — ' + m.headline + ': ' + m.text),
     'How to read this report', ...caveats,
   ].join('\n\n')
   return { headline, subtitle, birthSummary, pillarSummary, dayMaster: self.name, sections, periods, monthly, caveats, fullText }
