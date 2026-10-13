@@ -16,7 +16,7 @@ export default function ReadingView({ input }: Props) {
   const [reportId] = useState(() => `PREVIEW-${crypto.randomUUID().slice(0, 12).toUpperCase()}`)
 
   return (
-    <article lang="en" aria-label="Personal Saju reading" className="space-y-6 pb-8 text-[#f5e6ce]">
+    <article lang="en" aria-label="Personal Saju reading" className="printable-reading space-y-6 pb-8 text-[#f5e6ce]">
       <div className="relative overflow-hidden rounded-3xl bg-[#071b33] text-white border-2 border-[#c9a05e] px-6 py-12 sm:py-20 text-center shadow-2xl" style={{backgroundImage:"linear-gradient(180deg,rgba(4,17,33,.1),#071b33),url(/saju-moon-mountains.svg)",backgroundPosition:"center",backgroundSize:"cover"}}>
         <div className="absolute inset-3 rounded-2xl border border-[#e8c27d]/70 pointer-events-none" />
         <img src="/destiny-code-emblem.svg" alt="Destiny Code gold tree and crescent emblem" className="relative mx-auto h-28 w-28 sm:h-36 sm:w-36" /><p className="relative mt-3 text-xs tracking-[.3em] text-[#f0ce90]">DESTINY CODE</p>
