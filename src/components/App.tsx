@@ -40,12 +40,12 @@ export default function App() {
     <div className="min-h-screen bg-[#f8f7f5] text-[#10223b]">
       <header className="relative overflow-hidden bg-[#071b33] text-white">
         <div className="absolute inset-0 opacity-70" style={{background:'radial-gradient(circle at 76% 42%, #d2a15d 0%, #6e6b77 13%, #16324c 33%, #071b33 70%)'}} />
-        <div className="absolute inset-0 opacity-20" style={{backgroundImage:'radial-gradient(#fff 1px, transparent 1px)',backgroundSize:'44px 44px'}} />
+        <div className="absolute inset-0 bg-cover bg-[position:70%_center] sm:bg-center opacity-65" style={{backgroundImage:"url(/saju-moon-mountains.svg)"}} />\n        <div className="absolute inset-0 bg-gradient-to-r from-[#071b33]/95 via-[#071b33]/65 to-[#071b33]/10" />\n        <div className="absolute inset-0 opacity-20" style={{backgroundImage:'radial-gradient(#fff 1px, transparent 1px)',backgroundSize:'44px 44px'}} />
         <nav className="relative z-10 max-w-6xl mx-auto px-5 py-5 flex items-center justify-between">
           <a href="#" className="font-serif text-xl tracking-wider text-[#f2d19c]">✦ SAJU STORY</a>
           <a href="#birth-details" className="rounded-full bg-[#e6bc7c] px-5 py-2 text-sm font-semibold text-[#10223b]">Get My Reading →</a>
         </nav>
-        <div className="relative z-10 max-w-6xl mx-auto px-5 pt-12 pb-24 sm:pt-20 sm:pb-32">
+        <div className="relative z-10 max-w-6xl mx-auto px-5 pt-12 pb-28 sm:pt-20 sm:pb-32">
           <p className="text-xs sm:text-sm tracking-[0.22em] uppercase text-[#e9c48c]">Ancient wisdom · Modern insight</p>
           <h1 className="font-serif text-4xl sm:text-6xl leading-tight mt-5 max-w-2xl">Discover What Your Birth Date <span className="text-[#e9c48c]">Reveals About You</span></h1>
           <p className="mt-5 max-w-xl text-lg text-slate-200 leading-relaxed">A personalised Saju reading to explore your personality, love, career, money and the chapters ahead.</p>
@@ -89,10 +89,10 @@ export default function App() {
               ['◇','Career & Purpose','Find work styles and environments that may suit you.'],
               ['↗','Life Timeline','Explore the themes of different life chapters.'],
               ['◷','Next 12 Months','Discover traditional themes for the year ahead.'],
-            ].map(([symbol,title,description])=><div key={title} className="rounded-2xl border border-[#e8e3dc] bg-white p-5 sm:p-7 shadow-sm">
-              <div className="mb-4 text-3xl text-[#bd914e]">{symbol}</div>
+            ].map(([symbol,title,description])=><div key={title} className="rounded-2xl border border-[#e8e3dc] bg-white overflow-hidden shadow-sm">
+              <div className="h-24 sm:h-32 relative overflow-hidden bg-[#0b2741]" style={{backgroundImage:"linear-gradient(125deg, rgba(7,27,51,.3), rgba(211,161,95,.1)), url(/saju-moon-mountains.svg)",backgroundSize:"cover",backgroundPosition: title === "Love & Relationships" ? "75% 30%" : title === "Life Timeline" ? "35% 60%" : "center"}}><div className="absolute bottom-2 left-3 rounded-full bg-white/90 px-3 py-1 text-xl text-[#ad7a38]">{symbol}</div></div><div className="p-4 sm:p-6">
               <h3 className="font-serif text-lg font-semibold">{title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-slate-600">{description}</p>
+              <p className="mt-2 text-sm leading-relaxed text-slate-600">{description}</p></div>
             </div>)}
           </div>
           <div className="mt-12 rounded-2xl bg-[#f0ebe4] p-7 sm:p-10">
