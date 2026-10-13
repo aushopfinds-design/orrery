@@ -7,7 +7,8 @@ const en: Record<string, string> = {
   'app.profileManage': 'Manage Profiles',
   'app.tab.saju': 'Saju (四柱八字)',
   'app.tab.ziwei': 'Ziwei Doushu (紫微斗数)',
-  'app.tab.natal': 'Natal Chart',
+  'app.tab.natal': 'Natal Chart',  'app.tab.reading': 'English Reading',
+
   'app.copyAll': 'For AI Reading',
   'app.copyAllSub': 'Copy All',
   'app.intro': 'About',
