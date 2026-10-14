@@ -2,6 +2,9 @@ import { homepageCopy } from '../homepage.ts'
 
 const en: Record<string, string> = {
   ...homepageCopy,
+  "city.popular": "Popular cities",
+  "city.results": "Search results",
+  "city.birthCity": "Birth city",
   // App
   'app.subtitle1': 'A serverless, browser-based',
   'app.subtitle.tool': 'Saju · Ziwei Doushu · Natal Chart',
@@ -70,7 +73,7 @@ const en: Record<string, string> = {
   'city.noResults': 'No results found',
   'city.korea': 'Korea',
   'city.world': 'World',
-  'city.placeholder': 'Enter a city name',
+  'city.placeholder': 'Search city or country (e.g. Sydney)',
 
   // Guide
   'guide.title': 'How to Use',

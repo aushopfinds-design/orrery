@@ -6,6 +6,7 @@ import { toHangul } from '@orrery/core/pillars'
 import { calculateSaju } from '@orrery/core/saju'
 import { useLocale } from '../i18n/index.ts'
 import { inferTimeZoneFromCoordinates } from '../utils/timezones.ts'
+import { formatCityForLocale } from '../utils/city-search.ts'
 
 interface Props {
   open: boolean
@@ -14,13 +15,13 @@ interface Props {
   onSelect: (data: SavedFormState) => void
 }
 
-function formatSummary(data: SavedFormState, t: (key: string) => string): string {
+function formatSummary(data: SavedFormState, t: (key: string) => string, locale: string): string {
   const date = `${data.year}-${String(data.month).padStart(2, '0')}-${String(data.day).padStart(2, '0')}`
   const time = data.unknownTime
     ? t('profile.timeUnknown')
     : `${String(data.hour).padStart(2, '0')}:${String(data.minute).padStart(2, '0')}`
   const gender = data.gender === 'M' ? t('profile.male') : t('profile.female')
-  const city = data.city?.name ?? t('profile.manualInput')
+  const city = data.city ? formatCityForLocale(data.city, locale) : t('profile.manualInput')
   const effectiveTimezone = inferTimeZoneFromCoordinates(data.latitude, data.longitude) ?? ''
   const timezone = effectiveTimezone
     ? ` ${effectiveTimezone}`
@@ -48,7 +49,7 @@ function formatSummary(data: SavedFormState, t: (key: string) => string): string
 }
 
 export default function ProfileModal({ open, onClose, getCurrentFormState, onSelect }: Props) {
-  const { t } = useLocale()
+  const { t, locale } = useLocale()
   const [profiles, setProfiles] = useState<Profile[]>([])
   const [savingNew, setSavingNew] = useState(false)
   const [newName, setNewName] = useState('')
@@ -236,7 +237,7 @@ export default function ProfileModal({ open, onClose, getCurrentFormState, onSel
         >
           <span>{t('profile.addNew')}</span>
           <span className="block text-xs text-gray-400 dark:text-gray-500 mt-0.5">
-            {open && getCurrentFormState() && formatSummary(getCurrentFormState()!, t)}
+            {open && getCurrentFormState() && formatSummary(getCurrentFormState()!, t, locale)}
           </span>
         </button>
       )}
@@ -313,7 +314,7 @@ export default function ProfileModal({ open, onClose, getCurrentFormState, onSel
 
                 {/* 요약 */}
                 <p className="text-xs text-gray-400 dark:text-gray-500 mt-0.5">
-                  {formatSummary(profile.data, t)}
+                  {formatSummary(profile.data, t, locale)}
                 </p>
               </div>
             ))}

@@ -1,6 +1,6 @@
-import { useState, useRef, useEffect, useCallback } from 'react'
+import { useState, useRef, useEffect, useCallback, useMemo } from 'react'
 import type { City } from '@orrery/core/cities'
-import { KOREAN_CITIES, filterCities, formatCityName } from '@orrery/core/cities'
+import { formatCityForLocale, getCitySuggestions } from '../utils/city-search.ts'
 import { useLocale } from '../i18n/index.ts'
 
 interface Props {
@@ -12,9 +12,6 @@ const inputClass =
   'w-full h-10 px-3 border border-gray-200 dark:border-gray-700 rounded-lg text-base text-gray-800 dark:text-gray-100 bg-white dark:bg-gray-900 ' +
   'focus:outline-none focus:ring-2 focus:ring-gray-800/20 dark:focus:ring-gray-200/20 focus:border-gray-400 dark:focus:border-gray-500 transition-all'
 
-/** 포커스 시 보여줄 기본 도시 목록 (한국 주요 도시) */
-const DEFAULT_CITIES = KOREAN_CITIES.slice(0, 8) as City[]
-
 export default function CityCombobox({ selectedCity, onSelect }: Props) {
   const { t, locale } = useLocale()
   const [query, setQuery] = useState('')
@@ -24,10 +21,7 @@ export default function CityCombobox({ selectedCity, onSelect }: Props) {
   const listRef = useRef<HTMLUListElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
 
-  const results = query ? (/^new\s*york/i.test(query.trim()) ? [ { name: '뉴욕', country: '미국', lat: 40.7128, lon: -74.0060 } as City ] : filterCities(query)) : (locale === 'en' ? [ { name: '뉴욕', country: '미국', lat: 40.7128, lon: -74.0060 } as City, ...DEFAULT_CITIES ] : DEFAULT_CITIES)
-  const koreanResults = results.filter(c => !c.country)
-  const worldResults = results.filter(c => !!c.country)
-  const flatResults = results // 이미 한국 우선 정렬됨
+  const flatResults = useMemo(() => getCitySuggestions(query, locale), [query, locale])
 
   // 하이라이트된 항목이 보이도록 스크롤
   useEffect(() => {
@@ -72,16 +66,16 @@ export default function CityCombobox({ selectedCity, onSelect }: Props) {
     switch (e.key) {
       case 'ArrowDown':
         e.preventDefault()
-        setHighlightIndex(i => (i + 1) % flatResults.length)
+        if (flatResults.length) setHighlightIndex(i => (i + 1) % flatResults.length)
         break
       case 'ArrowUp':
         e.preventDefault()
-        setHighlightIndex(i => (i - 1 + flatResults.length) % flatResults.length)
+        if (flatResults.length) setHighlightIndex(i => i <= 0 ? flatResults.length - 1 : i - 1)
         break
       case 'Enter':
         e.preventDefault()
-        if (highlightIndex >= 0 && highlightIndex < flatResults.length) {
-          selectCity(flatResults[highlightIndex])
+        if (flatResults.length) {
+          selectCity(flatResults[highlightIndex >= 0 ? highlightIndex : 0])
         }
         break
       case 'Escape':
@@ -116,47 +110,21 @@ export default function CityCombobox({ selectedCity, onSelect }: Props) {
       )
     }
 
-    const items: React.ReactNode[] = []
-    let optionIndex = 0
-
-    if (koreanResults.length > 0) {
-      items.push(
-        <li key="header-kr" className="px-3 pt-1.5 pb-1 text-sm font-medium text-gray-400 dark:text-gray-500" role="presentation">
-          {t('city.korea')}
-        </li>
-      )
-      for (const city of koreanResults) {
-        const idx = optionIndex++
-        items.push(renderOption(city, idx))
-      }
-    }
-
-    if (worldResults.length > 0) {
-      if (koreanResults.length > 0) {
-        items.push(
-          <li key="divider" className="border-t border-gray-100 dark:border-gray-800 my-1" role="presentation" />
-        )
-      }
-      items.push(
-        <li key="header-world" className="px-3 pt-1.5 pb-1 text-sm font-medium text-gray-400 dark:text-gray-500" role="presentation">
-          {t('city.world')}
-        </li>
-      )
-      for (const city of worldResults) {
-        const idx = optionIndex++
-        items.push(renderOption(city, idx))
-      }
-    }
-
-    return items
+    return [
+      <li key="header" className="px-3 pt-2 pb-1 text-sm font-medium text-gray-500" role="presentation">
+        {query.trim() ? t('city.results') : locale === 'ko' ? t('city.korea') : t('city.popular')}
+      </li>,
+      ...flatResults.map((city, index) => renderOption(city, index)),
+    ]
   }
 
   function renderOption(city: City, index: number) {
     const isHighlighted = index === highlightIndex
-    const label = locale === 'en' && city.name === '뉴욕' && city.country === '미국' ? 'New York, United States' : formatCityName(city)
+    const label = formatCityForLocale(city, locale)
     return (
       <li
-        key={`${city.name}-${city.country ?? 'kr'}`}
+        key={`${city.name}-${city.country ?? city.region ?? 'kr'}`}
+        id={`city-option-${index}`}
         role="option"
         aria-selected={isHighlighted}
         className={`px-3 py-2 text-base cursor-pointer transition-colors ${
@@ -170,7 +138,7 @@ export default function CityCombobox({ selectedCity, onSelect }: Props) {
     )
   }
 
-  const displayValue = isOpen ? query : (selectedCity ? (locale === 'en' && selectedCity.name === '뉴욕' && selectedCity.country === '미국' ? 'New York, United States' : formatCityName(selectedCity)) : '')
+  const displayValue = isOpen ? query : (selectedCity ? formatCityForLocale(selectedCity, locale) : '')
 
   return (
     <div ref={containerRef} className="relative">
@@ -179,7 +147,9 @@ export default function CityCombobox({ selectedCity, onSelect }: Props) {
         type="text"
         role="combobox"
         aria-expanded={isOpen}
-        aria-controls={listboxId}
+        aria-controls={isOpen ? listboxId : undefined}
+        aria-autocomplete="list"
+        aria-label={t('city.birthCity')}
         aria-activedescendant={highlightIndex >= 0 ? `city-option-${highlightIndex}` : undefined}
         autoComplete="off"
         className={inputClass}

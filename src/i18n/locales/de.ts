@@ -2,6 +2,9 @@ import { homepageCopy } from '../homepage.ts'
 
 const de: Record<string, string> = {
   ...homepageCopy,
+  "city.popular": "Beliebte Städte",
+  "city.results": "Suchergebnisse",
+  "city.birthCity": "Geburtsstadt",
   // App
   'app.subtitle1': 'Ein serverloser, browserbasierter',
   'app.subtitle.tool': 'Saju · Zi Wei Dou Shu · Geburtshoroskop',

@@ -2,7 +2,8 @@ import { useState, useMemo, useEffect, useImperativeHandle, forwardRef } from 'r
 import type { BirthInput, Gender, JasiMethod } from '@orrery/core/types'
 import { isKoreanDaylightTime, isKoreanHistoricalTimeAnomaly } from '@orrery/core/natal'
 import type { City } from '@orrery/core/cities'
-import { NEW_YORK, formatCityName } from '@orrery/core/cities'
+import { NEW_YORK } from '@orrery/core/cities'
+import { formatCityForLocale } from '../utils/city-search.ts'
 import CityCombobox from './CityCombobox.tsx'
 import { useLocale } from '../i18n/index.ts'
 import {
@@ -104,7 +105,7 @@ const BirthForm = forwardRef<BirthFormHandle, Props>(function BirthForm({ onSubm
       return `${t('form.coordInput')} · ${t('form.latitude')} ${latitude.toFixed(4)} · ${t('form.longitude')} ${longitude.toFixed(4)}`
     }
     if (selectedCity) {
-      return `${locale === 'en' && selectedCity.name === '뉴욕' && selectedCity.country === '미국' ? 'New York, United States' : formatCityName(selectedCity)} · ${t('form.latitude')} ${latitude.toFixed(4)} · ${t('form.longitude')} ${longitude.toFixed(4)}`
+      return `${formatCityForLocale(selectedCity, locale)} · ${t('form.latitude')} ${latitude.toFixed(4)} · ${t('form.longitude')} ${longitude.toFixed(4)}`
     }
     return `${t('form.latitude')} ${latitude.toFixed(4)} · ${t('form.longitude')} ${longitude.toFixed(4)}`
   }, [manualCoords, selectedCity, latitude, longitude, t, locale])

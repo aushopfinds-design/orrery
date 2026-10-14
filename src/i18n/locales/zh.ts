@@ -2,6 +2,9 @@ import { homepageCopy } from '../homepage.ts'
 
 const zh: Record<string, string> = {
   ...homepageCopy,
+  "city.popular": "常用城市",
+  "city.results": "搜索结果",
+  "city.birthCity": "出生城市",
   // App
   'app.subtitle1': '无需服务器，在浏览器中运行的',
   'app.subtitle.tool': '四柱八字 · 紫微斗数 · 西洋占星术',

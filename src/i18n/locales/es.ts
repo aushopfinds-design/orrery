@@ -2,6 +2,9 @@ import { homepageCopy } from '../homepage.ts'
 
 const es: Record<string, string> = {
   ...homepageCopy,
+  "city.popular": "Ciudades populares",
+  "city.results": "Resultados",
+  "city.birthCity": "Ciudad de nacimiento",
   // App
   'app.subtitle1': 'Calculadora de',
   'app.subtitle.tool': 'Saju · Zi Wei Dou Shu · Carta natal',

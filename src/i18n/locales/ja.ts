@@ -2,6 +2,9 @@ import { homepageCopy } from '../homepage.ts'
 
 const ja: Record<string, string> = {
   ...homepageCopy,
+  "city.popular": "主な都市",
+  "city.results": "検索結果",
+  "city.birthCity": "出生都市",
   // App
   'app.subtitle1': 'サーバー不要、ブラウザで動作する',
   'app.subtitle.tool': '四柱八字 · 紫微斗数 · 西洋占星術',
