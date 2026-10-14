@@ -5,6 +5,7 @@ import { CATEGORY_SCENARIOS, categoryInfo } from '../report/category-catalog.ts'
 import type { FocusCategory } from '../report/category-catalog.ts'
 import { buildBundleReading, buildCategoryReading } from '../report/category-readings.ts'
 import { FateEmblem } from './HomeOverview.tsx'
+import ReadingText from './report/ReadingText.tsx'
 
 export default function CategoryReportPage({ kind }: { kind: FocusCategory | 'bundle' }) {
   const { t } = useLocale()
@@ -38,7 +39,7 @@ export default function CategoryReportPage({ kind }: { kind: FocusCategory | 'bu
       </div>
       <div className="fate-complete-book" aria-hidden="true"><FateEmblem className="fate-complete-book-emblem" /><span>THE FATE KEY</span><strong>{title}</strong><small>YOUR STORY HOLDS THE KEY</small></div>
     </header>
-    <section className="fate-complete-section"><h2>{t('category.product.insideTitle')}</h2><p>{t('category.product.inside')}</p><p className="fate-reading-small-note">{t('category.product.length').replace('{n}', contents.count.toLocaleString('en-US'))}</p><ol className="fate-complete-chapter-list">{contents.items.map((item, index) => <li key={item.href}><span>{String(index + 1).padStart(2, '0')}</span><div><h3><a href={item.href}>{item.title}</a></h3><p>{item.text}</p></div></li>)}</ol></section>
+    <section className="fate-complete-section"><h2>{t('category.product.insideTitle')}</h2><p>{t('category.product.inside')}</p><p className="fate-reading-small-note">{t('category.product.length').replace('{n}', contents.count.toLocaleString('en-US'))}</p><ol className="fate-complete-chapter-list">{contents.items.map((item, index) => <li key={item.href}><span>{String(index + 1).padStart(2, '0')}</span><div><h3><a href={item.href}>{item.title}</a></h3><p><ReadingText text={item.text} /></p></div></li>)}</ol></section>
     <section className="fate-complete-section fate-complete-expectations"><h2>{t('category.product.inputs')}</h2><p>{kind === 'bundle' ? t('category.product.twoPeople') : kind === 'compatibility' ? t('category.product.pairOnly') : kind === 'year' ? t('category.product.oneYear') : t('category.product.onePerson')}</p><p>{t('category.examples.note')}</p><details><summary>{t('complete.expectations.scopeTitle')}</summary><p>{info?.scope ?? t('category.bundle.scope')}</p></details></section>
     <section className="fate-complete-section fate-complete-bottom"><h2>{t('complete.bottom.title')}</h2><p>{t('complete.bottom.text')}</p><a href={`#${slug}-sample`} className="fate-complete-primary">{t('complete.sample')}</a><p className="fate-reading-small-note">{t('category.product.status')}</p></section>
   </article>

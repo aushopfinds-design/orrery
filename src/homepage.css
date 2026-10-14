@@ -756,3 +756,7 @@
   .fate-category-reading .fate-reading-practice { padding: 13px 16px; }
   .fate-category-reading > .fate-report-footer { display: none; }
 }
+@media print {
+  .fate-category-reading [id$="-business-chapters"] .fate-report-prose > p,
+  .fate-category-reading [id$="-annual-cycle-context"] .fate-report-prose > p { font-size: 10pt; line-height: 1.45; margin-bottom: 8px; }
+}
