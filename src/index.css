@@ -77,11 +77,15 @@ dialog[open] { border: none; }
 @media print {
   @page { size: A4; margin: 14mm; }
   body { background: #fff !important; }
+  .fate-hero, .fate-footer, .fate-benefits, .fate-sample-notice { display: none !important; }
+  .fate-main > div:not(:has(.printable-reading)) { display: none !important; }
+  .fate-main { max-width: none !important; margin: 0 !important; padding: 0 !important; }
   body * { visibility: hidden !important; }
   .printable-reading, .printable-reading * { visibility: visible !important; }
   .printable-reading {
-    position: absolute;
-    inset: 0 auto auto 0;
+    position: static;
+    max-width: none !important;
+    margin: 0 !important;
     width: 100%;
     padding: 0 !important;
     color: #111827 !important;

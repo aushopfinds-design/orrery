@@ -6,6 +6,7 @@ import { buildCompleteReading } from '../../report/complete-reading.ts'
 import type { ReportChapter } from '../../report/complete-reading.ts'
 import { useLocale } from '../../i18n/index.ts'
 import ElementBalance from './ElementBalance.tsx'
+import { FateEmblem } from '../HomeOverview.tsx'
 
 function Chapter({ chapter }: { chapter: ReportChapter }) {
   const { t } = useLocale()
@@ -33,7 +34,7 @@ export default function ReadingView({ input }: { input: BirthInput }) {
     <article id="sample-report" lang="en" aria-label={t('reading.complete.sampleTitle')} className="fate-complete-reading printable-reading">
       <div className="fate-sample-toolbar print:hidden"><a href="#complete-life-reading">← {t('complete.title')}</a><span>{t('reading.complete.sampleBadge')}</span></div>
       <header className="fate-reading-cover fate-reading-cover-complete">
-        <img src="/destiny-code-emblem.svg" alt="" width="120" height="120" />
+        <FateEmblem className="fate-reading-cover-emblem" />
         <p className="fate-eyebrow">THE FATE KEY</p><h1>{report.title}</h1>
         <p className="fate-reading-cover-tagline">{report.headline}</p><p>{report.birthSummary}</p>
         <p className="fate-reading-small-note">{t('reading.complete.sampleNote')}</p>
