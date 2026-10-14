@@ -1,4 +1,4 @@
-import { lazy, Suspense, useCallback, useRef, useState } from 'react'
+import { lazy, Suspense, useCallback, useEffect, useRef, useState } from 'react'
 import BirthForm from './BirthForm.tsx'
 import ProductCatalog from './ProductCatalog.tsx'
 import HomeOverview, { FateEmblem, HomeBenefits, HomeFAQ } from './HomeOverview.tsx'
@@ -83,6 +83,13 @@ export default function App() {
   const showingSample = route === 'sample'
   const showingReport = showingSample || route === 'category-sample' || route === 'bundle-sample'
   const showingHome = route === 'home' || (route === 'free' && !birthInput)
+  useEffect(() => {
+    if (!showingHome) return
+    const section = hash.slice(1)
+    if (['home', 'birth-details', 'reports', 'about', 'faq', 'discover', 'focused-reports'].includes(section)) {
+      document.getElementById(section)?.scrollIntoView({ block: 'start' })
+    }
+  }, [hash, showingHome])
   return (
     <div className="fate-site" id="home">
       <header className="fate-hero">
