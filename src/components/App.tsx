@@ -82,9 +82,7 @@ export default function App() {
           </div>
           {menuOpen && <div className="fate-mobile-menu" id="fate-mobile-menu">{links.map(([href, key]) => <a key={href} href={href} onClick={navigateHomeSection}>{t(key)}</a>)}<button type="button" onClick={() => { setMenuOpen(false); setProfileModalOpen(true) }}>{t('home.nav.saved')}</button></div>}
         </nav>
-        <div className="fate-hero-art" aria-hidden="true" hidden={!showingHome && !showingFree}>
-          {(showingHome || showingFree) && <HeroArtwork />}
-        </div>
+        {(showingHome || showingFree) && <HeroArtwork />}
         <div className="fate-hero-layout" hidden={!showingHome && !showingFree}>
           <div className="fate-hero-intro">
             <p className="fate-eyebrow">{t('home.hero.eyebrow')}</p>

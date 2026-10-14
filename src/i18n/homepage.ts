@@ -224,6 +224,8 @@ export const homepageCopy: Record<string, string> = {
   "reading.design.symbols": "visible symbols",
   "reading.footer.note": "Traditional Saju interpretation for personal reflection. Your choices and circumstances matter; these are not guaranteed outcomes.",
   "reading.loading": "Preparing your reading…",
+  "home.hero.motion.pause": "Pause sparkle",
+  "home.hero.motion.play": "Play sparkle",
   "reading.connections.eyebrow": "THE KEY PATTERN",
   "reading.connections.title": "How your themes work together",
   "reading.connections.intro": "Your starting style meets different needs at work and in close relationships. These prompts connect those parts of your chart.",

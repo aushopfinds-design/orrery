@@ -39,6 +39,10 @@
 .fate-mobile-menu a:hover, .fate-mobile-menu button:hover { background: #173149; }
 .fate-hero-art { position: absolute; z-index: -1; right: max(0px, calc((100vw - 1480px)/2)); top: 108px; height: 760px; width: min(54vw, 760px); overflow: hidden; mask-image: linear-gradient(90deg, transparent, #000 13%, #000 91%, transparent); }
 .fate-hero-art > svg { width: 100%; height: 100%; display: block; }
+.fate-hero-artwork { transform-origin: 35% 46%; animation: fateArtScene 7s ease-in-out infinite; }
+.fate-hero-motion-button { position: absolute; top: 800px; right: max(24px,calc((100vw - 1480px)/2 + 24px)); z-index: 5; display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; border: 1px solid #ddba7b99; border-radius: 50%; background: #071b2dcc; color: #efd39b; box-shadow: 0 3px 12px #0003; cursor: pointer; }
+.fate-hero-motion-button > svg { width: 17px; height: 17px; fill: currentColor; }
+.fate-hero-motion-button:hover { background: #19374be8; }
 .fate-hero-art::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, #041322 0, transparent 7%, transparent 78%, #041322); }
 .fate-hero-layout { position: relative; z-index: 1; max-width: 1260px; margin: 0 auto; padding: 28px 32px 64px; }
 .fate-hero-intro { max-width: 625px; }
@@ -135,22 +139,28 @@
 .fate-sample-notice a { text-decoration: underline; }
 /* Keep every light in the illustration's own coordinate system. */
 .fate-art-effects { pointer-events: none; }
-.fate-art-key-light { opacity: .2; animation: fateArtKeyLight 6s ease-in-out infinite; }
-.fate-art-key-core { opacity: .15; animation: fateArtKeyCore 4.8s ease-in-out infinite; }
-.fate-art-key-ring { opacity: .12; animation: fateArtKeyRing 6s ease-in-out infinite; }
-.fate-art-shaft { opacity: 0; animation: fateArtShaft 7s ease-in-out infinite; }
+.fate-art-key-light { opacity: .2; animation: fateArtKeyLight 3.2s ease-in-out infinite; }
+.fate-art-key-core { opacity: .15; animation: fateArtKeyCore 3.2s ease-in-out infinite; }
+.fate-art-key-ring { opacity: .12; animation: fateArtKeyRing 3.2s ease-in-out infinite; }
+.fate-art-aura { opacity: 0; transform-box: fill-box; transform-origin: center; animation: fateArtAura 3.5s ease-out infinite; }
+.fate-art-orbit { transform-origin: 0 0; animation: fateArtOrbit 8s linear infinite; }
+.fate-art-shaft { opacity: 0; animation: fateArtShaft 3.6s ease-in-out infinite; }
 .fate-art-moon-light { opacity: .05; animation: fateArtMoonLight 9s ease-in-out infinite; }
 .fate-art-sparkle { opacity: .08; transform-box: fill-box; transform-origin: center; animation: fateArtSparkle 5s ease-in-out infinite; }
 .fate-art-mote { opacity: .05; animation: fateArtMote 9s ease-in-out infinite; }
 .fate-art-mist { opacity: .12; animation: fateArtMist 17s ease-in-out infinite; }
 .fate-hero-artwork[data-motion="paused"] .fate-art-animated { animation-play-state: paused; }
-@keyframes fateArtKeyLight { 0%,100% { opacity: .16; } 50% { opacity: .52; } }
-@keyframes fateArtKeyCore { 0%,100% { opacity: .12; } 50% { opacity: .58; } }
-@keyframes fateArtKeyRing { 0%,100% { opacity: .1; } 50% { opacity: .58; } }
-@keyframes fateArtShaft { 0%,15% { opacity: 0; stroke-dashoffset: 146; } 25%,65% { opacity: .65; } 82%,100% { opacity: 0; stroke-dashoffset: 0; } }
+.fate-hero-artwork[data-motion="paused"] { animation-play-state: paused; }
+@keyframes fateArtScene { 0%,100% { transform: scale(1); } 50% { transform: scale(1.04); } }
+@keyframes fateArtKeyLight { 0%,100% { opacity: .08; } 50% { opacity: .82; } }
+@keyframes fateArtKeyCore { 0%,100% { opacity: .05; } 50% { opacity: .88; } }
+@keyframes fateArtKeyRing { 0%,100% { opacity: .1; } 50% { opacity: .95; } }
+@keyframes fateArtAura { 0% { opacity: 0; transform: scale(.9); } 18% { opacity: .85; } 100% { opacity: 0; transform: scale(2.05); } }
+@keyframes fateArtOrbit { to { transform: rotate(360deg); } }
+@keyframes fateArtShaft { 0%,8% { opacity: 0; stroke-dashoffset: 312; } 20%,70% { opacity: .95; } 95%,100% { opacity: 0; stroke-dashoffset: 0; } }
 @keyframes fateArtMoonLight { 0%,100% { opacity: .04; } 50% { opacity: .22; } }
-@keyframes fateArtSparkle { 0%,20%,80%,100% { opacity: .07; transform: scale(.7); } 50% { opacity: .94; transform: scale(1.16); } }
-@keyframes fateArtMote { 0% { opacity: 0; transform: translateY(6px); } 35%,65% { opacity: .6; } 100% { opacity: 0; transform: translateY(-14px); } }
+@keyframes fateArtSparkle { 0%,15%,85%,100% { opacity: .02; transform: scale(.35); } 48%,55% { opacity: 1; transform: scale(1.45); } }
+@keyframes fateArtMote { 0% { opacity: 0; transform: translate(0,15px); } 30%,60% { opacity: .92; } 100% { opacity: 0; transform: translate(-12px,-60px); } }
 @keyframes fateArtMist { 0%,100% { opacity: .12; transform: translateX(-10px); } 50% { opacity: .26; transform: translateX(12px); } }
 @media (max-width: 1080px) {
   .fate-nav { gap: 15px; }
@@ -175,6 +185,7 @@
   .fate-menu-button { display: inline-flex; justify-content: center; align-items: center; width: 37px; height: 37px; font-size: 22px; }
   .fate-hero-art { right: 0; top: 72px; width: 100%; height: 278px; opacity: 1; mask-image: linear-gradient(180deg,transparent,#000 8%,#000 80%,transparent); }
   .fate-hero-art > svg { width: 100%; height: 100%; }
+  .fate-hero-motion-button { top: 299px; right: 17px; }
   .fate-hero-art::after { background: linear-gradient(180deg,transparent 40%,#041322); }
   .fate-hero-layout { padding: 251px 18px 34px; }
   .fate-hero-intro { max-width: 540px; margin: 0 auto; }
@@ -232,10 +243,10 @@
   .fate-report-preview { right: -30px; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .fate-art-animated { animation: none !important; }
-  .fate-art-key-light { opacity: .2; }
-  .fate-art-key-core, .fate-art-moon-light { opacity: .12; }
-  .fate-art-shaft, .fate-art-mote, .fate-art-sparkle, .fate-art-mist { opacity: 0; }
+  .fate-hero-artwork[data-motion-enabled="false"], .fate-hero-artwork[data-motion-enabled="false"] .fate-art-animated { animation: none !important; }
+  .fate-hero-artwork[data-motion-enabled="false"] .fate-art-key-light { opacity: .2; }
+  .fate-hero-artwork[data-motion-enabled="false"] .fate-art-key-core, .fate-hero-artwork[data-motion-enabled="false"] .fate-art-moon-light { opacity: .12; }
+  .fate-hero-artwork[data-motion-enabled="false"] :is(.fate-art-shaft,.fate-art-mote,.fate-art-sparkle,.fate-art-mist,.fate-art-aura,.fate-art-orbit) { opacity: 0; }
   .fate-discovery-card, .fate-discovery-image img { transition: none; }
 }
 @media print {
