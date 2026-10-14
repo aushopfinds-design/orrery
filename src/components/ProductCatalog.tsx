@@ -8,7 +8,8 @@ const products = [
   { title: 'Love Compatibility', price: '$9.99', description: 'Explore how two birth charts relate, including communication and differences.', ready: false },
   { title: '2027 Year Ahead', price: '$7.99', description: 'A personal look at the themes of the coming year and its twelve months.', ready: false },
   { title: 'Career & Money', price: '$8.99', description: 'Focus on work preferences, financial habits and professional strengths.', ready: false },
-  { title: 'Complete Bundle', price: '$24.99', description: 'Complete Life Reading, Love Compatibility and 2027 Year Ahead together.', ready: false },
+  { title: 'Business & Entrepreneurship', price: 'TBD', description: 'Explore business decisions, entrepreneurial tendencies and collaboration through your birth chart.', ready: false },
+  { title: 'Complete Bundle', price: '$24.99', description: 'Complete Life Reading, Love Compatibility and 2027 Year Ahead together. Business reading is a separate planned report.', ready: false },
 ] as const
 
 export default function ProductCatalog() {
