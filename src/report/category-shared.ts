@@ -61,7 +61,8 @@ export function selectedCycles(result: SajuResult, year: number) {
   return buildEnglishReading(result, year).periods.map(period => result.daewoon.find(cycle => cycle.ganzi === period.pillar && cycle.startDate.getUTCFullYear() === Number(period.period.split('–')[0]))!).filter(Boolean)
 }
 export function cycleFacts(result: SajuResult, year: number) {
-  return selectedCycles(result, year).map(cycle => `Ten-year cycle ${cycle.ganzi}; calculated start ${cycle.startDate.toISOString().slice(0, 10)}; stem ${cycle.stemSipsin}; branch ${cycle.branchSipsin}.`)
+  const cycles = selectedCycles(result, year)
+  return cycles.length ? cycles.map(cycle => `Ten-year cycle ${cycle.ganzi}; calculated start ${cycle.startDate.toISOString().slice(0, 10)}; stem ${cycle.stemSipsin}; branch ${cycle.branchSipsin}.`) : [`No current or upcoming ten-year cycle is available for ${year} in this chart’s calculated range. Birth year: ${result.input.year}.`]
 }
 export function validateYear(year: number, result: SajuResult) {
   if (!Number.isInteger(year) || year < 1900 || year > 2100 || year < result.input.year) throw new Error('Choose a report year from 1900 to 2100, on or after the birth year')

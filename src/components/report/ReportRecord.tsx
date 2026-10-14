@@ -3,7 +3,7 @@ import { useLocale } from '../../i18n/index.ts'
 import { REPORT_EDITION } from '../../report/complete-reading.ts'
 import FateKeyMark from './FateKeyMark.tsx'
 
-interface Props { input: BirthInput; birthSummary: string; referenceYear: number; preparedOn: string; secondaryInput?: BirthInput; secondaryBirthSummary?: string }
+interface Props { input: BirthInput; birthSummary: string; referenceYear: number; preparedOn: string; secondaryInput?: BirthInput; secondaryBirthSummary?: string; series?: string }
 
 export function PublisherSignature({ preparedOn }: { preparedOn: string }) {
   const { t } = useLocale()
@@ -13,7 +13,7 @@ export function PublisherSignature({ preparedOn }: { preparedOn: string }) {
   </div>
 }
 
-export default function ReportRecord({ input, birthSummary, referenceYear, preparedOn, secondaryInput, secondaryBirthSummary }: Props) {
+export default function ReportRecord({ input, birthSummary, referenceYear, preparedOn, secondaryInput, secondaryBirthSummary, series }: Props) {
   const { t } = useLocale()
   const time = input.unknownTime ? t('reading.record.unknown') : `${String(input.hour).padStart(2, '0')}:${String(input.minute).padStart(2, '0')}`
   const longitude = input.longitude == null ? t('reading.record.notSupplied') : `${Math.abs(input.longitude).toFixed(4)}° ${input.longitude < 0 ? 'W' : 'E'}`
@@ -28,7 +28,7 @@ export default function ReportRecord({ input, birthSummary, referenceYear, prepa
     [t('reading.record.pillars'), t('reading.record.pillarCount').replace('{n}', input.unknownTime ? '3' : '4')],
   ]
   return <section className="fate-reading-chapter fate-report-record" aria-label={t('reading.record.title')}>
-    <header><FateKeyMark /><div><p className="fate-eyebrow">THE FATE KEY · {t('reading.record.series')}</p><h2>{t('reading.record.title')}</h2><p>{t('reading.record.intro')}</p></div></header>
+    <header><FateKeyMark /><div><p className="fate-eyebrow">THE FATE KEY · {series ?? t('reading.record.series')}</p><h2>{t('reading.record.title')}</h2><p>{t('reading.record.intro')}</p></div></header>
     <p className="fate-report-record-birth"><strong>{secondaryInput ? t('category.person.a') : t('reading.design.preparedFor')}</strong><span>{birthSummary}</span></p>
     <dl className="fate-report-record-fields">{fields.map(([label, value]) => <div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}</dl>
     {secondaryInput && <section className="fate-report-secondary"><p className="fate-report-record-birth"><strong>{t('category.person.b')}</strong><span>{secondaryBirthSummary}</span></p><dl className="fate-report-record-fields"><div><dt>{t('reading.record.timezone')}</dt><dd>{secondaryInput.timezone ?? 'Asia/Seoul (default)'}</dd></div><div><dt>{t('reading.record.birthTime')}</dt><dd>{secondaryInput.unknownTime ? t('reading.record.unknown') : `${String(secondaryInput.hour).padStart(2, '0')}:${String(secondaryInput.minute).padStart(2, '0')}`}</dd></div><div><dt>{t('reading.record.longitude')}</dt><dd>{secondaryInput.longitude == null ? t('reading.record.notSupplied') : `${Math.abs(secondaryInput.longitude).toFixed(4)}° ${secondaryInput.longitude < 0 ? 'W' : 'E'}`}</dd></div><div><dt>{t('reading.record.pillars')}</dt><dd>{t('reading.record.pillarCount').replace('{n}', secondaryInput.unknownTime ? '3' : '4')}</dd></div></dl></section>}

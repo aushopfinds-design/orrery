@@ -236,7 +236,7 @@ export const homepageCopy: Record<string, string> = {
   "reading.record.intro": "The birth details and calculation basis used for this sample, with its publisher and edition.",
   "reading.record.edition": "Report edition",
   "reading.record.preparedOn": "Prepared on (UTC)",
-  "reading.record.referenceYear": "Timeline reference year",
+  "reading.record.referenceYear": "Report reference year",
   "reading.record.calendar": "Birth-date calendar",
   "reading.record.gregorian": "Gregorian (solar calendar)",
   "reading.record.timezone": "Birthplace time zone",

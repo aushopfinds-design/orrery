@@ -170,6 +170,14 @@ describe('Work, money, cycles and daily balance', () => {
       expect(buildCategoryReading(kind, first, { year: 2027 }).fullText).toBe(buildCategoryReading(kind, second, { year: 2027 }).fullText)
     }
   })
+  it('shows a real limit when the requested year is beyond the calculated cycles', () => {
+    const oldChart = charts[0]
+    const report = buildCareerReading(oldChart, 2100)
+    const cycles = report.chapters.find(chapter => chapter.id === 'work-chapters')!
+    expect(cycles.evidence.join(' ')).toContain('No current or upcoming ten-year cycle')
+    expect(cycles.paragraphs.join(' ')).toContain('No ten-year cycle is available')
+    expect(report.fullText).not.toContain('undefined')
+  })
 })
 
 describe('Bundle and public report navigation', () => {

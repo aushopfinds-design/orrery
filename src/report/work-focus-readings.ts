@@ -52,15 +52,15 @@ export function buildCareerReading(result: SajuResult, referenceYear = new Date(
         'Check what happens if the workload grows or the agreement changes. Decide which part needs a clear answer before you commit. For personal financial decisions, use your actual situation and appropriate professional advice when needed.',
       ], money.facts, 'Review one offer or recurring duty. List the time, costs, limits and unanswered questions on a single page.', { keepClose: ['Clear written terms and realistic workloads.', 'People who explain the work behind an attractive offer.'], watchFor: [focus.capacity, 'Treating a money marker as proof of future earnings.'] }, 'money'),
       chapter('work-chapters', 'Your Longer Working Chapters', '**Use a life-cycle theme to choose a small experiment.** A calculated period does not promise a promotion, a new job or a financial result.', [
-        `This section uses **${referenceYear}** to select the available current or upcoming ten-year cycles. Year ranges are short labels; the notes contain each calculated starting date.`,
+        `These are the available current or upcoming ten-year chapters for **${referenceYear}**. The notes give each calculated starting date.`,
         ...(cycles.length ? cycles.map(cycle => {
           const start = cycle.startDate.getUTCFullYear()
           const theme = WORK_PROFILES[cycle.stemSipsin]
           const step = FOCUS_WORK[cycle.stemSipsin]
-          return `For **${start}–${start + 9}**, the cycle adds **${theme.theme}**. In work, compare tasks involving ${step.tasks}. A useful way to test it is: **${step.proof}**`
+          return `For **${start}–${start + 9}**, the added theme is **${theme.theme}**. Try one skill test: **${step.proof}**`
         }) : ['No ten-year cycle is available for this reference year in the calculated range. The report does not invent a later cycle to fill the space.']),
-        `Your birth-month theme remains **${c.work.theme}**. Compare a cycle theme with the conditions that already help you work well. You do not need to change careers simply because a different label appears.`,
-        'Review an experiment against the real result. A task completed, a clearer agreement or useful feedback gives you evidence for the next choice. Keep future chapters open to your changing interests and circumstances.',
+        `Your birth-month theme remains **${c.work.theme}**. Try the added theme alongside the conditions that already help you work well.`,
+        'Compare the completed task with the feedback. Keep the useful part, adjust what did not fit and choose one next step.',
       ], cycleFacts(result, referenceYear), 'Choose one cycle theme and one small task that would let you test it without changing your whole career.', c.work, 'timeline'),
       chapter('career-plan', 'A Thirty-Day Career Experiment', '**Choose one question, one example and one review date.** A small plan gives you something concrete to assess.', [
         `In the first week, compare a real task with your need for **${c.personal.need}** and a working setting with **${c.work.setting}**. Note one condition you want to keep and one you want to discuss.`,
