@@ -95,14 +95,17 @@ export default function App() {
           <h2 className="text-center font-serif text-3xl text-[#f7e8d0] sm:text-4xl mt-3 mb-9">A Clear Guide to Your Life</h2>
           <div className="grid grid-cols-1 min-[420px]:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
             {[
-              ['✦','Your Personality','Understand your strengths, habits and hidden potential.'],
-              ['♡','Love & Relationships','Explore how you connect and communicate.'],
-              ['$','Money & Success','Reflect on your choices and financial habits.'],
-              ['◇','Career & Purpose','Find work styles and environments that may suit you.'],
-              ['↗','Life Timeline','Explore the themes of different life chapters.'],
-              ['◷','Next 12 Months','Discover traditional themes for the year ahead.'],
-            ].map(([symbol,title,description])=><div key={title} className="rounded-2xl border border-[#967244]/55 bg-[#0b2037] overflow-hidden shadow-sm">
-              <div className="h-16 sm:h-24 relative overflow-hidden bg-[#0b2741]" style={{backgroundImage:"linear-gradient(125deg, rgba(7,27,51,.3), rgba(211,161,95,.1)), url(/saju-moon-mountains.svg)",backgroundSize:"cover",backgroundPosition: title === "Love & Relationships" ? "75% 30%" : title === "Life Timeline" ? "35% 60%" : "center"}}><div className="absolute bottom-2 left-3 rounded-full bg-white/90 px-3 py-1 text-xl text-[#ad7a38]">{symbol}</div></div><div className="p-4 sm:p-6">
+              {symbol:'✦',title:'Your Personality',description:'Understand your strengths, habits and hidden potential.',image:'/saju-moon-mountains.svg'},
+              {symbol:'♡',title:'Love & Relationships',description:'Explore your relationship patterns and communication style.',image:'/saju-moon-mountains.svg'},
+              {symbol:'♥',title:'Love Compatibility',description:'Compare two birth charts to explore connection, differences and communication.',image:'/saju-moon-mountains.svg'},
+              {symbol:'$',title:'Money & Success',description:'Reflect on your financial habits and opportunities.',image:'/saju-moon-mountains.svg'},
+              {symbol:'◇',title:'Career & Purpose',description:'Discover work styles and environments that may suit you.',image:'/saju-moon-mountains.svg'},
+              {symbol:'♧',title:'Business & Entrepreneurship',description:'Explore your approach to starting a business, decisions and partnerships.',image:'/saju-moon-mountains.svg'},
+              {symbol:'☼',title:'Health & Wellbeing',description:'Reflect on balance, daily routines and self-care.',image:'/saju-moon-mountains.svg'},
+              {symbol:'↗',title:'Life Timeline',description:'Explore the themes of different life chapters.',image:'/saju-moon-mountains.svg'},
+              {symbol:'◷',title:'Next 12 Months',description:'Discover traditional themes for the year ahead.',image:'/saju-moon-mountains.svg'},
+            ].map(({symbol,title,description,image})=><div key={title} className="rounded-2xl border border-[#967244]/55 bg-[#0b2037] overflow-hidden shadow-sm">
+              <div className="h-20 sm:h-24 relative overflow-hidden bg-[#0b2741]" style={{backgroundImage:`linear-gradient(125deg, rgba(7,27,51,.3), rgba(211,161,95,.1)), url(${image})`,backgroundSize:"cover",backgroundPosition:"center"}}><div className="absolute bottom-2 left-3 rounded-full bg-white/90 px-3 py-1 text-xl text-[#ad7a38]">{symbol}</div></div><div className="p-4 sm:p-6">
               <h3 className="font-serif text-lg font-semibold text-[#f3d49d]">{title}</h3>
               <p className="mt-2 text-sm leading-relaxed text-slate-200">{description}</p></div>
             </div>)}
