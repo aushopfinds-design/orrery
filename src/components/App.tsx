@@ -41,23 +41,23 @@ export default function App() {
   return (
     <div className="min-h-screen bg-[#061629] text-[#f7e8d0]">
       <header className="relative overflow-hidden bg-[#03111f] text-white">
-        <div className="pointer-events-none absolute inset-0" style={{backgroundImage:'linear-gradient(100deg,rgba(2,12,24,.94) 12%,rgba(2,12,24,.75) 60%,rgba(7,30,50,.7)),url(/saju-moon-mountains.svg)',backgroundSize:'cover',backgroundPosition:'center'}} />
+        <div className="pointer-events-none absolute inset-0" style={{backgroundImage:'linear-gradient(100deg,rgba(2,12,24,.94) 12%,rgba(2,12,24,.75) 60%,rgba(7,30,50,.7)),url(/fate-key-destiny-tree.svg)',backgroundSize:'cover',backgroundPosition:'center'}} />
         <div className="pointer-events-none absolute right-[-55px] top-24 h-60 w-60 rounded-full border border-[#b78b50]/20 sm:right-[10%]" />
         <div className="pointer-events-none absolute right-2 top-32 h-40 w-40 rounded-full border border-[#b78b50]/20" />
         <nav className="relative z-10 mx-auto flex max-w-6xl items-center justify-between gap-3 px-5 py-5 sm:px-6">
-          <a href="#" className="flex items-center gap-2 text-[#e9c48c]" aria-label="FATE KEY home">
-            <img src="/destiny-code-emblem.svg" alt="" className="h-14 w-14 shrink-0 sm:h-16 sm:w-16" />
-            <span><span className="block font-serif text-lg tracking-[.045em] sm:text-2xl">FATE KEY</span><span className="block text-[8px] tracking-[.21em] text-[#d8bb8c]">YOUR LIFE. DECODED.</span></span>
+          <a href="#" className="flex items-center gap-2 text-[#e9c48c]" aria-label="The Fate Key home">
+            <img src="/fate-key-destiny-tree.svg" alt="" className="h-12 w-12 shrink-0 rounded-full object-cover sm:h-14 sm:w-14" />
+            <span><span className="block font-serif text-[1.25rem] tracking-[.02em] sm:text-2xl">The Fate Key</span><span className="block text-[8px] tracking-[.21em] text-[#d8bb8c]">UNLOCK A BRIGHTER YOU</span></span>
           </a>
           <button type="button" aria-label="Open menu" aria-expanded={menuOpen} onClick={() => setMenuOpen(v => !v)} className="flex h-11 w-11 items-center justify-center rounded-lg border border-[#a7814b]/30 text-2xl text-[#edc88e]">☰</button>
           {menuOpen && <div className="absolute right-5 top-[78px] z-30 flex w-48 flex-col rounded-xl border border-[#a7814b]/50 bg-[#0b2037] p-3 shadow-2xl"><a className="p-3" href="#birth-details" onClick={() => setMenuOpen(false)}>Birth Details</a><a className="p-3" href="#discover" onClick={() => setMenuOpen(false)}>Discover</a><a className="p-3" href="#reports" onClick={() => setMenuOpen(false)}>Our Reports</a></div>}
         </nav>
-        <div className="relative z-10 mx-auto flex min-h-[590px] max-w-6xl flex-col justify-center px-7 pb-14 pt-10 sm:min-h-[570px] sm:px-10">
+        <div className="relative z-10 mx-auto flex min-h-[440px] max-w-6xl flex-col justify-center px-6 pb-8 pt-6 sm:min-h-[520px] sm:px-10">
           <p className="max-w-[230px] text-[11px] font-medium leading-5 tracking-[.26em] text-[#e7bc7e]">ANCIENT WISDOM.<br/>MODERN INSIGHT.</p>
-          <h1 className="mt-5 max-w-[460px] font-serif text-[2.9rem] leading-[1.1] tracking-tight text-[#fff9ed] sm:text-6xl">Understand<br/>Yourself.<br/>Create a <span className="text-[#e9bd7f]">Brighter Tomorrow.</span></h1>
-          <p className="mt-6 max-w-[370px] text-[15px] leading-7 text-slate-200">Discover your unique path with a personalized destiny report based on your birth date and time.</p>
-          <a href="#birth-details" className="mt-8 flex min-h-14 w-full max-w-[380px] items-center justify-center gap-3 rounded-xl bg-gradient-to-r from-[#f5d7a3] to-[#dda767] px-5 text-base font-semibold text-[#08192b] shadow-lg shadow-black/30">Get Your Personal Report <span aria-hidden="true">→</span></a>
-          <div className="mt-10 grid max-w-[380px] grid-cols-3 gap-3 text-center text-[#e9bd7f]">
+          <h1 className="mt-5 max-w-[460px] font-serif text-[2.45rem] leading-[1.12] tracking-tight text-[#fff9ed] sm:text-6xl">Understand<br/>Yourself.<br/>Create a <span className="text-[#e9bd7f]">Brighter Tomorrow.</span></h1>
+          <p className="mt-4 max-w-[370px] text-[15px] leading-7 text-slate-200">Discover your unique path with a personalized destiny report based on your birth date and time.</p>
+          <a href="#birth-details" className="mt-6 flex min-h-12 w-full max-w-[380px] items-center justify-center gap-3 rounded-xl bg-gradient-to-r from-[#f5d7a3] to-[#dda767] px-5 text-base font-semibold text-[#08192b] shadow-lg shadow-black/30">Get Your Personal Report <span aria-hidden="true">→</span></a>
+          <div className="mt-6 grid max-w-[380px] grid-cols-3 gap-3 text-center text-[#e9bd7f]">
             <div><span className="block text-2xl">✦</span><span className="mt-2 block text-[10px] leading-4 tracking-wide">SELF<br/>DISCOVERY</span></div>
             <div><span className="block text-2xl">♡</span><span className="mt-2 block text-[10px] leading-4 tracking-wide">LOVE &<br/>RELATIONSHIPS</span></div>
             <div><span className="block text-2xl">♧</span><span className="mt-2 block text-[10px] leading-4 tracking-wide">CAREER &<br/>MONEY</span></div>
