@@ -5,7 +5,7 @@ import type { Locale } from '../i18n/index.ts'
 const LISTBOX_ID = 'lang-listbox'
 const optionId = (code: Locale) => `lang-option-${code}`
 
-export default function LanguageMenu() {
+export default function LanguageMenu({ inline = false }: { inline?: boolean } = {}) {
   const { locale, setLocale, t } = useLocale()
   const [open, setOpen] = useState(false)
   const [highlight, setHighlight] = useState(0)
@@ -88,7 +88,7 @@ export default function LanguageMenu() {
   }
 
   return (
-    <div ref={containerRef} className="fixed top-14 left-3 z-50">
+    <div ref={containerRef} className={inline ? 'relative z-50' : 'fixed top-14 left-3 z-50'}>
       <button
         ref={triggerRef}
         type="button"
@@ -99,15 +99,15 @@ export default function LanguageMenu() {
         aria-controls={open ? LISTBOX_ID : undefined}
         aria-label={label}
         title={label}
-        className="w-8 h-8 rounded-full
+        className={inline ? 'fate-language-button' : `w-8 h-8 rounded-full
           flex items-center justify-center
           bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm
           border border-gray-200 dark:border-gray-700
           text-gray-600 dark:text-gray-300
           hover:bg-gray-100 dark:hover:bg-gray-700
-          transition-colors text-xs font-medium"
+          transition-colors text-xs font-medium`}
       >
-        {current.short}
+        {inline ? <><span aria-hidden="true">◎</span><span className="fate-language-name">{current.name}</span><span aria-hidden="true">⌄</span></> : current.short}
       </button>
 
       {open && (
@@ -119,10 +119,10 @@ export default function LanguageMenu() {
           aria-label={label}
           aria-activedescendant={optionId(LOCALES[highlight].code)}
           onKeyDown={handleListKeyDown}
-          className="absolute top-full left-0 mt-1 w-36 py-1 outline-none
+          className={`${inline ? 'right-0' : 'left-0'} absolute top-full mt-1 w-36 py-1 outline-none
             rounded-lg border shadow-lg
             bg-white dark:bg-gray-800
-            border-gray-200 dark:border-gray-700"
+            border-gray-200 dark:border-gray-700`}
         >
           {LOCALES.map((l, i) => {
             const selected = l.code === locale

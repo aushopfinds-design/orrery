@@ -1,4 +1,7 @@
+import { homepageCopy } from '../homepage.ts'
+
 const es: Record<string, string> = {
+  ...homepageCopy,
   // App
   'app.subtitle1': 'Calculadora de',
   'app.subtitle.tool': 'Saju · Zi Wei Dou Shu · Carta natal',

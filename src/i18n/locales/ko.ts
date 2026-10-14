@@ -1,4 +1,7 @@
+import { homepageCopy } from '../homepage.ts'
+
 const ko: Record<string, string> = {
+  ...homepageCopy,
   // App
   'app.subtitle1': '서버 없이 브라우저에서 동작하는',
   'app.subtitle.tool': '사주팔자 · 자미두수 · 서양 점성술',

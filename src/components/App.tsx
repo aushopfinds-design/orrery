@@ -1,6 +1,8 @@
 import { useCallback, useRef, useState } from 'react'
 import BirthForm from './BirthForm.tsx'
 import ProductCatalog from './ProductCatalog.tsx'
+import HomeOverview, { FateEmblem, HomeBenefits, HomeFAQ } from './HomeOverview.tsx'
+import LanguageMenu from './LanguageMenu.tsx'
 import type { BirthFormHandle, SavedFormState } from './BirthForm.tsx'
 import ProfileModal from './ProfileModal.tsx'
 import CopyButton from './CopyButton.tsx'
@@ -16,128 +18,84 @@ import { sajuToText, ziweiToText, natalToText } from '../utils/text-export.ts'
 import type { BirthInput } from '@orrery/core/types'
 
 type Tab = 'saju' | 'ziwei' | 'natal' | 'reading'
+const SAMPLE_BIRTH: BirthInput = {
+  year: 1998, month: 3, day: 25, hour: 3, minute: 0,
+  gender: 'M', timezone: 'America/New_York', latitude: 40.7128, longitude: -74.006,
+}
 
 export default function App() {
   const { t } = useLocale()
   const [tab, setTab] = useState<Tab>('reading')
   const [menuOpen, setMenuOpen] = useState(false)
   const [birthInput, setBirthInput] = useState<BirthInput | null>(null)
+  const [isSample, setIsSample] = useState(false)
   const [profileModalOpen, setProfileModalOpen] = useState(false)
   const [externalFormState, setExternalFormState] = useState<SavedFormState | null>(null)
   const resultsRef = useRef<HTMLDivElement>(null)
   const birthFormRef = useRef<BirthFormHandle>(null)
-
+  function scrollToReading() {
+    requestAnimationFrame(() => resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }))
+  }
   function handleSubmit(input: BirthInput) {
     setBirthInput(input)
-    requestAnimationFrame(() => {
-      resultsRef.current?.scrollIntoView({ behavior: 'smooth' })
-    })
+    setIsSample(false)
+    setTab('reading')
+    scrollToReading()
   }
-
-  const getCurrentFormState = useCallback(() => {
-    return birthFormRef.current?.getCurrentState() ?? null
-  }, [])
-
+  function viewSample() {
+    setBirthInput(SAMPLE_BIRTH)
+    setIsSample(true)
+    setTab('reading')
+    scrollToReading()
+  }
+  const getCurrentFormState = useCallback(() => birthFormRef.current?.getCurrentState() ?? null, [])
+  const links = [
+    ['#home', 'home.nav.home'], ['#birth-details', 'home.nav.free'],
+    ['#reports', 'home.nav.reports'], ['#about', 'home.nav.about'], ['#faq', 'home.nav.faq'],
+  ]
+  function navigateHomeSection() {
+    setMenuOpen(false)
+    setBirthInput(null)
+    setIsSample(false)
+  }
   return (
-    <div className="min-h-screen bg-[#061629] text-[#f7e8d0]">
-      <style>{`
-        @keyframes fateTwinkle { 0%, 100% { opacity: .15; transform: scale(.75); } 48% { opacity: .95; transform: scale(1.35); } }
-        @keyframes fateKeyGlow { 0%, 100% { opacity: .24; transform: translate(-50%,-50%) scale(.92); } 50% { opacity: .62; transform: translate(-50%,-50%) scale(1.16); } }
-        @keyframes fateMist { 0%, 100% { transform: translateX(-2%); opacity: .15; } 50% { transform: translateX(3%); opacity: .28; } }
-        .fate-star { position: absolute; width: 4px; height: 4px; border-radius: 50%; background: #ffe5a5; box-shadow: 0 0 12px 3px #efb75f; animation: fateTwinkle 4.5s ease-in-out infinite; }
-        .fate-key-glow { position:absolute; top: 43%; left: 73%; width: 100px; height: 160px; border-radius: 50%; background: radial-gradient(ellipse, rgba(255,210,118,.45),rgba(255,190,76,.1) 50%,transparent 75%); filter: blur(13px); animation: fateKeyGlow 6s ease-in-out infinite; }
-        .fate-mist { position:absolute; inset: auto -8% 0; height: 22%; background: radial-gradient(ellipse at 70% 90%,rgba(155,180,204,.28),transparent 70%); filter: blur(18px); animation: fateMist 14s ease-in-out infinite; }
-        @media (max-width: 640px) { .fate-key-glow { left: 75%; top: 38%; width: 60px; height: 110px; } }
-        @media (prefers-reduced-motion: reduce) { .fate-star, .fate-key-glow, .fate-mist { animation: none !important; } }
-      `}</style>
-      <header className="relative overflow-hidden bg-[#03111f] text-white">
-        <div className="pointer-events-none absolute inset-0" style={{backgroundImage:'linear-gradient(100deg,rgba(2,12,24,.94) 12%,rgba(2,12,24,.75) 60%,rgba(7,30,50,.7)),url(/fate-key-destiny-tree.svg)',backgroundSize:'cover',backgroundPosition:'center'}} />
-        <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
-          <span className="fate-key-glow" />
-          <span className="fate-mist" />
-          {[[12,19,0],[26,36,1.2],[44,14,2.4],[62,25,.6],[84,15,3],[93,49,1.8],[72,72,2.8],[34,76,.9],[17,58,3.5],[55,61,1.5]].map(([x,y,delay],i)=><span key={i} className="fate-star" style={{left:`${x}%`,top:`${y}%`,animationDelay:`${delay}s`}} />)}
-        </div>
-        <div className="pointer-events-none absolute right-[-55px] top-24 h-60 w-60 rounded-full border border-[#b78b50]/20 sm:right-[10%]" />
-        <div className="pointer-events-none absolute right-2 top-32 h-40 w-40 rounded-full border border-[#b78b50]/20" />
-        <nav className="relative z-10 mx-auto flex max-w-6xl items-center justify-between gap-3 px-5 py-5 sm:px-6">
-          <a href="#" className="flex items-center gap-2 text-[#e9c48c]" aria-label="The Fate Key home">
-            <img src="/fate-key-destiny-tree.svg" alt="" className="h-12 w-12 shrink-0 rounded-full object-cover sm:h-14 sm:w-14" />
-            <span><span className="block font-serif text-[1.25rem] tracking-[.02em] sm:text-2xl">The Fate Key</span><span className="block text-[8px] tracking-[.21em] text-[#d8bb8c]">UNLOCK A BRIGHTER YOU</span></span>
+    <div className="fate-site" id="home">
+      <header className="fate-hero">
+        <nav className="fate-nav" aria-label={t('home.nav.label')}>
+          <a href="#home" className="fate-brand" aria-label="The Fate Key" onClick={navigateHomeSection}>
+            <FateEmblem className="fate-brand-emblem" />
+            <span><strong>The Fate Key</strong><small>UNLOCK A BRIGHTER YOU</small></span>
           </a>
-          <button type="button" aria-label="Open menu" aria-expanded={menuOpen} onClick={() => setMenuOpen(v => !v)} className="flex h-11 w-11 items-center justify-center rounded-lg border border-[#a7814b]/30 text-2xl text-[#edc88e]">☰</button>
-          {menuOpen && <div className="absolute right-5 top-[78px] z-30 flex w-48 flex-col rounded-xl border border-[#a7814b]/50 bg-[#0b2037] p-3 shadow-2xl"><a className="p-3" href="#birth-details" onClick={() => setMenuOpen(false)}>Birth Details</a><a className="p-3" href="#discover" onClick={() => setMenuOpen(false)}>Discover</a><a className="p-3" href="#reports" onClick={() => setMenuOpen(false)}>Our Reports</a></div>}
-        </nav>
-        <div className="relative z-10 mx-auto flex min-h-[440px] max-w-6xl flex-col justify-center px-6 pb-8 pt-6 sm:min-h-[520px] sm:px-10">
-          <p className="max-w-[230px] text-[11px] font-medium leading-5 tracking-[.26em] text-[#e7bc7e]">ANCIENT WISDOM.<br/>MODERN INSIGHT.</p>
-          <h1 className="mt-5 max-w-[460px] font-serif text-[2.45rem] leading-[1.12] tracking-tight text-[#fff9ed] sm:text-6xl">Understand<br/>Yourself.<br/>Create a <span className="text-[#e9bd7f]">Brighter Tomorrow.</span></h1>
-          <p className="mt-4 max-w-[370px] text-[15px] leading-7 text-slate-200">Discover your unique path with a personalized destiny report based on your birth date and time.</p>
-          <a href="#birth-details" className="mt-6 flex min-h-12 w-full max-w-[380px] items-center justify-center gap-3 rounded-xl bg-gradient-to-r from-[#f5d7a3] to-[#dda767] px-5 text-base font-semibold text-[#08192b] shadow-lg shadow-black/30">Get Your Personal Report <span aria-hidden="true">→</span></a>
-          <div className="mt-6 grid max-w-[380px] grid-cols-3 gap-3 text-center text-[#e9bd7f]">
-            <div><span className="block text-2xl">✦</span><span className="mt-2 block text-[10px] leading-4 tracking-wide">SELF<br/>DISCOVERY</span></div>
-            <div><span className="block text-2xl">♡</span><span className="mt-2 block text-[10px] leading-4 tracking-wide">LOVE &<br/>RELATIONSHIPS</span></div>
-            <div><span className="block text-2xl">♧</span><span className="mt-2 block text-[10px] leading-4 tracking-wide">CAREER &<br/>MONEY</span></div>
+          <div className="fate-desktop-links">{links.map(([href, key]) => <a key={href} href={href} onClick={navigateHomeSection}>{t(key)}</a>)}</div>
+          <div className="fate-nav-actions">
+            <LanguageMenu inline />
+            <button type="button" className="fate-saved-button" onClick={() => setProfileModalOpen(true)}>{t('home.nav.saved')}</button>
+            <button type="button" className="fate-menu-button" aria-label={t('home.nav.menu')} aria-expanded={menuOpen} aria-controls="fate-mobile-menu" onClick={() => setMenuOpen(open => !open)}><span aria-hidden="true">{menuOpen ? '×' : '☰'}</span></button>
           </div>
+          {menuOpen && <div className="fate-mobile-menu" id="fate-mobile-menu">{links.map(([href, key]) => <a key={href} href={href} onClick={navigateHomeSection}>{t(key)}</a>)}<button type="button" onClick={() => { setMenuOpen(false); setProfileModalOpen(true) }}>{t('home.nav.saved')}</button></div>}
+        </nav>
+        <div className="fate-hero-art" aria-hidden="true">
+          <svg viewBox="825 115 780 700" preserveAspectRatio="xMidYMid slice"><image href="/images/fate-key-approved-hero.webp" width="1606" height="979" /></svg>
+          <span className="fate-key-glow" /><span className="fate-mist" />
+          {[[15,18,0],[36,35,1.2],[66,12,2.4],[91,28,.6],[84,54,3],[20,70,1.8],[67,80,2.8]].map(([x,y,delay],i) => <span key={i} className="fate-star" style={{left:`${x}%`,top:`${y}%`,animationDelay:`${delay}s`}} />)}
+        </div>
+        <div className="fate-hero-layout">
+          <div className="fate-hero-intro">
+            <p className="fate-eyebrow">{t('home.hero.eyebrow')}</p>
+            <h1>{t('home.hero.title')}<br /><em>{t('home.hero.highlight')}</em></h1>
+            <p className="fate-hero-description">{t('home.hero.text')}</p>
+          </div>
+          <section id="birth-details" className="fate-birth-panel" aria-labelledby="birth-heading">
+            <div className="fate-birth-heading"><span aria-hidden="true">✦</span><h2 id="birth-heading">{t('home.form.title')}</h2></div>
+            <p className="fate-birth-description">{t('home.form.text')}</p>
+            <BirthForm ref={birthFormRef} onSubmit={handleSubmit} externalState={externalFormState} onExternalStateConsumed={() => setExternalFormState(null)} />
+          </section>
         </div>
       </header>
-      <main className="mx-auto max-w-6xl px-4 pb-16 sm:px-6">
-        <section id="birth-details" className="relative z-20 mx-auto max-w-2xl scroll-mt-3 pt-12 sm:pt-16">
-          <div className="mb-6 px-2 sm:mb-8">
-            <h2 className="font-serif text-[2.1rem] text-[#f5e6ce] sm:text-4xl">Your Birth Details</h2>
-            <p className="mt-2 max-w-sm text-[15px] leading-6 text-slate-300">Enter your information to receive your personalized destiny report.</p>
-          </div>
-        <BirthForm
-          ref={birthFormRef}
-          onSubmit={handleSubmit}
-          externalState={externalFormState}
-          onExternalStateConsumed={() => setExternalFormState(null)}
-        />
-        <div className="hidden">
-          <button
-            type="button"
-            onClick={() => setProfileModalOpen(true)}
-            className="flex items-center gap-1 text-sm text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
-          >
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
-            </svg>
-            {t('app.profileManage')}
-          </button>
-        </div>
-
-        </section>
-        {!birthInput && <section id="discover" className="py-10 sm:py-16">
-          <p className="text-center text-xs tracking-[0.2em] text-[#e9c48c] uppercase">What you'll discover</p>
-          <h2 className="text-center font-serif text-3xl text-[#f7e8d0] sm:text-4xl mt-3 mb-9">A Clear Guide to Your Life</h2>
-          <div className="grid grid-cols-1 min-[420px]:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
-            {[
-              {symbol: '✦', title: 'Your Personality', description: 'Understand your strengths, habits and hidden potential.', image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=900&q=80'},
-              {symbol: '♡', title: 'Love & Relationships', description: 'Explore how you connect and communicate.', image: 'https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=900&q=80'},
-              {symbol: '♥', title: 'Love Compatibility', description: 'Explore the connection between two birth charts.', image: 'https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?auto=format&fit=crop&w=900&q=80'},
-              {symbol: '$', title: 'Money & Success', description: 'Reflect on your choices and financial habits.', image: 'https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?auto=format&fit=crop&w=900&q=80'},
-              {symbol: '◇', title: 'Career & Purpose', description: 'Find work styles and environments that may suit you.', image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=900&q=80'},
-              {symbol: '♧', title: 'Business & Entrepreneurship', description: 'Explore business decisions, partnerships and working style.', image: 'https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=900&q=80'},
-              {symbol: '☼', title: 'Health & Wellbeing', description: 'Reflect on balance, daily routines and self-care.', image: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=900&q=80'},
-              {symbol: '↗', title: 'Life Timeline', description: 'See the key phases and turning points in your life.', image: 'https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=900&q=80'},
-              {symbol: '◷', title: 'Next 12 Months', description: 'Explore traditional themes for the year ahead.', image: 'https://images.unsplash.com/photo-1462331940025-496dfbfc7564?auto=format&fit=crop&w=900&q=80'}
-            ].map(({symbol,title,description,image}) => <a key={title} href="#birth-details" aria-label={`Explore ${title} — start with your birth details`} className="group relative isolate flex min-h-[330px] flex-col justify-end overflow-hidden rounded-[20px] border border-[#b28a57]/55 bg-[#0b2037] shadow-lg shadow-black/20 transition-transform duration-300 hover:-translate-y-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#f3d49d] sm:min-h-[350px]">
-              <img src={image} alt="" loading="lazy" className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" onError={e => { e.currentTarget.style.display = 'none' }} />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#04172a] via-[#04172a]/75 to-[#04172a]/5" />
-              <span aria-hidden="true" className="absolute left-4 top-4 flex h-12 w-12 items-center justify-center rounded-full bg-white/95 text-2xl text-[#b68445] shadow-md">{symbol}</span>
-              <div className="relative z-10 px-5 pb-6 pt-28">
-                <h3 className="font-serif text-[1.45rem] font-semibold leading-tight text-[#f3d49d]">{title}</h3>
-                <p className="mt-3 max-w-[280px] pr-5 text-sm leading-6 text-slate-100">{description}</p>
-                <span aria-hidden="true" className="absolute bottom-6 right-4 flex h-9 w-9 items-center justify-center rounded-full border border-[#d9ae76] text-lg text-[#f3d49d]">›</span>
-              </div>
-            </a>)}
-          </div>
-          <div className="mt-12 rounded-2xl border border-[#967244]/60 bg-[#0b2037] p-7 sm:p-10">
-            <p className="text-xs tracking-widest uppercase text-[#e9c48c]">Sample report</p>
-            <h3 className="font-serif text-2xl mt-2 text-[#f7e8d0]">A Reading You Can Actually Understand</h3>
-            <p className="mt-3 text-slate-200 leading-relaxed max-w-2xl">Your report explains the traditional symbols behind your chart in everyday English, then offers questions and practical ideas to help you reflect. Every reading is based on your birth details.</p>
-            <p className="mt-3 text-xs text-slate-400">Inspired by traditional Korean birth-chart interpretation, not a scientific prediction of future events.</p>
-          </div>
-        </section>}
-        <ProductCatalog />
+      {!birthInput && <HomeBenefits />}
+      <main className={birthInput ? 'fate-main fate-main-reading' : 'fate-main'}>
+        {!birthInput && <><HomeOverview onViewSample={viewSample} /><ProductCatalog /><HomeFAQ /></>}
+        {isSample && <div className="fate-sample-notice" role="status"><p><strong>{t('home.sample.notice')}</strong> · {t('home.sample.details')}</p><a href="#birth-details">{t('home.sample.personal')} <span aria-hidden="true">↑</span></a></div>}
         {birthInput && (
           <>
             {/* Show the plain-English reading first; expert calculations remain available in separate tabs. */}
@@ -145,8 +103,8 @@ export default function App() {
               <button
                 className={`px-2 sm:px-4 py-2 text-sm sm:text-base font-medium whitespace-nowrap border-b-2 transition-colors ${
                   tab === 'saju'
-                    ? 'border-gray-800 text-gray-800 dark:border-gray-200 dark:text-gray-200'
-                    : 'border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200'
+                    ? 'border-[#eac18a] text-[#f4d19b]'
+                    : 'border-transparent text-slate-300 hover:text-[#f4d19b]'
                 }`}
                 onClick={() => setTab('saju')}
               >
@@ -155,8 +113,8 @@ export default function App() {
               <button
                 className={`px-2 sm:px-4 py-2 text-sm sm:text-base font-medium whitespace-nowrap border-b-2 transition-colors ${
                   tab === 'ziwei'
-                    ? 'border-gray-800 text-gray-800 dark:border-gray-200 dark:text-gray-200'
-                    : 'border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200'
+                    ? 'border-[#eac18a] text-[#f4d19b]'
+                    : 'border-transparent text-slate-300 hover:text-[#f4d19b]'
                 }`}
                 onClick={() => setTab('ziwei')}
               >
@@ -165,8 +123,8 @@ export default function App() {
               <button
                 className={`px-2 sm:px-4 py-2 text-sm sm:text-base font-medium whitespace-nowrap border-b-2 transition-colors ${
                   tab === 'natal'
-                    ? 'border-gray-800 text-gray-800 dark:border-gray-200 dark:text-gray-200'
-                    : 'border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200'
+                    ? 'border-[#eac18a] text-[#f4d19b]'
+                    : 'border-transparent text-slate-300 hover:text-[#f4d19b]'
                 }`}
                 onClick={() => setTab('natal')}
               >
@@ -175,8 +133,8 @@ export default function App() {
               <button
                 className={`px-2 sm:px-4 py-2 text-sm sm:text-base font-medium whitespace-nowrap border-b-2 transition-colors ${
                   tab === 'reading'
-                    ? 'border-amber-700 text-amber-800 dark:border-amber-400 dark:text-amber-300'
-                    : 'border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200'
+                    ? 'border-[#eac18a] text-[#f4d19b]'
+                    : 'border-transparent text-slate-300 hover:text-[#f4d19b]'
                 }`}
                 onClick={() => setTab('reading')}
               >
@@ -213,19 +171,16 @@ export default function App() {
             {tab === 'reading' && <ReadingView input={birthInput} />}
           </>
         )}
-
-
       </main>
-      <footer className="text-center text-xs text-slate-300 bg-[#04101e] py-8 px-4">
-        <p>FATE KEY · Traditional Saju insights for reflection, not guaranteed outcomes.</p>
-        <p className="mt-2">Calculation engine attribution: <a className="underline" href="https://github.com/rath/orrery" target="_blank" rel="noopener noreferrer">Orrery open-source project</a>.</p>
+      <footer className="fate-footer">
+        <div className="fate-footer-inner">
+          <a href="#home" className="fate-brand" aria-label="The Fate Key" onClick={navigateHomeSection}><FateEmblem className="fate-brand-emblem" /><span><strong>The Fate Key</strong><small>UNLOCK A BRIGHTER YOU</small></span></a>
+          <div className="fate-footer-links">{links.slice(1).map(([href,key]) => <a key={href} href={href} onClick={navigateHomeSection}>{t(key)}</a>)}</div>
+          <p>{t('home.footer.note')}</p>
+          <p className="fate-footer-credit">© {new Date().getFullYear()} The Fate Key · {t('home.footer.engine')} <a href="https://github.com/rath/orrery" target="_blank" rel="noopener noreferrer">Orrery</a></p>
+        </div>
       </footer>
-      <ProfileModal
-        open={profileModalOpen}
-        onClose={() => setProfileModalOpen(false)}
-        getCurrentFormState={getCurrentFormState}
-        onSelect={setExternalFormState}
-      />
+      <ProfileModal open={profileModalOpen} onClose={() => setProfileModalOpen(false)} getCurrentFormState={getCurrentFormState} onSelect={setExternalFormState} />
     </div>
   )
 }

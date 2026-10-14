@@ -1,4 +1,7 @@
+import { homepageCopy } from '../homepage.ts'
+
 const zh: Record<string, string> = {
+  ...homepageCopy,
   // App
   'app.subtitle1': '无需服务器，在浏览器中运行的',
   'app.subtitle.tool': '四柱八字 · 紫微斗数 · 西洋占星术',

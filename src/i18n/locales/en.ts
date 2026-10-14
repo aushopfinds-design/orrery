@@ -1,4 +1,7 @@
+import { homepageCopy } from '../homepage.ts'
+
 const en: Record<string, string> = {
+  ...homepageCopy,
   // App
   'app.subtitle1': 'A serverless, browser-based',
   'app.subtitle.tool': 'Saju · Ziwei Doushu · Natal Chart',
@@ -14,14 +17,14 @@ const en: Record<string, string> = {
   'app.intro': 'About',
 
   // BirthForm
-  'form.birthDate': 'Date of Birth (Solar)',
+  'form.birthDate': 'Date of Birth (YYYY / MM / DD)',
   'form.yearSuffix': '',
   'form.monthSuffix': '',
   'form.daySuffix': '',
   'form.kdt': 'This period falls under the 1988 Olympics summer time (KDT, UTC+10). All calculations are automatically adjusted.',
   'form.kstHistoricalOffset': 'This date falls under Korean historical timezone anomalies (1948-1951 KDT, 1954-1961 UTC+8:30/+9:30, 1987-1988 KDT). All calculations are automatically normalized to KST wall-clock.',
   'form.dstGapError': 'The entered time falls in a DST spring-forward gap and does not exist. Please verify the timezone of the birth record.',
-  'form.time': 'Time',
+  'form.time': 'Birth Time (24-hour)',
   'form.unknown': 'Unknown',
   'form.hourSuffix': '',
   'form.minuteSuffix': '',

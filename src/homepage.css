@@ -1,0 +1,229 @@
+/* FATE KEY homepage: navy artwork, warm paper panels and readable report cards. */
+.fate-site {
+  --fate-night: #041322;
+  --fate-paper: #fcf6ee;
+  --fate-ink: #1b2d43;
+  --fate-gold: #c1995e;
+  background: var(--fate-paper);
+  color: var(--fate-ink);
+  min-height: 100vh;
+}
+.fate-site * { box-sizing: border-box; }
+.fate-site a, .fate-site button, .fate-site summary { -webkit-tap-highlight-color: transparent; }
+.fate-site a:focus-visible, .fate-site button:focus-visible, .fate-site summary:focus-visible {
+  outline: 2px solid #b58742; outline-offset: 4px;
+}
+.fate-site h1, .fate-section h2, .fate-sample-section h2, .fate-discovery-card h3, .fate-product-card h3 {
+  font-family: Georgia, 'Times New Roman', serif; font-weight: 400;
+}
+.fate-hero { position: relative; isolation: isolate; overflow: clip; background: var(--fate-night); color: #fff8eb; border-bottom: 1px solid #c1995e; }
+.fate-hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 75% 30%, #143448 0, transparent 55%); pointer-events: none; z-index: -2; }
+.fate-nav { position: relative; z-index: 30; display: flex; align-items: center; justify-content: space-between; gap: 24px; max-width: 1260px; margin: 0 auto; padding: 22px 32px; }
+.fate-brand { display: inline-flex; align-items: center; gap: 10px; flex-shrink: 0; color: #eccb8e; text-decoration: none; }
+.fate-brand-emblem { width: 51px; height: 53px; border-radius: 50%; }
+.fate-brand strong { display: block; font: 29px/1.2 Georgia, 'Times New Roman', serif; }
+.fate-brand small { display: block; margin-top: 6px; font-size: 8px; letter-spacing: .23em; color: #d5bd99; }
+.fate-desktop-links { display: flex; align-items: center; gap: 26px; margin-left: auto; }
+.fate-desktop-links a { font-size: 14px; text-decoration: none; color: #f2eadd; padding: 9px 0; }
+.fate-desktop-links a:first-child { color: #eccb8e; border-bottom: 2px solid #c1995e; }
+.fate-desktop-links a:hover, .fate-footer-links a:hover { color: #eccb8e; }
+.fate-nav-actions { display: flex; align-items: center; gap: 12px; }
+.fate-nav-actions > div > button { color: #f1e7d6; }
+.fate-language-button { display: flex; align-items: center; justify-content: center; gap: 7px; padding: 8px 5px; min-height: 40px; font-size: 12px; }
+.fate-birth-form [role=option] { color: #203049; }
+.fate-birth-form [role=option]:hover, .fate-birth-form [role=option][aria-selected=true] { background: #f0e5d6; }
+.fate-saved-button { padding: 10px 18px; border-radius: 99px; border: 1px solid #c5a064; color: #f1d5a2; font-size: 12px; white-space: nowrap; }
+.fate-menu-button { display: none; height: 42px; width: 42px; border: 1px solid #c5a06466; border-radius: 10px; color: #f1d5a2; font-size: 25px; }
+.fate-mobile-menu { position: absolute; right: 20px; top: 84px; width: 220px; display: flex; flex-direction: column; padding: 12px; background: #0b2236; border: 1px solid #c5a06466; border-radius: 15px; box-shadow: 0 18px 40px #0008; }
+.fate-mobile-menu a, .fate-mobile-menu button { padding: 12px; text-align: left; font-size: 14px; color: #f4dfb9; border-radius: 8px; }
+.fate-mobile-menu a:hover, .fate-mobile-menu button:hover { background: #173149; }
+.fate-hero-art { position: absolute; z-index: -1; right: max(0px, calc((100vw - 1480px)/2)); top: 108px; height: 760px; width: min(54vw, 760px); overflow: hidden; mask-image: linear-gradient(90deg, transparent, #000 13%, #000 91%, transparent); }
+.fate-hero-art > svg { width: 100%; height: 100%; display: block; }
+.fate-hero-art::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, #041322 0, transparent 7%, transparent 78%, #041322); }
+.fate-hero-layout { position: relative; z-index: 1; max-width: 1260px; margin: 0 auto; padding: 28px 32px 64px; }
+.fate-hero-intro { max-width: 625px; }
+.fate-eyebrow { color: #98662c; font-size: 10px; line-height: 1.7; text-transform: uppercase; letter-spacing: .24em; font-weight: 600; }
+.fate-hero-intro .fate-eyebrow { color: #edc787; }
+.fate-hero-intro h1 { margin: 15px 0 0; max-width: 640px; font-size: clamp(42px, 4.1vw, 56px); line-height: 1.09; letter-spacing: -.025em; text-wrap: balance; }
+.fate-hero-intro h1 em { font-style: normal; color: #efc78b; }
+.fate-hero-description { max-width: 500px; margin: 18px 0 0; font-size: 15px; line-height: 1.8; color: #e3e5e8; }
+.fate-birth-panel { margin-top: 32px; width: min(100%, 600px); border: 1px solid #d1af78; border-radius: 18px; background: #fff9f1; color: #22354a; box-shadow: 0 12px 55px #0004; scroll-margin-top: 18px; }
+.fate-birth-heading { display: flex; justify-content: center; align-items: center; gap: 10px; width: max-content; max-width: calc(100% - 24px); margin: -17px auto 0; padding: 9px 22px; border-radius: 99px; background: linear-gradient(120deg, #f2d49a, #c79a50); box-shadow: 0 4px 10px #64401416; }
+.fate-birth-heading span { color: #fff6df; font-size: 19px; }
+.fate-birth-heading h2 { font: 600 15px/1.4 Georgia, 'Times New Roman', serif; }
+.fate-birth-description { margin: 12px 15px 0; text-align: center; font-size: 12px; line-height: 1.6; color: #6d5c48; }
+.fate-birth-form { color-scheme: light; }
+.fate-birth-form [role=combobox] { min-height: 48px; border-color: #ddcbb1; background: #fffdf9; color: #203049; }
+.fate-birth-form input[type=checkbox]:focus-visible + div { outline: 2px solid #b58742; outline-offset: 3px; }
+.fate-birth-form [role=listbox] { color-scheme: light; background: #fffdf9; border-color: #ddcbb1; }
+.fate-benefits { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; max-width: 1200px; margin: 0 auto; padding: 34px 24px; text-align: center; }
+.fate-benefits > div { padding: 0 24px; border-right: 1px solid #debd884f; }
+.fate-benefits > div:last-child { border-right: 0; }
+.fate-benefit-icon { font-size: 31px; line-height: 1; color: #967039; }
+.fate-benefits h2 { font: 20px/1.3 Georgia, 'Times New Roman', serif; margin-top: 11px; }
+.fate-benefits p { font-size: 12px; line-height: 1.65; color: #675f56; margin: 8px auto 0; max-width: 235px; }
+.fate-main { max-width: 1200px; margin: 0 auto; padding: 0 24px 52px; }
+.fate-section { padding: 30px 0; scroll-margin-top: 20px; }
+.fate-section-heading { text-align: center; margin: 0 auto 28px; }
+.fate-section-heading h2 { margin-top: 8px; font-size: 34px; line-height: 1.2; letter-spacing: -.025em; }
+.fate-section-heading > p:last-child:not(.fate-eyebrow) { max-width: 550px; margin: 10px auto 0; font-size: 14px; line-height: 1.7; color: #6c6256; }
+.fate-discovery-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 20px; }
+.fate-discovery-card { display: flex; flex-direction: column; overflow: hidden; border-radius: 15px; border: 1px solid #e1cdaa; background: linear-gradient(180deg,#fffdf9,#f2e8de); text-decoration: none; box-shadow: 0 5px 18px #533d1a06; transition: transform .2s, box-shadow .2s; }
+.fate-discovery-card:hover { transform: translateY(-3px); box-shadow: 0 12px 26px #533d1a14; }
+.fate-discovery-image { position: relative; aspect-ratio: 2/1; overflow: hidden; background: #d5c3a9; }
+.fate-discovery-image img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s; }
+.fate-discovery-card:hover img { transform: scale(1.04); }
+.fate-discovery-image > span { position: absolute; top: 12px; left: 12px; width: 34px; height: 34px; border-radius: 50%; background: #fffaf1f2; color: #996d35; text-align: center; font-size: 22px; line-height: 34px; box-shadow: 0 2px 8px #0001; }
+.fate-discovery-content { padding: 18px 20px 20px; display: flex; flex-direction: column; flex: 1; }
+.fate-discovery-content h3 { font-size: 23px; line-height: 1.2; color: #162c43; }
+.fate-discovery-content p { font-size: 13px; line-height: 1.65; margin-top: 8px; color: #635c53; }
+.fate-card-link { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: auto; padding-top: 16px; color: #98662c; font-size: 12px; font-weight: 600; }
+.fate-card-link > span { font-size: 18px; }
+.fate-sample-section { display: grid; grid-template-columns: 1.15fr 1fr; gap: 20px; padding: 18px 0 26px; }
+.fate-sample-card { display: flex; align-items: center; min-width: 0; position: relative; overflow: hidden; padding: 30px; background: #f1e5d9; border: 1px solid #e5d1b4; border-radius: 16px; }
+.fate-sample-copy { width: 57%; position: relative; z-index: 2; }
+.fate-sample-copy h2, .fate-about-card h2 { font-size: 30px; line-height: 1.15; margin-top: 10px; }
+.fate-sample-copy > p:not(.fate-eyebrow), .fate-about-card > p:not(.fate-eyebrow) { margin-top: 13px; font-size: 13px; line-height: 1.8; color: #695e50; }
+.fate-outline-button { display: inline-flex; justify-content: center; gap: 18px; align-items: center; border: 1px solid #b58a4d; color: #6b4b25; border-radius: 99px; padding: 11px 17px; margin-top: 19px; font-size: 12px; font-weight: 600; background: #fffaf144; }
+.fate-outline-button:hover { background: #fffaf1; }
+.fate-report-preview { position: absolute; right: -2px; bottom: 0; width: 45%; height: 90%; }
+.fate-preview-page { position: absolute; width: 170px; height: 247px; padding: 23px 16px; background: #fffcf6; border: 1px solid #ba9c73; box-shadow: 0 8px 30px #41260827; border-radius: 3px; }
+.fate-preview-page-front { left: 0; bottom: -23px; transform: rotate(-13deg); background: linear-gradient(#fcf3e1, #e7c894); text-align: center; color: #3c2918; }
+.fate-preview-page-back { left: 73px; bottom: -5px; transform: rotate(9deg); }
+.fate-preview-page span { display: block; font-size: 7px; letter-spacing: .13em; margin-bottom: 12px; }
+.fate-preview-page strong { display: block; font: 20px/1.35 Georgia,serif; }
+.fate-preview-page small { display: block; font-size: 6px; letter-spacing: .12em; margin-top: 20px; }
+.fate-preview-emblem { margin: 0 auto 12px; width: 45px; height: 45px; border-radius: 50%; }
+.fate-preview-lines { margin-top: 24px; }
+.fate-preview-lines i { display: block; width: 100%; height: 3px; margin: 9px 0; background: #b19a7e44; }
+.fate-preview-lines i:last-child { width: 65%; }
+.fate-preview-timeline { display: flex; flex-direction: column; gap: 22px; border-left: 2px solid #c49d65; margin: 20px 0 0 8px; padding-left: 14px; }
+.fate-preview-timeline i { height: 16px; position: relative; border-bottom: 2px solid #b19a7e44; }
+.fate-preview-timeline i::before { content: ''; position: absolute; left: -19px; width: 8px; height: 8px; border-radius: 50%; background: #c49d65; }
+.fate-about-card { padding: 30px; border: 1px solid #e5d1b4; border-radius: 16px; background: #fffaf4; scroll-margin-top: 20px; }
+.fate-how-steps { list-style: none; padding: 0; margin: 21px 0 0; display: grid; gap: 16px; }
+.fate-how-steps li { display: flex; gap: 13px; align-items: flex-start; }
+.fate-how-steps li > span { display: inline-flex; align-items: center; justify-content: center; width: 29px; height: 29px; flex-shrink: 0; border: 1px solid #c39b6540; border-radius: 50%; color: #91662e; font-size: 10px; background: #f7eede; }
+.fate-how-steps h3 { font-size: 12px; font-weight: 600; }
+.fate-how-steps p { margin-top: 3px; font-size: 11px; line-height: 1.65; color: #6e655b; }
+.fate-product-grid { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 17px; }
+.fate-product-card { display: flex; flex-direction: column; overflow: hidden; border: 1px solid #e1cdaa; border-radius: 14px; background: #fffbf5; }
+.fate-product-card > img { aspect-ratio: 1.9/1; width: 100%; object-fit: cover; }
+.fate-product-content { padding: 18px; display: flex; flex-direction: column; flex: 1; }
+.fate-product-card h3 { font-size: 22px; line-height: 1.25; }
+.fate-product-price { font-size: 18px; font-weight: 600; color: #8a602a; margin-top: 10px; }
+.fate-product-content > p:last-of-type { font-size: 12px; line-height: 1.8; color: #6e6254; margin-top: 9px; flex: 1; }
+.fate-product-action { text-align: center; padding: 10px 8px; margin-top: 20px; border-radius: 99px; font-size: 11px; font-weight: 600; background: #092239; color: #fff3d5; }
+.fate-product-action-soon { background: #f4eadc; color: #8a6637; }
+.fate-product-note { font-size: 11px; text-align: center; line-height: 1.8; color: #817465; max-width: 720px; margin: 22px auto 0; }
+.fate-faq { max-width: 780px; margin: 25px auto 0; }
+.fate-faq details { border-bottom: 1px solid #dac5a43d; padding: 18px 0; }
+.fate-faq summary { cursor: pointer; list-style: none; display: flex; align-items: center; justify-content: space-between; gap: 14px; font-size: 14px; font-weight: 500; }
+.fate-faq summary::after { content: '+'; color: #98662c; font-size: 22px; line-height: 1; }
+.fate-faq details[open] summary::after { content: '−'; }
+.fate-faq details p { color: #6a6259; font-size: 13px; line-height: 1.8; margin-top: 12px; }
+.fate-footer { background: #041322; color: #d5cbb9; padding: 28px 24px; }
+.fate-footer-inner { max-width: 1152px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 20px; }
+.fate-footer-links { display: flex; gap: 22px; justify-content: flex-end; font-size: 12px; }
+.fate-footer-inner > p { grid-column: 1/-1; text-align: center; font-size: 11px; color: #a3adbb; line-height: 1.7; }
+.fate-footer-inner .fate-footer-credit { margin-top: -8px; font-size: 10px; color: #8493a6; }
+.fate-footer-credit a { text-decoration: underline; }
+.fate-site:has(.fate-main-reading) { background: #061629; }
+.fate-main-reading { padding-top: 28px; color: #f7e8d0; }
+.fate-main-reading > div[ref], .fate-main-reading .printable-reading { scroll-margin-top: 16px; }
+.fate-sample-notice { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; padding: 15px 18px; border: 1px solid #b78a4770; border-radius: 12px; background: #122c42; font-size: 12px; color: #f1d3a1; }
+.fate-sample-notice a { text-decoration: underline; }
+@keyframes fateTwinkle { 0%,100% { opacity: .12; transform: scale(.7); } 48% { opacity: .85; transform: scale(1.2); } }
+@keyframes fateKeyGlow { 0%,100% { opacity: .2; transform: translate(-50%,-50%) scale(.93); } 50% { opacity: .5; transform: translate(-50%,-50%) scale(1.08); } }
+@keyframes fateMist { 0%,100% { transform: translateX(-2%); opacity: .1; } 50% { transform: translateX(3%); opacity: .22; } }
+.fate-star { position: absolute; z-index: 2; width: 3px; height: 3px; border-radius: 50%; background: #ffe5a5; box-shadow: 0 0 12px 2px #efb75f; animation: fateTwinkle 5s ease-in-out infinite; }
+.fate-key-glow { position: absolute; top: 45%; left: 35%; width: 110px; height: 190px; z-index: 2; border-radius: 50%; background: radial-gradient(ellipse, #ffd27666, #ffbe4c11 50%, transparent 75%); filter: blur(13px); animation: fateKeyGlow 7s ease-in-out infinite; }
+.fate-mist { position: absolute; z-index: 2; inset: auto -8% 0; height: 22%; background: radial-gradient(ellipse at 70% 90%, #9bb4cc44, transparent 70%); filter: blur(18px); animation: fateMist 14s ease-in-out infinite; }
+@media (max-width: 1080px) {
+  .fate-nav { gap: 15px; }
+  .fate-desktop-links { gap: 16px; }
+  .fate-desktop-links a { font-size: 12px; }
+  .fate-brand strong { font-size: 24px; }
+  .fate-saved-button { display: none; }
+  .fate-hero-intro { max-width: 550px; }
+  .fate-birth-panel { max-width: 560px; }
+  .fate-hero-art { right: -60px; width: 53vw; opacity: .84; }
+  .fate-product-grid { grid-template-columns: repeat(3,minmax(0,1fr)); }
+}
+@media (max-width: 760px) {
+  .fate-nav { padding: 17px 18px; gap: 8px; }
+  .fate-brand { gap: 8px; }
+  .fate-brand-emblem { width: 42px; height: 43px; }
+  .fate-brand strong { font-size: 25px; }
+  .fate-brand small { font-size: 6.5px; letter-spacing: .18em; }
+  .fate-desktop-links { display: none; }
+  .fate-nav-actions { gap: 4px; }
+  .fate-language-button { gap: 5px; padding: 8px 4px; font-size: 10px; }
+  .fate-menu-button { display: inline-flex; justify-content: center; align-items: center; width: 37px; height: 37px; font-size: 22px; }
+  .fate-hero-art { right: 0; top: 72px; width: 100%; height: 278px; opacity: 1; mask-image: linear-gradient(180deg,transparent,#000 8%,#000 80%,transparent); }
+  .fate-hero-art > svg { width: 100%; height: 100%; }
+  .fate-hero-art::after { background: linear-gradient(180deg,transparent 40%,#041322); }
+  .fate-hero-layout { padding: 251px 18px 34px; }
+  .fate-hero-intro { max-width: 540px; margin: 0 auto; }
+  .fate-hero-intro h1 { font-size: clamp(31px, 7.3vw, 43px); margin-top: 10px; max-width: 500px; }
+  .fate-hero-intro .fate-eyebrow { font-size: 8px; letter-spacing: .2em; }
+  .fate-hero-description { font-size: 13px; line-height: 1.75; margin-top: 13px; max-width: 450px; }
+  .fate-birth-panel { margin: 30px auto 0; }
+  .fate-birth-heading { padding: 8px 17px; }
+  .fate-birth-heading h2 { font-size: 14px; }
+  .fate-birth-description { font-size: 11px; }
+  .fate-key-glow { top: 45%; left: 41%; height: 90px; width: 65px; }
+  .fate-benefits { grid-template-columns: repeat(2,1fr); padding: 24px 16px; row-gap: 25px; }
+  .fate-benefits > div { padding: 0 13px; }
+  .fate-benefits > div:nth-child(2) { border: 0; }
+  .fate-benefits h2 { font-size: 17px; }
+  .fate-benefits p { font-size: 11px; max-width: 220px; }
+  .fate-benefit-icon { font-size: 26px; }
+  .fate-main { padding: 0 16px 32px; }
+  .fate-section { padding: 24px 0; }
+  .fate-section-heading { margin-bottom: 22px; }
+  .fate-section-heading h2 { font-size: 29px; }
+  .fate-section-heading > p:last-child:not(.fate-eyebrow) { font-size: 12px; max-width: 380px; }
+  .fate-eyebrow { font-size: 8px; letter-spacing: .2em; }
+  .fate-discovery-grid { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; }
+  .fate-discovery-image { aspect-ratio: 1.65/1; }
+  .fate-discovery-content { padding: 14px 12px 15px; }
+  .fate-discovery-content h3 { font-size: 21px; line-height: 1.17; }
+  .fate-discovery-content p { font-size: 11px; line-height: 1.7; margin-top: 7px; }
+  .fate-discovery-image > span { width: 28px; height: 28px; line-height: 28px; font-size: 18px; top: 8px; left: 8px; }
+  .fate-card-link { font-size: 10px; padding-top: 12px; }
+  .fate-sample-section { grid-template-columns: 1fr; gap: 14px; padding-top: 13px; }
+  .fate-sample-card, .fate-about-card { padding: 23px; }
+  .fate-sample-card { min-height: 280px; }
+  .fate-sample-copy h2, .fate-about-card h2 { font-size: 27px; }
+  .fate-sample-copy > p:not(.fate-eyebrow), .fate-about-card > p:not(.fate-eyebrow) { font-size: 12px; }
+  .fate-product-grid { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; }
+  .fate-product-content { padding: 14px 12px; }
+  .fate-product-card h3 { font-size: 20px; }
+  .fate-product-price { font-size: 16px; }
+  .fate-product-content > p:last-of-type { font-size: 11px; line-height: 1.7; }
+  .fate-product-action { font-size: 10px; }
+  .fate-faq { margin-top: 12px; }
+  .fate-faq summary { font-size: 13px; }
+  .fate-footer-inner { grid-template-columns: 1fr; gap: 20px; }
+  .fate-footer-inner .fate-brand { justify-content: center; }
+  .fate-footer-links { justify-content: center; gap: 18px; flex-wrap: wrap; font-size: 11px; }
+  .fate-main-reading { padding-top: 24px; }
+}
+@media (max-width: 360px) {
+  .fate-brand strong { font-size: 22px; }
+  .fate-brand-emblem { width: 36px; height: 38px; }
+  .fate-nav { padding-inline: 12px; }
+  .fate-hero-layout { padding-inline: 12px; }
+  .fate-discovery-content h3 { font-size: 19px; }
+  .fate-sample-card { padding: 18px; }
+  .fate-report-preview { right: -30px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .fate-star, .fate-key-glow, .fate-mist { animation: none !important; }
+  .fate-discovery-card, .fate-discovery-image img { transition: none; }
+}
+@media print {
+  .fate-nav, .fate-hero, .fate-footer, .fate-sample-notice { display: none !important; }
+  .fate-site:has(.fate-main-reading), .fate-main-reading { background: #fff !important; }
+}
