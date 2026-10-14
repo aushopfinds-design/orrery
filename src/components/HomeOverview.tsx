@@ -51,7 +51,7 @@ export default function HomeOverview({ onViewSample }: Props) {
           <h2 id="discover-heading">{t('home.discover.title')}</h2>
           <p>{t('home.discover.text')}</p>
         </div>
-        <div className="fate-discovery-grid">
+        <details className="fate-discovery-details"><summary>{t('buyer.discovery.open')}</summary><div className="fate-discovery-grid">
           {discoveries.map(({ key, symbol, image, href }) => (
             <a key={key} href={href} className="fate-discovery-card">
               <div className="fate-discovery-image">
@@ -65,7 +65,7 @@ export default function HomeOverview({ onViewSample }: Props) {
               </div>
             </a>
           ))}
-        </div>
+        </div></details>
       </section>
 
       <section className="fate-sample-section" aria-label={t('home.sample.title')}>
@@ -99,7 +99,7 @@ export function HomeFAQ() {
   return (
     <section id="faq" className="fate-section fate-faq" aria-labelledby="faq-heading">
       <div className="fate-section-heading"><p className="fate-eyebrow">{t('home.faq.eyebrow')}</p><h2 id="faq-heading">{t('home.faq.title')}</h2></div>
-      {['saju', 'time', 'location', 'free', 'privacy'].map(key => <details key={key}><summary>{t(`home.faq.${key}.question`)}</summary><p>{t(`home.faq.${key}.answer`)}</p></details>)}
+      {['saju', 'time', 'location', 'free', 'payment', 'delivery', 'privacy'].map(key => <details key={key}><summary>{t(`home.faq.${key}.question`)}</summary><p>{t(`home.faq.${key}.answer`)}</p></details>)}
     </section>
   )
 }

@@ -26,6 +26,9 @@ export interface BirthFormHandle {
 
 interface Props {
   onSubmit: (input: BirthInput) => void
+  submitLabel?: string
+  initialInput?: BirthInput
+  rememberInput?: boolean
   externalState?: SavedFormState | null
   onExternalStateConsumed?: () => void
 }
@@ -60,9 +63,6 @@ function loadSaved(): SavedFormState | null {
 
 const now = new Date()
 const currentYear = now.getFullYear()
-const saved = loadSaved()
-const initialLatitude = saved?.latitude ?? NEW_YORK.lat
-const initialLongitude = saved?.longitude ?? NEW_YORK.lon
 
 const selectClass =
   'w-full min-w-0 min-h-12 pl-3 pr-8 border border-[#ddcbb1] rounded-lg text-base text-[#203049] bg-[#fffdf9] ' +
@@ -76,8 +76,20 @@ const inputClass =
   'focus:outline-none focus:ring-2 focus:ring-[#c99b56]/35 focus:border-[#b78a47] transition-all'
 
 
-const BirthForm = forwardRef<BirthFormHandle, Props>(function BirthForm({ onSubmit, externalState, onExternalStateConsumed }, ref) {
+const BirthForm = forwardRef<BirthFormHandle, Props>(function BirthForm({ onSubmit, externalState, onExternalStateConsumed, submitLabel, initialInput, rememberInput = true }, ref) {
   const { t, locale } = useLocale()
+  const [saved] = useState<SavedFormState | null>(() => initialInput ? {
+    ...initialInput,
+    unknownTime: Boolean(initialInput.unknownTime),
+    jasiMethod: initialInput.jasiMethod ?? 'unified',
+    city: null,
+    countryCode: '',
+    manualCoords: true,
+    latitude: initialInput.latitude ?? NEW_YORK.lat,
+    longitude: initialInput.longitude ?? NEW_YORK.lon,
+  } : rememberInput ? loadSaved() : null)
+  const initialLatitude = saved?.latitude ?? NEW_YORK.lat
+  const initialLongitude = saved?.longitude ?? NEW_YORK.lon
   const [year, setYear] = useState(saved?.year ?? currentYear - 20)
   const [month, setMonth] = useState(saved?.month ?? now.getMonth() + 1)
   const [day, setDay] = useState(saved?.day ?? now.getDate())
@@ -302,7 +314,9 @@ const BirthForm = forwardRef<BirthFormHandle, Props>(function BirthForm({ onSubm
       return
     }
     setTimezoneError(null)
-    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)) } catch { /* quota exceeded — ignore */ }
+    if (rememberInput) {
+      try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)) } catch { /* quota exceeded — ignore */ }
+    }
     const birthInput = buildBirthInput(state)
     if (!birthInput) return
     onSubmit(birthInput)
@@ -585,7 +599,7 @@ const BirthForm = forwardRef<BirthFormHandle, Props>(function BirthForm({ onSubm
             type="submit"
             className="mt-5 w-full min-h-12 bg-gradient-to-r from-[#e9c384] to-[#bd873d] text-[#13243a] text-base font-semibold rounded-full active:scale-[0.98] transition-all shadow-md shadow-[#c49a57]/15 hover:brightness-105 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#996626]"
           >
-            {t('home.form.submit')} <span aria-hidden="true">→</span>
+            {submitLabel ?? t('home.form.submit')} <span aria-hidden="true">→</span>
           </button>
 
           <p className="mt-3 text-center text-[11px] text-[#755632] leading-relaxed">

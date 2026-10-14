@@ -35,7 +35,7 @@ export default function FreeReadingView({ input }: { input: BirthInput }) {
         <p className="fate-eyebrow">{t('reading.upgrade.eyebrow')}</p><h2 id="free-upgrade-heading">{t('reading.upgrade.title')}</h2>
         <p>{t('reading.upgrade.text')}</p>
         <ul>{['work', 'love', 'money', 'timeline'].map(key => <li key={key}>{t(`reading.upgrade.${key}`)}</li>)}</ul>
-        <a className="fate-product-action" href="#complete-life-reading">{t('reading.upgrade.action')} <span aria-hidden="true">→</span></a>
+        <div className="fate-free-upgrade-actions"><a className="fate-product-action" href="#my-report">{t('buyer.preview.cta')} <span aria-hidden="true">→</span></a><a href="#sample-report" className="fate-outline-button">{t('buyer.guide.sample')}</a></div>
         <p className="fate-reading-small-note">{t('reading.upgrade.status')}</p>
       </section>
       <footer className="fate-reading-small-note"><p>{t('reading.footer.note')}</p><button type="button" className="fate-outline-button print:hidden" onClick={() => window.print()}>{t('reading.free.print')}</button></footer>
