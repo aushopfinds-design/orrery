@@ -244,7 +244,7 @@ export const homepageCopy: Record<string, string> = {
   "reading.record.pillarCount": "{n} birth pillars",
   "reading.record.unknown": "Unknown · hour excluded",
   "reading.record.notSupplied": "Not supplied",
-  "reading.record.sourceCount": "{n} chart notes",
+  "reading.record.sourceCount": "Chart notes: {n}",
   "reading.record.basis": "The calculated Four Pillars supply the chart symbols. The chapter examples, connections and practical prompts are editorial interpretations of that traditional system. The method notes explain the time conventions and the limits of the reading.",
   "reading.record.publishedBy": "Prepared and published by",
   "reading.record.publisherMark": "Publisher’s mark",

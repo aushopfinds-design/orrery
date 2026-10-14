@@ -90,7 +90,7 @@ export default function ReadingView({ input }: { input: BirthInput }) {
       <section className="fate-reading-chapter fate-reading-method print:hidden"><h2>{t('reading.method.title')}</h2><p>{t('reading.method.intro')}</p><details><summary>{t('reading.method.details')}</summary><p>{report.pillarSummary.join(' · ')}</p><ul>{report.methodNotes.map(note => <li key={note}>{note}</li>)}</ul></details></section>
       <section className="fate-reading-chapter hidden print:block"><h2>{t('reading.method.title')}</h2><p>{report.pillarSummary.join(' · ')}</p><ul>{report.methodNotes.map(note => <li key={note}>{note}</li>)}</ul></section>
       <ReportRecord input={input} birthSummary={report.birthSummary} referenceYear={report.referenceYear} preparedOn={preparedOn} />
-      <footer className="fate-reading-small-note"><p>{t('reading.footer.note')}</p><p>{t('reading.complete.sampleNote')}</p><a href="#complete-life-reading" className="fate-outline-button print:hidden">{t('reading.complete.back')}</a></footer>
+      <footer className="fate-reading-small-note fate-report-footer"><p>{t('reading.footer.note')}</p><p>{t('reading.complete.sampleNote')}</p><a href="#complete-life-reading" className="fate-outline-button print:hidden">{t('reading.complete.back')}</a></footer>
     </article>
   )
 }
