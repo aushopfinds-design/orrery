@@ -40,8 +40,23 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-[#061629] text-[#f7e8d0]">
+      <style>{`
+        @keyframes fateTwinkle { 0%, 100% { opacity: .15; transform: scale(.75); } 48% { opacity: .95; transform: scale(1.35); } }
+        @keyframes fateKeyGlow { 0%, 100% { opacity: .24; transform: translate(-50%,-50%) scale(.92); } 50% { opacity: .62; transform: translate(-50%,-50%) scale(1.16); } }
+        @keyframes fateMist { 0%, 100% { transform: translateX(-2%); opacity: .15; } 50% { transform: translateX(3%); opacity: .28; } }
+        .fate-star { position: absolute; width: 4px; height: 4px; border-radius: 50%; background: #ffe5a5; box-shadow: 0 0 12px 3px #efb75f; animation: fateTwinkle 4.5s ease-in-out infinite; }
+        .fate-key-glow { position:absolute; top: 43%; left: 73%; width: 100px; height: 160px; border-radius: 50%; background: radial-gradient(ellipse, rgba(255,210,118,.45),rgba(255,190,76,.1) 50%,transparent 75%); filter: blur(13px); animation: fateKeyGlow 6s ease-in-out infinite; }
+        .fate-mist { position:absolute; inset: auto -8% 0; height: 22%; background: radial-gradient(ellipse at 70% 90%,rgba(155,180,204,.28),transparent 70%); filter: blur(18px); animation: fateMist 14s ease-in-out infinite; }
+        @media (max-width: 640px) { .fate-key-glow { left: 75%; top: 38%; width: 60px; height: 110px; } }
+        @media (prefers-reduced-motion: reduce) { .fate-star, .fate-key-glow, .fate-mist { animation: none !important; } }
+      `}</style>
       <header className="relative overflow-hidden bg-[#03111f] text-white">
         <div className="pointer-events-none absolute inset-0" style={{backgroundImage:'linear-gradient(100deg,rgba(2,12,24,.94) 12%,rgba(2,12,24,.75) 60%,rgba(7,30,50,.7)),url(/fate-key-destiny-tree.svg)',backgroundSize:'cover',backgroundPosition:'center'}} />
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
+          <span className="fate-key-glow" />
+          <span className="fate-mist" />
+          {[[12,19,0],[26,36,1.2],[44,14,2.4],[62,25,.6],[84,15,3],[93,49,1.8],[72,72,2.8],[34,76,.9],[17,58,3.5],[55,61,1.5]].map(([x,y,delay],i)=><span key={i} className="fate-star" style={{left:`${x}%`,top:`${y}%`,animationDelay:`${delay}s`}} />)}
+        </div>
         <div className="pointer-events-none absolute right-[-55px] top-24 h-60 w-60 rounded-full border border-[#b78b50]/20 sm:right-[10%]" />
         <div className="pointer-events-none absolute right-2 top-32 h-40 w-40 rounded-full border border-[#b78b50]/20" />
         <nav className="relative z-10 mx-auto flex max-w-6xl items-center justify-between gap-3 px-5 py-5 sm:px-6">
