@@ -28,7 +28,7 @@ export default function ProductCatalog() {
               <h3>{t(`home.products.${key}.title`)}</h3>
               <p className="fate-product-price">{price === 'free' ? t('home.products.free.price') : price === 'tbd' ? t('home.products.tbd.price') : price}</p>
               <p>{t(`home.products.${key}.text`)}</p>
-              {ready ? <a href="#birth-details" className="fate-product-action">{t('home.products.start')} <span aria-hidden="true">→</span></a> : <span className="fate-product-action fate-product-action-soon">{t('home.products.soon')}</span>}
+              {key === 'complete' ? <a href="#complete-life-reading" className="fate-product-action">{t('home.products.complete.action')} <span aria-hidden="true">→</span></a> : ready ? <a href="#birth-details" className="fate-product-action">{t('home.products.start')} <span aria-hidden="true">→</span></a> : <span className="fate-product-action fate-product-action-soon">{t('home.products.soon')}</span>}
             </div>
           </article>
         ))}

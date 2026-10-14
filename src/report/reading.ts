@@ -1,9 +1,10 @@
 import type { BirthInput, SajuResult } from '@orrery/core/types'
 import { getFourPillars, getRelation } from '@orrery/core/pillars'
 
-type Element = 'Wood' | 'Fire' | 'Earth' | 'Metal' | 'Water'
+export type ReadingElement = 'Wood' | 'Fire' | 'Earth' | 'Metal' | 'Water'
+type Element = ReadingElement
 
-const STEMS: Record<string, { name: string; element: Element; approach: string; caution: string; practice: string }> = {
+export const STEMS: Record<string, { name: string; element: Element; approach: string; caution: string; practice: string }> = {
   '甲': { name: 'Yang Wood', element: 'Wood', approach: 'You may prefer to build a clear path and keep moving toward a bigger goal.', caution: 'A fixed plan can become frustrating when people or circumstances change.', practice: 'Choose one important goal, then leave room to change the route.' },
   '乙': { name: 'Yin Wood', element: 'Wood', approach: 'You may notice small changes and find creative ways around obstacles.', caution: 'Adapting for everyone else can make your own needs disappear.', practice: 'State one non-negotiable need before saying yes.' },
   '丙': { name: 'Yang Fire', element: 'Fire', approach: 'You may lead with enthusiasm, openness and a desire to bring people together.', caution: 'Being available to everyone can drain your attention.', practice: 'Keep time for one quiet task that belongs only to you.' },
@@ -16,16 +17,16 @@ const STEMS: Record<string, { name: string; element: Element; approach: string; 
   '癸': { name: 'Yin Water', element: 'Water', approach: 'You may learn by observing, listening and asking thoughtful questions.', caution: 'Keeping every thought private can leave others guessing.', practice: 'Say what you need plainly, even if your idea is still forming.' },
 }
 
-const BRANCH_ELEMENTS: Record<string, Element> = {
+export const BRANCH_ELEMENTS: Record<string, Element> = {
   '寅': 'Wood', '卯': 'Wood', '巳': 'Fire', '午': 'Fire',
   '辰': 'Earth', '戌': 'Earth', '丑': 'Earth', '未': 'Earth',
   '申': 'Metal', '酉': 'Metal', '亥': 'Water', '子': 'Water',
 }
-const STEM_ELEMENTS: Record<string, Element> = Object.fromEntries(
+export const STEM_ELEMENTS: Record<string, Element> = Object.fromEntries(
   Object.entries(STEMS).map(([stem, info]) => [stem, info.element]),
 ) as Record<string, Element>
 
-const ELEMENT_MEANING: Record<Element, string> = {
+export const ELEMENT_MEANING: Record<Element, string> = {
   Wood: 'growth, learning and starting things',
   Fire: 'expression, visibility and connection',
   Earth: 'practical care, structure and follow-through',
@@ -47,7 +48,7 @@ const RELATIONSHIP_FOCUS: Record<string, string> = {
   '亥': 'whether feelings are said aloud or left for someone to guess',
 }
 
-const TEN_GODS: Record<string, { title: string; lens: string; caution: string; step: string }> = {
+export const TEN_GODS: Record<string, { title: string; lens: string; caution: string; step: string }> = {
   '比肩': { title: 'Independence', lens: 'making your own decisions and working beside equals', caution: 'trying to do everything yourself', step: 'decide where independence helps and where teamwork saves time' },
   '劫財': { title: 'Peers and competition', lens: 'learning through peers, speed and competition', caution: 'taking on pressure just to keep up', step: 'compare progress with your last attempt, not someone else\'s' },
   '食神': { title: 'Craft and consistency', lens: 'creating useful work through regular practice', caution: 'staying comfortable when a change is needed', step: 'show one finished piece of work, not just the plan' },

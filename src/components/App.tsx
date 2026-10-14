@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from 'react'
+import { lazy, Suspense, useCallback, useRef, useState } from 'react'
 import BirthForm from './BirthForm.tsx'
 import ProductCatalog from './ProductCatalog.tsx'
 import HomeOverview, { FateEmblem, HomeBenefits, HomeFAQ } from './HomeOverview.tsx'
@@ -10,7 +10,7 @@ import { useLocale } from '../i18n/index.ts'
 import SajuView from './saju/SajuView.tsx'
 import ZiweiView from './ziwei/ZiweiView.tsx'
 import NatalView from './natal/NatalView.tsx'
-import ReadingView from './report/ReadingView.tsx'
+import { useReportRoute } from '../utils/report-route.ts'
 import { calculateSaju } from '@orrery/core/saju'
 import { createChart } from '@orrery/core/ziwei'
 import { calculateNatal } from '@orrery/core/natal'
@@ -18,6 +18,9 @@ import { sajuToText, ziweiToText, natalToText } from '../utils/text-export.ts'
 import type { BirthInput } from '@orrery/core/types'
 
 type Tab = 'saju' | 'ziwei' | 'natal' | 'reading'
+const ReadingView = lazy(() => import('./report/ReadingView.tsx'))
+const FreeReadingView = lazy(() => import('./report/FreeReadingView.tsx'))
+const CompleteReportPage = lazy(() => import('./CompleteReportPage.tsx'))
 const SAMPLE_BIRTH: BirthInput = {
   year: 1998, month: 3, day: 25, hour: 3, minute: 0,
   gender: 'M', timezone: 'America/New_York', latitude: 40.7128, longitude: -74.006,
@@ -25,10 +28,10 @@ const SAMPLE_BIRTH: BirthInput = {
 
 export default function App() {
   const { t } = useLocale()
+  const route = useReportRoute()
   const [tab, setTab] = useState<Tab>('reading')
   const [menuOpen, setMenuOpen] = useState(false)
   const [birthInput, setBirthInput] = useState<BirthInput | null>(null)
-  const [isSample, setIsSample] = useState(false)
   const [profileModalOpen, setProfileModalOpen] = useState(false)
   const [externalFormState, setExternalFormState] = useState<SavedFormState | null>(null)
   const resultsRef = useRef<HTMLDivElement>(null)
@@ -38,15 +41,17 @@ export default function App() {
   }
   function handleSubmit(input: BirthInput) {
     setBirthInput(input)
-    setIsSample(false)
     setTab('reading')
+    window.location.hash = 'free-reading'
     scrollToReading()
   }
   function viewSample() {
-    setBirthInput(SAMPLE_BIRTH)
-    setIsSample(true)
-    setTab('reading')
+    window.location.hash = 'sample-report'
     scrollToReading()
+  }
+  function startFree() {
+    window.location.hash = 'birth-details'
+    requestAnimationFrame(() => document.getElementById('birth-details')?.scrollIntoView({ behavior: 'smooth', block: 'start' }))
   }
   const getCurrentFormState = useCallback(() => birthFormRef.current?.getCurrentState() ?? null, [])
   const links = [
@@ -56,8 +61,10 @@ export default function App() {
   function navigateHomeSection() {
     setMenuOpen(false)
     setBirthInput(null)
-    setIsSample(false)
   }
+  const showingFree = route === 'free' && birthInput != null
+  const showingSample = route === 'sample'
+  const showingHome = route === 'home' || (route === 'free' && !birthInput)
   return (
     <div className="fate-site" id="home">
       <header className="fate-hero">
@@ -74,12 +81,12 @@ export default function App() {
           </div>
           {menuOpen && <div className="fate-mobile-menu" id="fate-mobile-menu">{links.map(([href, key]) => <a key={href} href={href} onClick={navigateHomeSection}>{t(key)}</a>)}<button type="button" onClick={() => { setMenuOpen(false); setProfileModalOpen(true) }}>{t('home.nav.saved')}</button></div>}
         </nav>
-        <div className="fate-hero-art" aria-hidden="true">
+        <div className="fate-hero-art" aria-hidden="true" hidden={!showingHome && !showingFree}>
           <svg viewBox="825 115 780 700" preserveAspectRatio="xMidYMid slice"><image href="/images/fate-key-approved-hero.webp" width="1606" height="979" /></svg>
           <span className="fate-key-glow" /><span className="fate-mist" />
           {[[15,18,0],[36,35,1.2],[66,12,2.4],[91,28,.6],[84,54,3],[20,70,1.8],[67,80,2.8]].map(([x,y,delay],i) => <span key={i} className="fate-star" style={{left:`${x}%`,top:`${y}%`,animationDelay:`${delay}s`}} />)}
         </div>
-        <div className="fate-hero-layout">
+        <div className="fate-hero-layout" hidden={!showingHome && !showingFree}>
           <div className="fate-hero-intro">
             <p className="fate-eyebrow">{t('home.hero.eyebrow')}</p>
             <h1>{t('home.hero.title')}<br /><em>{t('home.hero.highlight')}</em></h1>
@@ -92,11 +99,13 @@ export default function App() {
           </section>
         </div>
       </header>
-      {!birthInput && <HomeBenefits />}
-      <main className={birthInput ? 'fate-main fate-main-reading' : 'fate-main'}>
-        {!birthInput && <><HomeOverview onViewSample={viewSample} /><ProductCatalog /><HomeFAQ /></>}
-        {isSample && <div className="fate-sample-notice" role="status"><p><strong>{t('home.sample.notice')}</strong> · {t('home.sample.details')}</p><a href="#birth-details">{t('home.sample.personal')} <span aria-hidden="true">↑</span></a></div>}
-        {birthInput && (
+      {showingHome && <HomeBenefits />}
+      <main className={showingFree || showingSample ? 'fate-main fate-main-reading' : 'fate-main'}>
+        <Suspense fallback={<p role="status" className="fate-reading-loading">{t('reading.loading')}</p>}>
+        {showingHome && <><HomeOverview onViewSample={viewSample} /><ProductCatalog /><HomeFAQ /></>}
+        {route === 'product' && <CompleteReportPage onStartFree={startFree} onViewSample={viewSample} />}
+        {showingSample && <div ref={resultsRef}><ReadingView input={SAMPLE_BIRTH} /></div>}
+        {showingFree && birthInput && (
           <>
             {/* Show the plain-English reading first; expert calculations remain available in separate tabs. */}
             <div ref={resultsRef} className="flex items-center gap-2 border-b border-[#b58b52]/40 mt-10 mb-5 overflow-x-auto pb-2">
@@ -138,7 +147,7 @@ export default function App() {
                 }`}
                 onClick={() => setTab('reading')}
               >
-                {t('app.tab.reading')}
+                {t('reading.free.tab')}
               </button>
               <div className="ml-auto pb-1">
                 <CopyButton
@@ -168,9 +177,10 @@ export default function App() {
             {tab === 'saju' && <SajuView input={birthInput} />}
             {tab === 'ziwei' && <ZiweiView input={birthInput} />}
             {tab === 'natal' && <NatalView input={birthInput} />}
-            {tab === 'reading' && <ReadingView input={birthInput} />}
+            {tab === 'reading' && <FreeReadingView input={birthInput} />}
           </>
         )}
+        </Suspense>
       </main>
       <footer className="fate-footer">
         <div className="fate-footer-inner">
