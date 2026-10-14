@@ -5,7 +5,7 @@ import FateKeyMark from './report/FateKeyMark.tsx'
 
 export default function ProductCatalog() {
   const { t } = useLocale()
-  return <section id="reports" className="fate-section fate-purpose-reports" aria-labelledby="reports-heading">
+  return <section id="focused-reports" className="fate-section fate-purpose-reports" aria-labelledby="reports-heading">
     <div className="fate-section-heading"><p className="fate-eyebrow">{t('buyer.focus.eyebrow')}</p><h2 id="reports-heading">{t('buyer.focus.title')}</h2><p>{t('buyer.focus.text')}</p></div>
     <div className="fate-focused-product-grid">{(['compatibility', 'career', 'year'] as const).map(kind => {
       const product = previewProduct(kind)

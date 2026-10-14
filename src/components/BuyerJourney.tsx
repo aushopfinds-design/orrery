@@ -5,7 +5,7 @@ import ReportIcon from './report/ReportIcon.tsx'
 
 export default function BuyerJourney() {
   const { t } = useLocale()
-  return <section id="report-guide" className="fate-buyer-guide fate-section" aria-labelledby="buyer-guide-title">
+  return <section id="reports" className="fate-buyer-guide fate-section" aria-labelledby="buyer-guide-title">
     <div className="fate-buyer-intro"><p className="fate-eyebrow">{t('buyer.guide.eyebrow')}</p><h2 id="buyer-guide-title">{t('buyer.guide.title')}</h2><p>{t('buyer.guide.text')}</p></div>
     <div className="fate-buyer-feature">
       <div className="fate-buyer-book" aria-hidden="true"><FateEmblem /><span>THE FATE KEY</span><FateKeyMark /><strong>{t('complete.title')}</strong><small>{t('buyer.book.note')}</small></div>
