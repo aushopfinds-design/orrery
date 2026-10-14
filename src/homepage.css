@@ -456,6 +456,7 @@
 .fate-report-pillars > div { text-align: center; padding: 13px 5px; border-radius: 8px; border: 1px solid #e4d4ba; background: #faf3e7; min-width: 0; }
 .fate-report-pillars span { font-size: 10px; display: block; color: #77644c; }
 .fate-report-pillars strong { display: block; font-size: 26px; line-height: 1.7; font-weight: 500; color: #354759; }
+.fate-report-pillars strong[lang="en"] { font-family: inherit; font-size: 12px; padding: 9px 0; }
 .fate-report-pillars small { font-size: 8px; color: #92713c; display: block; }
 .fate-report-pillars > .fate-report-pillar-day { border-color: #b8955d; background: #f3e6cd; }
 .fate-report-overview .fate-reading-summary { margin: 22px 0; }
@@ -561,4 +562,16 @@
   .fate-report-cover-art, .fate-report-chapter-icon, .fate-report-period-dot { print-color-adjust: exact; }
   .fate-element-visual { grid-template-columns: 170px minmax(0,1fr); break-inside: avoid; }
   .fate-complete-reading .fate-reading-period { padding-left: 23px; }
+  .fate-report-chart-strip { display: block; }
+  .fate-report-day-symbol { display: flex; gap: 10px; margin-bottom: 17px; }
+  .fate-report-pillars { display: flex; gap: 8px; }
+  .fate-report-pillars > div { flex: 1; }
+  .fate-report-overview .fate-reading-summary { display: flex; gap: 10px; }
+  .fate-report-overview .fate-reading-summary > div { flex: 1; min-width: 0; }
+  .fate-report-chapter-layout .fate-reading-guidance { display: flex; gap: 10px; align-items: stretch; }
+  .fate-report-chapter-layout .fate-reading-guidance > section { flex: 1; min-width: 0; }
+  .fate-element-visual { display: flex; flex-wrap: wrap; gap: 12px 20px; }
+  .fate-element-wheel { flex: 0 0 170px; }
+  .fate-element-visual > table { flex: 1; width: auto; }
+  .fate-element-visual > p { flex: 0 0 100%; }
 }
