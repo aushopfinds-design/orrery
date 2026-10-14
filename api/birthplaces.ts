@@ -1,5 +1,5 @@
-import { isCountryCode } from '../src/utils/countries.ts'
-import { MAX_PLACE_QUERY_LENGTH, MIN_PLACE_QUERY_LENGTH, normalizePlaceQuery, parsePhotonPlaces } from '../src/utils/world-birthplaces.ts'
+import { isCountryCode } from '../src/utils/countries.js'
+import { MAX_PLACE_QUERY_LENGTH, MIN_PLACE_QUERY_LENGTH, normalizePlaceQuery, parsePhotonPlaces } from '../src/utils/world-birthplaces.js'
 
 const successHeaders = {
   'Cache-Control': 'public, max-age=3600, s-maxage=86400, stale-while-revalidate=604800',
@@ -25,7 +25,7 @@ export default {
     for (const layer of ['city', 'locality', 'district']) upstream.searchParams.append('layer', layer)
     try {
       const response = await fetch(upstream, {
-        signal: AbortSignal.timeout(8000),
+        signal: AbortSignal.timeout(15000),
         headers: { Accept: 'application/json', 'User-Agent': 'The Fate Key birthplace search (https://thefatekey.com)' },
       })
       if (!response.ok) throw new Error('Upstream unavailable')

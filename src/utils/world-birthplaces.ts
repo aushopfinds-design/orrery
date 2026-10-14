@@ -1,5 +1,5 @@
 import type { City } from '@orrery/core/cities'
-import { getCountryName, isCountryCode } from './countries.ts'
+import { getCountryName, isCountryCode } from './countries.js'
 
 export const MIN_PLACE_QUERY_LENGTH = 2
 export const MAX_PLACE_QUERY_LENGTH = 100

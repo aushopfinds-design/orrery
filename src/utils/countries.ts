@@ -1,5 +1,5 @@
 import type { City } from '@orrery/core/cities'
-import { COUNTRY_NAMES_EN } from './city-names.ts'
+import { COUNTRY_NAMES_EN } from './city-names.js'
 
 // ISO 3166-1 countries and territories from IANA's public-domain iso3166.tab.
 export const COUNTRY_CODES = (

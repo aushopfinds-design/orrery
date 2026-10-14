@@ -81,7 +81,7 @@ export default function CityCombobox({ countryCode, selectedCity, onSelect, onSe
     setQuery(value)
     setIsOpen(true)
     setHighlightIndex(-1)
-    if (selectedCity) onSelectionInvalidated()
+    onSelectionInvalidated()
   }
 
   function selectCity(city: City) {
