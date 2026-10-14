@@ -11,7 +11,7 @@ import { useLocale } from '../i18n/index.ts'
 import SajuView from './saju/SajuView.tsx'
 import ZiweiView from './ziwei/ZiweiView.tsx'
 import NatalView from './natal/NatalView.tsx'
-import { useReportRoute } from '../utils/report-route.ts'
+import { useReportHash, resolveReportRoute, resolveFocusCategory } from '../utils/report-route.ts'
 import { calculateSaju } from '@orrery/core/saju'
 import { createChart } from '@orrery/core/ziwei'
 import { calculateNatal } from '@orrery/core/natal'
@@ -22,6 +22,9 @@ type Tab = 'saju' | 'ziwei' | 'natal' | 'reading'
 const ReadingView = lazy(() => import('./report/ReadingView.tsx'))
 const FreeReadingView = lazy(() => import('./report/FreeReadingView.tsx'))
 const CompleteReportPage = lazy(() => import('./CompleteReportPage.tsx'))
+const CategoryReportPage = lazy(() => import('./CategoryReportPage.tsx'))
+const CategorySamplePage = lazy(() => import('./report/CategorySamplePage.tsx'))
+const BundleSamplePage = lazy(() => import('./report/BundleSamplePage.tsx'))
 const SAMPLE_BIRTH: BirthInput = {
   year: 1998, month: 3, day: 25, hour: 3, minute: 0,
   gender: 'M', timezone: 'America/New_York', latitude: 40.7128, longitude: -74.006,
@@ -29,7 +32,9 @@ const SAMPLE_BIRTH: BirthInput = {
 
 export default function App() {
   const { t } = useLocale()
-  const route = useReportRoute()
+  const hash = useReportHash()
+  const route = resolveReportRoute(hash)
+  const focusCategory = resolveFocusCategory(hash)
   const [tab, setTab] = useState<Tab>('reading')
   const [menuOpen, setMenuOpen] = useState(false)
   const [birthInput, setBirthInput] = useState<BirthInput | null>(null)
@@ -65,6 +70,7 @@ export default function App() {
   }
   const showingFree = route === 'free' && birthInput != null
   const showingSample = route === 'sample'
+  const showingReport = showingSample || route === 'category-sample' || route === 'bundle-sample'
   const showingHome = route === 'home' || (route === 'free' && !birthInput)
   return (
     <div className="fate-site" id="home">
@@ -97,11 +103,15 @@ export default function App() {
         </div>
       </header>
       {showingHome && <HomeBenefits />}
-      <main className={showingFree || showingSample ? 'fate-main fate-main-reading' : 'fate-main'}>
+      <main className={showingFree || showingReport ? 'fate-main fate-main-reading' : 'fate-main'}>
         <Suspense fallback={<p role="status" className="fate-reading-loading">{t('reading.loading')}</p>}>
         {showingHome && <><HomeOverview onViewSample={viewSample} /><ProductCatalog /><HomeFAQ /></>}
         {route === 'product' && <CompleteReportPage onStartFree={startFree} onViewSample={viewSample} />}
         {showingSample && <div ref={resultsRef}><ReadingView input={SAMPLE_BIRTH} /></div>}
+        {route === 'category-product' && focusCategory && <CategoryReportPage key={focusCategory} kind={focusCategory} />}
+        {route === 'bundle-product' && <CategoryReportPage kind="bundle" />}
+        {route === 'category-sample' && focusCategory && <CategorySamplePage key={focusCategory} kind={focusCategory} />}
+        {route === 'bundle-sample' && <BundleSamplePage />}
         {showingFree && birthInput && (
           <>
             {/* Show the plain-English reading first; expert calculations remain available in separate tabs. */}

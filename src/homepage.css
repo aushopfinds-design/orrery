@@ -690,3 +690,58 @@
   .fate-report-footer { break-inside: avoid; font-size: 8pt; line-height: 1.5; margin-top: 12px; }
   .fate-report-footer > p { margin: 6px 0; }
 }
+
+/* Category editions share the book design and keep examples visibly labelled. */
+.fate-category-picker { display: flex; flex-wrap: wrap; gap: 18px; padding: 23px 26px; margin: 0 0 24px; border: 1px solid #d2b17e; border-radius: 12px; background: #fff9f0; color: #21374b; }
+.fate-category-picker > div { flex: 1 1 220px; min-width: 0; }
+.fate-category-picker label { display: block; margin-bottom: 9px; font-weight: 600; font-size: 13px; color: #776041; }
+.fate-category-picker select { width: 100%; min-height: 46px; padding: 10px 14px; border: 1px solid #cdbb9e; border-radius: 7px; background: #fffdf8; color: #20374a; font-size: 14px; }
+.fate-category-picker > p { flex-basis: 100%; margin: 0; font-size: 12px; line-height: 1.8; color: #756551; }
+.fate-category-subjects { display: grid; grid-template-columns: repeat(auto-fit,minmax(240px,1fr)); gap: 24px; margin-bottom: 28px; }
+.fate-category-subjects h3 { font-weight: 600; font-size: 13px; color: #85683f; margin: 0 0 9px; }
+.fate-category-subjects > section > p { font: 400 21px/1.5 Georgia,serif; color: #20374a; margin-bottom: 16px; }
+.fate-category-reading .fate-report-cover-birth > div + div { margin-top: 16px; }
+.fate-report-secondary { margin-top: 8px; }
+.fate-complete-chapter-list h3 a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: 4px; }
+.fate-bundle-intro { display: flex; gap: 25px; padding: 28px 32px; margin-bottom: 24px; background: #fff9f0; color: #20374a; border: 1px solid #d5b484; border-radius: 12px; }
+.fate-bundle-intro > svg { width: 35px; height: 75px; flex-shrink: 0; color: #a47c43; }
+.fate-bundle-intro h1 { font: 400 clamp(32px,4vw,46px)/1.2 Georgia,serif; margin: 8px 0 18px; }
+.fate-bundle-intro p { line-height: 1.8; margin: 10px 0; }
+.fate-bundle-tabs { display: flex; flex-wrap: wrap; gap: 8px; padding: 8px; border: 1px solid #aa8650; border-radius: 12px; margin-top: 20px; background: #132c41; }
+.fate-bundle-tabs button { flex: 1 1 180px; min-height: 48px; padding: 12px 18px; border: 1px solid transparent; border-radius: 7px; color: #e4ccb0; font-size: 14px; }
+.fate-bundle-tabs button[aria-selected="true"] { background: #ebc68e; color: #1e3347; border-color: #d1a05c; font-weight: 600; }
+.fate-bundle-print-note { color: #d7c8b2; padding: 16px 4px 22px; }
+.fate-bundle-pane[data-active="false"] { display: none; }
+.fate-bundle-pane > article { width: 100%; }
+.fate-bundle-child .fate-sample-toolbar, .fate-bundle-child .fate-reading-controls, .fate-bundle-child > footer a { display: none; }
+.fate-category-picker select:focus-visible, .fate-bundle-tabs button:focus-visible, .fate-complete-chapter-list a:focus-visible { outline: 3px solid #c8a566; outline-offset: 3px; }
+@media (max-width: 600px) {
+  .fate-category-picker { padding: 20px; }
+  .fate-category-subjects { grid-template-columns: minmax(0,1fr); }
+  .fate-bundle-intro { padding: 24px 20px; gap: 17px; }
+  .fate-bundle-intro > svg { width: 25px; height: 56px; }
+}
+@media print {
+  .fate-category-picker, .fate-bundle-tabs, .fate-bundle-print-note { display: none !important; }
+  .fate-category-subjects { display: flex; gap: 20px; }
+  .fate-category-subjects > section { flex: 1; min-width: 0; }
+  .fate-category-subjects .fate-report-pillars strong { font-size: 22px; }
+  .fate-category-reading .fate-report-cover-brand { margin-bottom: 18mm; }
+  .fate-category-reading .fate-report-cover-content h1 { font-size: 36pt; }
+  .fate-category-reading .fate-report-cover-birth > div + div { margin-top: 12px; }
+  .fate-category-reading .fate-report-cover-birth p { font-size: 10pt; }
+  .fate-category-reading .fate-report-cover-bottom { margin-top: 10mm; }
+  .fate-category-calendar .fate-reading-period { break-inside: avoid; padding-bottom: 8px; }
+  .fate-category-calendar .fate-reading-period > h3 { font-size: 21px; break-after: avoid; }
+  .fate-category-reading .fate-report-record:has(.fate-report-secondary) { padding: 18px; }
+  .fate-report-record:has(.fate-report-secondary) .fate-report-record-birth { padding: 10px 0; }
+  .fate-report-record:has(.fate-report-secondary) .fate-report-record-fields { margin-bottom: 10px; }
+  .fate-report-record:has(.fate-report-secondary) .fate-report-record-fields > div { padding: 6px 0; }
+  .fate-report-record:has(.fate-report-secondary) .fate-report-signature { padding-top: 14px; margin-top: 14px; }
+  .fate-report-record:has(.fate-report-secondary) .fate-report-publisher-mark { width: 108px; height: 108px; }
+  .fate-bundle-pane[data-active] { display: block !important; break-before: page; }
+  .fate-bundle-intro { display: block; border: 1px solid #cbb99a; background: #fff; padding: 24px; break-after: page; }
+  .fate-bundle-intro > svg { margin-bottom: 20px; }
+  .fate-bundle-pane .printable-reading { margin: 0; padding: 0; max-width: none; }
+  .fate-bundle-pane .fate-reading-cover { margin-top: 0; }
+}

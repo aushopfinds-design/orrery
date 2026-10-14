@@ -2,13 +2,14 @@ import { useLocale } from '../i18n/index.ts'
 
 // Prices are proposals. Paid reports do not expose a checkout.
 const products = [
-  { key: 'free', price: 'free', image: 'personality', ready: true },
-  { key: 'complete', price: 'US$14.99', image: 'timeline', ready: false },
-  { key: 'compatibility', price: 'US$9.99', image: 'relationships', ready: false },
-  { key: 'year', price: 'US$7.99', image: 'year-ahead', ready: false },
-  { key: 'career', price: 'US$8.99', image: 'career', ready: false },
-  { key: 'business', price: 'tbd', image: 'business', ready: false },
-  { key: 'bundle', price: 'US$24.99', image: 'wellbeing', ready: false },
+  { key: 'free', price: 'free', image: 'personality', href: '#birth-details' },
+  { key: 'complete', price: 'US$14.99', image: 'timeline', href: '#complete-life-reading' },
+  { key: 'compatibility', price: 'US$9.99', image: 'relationships', href: '#love-compatibility' },
+  { key: 'year', price: 'US$7.99', image: 'year-ahead', href: '#year-ahead' },
+  { key: 'career', price: 'US$8.99', image: 'career', href: '#career-money' },
+  { key: 'business', price: 'tbd', image: 'business', href: '#business-reading' },
+  { key: 'wellbeing', price: 'tbd', image: 'wellbeing', href: '#everyday-balance' },
+  { key: 'bundle', price: 'US$24.99', image: 'compatibility', href: '#complete-bundle' },
 ] as const
 
 export default function ProductCatalog() {
@@ -21,14 +22,14 @@ export default function ProductCatalog() {
         <p>{t('home.products.text')}</p>
       </div>
       <div className="fate-product-grid">
-        {products.map(({ key, price, image, ready }) => (
+        {products.map(({ key, price, image, href }) => (
           <article key={key} className="fate-product-card">
             <img src={`/images/${image}.jpg`} alt="" loading="lazy" width="800" height="420" />
             <div className="fate-product-content">
               <h3>{t(`home.products.${key}.title`)}</h3>
               <p className="fate-product-price">{price === 'free' ? t('home.products.free.price') : price === 'tbd' ? t('home.products.tbd.price') : price}</p>
               <p>{t(`home.products.${key}.text`)}</p>
-              {key === 'complete' ? <a href="#complete-life-reading" className="fate-product-action">{t('home.products.complete.action')} <span aria-hidden="true">→</span></a> : ready ? <a href="#birth-details" className="fate-product-action">{t('home.products.start')} <span aria-hidden="true">→</span></a> : <span className="fate-product-action fate-product-action-soon">{t('home.products.soon')}</span>}
+              <a href={href} className="fate-product-action">{t(key === 'free' ? 'home.products.start' : 'home.products.complete.action')} <span aria-hidden="true">→</span></a>
             </div>
           </article>
         ))}

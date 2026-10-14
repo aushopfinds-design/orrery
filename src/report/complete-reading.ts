@@ -21,6 +21,7 @@ export interface ReadingConnection {
 
 export interface ReportChapter {
   id: string
+  icon?: string
   title: string
   lead: string
   paragraphs: string[]
