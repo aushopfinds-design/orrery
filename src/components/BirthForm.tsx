@@ -5,6 +5,9 @@ import type { City } from '@orrery/core/cities'
 import { NEW_YORK } from '@orrery/core/cities'
 import { formatCityForLocale } from '../utils/city-search.ts'
 import CityCombobox from './CityCombobox.tsx'
+import { BIRTH_FORM_STORAGE_KEY, readBirthFormState, formStateFromBirth } from '../utils/birth-form-state.ts'
+import type { SavedFormState } from '../utils/birth-form-state.ts'
+export type { SavedFormState } from '../utils/birth-form-state.ts'
 import { getCountries, getCityCountryCode, isCountryCode, isSelectedBirthplaceValid } from '../utils/countries.ts'
 import { useLocale } from '../i18n/index.ts'
 import {
@@ -33,34 +36,6 @@ interface Props {
   onExternalStateConsumed?: () => void
 }
 
-const STORAGE_KEY = 'orrery-birth-input'
-
-export interface SavedFormState {
-  year: number
-  month: number
-  day: number
-  hour: number
-  minute: number
-  gender: Gender
-  unknownTime: boolean
-  jasiMethod: JasiMethod
-  city: City | null
-  countryCode?: string
-  manualCoords: boolean
-  latitude: number
-  longitude: number
-}
-
-function loadSaved(): SavedFormState | null {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY)
-    if (!raw) return null
-    return JSON.parse(raw) as SavedFormState
-  } catch {
-    return null
-  }
-}
-
 const now = new Date()
 const currentYear = now.getFullYear()
 
@@ -78,16 +53,7 @@ const inputClass =
 
 const BirthForm = forwardRef<BirthFormHandle, Props>(function BirthForm({ onSubmit, externalState, onExternalStateConsumed, submitLabel, initialInput, rememberInput = true }, ref) {
   const { t, locale } = useLocale()
-  const [saved] = useState<SavedFormState | null>(() => initialInput ? {
-    ...initialInput,
-    unknownTime: Boolean(initialInput.unknownTime),
-    jasiMethod: initialInput.jasiMethod ?? 'unified',
-    city: null,
-    countryCode: '',
-    manualCoords: true,
-    latitude: initialInput.latitude ?? NEW_YORK.lat,
-    longitude: initialInput.longitude ?? NEW_YORK.lon,
-  } : rememberInput ? loadSaved() : null)
+  const [saved] = useState<SavedFormState | null>(() => initialInput ? formStateFromBirth(initialInput) : rememberInput ? readBirthFormState() : null)
   const initialLatitude = saved?.latitude ?? NEW_YORK.lat
   const initialLongitude = saved?.longitude ?? NEW_YORK.lon
   const [year, setYear] = useState(saved?.year ?? currentYear - 20)
@@ -315,7 +281,7 @@ const BirthForm = forwardRef<BirthFormHandle, Props>(function BirthForm({ onSubm
     }
     setTimezoneError(null)
     if (rememberInput) {
-      try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)) } catch { /* quota exceeded — ignore */ }
+      try { localStorage.setItem(BIRTH_FORM_STORAGE_KEY, JSON.stringify(state)) } catch { /* quota exceeded — ignore */ }
     }
     const birthInput = buildBirthInput(state)
     if (!birthInput) return

@@ -94,12 +94,13 @@ export default function HomeOverview({ onViewSample }: Props) {
   )
 }
 
-export function HomeFAQ() {
+export function HomeFAQ({ id = 'faq' }: { id?: string }) {
   const { t } = useLocale()
   return (
-    <section id="faq" className="fate-section fate-faq" aria-labelledby="faq-heading">
-      <div className="fate-section-heading"><p className="fate-eyebrow">{t('home.faq.eyebrow')}</p><h2 id="faq-heading">{t('home.faq.title')}</h2></div>
+    <section id={id} className="fate-section fate-faq" aria-labelledby={id + '-heading'}>
+      <div className="fate-section-heading"><p className="fate-eyebrow">{t('home.faq.eyebrow')}</p><h2 id={id + '-heading'}>{t('home.faq.title')}</h2></div>
       {['saju', 'time', 'location', 'free', 'payment', 'delivery', 'privacy'].map(key => <details key={key}><summary>{t(`home.faq.${key}.question`)}</summary><p>{t(`home.faq.${key}.answer`)}</p></details>)}
+      <a href="#help" className="fate-outline-button fate-help-link">{t('site.help.cta')}</a>
     </section>
   )
 }

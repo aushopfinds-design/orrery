@@ -8,20 +8,20 @@ import type { BirthFormHandle, SavedFormState } from './BirthForm.tsx'
 import ProfileModal from './ProfileModal.tsx'
 import CopyButton from './CopyButton.tsx'
 import { useLocale } from '../i18n/index.ts'
-import SajuView from './saju/SajuView.tsx'
-import ZiweiView from './ziwei/ZiweiView.tsx'
-import NatalView from './natal/NatalView.tsx'
-import { useReportHash, resolveReportRoute, resolveFocusCategory } from '../utils/report-route.ts'
-import { calculateSaju } from '@orrery/core/saju'
-import { createChart } from '@orrery/core/ziwei'
-import { calculateNatal } from '@orrery/core/natal'
-import { sajuToText, ziweiToText, natalToText } from '../utils/text-export.ts'
+import { useReportHash, resolveReportRoute, resolveFocusCategory, navigationTarget } from '../utils/report-route.ts'
 import type { BirthInput } from '@orrery/core/types'
 import BuyerJourney from './BuyerJourney.tsx'
 import { resolvePreviewKind } from '../report/personal-products.ts'
 import { readPreviewDraft, savePreviewDraft } from '../utils/preview-draft.ts'
+import { formStateFromBirth, matchesBirth, normalizeBirthFormState, readBirthFormState } from '../utils/birth-form-state.ts'
+import { previewProduct } from '../report/personal-products.ts'
+import ReportBoundary from './report/ReportBoundary.tsx'
 
 type Tab = 'saju' | 'ziwei' | 'natal' | 'reading'
+const SajuView = lazy(() => import('./saju/SajuView.tsx'))
+const ZiweiView = lazy(() => import('./ziwei/ZiweiView.tsx'))
+const NatalView = lazy(() => import('./natal/NatalView.tsx'))
+const SiteInfoPage = lazy(() => import('./SiteInfoPage.tsx'))
 const ReadingView = lazy(() => import('./report/ReadingView.tsx'))
 const FreeReadingView = lazy(() => import('./report/FreeReadingView.tsx'))
 const CompleteReportPage = lazy(() => import('./CompleteReportPage.tsx'))
@@ -62,6 +62,9 @@ export default function App() {
   function handlePersonalBirth(input: BirthInput) {
     savePreviewDraft({ first: input })
     setBirthInput(input)
+    setTab('reading')
+    const stored = readBirthFormState()
+    lastFormStateRef.current = stored && matchesBirth(stored, input) ? stored : formStateFromBirth(input)
   }
   function viewSample() {
     window.location.hash = 'sample-report'
@@ -71,10 +74,24 @@ export default function App() {
     window.location.hash = 'birth-details'
     requestAnimationFrame(() => document.getElementById('birth-details')?.scrollIntoView({ behavior: 'smooth', block: 'start' }))
   }
-  const getCurrentFormState = useCallback(() => birthFormRef.current?.getCurrentState() ?? lastFormStateRef.current, [])
+  const getCurrentFormState = useCallback(() => {
+    const active = birthFormRef.current?.getCurrentState()
+    if (active) return normalizeBirthFormState(active)
+    if (!birthInput) return null
+    const stored = readBirthFormState()
+    if (stored && matchesBirth(stored, birthInput)) return stored
+    const last = lastFormStateRef.current
+    return last && matchesBirth(last, birthInput) ? last : formStateFromBirth(birthInput)
+  }, [birthInput])
+  function handleDataCleared() {
+    setBirthInput(null); lastFormStateRef.current = null; setExternalFormState(null); setTab('reading'); setProfileModalOpen(false)
+  }
+  const currentNav = navigationTarget(hash)
   const links = [
     ['#home', 'home.nav.home'], ['#birth-details', 'home.nav.free'],
-    ['#reports', 'home.nav.reports'], ['#about', 'home.nav.about'], ['#faq', 'home.nav.faq'],
+    ['#reports', 'home.nav.reports'],
+    ...(birthInput || route === 'personal-preview' ? [['#my-report', 'site.nav.my']] : []),
+    ['#about', 'home.nav.about'], ['#help', 'site.help.nav'],
   ]
   function navigateHomeSection() {
     setMenuOpen(false)
@@ -90,21 +107,27 @@ export default function App() {
       document.getElementById(section)?.scrollIntoView({ block: 'start' })
     }
   }, [hash, showingHome])
+  useEffect(() => {
+    if (route === 'personal-preview') return
+    const title = route === 'help' ? t('site.help.title') : route === 'guide' ? t('site.guide.title') : route === 'privacy' ? t('site.privacy.title') : route === 'free' ? t('reading.free.title') : route === 'bundle-product' || route === 'bundle-sample' ? t('category.bundle.title') : focusCategory ? previewProduct(focusCategory).title : route === 'sample' || route === 'product' ? t('complete.title') : t('home.hero.title')
+    document.title = title + (route.includes('sample') ? ' — ' + t('site.title.sample') : '') + ' | The Fate Key'
+  }, [route, focusCategory, t])
   return (
     <div className="fate-site" id="home">
+      <a className="fate-skip-link" href="#main-content" onClick={event => { event.preventDefault(); const main = document.getElementById('main-content'); main?.focus(); main?.scrollIntoView({ block: 'start' }) }}>{t('site.skip')}</a>
       <header className="fate-hero">
         <nav className="fate-nav" aria-label={t('home.nav.label')}>
           <a href="#home" className="fate-brand" aria-label="The Fate Key" onClick={navigateHomeSection}>
             <FateEmblem className="fate-brand-emblem" />
             <span><strong>The Fate Key</strong><small>UNLOCK A BRIGHTER YOU</small></span>
           </a>
-          <div className="fate-desktop-links">{links.map(([href, key]) => <a key={href} href={href} onClick={navigateHomeSection}>{t(key)}</a>)}</div>
+          <div className="fate-desktop-links">{links.map(([href, key]) => <a key={href} href={href} aria-current={currentNav === href ? 'page' : undefined} onClick={navigateHomeSection}>{t(key)}</a>)}</div>
           <div className="fate-nav-actions">
             <LanguageMenu inline />
             <button type="button" className="fate-saved-button" onClick={() => setProfileModalOpen(true)}>{t('home.nav.saved')}</button>
             <button type="button" className="fate-menu-button" aria-label={t('home.nav.menu')} aria-expanded={menuOpen} aria-controls="fate-mobile-menu" onClick={() => setMenuOpen(open => !open)}><span aria-hidden="true">{menuOpen ? '×' : '☰'}</span></button>
           </div>
-          {menuOpen && <div className="fate-mobile-menu" id="fate-mobile-menu">{links.map(([href, key]) => <a key={href} href={href} onClick={navigateHomeSection}>{t(key)}</a>)}<button type="button" onClick={() => { setMenuOpen(false); setProfileModalOpen(true) }}>{t('home.nav.saved')}</button></div>}
+          {menuOpen && <div className="fate-mobile-menu" id="fate-mobile-menu">{links.map(([href, key]) => <a key={href} href={href} aria-current={currentNav === href ? 'page' : undefined} onClick={navigateHomeSection}>{t(key)}</a>)}<button type="button" onClick={() => { setMenuOpen(false); setProfileModalOpen(true) }}>{t('home.nav.saved')}</button></div>}
         </nav>
         {showingHome && <HeroArtwork />}
         <div className="fate-hero-layout" hidden={!showingHome}>
@@ -122,8 +145,8 @@ export default function App() {
         </div>
       </header>
       {showingHome && <HomeBenefits />}
-      <main className={showingFree || showingReport ? 'fate-main fate-main-reading' : 'fate-main'}>
-        <Suspense fallback={<p role="status" className="fate-reading-loading">{t('reading.loading')}</p>}>
+      <main id="main-content" tabIndex={-1} className={showingFree || showingReport ? 'fate-main fate-main-reading' : 'fate-main'}>
+        <ReportBoundary key={route}><Suspense fallback={<p role="status" className="fate-reading-loading">{t('reading.loading')}</p>}>
         {showingHome && <><BuyerJourney /><ProductCatalog /><HomeOverview onViewSample={viewSample} /><HomeFAQ /></>}
         {route === 'product' && <CompleteReportPage onStartFree={startFree} onViewSample={viewSample} />}
         {showingSample && <div ref={resultsRef}><ReadingView input={SAMPLE_BIRTH} /></div>}
@@ -131,11 +154,13 @@ export default function App() {
         {route === 'bundle-product' && <CategoryReportPage kind="bundle" />}
         {route === 'category-sample' && focusCategory && <CategorySamplePage key={focusCategory} kind={focusCategory} />}
         {route === 'bundle-sample' && <BundleSamplePage />}
+        {(route === 'help' || route === 'guide' || route === 'privacy') && <SiteInfoPage key={route} page={route} hash={hash} onDataCleared={handleDataCleared} onOpenSaved={() => setProfileModalOpen(true)} />}
         {route === 'personal-preview' && previewKind && <PersonalPreviewPage key={previewKind} kind={previewKind} input={birthInput} onFirstBirth={handlePersonalBirth} />}
         {showingFree && birthInput && (
-          <>
+          <div ref={resultsRef}>
+            <FreeReadingView input={birthInput} />
             {/* Show the plain-English reading first; expert calculations remain available in separate tabs. */}
-            <details className="fate-chart-options print:hidden" onToggle={event => { if (!event.currentTarget.open) setTab('reading') }}><summary>{t('buyer.expert.optional')}</summary><div ref={resultsRef} className="flex items-center gap-2 border-b border-[#b58b52]/40 mt-5 mb-5 overflow-x-auto pb-2">
+            <details className="fate-chart-options print:hidden" onToggle={event => { if (!event.currentTarget.open) setTab('reading') }}><summary>{t('buyer.expert.optional')}</summary><div className="flex items-center gap-2 border-b border-[#b58b52]/40 mt-5 mb-5 overflow-x-auto pb-2">
               <button
                 className={`px-2 sm:px-4 py-2 text-sm sm:text-base font-medium whitespace-nowrap border-b-2 transition-colors ${
                   tab === 'saju'
@@ -180,6 +205,7 @@ export default function App() {
                 <CopyButton
                   label={<>{t('app.copyAll')}<br />{t('app.copyAllSub')}</>}
                   getText={async () => {
+                    const [{ calculateSaju }, { createChart }, { calculateNatal }, { sajuToText, ziweiToText, natalToText }] = await Promise.all([import('@orrery/core/saju'), import('@orrery/core/ziwei'), import('@orrery/core/natal'), import('../utils/text-export.ts')])
                     const saju = calculateSaju(birthInput)
                     const parts = [sajuToText(saju)]
                     if (!birthInput.unknownTime) {
@@ -199,25 +225,26 @@ export default function App() {
                   }}
                 />
               </div>
-            </div></details>
+            </div>
 
             {tab === 'saju' && <SajuView input={birthInput} />}
             {tab === 'ziwei' && <ZiweiView input={birthInput} />}
             {tab === 'natal' && <NatalView input={birthInput} />}
-            {tab === 'reading' && <FreeReadingView input={birthInput} />}
-          </>
+            </details>
+          </div>
         )}
-        </Suspense>
+        </Suspense></ReportBoundary>
       </main>
       <footer className="fate-footer">
         <div className="fate-footer-inner">
           <a href="#home" className="fate-brand" aria-label="The Fate Key" onClick={navigateHomeSection}><FateEmblem className="fate-brand-emblem" /><span><strong>The Fate Key</strong><small>UNLOCK A BRIGHTER YOU</small></span></a>
-          <div className="fate-footer-links">{links.slice(1).map(([href,key]) => <a key={href} href={href} onClick={navigateHomeSection}>{t(key)}</a>)}</div>
+          <div className="fate-footer-links">{links.slice(1).map(([href,key]) => <a key={href} href={href} aria-current={currentNav === href ? 'page' : undefined} onClick={navigateHomeSection}>{t(key)}</a>)}</div>
+          <div className="fate-footer-service-links"><a href="#reading-guide">{t('site.guide.title')}</a><a href="#your-data">{t('site.privacy.title')}</a><a href="#help-faq">{t('home.nav.faq')}</a></div>
           <p>{t('home.footer.note')}</p>
           <p className="fate-footer-credit">© {new Date().getFullYear()} The Fate Key · {t('home.footer.engine')} <a href="https://github.com/rath/orrery" target="_blank" rel="noopener noreferrer">Orrery</a></p>
         </div>
       </footer>
-      <ProfileModal open={profileModalOpen} onClose={() => setProfileModalOpen(false)} getCurrentFormState={getCurrentFormState} onSelect={data => { setExternalFormState(data); startFree() }} />
+      {profileModalOpen && <ProfileModal open={true} onClose={() => setProfileModalOpen(false)} getCurrentFormState={getCurrentFormState} onSelect={data => { setExternalFormState(data); startFree() }} />}
     </div>
   )
 }

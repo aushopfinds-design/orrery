@@ -904,3 +904,114 @@
   .fate-personal-preview-layout { display: block; }
   .fate-personal-order-summary { position: static; margin-top: 24px; }
 }
+
+/* Complete reading support, saved details and accessible navigation. */
+.fate-skip-link { position: fixed; z-index: 100; top: 10px; left: 15px; transform: translateY(-150%); padding: 12px 20px; color: #20374a; background: #f6d28c; border-radius: 8px; font-weight: 600; }
+.fate-skip-link:focus { transform: translateY(0); }
+#main-content:focus { outline: none; }
+.fate-desktop-links { gap: 18px; }
+.fate-desktop-links a:first-child { color: #f2eadd; border-bottom: 0; }
+.fate-desktop-links a[aria-current=page] { color: #eccb8e; border-bottom: 2px solid #c1995e; }
+.fate-mobile-menu a[aria-current=page] { background: #173149; color: #f5cf8c; }
+.fate-footer-service-links { grid-column: 1/-1; display: flex; flex-wrap: wrap; gap: 18px; justify-content: center; border-top: 1px solid #c5a06430; padding-top: 20px; font-size: 12px; color: #d9bd8f; }
+.fate-help-link { display: inline-block; margin-top: 22px; }
+.fate-reading-journey { margin: 4px 0 25px; }
+.fate-reading-journey ol { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 12px; list-style: none; padding: 0; }
+.fate-reading-journey li > a, .fate-reading-journey li > span { display: flex; gap: 10px; align-items: center; padding: 12px 14px; min-height: 46px; border: 1px solid #b9a27e; border-radius: 8px; color: #8c714e; font-size: 12px; }
+.fate-reading-journey b { display: grid; place-items: center; font-weight: 400; border: 1px solid #c5ab80; border-radius: 50%; width: 23px; height: 23px; flex-shrink: 0; }
+.fate-reading-journey li[data-current] > span { color: #213849; border-color: #c49c5e; background: #eddbbb; font-weight: 600; }
+.fate-free-reading .fate-reading-journey li > a { color: #e6c994; border-color: #b89661; }
+.fate-free-reading .fate-reading-journey li[data-current] > span { color: #243b4d; }
+.fate-info-page { max-width: 1000px; margin: 0 auto; padding: 30px 0 15px; color: #243849; }
+.fate-info-heading { position: relative; background: radial-gradient(ellipse at top right,#27475b,#071b2d 78%); color: #fff5e3; padding: 43px 42px; margin: 25px 0; border: 1px solid #a8844e; border-radius: 15px; overflow: hidden; }
+.fate-info-heading > svg { position: absolute; top: 34px; right: 38px; width: 40px; height: 88px; color: #dab67a; opacity: .65; }
+.fate-info-heading .fate-eyebrow { color: #d9b980; max-width: 80%; }
+.fate-info-heading h1 { font: 400 clamp(34px,4vw,47px)/1.25 Georgia,serif; max-width: 80%; margin: 14px 0 22px; }
+.fate-info-heading > p:last-child { color: #d0d9db; font-size: 14px; line-height: 1.85; max-width: 740px; }
+.fate-info-nav { display: flex; flex-wrap: wrap; gap: 10px; margin: 26px 0 33px; }
+.fate-info-nav a { padding: 10px 18px; border: 1px solid #d6bd96; border-radius: 999px; font-size: 12px; color: #83643c; }
+.fate-info-nav a[aria-current] { background: #ead6b3; border-color: #b68c50; color: #253d4e; }
+.fate-help-options { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 18px; }
+.fate-help-options > a { display: block; background: #fffaf2; padding: 28px; border: 1px solid #dac29e; border-radius: 13px; }
+.fate-help-options svg { width: 31px; height: 31px; color: #a98045; margin-bottom: 20px; }
+.fate-help-options h2 { font: 400 26px/1.3 Georgia,serif; margin-bottom: 12px; }
+.fate-help-options p { font-size: 14px; line-height: 1.8; color: #7c6a54; }
+.fate-help-options span { display: inline-block; font-size: 12px; color: #886536; margin-top: 22px; }
+.fate-help-options a:hover { border-color: #b4874a; background: #fff6e7; }
+.fate-info-status { margin: 27px 0; padding: 26px 30px; background: #eddfc8; border: 1px solid #d1b284; border-radius: 12px; }
+.fate-info-status strong { color: #2b3e4a; font-size: 15px; }
+.fate-info-status p { font-size: 13px; line-height: 1.8; margin: 12px 0 20px; color: #78654c; }
+.fate-info-section { scroll-margin-top: 22px; padding: 30px 0; border-bottom: 1px solid #ddcbae; }
+.fate-info-section > h2, .fate-clear-data h2 { font: 400 29px/1.3 Georgia,serif; margin: 12px 0 20px; }
+.fate-info-section > p:not(.fate-eyebrow), .fate-clear-data > p { font-size: 14px; line-height: 1.85; margin: 14px 0; color: #766854; max-width: 850px; }
+.fate-info-section > button { margin-top: 15px; }
+.fate-guide-steps { list-style: none; margin: 25px 0; padding: 0; }
+.fate-guide-steps li { display: flex; align-items: flex-start; gap: 18px; padding: 21px 0; }
+.fate-guide-steps li > span { display: grid; place-items: center; flex: 0 0 40px; height: 40px; border-radius: 50%; background: #ead8b9; color: #8d6b3c; }
+.fate-guide-steps h3 { font-size: 15px; font-weight: 600; margin-bottom: 9px; }
+.fate-guide-steps p { font-size: 14px; color: #756652; line-height: 1.85; }
+.fate-guide-reports { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 17px; margin: 25px 0; }
+.fate-guide-reports > section { padding: 26px; border: 1px solid #d6ba90; border-radius: 12px; background: #fffaf2; }
+.fate-guide-report-mark { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.fate-guide-report-mark svg { width: 27px; height: 27px; color: #ae854b; }
+.fate-guide-report-mark > span { font-size: 10px; padding: 5px 10px; background: #eee1cb; border-radius: 999px; color: #896b46; }
+.fate-guide-reports h3 { font: 400 27px/1.3 Georgia,serif; margin: 20px 0 14px; }
+.fate-guide-reports p { font-size: 13px; line-height: 1.8; color: #776750; }
+.fate-guide-reports small { display: block; margin: 17px 0; color: #8d6c3d; font-size: 11px; }
+.fate-guide-reports section > div:last-child { display: flex; flex-wrap: wrap; gap: 10px 18px; font-size: 11px; text-decoration: underline; text-underline-offset: 4px; color: #876439; }
+.fate-guide-reading-tips { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 20px; }
+.fate-guide-reading-tips > div { background: #eee0c9; border: 1px solid #d8bb90; padding: 22px; border-radius: 10px; }
+.fate-guide-reading-tips h3 { font-size: 14px; font-weight: 600; margin-bottom: 12px; }
+.fate-guide-reading-tips p { font-size: 13px; line-height: 1.85; color: #7b6951; }
+.fate-info-actions { display: flex; flex-wrap: wrap; gap: 12px; margin: 22px 0 8px; }
+.fate-data-summary { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 16px; margin: 24px 0 10px; }
+.fate-data-summary > div { padding: 22px; border: 1px solid #d4b88c; background: #eee0c9; border-radius: 10px; }
+.fate-data-summary span { display: block; font-size: 12px; color: #7b674c; line-height: 1.7; margin-bottom: 15px; }
+.fate-data-summary strong { font: 400 23px/1.4 Georgia,serif; color: #344858; }
+.fate-clear-data { background: #fff8ec; border: 1px solid #c4a476; border-radius: 13px; padding: 28px 30px; margin: 28px 0; }
+.fate-clear-confirm { padding: 22px; background: #f4e4cd; border: 1px solid #caa473; border-radius: 9px; margin-top: 22px; }
+.fate-clear-confirm > strong { font-size: 14px; }
+.fate-clear-confirm > p { font-size: 13px; line-height: 1.8; color: #7b644a; margin: 13px 0; }
+.fate-clear-confirm-button { background: #71462c; border-radius: 999px; color: #fff5e6; padding: 12px 18px; font-size: 12px; }
+.fate-clear-data [role=status], .fate-clear-data [role=alert] { font-size: 13px; margin-top: 20px; padding: 13px; border: 1px solid #c8ad84; border-radius: 8px; }
+.fate-info-footer { display: flex; flex-wrap: wrap; align-items: center; gap: 22px; padding: 28px 0; margin-top: 25px; font-size: 11px; color: #867357; }
+.fate-info-footer > svg { width: 20px; height: 45px; color: #a8844e; flex-shrink: 0; }
+.fate-info-footer > p { flex: 1 1 260px; line-height: 1.85; }
+.fate-info-footer > a { color: #8b6a3b; text-decoration: underline; text-underline-offset: 4px; }
+.fate-load-error { max-width: 650px; margin: 50px auto; padding: 35px; border: 1px solid #c6a773; border-radius: 15px; background: #fff7e9; color: #263d50; }
+.fate-load-error > svg { width: 27px; height: 57px; color: #a57c41; }
+.fate-load-error h1 { font: 400 32px/1.3 Georgia,serif; margin: 22px 0; }
+.fate-load-error p { font-size: 14px; line-height: 1.8; margin-bottom: 23px; }
+.fate-load-error > div { display: flex; flex-wrap: wrap; gap: 13px; }
+.fate-site .fate-profile-dialog { background: #fffaf2; color: #263c4e; border: 1px solid #b69360; border-radius: 16px; padding: 27px; box-shadow: 0 28px 70px #04132240; max-height: calc(100dvh - 36px); overflow: auto; }
+.fate-profile-dialog::backdrop { background: #041322aa; backdrop-filter: blur(3px); }
+.fate-profile-dialog h2 { font: 400 25px/1.3 Georgia,serif; color: #263b4c; }
+.fate-profile-dialog p, .fate-profile-dialog span { color: #7c6a54; }
+.fate-profile-dialog button { color: #896338; border-color: #c5ac87; min-height: 36px; }
+.fate-profile-dialog button:disabled { opacity: .45; }
+.fate-profile-dialog form button[type=submit] { background: #a57d43; color: #fff8ec; border-color: #a57d43; }
+.fate-profile-dialog input { background: #fffdf8; color: #203849; border-color: #ccb28a; }
+.fate-saved-row { border-color: #dbc7a9; padding-top: 16px; padding-bottom: 16px; }
+.fate-saved-open { text-align: left; font-size: 14px; font-weight: 600; min-width: 0; overflow-wrap: anywhere; padding-right: 14px; }
+.fate-profile-dialog input { min-width: 0; }
+.fate-profile-dialog [role=alert] { color: #9b392f; }
+.fate-profile-dialog button:focus-visible { outline: 2px solid #9d7139; outline-offset: 3px; }
+.fate-profile-dialog .fate-reading-small-note { font-size: 12px; line-height: 1.7; }
+@media (max-width: 1180px) { .fate-desktop-links { display: none; } .fate-menu-button { display: inline-flex; align-items: center; justify-content: center; } }
+@media (max-width: 600px) {
+  .fate-help-options, .fate-guide-reports, .fate-guide-reading-tips, .fate-data-summary { grid-template-columns: minmax(0,1fr); }
+  .fate-info-heading { padding: 32px 23px; }
+  .fate-info-heading > svg { width: 28px; height: 60px; right: 23px; top: 32px; }
+  .fate-info-heading h1 { font-size: 34px; }
+  .fate-info-nav a { padding: 9px 13px; font-size: 11px; }
+  .fate-help-options > a, .fate-guide-reports > section, .fate-clear-data { padding: 25px 22px; }
+  .fate-reading-journey ol { gap: 6px; }
+  .fate-reading-journey li > a, .fate-reading-journey li > span { gap: 6px; padding: 10px 7px; font-size: 10px; }
+  .fate-reading-journey b { width: 20px; height: 20px; }
+  .fate-site .fate-profile-dialog { padding: 23px 20px; }
+}
+@media print {
+  .fate-info-nav, .fate-info-actions, .fate-clear-data, .fate-info-footer > a, .fate-info-section > a, .fate-info-section > button { display: none; }
+  .fate-info-heading { color: #20374a; background: #fff; border-color: #b9a07c; }
+  .fate-info-heading > p:last-child { color: #625849; }
+}

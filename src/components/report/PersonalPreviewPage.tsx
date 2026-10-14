@@ -10,6 +10,7 @@ import type { PreviewKind } from '../../report/personal-products.ts'
 import ReadingText from './ReadingText.tsx'
 import ReportIcon from './ReportIcon.tsx'
 import FateKeyMark from './FateKeyMark.tsx'
+import ReadingJourney from './ReadingJourney.tsx'
 
 export default function PersonalPreviewPage({ kind, input, onFirstBirth }: { kind: PreviewKind; input: BirthInput | null; onFirstBirth: (input: BirthInput) => void }) {
   const { t } = useLocale()
@@ -21,10 +22,13 @@ export default function PersonalPreviewPage({ kind, input, onFirstBirth }: { kin
   const product = previewProduct(kind)
   const preview = useMemo(() => input ? buildPersonalPreview(kind, { first: input, second, year }) : null, [kind, input, second, year])
   const paired = kind === 'compatibility' || kind === 'bundle'
+  const pageTitle = preview?.title ?? product.title
+  useEffect(() => { document.title = pageTitle + ' | The Fate Key' }, [pageTitle])
   useEffect(() => { document.getElementById('my-report')?.scrollIntoView({ block: 'start' }) }, [kind])
   function chooseYear(value: number) { setYear(value); savePreviewDraft({ first: input ?? undefined, second, year: value }) }
   function submitSecond(value: BirthInput) { setSecond(value); setEditingSecond(false); savePreviewDraft({ first: input ?? undefined, second: value, year }) }
   return <article id="my-report" className="fate-personal-preview" lang="en" aria-labelledby="personal-preview-title">
+    <ReadingJourney step={input ? 3 : 1} />
     <a href="#reports" className="fate-product-back">← {t('complete.back')}</a>
     <header className="fate-personal-preview-heading"><FateKeyMark /><div><p className="fate-eyebrow">{t('buyer.preview.eyebrow')}</p><h1 id="personal-preview-title">{preview?.title ?? product.title}</h1><p>{t('buyer.preview.intro')}</p></div></header>
     <div className="fate-personal-preview-controls"><div><label htmlFor="personal-report-kind">{t('buyer.preview.kind')}</label><select id="personal-report-kind" value={kind} onChange={event => window.location.assign(previewHash(event.target.value as PreviewKind))}>{PREVIEW_KINDS.map(value => <option key={value} value={value}>{previewProduct(value).title}</option>)}</select></div>{(kind === 'year' || kind === 'bundle') && <div><label htmlFor="personal-report-year">{t('category.examples.year')}</label><select id="personal-report-year" value={year} onChange={event => chooseYear(Number(event.target.value))}>{Array.from({ length: 11 }, (_, index) => new Date().getFullYear() + index).map(value => <option key={value} value={value}>{value}</option>)}</select></div>}</div>

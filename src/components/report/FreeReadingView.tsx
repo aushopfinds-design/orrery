@@ -6,6 +6,7 @@ import { useLocale } from '../../i18n/index.ts'
 import ElementBalance from './ElementBalance.tsx'
 import ReadingText from './ReadingText.tsx'
 import ReadingGuidance from './ReadingGuidance.tsx'
+import ReadingJourney from './ReadingJourney.tsx'
 
 export default function FreeReadingView({ input }: { input: BirthInput }) {
   const { t } = useLocale()
@@ -13,6 +14,7 @@ export default function FreeReadingView({ input }: { input: BirthInput }) {
   useEffect(() => { document.getElementById('free-reading')?.scrollIntoView({ block: 'start' }) }, [])
   return (
     <article id="free-reading" lang="en" aria-label={t('reading.free.title')} className="fate-free-reading printable-reading">
+      <ReadingJourney step={2} />
       <header className="fate-reading-cover fate-reading-cover-free">
         <p className="fate-eyebrow">{t('reading.free.eyebrow')}</p>
         <h1>{report.title}</h1>
