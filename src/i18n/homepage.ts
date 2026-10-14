@@ -103,7 +103,7 @@ export const homepageCopy: Record<string, string> = {
   "home.faq.free.question": "Can I try a reading before paying?",
   "home.faq.free.answer": "Yes. You can generate a free reading or open the sample report. Paid reports and payment checkout are still in development, so this site does not take payment.",
   "home.faq.privacy.question": "Where do my birth details go?",
-  "home.faq.privacy.answer": "The current reading is calculated in your browser. Birth details are saved in browser storage on this device so you can return to them; they are not submitted to a calculation server. Avoid saving personal readings on a shared device.",
+  "home.faq.privacy.answer": "The current reading is calculated in your browser. Birth details are saved in browser storage on this device so you can return to them; they are not submitted to a calculation server. Place search sends only the place name and country to Photon, using OpenStreetMap data. Avoid saving personal readings on a shared device.",
   "home.footer.note": "Traditional birth-chart interpretation for personal reflection, not guaranteed outcomes.",
   "home.footer.engine": "Calculation engine:"
 }

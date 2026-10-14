@@ -2,9 +2,19 @@ import { homepageCopy } from '../homepage.ts'
 
 const ko: Record<string, string> = {
   ...homepageCopy,
+  "city.country": "국가 또는 지역",
+  "city.suggestions": "추천 출생지",
+  "city.typeToSearch": "두 글자 이상 입력하면 선택한 국가의 출생지를 검색합니다.",
+  "city.searchHint": "출생지 이름을 입력하고 검색 결과를 선택하세요. 작은 읍·마을도 검색할 수 있습니다.",
+  "city.loading": "출생지를 검색하고 있습니다…",
+  "city.searchError": "검색을 사용할 수 없습니다. 다시 시도하거나 좌표를 입력하세요.",
+  "city.retry": "다시 시도",
+  "city.attribution": "출생지 데이터:",
+  "city.selectionRequired": "검색 결과에서 도시·읍·마을을 선택하거나 좌표를 입력하세요.",
+  "form.invalidDate": "올바른 날짜를 선택하세요.",
   "city.popular": "추천 도시",
   "city.results": "검색 결과",
-  "city.birthCity": "출생 도시",
+  "city.birthCity": "도시·읍·마을",
   // App
   'app.subtitle1': '서버 없이 브라우저에서 동작하는',
   'app.subtitle.tool': '사주팔자 · 자미두수 · 서양 점성술',
@@ -50,8 +60,8 @@ const ko: Record<string, string> = {
   'form.unifiedDesc': '23:30부터 子시, 일주를 다음날로 넘깁니다.',
   'form.splitDesc': '23:30~00:00(야자시)은 子시이나, 일주는 당일 유지합니다.',
   'form.calculate': '계산',
-  'form.privacy1': '모든 계산은 브라우저에서 처리되며,',
-  'form.privacy2': '입력하신 정보는 어떤 서버에도 전송되지 않습니다.',
+  "form.privacy1": "출생 날짜와 시간은 이 기기에만 보관됩니다.",
+  "form.privacy2": "출생지 검색에는 지명과 국가만 전송됩니다.",
 
   // CopyButton
   'copy.copy': '복사',
@@ -70,10 +80,10 @@ const ko: Record<string, string> = {
   'date.monthDay': '{m}월 {d}일',
 
   // CityCombobox
-  'city.noResults': '검색 결과 없음',
+  "city.noResults": "출생지를 찾지 못했습니다. 다른 표기로 검색하거나 좌표를 입력하세요.",
   'city.korea': '한국',
   'city.world': '세계',
-  'city.placeholder': '도시 이름을 입력하세요',
+  "city.placeholder": "도시 또는 마을 이름 검색",
 
   // Guide
   'guide.title': '사용 방법',

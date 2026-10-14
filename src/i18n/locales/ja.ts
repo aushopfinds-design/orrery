@@ -2,9 +2,19 @@ import { homepageCopy } from '../homepage.ts'
 
 const ja: Record<string, string> = {
   ...homepageCopy,
+  "city.country": "国または地域",
+  "city.suggestions": "おすすめの場所",
+  "city.typeToSearch": "2文字以上入力して、選択した国の場所を検索してください。",
+  "city.searchHint": "出生地の名前を入力し、検索結果を選択してください。小さな町や村も検索できます。",
+  "city.loading": "場所を検索中…",
+  "city.searchError": "検索を利用できません。再試行するか、座標を入力してください。",
+  "city.retry": "再試行",
+  "city.attribution": "場所データ：",
+  "city.selectionRequired": "検索結果から市・町・村を選択するか、座標を入力してください。",
+  "form.invalidDate": "有効な日付を選択してください。",
   "city.popular": "主な都市",
   "city.results": "検索結果",
-  "city.birthCity": "出生都市",
+  "city.birthCity": "市・町・村",
   // App
   'app.subtitle1': 'サーバー不要、ブラウザで動作する',
   'app.subtitle.tool': '四柱八字 · 紫微斗数 · 西洋占星術',
@@ -50,8 +60,8 @@ const ja: Record<string, string> = {
   'form.unifiedDesc': '23:30から子時とし、日柱を翌日に繰り越します。',
   'form.splitDesc': '23:30〜00:00（夜子時）は子時ですが、日柱は当日のまま維持します。',
   'form.calculate': '計算',
-  'form.privacy1': 'すべての計算はブラウザ内で処理され、',
-  'form.privacy2': '入力された情報はいかなるサーバーにも送信されません。',
+  "form.privacy1": "出生日時はこの端末にのみ保存されます。",
+  "form.privacy2": "場所の検索では地名と国のみを送信します。",
 
   // CopyButton
   'copy.copy': 'コピー',
@@ -70,10 +80,10 @@ const ja: Record<string, string> = {
   'date.monthDay': '{m}月 {d}日',
 
   // CityCombobox
-  'city.noResults': '検索結果なし',
+  "city.noResults": "場所が見つかりません。別の表記で検索するか、座標を入力してください。",
   'city.korea': '韓国',
   'city.world': '世界',
-  'city.placeholder': '都市名を入力してください',
+  "city.placeholder": "市・町・村の名前を検索",
 
   // Guide
   'guide.title': '使い方',

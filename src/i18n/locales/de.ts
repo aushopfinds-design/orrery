@@ -2,9 +2,19 @@ import { homepageCopy } from '../homepage.ts'
 
 const de: Record<string, string> = {
   ...homepageCopy,
+  "city.country": "Land oder Gebiet",
+  "city.suggestions": "Vorgeschlagene Orte",
+  "city.typeToSearch": "Geben Sie mindestens 2 Zeichen ein, um Orte in diesem Land zu suchen.",
+  "city.searchHint": "Geben Sie den Geburtsort ein und wählen Sie ein Ergebnis. Auch kleine Orte und Dörfer sind durchsuchbar.",
+  "city.loading": "Orte werden gesucht…",
+  "city.searchError": "Suche nicht verfügbar. Erneut versuchen oder Koordinaten eingeben.",
+  "city.retry": "Erneut versuchen",
+  "city.attribution": "Ortsdaten:",
+  "city.selectionRequired": "Wählen Sie eine Stadt, einen Ort oder ein Dorf aus den Ergebnissen oder geben Sie Koordinaten ein.",
+  "form.invalidDate": "Bitte wählen Sie ein gültiges Datum.",
   "city.popular": "Beliebte Städte",
   "city.results": "Suchergebnisse",
-  "city.birthCity": "Geburtsstadt",
+  "city.birthCity": "Stadt, Ort oder Dorf",
   // App
   'app.subtitle1': 'Ein serverloser, browserbasierter',
   'app.subtitle.tool': 'Saju · Zi Wei Dou Shu · Geburtshoroskop',
@@ -50,8 +60,8 @@ const de: Record<string, string> = {
   'form.unifiedDesc': 'Ab 23:30 gilt die 子-Stunde, und die Tagessäule wechselt auf den nächsten Tag.',
   'form.splitDesc': '23:30–00:00 (Nacht-Ja-si) ist die 子-Stunde, die Tagessäule bleibt jedoch beim aktuellen Tag.',
   'form.calculate': 'Berechnen',
-  'form.privacy1': 'Alle Berechnungen erfolgen in Ihrem Browser.',
-  'form.privacy2': 'Ihre Daten werden an keinen Server gesendet.',
+  "form.privacy1": "Geburtsdatum und Uhrzeit bleiben auf diesem Gerät.",
+  "form.privacy2": "Die Ortssuche übermittelt nur Ortsname und Land.",
 
   // CopyButton
   'copy.copy': 'Kopieren',
@@ -70,10 +80,10 @@ const de: Record<string, string> = {
   'date.monthDay': '{d}.{m}.',
 
   // CityCombobox
-  'city.noResults': 'Keine Ergebnisse',
+  "city.noResults": "Keine Orte gefunden. Andere Schreibweise versuchen oder Koordinaten eingeben.",
   'city.korea': 'Korea',
   'city.world': 'Welt',
-  'city.placeholder': 'Stadtnamen eingeben',
+  "city.placeholder": "Stadt, Ort oder Dorf suchen",
 
   // Guide
   'guide.title': 'Anleitung',

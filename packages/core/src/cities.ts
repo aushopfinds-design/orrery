@@ -1,11 +1,15 @@
 /** 도시 정보 */
 export interface City {
-  /** 한국어 도시명 */
+  /** 도시명 (기존 목록은 한국어, 전 세계 검색은 영어 또는 현지명) */
   name: string
   /** 한국어 국가명 (국내 도시는 생략) */
   country?: string
   /** 한국어 광역 지역명 (예: '경기도', '강원도') */
   region?: string
+  /** ISO 3166-1 국가 코드 (전 세계 검색 및 신규 프로필) */
+  countryCode?: string
+  /** 검색 공급자의 장소 식별자 */
+  placeId?: string
   lat: number
   lon: number
 }

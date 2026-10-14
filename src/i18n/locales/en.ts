@@ -2,9 +2,19 @@ import { homepageCopy } from '../homepage.ts'
 
 const en: Record<string, string> = {
   ...homepageCopy,
+  "city.country": "Country or territory",
+  "city.suggestions": "Suggested places",
+  "city.typeToSearch": "Type at least 2 characters to search places in this country.",
+  "city.searchHint": "Type a place name and select a result. Small towns and villages are searchable too.",
+  "city.loading": "Searching places…",
+  "city.searchError": "Search is unavailable. Try again or enter coordinates.",
+  "city.retry": "Retry",
+  "city.attribution": "Place data:",
+  "city.selectionRequired": "Select a city, town or village from the results, or enter coordinates.",
+  "form.invalidDate": "Please choose a valid calendar date.",
   "city.popular": "Popular cities",
   "city.results": "Search results",
-  "city.birthCity": "Birth city",
+  "city.birthCity": "City, town or village",
   // App
   'app.subtitle1': 'A serverless, browser-based',
   'app.subtitle.tool': 'Saju · Ziwei Doushu · Natal Chart',
@@ -50,8 +60,8 @@ const en: Record<string, string> = {
   'form.unifiedDesc': 'From 23:30, it is 子 hour, and the day pillar advances to the next day.',
   'form.splitDesc': '23:30–00:00 (night Ja-si) is 子 hour, but the day pillar remains on the current day.',
   'form.calculate': 'Calculate',
-  'form.privacy1': 'All calculations are processed in your browser.',
-  'form.privacy2': 'Your information is never sent to any server.',
+  "form.privacy1": "Birth date and time stay on this device.",
+  "form.privacy2": "Place search shares only the place name and country.",
 
   // CopyButton
   'copy.copy': 'Copy',
@@ -70,10 +80,10 @@ const en: Record<string, string> = {
   'date.monthDay': '{m}/{d}',
 
   // CityCombobox
-  'city.noResults': 'No results found',
+  "city.noResults": "No places found. Try another spelling or enter coordinates.",
   'city.korea': 'Korea',
   'city.world': 'World',
-  'city.placeholder': 'Search city or country (e.g. Sydney)',
+  "city.placeholder": "Search a city, town or village",
 
   // Guide
   'guide.title': 'How to Use',

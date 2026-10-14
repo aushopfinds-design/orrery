@@ -1,6 +1,7 @@
 import type { City } from '@orrery/core/cities'
 import { KOREAN_CITIES, WORLD_CITIES, filterCities, formatCityName } from '@orrery/core/cities'
 import { CITY_NAMES_EN, COUNTRY_NAMES_EN, REGION_NAMES_EN } from './city-names.ts'
+import { getCityCountryCode } from './countries.ts'
 
 const ALL_CITIES = [...WORLD_CITIES, ...KOREAN_CITIES]
 const POPULAR_NAMES = ['뉴욕', '런던', '시드니', '멜버른', '토론토', '로스앤젤레스', '시카고', '밴쿠버', '브리즈번', '퍼스', '서울', '도쿄']
@@ -32,6 +33,9 @@ const COUNTRY_ALIASES: Readonly<Record<string, readonly string[]>> = {
 
 /** Also formats old, browser-saved city objects that contain Korean names. */
 export function formatCityForLocale(city: City, locale = 'en'): string {
+  if (city.countryCode) {
+    return [city.name, city.region, city.country].filter(Boolean).join(', ')
+  }
   if (locale === 'ko') return formatCityName(city)
   let name = CITY_NAMES_EN[city.name] ?? city.name
   const country = city.country ? COUNTRY_NAMES_EN[city.country] ?? city.country : 'South Korea'
@@ -57,7 +61,12 @@ const SEARCH_INDEX = ALL_CITIES.map(city => {
 })
 
 /** Worldwide suggestions in displayed order; return the original coordinates. */
-export function getCitySuggestions(query: string, locale = 'en'): City[] {
+export function getCitySuggestions(query: string, locale = 'en', countryCode?: string): City[] {
+  if (countryCode) {
+    const cities = ALL_CITIES.filter(city => getCityCountryCode(city) === countryCode)
+    if (!normalize(query)) return cities.slice(0, 8)
+    return getCitySuggestions(query, locale).filter(city => getCityCountryCode(city) === countryCode)
+  }
   const q = normalize(query)
   if (!q) return locale === 'ko' ? KOREAN_CITIES.slice(0, 8) : [...POPULAR_CITIES]
   if (/[\u1100-\u11ff\u3130-\u318f\uac00-\ud7af]/u.test(query)) return filterCities(query)

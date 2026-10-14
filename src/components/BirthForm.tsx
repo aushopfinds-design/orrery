@@ -5,6 +5,7 @@ import type { City } from '@orrery/core/cities'
 import { NEW_YORK } from '@orrery/core/cities'
 import { formatCityForLocale } from '../utils/city-search.ts'
 import CityCombobox from './CityCombobox.tsx'
+import { getCountries, getCityCountryCode, isCountryCode, isSelectedBirthplaceValid } from '../utils/countries.ts'
 import { useLocale } from '../i18n/index.ts'
 import {
   getTimeZoneDisplayLabelAtLocalTime,
@@ -41,6 +42,7 @@ export interface SavedFormState {
   unknownTime: boolean
   jasiMethod: JasiMethod
   city: City | null
+  countryCode?: string
   manualCoords: boolean
   latitude: number
   longitude: number
@@ -86,6 +88,8 @@ const BirthForm = forwardRef<BirthFormHandle, Props>(function BirthForm({ onSubm
   const [jasiMethod, setJasiMethod] = useState<JasiMethod>(saved?.jasiMethod ?? 'unified')
   const [showAdvanced, setShowAdvanced] = useState(false)
   const [selectedCity, setSelectedCity] = useState<City | null>(saved?.city ?? NEW_YORK)
+  const [countryCode, setCountryCode] = useState(() => saved?.countryCode && isCountryCode(saved.countryCode) ? saved.countryCode : getCityCountryCode(saved?.city ?? NEW_YORK))
+  const countries = useMemo(() => getCountries(locale), [locale])
   const [manualCoords, setManualCoords] = useState(saved?.manualCoords ?? false)
   const [latitude, setLatitude] = useState(initialLatitude)
   const [longitude, setLongitude] = useState(initialLongitude)
@@ -97,8 +101,8 @@ const BirthForm = forwardRef<BirthFormHandle, Props>(function BirthForm({ onSubm
   if (day > daysInSelectedMonth) setDay(daysInSelectedMonth)
 
   const inferredTimezone = useMemo(
-    () => inferTimeZoneFromCoordinates(latitude, longitude),
-    [latitude, longitude],
+    () => manualCoords || isSelectedBirthplaceValid(selectedCity, countryCode) ? inferTimeZoneFromCoordinates(latitude, longitude) : null,
+    [latitude, longitude, manualCoords, selectedCity, countryCode],
   )
   const locationSummary = useMemo(() => {
     if (manualCoords) {
@@ -107,7 +111,7 @@ const BirthForm = forwardRef<BirthFormHandle, Props>(function BirthForm({ onSubm
     if (selectedCity) {
       return `${formatCityForLocale(selectedCity, locale)} · ${t('form.latitude')} ${latitude.toFixed(4)} · ${t('form.longitude')} ${longitude.toFixed(4)}`
     }
-    return `${t('form.latitude')} ${latitude.toFixed(4)} · ${t('form.longitude')} ${longitude.toFixed(4)}`
+    return null
   }, [manualCoords, selectedCity, latitude, longitude, t, locale])
   const timezoneDisplayLabel = useMemo(() => {
     if (!inferredTimezone) return null
@@ -122,6 +126,7 @@ const BirthForm = forwardRef<BirthFormHandle, Props>(function BirthForm({ onSubm
   }, [inferredTimezone, year, month, day, hour, minute, unknownTime])
 
   function getTimezoneValidationError(state: SavedFormState): string | null {
+    if (!state.manualCoords && !isSelectedBirthplaceValid(state.city, state.countryCode ?? getCityCountryCode(state.city))) return t('city.selectionRequired')
     const effectiveHour = state.unknownTime ? 12 : state.hour
     const effectiveMinute = state.unknownTime ? 0 : state.minute
     const result = validateBirthLocalTime(
@@ -158,7 +163,7 @@ const BirthForm = forwardRef<BirthFormHandle, Props>(function BirthForm({ onSubm
   useImperativeHandle(ref, () => ({
     getCurrentState: (): SavedFormState => ({
       year, month, day, hour, minute, gender, unknownTime, jasiMethod,
-      city: selectedCity, manualCoords, latitude, longitude,
+      city: selectedCity, countryCode, manualCoords, latitude, longitude,
     }),
   }))
 
@@ -222,6 +227,7 @@ const BirthForm = forwardRef<BirthFormHandle, Props>(function BirthForm({ onSubm
     setUnknownTime(externalState.unknownTime)
     setJasiMethod(externalState.jasiMethod)
     setSelectedCity(externalState.city)
+    setCountryCode(externalState.countryCode && isCountryCode(externalState.countryCode) ? externalState.countryCode : getCityCountryCode(externalState.city))
     setManualCoords(externalState.manualCoords)
     setLatitude(externalState.latitude)
     setLongitude(externalState.longitude)
@@ -264,6 +270,11 @@ const BirthForm = forwardRef<BirthFormHandle, Props>(function BirthForm({ onSubm
     setTimezoneError(null)
   }
 
+  function clearCitySelection() {
+    setSelectedCity(null)
+    setTimezoneError(null)
+  }
+
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
 
@@ -279,10 +290,10 @@ const BirthForm = forwardRef<BirthFormHandle, Props>(function BirthForm({ onSubm
 
     const state: SavedFormState = {
       year, month, day, hour, minute, gender, unknownTime, jasiMethod,
-      city: selectedCity, manualCoords, latitude: resolvedLatitude, longitude: resolvedLongitude,
+      city: selectedCity, countryCode, manualCoords, latitude: resolvedLatitude, longitude: resolvedLongitude,
     }
     if (state.day < 1 || state.day > new Date(state.year, state.month, 0).getDate()) {
-      setTimezoneError('Please choose a valid calendar date.')
+      setTimezoneError(t('form.invalidDate'))
       return
     }
     const validationError = getTimezoneValidationError(state)
@@ -485,10 +496,14 @@ const BirthForm = forwardRef<BirthFormHandle, Props>(function BirthForm({ onSubm
               </div>
             ) : (
               <>
-                <CityCombobox selectedCity={selectedCity} onSelect={handleCitySelect} />
-                <p className="mt-1.5 text-sm text-[#755632] leading-relaxed">
+                <label htmlFor="birth-country" className="block text-sm text-[#755632] mb-1">{t('city.country')}</label>
+                <select id="birth-country" value={countryCode} className={`${selectClass} mb-3`} onChange={e => { setCountryCode(e.target.value); clearCitySelection() }}>
+                  {countries.map(country => <option key={country.code} value={country.code}>{country.name}</option>)}
+                </select>
+                <CityCombobox key={countryCode} countryCode={countryCode} selectedCity={selectedCity} onSelect={handleCitySelect} onSelectionInvalidated={clearCitySelection} />
+                {locationSummary && <p className="mt-2 text-xs text-[#755632] leading-relaxed">
                   {locationSummary}
-                </p>
+                </p>}
               </>
             )}
             {manualCoords && (
@@ -507,7 +522,7 @@ const BirthForm = forwardRef<BirthFormHandle, Props>(function BirthForm({ onSubm
               </p>
             )}
             {timezoneError && (
-              <div className="mt-2 px-3 py-2 bg-red-50 dark:bg-red-950 border border-red-200 dark:border-red-800 rounded-lg text-sm text-red-700 dark:text-red-400 leading-relaxed">
+              <div role="alert" className="mt-2 px-3 py-2 bg-red-50 dark:bg-red-950 border border-red-200 dark:border-red-800 rounded-lg text-sm text-red-700 dark:text-red-400 leading-relaxed">
                 {timezoneError}
               </div>
             )}
