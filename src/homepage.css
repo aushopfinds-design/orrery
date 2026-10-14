@@ -272,7 +272,7 @@
 .fate-reading-cover { border: 1px solid #ba955c; border-radius: 18px; padding: 40px; text-align: center; color: #f4e4ca; background: #0b223a; }
 .fate-reading-cover-complete { position: relative; overflow: hidden; padding: 60px 32px; background: linear-gradient(#061b2abb,#071b33),url(/saju-moon-mountains.svg) center/cover; outline: 1px solid #c6a878; outline-offset: -13px; }
 .fate-reading-cover img { margin: 0 auto 15px; width: 110px; height: 110px; }
-.fate-reading-cover-emblem { display: block; margin: 0 auto 15px; width: 110px; height: 110px; }
+.fate-reading-cover-emblem { display: block; margin: 0 auto 15px; width: 110px; height: 110px; border-radius: 50%; }
 .fate-reading-controls button:not(.fate-complete-primary) { color: #e7ccaa; border-color: #ab8955; background: #142c42; padding: 11px 17px; border-radius: 99px; }
 .fate-reading-cover .fate-eyebrow { color: #dbb576; }
 .fate-reading-cover h1 { font: 400 clamp(32px,4vw,49px)/1.2 Georgia,serif; margin-top: 12px; }
