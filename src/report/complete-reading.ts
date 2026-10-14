@@ -5,6 +5,19 @@ import type { ReadingElement, ReadingPeriod } from './reading.ts'
 import { PERSONAL_PROFILES, WORK_PROFILES, RELATIONSHIP_PROFILES } from './reading-profiles.ts'
 import type { ReadingGuidance } from './reading-profiles.ts'
 import { plainReadingText } from './reading-text.ts'
+import { WORK_CONNECTIONS, RELATIONSHIP_CONNECTIONS, WORK_REFLECTIONS } from './reading-connections.ts'
+
+export const REPORT_EDITION = '2026.10'
+
+export interface ReadingConnection {
+  id: string
+  title: string
+  basis: string
+  text: string
+  question: string
+  chapterId: string
+  evidence: string[]
+}
 
 export interface ReportChapter {
   id: string
@@ -29,6 +42,8 @@ export interface CompleteReading {
   dayMaster: string
   headline: string
   summary: { label: string; text: string }[]
+  connections: ReadingConnection[]
+  referenceYear: number
   chapters: ReportChapter[]
   periods: CompleteReadingPeriod[]
   actionPlan: ReportChapter
@@ -196,6 +211,23 @@ export function buildCompleteReading(result: SajuResult, asOfYear = new Date().g
   const combine = interactions.find(item => item.kind === '合')
   const clash = interactions.find(item => item.kind === '沖')
   const elementHabits = c.prominent.map(item => ELEMENT_HABITS[item.element])
+  const workFamily = FAMILY[month.stemSipsin]
+  const connections: ReadingConnection[] = [
+    {
+      id: 'work-fit', title: 'Your approach, in your working world',
+      basis: `Your starting theme: ${personal.focus}. Your work theme: ${work.theme}.`,
+      text: WORK_CONNECTIONS[day.pillar.stem][workFamily],
+      question: WORK_REFLECTIONS[workFamily], chapterId: 'career',
+      evidence: [`Day stem ${day.pillar.stem} (${self.name}).`, fact(month, 2)],
+    },
+    {
+      id: 'close-conversations', title: 'How you show care, and what you need',
+      basis: `Your relationship theme: ${relationship.need}.`,
+      text: `${RELATIONSHIP_CONNECTIONS[day.pillar.stem]} Your close-relationship theme adds a need for **${relationship.need}**. Try saying: **“${relationship.words}”**`,
+      question: 'Have I said what I need, and asked what the other person needs?', chapterId: 'love',
+      evidence: [`Day pillar ${day.pillar.ganzi}: stem ${day.pillar.stem} (${self.name}) and branch ${day.pillar.branch}.`, fact(day, 1, true)],
+    },
+  ]
   const chapters: ReportChapter[] = [
     {
       id: 'personality', title: '01 · Your Personality', lead: personal.strength,
@@ -378,12 +410,13 @@ export function buildCompleteReading(result: SajuResult, asOfYear = new Date().g
     'From your chart: ' + chapter.evidence.join(' '), 'Try this: ' + chapter.tryThis,
   ]
   const fullText = plainReadingText([
-    'Complete Life Reading', formatBirth(result.input), pillarSummary(result).join(' · '), personal.headline,
+    'THE FATE KEY · Complete Life Reading', `Report edition ${REPORT_EDITION} · Timeline reference year ${asOfYear}`, formatBirth(result.input), pillarSummary(result).join(' · '), personal.headline,
     ...summary.map(item => `${item.label}: ${item.text}`),
+    'How your themes work together', ...connections.flatMap(item => [item.title, item.basis, item.text, 'Ask yourself: ' + item.question, 'From your chart: ' + item.evidence.join(' ')]),
     ...chapters.flatMap(chapterText),
     '08 · Your Ten-Year Chapters', ...periods.map(period => `${period.period} · ${period.pillar} · ${period.headline}\n${period.text}`),
     ...chapterText(actionPlan),
     'How this reading is prepared', ...methodNotes,
   ].join('\n\n'))
-  return { title: 'Complete Life Reading', birthSummary: formatBirth(result.input), pillarSummary: pillarSummary(result), dayMaster: self.name, headline: personal.headline, summary, chapters, periods, actionPlan, elements: c.elements, visibleMarkers: result.input.unknownTime ? 6 : 8, methodNotes, fullText, wordCount: fullText.split(/\s+/).length }
+  return { title: 'Complete Life Reading', birthSummary: formatBirth(result.input), pillarSummary: pillarSummary(result), dayMaster: self.name, headline: personal.headline, summary, connections, referenceYear: asOfYear, chapters, periods, actionPlan, elements: c.elements, visibleMarkers: result.input.unknownTime ? 6 : 8, methodNotes, fullText, wordCount: fullText.split(/\s+/).length }
 }

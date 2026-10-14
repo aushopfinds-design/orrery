@@ -69,6 +69,29 @@ describe('Complete reading quality across 60 international profiles', () => {
     }
   })
 
+  it('connects multiple chart positions into distinct, traceable prompts in the text export', () => {
+    const workPrompts = new Map<string, Set<string>>()
+    for (const { result, reading } of readings) {
+      const [work, love] = reading.connections
+      expect(work.evidence.join(' ')).toContain(result.pillars[1].pillar.stem)
+      expect(work.evidence.join(' ')).toContain(result.pillars[2].stemSipsin)
+      expect(love.evidence.join(' ')).toContain(result.pillars[1].pillar.ganzi)
+      expect(love.evidence.join(' ')).toContain(result.pillars[1].branchSipsin)
+      for (const connection of reading.connections) {
+        expect(reading.chapters.some(chapter => chapter.id === connection.chapterId)).toBe(true)
+        expect(reading.fullText).toContain(plainReadingText(connection.text))
+        expect(reading.fullText).toContain(connection.question)
+        expect(connection.text.split(/\s+/).length).toBeLessThan(95)
+      }
+      const prompts = workPrompts.get(reading.dayMaster) ?? new Set<string>()
+      prompts.add(work.text)
+      workPrompts.set(reading.dayMaster, prompts)
+    }
+    expect([...workPrompts.values()].some(prompts => prompts.size >= 3)).toBe(true)
+    expect(new Set(readings.map(({ reading }) => reading.connections[0].text)).size).toBeGreaterThan(20)
+    expect(new Set(readings.map(({ reading }) => reading.connections[1].text)).size).toBeGreaterThan(30)
+  })
+
   it('contains no duplicated body paragraphs or leaked template values', () => {
     for (const { reading } of readings) {
       const paragraphs = reading.chapters.flatMap(chapter => [chapter.lead, ...chapter.paragraphs])

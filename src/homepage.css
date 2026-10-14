@@ -575,3 +575,86 @@
   .fate-element-visual > table { flex: 1; width: auto; }
   .fate-element-visual > p { flex: 0 0 100%; }
 }
+
+/* Publisher identity and a transparent preparation record. */
+.fate-report-edition-label { display: flex; flex-wrap: wrap; gap: 5px 12px; color: #e0c69f; font-size: 8px; letter-spacing: .1em; text-transform: uppercase; border-left: 2px solid #c4a066; padding-left: 10px; margin: -8px 0 20px; line-height: 1.7; }
+.fate-report-edition-label span { color: #c5b69c; letter-spacing: .04em; }
+.fate-report-chapter-heading > div > p { display: flex; align-items: center; gap: 5px; }
+.fate-report-chapter-heading > div > p > svg { width: 8px; height: 17px; flex-shrink: 0; }
+.fate-report-chapter-publisher { color: #8d7e69; font-size: 8px; letter-spacing: .12em; }
+.fate-complete-reading .fate-reading-practice > svg { width: 22px; height: 45px; }
+.fate-complete-reading .fate-reading-evidence summary { padding: 2px 0; }
+.fate-reading-evidence summary small { display: inline-block; margin-left: 12px; font-size: 10px; color: #7a746c; border: 1px solid #dfd2bd; border-radius: 20px; padding: 1px 8px; }
+.fate-reading-evidence summary:focus-visible { outline: 2px solid #987442; outline-offset: 4px; }
+.fate-report-connections-heading, .fate-report-record > header { display: flex; align-items: flex-start; gap: 20px; padding-bottom: 23px; border-bottom: 1px solid #dfcdb0; }
+.fate-report-connections-heading > svg, .fate-report-record > header > svg { width: 29px; height: 62px; color: #a17c45; flex-shrink: 0; }
+.fate-report-connections-heading > div, .fate-report-record > header > div { min-width: 0; }
+.fate-report-connections-heading .fate-eyebrow, .fate-report-record .fate-eyebrow { color: #87653b; font-size: 9px; letter-spacing: .14em; }
+.fate-complete-reading .fate-report-connections-heading h2, .fate-complete-reading .fate-report-record h2 { margin: 7px 0 10px; font-size: 29px; }
+.fate-report-connections-heading p:last-child, .fate-report-record > header p:last-child { font-size: 13px; line-height: 1.85; color: #5a6872; margin: 0; max-width: 640px; }
+.fate-report-connection-cards { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 25px; margin-top: 25px; }
+.fate-report-connection-cards > section { min-width: 0; padding: 24px; border: 1px solid #dfceb3; background: #fbf5e9; border-radius: 10px; }
+.fate-report-connection-cards > section + section { background: #fcf2ee; border-color: #e3cec4; }
+.fate-report-connection-title { display: flex; align-items: flex-start; gap: 11px; margin-bottom: 15px; }
+.fate-report-connection-title > svg { width: 21px; height: 21px; color: #927345; flex-shrink: 0; }
+.fate-report-connection-title h3 { font: 21px/1.35 Georgia,serif; margin: 0; color: #263d4e; }
+.fate-report-connection-cards p { font-size: 13px; line-height: 1.9; margin: 13px 0; }
+.fate-report-connection-cards .fate-report-connection-basis { font-size: 11px; line-height: 1.85; color: #746751; border-top: 1px solid #e1d1b9; padding-top: 13px; }
+.fate-report-connection-cards blockquote { border-left: 2px solid #baa074; padding-left: 15px; margin: 22px 0; }
+.fate-report-connection-cards blockquote > span { font-size: 9px; letter-spacing: .05em; color: #82613a; }
+.fate-report-connection-cards blockquote > p { font: 17px/1.5 Georgia,serif; margin: 6px 0 0; color: #314658; }
+.fate-report-connection-cards .fate-reading-evidence { font-size: 11px; line-height: 1.7; margin-top: 20px; }
+.fate-report-connection-cards .fate-reading-evidence summary small { display: block; width: fit-content; margin: 5px 0 0; }
+.fate-report-connection-link { display: inline-flex; align-items: center; gap: 12px; margin-top: 17px; color: #70542f; font-size: 11px; text-underline-offset: 4px; }
+.fate-report-connection-link:focus-visible { outline: 2px solid #987442; outline-offset: 4px; }
+.fate-report-record-birth { border-bottom: 1px solid #dfceb6; padding: 22px 0; margin: 0; }
+.fate-report-record-birth strong { display: block; color: #7d6443; font-size: 9px; letter-spacing: .1em; margin-bottom: 7px; }
+.fate-report-record-birth span { font-size: 13px; line-height: 1.8; }
+.fate-report-record-fields { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 0 30px; margin: 8px 0 20px; }
+.fate-report-record-fields > div { padding: 15px 0; border-bottom: 1px solid #e6dac8; min-width: 0; }
+.fate-report-record-fields dt { font-size: 10px; color: #7a6951; margin-bottom: 6px; }
+.fate-report-record-fields dd { font-size: 13px; color: #2d4253; line-height: 1.65; margin: 0; overflow-wrap: anywhere; }
+.fate-report-record-basis { color: #61707a; font-size: 12px; line-height: 1.9; max-width: 710px; }
+.fate-report-signature { display: flex; align-items: center; gap: 29px; border-top: 1px solid #d9c5a5; padding-top: 26px; margin-top: 26px; }
+.fate-report-publisher-mark { width: 142px; height: 142px; border: 1px solid #b79a6b; outline: 1px solid #d4bd96; outline-offset: -8px; border-radius: 50%; color: #9c793f; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 7px; flex-shrink: 0; background: #f7ecd9; }
+.fate-report-publisher-mark > span { font-size: 9px; letter-spacing: .16em; }
+.fate-report-publisher-mark > svg { width: 29px; height: 61px; }
+.fate-report-publisher-mark > small { font-size: 8px; letter-spacing: .06em; }
+.fate-report-signature > div:last-child { max-width: 410px; }
+.fate-report-signature h3 { font: 29px/1.25 Georgia,serif; color: #273e50; margin: 8px 0 12px; }
+.fate-report-signature > div > p:not(.fate-eyebrow) { font-size: 12px; line-height: 1.85; color: #637079; margin: 0 0 12px; }
+.fate-report-signature > div > span { font-size: 10px; color: #7c6b53; line-height: 1.8; }
+@media (max-width:760px) {
+  .fate-report-chapter-publisher { display: none; }
+  .fate-report-connections-heading, .fate-report-record > header { gap: 14px; }
+  .fate-complete-reading .fate-report-connections-heading h2, .fate-complete-reading .fate-report-record h2 { font-size: 25px; }
+  .fate-report-connection-cards { grid-template-columns: 1fr; gap: 17px; }
+  .fate-report-connection-cards > section { padding: 21px; }
+  .fate-report-record-fields { gap: 0 15px; }
+  .fate-report-signature { gap: 20px; align-items: flex-start; }
+  .fate-report-publisher-mark { width: 110px; height: 110px; gap: 4px; }
+  .fate-report-publisher-mark > svg { width: 24px; height: 49px; }
+  .fate-report-publisher-mark > span { font-size: 7px; }
+  .fate-report-publisher-mark > small { font-size: 7px; }
+  .fate-report-signature h3 { font-size: 25px; }
+}
+@media (max-width:420px) {
+  .fate-report-signature { flex-direction: column; }
+  .fate-report-record-fields { grid-template-columns: 1fr; }
+}
+@media print {
+  .fate-report-edition-label, .fate-report-edition-label span { color: #f3e0bd !important; }
+  .fate-report-connections { break-after: page; }
+  .fate-report-connections-heading, .fate-report-record > header { break-after: avoid; }
+  .fate-report-connection-cards { display: block; margin-top: 18px; }
+  .fate-report-connection-cards > section { padding: 18px; margin-top: 16px; break-inside: avoid; }
+  .fate-report-connection-cards p { font-size: 10pt; line-height: 1.6; }
+  .fate-report-connection-cards blockquote { margin: 13px 0; }
+  .fate-report-connection-cards blockquote > p { font-size: 12pt; }
+  .fate-report-connection-cards .fate-reading-print-evidence { font-size: 9pt; line-height: 1.5; }
+  .fate-complete-reading .fate-report-record { break-before: page; }
+  .fate-report-record-fields { display: flex; flex-wrap: wrap; gap: 0 24px; }
+  .fate-report-record-fields > div { flex: 1 1 40%; }
+  .fate-report-signature { break-inside: avoid; }
+  .fate-report-publisher-mark { print-color-adjust: exact; }
+}
