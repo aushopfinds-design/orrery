@@ -3,6 +3,7 @@ import BirthForm from './BirthForm.tsx'
 import ProductCatalog from './ProductCatalog.tsx'
 import HomeOverview, { FateEmblem, HomeBenefits, HomeFAQ } from './HomeOverview.tsx'
 import LanguageMenu from './LanguageMenu.tsx'
+import HeroArtwork from './HeroArtwork.tsx'
 import type { BirthFormHandle, SavedFormState } from './BirthForm.tsx'
 import ProfileModal from './ProfileModal.tsx'
 import CopyButton from './CopyButton.tsx'
@@ -82,9 +83,7 @@ export default function App() {
           {menuOpen && <div className="fate-mobile-menu" id="fate-mobile-menu">{links.map(([href, key]) => <a key={href} href={href} onClick={navigateHomeSection}>{t(key)}</a>)}<button type="button" onClick={() => { setMenuOpen(false); setProfileModalOpen(true) }}>{t('home.nav.saved')}</button></div>}
         </nav>
         <div className="fate-hero-art" aria-hidden="true" hidden={!showingHome && !showingFree}>
-          <svg viewBox="825 115 780 700" preserveAspectRatio="xMidYMid slice"><image href="/images/fate-key-approved-hero.webp" width="1606" height="979" /></svg>
-          <span className="fate-key-glow" /><span className="fate-mist" />
-          {[[15,18,0],[36,35,1.2],[66,12,2.4],[91,28,.6],[84,54,3],[20,70,1.8],[67,80,2.8]].map(([x,y,delay],i) => <span key={i} className="fate-star" style={{left:`${x}%`,top:`${y}%`,animationDelay:`${delay}s`}} />)}
+          {(showingHome || showingFree) && <HeroArtwork />}
         </div>
         <div className="fate-hero-layout" hidden={!showingHome && !showingFree}>
           <div className="fate-hero-intro">
