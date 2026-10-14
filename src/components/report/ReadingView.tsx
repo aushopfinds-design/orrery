@@ -7,16 +7,26 @@ import type { ReportChapter } from '../../report/complete-reading.ts'
 import { useLocale } from '../../i18n/index.ts'
 import ElementBalance from './ElementBalance.tsx'
 import { FateEmblem } from '../HomeOverview.tsx'
+import ReadingText from './ReadingText.tsx'
+import ReadingGuidance from './ReadingGuidance.tsx'
+
+function ChartEvidence({ facts }: { facts: string[] }) {
+  const { t } = useLocale()
+  return <>
+    <details className="fate-reading-evidence"><summary>{t('reading.chartSource')}</summary><ul>{facts.map(fact => <li key={fact}>{fact}</li>)}</ul></details>
+    <p className="hidden print:block fate-reading-print-evidence"><strong>{t('reading.chartSource')}</strong> {facts.join(' ')}</p>
+  </>
+}
 
 function Chapter({ chapter }: { chapter: ReportChapter }) {
   const { t } = useLocale()
   return (
     <section id={`sample-report-${chapter.id}`} className="fate-reading-chapter">
-      <h2>{chapter.title}</h2><p className="fate-reading-lead">{chapter.lead}</p>
-      {chapter.paragraphs.map(paragraph => <p key={paragraph}>{paragraph}</p>)}
-      <details className="fate-reading-evidence"><summary>{t('reading.chartSource')}</summary><ul>{chapter.evidence.map(fact => <li key={fact}>{fact}</li>)}</ul></details>
-      <p className="hidden print:block fate-reading-print-evidence"><strong>{t('reading.chartSource')}</strong> {chapter.evidence.join(' ')}</p>
+      <h2>{chapter.title}</h2><p className="fate-reading-lead"><ReadingText text={chapter.lead} /></p>
+      {chapter.paragraphs.map(paragraph => <p key={paragraph}><ReadingText text={paragraph} /></p>)}
+      <ReadingGuidance guidance={chapter.guidance} />
       <div className="fate-reading-practice"><strong>{t('reading.tryThis')}</strong><p>{chapter.tryThis}</p></div>
+      <ChartEvidence facts={chapter.evidence} />
     </section>
   )
 }
@@ -50,7 +60,7 @@ export default function ReadingView({ input }: { input: BirthInput }) {
       {report.chapters.map(chapter => <div key={chapter.id}><Chapter chapter={chapter} />{chapter.id === 'balance' && <section className="fate-reading-chapter fate-reading-element-detail"><ElementBalance elements={report.elements} visibleMarkers={report.visibleMarkers} /></section>}</div>)}
       <section id="sample-report-timeline" className="fate-reading-chapter">
         <h2>{t('reading.complete.timeline')}</h2><p>{t('reading.complete.timelineNote')}</p>
-        {report.periods.length ? report.periods.map(period => <div key={period.period} className="fate-reading-period"><p className="fate-eyebrow">{period.period} · {period.pillar}</p><h3>{period.headline}</h3><p>{period.text}</p></div>) : <p>{t('reading.complete.noPeriods')}</p>}
+        {report.periods.length ? report.periods.map(period => <div key={period.period} className="fate-reading-period"><p className="fate-eyebrow">{period.period}</p><h3>{period.headline}</h3>{period.paragraphs.map(paragraph => <p key={paragraph}><ReadingText text={paragraph} /></p>)}<ReadingGuidance guidance={period.guidance} headingLevel="h4" /><div className="fate-reading-practice"><strong>{t('reading.tryThis')}</strong><p>{period.tryThis}</p></div><ChartEvidence facts={period.evidence} /></div>) : <p>{t('reading.complete.noPeriods')}</p>}
       </section>
       <Chapter chapter={report.actionPlan} />
       <section className="fate-reading-chapter fate-reading-method print:hidden"><h2>{t('reading.method.title')}</h2><p>{t('reading.method.intro')}</p><details><summary>{t('reading.method.details')}</summary><p>{report.pillarSummary.join(' · ')}</p><ul>{report.methodNotes.map(note => <li key={note}>{note}</li>)}</ul></details></section>

@@ -1,8 +1,10 @@
 import type { SajuResult, BirthInput, PillarDetail } from '@orrery/core/types'
 import { getRelation } from '@orrery/core/pillars'
-import { buildEnglishReading, BRANCH_ELEMENTS, STEM_ELEMENTS, STEMS, TEN_GODS, ELEMENT_MEANING } from './reading.ts'
+import { buildEnglishReading, BRANCH_ELEMENTS, STEM_ELEMENTS, STEMS, TEN_GODS } from './reading.ts'
 import type { ReadingElement, ReadingPeriod } from './reading.ts'
 import { PERSONAL_PROFILES, WORK_PROFILES, RELATIONSHIP_PROFILES } from './reading-profiles.ts'
+import type { ReadingGuidance } from './reading-profiles.ts'
+import { plainReadingText } from './reading-text.ts'
 
 export interface ReportChapter {
   id: string
@@ -10,6 +12,13 @@ export interface ReportChapter {
   lead: string
   paragraphs: string[]
   evidence: string[]
+  tryThis: string
+  guidance: ReadingGuidance
+}
+export interface CompleteReadingPeriod extends ReadingPeriod {
+  paragraphs: string[]
+  evidence: string[]
+  guidance: ReadingGuidance
   tryThis: string
 }
 export interface ElementCount { element: ReadingElement; count: number }
@@ -21,7 +30,7 @@ export interface CompleteReading {
   headline: string
   summary: { label: string; text: string }[]
   chapters: ReportChapter[]
-  periods: ReadingPeriod[]
+  periods: CompleteReadingPeriod[]
   actionPlan: ReportChapter
   elements: ElementCount[]
   visibleMarkers: number
@@ -42,6 +51,7 @@ export interface FreeReading {
   evidence: string[]
   tryThis: string
   timeUnknown: boolean
+  guidance: ReadingGuidance
 }
 
 const POSITIONS = ['hour', 'day', 'month', 'year']
@@ -53,11 +63,11 @@ const FAMILY: Record<string, string> = {
   '七殺': 'responsibility', '正印': 'learning', '偏印': 'learning',
 }
 const MONEY_PROMPTS: Record<string, string> = {
-  ownership: 'Notice which commitments are yours and which you accepted to keep up with somebody else. Generosity is easier to sustain when you know what you have already promised. Write down a limit before agreeing to another shared expense or unpaid piece of work.',
-  making: 'Look at the time and materials behind something you produce. Enjoying a skill does not make its ongoing cost disappear. Keeping a simple record can help you see whether a useful activity still fits the time and resources you have available.',
-  resources: 'Look at what a commitment asks of you after the first payment or first week. A promising start and a manageable routine are different questions. Make the recurring part visible so that your decision is based on the whole commitment.',
-  responsibility: 'Notice when pressure makes a practical decision feel more urgent than it is. A request can be important without needing an immediate yes. Confirm the deadline, the amount involved and who is responsible before taking another obligation on yourself.',
-  learning: 'Notice how often preparation creates another expense. A course, tool or source of advice is most useful when you know what you want to use it for. Name the first practical result you hope to get before adding another item to the list.',
+  ownership: 'Before sharing a cost, agree **who will pay for each part**. Helping someone is easier when you know what you have already promised.',
+  making: 'Count the **time and materials** behind something you make. Enjoying the work does not remove its cost.',
+  resources: 'Check what an offer will cost **after the first week**. A good start still needs a plan you can keep up.',
+  responsibility: 'A request can matter without needing an instant yes. **Check the deadline and the cost** before taking it on.',
+  learning: 'Before buying another tool or course, decide **what you will use it for**. Give the things you already have a chance to help.',
 }
 
 function context(result: SajuResult) {
@@ -110,18 +120,32 @@ export function buildFreeReading(result: SajuResult): FreeReading {
     title: 'Your Free Saju Snapshot', birthSummary: formatBirth(result.input),
     pillarSummary: pillarSummary(result), dayMaster: c.self.name, headline: c.personal.headline,
     paragraphs: [
-      `Your starting symbol is ${c.self.name}, traditionally pictured as ${c.personal.image}. ${c.personal.strength}`,
+      c.personal.strength,
       c.personal.pressure,
     ],
-    workNote: `Your month marker adds ${label(c.month.stemSipsin)} to the picture. You may prefer work with ${c.work.setting}.`,
+    workNote: `Your birth month adds a focus on **${c.work.theme}**. You may prefer work with ${c.work.setting}.`,
     elements: c.elements, visibleMarkers: result.input.unknownTime ? 6 : 8,
     evidence: [`Day stem ${c.day.pillar.stem} (${c.self.name}).`, fact(c.month, 2)],
-    tryThis: c.self.practice, timeUnknown: Boolean(result.input.unknownTime),
+    tryThis: c.personal.practice, timeUnknown: Boolean(result.input.unknownTime),
+    guidance: { keepClose: c.personal.keepClose.slice(0, 1), watchFor: c.personal.watchFor.slice(0, 1) },
   }
 }
 
-/** Editorial composition from actual calculated markers, with no invented
- * strength score, useful-god diagnosis, personality certainty or event forecast. */
+const ELEMENT_HABITS: Record<ReadingElement, ReadingGuidance & { meaning: string }> = {
+  Wood: { meaning: 'growth and trying a new direction', keepClose: ['A small goal you can act on.', 'People who help you adjust the plan.'], watchFor: ['Pushing ahead after the plan stops fitting.', 'Adding a new goal before checking the current one.'] },
+  Fire: { meaning: 'sharing ideas and bringing energy to a group', keepClose: ['People who share the effort.', 'Quiet time between busy tasks.'], watchFor: ['Using all your energy in the first burst.', 'Feeling you must be available all the time.'] },
+  Earth: { meaning: 'steady care and following things through', keepClose: ['A routine with clear jobs and time to rest.', 'People who carry their share.'], watchFor: ['Taking on every task because you can.', 'Keeping a routine after it stops helping.'] },
+  Metal: { meaning: 'clear standards and careful decisions', keepClose: ['A short list of the details that matter.', 'Feedback that is clear and kind.'], watchFor: ['Treating every detail as equally important.', 'Judging a different method before hearing why it works.'] },
+  Water: { meaning: 'listening, learning and exploring options', keepClose: ['Time to think followed by one small action.', 'People who help you put an idea into words.'], watchFor: ['Thinking so long that the next step never happens.', 'Keeping every option open instead of choosing one test.'] },
+}
+const unique = (items: string[]) => [...new Set(items)]
+const guidanceText = (guidance: ReadingGuidance) => [
+  'Keep close:', ...guidance.keepClose.map(item => '• ' + item),
+  'Watch out for:', ...guidance.watchFor.map(item => '• ' + item),
+].join('\n')
+
+/** Actual chart relationships choose each theme. Everyday advice is cultural
+ * interpretation, not an observed fact or an advanced useful-element diagnosis. */
 export function buildCompleteReading(result: SajuResult, asOfYear = new Date().getFullYear()): CompleteReading {
   const c = context(result)
   const base = buildEnglishReading(result, asOfYear)
@@ -129,6 +153,8 @@ export function buildCompleteReading(result: SajuResult, asOfYear = new Date().g
   const relationship = RELATIONSHIP_PROFILES[day.pillar.branch]
   if (!relationship) throw new Error('A valid relationship marker is needed')
   const innerWork = WORK_PROFILES[month.branchSipsin]
+  const groupWork = WORK_PROFILES[year.stemSipsin]
+  const hourWork = WORK_PROFILES[hour.stemSipsin]
   const wealth = available.flatMap(({ pillar, index }) => [
     ...(index === 1 ? [] : [{ symbol: pillar.stemSipsin, location: `${POSITIONS[index]} stem ${pillar.pillar.stem}` }]),
     { symbol: pillar.branchSipsin, location: `${POSITIONS[index]} branch ${pillar.pillar.branch}` },
@@ -140,14 +166,24 @@ export function buildCompleteReading(result: SajuResult, asOfYear = new Date().g
   const hasSteady = wealth.some(item => item.symbol === '正財')
   const hasOpportunity = wealth.some(item => item.symbol === '偏財')
   const moneyOpening = hasSteady && hasOpportunity
-    ? 'Your chart contains both steady-resource and opportunity-related money markers. A useful way to read that mix is to keep a dependable base while allowing room for a new possibility. The two priorities can work together when you are clear about what is already committed and what is still optional.'
+    ? '**Keep a steady base while checking new opportunities.** Both money themes appear in the parts of your chart used here.'
     : hasSteady
-      ? 'The money-related markers checked in your chart lean toward steady resources. In everyday terms, this points toward the value of knowing what comes in, what goes out and what you have promised to deliver. Predictability can give you room to make a decision without needing every week to become a new opportunity.'
+      ? '**Know what comes in, what goes out and what you have promised.** Your chart puts steady resources in focus.'
       : hasOpportunity
-        ? 'The money-related markers checked in your chart lean toward opportunity and exchange. In everyday terms, this raises the question of how a promising idea becomes something manageable. Interest from other people, a useful connection or an appealing offer still needs time, a clear agreement and a realistic next step.'
+        ? '**An exciting offer needs a clear plan.** Your chart brings new opportunities and useful connections into focus.'
         : hiddenWealth.length
-          ? 'The top markers and main branch markers checked here do not contain a money-related symbol, but one appears inside a branch. That matters because a quick scan of the visible chart would miss part of the picture. Use this section to think about how resources support your other priorities, rather than treating a missing top marker as a verdict on your finances.'
-          : 'The money-related symbols checked here are not prominent in your chart. This section therefore starts with the work theme that is present, rather than inventing a promise about wealth. Your real income, commitments and choices remain the useful starting point for understanding what is manageable in everyday life.'
+          ? '**Look at the whole picture before judging your money habits.** A money theme appears within a less visible part of your chart.'
+          : '**Start with your real costs and commitments.** The parts checked here do not show a clear money theme.'
+  const moneyGuidance: ReadingGuidance = {
+    keepClose: [
+      hasOpportunity ? 'People who explain the cost and the work behind an offer.' : 'People who make clear, realistic agreements about shared costs.',
+      hasSteady ? 'A simple record of regular income and costs.' : 'A written plan showing the time and money a choice needs.',
+    ],
+    watchFor: [
+      hasOpportunity ? 'Saying yes before checking the full cost.' : 'Accepting another regular cost without checking your budget.',
+      FAMILY[month.stemSipsin] === 'learning' ? 'Buying more preparation before using what you already have.' : 'Paying or doing extra work simply to keep someone happy.',
+    ],
+  }
   const clashes = branchClashesWithDay(result)
   const interactions = [...result.relations.pairs].flatMap(([key, relation]) => {
     const indices = key.split(',').map(Number)
@@ -159,139 +195,195 @@ export function buildCompleteReading(result: SajuResult, asOfYear = new Date().g
   })
   const combine = interactions.find(item => item.kind === '合')
   const clash = interactions.find(item => item.kind === '沖')
-  const overview = `Your birth-day marker suggests ${personal.need}. Your birth-month marker adds ${label(month.stemSipsin)}, a theme about ${TEN_GODS[month.stemSipsin].lens}. Read the two together: your preferred way of approaching a situation may be different from what helps you organise the work around it.`
+  const elementHabits = c.prominent.map(item => ELEMENT_HABITS[item.element])
   const chapters: ReportChapter[] = [
     {
-      id: 'personality', title: '01 · Your Starting Style', lead: personal.strength,
+      id: 'personality', title: '01 · Your Personality', lead: personal.strength,
       paragraphs: [
-        `The ${self.name} symbol is traditionally pictured as ${personal.image}. We use that image to describe an approach, not a fixed label. ${overview}`,
-        personal.example,
-        personal.pressure,
-        `${personal.balance} Think of a recent decision where this would have made the situation easier. What would you keep, and what could you change? A useful reading becomes clearer when you can connect it with a real example from your own life.`,
+        `Saju uses your birth day as the starting point for this part of the reading. Your symbol is **${self.name}**, pictured as ${personal.image}. That image points to ${personal.focus}.`,
+        `Your birth month adds a focus on **${work.theme}**. Think about how that fits with your need for ${personal.need}.`,
+        personal.example, personal.pressure, personal.balance,
       ],
       evidence: [`Your day stem is ${day.pillar.stem} (${self.name}); this is the reference marker for the reading.`, fact(month, 2)],
-      tryThis: self.practice,
+      tryThis: personal.practice,
+      guidance: { keepClose: personal.keepClose, watchFor: personal.watchFor },
     },
     {
-      id: 'career', title: '02 · Work That Fits Your Way of Thinking', lead: `Look for work with ${work.setting}.`,
+      id: 'career', title: '02 · Work That Suits You',
+      lead: `You may prefer work with **${work.setting}**.`,
       paragraphs: [
-        `The work theme here is ${label(month.stemSipsin)}. It comes from how your birth-month marker connects with the day marker used as your starting point. That is why this chapter pays attention to ${work.contribution}. Use the theme to compare work environments, rather than to choose a job from a fixed list.`,
+        `Your birth month connects with your birth day through a theme of **${work.theme}**. In everyday work, that points to ${work.contribution}.`,
         innerWork && month.branchSipsin !== month.stemSipsin
-          ? `The second marker in your birth-month pair adds ${label(month.branchSipsin)}. That brings ${innerWork.contribution} into the reading too. A role may suit you better when it makes room for both, instead of asking you to rely on only one way of working.`
-          : `Both markers in your birth-month pair repeat the same ${label(month.stemSipsin)} theme. That gives this chapter a consistent focus: how the daily task is organised matters as much as the title of the role. Compare the actual working routine with the conditions that help you contribute.`,
-        `A possible source of friction is ${work.friction}. ${work.scene} Try to name the difference between a difficult task that teaches you something and a working arrangement that keeps creating the same avoidable problem.`,
-        `Bring your starting style into that decision too: you may need ${personal.need}. Before saying yes to a role or project, ask how responsibility, feedback and the pace of work will be handled. A clear answer gives you something concrete to compare with your preferences.`,
+          ? `A second part of your birth month adds **${innerWork.theme}**. A role may feel easier when it leaves room for both ways of working.`
+          : `This theme appears in both parts of your birth month. Look at the **daily routine**, as well as the job title.`,
+        `Watch for **${work.friction}**. ${work.scene}`,
+        `Before accepting a role, ask about the **workload, feedback and freedom to make decisions**. Compare the answers with what helps you do your best work.`,
       ],
       evidence: [fact(month, 2), fact(month, 2, true), `The comparison uses your day stem ${day.pillar.stem}; it is not based on your birth year alone.`],
       tryThis: work.next,
+      guidance: {
+        keepClose: unique([...work.keepClose, ...(month.branchSipsin !== month.stemSipsin ? innerWork.keepClose.slice(0, 1) : [])]),
+        watchFor: unique([...work.watchFor, ...(month.branchSipsin !== month.stemSipsin ? innerWork.watchFor.slice(0, 1) : [])]),
+      },
     },
     {
-      id: 'money', title: '03 · Money, Commitments and Opportunity', lead: moneyOpening,
+      id: 'money', title: '03 · Money and Everyday Choices', lead: moneyOpening,
       paragraphs: [
-        wealth.length ? `The markers behind that reading are ${wealth.map(item => `${item.location} (${label(item.symbol)})`).join('; ')}. Their location tells us which part of the birth chart supplied the theme. It does not tell us your earnings, savings or financial history, so those real figures belong in any practical decision.` : `The work theme available in your chart is ${label(month.stemSipsin)}. That gives this chapter a practical link with the way you handle tasks and commitments. Look at how time, effort and resources support that work before adding a claim about a financial outcome.`,
+        wealth.length
+          ? 'The chart gives this chapter its theme. **Your actual income and costs** tell you what you can afford. Use both parts when thinking about a choice.'
+          : `Your work theme is **${work.theme}**. Check how your time and money support that work before taking on another cost.`,
         MONEY_PROMPTS[FAMILY[month.stemSipsin]],
-        `Separate what is already committed from what you are still free to choose. That can mean a recurring bill, a promise to another person or the time required to finish a project. Looking at the whole obligation makes it easier to see why a small decision sometimes feels larger than its first cost.`,
-        `Bring the decision back to one question you can answer with real information: what will this ask of you each month? You can like an idea and still need a clearer agreement about its ongoing demands. Keep the cost, available time and other people's expectations in the same picture before deciding what to take on.`,
+        'For example, a low first payment may hide a regular cost. Write down **what you will pay each month** and how long it will continue.',
+        '**Check the full commitment.** Include the money, the time and any work someone expects from you. A clear agreement makes a small choice easier to understand.',
       ],
-      evidence: wealth.length ? wealth.map(item => `${item.location}: ${item.symbol} (${label(item.symbol)}).`) : hiddenWealth.length ? hiddenWealth : [`No 正財 or 偏財 appears in the checked top or main branch markers.`, fact(month, 2)],
-      tryThis: hasOpportunity ? 'Write down one appealing offer, the time it requires and the commitment you would have to make. Check what is still unknown before replying.' : 'Choose one regular commitment. Record what it costs in money or time and decide whether the agreement still fits your circumstances.',
+      evidence: wealth.length ? wealth.map(item => `${item.location}: ${item.symbol} (${label(item.symbol)}).`) : hiddenWealth.length ? hiddenWealth : ['No 正財 or 偏財 appears in the checked top or main branch markers.', fact(month, 2)],
+      tryThis: hasOpportunity ? 'Choose one appealing offer. Write down its full cost, the time it needs and what is still unknown.' : 'Choose one regular cost. Check whether it still fits your budget and what you need it for.',
+      guidance: moneyGuidance,
     },
     {
-      id: 'love', title: '04 · Closeness, Communication and Boundaries', lead: `Your relationship chapter starts with ${relationship.need}.`,
+      id: 'love', title: '04 · Relationships and Communication',
+      lead: `**${relationship.headline}.**`,
       paragraphs: [
-        `Your birth-day pair supplies this chapter's starting point. One marker describes your preferred approach; the other is traditionally used to explore close relationships. Read together, they raise two questions: how you approach someone, and what makes everyday closeness feel comfortable for you. The original markers are shown in the chart notes below.`,
-        `You may need ${personal.need}, while the day-branch prompt asks you to notice ${relationship.friction}. Both can be true in the same conversation. One person can care about keeping the connection warm while also needing a different pace, a clearer answer or a little more space.`,
-        `For example, you might say: “${relationship.words}” This gives the other person something they can respond to. Adjust the wording to fit your situation; the useful part is making a need clear without deciding in advance how the other person must feel.`,
-        clashes.length ? `There is also a clash marker involving your day branch: ${clashes.join('; ')}. We use that as a prompt to notice competing needs, such as a private preference and an outside expectation. It is not a prediction about a relationship ending or a reason to judge another person from one chart.` : `There is no direct day-branch clash in the pairs checked here. That does not remove the need to communicate. A useful conversation still depends on what is happening between real people, including needs that a birth chart cannot know.`,
-        `This is a one-person reading. It cannot tell you another person's intentions or compare the fit between two birth charts. Start with your own part of the conversation, then ask the other person what would make the same situation easier for them.`,
+        `Saju uses the two parts of your birth day to explore close relationships. Your reading points to a need for **${relationship.need}**.`,
+        `Your own starting style also values **${personal.need}**. Notice whether you can say that clearly during an everyday conversation.`,
+        `One habit to watch is **${relationship.friction}**. Try asking what the other person needs before deciding how to help.`,
+        `You could say: **“${relationship.words}”** Give the other person time to answer.`,
+        clashes.length
+          ? 'Your chart also shows two parts pulling in different directions. If that fits, notice when one person wants space while another wants an answer. **Agree when to talk again.**'
+          : 'The pairs checked here do not show a direct conflict in this part of the chart. You still need to talk about what each person wants.',
+        '**Ask about the real situation.** This reading is about one person. Understanding a partner also takes listening to them.',
       ],
       evidence: [`Day pillar ${day.pillar.ganzi}: stem ${day.pillar.stem} (${self.name}) with branch ${day.pillar.branch}.`, fact(day, 1, true), ...clashes],
-      tryThis: `Use the sentence “${relationship.words}” as a starting point, then ask what the other person needs in return.`,
+      tryThis: 'Try the example sentence in one conversation. Listen to the answer before offering a solution.',
+      guidance: { keepClose: relationship.keepClose, watchFor: relationship.watchFor },
     },
     {
-      id: 'social', title: '05 · The Role You Take Around Other People', lead: `Your year marker adds a theme of ${label(year.stemSipsin)}.`,
+      id: 'social', title: '05 · Your Role Around Other People',
+      lead: `In a wider group, your chart brings **${groupWork.theme}** into focus.`,
       paragraphs: [
-        `The year stem ${year.pillar.stem} connects with your day stem through ${label(year.stemSipsin)}. In this chapter, we use that as a way to think about the role you take in a wider group: ${TEN_GODS[year.stemSipsin]?.lens ?? 'how you respond to other people'}. It can be different from the role that feels comfortable in a close relationship.`,
-        year.stemSipsin === month.stemSipsin ? `Your year and month markers repeat the same ${label(year.stemSipsin)} theme. That gives the wider-group chapter a link with the work chapter: a contribution you make at work may also become the role people expect from you elsewhere. Check whether you choose that role or have simply become used to filling it.` : `Your wider-group theme is ${label(year.stemSipsin)}, while your work theme is ${label(month.stemSipsin)}. You do not have to take the same role everywhere. Notice whether a group expects the contribution you actually want to make, or keeps asking you to repeat a familiar role that no longer fits the situation.`,
-        result.input.unknownTime ? 'Your birth time is unknown, so this report uses three pillars. The hour-based part of this chapter is left out rather than guessed. If you find the time later, the additional marker can change the reading of personal priorities and the timing of the ten-year chapters.' : `The hour stem ${hour.pillar.stem} adds ${label(hour.stemSipsin)}: ${TEN_GODS[hour.stemSipsin]?.lens ?? 'your longer-term priorities'}. Compare that theme with the year marker. One useful question is whether the role you take for other people also leaves room for what you want to develop over time.`,
-        `Think about a request you receive repeatedly. What part of it do you enjoy, and what part have you never agreed to keep doing? Naming that difference lets you make a clearer offer. You do not have to stop being useful in order to make your own priorities visible.`,
+        `This part comes from how your birth year connects with your birth day. It points to **${groupWork.contribution}**. Think about the role you often take with friends or colleagues.`,
+        year.stemSipsin === month.stemSipsin
+          ? 'Your group and work themes match. A role you take at work may follow you elsewhere. **Check whether you still want that role.**'
+          : `Your work theme is **${work.theme}**. Your group theme is different. You can offer a different kind of help in each setting.`,
+        result.input.unknownTime
+          ? 'Your birth time is unknown, so this report uses three pillars. The time-based part is left out. An accurate time could add detail later.'
+          : `Your birth time adds a focus on **${hourWork.theme}**. Leave room for that interest alongside what other people ask of you.`,
+        'Think of a request you hear often. Choose which part you enjoy and which part needs a new agreement. **You can be helpful and have limits.**',
       ],
       evidence: [fact(year, 3), ...(result.input.unknownTime ? ['The birth hour was not supplied; no hour interpretation is included.'] : [fact(hour, 0)])],
-      tryThis: 'Choose one role you often take in a group. Tell someone which part you are happy to keep and which part needs a different agreement.',
+      tryThis: 'Tell someone one task you are happy to help with. Say which part needs to be shared.',
+      guidance: { keepClose: groupWork.keepClose, watchFor: groupWork.watchFor },
     },
     {
-      id: 'balance', title: '06 · What Your Chart Brings Into Focus', lead: `${c.prominent.map(item => item.element).join(' and ')} ${c.prominent.length === 1 ? 'appears' : 'appear'} most often in the visible markers of your chart.`,
+      id: 'balance', title: '06 · Your Five-Element Picture',
+      lead: `**${c.prominent.map(item => item.element).join(' and ')}** ${c.prominent.length === 1 ? 'appears' : 'appear'} most often in this simple count.`,
       paragraphs: [
-        `The visible count is ${c.elements.map(item => `${item.element} ${item.count}`).join(', ')} across ${result.input.unknownTime ? 'six' : 'eight'} markers. Each supplied pillar contributes one top marker and one branch marker. This is a simple view of what is present; it gives you a way to follow the reading without needing to memorise the original symbols.`,
-        `In the language of this report, that emphasis brings ${c.prominent.map(item => ELEMENT_MEANING[item.element]).join('; ')} into focus. Look at the activities you naturally make time for. Then notice whether the same preference also takes over when the situation would benefit from another approach.`,
-        c.absent.length ? `${c.absent.map(item => item.element).join(' and ')} ${c.absent.length === 1 ? 'does' : 'do'} not appear in this visible count. A missing visible marker does not mean a missing ability, and inner branch markers can contain an element that this simple view leaves out. You do not need to buy a remedy or change your life around a zero in the table.` : 'All five elements appear in the visible count. That shows a range of markers, but it does not prove that your life is automatically balanced. The useful question is which approaches you actually use and which ones you forget when a situation becomes demanding.',
-        `Use the chart as a reminder to make room for a different kind of response. If you move quickly, try gathering one more piece of information. If you keep reflecting, try one small action. The value is in widening your options, rather than trying to force yourself into an ideal numerical balance.`,
+        `Your chart has **${result.input.unknownTime ? 'six' : 'eight'} visible symbols**. Their element count is ${c.elements.map(item => `${item.element} ${item.count}`).join(', ')}. You can see the numbers in the table below.`,
+        `In Saju imagery, ${c.prominent.map(item => item.element).join(' and ')} points to **${elementHabits.map(item => item.meaning).join('; ')}**. Use that image to notice a habit you already recognise.`,
+        c.absent.length
+          ? `${c.absent.map(item => item.element).join(' and ')} ${c.absent.length === 1 ? 'is' : 'are'} absent from this simple count. **A zero does not mean a missing ability.** Other parts of the full chart can contain those elements.`
+          : 'All five elements appear in this count. That gives a varied picture. **It does not tell us how balanced your daily life feels.**',
+        '**Try a different response to one small problem.** If you usually rush, pause and ask a question. If you usually wait, take one small step.',
+        'The habits below are ideas to try. This count alone cannot identify a lucky element, colour or direction for you.',
       ],
       evidence: c.elements.map(item => `${item.element}: ${item.count} visible markers.`),
-      tryThis: 'Pick one recent problem. Name the approach you used first, then try a different approach for one small part of it.',
+      tryThis: 'Choose one small problem. Try a response you would not usually choose and note what changes.',
+      guidance: {
+        keepClose: unique(elementHabits.flatMap(item => item.keepClose)),
+        watchFor: unique(elementHabits.flatMap(item => item.watchFor)),
+      },
     },
     {
-      id: 'patterns', title: '07 · Where Priorities Meet or Pull Apart', lead: clash ? `A clash between ${clash.markers} brings a question about different priorities into the reading.` : combine ? `A combination between ${combine.markers} offers a prompt about how two parts of your chart can work together.` : 'The checked pairs do not show a direct stem or branch combination or clash.',
+      id: 'patterns', title: '07 · When Different Needs Pull Against Each Other',
+      lead: clash ? '**Two parts of your chart pull in different directions.** Use this as a question about competing needs.' : combine ? '**Two parts of your chart form a connection.** Use this as a question about working together.' : '**No direct combination or clash appears in the pairs checked here.** Your other chart details still give this reading its themes.',
       paragraphs: [
-        clash ? `The ${clash.markers} ${clash.layer} markers sit in the ${clash.positions} positions. In the traditional reading framework, a clash is a relationship between symbols, rather than a record of something that has happened. A practical way to use it is to ask where two reasonable needs are competing for the same time or attention.` : 'A combination or clash is one relationship checked between two chart markers. When neither is present in these pairs, we leave that layer out rather than inventing a hidden conflict or claiming that life will be easy. The day, month and other supplied markers still give the reading its personal starting points.',
-        combine ? `The ${combine.markers} ${combine.layer} markers also form a combination in the ${combine.positions} positions. Read this as a prompt about cooperation: which parts of a situation become easier when they share an aim? A combination does not mean that every disagreement disappears or that an element has automatically transformed into something else.` : `A useful starting point is the relationship between your own preference for ${personal.need} and the work theme of ${label(month.stemSipsin)}. They do not need to compete, but making both visible can help you decide what the next agreement should include.`,
-        `Choose a situation where the decision keeps going in circles. Write down the two priorities separately, using ordinary words rather than the chart symbols. Then ask what small change would protect the essential part of each. This can turn a vague feeling of pressure into a choice that people can discuss.`,
-        'Check the result against your experience. A symbolic pattern is useful only if it helps you notice a real choice more clearly. If an example does not fit, leave it aside instead of trying to find an event that makes the reading seem correct.',
+        clash
+          ? 'For example, you may want to finish work while someone needs your attention. **Name both needs** before choosing what to do. A chart pattern cannot tell us that this has happened.'
+          : 'Look at how you handle a shared task. Which needs have been said clearly, and which ones are still being guessed?',
+        combine
+          ? 'Your chart also has a connection between two parts. Ask where a **shared goal** could make a task easier. Cooperation still needs a clear agreement.'
+          : `Your starting style values **${personal.need}**. Your work theme adds **${work.theme}**. Make room for both when planning a task.`,
+        'If a decision keeps going in circles, write down what each side needs. **Choose one small change** that gives both needs a place.',
+        'Use a pattern only when it helps you understand a real choice. Leave examples that do not fit. Your experience gives the reading its everyday detail.',
       ],
       evidence: interactions.length ? interactions.map(item => `${item.markers}: ${item.kind === '合' ? 'combination (合)' : 'clash (沖)'} between ${item.positions} ${item.layer} markers.`) : ['No direct stem or branch 合/沖 occurs in the supplied pillar pairs.'],
-      tryThis: 'Write down two priorities in one difficult decision. Make one small change that gives each priority a clear place in the agreement.',
+      tryThis: 'Write down two needs in one difficult decision. Agree one small change that makes room for both.',
+      guidance: {
+        keepClose: [clash ? 'People who can discuss two different needs calmly.' : 'People who agree a shared goal before dividing the work.', 'A written plan for who will do what and when.'],
+        watchFor: [clash ? 'Treating a different need as a personal attack.' : 'Assuming cooperation will happen without an agreement.', 'Using a chart symbol to predict a problem in real life.'],
+      },
     },
   ]
-  const periods = base.periods.map((period, index) => {
+  const periods: CompleteReadingPeriod[] = base.periods.map((period, index) => {
     const cycle = result.daewoon.find(item => item.ganzi === period.pillar && item.startDate.getUTCFullYear() === Number(period.period.split('–')[0]))!
-    const top = TEN_GODS[cycle.stemSipsin]
-    const inner = TEN_GODS[cycle.branchSipsin]
     const cycleWork = WORK_PROFILES[cycle.stemSipsin]
-    const startYear = cycle.startDate.getUTCFullYear()
-    const when = asOfYear < startYear ? 'This chapter has not started yet.' : index === 0 ? `${asOfYear} falls within this chapter.` : index === 1 ? 'This is the next chapter in the calculated sequence.' : 'This is the later chapter shown in this reading.'
-    const examples = [
-      `Start with one commitment you already have. Ask whether it gives you room for ${personal.need}, and whether the ${label(cycle.stemSipsin)} theme suggests a practical adjustment to the way you handle it.`,
-      `Use this chapter as a planning question. What skill or habit could you begin learning while the earlier chapter is still in progress? ${cycleWork?.next ?? self.practice}`,
-      `Keep this later chapter open as a question rather than a deadline. When your circumstances change, revisit the theme and choose which parts are still useful. Your present situation provides better detail than a distant date alone.`,
+    const inner = WORK_PROFILES[cycle.branchSipsin]
+    const startDate = cycle.startDate.toISOString().slice(0, 10)
+    const when = asOfYear < cycle.startDate.getUTCFullYear()
+      ? index < 2
+        ? 'This period is still ahead of you. Think about what you could practise before it begins.'
+        : 'This later period is further ahead. Keep its theme open as your plans and circumstances change.'
+      : `${asOfYear} falls within this period. Compare its theme with the tasks and choices in your life now.`
+    const paragraphs = [
+      when,
+      `The main theme is **${cycleWork.theme}**. Use it to think about ${cycleWork.contribution}.`,
+      cycle.branchSipsin === cycle.stemSipsin
+        ? `Both parts focus on ${cycleWork.theme}. **Choose a small task** where you can put that theme into practice.`
+        : `The second theme is **${inner.theme}**. Look for a plan that leaves room for both.`,
+      index === 0 ? cycleWork.scene : index === 1
+        ? `Before this period begins, try one small step: **${cycleWork.next}**`
+        : `Keep the later years open to change. When your life changes, review what still fits. One possible step is: **${cycleWork.next}**`,
     ]
-    const innerNote = cycle.branchSipsin === cycle.stemSipsin
-      ? `Both markers in this cycle repeat that theme. Use it to compare the way you begin a task with the way you keep it going.`
-      : `Its second marker adds ${cycle.branchSipsin} (${inner?.title ?? 'a supporting theme'}), a prompt about ${inner?.lens ?? 'your everyday circumstances'}.`
-    return { ...period, headline: top?.title ?? period.headline,
-      text: `${when} The year label ${period.period} summarises a ten-year cycle; its calculated starting date is ${cycle.startDate.toISOString().slice(0, 10)}. The first marker in ${cycle.ganzi} connects with your birth-day marker through ${cycle.stemSipsin} (${top?.title ?? 'a supporting theme'}), highlighting ${top?.lens ?? 'changing priorities'}. ${innerNote} ${examples[index]} Watch for ${top?.caution ?? 'treating a symbolic chapter as a fixed schedule'}. A useful next step is to ${top?.step ?? 'review a current agreement'}.` }
+    const evidence = [
+      `Calculated start: ${startDate}. The year label ${period.period} is a short label for the ten-year cycle.`,
+      `Cycle ${cycle.ganzi}: stem ${cycle.stemSipsin} (${TEN_GODS[cycle.stemSipsin]?.title}); branch ${cycle.branchSipsin} (${TEN_GODS[cycle.branchSipsin]?.title}).`,
+    ]
+    const guidance: ReadingGuidance = {
+      keepClose: unique([...cycleWork.keepClose, ...(cycle.branchSipsin !== cycle.stemSipsin ? inner.keepClose.slice(0, 1) : [])]),
+      watchFor: unique([...cycleWork.watchFor, ...(cycle.branchSipsin !== cycle.stemSipsin ? inner.watchFor.slice(0, 1) : [])]),
+    }
+    const text = plainReadingText([...paragraphs, guidanceText(guidance), 'Try this: ' + cycleWork.next, 'From your chart: ' + evidence.join(' ')].join('\n\n'))
+    return { ...period, headline: cycleWork.title, paragraphs, evidence, guidance, tryThis: cycleWork.next, text }
   })
   const actionPlan: ReportChapter = {
-    id: 'next-moves', title: '09 · Three Moves to Try Next', lead: 'Use the reading on one real situation before trying to apply it to your whole life.',
+    id: 'next-moves', title: '09 · Three Small Steps to Try',
+    lead: '**Choose one step for this week.** You do not need to change everything at once.',
     paragraphs: [
-      `For your own pace: ${self.practice} Choose a small occasion where you can try this without turning it into another demand. Notice what changed in the conversation or the task, rather than judging yourself on whether you matched a description.`,
-      `For work: ${work.next} Make the experiment specific enough to finish. A changed deadline, clearer division of responsibility or single demonstration gives you something you can compare with the previous way of working. Keep the version that makes the actual task easier.`,
-      `For connection: ask about ${relationship.need}. Say what it means in everyday terms and invite the other person to explain their preference too. A useful agreement is one both people understand, rather than a rule one person has worked out privately from a reading.`,
-      'After a week, write down what was useful, what did not fit and what you want to try again. Keep the reading as a starting point for that conversation with yourself. Your experience can add the detail that the birth chart cannot supply.',
+      `**For yourself:** ${personal.practice}`,
+      `**For work:** ${work.next}`,
+      `**For a relationship:** Ask about ${relationship.need}. Listen to the answer before deciding what to do.`,
+      'After a week, note what helped and what did not fit. **Keep the useful part.** Adjust the rest to your real life.',
     ],
     evidence: [`Day stem ${day.pillar.stem}; month stem ${month.pillar.stem} (${month.stemSipsin}); day branch ${day.pillar.branch}.`],
-    tryThis: 'Choose one of these three moves and write down when you will try it.',
+    tryThis: 'Choose one step above. Write down when you will try it.',
+    guidance: { keepClose: [personal.keepClose[0], work.keepClose[0], relationship.keepClose[0]], watchFor: [personal.watchFor[0], work.watchFor[0], relationship.watchFor[0]] },
   }
   const methodNotes = [
     ...base.caveats.filter(note => !note.startsWith('Each monthly chapter') && !note.startsWith('Monthly headlines')),
     'Visible element counts are not a full assessment of day-master strength, chart structure or useful elements. This report does not claim to diagnose those advanced layers.',
     'The month-branch relationship uses the principal inner stem. Inner-stem money checks list symbols without assigning strength weights.',
-    'Modern examples and conversation prompts are original editorial interpretations. Chart markers are calculated; the examples are not facts known about your life.',
-    'Combination and clash markers are not automatically interpreted as transformation, illness, separation or a predicted event.',
-    'A one-person life reading does not replace a two-person compatibility report, a separate annual reading or personal financial and medical advice.',
+    'Everyday examples and the Keep close / Watch out for lists are original cultural interpretations. They are ideas to try, not facts known about your life.',
+    'People, habits and work settings are suggested from the chapter themes. This report does not calculate lucky objects, colours or directions.',
+    'Combination and clash patterns do not automatically predict illness, separation or any other event.',
+    'This report covers one person. It does not include a two-person compatibility reading or a separate annual report.',
     ...(result.input.unknownTime ? ['An unknown birth time excludes all hour facts and pair relationships. Ten-year starting dates remain approximate until the time is confirmed.'] : []),
   ]
   const summary = [
-    { label: 'Your starting style', text: personal.headline },
-    { label: 'Your work theme', text: TEN_GODS[month.stemSipsin].title },
-    { label: 'Your relationship prompt', text: relationship.need },
+    { label: 'Your personality', text: personal.headline },
+    { label: 'Your work theme', text: work.title },
+    { label: 'Your relationship message', text: relationship.headline },
   ]
-  const fullText = [
+  const chapterText = (chapter: ReportChapter) => [
+    chapter.title, chapter.lead, ...chapter.paragraphs, guidanceText(chapter.guidance),
+    'From your chart: ' + chapter.evidence.join(' '), 'Try this: ' + chapter.tryThis,
+  ]
+  const fullText = plainReadingText([
     'Complete Life Reading', formatBirth(result.input), pillarSummary(result).join(' · '), personal.headline,
     ...summary.map(item => `${item.label}: ${item.text}`),
-    ...chapters.flatMap(chapter => [chapter.title, chapter.lead, ...chapter.paragraphs, 'From your chart: '+chapter.evidence.join(' '), 'Try this: '+chapter.tryThis]),
-    '08 · Your Life Chapters', ...periods.map(period => `${period.period} · ${period.pillar} · ${period.headline}\n${period.text}`),
-    actionPlan.title, actionPlan.lead, ...actionPlan.paragraphs,
+    ...chapters.flatMap(chapterText),
+    '08 · Your Ten-Year Chapters', ...periods.map(period => `${period.period} · ${period.pillar} · ${period.headline}\n${period.text}`),
+    ...chapterText(actionPlan),
     'How this reading is prepared', ...methodNotes,
-  ].join('\n\n')
+  ].join('\n\n'))
   return { title: 'Complete Life Reading', birthSummary: formatBirth(result.input), pillarSummary: pillarSummary(result), dayMaster: self.name, headline: personal.headline, summary, chapters, periods, actionPlan, elements: c.elements, visibleMarkers: result.input.unknownTime ? 6 : 8, methodNotes, fullText, wordCount: fullText.split(/\s+/).length }
 }

@@ -3,6 +3,7 @@ import { calculateSaju } from '@orrery/core/saju'
 import type { BirthInput } from '@orrery/core/types'
 import { buildCompleteReading, buildFreeReading } from './complete-reading.ts'
 import { resolveReportRoute } from '../utils/report-route.ts'
+import { plainReadingText } from './reading-text.ts'
 
 const locations = [
   { timezone: 'Asia/Seoul', latitude: 37.5665, longitude: 126.978 },
@@ -74,6 +75,38 @@ describe('Complete reading quality across 60 international profiles', () => {
       expect(new Set(paragraphs).size).toBe(paragraphs.length)
       expect(reading.fullText).not.toMatch(/undefined|NaN|\[object Object\]/)
       expect(reading.chapters.every(chapter => chapter.evidence.length > 0 && chapter.tryThis.length > 0)).toBe(true)
+    }
+  })
+
+  it('keeps customer-facing paragraphs short and moves chart jargon into the evidence notes', () => {
+    for (const { reading } of readings) {
+      const paragraphs = [...reading.chapters, reading.actionPlan].flatMap(chapter => [chapter.lead, ...chapter.paragraphs])
+        .concat(reading.periods.flatMap(period => period.paragraphs))
+      for (const paragraph of paragraphs) {
+        const plain = plainReadingText(paragraph)
+        expect(plain.split(/\s+/).length).toBeLessThanOrEqual(70)
+        expect(plain).not.toMatch(/\b(marker|stem|branch|principal)\b|[\u3400-\u9FFF]/i)
+      }
+      expect(paragraphs.some(paragraph => paragraph.includes('**'))).toBe(true)
+      expect(reading.fullText).not.toContain('**')
+    }
+  })
+
+  it('includes distinct helpful habits and cautions in every chapter, period and plain-text copy', () => {
+    for (const { reading } of readings) {
+      for (const section of [...reading.chapters, reading.actionPlan, ...reading.periods]) {
+        expect(section.guidance.keepClose.length).toBeGreaterThan(0)
+        expect(section.guidance.watchFor.length).toBeGreaterThan(0)
+        expect(section.guidance.keepClose.every(item => item.trim().length > 0)).toBe(true)
+        expect(section.guidance.watchFor.every(item => item.trim().length > 0)).toBe(true)
+        for (const item of [...section.guidance.keepClose, ...section.guidance.watchFor]) {
+          expect(reading.fullText).toContain(plainReadingText(item))
+        }
+      }
+    }
+    for (const id of ['personality', 'career', 'love']) {
+      const variants = readings.map(({ reading }) => reading.chapters.find(chapter => chapter.id === id)!.guidance)
+      expect(new Set(variants.map(guidance => JSON.stringify(guidance))).size).toBeGreaterThanOrEqual(8)
     }
   })
 

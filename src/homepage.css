@@ -400,3 +400,28 @@
   .fate-complete-reading .fate-reading-chapter[id]:not(#sample-report-personality) { break-before: page; }
   .fate-reading-practice p { font-size: 10pt; }
 }
+
+/* Practical advice stays readable on screen, in print and in plain-text copies. */
+.fate-reading-chapter p strong { font-weight: 700; color: inherit; }
+.fate-reading-guidance { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 14px; margin: 22px 0; }
+.fate-reading-guidance > section { min-width: 0; padding: 18px 20px; border: 1px solid #768267; border-radius: 10px; background: #183238; }
+.fate-reading-guidance > .fate-reading-guidance-caution { background: #352f29; border-color: #9b7c59; }
+.fate-reading-guidance h3, .fate-reading-guidance h4 { font-family: inherit; font-size: 14px; font-weight: 700; line-height: 1.5; margin: 0 0 10px; color: #e8ddc8; }
+.fate-reading-guidance ul { list-style: disc; padding-left: 18px; }
+.fate-reading-guidance li { font-size: 14px; line-height: 1.75; color: #e7e2d9; margin-top: 7px; }
+.fate-complete-reading .fate-reading-guidance > section { background: #edf2e6; border-color: #b5c49e; }
+.fate-complete-reading .fate-reading-guidance > .fate-reading-guidance-caution { background: #f7ece1; border-color: #d3b599; }
+.fate-complete-reading .fate-reading-guidance h3, .fate-complete-reading .fate-reading-guidance h4 { font-family: inherit; font-size: 14px; font-weight: 700; color: #334239; }
+.fate-complete-reading .fate-reading-guidance li { color: #34434b; }
+.fate-complete-reading .fate-reading-period > p:not(.fate-eyebrow) { margin-top: 15px; line-height: 1.85; }
+@media (max-width: 760px) {
+  .fate-reading-guidance { grid-template-columns: 1fr; gap: 10px; }
+  .fate-reading-guidance > section { padding: 16px 18px; }
+}
+@media print {
+  .fate-reading-guidance { gap: 10px; margin: 14px 0; }
+  .fate-reading-guidance > section { break-inside: avoid; background: #f6f7f0 !important; border-color: #b8bda5 !important; }
+  .fate-reading-guidance > .fate-reading-guidance-caution { background: #faf2e9 !important; border-color: #cbb99a !important; }
+  .fate-reading-guidance h3, .fate-reading-guidance h4, .fate-reading-guidance li { color: #263244 !important; font-size: 10pt; }
+  .fate-reading-period h3 { break-after: avoid; }
+}

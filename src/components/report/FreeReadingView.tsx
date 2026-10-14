@@ -4,6 +4,8 @@ import { calculateSaju } from '@orrery/core/saju'
 import { buildFreeReading } from '../../report/complete-reading.ts'
 import { useLocale } from '../../i18n/index.ts'
 import ElementBalance from './ElementBalance.tsx'
+import ReadingText from './ReadingText.tsx'
+import ReadingGuidance from './ReadingGuidance.tsx'
 
 export default function FreeReadingView({ input }: { input: BirthInput }) {
   const { t } = useLocale()
@@ -20,11 +22,12 @@ export default function FreeReadingView({ input }: { input: BirthInput }) {
       <section className="fate-reading-chapter">
         <p className="fate-eyebrow">{t('reading.free.personality')}</p>
         <h2>{report.headline}</h2>
-        {report.paragraphs.map(paragraph => <p key={paragraph}>{paragraph}</p>)}
+        {report.paragraphs.map(paragraph => <p key={paragraph}><ReadingText text={paragraph} /></p>)}
+        <ReadingGuidance guidance={report.guidance} />
         <details className="fate-reading-evidence"><summary>{t('reading.chartSource')}</summary><ul>{report.evidence.map(fact => <li key={fact}>{fact}</li>)}</ul></details>
       </section>
       <section className="fate-reading-chapter">
-        <h2>{t('reading.free.work')}</h2><p>{report.workNote}</p>
+        <h2>{t('reading.free.work')}</h2><p><ReadingText text={report.workNote} /></p>
         <div className="fate-reading-practice"><strong>{t('reading.tryThis')}</strong><p>{report.tryThis}</p></div>
       </section>
       <section className="fate-reading-chapter"><h2>{t('reading.free.elements')}</h2><ElementBalance elements={report.elements} visibleMarkers={report.visibleMarkers} /></section>
