@@ -95,20 +95,25 @@ export default function App() {
           <h2 className="text-center font-serif text-3xl text-[#f7e8d0] sm:text-4xl mt-3 mb-9">A Clear Guide to Your Life</h2>
           <div className="grid grid-cols-1 min-[420px]:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
             {[
-              {symbol:'✦',title:'Your Personality',description:'Understand your strengths, habits and hidden potential.',image:'/saju-moon-mountains.svg'},
-              {symbol:'♡',title:'Love & Relationships',description:'Explore your relationship patterns and communication style.',image:'/saju-moon-mountains.svg'},
-              {symbol:'♥',title:'Love Compatibility',description:'Compare two birth charts to explore connection, differences and communication.',image:'/saju-moon-mountains.svg'},
-              {symbol:'$',title:'Money & Success',description:'Reflect on your financial habits and opportunities.',image:'/saju-moon-mountains.svg'},
-              {symbol:'◇',title:'Career & Purpose',description:'Discover work styles and environments that may suit you.',image:'/saju-moon-mountains.svg'},
-              {symbol:'♧',title:'Business & Entrepreneurship',description:'Explore your approach to starting a business, decisions and partnerships.',image:'/saju-moon-mountains.svg'},
-              {symbol:'☼',title:'Health & Wellbeing',description:'Reflect on balance, daily routines and self-care.',image:'/saju-moon-mountains.svg'},
-              {symbol:'↗',title:'Life Timeline',description:'Explore the themes of different life chapters.',image:'/saju-moon-mountains.svg'},
-              {symbol:'◷',title:'Next 12 Months',description:'Discover traditional themes for the year ahead.',image:'/saju-moon-mountains.svg'},
-            ].map(({symbol,title,description,image})=><div key={title} className="rounded-2xl border border-[#967244]/55 bg-[#0b2037] overflow-hidden shadow-sm">
-              <div className="h-20 sm:h-24 relative overflow-hidden bg-[#0b2741]" style={{backgroundImage:`linear-gradient(125deg, rgba(7,27,51,.3), rgba(211,161,95,.1)), url(${image})`,backgroundSize:"cover",backgroundPosition:"center"}}><div className="absolute bottom-2 left-3 rounded-full bg-white/90 px-3 py-1 text-xl text-[#ad7a38]">{symbol}</div></div><div className="p-4 sm:p-6">
-              <h3 className="font-serif text-lg font-semibold text-[#f3d49d]">{title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-slate-200">{description}</p></div>
-            </div>)}
+              {symbol: '✦', title: 'Your Personality', description: 'Understand your strengths, habits and hidden potential.', image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=900&q=80'},
+              {symbol: '♡', title: 'Love & Relationships', description: 'Explore how you connect and communicate.', image: 'https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=900&q=80'},
+              {symbol: '♥', title: 'Love Compatibility', description: 'Explore the connection between two birth charts.', image: 'https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?auto=format&fit=crop&w=900&q=80'},
+              {symbol: '$', title: 'Money & Success', description: 'Reflect on your choices and financial habits.', image: 'https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?auto=format&fit=crop&w=900&q=80'},
+              {symbol: '◇', title: 'Career & Purpose', description: 'Find work styles and environments that may suit you.', image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=900&q=80'},
+              {symbol: '♧', title: 'Business & Entrepreneurship', description: 'Explore business decisions, partnerships and working style.', image: 'https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=900&q=80'},
+              {symbol: '☼', title: 'Health & Wellbeing', description: 'Reflect on balance, daily routines and self-care.', image: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=900&q=80'},
+              {symbol: '↗', title: 'Life Timeline', description: 'See the key phases and turning points in your life.', image: 'https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=900&q=80'},
+              {symbol: '◷', title: 'Next 12 Months', description: 'Explore traditional themes for the year ahead.', image: 'https://images.unsplash.com/photo-1462331940025-496dfbfc7564?auto=format&fit=crop&w=900&q=80'}
+            ].map(({symbol,title,description,image}) => <a key={title} href="#birth-details" aria-label={`Explore ${title} — start with your birth details`} className="group relative isolate flex min-h-[330px] flex-col justify-end overflow-hidden rounded-[20px] border border-[#b28a57]/55 bg-[#0b2037] shadow-lg shadow-black/20 transition-transform duration-300 hover:-translate-y-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#f3d49d] sm:min-h-[350px]">
+              <img src={image} alt="" loading="lazy" className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" onError={e => { e.currentTarget.style.display = 'none' }} />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#04172a] via-[#04172a]/75 to-[#04172a]/5" />
+              <span aria-hidden="true" className="absolute left-4 top-4 flex h-12 w-12 items-center justify-center rounded-full bg-white/95 text-2xl text-[#b68445] shadow-md">{symbol}</span>
+              <div className="relative z-10 px-5 pb-6 pt-28">
+                <h3 className="font-serif text-[1.45rem] font-semibold leading-tight text-[#f3d49d]">{title}</h3>
+                <p className="mt-3 max-w-[280px] pr-5 text-sm leading-6 text-slate-100">{description}</p>
+                <span aria-hidden="true" className="absolute bottom-6 right-4 flex h-9 w-9 items-center justify-center rounded-full border border-[#d9ae76] text-lg text-[#f3d49d]">›</span>
+              </div>
+            </a>)}
           </div>
           <div className="mt-12 rounded-2xl border border-[#967244]/60 bg-[#0b2037] p-7 sm:p-10">
             <p className="text-xs tracking-widest uppercase text-[#e9c48c]">Sample report</p>
