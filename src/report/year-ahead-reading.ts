@@ -1,3 +1,4 @@
+import { buildReportApplications } from './report-applications.ts'
 import type { SajuResult } from '@orrery/core/types'
 import { analyzePillarRelations, getFourPillars, getJeonggi, getRelation } from '@orrery/core/pillars'
 import { chapter, chartContext, commonMethod, cycleFacts, FAMILY, finishReading, moneyMarkers, pairFacts, pillarFact, selectedCycles, subject, validateYear } from './category-shared.ts'
@@ -63,6 +64,7 @@ export function buildYearAheadReading(result: SajuResult, year = new Date().getF
     }
   })
   return finishReading({ kind: 'year', title: `${year} Year Ahead`, referenceYear: year,
+    applications: buildReportApplications('year', result, { year }),
     extras: buildReportExtras('year', result, { year, annual: { theme: annual.theme, god: annualGod, pillar: annualPillar } }),
     headline: `${year}: ${annual.title}`, subjects: [subject(result)],
     summary: [{ label: 'The annual theme', text: annual.theme }, { label: 'A second annual theme', text: inner.theme }, { label: 'Your own starting need', text: c.personal.need }],

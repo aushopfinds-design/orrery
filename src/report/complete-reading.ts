@@ -12,6 +12,9 @@ import { CLOSENESS_PROMPTS } from './reading-scenarios.ts'
 import { everydayExample, workExample, relationshipExample, moneyExample, everydayExampleText } from './personal-examples.ts'
 import type { EverydayExample } from './personal-examples.ts'
 import { buildReadingBrief, readingBriefText } from './reading-brief.ts'
+import { THEME_FAMILY as FAMILY } from './theme-family.ts'
+import { buildReportApplications, applicationText } from './report-applications.ts'
+import type { ReportApplication } from './report-applications.ts'
 
 export const REPORT_EDITION = '2026.10'
 
@@ -55,6 +58,7 @@ export interface CompleteReading {
   chapters: ReportChapter[]
   periods: CompleteReadingPeriod[]
   actionPlan: ReportChapter
+  applications: ReportApplication[]
   extras: ReportExtras
   elements: ElementCount[]
   visibleMarkers: number
@@ -81,11 +85,6 @@ export interface FreeReading {
 const POSITIONS = ['hour', 'day', 'month', 'year']
 const ELEMENT_ORDER: ReadingElement[] = ['Wood', 'Fire', 'Earth', 'Metal', 'Water']
 const WEALTH_SYMBOLS = new Set(['正財', '偏財'])
-const FAMILY: Record<string, string> = {
-  '比肩': 'ownership', '劫財': 'ownership', '食神': 'making', '傷官': 'making',
-  '正財': 'resources', '偏財': 'resources', '正官': 'responsibility', '偏官': 'responsibility',
-  '七殺': 'responsibility', '正印': 'learning', '偏印': 'learning',
-}
 const MONEY_PROMPTS: Record<string, string> = {
   ownership: 'Before sharing a cost, agree **who will pay for each part**. Helping someone is easier when you know what you have already promised.',
   making: 'Count the **time and materials** behind something you make. Enjoying the work does not remove its cost.',
@@ -409,6 +408,7 @@ export function buildCompleteReading(result: SajuResult, asOfYear = new Date().g
     'Visible element counts are not a full assessment of day-master strength, chart structure or useful elements. This report does not claim to diagnose those advanced layers.',
     'The month-branch relationship uses the principal inner stem. Inner-stem money checks list symbols without assigning strength weights.',
     'Everyday examples and the Keep close / Watch out for lists are original cultural interpretations. They are ideas to try, not facts known about your life.',
+    'The situation pages are optional editorial exercises. Birth-chart themes shape their personal checks and practice details; the situation itself is not inferred from the chart. Compare the choices with actual circumstances and review what happens.',
     'People, habits and work settings are suggested from the chapter themes. Color palettes and He Tu number pairs are optional symbols linked to the birth-day element, not lucky-event calculations or useful-element prescriptions.',
     'Combination and clash patterns do not automatically predict illness, separation or any other event.',
     'This report covers one person. It does not include a two-person compatibility reading or a separate annual report.',
@@ -424,6 +424,7 @@ export function buildCompleteReading(result: SajuResult, asOfYear = new Date().g
     'From your chart: ' + chapter.evidence.join(' '), 'Try this: ' + chapter.tryThis,
   ]
   const extras = buildReportExtras('complete', result)
+  const applications = buildReportApplications('complete', result)
   const fullText = plainReadingText([
     'THE FATE KEY · Complete Life Reading', `Report edition ${REPORT_EDITION} · Timeline reference year ${asOfYear}`, formatBirth(result.input), pillarSummary(result).join(' · '), personal.headline,
     readingBriefText(buildReadingBrief(chapters[0])),
@@ -432,8 +433,9 @@ export function buildCompleteReading(result: SajuResult, asOfYear = new Date().g
     ...chapters.flatMap(chapterText),
     '08 · Your Ten-Year Chapters', ...periods.map(period => `${period.period} · ${period.pillar} · ${period.headline}\n${period.text}`),
     ...chapterText(actionPlan),
+    'Situations you can work through', ...applications.map(applicationText),
     reportExtrasText(extras),
     'How this reading is prepared', ...methodNotes,
   ].join('\n\n'))
-  return { title: 'Complete Life Reading', birthSummary: formatBirth(result.input), pillarSummary: pillarSummary(result), dayMaster: self.name, headline: personal.headline, summary, connections, referenceYear: asOfYear, chapters, periods, actionPlan, extras, elements: c.elements, visibleMarkers: result.input.unknownTime ? 6 : 8, methodNotes, fullText, wordCount: fullText.split(/\s+/).length }
+  return { title: 'Complete Life Reading', birthSummary: formatBirth(result.input), pillarSummary: pillarSummary(result), dayMaster: self.name, headline: personal.headline, summary, connections, referenceYear: asOfYear, chapters, periods, actionPlan, applications, extras, elements: c.elements, visibleMarkers: result.input.unknownTime ? 6 : 8, methodNotes, fullText, wordCount: fullText.split(/\s+/).length }
 }

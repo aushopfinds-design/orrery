@@ -13,12 +13,15 @@ import { plainReadingText } from './reading-text.ts'
 import { everydayExampleText } from './personal-examples.ts'
 import { buildReadingBrief, readingBriefText } from './reading-brief.ts'
 import type { ReadingBrief } from './reading-brief.ts'
+import { applicationText } from './report-applications.ts'
+import type { ReportApplication } from './report-applications.ts'
 
 export interface PersonalPreview {
   title: string
   subjects: { label: string; birthSummary: string; dayMaster: string; pillarSummary: string[] }[]
   headline: string
   brief: ReadingBrief | null
+  applications: ReportApplication[]
   summary: { label: string; text: string }[]
   excerpts: Pick<ReportChapter, 'id' | 'title' | 'icon' | 'lead' | 'paragraphs' | 'evidence' | 'example'>[]
   contents: { id: string; title: string }[]
@@ -41,21 +44,25 @@ export function buildPersonalPreview(kind: PreviewKind, draft: PreviewDraft): Pe
   const subjectA = { label: kind === 'compatibility' || kind === 'bundle' ? 'Person A' : 'Your birth details', birthSummary: snapshot.birthSummary, dayMaster: snapshot.dayMaster, pillarSummary: snapshot.pillarSummary }
   const second = normalizePreviewBirth(draft.second)
   const paired = kind === 'compatibility' || kind === 'bundle'
-  if (paired && !second) return { title: previewProduct(kind).title, subjects: [subjectA], headline: snapshot.headline, brief: null, summary: [], excerpts: [], contents: [], monthly: [], needsPartner: true, extras: null }
+  if (paired && !second) return { title: previewProduct(kind).title, subjects: [subjectA], headline: snapshot.headline, brief: null, applications: [], summary: [], excerpts: [], contents: [], monthly: [], needsPartner: true, extras: null }
   const currentYear = new Date().getFullYear()
   const year = draft.year ?? currentYear + 1
   if (!Number.isInteger(year) || year < first.year || year > 2100 || year < 1900) throw new Error('Choose a valid report year')
   if (kind === 'complete') {
     const full = buildCompleteReading(a, currentYear)
-    return { title: full.title, subjects: [subjectA], headline: full.headline, brief: buildReadingBrief(full.chapters.find(chapter => chapter.id === 'career')!), summary: full.summary, excerpts: ['career', 'love', 'money'].map(id => excerpt(full.chapters.find(chapter => chapter.id === id)!)), contents: [...full.chapters, { id: 'timeline', title: '08 · Your Ten-Year Chapters' }, full.actionPlan].map(chapter => ({ id: chapter.id, title: chapter.title.replace(/^\d+ · /, '') })), monthly: [], needsPartner: false, extras: extrasExcerpt(full.extras) }
+    return { title: full.title, subjects: [subjectA], headline: full.headline, brief: buildReadingBrief(full.chapters.find(chapter => chapter.id === 'career')!), summary: full.summary, applications: full.applications, excerpts: ['career', 'love', 'money'].map(id => excerpt(full.chapters.find(chapter => chapter.id === id)!)), contents: [...full.chapters, { id: 'timeline', title: '08 · Your Ten-Year Chapters' }, full.actionPlan].map(chapter => ({ id: chapter.id, title: chapter.title.replace(/^\d+ · /, '') })), monthly: [], needsPartner: false, extras: extrasExcerpt(full.extras) }
   }
   const b = second ? calculateSaju(second) : undefined
   if (kind === 'bundle') {
     const bundle = buildBundleReading(a, b!, year, currentYear)
-    return { title: 'Complete Bundle', subjects: bundle.compatibility.subjects, headline: bundle.complete.headline, brief: buildReadingBrief(bundle.complete.chapters[0], 'Person A · Complete Life Reading'), summary: bundle.complete.summary, excerpts: [excerpt(bundle.complete.chapters[0]), excerpt(bundle.compatibility.chapters[1], true), excerpt(bundle.annual.chapters[0])], contents: [bundle.complete, bundle.compatibility, bundle.annual].map((report, index) => ({ id: `report-${index + 1}`, title: report.title })), monthly: [], needsPartner: false, extras: extrasExcerpt(bundle.compatibility.extras) }
+    return { title: 'Complete Bundle', subjects: bundle.compatibility.subjects, headline: bundle.complete.headline, brief: buildReadingBrief(bundle.complete.chapters[0], 'Person A · Complete Life Reading'), summary: bundle.complete.summary, applications: [
+      { ...bundle.complete.applications[0], scope: 'Person A · Complete Life Reading' },
+      bundle.compatibility.applications[0],
+      { ...bundle.annual.applications[0], scope: `Person A · ${year} Year Ahead` },
+    ], excerpts: [excerpt(bundle.complete.chapters[0]), excerpt(bundle.compatibility.chapters[1], true), excerpt(bundle.annual.chapters[0])], contents: [bundle.complete, bundle.compatibility, bundle.annual].map((report, index) => ({ id: `report-${index + 1}`, title: report.title })), monthly: [], needsPartner: false, extras: extrasExcerpt(bundle.compatibility.extras) }
   }
   const full = buildCategoryReading(kind, a, { second: b, year: kind === 'year' ? year : currentYear })
-  return { title: full.title, subjects: paired ? full.subjects : [subjectA], headline: full.headline, brief: buildReadingBrief(full.chapters[0]), summary: full.summary, excerpts: full.chapters.slice(0, 3).map(chapter => excerpt(chapter, paired)), contents: full.chapters.map(chapter => ({ id: chapter.id, title: chapter.title.replace(/^\d+ · /, '') })), monthly: full.months.map(month => ({ label: month.label, lead: month.lead })), needsPartner: false, extras: extrasExcerpt(full.extras) }
+  return { title: full.title, subjects: paired ? full.subjects : [subjectA], headline: full.headline, brief: buildReadingBrief(full.chapters[0]), summary: full.summary, applications: full.applications, excerpts: full.chapters.slice(0, 3).map(chapter => excerpt(chapter, paired)), contents: full.chapters.map(chapter => ({ id: chapter.id, title: chapter.title.replace(/^\d+ · /, '') })), monthly: full.months.map(month => ({ label: month.label, lead: month.lead })), needsPartner: false, extras: extrasExcerpt(full.extras) }
 }
 
 /** Export only what the visitor can read in the free preview. */
@@ -67,6 +74,7 @@ export function personalPreviewText(preview: PersonalPreview): string {
     ...preview.subjects.flatMap(person => [person.label, person.birthSummary, person.dayMaster, person.pillarSummary.join(' · ')]),
     preview.headline,
     ...(preview.brief ? [readingBriefText(preview.brief)] : []),
+    'Situations you can work through', ...preview.applications.map(applicationText),
     ...preview.summary.map(theme => `${theme.label}\n${theme.text}`),
     ...preview.excerpts.flatMap(section => [section.title, section.lead, ...(section.example ? everydayExampleText(section.example) : []), ...section.paragraphs, 'Chart notes: ' + section.evidence.join(' · ')]),
     ...(preview.extras ? [preview.extras.question.question, preview.extras.question.answer, 'Chart note: ' + preview.extras.question.basis,

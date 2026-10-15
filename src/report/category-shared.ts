@@ -12,12 +12,15 @@ import type { ReportExtras } from './report-extras.ts'
 import { everydayExampleText } from './personal-examples.ts'
 import type { EverydayExample } from './personal-examples.ts'
 import { buildReadingBrief, readingBriefText } from './reading-brief.ts'
+import { THEME_FAMILY as FAMILY } from './theme-family.ts'
+import { applicationText } from './report-applications.ts'
+import type { ReportApplication } from './report-applications.ts'
+export { THEME_FAMILY as FAMILY } from './theme-family.ts'
 
 export const POSITIONS = ['hour', 'day', 'month', 'year']
-export const FAMILY: Record<string, string> = { '比肩': 'ownership', '劫財': 'ownership', '食神': 'making', '傷官': 'making', '正財': 'resources', '偏財': 'resources', '正官': 'responsibility', '偏官': 'responsibility', '七殺': 'responsibility', '正印': 'learning', '偏印': 'learning' }
 export interface ReportSubject { label: string; input: BirthInput; birthSummary: string; pillarSummary: string[]; dayMaster: string; elements: ElementCount[]; visibleMarkers: number }
 export interface ReportMonth extends ReportChapter { label: string; referenceDate: string; pillar: string; yearPillar: string }
-export interface CategoryReading { kind: FocusCategory; title: string; headline: string; referenceYear: number; subjects: ReportSubject[]; summary: { label: string; text: string }[]; chapters: ReportChapter[]; months: ReportMonth[]; extras: ReportExtras; methodNotes: string[]; fullText: string; wordCount: number }
+export interface CategoryReading { kind: FocusCategory; title: string; headline: string; referenceYear: number; subjects: ReportSubject[]; summary: { label: string; text: string }[]; chapters: ReportChapter[]; months: ReportMonth[]; applications: ReportApplication[]; extras: ReportExtras; methodNotes: string[]; fullText: string; wordCount: number }
 
 export function chartContext(result: SajuResult) {
   const [hour, day, month, year] = result.pillars
@@ -76,6 +79,7 @@ export function commonMethod(result: SajuResult, year: number): string[] {
   return [
     ...buildEnglishReading(result, year).caveats.filter(note => !note.startsWith('Each monthly chapter') && !note.startsWith('Monthly headlines')),
     'These chapter examples, questions and helpful habits are editorial cultural interpretations. They are not facts known about the person or a professionally validated assessment.',
+    'The situation pages are optional editorial exercises. Birth-chart themes shape their personal checks and practice details; the situation itself is not inferred from the chart. Compare the choices with actual circumstances and review what happens.',
     'The report does not diagnose chart strength, chart structure or useful elements. Counts and pair patterns do not supply those advanced conclusions.',
     SYMBOL_NOTE,
     ...(result.input.unknownTime ? ['An unknown birth time excludes the hour pillar and every hour comparison. Ten-year starting dates remain approximate.'] : []),
@@ -90,6 +94,7 @@ export function finishReading(data: Omit<CategoryReading, 'fullText' | 'wordCoun
     readingBriefText(buildReadingBrief(chapters[0])),
     ...data.summary.map(item => `${item.label}: ${item.text}`), ...chapters.flatMap(chapterText),
     ...(data.months.length ? ['Your Twelve Months', ...data.months.flatMap(chapterText)] : []),
+    'Situations you can work through', ...data.applications.map(applicationText),
     reportExtrasText(data.extras),
     'How this reading is prepared', ...data.methodNotes,
   ].join('\n\n'))

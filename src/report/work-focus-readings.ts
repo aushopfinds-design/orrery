@@ -1,3 +1,4 @@
+import { buildReportApplications } from './report-applications.ts'
 import type { SajuResult } from '@orrery/core/types'
 import { chapter, chartContext, commonMethod, cycleFacts, finishReading, moneyMarkers, pillarFact, selectedCycles, subject, validateYear } from './category-shared.ts'
 import { FOCUS_WORK } from './category-profiles.ts'
@@ -17,6 +18,7 @@ export function buildCareerReading(result: SajuResult, referenceYear = new Date(
   const cycles = selectedCycles(result, referenceYear)
   const future = result.input.unknownTime ? null : WORK_PROFILES[c.hour.stemSipsin]
   return finishReading({ kind: 'career', title: 'Career & Money', referenceYear,
+    applications: buildReportApplications('career', result),
     extras: buildReportExtras('career', result),
     headline: 'Find a workable role. Make the full commitment clear.', subjects: [subject(result)],
     summary: [{ label: 'Your working conditions', text: c.work.setting }, { label: 'Your useful contribution', text: c.work.contribution }, { label: 'Your money conversation', text: money.theme }],
@@ -86,6 +88,7 @@ export function buildBusinessReading(result: SajuResult, referenceYear = new Dat
   const money = moneyMarkers(result)
   const cycles = selectedCycles(result, referenceYear)
   return finishReading({ kind: 'business', title: 'Business & Entrepreneurship', referenceYear,
+    applications: buildReportApplications('business', result),
     extras: buildReportExtras('business', result),
     headline: 'A clear offer, a workable promise and room to learn.', subjects: [subject(result)],
     summary: [{ label: 'Your founder theme', text: c.personal.focus }, { label: 'An offer to test', text: focus.offer }, { label: 'Your capacity pressure', text: focus.capacity }],

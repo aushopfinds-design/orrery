@@ -16,6 +16,7 @@ import CopyButton from '../CopyButton.tsx'
 import { ReportExtrasPreview } from './ReportExtrasView.tsx'
 import EverydayExampleView from './EverydayExampleView.tsx'
 import ReportBriefView from './ReportBriefView.tsx'
+import ReportApplicationsView from './ReportApplicationsView.tsx'
 
 function focusSection(id: string) {
   const section = document.getElementById(id)
@@ -109,6 +110,7 @@ export default function PersonalPreviewPage({ kind, input, onFirstBirth }: { kin
           <details className="fate-report-chart-details print:hidden"><summary>{t('reading.brief.themes')}</summary><div className="fate-personal-theme-grid">{preview.summary.map(theme => <div key={theme.label}><ReportIcon kind={product.icon} /><h3>{theme.label}</h3><p>{theme.text}</p></div>)}</div></details>
           <div className="hidden print:block"><div className="fate-personal-theme-grid">{preview.summary.map(theme => <div key={theme.label}><ReportIcon kind={product.icon} /><h3>{theme.label}</h3><p>{theme.text}</p></div>)}</div></div>
         </section>
+        <ReportApplicationsView items={preview.applications} prefix={`personal-${kind}`} preview />
         <div className="fate-personal-preview-layout"><div>
           <section className="fate-personal-excerpts" aria-labelledby="personal-preview-excerpts"><p className="fate-eyebrow">{t('buyer.preview.excerpts')}</p><h2 id="personal-preview-excerpts" tabIndex={-1}>{t('buyer.preview.excerptsTitle')}</h2><p>{t('buyer.preview.excerptsText')}</p>{preview.excerpts.map(section => <section id={`personal-excerpt-${section.id}`} tabIndex={-1} key={section.id} className="fate-personal-excerpt"><div><ReportIcon kind={section.icon ?? product.icon} /><h3>{section.title}</h3></div><p><ReadingText text={section.lead} /></p>{section.example && <EverydayExampleView example={section.example} headingLevel={4} />}{section.paragraphs.map(text => <p key={text}><ReadingText text={text} /></p>)}<details><summary>{t('reading.chartSource')}</summary><ul>{section.evidence.map(fact => <li key={fact}>{fact}</li>)}</ul></details></section>)}</section>
           {preview.extras && <ReportExtrasPreview question={preview.extras.question} symbols={preview.extras.symbols} />}

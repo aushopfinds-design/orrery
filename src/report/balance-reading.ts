@@ -1,3 +1,4 @@
+import { buildReportApplications } from './report-applications.ts'
 import type { SajuResult } from '@orrery/core/types'
 import { chapter, chartContext, commonMethod, finishReading, pillarFact, subject, validateYear } from './category-shared.ts'
 import { ELEMENT_MEANING } from './reading.ts'
@@ -11,6 +12,7 @@ export function buildBalanceReading(result: SajuResult, referenceYear = new Date
   const prominent = c.snapshot.elements.filter(item => item.count === maximum)
   const zero = c.snapshot.elements.filter(item => item.count === 0)
   return finishReading({ kind: 'wellbeing', title: 'Everyday Balance', referenceYear,
+    applications: buildReportApplications('wellbeing', result),
     extras: buildReportExtras('wellbeing', result),
     headline: 'A more workable routine, with room for your own needs.', subjects: [subject(result)],
     summary: [{ label: 'Your own space', text: c.personal.need }, { label: 'A routine to examine', text: c.work.friction }, { label: 'The visible element picture', text: prominent.map(item => item.element).join(' and ') + (prominent.length === 1 ? ' appears most often in this count' : ' appear most often in this count') }],

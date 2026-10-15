@@ -1,3 +1,4 @@
+import { buildReportApplications } from './report-applications.ts'
 import type { SajuResult } from '@orrery/core/types'
 import { getRelation, analyzePillarRelations } from '@orrery/core/pillars'
 import { chapter, chartContext, commonMethod, finishReading, moneyMarkers, pairFacts, pillarFact, subject, validateYear } from './category-shared.ts'
@@ -27,6 +28,7 @@ export function buildCompatibilityReading(first: SajuResult, second: SajuResult,
   const loveGuidance = shared([`Person A: ${a.relationship.keepClose[0]}`, `Person B: ${b.relationship.keepClose[0]}`], [`Person A: ${a.relationship.watchFor[0]}`, `Person B: ${b.relationship.watchFor[0]}`])
   return finishReading({
     kind: 'compatibility', title: 'Love Compatibility', referenceYear,
+    applications: buildReportApplications('compatibility', first, { second }),
     extras: buildReportExtras('compatibility', first, { second }),
     headline: 'How you show care, make room for each other and find your way through differences.',
     subjects: [subject(first, 'Person A'), subject(second, 'Person B')],

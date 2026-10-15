@@ -17,6 +17,7 @@ import ReportRecord from './ReportRecord.tsx'
 import ReportExtrasView from './ReportExtrasView.tsx'
 import ReportBriefView, { BackToChapters } from './ReportBriefView.tsx'
 import { buildReadingBrief } from '../../report/reading-brief.ts'
+import ReportApplicationsView from './ReportApplicationsView.tsx'
 
 export default function CategoryReadingView({ report, embedded = false, controls, prefix: customPrefix }: { report: CategoryReading; embedded?: boolean; controls?: ReactNode; prefix?: string }) {
   const { t } = useLocale()
@@ -43,10 +44,11 @@ export default function CategoryReadingView({ report, embedded = false, controls
     {report.subjects.some(person => person.input.unknownTime) && <p role="status" className="fate-reading-time-note">{t('category.unknown')}</p>}
     <section id={`${prefix}-start`} className="fate-report-overview" aria-label={t('reading.complete.summary')}><div className="fate-report-overview-heading"><p className="fate-eyebrow">{t('reading.complete.summary')}</p><h2>{t('reading.design.overview')}</h2></div>
         <ReportBriefView brief={buildReadingBrief(report.chapters[0])} href={`#${prefix}-${report.chapters[0].id}`} />
-      <nav id={`${prefix}-contents`} className="fate-reading-toc print:hidden" aria-label={t('reading.complete.contents')}>{contents.map(item => <a key={item.id} href={`#${prefix}-${item.id}`}><ReportIcon kind={item.icon ?? info.icon} /><span>{item.title}</span><span aria-hidden="true">↗</span></a>)}<a href={`#${prefix}-everyday-compass`}><ReportIcon kind="balance" /><span>{t('reading.extras.title')}</span><span aria-hidden="true">↗</span></a></nav>
+      <nav id={`${prefix}-contents`} className="fate-reading-toc print:hidden" aria-label={t('reading.complete.contents')}><a href={`#${prefix}-situations`}><ReportIcon kind="next-moves" /><span>{t('reading.application.contents')}</span><span aria-hidden="true">↗</span></a>{contents.map(item => <a key={item.id} href={`#${prefix}-${item.id}`}><ReportIcon kind={item.icon ?? info.icon} /><span>{item.title}</span><span aria-hidden="true">↗</span></a>)}<a href={`#${prefix}-everyday-compass`}><ReportIcon kind="balance" /><span>{t('reading.extras.title')}</span><span aria-hidden="true">↗</span></a></nav>
         <details className="fate-report-chart-details print:hidden"><summary>{t('reading.brief.chart')}</summary>{chartDetails}</details>
         <div className="hidden print:block">{chartDetails}</div>
     </section>
+    <ReportApplicationsView items={report.applications} prefix={prefix} />
     {report.chapters.map(item => <ReportChapterView key={item.id} chapter={item} prefix={prefix}>{item.id === 'visible-elements' ? <ElementBalance elements={first.elements} visibleMarkers={first.visibleMarkers} /> : null}</ReportChapterView>)}
     {report.months.length > 0 && <section id={`${prefix}-calendar`} className="fate-reading-chapter fate-category-calendar"><ChapterHeading title={`${String(report.chapters.length + 1).padStart(2, '0')} · ${t('category.months.title')}`} kind="timeline" /><p>{t('category.months.intro')}</p><div className="fate-report-periods">{report.months.map((month, index) => <section id={`${prefix}-${month.id}`} className="fate-reading-period" key={month.id}><span className="fate-report-period-dot" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span><p className="fate-eyebrow">{month.label}</p><h3><ReadingText text={month.lead} /></h3><div className="fate-report-chapter-layout"><div className="fate-report-prose">{month.paragraphs.map(text => <p key={text}><ReadingText text={text} /></p>)}</div><ReadingGuidance guidance={month.guidance} headingLevel="h4" /></div><div className="fate-reading-practice"><FateKeyMark /><div><strong>{t('reading.tryThis')}</strong><p>{month.tryThis}</p></div></div><ChartEvidence facts={month.evidence} /><BackToChapters prefix={prefix} /></section>)}</div></section>}
     <ReportExtrasView extras={report.extras} prefix={prefix} />

@@ -16,6 +16,7 @@ import ReportChapterView, { ChartEvidence } from './ReportChapterView.tsx'
 import ReportExtrasView from './ReportExtrasView.tsx'
 import ReportBriefView, { BackToChapters } from './ReportBriefView.tsx'
 import { buildReadingBrief } from '../../report/reading-brief.ts'
+import ReportApplicationsView from './ReportApplicationsView.tsx'
 
 /** A public sample, never an order confirmation or a client-side paid unlock. */
 export default function ReadingView({ input, embedded = false, prefix = 'sample-report' }: { input: BirthInput; embedded?: boolean; prefix?: string }) {
@@ -52,13 +53,14 @@ export default function ReadingView({ input, embedded = false, prefix = 'sample-
       <section id={`${prefix}-start`} className="fate-report-overview" aria-label={t('reading.complete.summary')}>
         <div className="fate-report-overview-heading"><p className="fate-eyebrow">{t('reading.complete.summary')}</p><h2>{t('reading.design.overview')}</h2></div>
         <ReportBriefView brief={buildReadingBrief(report.chapters[0])} href={`#${prefix}-${report.chapters[0].id}`} />
-        <nav id={`${prefix}-contents`} className="fate-reading-toc print:hidden" aria-label={t('reading.complete.contents')}>
+        <nav id={`${prefix}-contents`} className="fate-reading-toc print:hidden" aria-label={t('reading.complete.contents')}><a href={`#${prefix}-situations`}><ReportIcon kind="next-moves" /><span>{t('reading.application.contents')}</span><span aria-hidden="true">↗</span></a>
           {contents.map(item => <a key={item.id} href={`#${prefix}-${item.id}`}><ReportIcon kind={item.id} /><span>{item.title}</span><span aria-hidden="true">↗</span></a>)}
           <a href={`#${prefix}-everyday-compass`}><ReportIcon kind="balance" /><span>{t('reading.extras.title')}</span><span aria-hidden="true">↗</span></a>
         </nav>
         <details className="fate-report-chart-details print:hidden"><summary>{t('reading.brief.chart')}</summary>{chartDetails}</details>
         <div className="hidden print:block">{chartDetails}</div>
       </section>
+    <ReportApplicationsView items={report.applications} prefix={prefix} />
       <section className="fate-reading-chapter fate-report-connections" aria-label={t('reading.connections.title')}>
         <header className="fate-report-connections-heading"><FateKeyMark /><div><p className="fate-eyebrow">{t('reading.connections.eyebrow')}</p><h2>{t('reading.connections.title')}</h2><p>{t('reading.connections.intro')}</p></div></header>
         <div className="fate-report-connection-cards">{report.connections.map(connection => <section key={connection.id}>
