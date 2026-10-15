@@ -11,6 +11,7 @@ import { reportExtrasText, SYMBOL_NOTE } from './report-extras.ts'
 import type { ReportExtras } from './report-extras.ts'
 import { everydayExampleText } from './personal-examples.ts'
 import type { EverydayExample } from './personal-examples.ts'
+import { buildReadingBrief, readingBriefText } from './reading-brief.ts'
 
 export const POSITIONS = ['hour', 'day', 'month', 'year']
 export const FAMILY: Record<string, string> = { '比肩': 'ownership', '劫財': 'ownership', '食神': 'making', '傷官': 'making', '正財': 'resources', '偏財': 'resources', '正官': 'responsibility', '偏官': 'responsibility', '七殺': 'responsibility', '正印': 'learning', '偏印': 'learning' }
@@ -86,6 +87,7 @@ export function finishReading(data: Omit<CategoryReading, 'fullText' | 'wordCoun
   const fullText = plainReadingText([
     `THE FATE KEY · ${data.title}`, `Report edition ${REPORT_EDITION} · Reference year ${data.referenceYear}`,
     ...data.subjects.flatMap(item => [item.label, item.birthSummary, item.pillarSummary.join(' · ')]), data.headline,
+    readingBriefText(buildReadingBrief(chapters[0])),
     ...data.summary.map(item => `${item.label}: ${item.text}`), ...chapters.flatMap(chapterText),
     ...(data.months.length ? ['Your Twelve Months', ...data.months.flatMap(chapterText)] : []),
     reportExtrasText(data.extras),

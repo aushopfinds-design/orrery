@@ -14,6 +14,8 @@ import FateKeyMark from './FateKeyMark.tsx'
 import ReportRecord from './ReportRecord.tsx'
 import ReportChapterView, { ChartEvidence } from './ReportChapterView.tsx'
 import ReportExtrasView from './ReportExtrasView.tsx'
+import ReportBriefView, { BackToChapters } from './ReportBriefView.tsx'
+import { buildReadingBrief } from '../../report/reading-brief.ts'
 
 /** A public sample, never an order confirmation or a client-side paid unlock. */
 export default function ReadingView({ input, embedded = false, prefix = 'sample-report' }: { input: BirthInput; embedded?: boolean; prefix?: string }) {
@@ -26,6 +28,10 @@ export default function ReadingView({ input, embedded = false, prefix = 'sample-
     const target = embedded ? null : document.getElementById(window.location.hash.slice(1))
     target?.scrollIntoView({ block: 'start' })
   }, [embedded])
+  const chartDetails = <>
+    <div className="fate-report-chart-strip"><div className="fate-report-day-symbol"><ReportIcon kind="personality" /><span>{t('reading.design.startingSymbol')}</span><strong>{report.dayMaster}</strong></div><div className="fate-report-pillars">{report.pillarSummary.map((pillar, index) => { const [position, value] = pillar.split(': '); return <div key={position} className={index === 2 ? 'fate-report-pillar-day' : ''}><span>{t(`reading.design.pillar.${position.toLowerCase()}`)}</span><strong lang={value === 'Unknown' ? 'en' : 'zh'}>{value}</strong>{index === 2 && <small>{t('reading.design.you')}</small>}</div> })}</div></div>
+        <section className="fate-reading-summary" aria-label={t('reading.design.summaryThemes')}>{report.summary.map((item, index) => <div key={item.label}><ReportIcon kind={['personality', 'career', 'love'][index]} /><h3>{item.label}</h3><p>{item.text}</p></div>)}</section>
+  </>
   return (
     <article id={prefix} lang="en" aria-label={t('reading.complete.sampleTitle')} className={`fate-complete-reading printable-reading${embedded ? ' fate-bundle-child' : ''}`}>
       <div className="fate-sample-toolbar print:hidden"><a href="#complete-life-reading">← {t('complete.title')}</a><span>{t('reading.complete.sampleBadge')}</span></div>
@@ -43,14 +49,15 @@ export default function ReadingView({ input, embedded = false, prefix = 'sample-
       </header>
       <div className="fate-reading-controls print:hidden"><CopyButton label={t('reading.complete.copy')} getText={() => `${t('reading.complete.sampleNote')}\n${t('reading.record.preparedOn')}: ${preparedOn}\n\n${report.fullText}`} /><button type="button" className="fate-complete-primary" onClick={() => { setShowPrintHelp(true); window.print() }}>{t('reading.complete.print')}</button>{showPrintHelp && <p role="status">{t('reading.printHelp')}</p>}</div>
       {input.unknownTime && <p role="status" className="fate-reading-time-note">{t('reading.timeUnknown')}</p>}
-      <section className="fate-report-overview" aria-label={t('reading.complete.summary')}>
+      <section id={`${prefix}-start`} className="fate-report-overview" aria-label={t('reading.complete.summary')}>
         <div className="fate-report-overview-heading"><p className="fate-eyebrow">{t('reading.complete.summary')}</p><h2>{t('reading.design.overview')}</h2></div>
-        <div className="fate-report-chart-strip"><div className="fate-report-day-symbol"><ReportIcon kind="personality" /><span>{t('reading.design.startingSymbol')}</span><strong>{report.dayMaster}</strong></div><div className="fate-report-pillars">{report.pillarSummary.map((pillar, index) => { const [position, value] = pillar.split(': '); return <div key={position} className={index === 2 ? 'fate-report-pillar-day' : ''}><span>{t(`reading.design.pillar.${position.toLowerCase()}`)}</span><strong lang={value === 'Unknown' ? 'en' : 'zh'}>{value}</strong>{index === 2 && <small>{t('reading.design.you')}</small>}</div> })}</div></div>
-        <section className="fate-reading-summary" aria-label={t('reading.design.summaryThemes')}>{report.summary.map((item, index) => <div key={item.label}><ReportIcon kind={['personality', 'career', 'love'][index]} /><h3>{item.label}</h3><p>{item.text}</p></div>)}</section>
-        <nav className="fate-reading-toc print:hidden" aria-label={t('reading.complete.contents')}>
+        <ReportBriefView brief={buildReadingBrief(report.chapters[0])} href={`#${prefix}-${report.chapters[0].id}`} />
+        <nav id={`${prefix}-contents`} className="fate-reading-toc print:hidden" aria-label={t('reading.complete.contents')}>
           {contents.map(item => <a key={item.id} href={`#${prefix}-${item.id}`}><ReportIcon kind={item.id} /><span>{item.title}</span><span aria-hidden="true">↗</span></a>)}
           <a href={`#${prefix}-everyday-compass`}><ReportIcon kind="balance" /><span>{t('reading.extras.title')}</span><span aria-hidden="true">↗</span></a>
         </nav>
+        <details className="fate-report-chart-details print:hidden"><summary>{t('reading.brief.chart')}</summary>{chartDetails}</details>
+        <div className="hidden print:block">{chartDetails}</div>
       </section>
       <section className="fate-reading-chapter fate-report-connections" aria-label={t('reading.connections.title')}>
         <header className="fate-report-connections-heading"><FateKeyMark /><div><p className="fate-eyebrow">{t('reading.connections.eyebrow')}</p><h2>{t('reading.connections.title')}</h2><p>{t('reading.connections.intro')}</p></div></header>

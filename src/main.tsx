@@ -8,6 +8,7 @@ import './preview.css'
 import './report-extras.css'
 import './buyer-polish.css'
 import './report-examples.css'
+import './report-reader.css'
 import App from './components/App.tsx'
 
 createRoot(document.getElementById('root')!).render(

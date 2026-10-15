@@ -6,6 +6,7 @@ import ReportIcon from './ReportIcon.tsx'
 import FateKeyMark from './FateKeyMark.tsx'
 import ChapterHeading from './ChapterHeading.tsx'
 import { ChartEvidence } from './ReportChapterView.tsx'
+import { BackToChapters } from './ReportBriefView.tsx'
 
 function QuestionCard({ item }: { item: InsightQuestion }) {
   const { t } = useLocale()
@@ -67,5 +68,6 @@ export default function ReportExtrasView({ extras, prefix }: { extras: ReportExt
     <ChartEvidence facts={extras.evidence} />
     <details className="fate-compass-sources print:hidden"><summary>{t('reading.extras.sources')}</summary><p>{t('reading.extras.sourceNote')}</p><ul>{SYMBOL_SOURCES.map(source => <li key={source.url}><a href={source.url} target="_blank" rel="noopener noreferrer">{source.label} ↗</a></li>)}</ul></details>
     <p className="hidden print:block fate-compass-print-sources">{t('reading.extras.sources')}: {SYMBOL_SOURCES.map(source => `${source.label} — ${source.url}`).join(' · ')}</p>
+    <BackToChapters prefix={prefix} />
   </section>
 }

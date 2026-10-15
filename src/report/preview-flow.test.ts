@@ -2,8 +2,10 @@ import { afterEach, describe, expect, it, vi } from 'vitest'
 import { calculateSaju } from '@orrery/core/saju'
 import { CATEGORY_SCENARIOS } from './category-catalog.ts'
 import { buildCompleteReading } from './complete-reading.ts'
+import { buildCategoryReading } from './category-readings.ts'
 import { buildPersonalPreview, personalPreviewText } from './personal-preview.ts'
 import { PREVIEW_KINDS } from './personal-products.ts'
+import { plainReadingText } from './reading-text.ts'
 import { parsePreviewDraft, readPreviewDraft, savePreviewDraft, updatePreviewDraft } from '../utils/preview-draft.ts'
 
 const { first, second } = CATEGORY_SCENARIOS[0]
@@ -56,6 +58,37 @@ describe('A continuous preview before checkout', () => {
     const text = personalPreviewText(buildPersonalPreview('complete', { first }))
     expect(text).not.toContain(full.actionPlan.paragraphs[0])
     expect(text).not.toContain(full.chapters.find(chapter => chapter.id === 'career')!.paragraphs[1])
+  })
+
+  it('opens a visible passage from every short guide and includes the same guide in the saved preview', () => {
+    for (const kind of PREVIEW_KINDS) {
+      const preview = buildPersonalPreview(kind, { first, second, year: 2030 })
+      const brief = preview.brief!
+      expect(preview.excerpts.find(section => section.id === brief.chapterId)?.title).toBe(brief.chapterTitle)
+      const text = personalPreviewText(preview)
+      for (const line of [...brief.support, ...brief.watchFor, brief.action]) expect(text).toContain(plainReadingText(line))
+      expect(brief.action.split(/\s+/).length).toBeLessThanOrEqual(40)
+    }
+    expect(buildPersonalPreview('bundle', { first, second, year: 2030 }).brief?.scope).toBe('Person A · Complete Life Reading')
+    expect(buildPersonalPreview('compatibility', { first }).brief).toBeNull()
+  })
+
+  it('keeps both people in the relationship guide and updates the annual guide with its real chapter', () => {
+    const pair = buildPersonalPreview('compatibility', { first, second })
+    for (const group of [pair.brief!.support, pair.brief!.watchFor]) {
+      expect(group.some(item => item.startsWith('Person A:'))).toBe(true)
+      expect(group.some(item => item.startsWith('Person B:'))).toBe(true)
+    }
+    const changed = buildPersonalPreview('compatibility', { first, second: { ...second, day: second.day + 1 } })
+    expect(changed.brief!.support).not.toEqual(pair.brief!.support)
+    for (const year of [2027, 2028]) {
+      const preview = buildPersonalPreview('year', { first, year })
+      const full = buildCategoryReading('year', calculateSaju(first), { year })
+      expect(preview.brief!.support).toEqual(full.chapters[0].guidance.keepClose)
+      expect(preview.brief!.watchFor).toEqual(full.chapters[0].guidance.watchFor)
+      expect(full.fullText).toContain(plainReadingText(preview.brief!.action))
+    }
+    expect(buildPersonalPreview('year', { first, year: 2027 }).brief?.support).not.toEqual(buildPersonalPreview('year', { first, year: 2028 }).brief?.support)
   })
 
   it('includes both real subjects and their own symbols for a two-person preview', () => {

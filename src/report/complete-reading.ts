@@ -11,6 +11,7 @@ import type { ReportExtras } from './report-extras.ts'
 import { CLOSENESS_PROMPTS } from './reading-scenarios.ts'
 import { everydayExample, workExample, relationshipExample, moneyExample, everydayExampleText } from './personal-examples.ts'
 import type { EverydayExample } from './personal-examples.ts'
+import { buildReadingBrief, readingBriefText } from './reading-brief.ts'
 
 export const REPORT_EDITION = '2026.10'
 
@@ -425,6 +426,7 @@ export function buildCompleteReading(result: SajuResult, asOfYear = new Date().g
   const extras = buildReportExtras('complete', result)
   const fullText = plainReadingText([
     'THE FATE KEY · Complete Life Reading', `Report edition ${REPORT_EDITION} · Timeline reference year ${asOfYear}`, formatBirth(result.input), pillarSummary(result).join(' · '), personal.headline,
+    readingBriefText(buildReadingBrief(chapters[0])),
     ...summary.map(item => `${item.label}: ${item.text}`),
     'How your themes work together', ...connections.flatMap(item => [item.title, item.basis, item.text, 'Ask yourself: ' + item.question, 'From your chart: ' + item.evidence.join(' ')]),
     ...chapters.flatMap(chapterText),

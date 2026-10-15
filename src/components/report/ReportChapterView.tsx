@@ -6,6 +6,7 @@ import ReadingGuidance from './ReadingGuidance.tsx'
 import ChapterHeading from './ChapterHeading.tsx'
 import FateKeyMark from './FateKeyMark.tsx'
 import EverydayExampleView from './EverydayExampleView.tsx'
+import { BackToChapters } from './ReportBriefView.tsx'
 
 export function ChartEvidence({ facts }: { facts: string[] }) {
   const { t } = useLocale()
@@ -18,5 +19,6 @@ export default function ReportChapterView({ chapter, prefix = 'sample-report', c
     <p className="fate-reading-lead"><ReadingText text={chapter.lead} /></p>
     <div className="fate-report-chapter-layout"><div className="fate-report-prose">{chapter.example && <EverydayExampleView example={chapter.example} />}{chapter.paragraphs.map(paragraph => <p key={paragraph}><ReadingText text={paragraph} /></p>)}{children}</div><ReadingGuidance guidance={chapter.guidance} /></div>
     <div className="fate-reading-practice"><FateKeyMark /><div><strong>{t('reading.tryThis')}</strong><p>{chapter.tryThis}</p></div></div><ChartEvidence facts={chapter.evidence} />
+    <BackToChapters prefix={prefix} />
   </section>
 }
