@@ -6,7 +6,7 @@ import FateKeyMark from './report/FateKeyMark.tsx'
 export default function ProductCatalog() {
   const { t } = useLocale()
   return <section id="reports" className="fate-section fate-purpose-reports" aria-labelledby="reports-heading">
-    <div id="focused-reports" className="fate-section-heading"><p className="fate-eyebrow">{t('buyer.focus.eyebrow')}</p><h2 id="reports-heading">{t('buyer.focus.title')}</h2><p>{t('buyer.focus.text')}</p><span className="fate-catalog-count">{t('buyer.catalog.count')}</span></div>
+    <div id="focused-reports" className="fate-section-heading"><p className="fate-eyebrow">{t('buyer.focus.eyebrow')}</p><h2 id="reports-heading">{t('buyer.focus.title')}</h2><span className="fate-catalog-count">{t('buyer.catalog.count')}</span><p>{t('buyer.focus.text')}</p></div>
     <nav className="fate-catalog-shortcuts" aria-label={t('buyer.catalog.quick')}><p>{t('buyer.catalog.quick')}</p><div>{PREVIEW_KINDS.map(kind => <a href={previewHash(kind)} key={kind}><ReportIcon kind={previewProduct(kind).icon} /><span>{previewProduct(kind).title}</span></a>)}</div></nav>
     <div className="fate-focused-product-grid">{PREVIEW_KINDS.filter(kind => kind !== 'bundle').map(kind => {
       const product = previewProduct(kind)
