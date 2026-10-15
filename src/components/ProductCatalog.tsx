@@ -4,6 +4,8 @@ import { PREVIEW_KINDS, previewHash, previewProduct } from '../report/personal-p
 import type { PreviewKind } from '../report/personal-products.ts'
 import ReportIcon from './report/ReportIcon.tsx'
 import ReportArtwork from './report/ReportArtwork.tsx'
+import ReportPrice from './report/ReportPrice.tsx'
+import { bundleSavings, reportPrice } from '../report/pricing.ts'
 
 // Lead with a focused question at a lower proposed price. Keep every other option visible.
 const STARTING_REPORTS: PreviewKind[] = ['year', 'career', 'compatibility']
@@ -11,6 +13,7 @@ const CATALOG_KINDS = [...STARTING_REPORTS, ...PREVIEW_KINDS.filter(kind => !STA
 
 export default function ProductCatalog() {
   const { t } = useLocale()
+  const savings = bundleSavings()
   const [reducedMotion, setReducedMotion] = useState(() => window.matchMedia('(prefers-reduced-motion: reduce)').matches)
   const [manualMotion, setManualMotion] = useState<boolean | null>(null)
   const [pageVisible, setPageVisible] = useState(() => !document.hidden)
@@ -30,17 +33,18 @@ export default function ProductCatalog() {
 
   return <section id="reports" className="fate-section fate-purpose-reports" aria-labelledby="reports-heading">
     <div id="focused-reports" className="fate-section-heading"><p className="fate-eyebrow">{t('buyer.focus.eyebrow')}</p><h2 id="reports-heading">{t('buyer.focus.title')}</h2><span className="fate-catalog-count">{t('buyer.catalog.count')}</span><p>{t('buyer.focus.text')}</p></div>
+    <div className="fate-launch-offer"><div><p className="fate-eyebrow">{t('buyer.price.collection')}</p><strong>{t('buyer.price.from').replace('{price}', reportPrice('wellbeing'))}</strong><span>{t('buyer.price.note')}</span></div><a href={previewHash('bundle')}><strong>{t('buyer.price.bundleOffer').replace('{percent}', String(savings.percent))}</strong><span>{t('buyer.price.bundleCompare').replace('{bundle}', reportPrice('bundle')).replace('{separate}', savings.separatePrice)}</span><small>{t('buyer.bundle.cta')} →</small></a></div>
     <nav className="fate-catalog-shortcuts" aria-label={t('buyer.catalog.quick')}><p>{t('buyer.catalog.quick')}<small>{t('buyer.price.short')}</small></p><div>{CATALOG_KINDS.map(kind => {
       const product = previewProduct(kind)
-      return <a href={previewHash(kind)} key={kind}><ReportIcon kind={product.icon} /><span>{product.title}</span><strong>{product.price ?? t('home.products.tbd.price')}</strong></a>
+      return <a href={previewHash(kind)} key={kind}><ReportIcon kind={product.icon} /><span>{product.title}</span><ReportPrice kind={kind} compact /></a>
     })}</div></nav>
     <div className="fate-catalog-art-controls"><button type="button" className="fate-catalog-motion" aria-controls="report-art-gallery" onClick={() => setManualMotion(!motionEnabled)}><svg viewBox="0 0 24 24" aria-hidden="true">{motionEnabled ? <path d="M7 5h4v14H7z M14 5h4v14h-4z" /> : <path d="m8 4 13 8-13 8z" />}</svg>{t(motionEnabled ? 'buyer.catalog.motion.pause' : 'buyer.catalog.motion.play')}</button></div>
     <div id="report-art-gallery">
     <div className="fate-focused-product-grid">{CATALOG_KINDS.filter(kind => kind !== 'bundle').map(kind => {
       const product = previewProduct(kind)
-      return <article key={kind} className="fate-product-card fate-focus-product" aria-label={product.title}><ReportArtwork kind={kind} title={product.title} motionEnabled={motionEnabled && pageVisible} /><div className="fate-product-content">{kind === 'year' && <span className="fate-catalog-entry">{t('buyer.catalog.entry')}</span>}<p className="fate-eyebrow">{t(`buyer.focus.${kind}.question`)}</p><h3>{product.title}</h3><span className="fate-catalog-scope">{product.chapters} {t('site.guide.chaptersUnit')} · {t(kind === 'compatibility' ? 'site.guide.twoPeople' : 'site.guide.onePerson')}</span><p>{t(`buyer.focus.${kind}.text`)}</p><p className="fate-product-price">{product.price ?? t('home.products.tbd.price')}<small>{t(product.price ? 'buyer.price.short' : 'buyer.catalog.pricePending')}</small></p><a href={previewHash(kind)} className="fate-product-action">{t('buyer.preview.cta')} <span aria-hidden="true">→</span></a><a href={product.sample} className="fate-buyer-sample-link">{t('buyer.guide.sample')}</a></div></article>
+      return <article key={kind} className="fate-product-card fate-focus-product" aria-label={product.title}><ReportArtwork kind={kind} title={product.title} motionEnabled={motionEnabled && pageVisible} /><div className="fate-product-content">{kind === 'year' && <span className="fate-catalog-entry">{t('buyer.catalog.entry')}</span>}<p className="fate-eyebrow">{t(`buyer.focus.${kind}.question`)}</p><h3>{product.title}</h3><span className="fate-catalog-scope">{product.chapters} {t('site.guide.chaptersUnit')} · {t(kind === 'compatibility' ? 'site.guide.twoPeople' : 'site.guide.onePerson')}</span><p>{t(`buyer.focus.${kind}.text`)}</p><p className="fate-product-price"><ReportPrice kind={kind} /></p><a href={previewHash(kind)} className="fate-product-action">{t('buyer.preview.cta')} <span aria-hidden="true">→</span></a><a href={product.sample} className="fate-buyer-sample-link">{t('buyer.guide.sample')}</a></div></article>
     })}</div>
-    <aside className="fate-bundle-offer"><ReportArtwork kind="bundle" title={t('category.bundle.title')} motionEnabled={motionEnabled && pageVisible} /><div className="fate-bundle-copy"><p className="fate-eyebrow">{t('buyer.bundle.eyebrow')}</p><h3>{t('category.bundle.title')}</h3><p>{t('buyer.bundle.text')}</p><span>{t('buyer.bundle.saving')}</span></div><div className="fate-bundle-action"><strong>US$24.99</strong><span>{t('buyer.price.short')}</span><a href="#my-report-bundle" className="fate-complete-primary">{t('buyer.bundle.cta')}</a><a href="#complete-bundle-sample" className="fate-buyer-sample-link">{t('buyer.guide.sample')}</a></div></aside>
+    <aside className="fate-bundle-offer"><ReportArtwork kind="bundle" title={t('category.bundle.title')} motionEnabled={motionEnabled && pageVisible} /><div className="fate-bundle-copy"><p className="fate-eyebrow">{t('buyer.bundle.eyebrow')}</p><h3>{t('category.bundle.title')}</h3><p>{t('buyer.bundle.text')}</p><span>{t('buyer.bundle.saving').replace('{amount}', savings.savedAmount)}</span></div><div className="fate-bundle-action"><ReportPrice kind="bundle" /><a href="#my-report-bundle" className="fate-complete-primary">{t('buyer.bundle.cta')}</a><a href="#complete-bundle-sample" className="fate-buyer-sample-link">{t('buyer.guide.sample')}</a></div></aside>
     </div>
     <p className="fate-product-note">{t('buyer.checkout.pending')} {t('buyer.price.note')}</p>
   </section>

@@ -7,6 +7,7 @@ import { buildBundleReading, buildCategoryReading } from '../report/category-rea
 import { FateEmblem } from './HomeOverview.tsx'
 import ReadingText from './report/ReadingText.tsx'
 import { previewHash } from '../report/personal-products.ts'
+import ReportPrice from './report/ReportPrice.tsx'
 
 export default function CategoryReportPage({ kind }: { kind: FocusCategory | 'bundle' }) {
   const { t } = useLocale()
@@ -35,7 +36,7 @@ export default function CategoryReportPage({ kind }: { kind: FocusCategory | 'bu
   return <article id={slug} className="fate-complete-product" lang="en" aria-labelledby={`${slug}-title`}>
     <a href="#reports" className="fate-product-back">← {t('complete.back')}</a>
     <header className="fate-complete-product-hero">
-      <div><p className="fate-eyebrow">{t('category.series')}</p><h1 id={`${slug}-title`}>{title}</h1><p className="fate-complete-description">{info?.description ?? t('category.bundle.description')}</p><p className="fate-complete-price">{info?.price === 'To be decided' ? t('home.products.tbd.price') : info?.price ?? 'US$24.99'} <span>{t('category.product.priceNote')}</span></p>
+      <div><p className="fate-eyebrow">{t('category.series')}</p><h1 id={`${slug}-title`}>{title}</h1><p className="fate-complete-description">{info?.description ?? t('category.bundle.description')}</p><p className="fate-complete-price"><ReportPrice kind={kind} /><span>{t('category.product.priceNote')}</span></p>
         <div className="fate-complete-actions"><a href={previewHash(kind)} className="fate-complete-primary">{t('buyer.preview.cta')}</a><a href={`#${slug}-sample`} className="fate-outline-button">{t('complete.sample')}</a></div><p className="fate-reading-small-note">{t('category.product.status')}</p>
       </div>
       <div className="fate-complete-book" aria-hidden="true"><FateEmblem className="fate-complete-book-emblem" /><span>THE FATE KEY</span><strong>{title}</strong><small>YOUR STORY HOLDS THE KEY</small></div>
