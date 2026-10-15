@@ -1,5 +1,8 @@
 // English-first homepage copy, shared as the fallback for every supported locale.
 export const homepageCopy: Record<string, string> = {
+  'copy.failed': 'Copy failed — try again',
+  'copy.copying': 'Copying…',
+  'reading.design.guide': 'Personal guide',
   'reading.extras.title': 'Your Everyday Compass',
   'reading.extras.intro': 'A few more personal questions, useful choices and traditional symbols to carry into everyday life.',
   'reading.extras.questions': 'Questions you may be asking',

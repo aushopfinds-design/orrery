@@ -61,6 +61,8 @@
   .fate-compass-questions, .fate-compass-choices { grid-template-columns: minmax(0, 1fr); }
   .fate-compass-question, .fate-compass-choices > section, .fate-compass-symbol, .fate-compass-experiment { padding: 20px; }
   .fate-compass-question h4 { font-size: 22px; }
+  .fate-compass-question > p { font-size: 15px; }
+  .fate-compass-choices li p, .fate-compass-symbol > .fate-compass-symbol-use, .fate-compass-experiment li { font-size: 14px; }
   .fate-compass-preview { padding: 20px 16px; }
   .fate-compass-reminder { padding: 21px 18px; gap: 13px; }
   .fate-compass-reminder p { font-size: 23px; }
