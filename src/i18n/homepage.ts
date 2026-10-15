@@ -1,5 +1,7 @@
 // English-first homepage copy, shared as the fallback for every supported locale.
 export const homepageCopy: Record<string, string> = {
+  "buyer.catalog.motion.pause": "Pause image effects",
+  "buyer.catalog.motion.play": "Play image effects",
   "home.nav.label": "Main navigation",
   "home.nav.home": "Home",
   "home.nav.free": "Free Reading",
