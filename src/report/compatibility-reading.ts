@@ -4,6 +4,7 @@ import { chapter, chartContext, commonMethod, finishReading, moneyMarkers, pairF
 import { PAIR_LENSES } from './category-profiles.ts'
 import type { ReadingGuidance } from './reading-profiles.ts'
 import { buildReportExtras } from './report-extras.ts'
+import { CLOSENESS_PROMPTS } from './reading-scenarios.ts'
 
 export function buildCompatibilityReading(first: SajuResult, second: SajuResult, referenceYear = new Date().getFullYear()) {
   validateYear(referenceYear, first)
@@ -26,7 +27,7 @@ export function buildCompatibilityReading(first: SajuResult, second: SajuResult,
   return finishReading({
     kind: 'compatibility', title: 'Love Compatibility', referenceYear,
     extras: buildReportExtras('compatibility', first, { second }),
-    headline: 'Two points of view. A clearer way to meet in the middle.',
+    headline: 'How you show care, make room for each other and find your way through differences.',
     subjects: [subject(first, 'Person A'), subject(second, 'Person B')],
     summary: [{ label: 'Person A’s starting style', text: a.personal.headline }, { label: 'Person B’s starting style', text: b.personal.headline }, { label: 'Your two-way connection', text: `${lensA.theme} · ${lensB.theme}` }],
     chapters: [
@@ -50,8 +51,10 @@ export function buildCompatibilityReading(first: SajuResult, second: SajuResult,
         `Person B’s theme is **${b.relationship.need}**. Make room for both needs instead of assuming that your own preferred response will help everyone.`,
         `Person A could say: **“${a.relationship.words}”** Person B can answer what fits and what needs changing.`,
         `Person B could say: **“${b.relationship.words}”** Person A can listen before offering an explanation or a fix.`,
+        `**An idea to try with Person A:** ${CLOSENESS_PROMPTS[a.day.pillar.branch]} Ask whether this feels like care to them before making it a regular ritual.`,
+        `**An idea to try with Person B:** ${CLOSENESS_PROMPTS[b.day.pillar.branch]} If the ideas differ, give both a turn rather than making one person’s preference the rule.`,
         'Try this with a small situation, such as a changed plan or a difficult day. **Ask whether the person wants company, an idea or practical help.** You can care without guessing which one they need.',
-      ], [pillarFact(first, 1, 'Person A'), pillarFact(second, 1, 'Person B')], 'Use one example sentence each. Let the answer finish before asking a follow-up question.', loveGuidance, 'love'),
+      ], [pillarFact(first, 1, 'Person A'), pillarFact(second, 1, 'Person B')], 'Plan one small moment of connection. Each person chooses a detail that matters to them, then names one thing they appreciated afterwards.', loveGuidance, 'love'),
       chapter('shared-routine', 'Sharing the Practical Work', '**Make the division of work visible.** A familiar routine is easier to keep when both people know what they have agreed.', [
         `Person A’s working theme is **${a.work.theme}**. That points to a preference for ${a.work.setting}. Consider how this appears in shared planning or practical tasks.`,
         `Person B’s theme is **${b.work.theme}**. Their suggested setting includes ${b.work.setting}. A different method may still lead to the same useful result.`,

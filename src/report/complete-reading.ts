@@ -8,6 +8,7 @@ import { plainReadingText } from './reading-text.ts'
 import { WORK_CONNECTIONS, RELATIONSHIP_CONNECTIONS, WORK_REFLECTIONS } from './reading-connections.ts'
 import { buildReportExtras, reportExtrasText } from './report-extras.ts'
 import type { ReportExtras } from './report-extras.ts'
+import { CLOSENESS_PROMPTS } from './reading-scenarios.ts'
 
 export const REPORT_EDITION = '2026.10'
 
@@ -284,6 +285,7 @@ export function buildCompleteReading(result: SajuResult, asOfYear = new Date().g
         `Your own starting style also values **${personal.need}**. Notice whether you can say that clearly during an everyday conversation.`,
         `One habit to watch is **${relationship.friction}**. Try asking what the other person needs before deciding how to help.`,
         `You could say: **“${relationship.words}”** Give the other person time to answer.`,
+        `For a small moment of connection, try this idea: **${CLOSENESS_PROMPTS[day.pillar.branch]}** Ask whether it fits what the other person enjoys, rather than assuming that your own preferred kind of care is theirs too.`,
         clashes.length
           ? 'Your chart also shows two parts pulling in different directions. If that fits, notice when one person wants space while another wants an answer. **Agree when to talk again.**'
           : 'The pairs checked here do not show a direct conflict in this part of the chart. You still need to talk about what each person wants.',

@@ -4,12 +4,14 @@ import { FOCUS_WORK } from './category-profiles.ts'
 import { WORK_CONNECTIONS } from './reading-connections.ts'
 import { WORK_PROFILES } from './reading-profiles.ts'
 import { buildReportExtras } from './report-extras.ts'
+import { LIFE_FOCUS } from './reading-scenarios.ts'
 
 export function buildCareerReading(result: SajuResult, referenceYear = new Date().getFullYear()) {
   validateYear(referenceYear, result)
   const c = chartContext(result)
   const focus = FOCUS_WORK[c.month.stemSipsin]
   const innerFocus = FOCUS_WORK[c.month.branchSipsin]
+  const life = LIFE_FOCUS[c.month.stemSipsin]
   const money = moneyMarkers(result)
   const cycles = selectedCycles(result, referenceYear)
   const future = result.input.unknownTime ? null : WORK_PROFILES[c.hour.stemSipsin]
@@ -46,13 +48,13 @@ export function buildCareerReading(result: SajuResult, referenceYear = new Date(
         `Ask your manager or teammate: **“${focus.interview}”** Follow up with who will decide, what support is available and when the result will be checked.`,
         'If several requests compete, ask which one comes first and which can wait. **A clear limit protects an agreed result.** It does not require treating every request as a personal conflict.',
       ], [pillarFact(result, 3), pillarFact(result, 2), ...(result.input.unknownTime ? [] : [pillarFact(result, 0)])], 'Choose one unclear expectation. Ask for the priority, the definition of a finished result and the support available.', c.group, 'social'),
-      chapter('money-commitments', 'The Full Cost of a Commitment', `**Your checked money theme is ${money.theme}.** Use it to ask a practical question about a real commitment.`, [
-        money.opportunity ? 'A promising offer can deserve attention without deserving an instant yes. Check who will do the work, what is still uncertain and whether the first step can be completed.' : 'A manageable commitment is one you can explain and keep. Add up the recurring duties before treating another small request as easy to absorb.',
-        `Your work setting has its own pressure point: **${focus.capacity}**. Watch for that pattern when you compare an opportunity with the time you actually have.`,
-        'For example, a side project may involve delivery, messages, revisions and follow-up. **Count the work around the main task.** The visible task may be only part of the promise.',
-        'Write down the real amount paid or received, the costs and the time needed. Keep uncertain figures separate from confirmed ones. A traditional money symbol cannot tell you what an offer will earn.',
-        'Check what happens if the workload grows or the agreement changes. Decide which part needs a clear answer before you commit. For personal financial decisions, use your actual situation and appropriate professional advice when needed.',
-      ], money.facts, 'Review one offer or recurring duty. List the time, costs, limits and unanswered questions on a single page.', { keepClose: ['Clear written terms and realistic workloads.', 'People who explain the work behind an attractive offer.'], watchFor: [focus.capacity, 'Treating a money marker as proof of future earnings.'] }, 'money'),
+      chapter('money-commitments', 'Income, Pay and the Work Behind the Number', `**Your checked money theme is ${money.theme}.** Your working theme adds a question about ${life.incomeStyle}.`, [
+        money.steady && money.opportunity ? 'The checked chart contains both steady-commitment and opportunity themes. Compare a reliable base with the time a new opening would need. Neither symbol tells you how much you will earn.' : money.opportunity ? 'The checked opportunity theme makes a useful prompt for reviewing a new role or side project. **Separate confirmed pay from hoped-for earnings**, and check the work needed after the appealing first step.' : money.steady ? 'The checked steady-commitment theme gives you a reason to look closely at regular duties and recurring pay. A familiar arrangement can still need a clearer description when the workload changes.' : 'A clear visible money theme is not present in the checked positions. Use your actual work and records to explore income habits; that absence does not mean a lack of earning ability.',
+        `One pattern to examine is **${life.moneyWatch}**. This comes from your working theme, not a prediction about your bank balance.`,
+        `For example: **${life.moneyExample}** Compare that scene with one offer, payslip or recurring duty you actually understand.`,
+        `Before accepting more responsibility, ask: **“${life.payQuestion}”** Check the agreed pay, expected hours, extra duties, necessary costs and time outside the main task. Keep unanswered points visible.`,
+        'Put two real options beside each other: **what is confirmed, what you must deliver and what remains uncertain**. Use the actual figures and appropriate advice for important financial decisions. The chart supplies a conversation theme; the agreement shows the commitment.',
+      ], [...money.facts, pillarFact(result, 2)], 'Compare one real offer or recurring role using five lines: confirmed pay, expected hours, extra duties, necessary costs and unanswered questions.', { keepClose: ['A clear description of the role and how added duties are discussed.', 'Confirmed pay and a record of the time the work actually needs.'], watchFor: [life.moneyWatch, 'Treating a money marker as proof of future earnings.'] }, 'money'),
       chapter('work-chapters', 'Your Longer Working Chapters', '**Use a life-cycle theme to choose a small experiment.** A calculated period does not promise a promotion, a new job or a financial result.', [
         `These are the available current or upcoming ten-year chapters for **${referenceYear}**. The notes give each calculated starting date.`,
         ...(cycles.length ? cycles.map(cycle => {
@@ -116,12 +118,12 @@ export function buildBusinessReading(result: SajuResult, referenceYear = new Dat
         'Choose a delivery limit you can test with actual work. Record what takes longer than expected and review the offer before increasing the number of customers. The chart does not calculate a sustainable price or a profit margin.',
       ], money.facts, 'Complete one small delivery or realistic trial. Record the time, costs and work that was left outside the original brief.', { keepClose: ['An explicit list of what the offer includes.', 'Actual delivery records and room to review an estimate.'], watchFor: [focus.capacity, 'Calling expected revenue a confirmed result.'] }, 'money'),
       chapter('customer-communication', 'Customer Conversations and Clear Boundaries', '**Make the next step easy to understand.** A customer should know what you will do, what you need from them and when you will reply.', [
-        `Your personal communication theme values **${c.personal.need}**. Your close-conversation theme adds **${c.relationship.need}**. Use those images to notice how you explain a promise under pressure.`,
+        `Your starting style values **${c.personal.need}**, while your working theme emphasises **${c.work.theme}**. In a customer conversation, turn those needs into a clear way to explain what you can deliver.`,
         `One useful customer question is: **“${focus.customer}”** Ask it before filling a gap with your own assumption.`,
         'Write a short confirmation of the result, the deadline and any customer input needed. Explain how a new request changes the work. **A clear boundary helps the customer choose**, rather than leaving them to guess.',
         'When feedback arrives, ask which part failed to meet the agreed result. Separate a useful correction from a new request that needs a fresh discussion.',
         'For example, a customer may ask for another version after the work is complete. Review what was included and explain the available next step. A calm, specific answer is easier to act on than an unexplained yes or no.',
-      ], [pillarFact(result, 1), pillarFact(result, 2)], 'Draft a five-line customer confirmation: result, deadline, needed input, included changes and the next contact point.', c.relationship, 'love'),
+      ], [pillarFact(result, 1), pillarFact(result, 2)], 'Draft a five-line customer confirmation: result, deadline, needed input, included changes and the next contact point.', { keepClose: ['A customer who can explain the result they need.', 'A written brief, a reply window and a clear way to discuss changes.'], watchFor: ['Treating a new request as an included revision without discussing it.', 'Promising an immediate reply when the delivery already needs your attention.'] }, 'social'),
       chapter('business-chapters', 'Life-Cycle Themes for Business Experiments', '**Use a period theme to shape an experiment.** The timing label does not tell you when to launch, borrow money or expect a return.', [
         `The available cycles are selected using **${referenceYear}**. Their exact calculated starts are in the notes. Compare a theme with the stage of your actual work.`,
         ...(cycles.length ? cycles.map(cycle => {

@@ -5,6 +5,7 @@ import { FOCUS_WORK, PAIR_LENSES } from './category-profiles.ts'
 import { STEM_ELEMENTS, STEMS } from './reading.ts'
 import type { ReadingElement } from './reading.ts'
 import { plainReadingText } from './reading-text.ts'
+import { LIFE_FOCUS } from './reading-scenarios.ts'
 
 export type ExtrasKind = 'complete' | 'compatibility' | 'year' | 'career' | 'business' | 'wellbeing'
 export interface InsightQuestion { question: string; answer: string; basis: string }
@@ -163,6 +164,7 @@ export function buildReportExtras(kind: ExtrasKind, result: SajuResult, options:
   const relationship = RELATIONSHIP_PROFILES[day.pillar.branch]
   const detail = LIFE_DETAILS[day.pillar.stem]
   const focus = FOCUS_WORK[month.stemSipsin]
+  const life = LIFE_FOCUS[month.stemSipsin]
   if (!personal || !work || !relationship || !detail || !focus) throw new Error('A valid chart is needed for the everyday guide')
   const dayBasis = `Your birth-day starting theme is ${personal.focus}.`
   const workBasis = `Your birth-month comparison brings ${work.theme} into focus.`
@@ -190,7 +192,7 @@ export function buildReportExtras(kind: ExtrasKind, result: SajuResult, options:
         q('Which working conditions are worth looking for?', `Look for **${work.setting}**. Then ask: **“${focus.interview}”** A useful answer includes a recent example of how the team works, not only a promise about its culture.`, workBasis),
         q('How can I show what I can do?', `**${detail.gift}** Make it visible in a real example: **${focus.proof}** Add one sentence about the problem you solved and one about your own part. This gives someone a result to discuss alongside the chart’s suggested theme.`, `${dayBasis} ${workBasis}`),
         q('Should I change jobs or change the way I work?', `First separate the **task, workload and working conditions**. A role that uses ${work.contribution} may still feel difficult when you face ${work.friction}. Test one change you can discuss, then compare the result with a real alternative. The chart cannot choose the job for you.`, workBasis),
-        q('What money habit should I watch at work?', `Keep **time, costs and the full promise** in the same conversation. ${focus.customer} Before taking on extra duties, write down what changes and what stays inside the agreed role. Use the actual figures to judge an offer.`, workBasis),
+        q('What money habit should I watch at work?', `Watch for **${life.moneyWatch}**. Ask: **“${life.payQuestion}”** Put confirmed pay, expected hours and added duties on one page. Compare the whole agreement, rather than judging an offer by the headline amount alone.`, workBasis),
       ]
       keepClose = [card('Useful feedback', `Ask someone to discuss a piece of work involving **${focus.tasks}**.`), card('Working conditions', `Check for **${work.setting}** before judging a job by its title.`), card('A clear boundary', detail.habit)]
       stepBack = [card('Work without the right conditions', `Notice **${work.friction}** and ask what could change.`), card('Promises that keep expanding', 'Ask what will be removed or shared when another duty is added.'), card('A quiet source of friction', detail.misread)]
@@ -210,17 +212,17 @@ export function buildReportExtras(kind: ExtrasKind, result: SajuResult, options:
     case 'year': {
       if (!options.annual || !options.year) throw new Error('The calculated annual theme and report year are needed')
       const annual = WORK_PROFILES[options.annual.god]
-      const annualFocus = FOCUS_WORK[options.annual.god]
+      const annualLife = LIFE_FOCUS[options.annual.god]
       const basis = `The ${options.year} annual comparison adds ${annual.theme} to your birth-day starting theme.`
       questions = [
         q(`What deserves my attention in ${options.year}?`, `Use **${annual.theme}** as a planning question. Your own style still needs **${personal.need}**. Pick one current plan where both can fit, instead of treating the year as a promise that something will happen.`, basis),
-        q('How should I judge a new opportunity?', `Try a smaller version first: **${annualFocus.experiment}** Compare what you learn with your usual preference for **${work.setting}**. An interesting opening still needs a workable plan.`, `${basis} ${workBasis}`),
+        q('How should I judge a new opportunity?', `Start with one question: **“${annualLife.yearQuestion}”** Then try a smaller version: **${annualLife.yearStep}** Compare what happens with your need for **${personal.need}** before adding another plan.`, `${basis} ${dayBasis}`),
         q(`What should I avoid carrying into ${options.year}?`, `Notice **${detail.limit.charAt(0).toLowerCase() + detail.limit.slice(1)}** The annual theme can also bring a reason to examine **${annual.friction}**. Name one commitment you want to review before adding another.`, basis),
         q('When should I make my next move?', 'Use the twelve monthly reflections as **check-in points**, then choose a date that fits your information, responsibilities and readiness. A reference-month symbol is not a lucky day. Start with a small step you can review rather than waiting for a date to guarantee the result.', basis),
       ]
-      keepClose = [card('One focus for the year', `Bring **${annual.theme}** into one plan you already care about.`), card('A realistic way to try it', annualFocus.proof), card('Your own pace', detail.habit)]
+      keepClose = [card('One focus for the year', `Bring **${annual.theme}** into one plan you already care about.`), card('A realistic way to try it', annualLife.yearStep), card('Your own pace', detail.habit)]
       stepBack = [card('An annual pressure to notice', `Watch for **${annual.friction}**.`), card('A habit to leave less room for', detail.limit), card('Waiting for a perfect date', 'Use actual readiness and the monthly questions to choose your next step.')]
-      experiment = { title: `Begin your ${options.year} plan with one test`, steps: [annualFocus.experiment, `Leave room for **${personal.need}** while you try it.`, 'Book a review after the first small result. Change the plan using what you learned.'] }
+      experiment = { title: `Begin your ${options.year} plan with one test`, steps: [annualLife.yearStep, `Leave room for **${personal.need}** while you try it.`, 'Book a review after the first small result. Change the plan using what you learned.'] }
       evidence.push(`Annual reference ${options.year}-07-15, 12:00 Asia/Seoul: ${options.annual.pillar}; day-stem comparison ${options.annual.god}.`)
       break
     }

@@ -18,8 +18,8 @@ export function buildBalanceReading(result: SajuResult, referenceYear = new Date
         `Your starting theme is **${c.personal.focus}**. The image behind it, ${c.personal.image}, can help you describe a familiar habit without treating the habit as a fixed identity.`,
         c.personal.pressure,
         `A useful condition for you is **${c.personal.need}**. Look at one ordinary day and ask where that condition appears, where it is missing and which small change is possible.`,
-        'For example, an extra request may fit the calendar but still interrupt a task that needs concentration. Name the work already planned before promising another immediate answer.',
-        'This is a reflection on routines and boundaries. It does not assess health, diagnose symptoms or tell you how much rest your body needs. Use your real circumstances when deciding what support is appropriate.',
+        'Try a brief **look back at one day**: what did you choose, what interrupted you and what did you take on without being asked? One sentence for each is enough. Look for the moment a useful task turned into an automatic duty.',
+        'For a smaller response, try: **“I can help with this part. The other part will need to wait or be shared.”** Choose an ordinary task where that answer is realistic, and notice what changes.',
       ], [pillarFact(result, 1)], c.personal.practice, c.personal, 'personality'),
       chapter('visible-elements', 'Five Elements as a Habit Picture', `**${prominent.map(item => item.element).join(' and ')} ${prominent.length === 1 ? 'appears' : 'appear'} most often in the visible count.** This is a picture of symbols, not a score for health or personal balance.`, [
         `The chart uses **${c.snapshot.visibleMarkers} visible symbols**. Their counts are ${c.snapshot.elements.map(item => `${item.element} ${item.count}`).join(', ')}. The diagram shows exactly those counts.`,
@@ -32,7 +32,7 @@ export function buildBalanceReading(result: SajuResult, referenceYear = new Date
         `Your working theme is **${c.work.theme}**. A helpful setting has ${c.work.setting}. Check whether your daily routine offers that condition in practice.`,
         `The pressure to watch is **${c.work.friction}**. It may be easier to address one unclear duty than to describe the whole week as too much.`,
         c.work.scene,
-        'List one recurring task, when it begins, what a finished result includes and who can share it. Agree what happens when the task grows beyond that description.',
+        'Choose one recurring task at home or work. Write its **start, stopping point and owner**. Add a small transition after it, such as putting the materials away before opening another task. The aim is a visible ending rather than another ideal routine to maintain.',
         'Leave a point at which the work can be reviewed rather than endlessly carried forward. **A clear edge helps you see what is unfinished and what can wait.** It does not make every delay a personal failure.',
       ], [pillarFact(result, 2)], c.work.next, c.work, 'career'),
       chapter('support-and-space', 'Support, Conversation and Your Own Space', '**Ask for the kind of help you need.** People can respond more clearly when they know whether you want an idea, a practical hand or a chance to speak.', [
@@ -43,9 +43,9 @@ export function buildBalanceReading(result: SajuResult, referenceYear = new Date
         'Keep a distinction between requesting support and expecting someone to guess. **Name one need and one clear next step.** Let the answer tell you whether another form of help is needed.',
       ], [pillarFact(result, 1), pillarFact(result, 3)], 'Tell someone one kind of support you would welcome, and one task or choice you want to keep for yourself.', c.relationship, 'love'),
       chapter('balance-week', 'A Seven-Day Routine Experiment', '**Change one small habit and review the result.** This is a personal reflection exercise, not a treatment plan.', [
-        `Begin with your starting-style practice: **${c.personal.practice}** Choose an ordinary task where it is realistic to try.`,
-        `During the week, notice one part of the routine connected with **${c.work.theme}**. Record when the working condition helps and when the pressure point appears.`,
-        `Try one conversation that makes room for **${c.relationship.need}**. Ask what the other person needs before deciding how to respond.`,
+        `For the first two days, observe one situation connected with **${c.personal.focus}**. Note the task, the interruption and the response you chose. You are collecting an example, not grading the whole day.`,
+        `In the middle of the week, try one change that makes room for **${c.personal.need}**. Choose a clear stopping point, a smaller promise or a task to share. Keep the change small enough to compare with your first observations.`,
+        `Before the week ends, try a conversation that makes room for **${c.relationship.need}**. Ask for one specific kind of help and let the other person say what they can offer.`,
         'At the end of seven days, note one helpful change, one part that did not fit and one adjustment for the next week. A small observation is enough; you do not need a perfect record.',
         'Use the chart images only where they help you ask a useful question. **Keep what works in your actual life.** If a concern involves your health or safety, seek suitable real-world support rather than relying on this report.',
       ], [pillarFact(result, 1), pillarFact(result, 2)], 'Book a short review in seven days. Bring one observation and one change you want to keep.', { keepClose: [c.personal.keepClose[0], c.relationship.keepClose[0]], watchFor: [c.personal.watchFor[0], c.relationship.watchFor[0]] }, 'next-moves'),
