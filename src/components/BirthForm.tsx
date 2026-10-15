@@ -5,7 +5,7 @@ import type { City } from '@orrery/core/cities'
 import { NEW_YORK } from '@orrery/core/cities'
 import { formatCityForLocale } from '../utils/city-search.ts'
 import CityCombobox from './CityCombobox.tsx'
-import { BIRTH_FORM_STORAGE_KEY, readBirthFormState, formStateFromBirth } from '../utils/birth-form-state.ts'
+import { BIRTH_FORM_STORAGE_KEY, readBirthFormState, formStateFromBirth, matchesBirth } from '../utils/birth-form-state.ts'
 import type { SavedFormState } from '../utils/birth-form-state.ts'
 export type { SavedFormState } from '../utils/birth-form-state.ts'
 import { getCountries, getCityCountryCode, isCountryCode, isSelectedBirthplaceValid } from '../utils/countries.ts'
@@ -53,7 +53,11 @@ const inputClass =
 
 const BirthForm = forwardRef<BirthFormHandle, Props>(function BirthForm({ onSubmit, externalState, onExternalStateConsumed, submitLabel, initialInput, rememberInput = true }, ref) {
   const { t, locale } = useLocale()
-  const [saved] = useState<SavedFormState | null>(() => initialInput ? formStateFromBirth(initialInput) : rememberInput ? readBirthFormState() : null)
+  const [saved] = useState<SavedFormState | null>(() => {
+    const remembered = rememberInput ? readBirthFormState() : null
+    if (!initialInput) return remembered
+    return remembered && matchesBirth(remembered, initialInput) ? remembered : formStateFromBirth(initialInput)
+  })
   const initialLatitude = saved?.latitude ?? NEW_YORK.lat
   const initialLongitude = saved?.longitude ?? NEW_YORK.lon
   const [year, setYear] = useState(saved?.year ?? currentYear - 20)

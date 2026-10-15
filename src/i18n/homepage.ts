@@ -259,7 +259,7 @@ export const homepageCopy: Record<string, string> = {
   "complete.compare.work.free": "One work theme",
   "complete.compare.work.full": "Working conditions and practical examples",
   "complete.compare.love.label": "Relationships",
-  "complete.compare.love.free": "Not included",
+  "complete.compare.love.free": "A short personal excerpt",
   "complete.compare.love.full": "Needs, boundaries and conversation prompts",
   "complete.compare.money.label": "Money",
   "complete.compare.money.free": "Not included",
