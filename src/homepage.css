@@ -792,19 +792,23 @@
 .fate-focused-product-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 22px; }
 .fate-catalog-count { display: inline-block; margin-top: 17px; border: 1px solid #c9aa7b; border-radius: 999px; background: #f0e2ca; padding: 8px 16px; font-size: 12px; font-weight: 600; color: #624b2d; }
 .fate-catalog-shortcuts { margin: 0 0 26px; padding: 22px; border: 1px solid #d9c29f; border-radius: 13px; background: #fffaf2; }
-.fate-catalog-shortcuts > p { font-size: 12px; font-weight: 600; color: #6c5434; margin-bottom: 13px; }
-.fate-catalog-shortcuts > div { display: flex; flex-wrap: wrap; gap: 9px; }
-.fate-catalog-shortcuts a { display: inline-flex; align-items: center; gap: 8px; padding: 10px 13px; border: 1px solid #d1b589; border-radius: 8px; font-size: 12px; line-height: 1.5; color: #334b5b; min-height: 44px; }
+.fate-catalog-shortcuts > p { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; font-size: 12px; font-weight: 600; color: #6c5434; margin-bottom: 13px; }
+.fate-catalog-shortcuts > p small { font-size: 11px; font-weight: 400; }
+.fate-catalog-shortcuts > div { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 9px; }
+.fate-catalog-shortcuts a { display: flex; align-items: center; gap: 8px; padding: 10px 13px; border: 1px solid #d1b589; border-radius: 8px; font-size: 12px; line-height: 1.5; color: #334b5b; min-height: 44px; min-width: 0; }
+.fate-catalog-shortcuts a > span { flex: 1; min-width: 0; overflow-wrap: anywhere; }
+.fate-catalog-shortcuts a > strong { flex-shrink: 0; font-size: 11px; color: #755024; }
 .fate-catalog-shortcuts a:hover { background: #f0dfc2; border-color: #ac824c; }
 .fate-catalog-shortcuts svg { width: 18px; height: 18px; flex-shrink: 0; color: #8e6734; }
 .fate-catalog-scope { display: block; font-size: 11px; color: #766044; margin-top: 9px; }
+.fate-catalog-entry { display: inline-block; align-self: flex-start; font-size: 11px; font-weight: 600; color: #664b26; background: #eedab6; border: 1px solid #c7a16b; border-radius: 999px; padding: 5px 10px; margin-bottom: 10px; }
 #focused-reports { scroll-margin-top: 20px; }
 .fate-focus-product-art { position: relative; padding: 25px; min-height: 165px; background: radial-gradient(ellipse at right,#284351,#071b2e 85%); color: #e8c993; display: flex; flex-direction: column; justify-content: space-between; gap: 16px; }
 .fate-focus-product-art > svg:first-child { position: absolute; right: 22px; top: 25px; width: 23px; height: 50px; opacity: .55; }
 .fate-focus-product-art > span { font-size: 8px; letter-spacing: .2em; }
 .fate-focus-product-art > svg:nth-of-type(2) { width: 28px; height: 28px; }
-.fate-focus-product-art > strong { font: 400 25px/1.25 Georgia,serif; max-width: 80%; }
-.fate-focus-product .fate-product-content > .fate-eyebrow { font-size: 9px; line-height: 1.7; letter-spacing: .08em; }
+.fate-focus-product-art > strong { font: 400 25px/1.25 Georgia,serif; max-width: 80%; overflow-wrap: anywhere; }
+.fate-focus-product .fate-product-content > .fate-eyebrow { font-size: 12px; line-height: 1.6; letter-spacing: 0; text-transform: none; }
 .fate-focus-product .fate-product-price small { display: block; font-size: 10px; font-weight: 400; margin-top: 4px; color: #807056; }
 .fate-focus-product .fate-buyer-sample-link { align-self: center; text-align: center; }
 .fate-bundle-offer { display: flex; gap: 24px; align-items: center; margin: 28px 0; border: 1px solid #c3a370; background: #f4e7d1; padding: 28px 32px; border-radius: 14px; color: #304455; }
@@ -887,6 +891,7 @@
 .fate-personal-next .fate-outline-button { margin-top: 20px; }
 .fate-personal-preview > footer { padding: 20px 0; line-height: 1.8; }
 @media (max-width: 850px) {
+  .fate-catalog-shortcuts > div { grid-template-columns: repeat(2,minmax(0,1fr)); }
   .fate-buyer-feature { grid-template-columns: minmax(0,1fr); padding: 32px; gap: 34px; }
   .fate-buyer-book { width: 220px; min-height: 325px; }
   .fate-personal-preview-layout { grid-template-columns: minmax(0,1fr); }
@@ -895,6 +900,7 @@
   .fate-focus-product-art { min-height: 140px; }
 }
 @media (max-width: 600px) {
+  .fate-catalog-shortcuts > div { grid-template-columns: minmax(0,1fr); }
   .fate-buyer-feature { padding: 28px 22px; }
   .fate-buyer-steps, .fate-more-report-grid, .fate-personal-theme-grid, .fate-personal-months ol { grid-template-columns: minmax(0,1fr); }
   .fate-buyer-steps { gap: 20px; margin: 30px 0; }
