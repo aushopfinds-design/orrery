@@ -13,6 +13,7 @@ import ReportIcon from './ReportIcon.tsx'
 import FateKeyMark from './FateKeyMark.tsx'
 import ReportRecord from './ReportRecord.tsx'
 import ReportChapterView, { ChartEvidence } from './ReportChapterView.tsx'
+import ReportExtrasView from './ReportExtrasView.tsx'
 
 /** A public sample, never an order confirmation or a client-side paid unlock. */
 export default function ReadingView({ input, embedded = false, prefix = 'sample-report' }: { input: BirthInput; embedded?: boolean; prefix?: string }) {
@@ -48,6 +49,7 @@ export default function ReadingView({ input, embedded = false, prefix = 'sample-
         <section className="fate-reading-summary" aria-label={t('reading.design.summaryThemes')}>{report.summary.map((item, index) => <div key={item.label}><ReportIcon kind={['personality', 'career', 'love'][index]} /><h3>{item.label}</h3><p>{item.text}</p></div>)}</section>
         <nav className="fate-reading-toc print:hidden" aria-label={t('reading.complete.contents')}>
           {contents.map(item => <a key={item.id} href={`#${prefix}-${item.id}`}><ReportIcon kind={item.id} /><span>{item.title}</span><span aria-hidden="true">↗</span></a>)}
+          <a href={`#${prefix}-everyday-compass`}><ReportIcon kind="balance" /><span>{t('reading.extras.title')}</span><span aria-hidden="true">↗</span></a>
         </nav>
       </section>
       <section className="fate-reading-chapter fate-report-connections" aria-label={t('reading.connections.title')}>
@@ -65,6 +67,7 @@ export default function ReadingView({ input, embedded = false, prefix = 'sample-
         <div className="fate-report-periods">{report.periods.length ? report.periods.map((period, index) => <div key={period.period} className="fate-reading-period"><span className="fate-report-period-dot" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span><p className="fate-eyebrow">{period.period}</p><h3>{period.headline}</h3><div className="fate-report-chapter-layout"><div className="fate-report-prose">{period.paragraphs.map(paragraph => <p key={paragraph}><ReadingText text={paragraph} /></p>)}</div><ReadingGuidance guidance={period.guidance} headingLevel="h4" /></div><div className="fate-reading-practice"><FateKeyMark /><div><strong>{t('reading.tryThis')}</strong><p>{period.tryThis}</p></div></div><ChartEvidence facts={period.evidence} /></div>) : <p>{t('reading.complete.noPeriods')}</p>}</div>
       </section>
       <ReportChapterView chapter={report.actionPlan} prefix={prefix} />
+      <ReportExtrasView extras={report.extras} prefix={prefix} />
       <section className="fate-reading-chapter fate-reading-method print:hidden"><h2>{t('reading.method.title')}</h2><p>{t('reading.method.intro')}</p><details><summary>{t('reading.method.details')}</summary><p>{report.pillarSummary.join(' · ')}</p><ul>{report.methodNotes.map(note => <li key={note}>{note}</li>)}</ul></details></section>
       <section className="fate-reading-chapter hidden print:block"><h2>{t('reading.method.title')}</h2><p>{report.pillarSummary.join(' · ')}</p><ul>{report.methodNotes.map(note => <li key={note}>{note}</li>)}</ul></section>
       <ReportRecord input={input} birthSummary={report.birthSummary} referenceYear={report.referenceYear} preparedOn={preparedOn} />

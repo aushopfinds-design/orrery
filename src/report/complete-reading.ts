@@ -6,6 +6,8 @@ import { PERSONAL_PROFILES, WORK_PROFILES, RELATIONSHIP_PROFILES } from './readi
 import type { ReadingGuidance } from './reading-profiles.ts'
 import { plainReadingText } from './reading-text.ts'
 import { WORK_CONNECTIONS, RELATIONSHIP_CONNECTIONS, WORK_REFLECTIONS } from './reading-connections.ts'
+import { buildReportExtras, reportExtrasText } from './report-extras.ts'
+import type { ReportExtras } from './report-extras.ts'
 
 export const REPORT_EDITION = '2026.10'
 
@@ -48,6 +50,7 @@ export interface CompleteReading {
   chapters: ReportChapter[]
   periods: CompleteReadingPeriod[]
   actionPlan: ReportChapter
+  extras: ReportExtras
   elements: ElementCount[]
   visibleMarkers: number
   methodNotes: string[]
@@ -396,7 +399,7 @@ export function buildCompleteReading(result: SajuResult, asOfYear = new Date().g
     'Visible element counts are not a full assessment of day-master strength, chart structure or useful elements. This report does not claim to diagnose those advanced layers.',
     'The month-branch relationship uses the principal inner stem. Inner-stem money checks list symbols without assigning strength weights.',
     'Everyday examples and the Keep close / Watch out for lists are original cultural interpretations. They are ideas to try, not facts known about your life.',
-    'People, habits and work settings are suggested from the chapter themes. This report does not calculate lucky objects, colours or directions.',
+    'People, habits and work settings are suggested from the chapter themes. Color palettes and He Tu number pairs are optional symbols linked to the birth-day element, not lucky-event calculations or useful-element prescriptions.',
     'Combination and clash patterns do not automatically predict illness, separation or any other event.',
     'This report covers one person. It does not include a two-person compatibility reading or a separate annual report.',
     ...(result.input.unknownTime ? ['An unknown birth time excludes all hour facts and pair relationships. Ten-year starting dates remain approximate until the time is confirmed.'] : []),
@@ -410,6 +413,7 @@ export function buildCompleteReading(result: SajuResult, asOfYear = new Date().g
     chapter.title, chapter.lead, ...chapter.paragraphs, guidanceText(chapter.guidance),
     'From your chart: ' + chapter.evidence.join(' '), 'Try this: ' + chapter.tryThis,
   ]
+  const extras = buildReportExtras('complete', result)
   const fullText = plainReadingText([
     'THE FATE KEY · Complete Life Reading', `Report edition ${REPORT_EDITION} · Timeline reference year ${asOfYear}`, formatBirth(result.input), pillarSummary(result).join(' · '), personal.headline,
     ...summary.map(item => `${item.label}: ${item.text}`),
@@ -417,7 +421,8 @@ export function buildCompleteReading(result: SajuResult, asOfYear = new Date().g
     ...chapters.flatMap(chapterText),
     '08 · Your Ten-Year Chapters', ...periods.map(period => `${period.period} · ${period.pillar} · ${period.headline}\n${period.text}`),
     ...chapterText(actionPlan),
+    reportExtrasText(extras),
     'How this reading is prepared', ...methodNotes,
   ].join('\n\n'))
-  return { title: 'Complete Life Reading', birthSummary: formatBirth(result.input), pillarSummary: pillarSummary(result), dayMaster: self.name, headline: personal.headline, summary, connections, referenceYear: asOfYear, chapters, periods, actionPlan, elements: c.elements, visibleMarkers: result.input.unknownTime ? 6 : 8, methodNotes, fullText, wordCount: fullText.split(/\s+/).length }
+  return { title: 'Complete Life Reading', birthSummary: formatBirth(result.input), pillarSummary: pillarSummary(result), dayMaster: self.name, headline: personal.headline, summary, connections, referenceYear: asOfYear, chapters, periods, actionPlan, extras, elements: c.elements, visibleMarkers: result.input.unknownTime ? 6 : 8, methodNotes, fullText, wordCount: fullText.split(/\s+/).length }
 }

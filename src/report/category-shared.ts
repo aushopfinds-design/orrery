@@ -7,12 +7,14 @@ import { PERSONAL_PROFILES, WORK_PROFILES, RELATIONSHIP_PROFILES } from './readi
 import type { ReadingGuidance } from './reading-profiles.ts'
 import { plainReadingText } from './reading-text.ts'
 import type { FocusCategory } from './category-catalog.ts'
+import { reportExtrasText, SYMBOL_NOTE } from './report-extras.ts'
+import type { ReportExtras } from './report-extras.ts'
 
 export const POSITIONS = ['hour', 'day', 'month', 'year']
 export const FAMILY: Record<string, string> = { '比肩': 'ownership', '劫財': 'ownership', '食神': 'making', '傷官': 'making', '正財': 'resources', '偏財': 'resources', '正官': 'responsibility', '偏官': 'responsibility', '七殺': 'responsibility', '正印': 'learning', '偏印': 'learning' }
 export interface ReportSubject { label: string; input: BirthInput; birthSummary: string; pillarSummary: string[]; dayMaster: string; elements: ElementCount[]; visibleMarkers: number }
 export interface ReportMonth extends ReportChapter { label: string; referenceDate: string; pillar: string; yearPillar: string }
-export interface CategoryReading { kind: FocusCategory; title: string; headline: string; referenceYear: number; subjects: ReportSubject[]; summary: { label: string; text: string }[]; chapters: ReportChapter[]; months: ReportMonth[]; methodNotes: string[]; fullText: string; wordCount: number }
+export interface CategoryReading { kind: FocusCategory; title: string; headline: string; referenceYear: number; subjects: ReportSubject[]; summary: { label: string; text: string }[]; chapters: ReportChapter[]; months: ReportMonth[]; extras: ReportExtras; methodNotes: string[]; fullText: string; wordCount: number }
 
 export function chartContext(result: SajuResult) {
   const [hour, day, month, year] = result.pillars
@@ -72,6 +74,7 @@ export function commonMethod(result: SajuResult, year: number): string[] {
     ...buildEnglishReading(result, year).caveats.filter(note => !note.startsWith('Each monthly chapter') && !note.startsWith('Monthly headlines')),
     'These chapter examples, questions and helpful habits are editorial cultural interpretations. They are not facts known about the person or a professionally validated assessment.',
     'The report does not diagnose chart strength, chart structure or useful elements. Counts and pair patterns do not supply those advanced conclusions.',
+    SYMBOL_NOTE,
     ...(result.input.unknownTime ? ['An unknown birth time excludes the hour pillar and every hour comparison. Ten-year starting dates remain approximate.'] : []),
   ]
 }
@@ -83,6 +86,7 @@ export function finishReading(data: Omit<CategoryReading, 'fullText' | 'wordCoun
     ...data.subjects.flatMap(item => [item.label, item.birthSummary, item.pillarSummary.join(' · ')]), data.headline,
     ...data.summary.map(item => `${item.label}: ${item.text}`), ...chapters.flatMap(chapterText),
     ...(data.months.length ? ['Your Twelve Months', ...data.months.flatMap(chapterText)] : []),
+    reportExtrasText(data.extras),
     'How this reading is prepared', ...data.methodNotes,
   ].join('\n\n'))
   return { ...data, chapters, fullText, wordCount: fullText.split(/\s+/).length }

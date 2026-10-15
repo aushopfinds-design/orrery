@@ -3,6 +3,7 @@ import { chapter, chartContext, commonMethod, cycleFacts, finishReading, moneyMa
 import { FOCUS_WORK } from './category-profiles.ts'
 import { WORK_CONNECTIONS } from './reading-connections.ts'
 import { WORK_PROFILES } from './reading-profiles.ts'
+import { buildReportExtras } from './report-extras.ts'
 
 export function buildCareerReading(result: SajuResult, referenceYear = new Date().getFullYear()) {
   validateYear(referenceYear, result)
@@ -13,6 +14,7 @@ export function buildCareerReading(result: SajuResult, referenceYear = new Date(
   const cycles = selectedCycles(result, referenceYear)
   const future = result.input.unknownTime ? null : WORK_PROFILES[c.hour.stemSipsin]
   return finishReading({ kind: 'career', title: 'Career & Money', referenceYear,
+    extras: buildReportExtras('career', result),
     headline: 'Find a workable role. Make the full commitment clear.', subjects: [subject(result)],
     summary: [{ label: 'Your working conditions', text: c.work.setting }, { label: 'Your useful contribution', text: c.work.contribution }, { label: 'Your money conversation', text: money.theme }],
     chapters: [
@@ -81,6 +83,7 @@ export function buildBusinessReading(result: SajuResult, referenceYear = new Dat
   const money = moneyMarkers(result)
   const cycles = selectedCycles(result, referenceYear)
   return finishReading({ kind: 'business', title: 'Business & Entrepreneurship', referenceYear,
+    extras: buildReportExtras('business', result),
     headline: 'A clear offer, a workable promise and room to learn.', subjects: [subject(result)],
     summary: [{ label: 'Your founder theme', text: c.personal.focus }, { label: 'An offer to test', text: focus.offer }, { label: 'Your capacity pressure', text: focus.capacity }],
     chapters: [

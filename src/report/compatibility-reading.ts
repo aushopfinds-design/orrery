@@ -3,6 +3,7 @@ import { getRelation, analyzePillarRelations } from '@orrery/core/pillars'
 import { chapter, chartContext, commonMethod, finishReading, moneyMarkers, pairFacts, pillarFact, subject, validateYear } from './category-shared.ts'
 import { PAIR_LENSES } from './category-profiles.ts'
 import type { ReadingGuidance } from './reading-profiles.ts'
+import { buildReportExtras } from './report-extras.ts'
 
 export function buildCompatibilityReading(first: SajuResult, second: SajuResult, referenceYear = new Date().getFullYear()) {
   validateYear(referenceYear, first)
@@ -24,6 +25,7 @@ export function buildCompatibilityReading(first: SajuResult, second: SajuResult,
   const loveGuidance = shared([`Person A: ${a.relationship.keepClose[0]}`, `Person B: ${b.relationship.keepClose[0]}`], [`Person A: ${a.relationship.watchFor[0]}`, `Person B: ${b.relationship.watchFor[0]}`])
   return finishReading({
     kind: 'compatibility', title: 'Love Compatibility', referenceYear,
+    extras: buildReportExtras('compatibility', first, { second }),
     headline: 'Two points of view. A clearer way to meet in the middle.',
     subjects: [subject(first, 'Person A'), subject(second, 'Person B')],
     summary: [{ label: 'Person A’s starting style', text: a.personal.headline }, { label: 'Person B’s starting style', text: b.personal.headline }, { label: 'Your two-way connection', text: `${lensA.theme} · ${lensB.theme}` }],
