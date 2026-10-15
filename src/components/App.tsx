@@ -11,8 +11,8 @@ import { useLocale } from '../i18n/index.ts'
 import { useReportHash, resolveReportRoute, resolveFocusCategory, navigationTarget } from '../utils/report-route.ts'
 import type { BirthInput } from '@orrery/core/types'
 import BuyerJourney from './BuyerJourney.tsx'
-import { resolvePreviewKind } from '../report/personal-products.ts'
-import { readPreviewDraft, savePreviewDraft } from '../utils/preview-draft.ts'
+import { previewHash, resolvePreviewKind } from '../report/personal-products.ts'
+import { readPreviewDraft, updatePreviewDraft } from '../utils/preview-draft.ts'
 import { formStateFromBirth, matchesBirth, normalizeBirthFormState, readBirthFormState } from '../utils/birth-form-state.ts'
 import { previewProduct } from '../report/personal-products.ts'
 import ReportBoundary from './report/ReportBoundary.tsx'
@@ -54,14 +54,14 @@ export default function App() {
   }
   function handleSubmit(input: BirthInput) {
     lastFormStateRef.current = birthFormRef.current?.getCurrentState() ?? lastFormStateRef.current
-    savePreviewDraft({ first: input })
+    updatePreviewDraft({ first: input })
     setBirthInput(input)
     setTab('reading')
     window.location.hash = 'free-reading'
     scrollToReading()
   }
   function handlePersonalBirth(input: BirthInput) {
-    savePreviewDraft({ first: input })
+    updatePreviewDraft({ first: input })
     setBirthInput(input)
     setTab('reading')
     const stored = readBirthFormState()
@@ -91,7 +91,7 @@ export default function App() {
   const links = [
     ['#home', 'home.nav.home'], ['#birth-details', 'home.nav.free'],
     ['#reports', 'home.nav.reports'],
-    ...(birthInput || route === 'personal-preview' ? [['#my-report', 'site.nav.my']] : []),
+    ...(birthInput || route === 'personal-preview' ? [[previewHash(previewKind ?? readPreviewDraft().kind), 'site.nav.my']] : []),
     ['#about', 'home.nav.about'], ['#help', 'site.help.nav'],
   ]
   function navigateHomeSection() {
@@ -122,13 +122,13 @@ export default function App() {
             <FateEmblem className="fate-brand-emblem" />
             <span><strong>The Fate Key</strong><small>UNLOCK A BRIGHTER YOU</small></span>
           </a>
-          <div className="fate-desktop-links">{links.map(([href, key]) => <a key={href} href={href} aria-current={currentNav === href ? 'page' : undefined} onClick={navigateHomeSection}>{t(key)}</a>)}</div>
+          <div className="fate-desktop-links">{links.map(([href, key]) => <a key={href} href={href} aria-current={currentNav === (href.startsWith('#my-report') ? '#my-report' : href) ? 'page' : undefined} onClick={navigateHomeSection}>{t(key)}</a>)}</div>
           <div className="fate-nav-actions">
             <LanguageMenu inline />
             <button type="button" className="fate-saved-button" onClick={() => setProfileModalOpen(true)}>{t('home.nav.saved')}</button>
             <button type="button" className="fate-menu-button" aria-label={t('home.nav.menu')} aria-expanded={menuOpen} aria-controls="fate-mobile-menu" onClick={() => setMenuOpen(open => !open)}><span aria-hidden="true">{menuOpen ? '×' : '☰'}</span></button>
           </div>
-          {menuOpen && <div className="fate-mobile-menu" id="fate-mobile-menu">{links.map(([href, key]) => <a key={href} href={href} aria-current={currentNav === href ? 'page' : undefined} onClick={navigateHomeSection}>{t(key)}</a>)}<button type="button" onClick={() => { setMenuOpen(false); setProfileModalOpen(true) }}>{t('home.nav.saved')}</button></div>}
+          {menuOpen && <div className="fate-mobile-menu" id="fate-mobile-menu">{links.map(([href, key]) => <a key={href} href={href} aria-current={currentNav === (href.startsWith('#my-report') ? '#my-report' : href) ? 'page' : undefined} onClick={navigateHomeSection}>{t(key)}</a>)}<button type="button" onClick={() => { setMenuOpen(false); setProfileModalOpen(true) }}>{t('home.nav.saved')}</button></div>}
         </nav>
         {showingHome && <HeroArtwork />}
         <div className="fate-hero-layout" hidden={!showingHome}>
@@ -251,7 +251,7 @@ export default function App() {
       <footer className="fate-footer">
         <div className="fate-footer-inner">
           <a href="#home" className="fate-brand" aria-label="The Fate Key" onClick={navigateHomeSection}><FateEmblem className="fate-brand-emblem" /><span><strong>The Fate Key</strong><small>UNLOCK A BRIGHTER YOU</small></span></a>
-          <div className="fate-footer-links">{links.slice(1).map(([href,key]) => <a key={href} href={href} aria-current={currentNav === href ? 'page' : undefined} onClick={navigateHomeSection}>{t(key)}</a>)}</div>
+          <div className="fate-footer-links">{links.slice(1).map(([href,key]) => <a key={href} href={href} aria-current={currentNav === (href.startsWith('#my-report') ? '#my-report' : href) ? 'page' : undefined} onClick={navigateHomeSection}>{t(key)}</a>)}</div>
           <div className="fate-footer-service-links"><a href="#reading-guide">{t('site.guide.title')}</a><a href="#your-data">{t('site.privacy.title')}</a><a href="#help-faq">{t('home.nav.faq')}</a></div>
           <p>{t('home.footer.note')}</p>
           <p className="fate-footer-credit">© {new Date().getFullYear()} The Fate Key · {t('home.footer.engine')} <a href="https://github.com/rath/orrery" target="_blank" rel="noopener noreferrer">Orrery</a></p>

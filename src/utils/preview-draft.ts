@@ -1,6 +1,8 @@
 import type { BirthInput } from '@orrery/core/types'
+import { isPreviewKind } from '../report/personal-products.ts'
+import type { PreviewKind } from '../report/personal-products.ts'
 
-export interface PreviewDraft { first?: BirthInput; second?: BirthInput; year?: number }
+export interface PreviewDraft { first?: BirthInput; second?: BirthInput; year?: number; kind?: PreviewKind }
 export const PREVIEW_STORAGE_KEY = 'fate-key-preview-v1'
 
 /** Browser storage is untrusted. Only recognised birth fields are retained. */
@@ -28,7 +30,8 @@ export function parsePreviewDraft(raw: string | null): PreviewDraft {
     if (!first) return {}
     const second = normalizePreviewBirth(value.second)
     const year = Number.isInteger(value.year) && value.year >= Math.max(1900, first.year, second?.year ?? 1900) && value.year <= 2100 ? value.year : undefined
-    return { first, second, year }
+    const kind = typeof value.kind === 'string' && isPreviewKind(value.kind) ? value.kind : undefined
+    return { first, second, year, ...(kind ? { kind } : {}) }
   } catch { return {} }
 }
 export function readPreviewDraft(): PreviewDraft {
@@ -36,5 +39,10 @@ export function readPreviewDraft(): PreviewDraft {
 }
 export function savePreviewDraft(draft: PreviewDraft) {
   try { sessionStorage.setItem(PREVIEW_STORAGE_KEY, JSON.stringify(parsePreviewDraft(JSON.stringify(draft)))) } catch { /* Private browsing may disable storage. The current preview still works. */ }
+}
+
+/** Editing one part must keep the other person, report choice and report year. */
+export function updatePreviewDraft(patch: PreviewDraft) {
+  savePreviewDraft({ ...readPreviewDraft(), ...patch })
 }
 

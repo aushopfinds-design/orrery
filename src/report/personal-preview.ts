@@ -8,6 +8,8 @@ import type { PreviewKind } from './personal-products.ts'
 import { normalizePreviewBirth } from '../utils/preview-draft.ts'
 import type { PreviewDraft } from '../utils/preview-draft.ts'
 import type { InsightQuestion, ReportExtras, SymbolCard } from './report-extras.ts'
+import { SYMBOL_NOTE } from './report-extras.ts'
+import { plainReadingText } from './reading-text.ts'
 
 export interface PersonalPreview {
   title: string
@@ -50,4 +52,23 @@ export function buildPersonalPreview(kind: PreviewKind, draft: PreviewDraft): Pe
   }
   const full = buildCategoryReading(kind, a, { second: b, year: kind === 'year' ? year : currentYear })
   return { title: full.title, subjects: paired ? full.subjects : [subjectA], headline: full.headline, summary: full.summary, excerpts: full.chapters.slice(0, 3).map(chapter => excerpt(chapter, paired)), contents: full.chapters.map(chapter => ({ id: chapter.id, title: chapter.title.replace(/^\d+ · /, '') })), monthly: full.months.map(month => ({ label: month.label, lead: month.lead })), needsPartner: false, extras: extrasExcerpt(full.extras) }
+}
+
+/** Export only what the visitor can read in the free preview. */
+export function personalPreviewText(preview: PersonalPreview): string {
+  if (preview.needsPartner || preview.excerpts.length === 0) throw new Error('Complete the birth details before saving a preview')
+  return plainReadingText([
+    'THE FATE KEY · FREE PERSONAL PREVIEW', preview.title,
+    'Selected passages only. This is not an issued paid report.',
+    ...preview.subjects.flatMap(person => [person.label, person.birthSummary, person.dayMaster, person.pillarSummary.join(' · ')]),
+    preview.headline,
+    ...preview.summary.map(theme => `${theme.label}\n${theme.text}`),
+    ...preview.excerpts.flatMap(section => [section.title, section.lead, ...section.paragraphs, 'Chart notes: ' + section.evidence.join(' · ')]),
+    ...(preview.extras ? [preview.extras.question.question, preview.extras.question.answer, 'Chart note: ' + preview.extras.question.basis,
+      ...preview.extras.symbols.map(symbol => `${symbol.person} · ${symbol.element}\nColors: ${symbol.colors.map(color => color.name).join(', ')}\nNumbers: ${symbol.numbers.join(' · ')}\n${symbol.use}\n${symbol.basis}`), SYMBOL_NOTE] : []),
+    ...preview.monthly.map(month => `${month.label}\n${month.lead}`),
+    'Full report contents (the full chapters are not included in this preview)',
+    ...preview.contents.map((item, index) => `${index + 1}. ${item.title}`),
+    'Traditional Saju interpretation for personal reflection. These are not guaranteed outcomes.',
+  ].join('\n\n'))
 }

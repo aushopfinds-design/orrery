@@ -6,6 +6,7 @@ import ReportIcon from './report/ReportIcon.tsx'
 import ReportArtwork from './report/ReportArtwork.tsx'
 import ReportPrice from './report/ReportPrice.tsx'
 import { bundleSavings, reportPrice } from '../report/pricing.ts'
+import ReportFinder from './ReportFinder.tsx'
 
 // Lead with a focused question at a lower proposed price. Keep every other option visible.
 const STARTING_REPORTS: PreviewKind[] = ['year', 'career', 'compatibility']
@@ -39,6 +40,7 @@ export default function ProductCatalog() {
       return <a href={previewHash(kind)} key={kind}><ReportIcon kind={product.icon} /><span>{product.title}</span><ReportPrice kind={kind} compact /></a>
     })}</div></nav>
     <div className="fate-catalog-art-controls"><button type="button" className="fate-catalog-motion" aria-controls="report-art-gallery" onClick={() => setManualMotion(!motionEnabled)}><svg viewBox="0 0 24 24" aria-hidden="true">{motionEnabled ? <path d="M7 5h4v14H7z M14 5h4v14h-4z" /> : <path d="m8 4 13 8-13 8z" />}</svg>{t(motionEnabled ? 'buyer.catalog.motion.pause' : 'buyer.catalog.motion.play')}</button></div>
+    <ReportFinder />
     <div id="report-art-gallery">
     <div className="fate-focused-product-grid">{CATALOG_KINDS.filter(kind => kind !== 'bundle').map(kind => {
       const product = previewProduct(kind)
