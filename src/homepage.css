@@ -67,6 +67,7 @@
 .fate-benefits h2 { font: 20px/1.3 Georgia, 'Times New Roman', serif; margin-top: 11px; }
 .fate-benefits p { font-size: 12px; line-height: 1.65; color: #675f56; margin: 8px auto 0; max-width: 235px; }
 .fate-main { max-width: 1200px; margin: 0 auto; padding: 0 24px 52px; }
+.fate-site .fate-main .fate-benefits { padding-inline: 0; }
 .fate-section { padding: 30px 0; scroll-margin-top: 20px; }
 .fate-section-heading { text-align: center; margin: 0 auto 28px; }
 .fate-section-heading h2 { margin-top: 8px; font-size: 34px; line-height: 1.2; letter-spacing: -.025em; }

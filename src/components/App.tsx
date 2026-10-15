@@ -149,10 +149,18 @@ export default function App() {
           </section>
         </div>
       </header>
-      {showingHome && <HomeBenefits />}
       <main id="main-content" tabIndex={-1} className={showingFree || showingReport ? 'fate-main fate-main-reading' : 'fate-main'}>
         <ReportBoundary key={route}><Suspense fallback={<p role="status" className="fate-reading-loading">{t('reading.loading')}</p>}>
-        {showingHome && <><Suspense fallback={<section id="report-preview" className="fate-section"><p role="status">{t('reading.loading')}</p></section>}><HomeReportPreview input={SAMPLE_BIRTH} /></Suspense><ProductCatalog /><BuyerJourney /><HomeOverview onViewSample={viewSample} /><HomeFAQ /></>}
+        {showingHome && <>
+          <ProductCatalog />
+          <HomeBenefits />
+          <Suspense fallback={<section id="report-preview" className="fate-section"><p role="status">{t('reading.loading')}</p></section>}>
+            <HomeReportPreview input={SAMPLE_BIRTH} />
+          </Suspense>
+          <BuyerJourney />
+          <HomeOverview onViewSample={viewSample} />
+          <HomeFAQ />
+        </>}
         {route === 'product' && <CompleteReportPage onStartFree={startFree} onViewSample={viewSample} />}
         {showingSample && <div ref={resultsRef}><ReadingView input={SAMPLE_BIRTH} /></div>}
         {route === 'category-product' && focusCategory && <CategoryReportPage key={focusCategory} kind={focusCategory} />}
