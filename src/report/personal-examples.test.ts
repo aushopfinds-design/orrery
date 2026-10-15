@@ -5,7 +5,7 @@ import { buildCompleteReading } from './complete-reading.ts'
 import { buildBundleReading, buildCategoryReading } from './category-readings.ts'
 import { buildPersonalPreview, personalPreviewText } from './personal-preview.ts'
 import { PREVIEW_KINDS } from './personal-products.ts'
-import { workExample, compatibilityExample, everydayExampleText } from './personal-examples.ts'
+import { workExample, compatibilityExample, relationshipExample, everydayExampleText } from './personal-examples.ts'
 import { plainReadingText } from './reading-text.ts'
 
 const [a, b] = [calculateSaju(CATEGORY_SCENARIOS[0].first), calculateSaju(CATEGORY_SCENARIOS[0].second)]
@@ -60,6 +60,15 @@ describe('Concrete examples use several chart features', () => {
       expect(workExample(chart, 'career').scene).not.toBe(workExample(chart, 'business').scene)
       expect(workExample(chart, 'business').check).toContain('customer brief')
       expect(workExample(chart, 'career').check).toContain('role and workload')
+    }
+  })
+
+  it('keeps relationship examples about conversation and annual examples about personal plans', () => {
+    for (const chart of charts.slice(0, 24)) {
+      const relationship = relationshipExample(chart)
+      expect(relationship.response + relationship.check).not.toMatch(/customer|delivery|portfolio|publish|version|job offer/i)
+      const annual = buildCategoryReading('year', chart, { year: 2027 }).chapters[0].example!
+      expect(annual.response).not.toMatch(/customer|delivery|manager|portfolio|publish|version/i)
     }
   })
 

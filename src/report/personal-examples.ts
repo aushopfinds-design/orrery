@@ -83,7 +83,7 @@ const SITUATIONS: Record<string, WorkSituation> = {
     year: 'Imagine saving several ideas for a personal goal, without trying the smallest version of any one idea.',
     question: 'What can I test with what I already know?',
     customer: 'Could a small trial answer this question before we add another tool?',
-    inner: 'Which question will this extra research answer?',
+    inner: 'What do I need to understand before I try this?',
   },
   '正印': {
     career: 'Imagine finishing your task, then spending the rest of the day answering questions about how to use it.',
@@ -104,7 +104,7 @@ const STYLE: Record<string, { say: string; daily: string; social: string }> = {
   '戊': { say: 'I can take care of this part. Who can share the next step?', daily: 'Imagine solving one practical problem, then silently taking over the tasks left behind it.', social: 'Imagine a shared plan going wrong and being the first person to fill every gap.' },
   '己': { say: 'I can help after I finish the time I have set aside for my own work.', daily: 'Imagine tidying several small jobs for other people while your own next step keeps waiting.', social: 'Imagine noticing what everyone needs, then reaching the end of the day without starting your own plan.' },
   '庚': { say: 'This detail matters because it affects the result. How does your method handle it?', daily: 'Imagine correcting a small mistake before hearing why the other person chose that method.', social: 'Imagine wanting a clear group decision while another person still wants to explain a concern.' },
-  '辛': { say: 'Let us choose the few details that matter, then share a useful version.', daily: 'Imagine checking a nearly finished task again instead of sending it for useful feedback.', social: 'Imagine comparing several good options until a simple shared plan becomes difficult to settle.' },
+  '辛': { say: 'Let us choose the few details that matter, then make the next decision.', daily: 'Imagine checking a nearly finished task again instead of sending it for useful feedback.', social: 'Imagine comparing several good options until a simple shared plan becomes difficult to settle.' },
   '壬': { say: 'I can see a few routes. Let us choose one to try before opening another.', daily: 'Imagine starting a new idea while the small test you began yesterday is still unfinished.', social: 'Imagine offering several ideas when the group needs one clear next step.' },
   '癸': { say: 'I need a little time to think. I will tell you my answer when we return to this.', daily: 'Imagine noticing a problem, but keeping your thought private while the task moves ahead.', social: 'Imagine listening through a shared decision without saying which part does not work for you.' },
 }
@@ -124,6 +124,58 @@ const REQUEST: Record<string, string> = {
   '亥': 'Could I explain one feeling without needing to settle everything straight away?',
 }
 
+
+const WORK_CHECK: Record<string, string> = {
+  '甲': 'Keep the main result clear. Be willing to change how you reach it.',
+  '乙': 'Name one part you can change and one condition you need to keep.',
+  '丙': 'Agree when you will be available and who can handle the other messages.',
+  '丁': 'Choose a time to finish checking and give an answer.',
+  '戊': 'Keep the work you agreed to own. Ask who will share the rest.',
+  '己': 'Set aside time for your agreed task before adding another.',
+  '庚': 'Explain the standard that matters, then hear the other person’s reason.',
+  '辛': 'Pick three conditions that matter most. Stop comparing when those questions have clear answers.',
+  '壬': 'Compare the options against one clear aim. Choose one small next step.',
+  '癸': 'Ask for time to think, and agree when you will give your answer.',
+}
+const RELATIONSHIP_CHECK: Record<string, string> = {
+  '甲': 'Ask whether you can keep the shared aim while changing the plan.',
+  '乙': 'Name one preference you can change and one you want to keep.',
+  '丙': 'Agree on time together and time when neither person needs to reply.',
+  '丁': 'Say what matters without waiting for perfect words.',
+  '戊': 'Ask which part of the plan each person will handle.',
+  '己': 'Include your own request before offering more help.',
+  '庚': 'Explain why the detail matters, then ask for the other person’s view.',
+  '辛': 'Choose one detail that matters rather than checking the whole plan again.',
+  '壬': 'Offer one idea first, then hear the other person’s preference.',
+  '癸': 'Say what you need before quiet is taken as agreement.',
+}
+const YEAR_REPLY: Record<string, string> = {
+  '比肩': 'I want to choose the goal myself. I would still welcome help with one part.',
+  '劫財': 'I would like to join in. First, can we agree what time or cost each person will share?',
+  '食神': 'Could I begin with a small version that I can enjoy or use this week?',
+  '傷官': 'Could I explain what I would change, then hear what you want to keep?',
+  '正財': 'Before I add this, I want to check the promises that already repeat each month.',
+  '偏財': 'I am interested. Could we check the time and full cost before I agree?',
+  '偏官': 'I can give this attention. Which part truly needs an answer now?',
+  '正官': 'Could we say clearly what each person is agreeing to?',
+  '偏印': 'I have a few ideas. I want to try one small step before collecting more.',
+  '正印': 'Thank you for the advice. I want to choose one step and try it myself.',
+}
+const YEAR_CHECK: Record<string, string> = {
+  '比肩': 'Which part of this choice do I want to make myself?',
+  '劫財': 'What would a fair share of time or cost look like?',
+  '食神': 'What is the smallest version I could enjoy or use?',
+  '傷官': 'Have I heard the other person’s reason before suggesting a change?',
+  '正財': 'What will this ask of me each week?',
+  '偏財': 'What do I know about the time and cost, and what am I assuming?',
+  '偏官': 'What truly needs an answer now?',
+  '正官': 'What have we agreed, and what are we still guessing?',
+  '偏印': 'What do I need to understand before trying one small step?',
+  '正印': 'What help would let me take the next step myself?',
+}
+YEAR_REPLY['七殺'] = YEAR_REPLY['偏官']
+YEAR_CHECK['七殺'] = YEAR_CHECK['偏官']
+
 const dayFact = (r: SajuResult, name = '') => `${name}birth-day pillar ${r.pillars[1].pillar.ganzi}.`
 const monthFact = (r: SajuResult) => `Birth-month pillar ${r.pillars[2].pillar.ganzi}: ${r.pillars[2].stemSipsin} / ${r.pillars[2].branchSipsin}.`
 
@@ -133,9 +185,9 @@ export function workExample(r: SajuResult, kind: 'career' | 'business'): Everyda
   const inner = SITUATIONS[month.branchSipsin]
   return {
     scene: outer[kind],
-    response: outer[kind === 'career' ? 'question' : 'customer'] + ' ' + STYLE[day.pillar.stem].say,
-    check: `Before agreeing, ask: “${inner.inner}” Check the answer against the actual ${kind === 'career' ? 'role and workload' : 'customer brief and delivery time'}.`,
-    basis: `Your main birth-month theme is ${WORK_PROFILES[month.stemSipsin].theme}. The second theme is ${WORK_PROFILES[month.branchSipsin].theme}. Your birth-day style values ${PERSONAL_PROFILES[day.pillar.stem].focus}.`,
+    response: outer[kind === 'career' ? 'question' : 'customer'],
+    check: `${month.stemSipsin === month.branchSipsin ? 'This theme repeats in both parts of your birth month.' : `Before agreeing, ask: “${inner.inner}”`} ${WORK_CHECK[day.pillar.stem]} Check the actual ${kind === 'career' ? 'role and workload' : 'customer brief and delivery time'}.`,
+    basis: `${month.stemSipsin === month.branchSipsin ? `Both parts of your birth month repeat ${WORK_PROFILES[month.stemSipsin].theme}.` : `Your main birth-month theme is ${WORK_PROFILES[month.stemSipsin].theme}. The second theme is ${WORK_PROFILES[month.branchSipsin].theme}.`} Your birth-day style values ${PERSONAL_PROFILES[day.pillar.stem].focus}.`,
     facts: [dayFact(r), monthFact(r)],
   }
 }
@@ -159,7 +211,7 @@ export function relationshipExample(r: SajuResult): EverydayExample {
   return {
     scene: 'Imagine that a plan for time together changes at the last moment. You want to explain what matters without guessing the other person’s reason.',
     response: REQUEST[day.pillar.branch],
-    check: STYLE[day.pillar.stem].say + ' Listen for the other person’s own request before agreeing on the next step.',
+    check: RELATIONSHIP_CHECK[day.pillar.stem] + ' Listen for the other person’s own request before agreeing on the next step.',
     basis: `Your birth-day style points to ${PERSONAL_PROFILES[day.pillar.stem].focus}. Its relationship theme values ${RELATIONSHIP_PROFILES[day.pillar.branch].need}. These two parts shape the suggested conversation.`,
     facts: [dayFact(r)],
   }
@@ -175,25 +227,24 @@ export function compatibilityExample(a: SajuResult, b: SajuResult): EverydayExam
     response: `Person A: “${REQUEST[dayA.branch]}” Person B: “${REQUEST[dayB.branch]}”`,
     check: dayA.stem === dayB.stem
       ? 'The starting styles share a symbol. Still ask for two separate answers; similar words can carry different needs.'
-      : `Person A can try: “${STYLE[dayA.stem].say}” Person B can try: “${STYLE[dayB.stem].say}”`,
+      : `For Person A: ${RELATIONSHIP_CHECK[dayA.stem]} For Person B: ${RELATIONSHIP_CHECK[dayB.stem]}`,
     basis: `Person A’s relationship theme values ${RELATIONSHIP_PROFILES[dayA.branch].need}. Person B’s values ${RELATIONSHIP_PROFILES[dayB.branch].need}. The comparison also checks each birth-day style from the other person’s side.`,
     facts: [dayFact(a, 'Person A: '), dayFact(b, 'Person B: '), `A → B: ${aToB}. B → A: ${bToA}.`],
   }
 }
 
 export function annualExample(r: SajuResult, year: number, god: string, innerGod: string, pillar: string): EverydayExample {
-  const [, day, month] = r.pillars
   return {
     scene: SITUATIONS[god].year,
-    response: STYLE[day.pillar.stem].say,
-    check: `For ${year}, ask: “${SITUATIONS[innerGod].inner}” Try it with one personal plan. Keep the step small enough to review.`,
-    basis: `The selected year adds ${WORK_PROFILES[god].theme}. Your usual work theme is ${WORK_PROFILES[month.stemSipsin].theme}. A second yearly theme adds ${WORK_PROFILES[innerGod].theme}. Your birth-day style values ${PERSONAL_PROFILES[day.pillar.stem].focus}.`,
-    facts: [dayFact(r), monthFact(r), `Annual reference ${year}-07-15, 12:00 Asia/Seoul: ${pillar}; ${god} / ${innerGod}.`],
+    response: YEAR_REPLY[god],
+    check: `For ${year}, ask: “${YEAR_CHECK[innerGod]}” Try it with one personal plan. Keep the step small enough to review.`,
+    basis: `Your birth-day symbol is the reference for both yearly themes. The main yearly theme is ${WORK_PROFILES[god].theme}. The second adds ${WORK_PROFILES[innerGod].theme}.`,
+    facts: [dayFact(r), `Annual reference ${year}-07-15, 12:00 Asia/Seoul: ${pillar}; ${god} / ${innerGod}.`],
   }
 }
 
 export function monthlySituation(god: string, innerGod: string) {
-  return { scene: SITUATIONS[god].year, question: SITUATIONS[innerGod].inner }
+  return { scene: SITUATIONS[god].year, question: YEAR_CHECK[innerGod] }
 }
 
 export function moneyExample(r: SajuResult, steady: boolean, opportunity: boolean): EverydayExample {
@@ -207,7 +258,7 @@ export function moneyExample(r: SajuResult, steady: boolean, opportunity: boolea
           ? 'Imagine a small regular payment continuing after you have stopped using what it pays for.'
           : 'Imagine choosing between two commitments. Neither has a clear total cost until you include the time and follow-up.',
     response: 'What is the full cost, what time does it need, and what have I already promised?',
-    check: `Your work theme adds another check: “${SITUATIONS[month.branchSipsin].inner}” ${STYLE[day.pillar.stem].say}`,
+    check: `Your work theme adds another check: “${SITUATIONS[month.branchSipsin].inner}” ${WORK_CHECK[day.pillar.stem]}`,
     basis: `The checked visible money themes are ${steady && opportunity ? 'both regular commitments and new opportunities' : steady ? 'regular commitments' : opportunity ? 'new opportunities' : 'not clearly present'}. Your second birth-month theme adds ${WORK_PROFILES[month.branchSipsin].theme}. This is not an estimate of earnings or ability.`,
     facts: [dayFact(r), monthFact(r), `Checked visible money themes: 正財 ${steady ? 'present' : 'not present'}; 偏財 ${opportunity ? 'present' : 'not present'}.`],
   }
