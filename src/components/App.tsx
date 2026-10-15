@@ -29,6 +29,7 @@ const CategoryReportPage = lazy(() => import('./CategoryReportPage.tsx'))
 const CategorySamplePage = lazy(() => import('./report/CategorySamplePage.tsx'))
 const BundleSamplePage = lazy(() => import('./report/BundleSamplePage.tsx'))
 const PersonalPreviewPage = lazy(() => import('./report/PersonalPreviewPage.tsx'))
+const HomeReportPreview = lazy(() => import('./HomeReportPreview.tsx'))
 const SAMPLE_BIRTH: BirthInput = {
   year: 1998, month: 3, day: 25, hour: 3, minute: 0,
   gender: 'M', timezone: 'America/New_York', latitude: 40.7128, longitude: -74.006,
@@ -103,7 +104,7 @@ export default function App() {
   useEffect(() => {
     if (!showingHome) return
     const section = hash.slice(1)
-    if (['home', 'birth-details', 'reports', 'about', 'faq', 'discover', 'focused-reports'].includes(section)) {
+    if (['home', 'birth-details', 'report-preview', 'reports', 'about', 'faq', 'discover', 'focused-reports'].includes(section)) {
       document.getElementById(section)?.scrollIntoView({ block: 'start' })
     }
   }, [hash, showingHome])
@@ -135,6 +136,10 @@ export default function App() {
             <p className="fate-eyebrow">{t('home.hero.eyebrow')}</p>
             <h1>{t('home.hero.title')}<br /><em>{t('home.hero.highlight')}</em></h1>
             <p className="fate-hero-description">{t('home.hero.text')}</p>
+            <div className="fate-hero-reading-actions">
+              <a href="#birth-details" className="fate-complete-primary">{t('preview.home.start')} <span aria-hidden="true">→</span></a>
+              <a href="#report-preview" className="fate-hero-example-link">{t('preview.home.look')} <span aria-hidden="true">↗</span></a>
+            </div>
             <div className="fate-hero-promises">{['free', 'card', 'preview'].map(key => <span key={key}>{t(`buyer.hero.${key}`)}</span>)}</div>
           </div>
           <section id="birth-details" className="fate-birth-panel" aria-labelledby="birth-heading">
@@ -147,7 +152,7 @@ export default function App() {
       {showingHome && <HomeBenefits />}
       <main id="main-content" tabIndex={-1} className={showingFree || showingReport ? 'fate-main fate-main-reading' : 'fate-main'}>
         <ReportBoundary key={route}><Suspense fallback={<p role="status" className="fate-reading-loading">{t('reading.loading')}</p>}>
-        {showingHome && <><ProductCatalog /><BuyerJourney /><HomeOverview onViewSample={viewSample} /><HomeFAQ /></>}
+        {showingHome && <><Suspense fallback={<section id="report-preview" className="fate-section"><p role="status">{t('reading.loading')}</p></section>}><HomeReportPreview input={SAMPLE_BIRTH} /></Suspense><ProductCatalog /><BuyerJourney /><HomeOverview onViewSample={viewSample} /><HomeFAQ /></>}
         {route === 'product' && <CompleteReportPage onStartFree={startFree} onViewSample={viewSample} />}
         {showingSample && <div ref={resultsRef}><ReadingView input={SAMPLE_BIRTH} /></div>}
         {route === 'category-product' && focusCategory && <CategoryReportPage key={focusCategory} kind={focusCategory} />}

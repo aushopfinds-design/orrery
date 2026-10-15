@@ -4,6 +4,7 @@ import './index.css'
 import './homepage.css'
 import './depth.css'
 import './pricing.css'
+import './preview.css'
 import App from './components/App.tsx'
 
 createRoot(document.getElementById('root')!).render(
