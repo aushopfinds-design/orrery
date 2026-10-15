@@ -23,6 +23,7 @@
 .fate-personal-opening .fate-personal-theme-grid { margin: 15px 0; }
 .fate-reading-brief a:focus-visible, .fate-reading-brief button:focus-visible, .fate-report-chart-details > summary:focus-visible, .fate-chapter-return:focus-visible { outline: 2px solid #ac834a; outline-offset: 4px; border-radius: 4px; }
 .fate-reading-toc, .fate-personal-excerpt { scroll-margin-top: 110px; }
+.fate-report-overview .fate-reading-toc a { min-height: 44px; font-size: 13px; }
 @media(max-width:640px) {
   .fate-reading-brief { padding: 19px 17px; }
   .fate-reading-brief > header h3 { font-size: 23px; }
@@ -30,6 +31,8 @@
   .fate-brief-action { padding: 14px; }
   .fate-brief-action p { font-size: 15px; }
   .fate-brief-source { align-items: flex-start; }
+  .fate-report-overview .fate-reading-toc { grid-template-columns: minmax(0,1fr); }
+  .fate-report-overview .fate-reading-toc a { font-size: 14px; }
 }
 @media print {
   .fate-reading-brief { background: #fff !important; box-shadow: none; break-inside: avoid; padding: 15px; }
