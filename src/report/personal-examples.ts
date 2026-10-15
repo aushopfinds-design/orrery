@@ -152,7 +152,7 @@ const RELATIONSHIP_CHECK: Record<string, string> = {
 const YEAR_REPLY: Record<string, string> = {
   '比肩': 'I want to choose the goal myself. I would still welcome help with one part.',
   '劫財': 'I would like to join in. First, can we agree what time or cost each person will share?',
-  '食神': 'Could I begin with a small version that I can enjoy or use this week?',
+  '食神': 'Could I begin with one short session that I can enjoy this week?',
   '傷官': 'Could I explain what I would change, then hear what you want to keep?',
   '正財': 'Before I add this, I want to check the promises that already repeat each month.',
   '偏財': 'I am interested. Could we check the time and full cost before I agree?',
@@ -164,7 +164,7 @@ const YEAR_REPLY: Record<string, string> = {
 const YEAR_CHECK: Record<string, string> = {
   '比肩': 'Which part of this choice do I want to make myself?',
   '劫財': 'What would a fair share of time or cost look like?',
-  '食神': 'What is the smallest version I could enjoy or use?',
+  '食神': 'What is one small step I could enjoy or use?',
   '傷官': 'Have I heard the other person’s reason before suggesting a change?',
   '正財': 'What will this ask of me each week?',
   '偏財': 'What do I know about the time and cost, and what am I assuming?',

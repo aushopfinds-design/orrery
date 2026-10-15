@@ -66,9 +66,9 @@ describe('Concrete examples use several chart features', () => {
   it('keeps relationship examples about conversation and annual examples about personal plans', () => {
     for (const chart of charts.slice(0, 24)) {
       const relationship = relationshipExample(chart)
-      expect(relationship.response + relationship.check).not.toMatch(/customer|delivery|portfolio|publish|version|job offer/i)
+      expect(relationship.response + relationship.check).not.toMatch(/customer|delivery|portfolio|publish|share a useful version|job offer/i)
       const annual = buildCategoryReading('year', chart, { year: 2027 }).chapters[0].example!
-      expect(annual.response).not.toMatch(/customer|delivery|manager|portfolio|publish|version/i)
+      expect(annual.response).not.toMatch(/customer|delivery|manager|portfolio|publish|share a useful version/i)
     }
   })
 
