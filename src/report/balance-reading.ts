@@ -2,6 +2,7 @@ import type { SajuResult } from '@orrery/core/types'
 import { chapter, chartContext, commonMethod, finishReading, pillarFact, subject, validateYear } from './category-shared.ts'
 import { ELEMENT_MEANING } from './reading.ts'
 import { buildReportExtras } from './report-extras.ts'
+import { everydayExample } from './personal-examples.ts'
 
 export function buildBalanceReading(result: SajuResult, referenceYear = new Date().getFullYear()) {
   validateYear(referenceYear, result)
@@ -20,7 +21,7 @@ export function buildBalanceReading(result: SajuResult, referenceYear = new Date
         `A useful condition for you is **${c.personal.need}**. Look at one ordinary day and ask where that condition appears, where it is missing and which small change is possible.`,
         'Try a brief **look back at one day**: what did you choose, what interrupted you and what did you take on without being asked? One sentence for each is enough. Look for the moment a useful task turned into an automatic duty.',
         'For a smaller response, try: **“I can help with this part. The other part will need to wait or be shared.”** Choose an ordinary task where that answer is realistic, and notice what changes.',
-      ], [pillarFact(result, 1)], c.personal.practice, c.personal, 'personality'),
+      ], [pillarFact(result, 1)], c.personal.practice, c.personal, 'personality', everydayExample(result, 'wellbeing')),
       chapter('visible-elements', 'Five Elements as a Habit Picture', `**${prominent.map(item => item.element).join(' and ')} ${prominent.length === 1 ? 'appears' : 'appear'} most often in the visible count.** This is a picture of symbols, not a score for health or personal balance.`, [
         `The chart uses **${c.snapshot.visibleMarkers} visible symbols**. Their counts are ${c.snapshot.elements.map(item => `${item.element} ${item.count}`).join(', ')}. The diagram shows exactly those counts.`,
         `In traditional imagery, the most frequent visible elements are linked with **${prominent.map(item => ELEMENT_MEANING[item.element]).join('; ')}**. Choose one image that helps you notice an everyday response.`,

@@ -14,6 +14,7 @@ import ReportPrice from './ReportPrice.tsx'
 import ReportChoiceDetails, { reportScope } from './ReportChoiceDetails.tsx'
 import CopyButton from '../CopyButton.tsx'
 import { ReportExtrasPreview } from './ReportExtrasView.tsx'
+import EverydayExampleView from './EverydayExampleView.tsx'
 
 function focusSection(id: string) {
   const section = document.getElementById(id)
@@ -104,7 +105,7 @@ export default function PersonalPreviewPage({ kind, input, onFirstBirth }: { kin
         <p className="fate-preview-save-note">{t('buyer.preview.saveNote')}</p>
         <section className="fate-personal-opening"><p className="fate-eyebrow">{t('buyer.preview.fromChart')}</p><h2 id="personal-opening-heading" tabIndex={-1}>{preview.headline}</h2><div className="fate-personal-theme-grid">{preview.summary.map(theme => <div key={theme.label}><ReportIcon kind={product.icon} /><h3>{theme.label}</h3><p>{theme.text}</p></div>)}</div></section>
         <div className="fate-personal-preview-layout"><div>
-          <section className="fate-personal-excerpts" aria-labelledby="personal-preview-excerpts"><p className="fate-eyebrow">{t('buyer.preview.excerpts')}</p><h2 id="personal-preview-excerpts" tabIndex={-1}>{t('buyer.preview.excerptsTitle')}</h2><p>{t('buyer.preview.excerptsText')}</p>{preview.excerpts.map(section => <section key={section.id} className="fate-personal-excerpt"><div><ReportIcon kind={section.icon ?? product.icon} /><h3>{section.title}</h3></div><p><ReadingText text={section.lead} /></p>{section.paragraphs.map(text => <p key={text}><ReadingText text={text} /></p>)}<details><summary>{t('reading.chartSource')}</summary><ul>{section.evidence.map(fact => <li key={fact}>{fact}</li>)}</ul></details></section>)}</section>
+          <section className="fate-personal-excerpts" aria-labelledby="personal-preview-excerpts"><p className="fate-eyebrow">{t('buyer.preview.excerpts')}</p><h2 id="personal-preview-excerpts" tabIndex={-1}>{t('buyer.preview.excerptsTitle')}</h2><p>{t('buyer.preview.excerptsText')}</p>{preview.excerpts.map(section => <section key={section.id} className="fate-personal-excerpt"><div><ReportIcon kind={section.icon ?? product.icon} /><h3>{section.title}</h3></div><p><ReadingText text={section.lead} /></p>{section.example && <EverydayExampleView example={section.example} headingLevel={4} />}{section.paragraphs.map(text => <p key={text}><ReadingText text={text} /></p>)}<details><summary>{t('reading.chartSource')}</summary><ul>{section.evidence.map(fact => <li key={fact}>{fact}</li>)}</ul></details></section>)}</section>
           {preview.extras && <ReportExtrasPreview question={preview.extras.question} symbols={preview.extras.symbols} />}
           {preview.monthly.length > 0 && <section className="fate-personal-months"><h2>{t('buyer.preview.monthly')}</h2><p>{t('buyer.preview.monthlyText')}</p><ol>{preview.monthly.map(month => <li key={month.label}><strong>{month.label}</strong><span><ReadingText text={month.lead} /></span></li>)}</ol></section>}
         </div><aside className="fate-personal-order-summary" aria-labelledby="personal-preview-contents">

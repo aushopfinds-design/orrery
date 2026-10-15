@@ -10,20 +10,21 @@ import type { PreviewDraft } from '../utils/preview-draft.ts'
 import type { InsightQuestion, ReportExtras, SymbolCard } from './report-extras.ts'
 import { SYMBOL_NOTE } from './report-extras.ts'
 import { plainReadingText } from './reading-text.ts'
+import { everydayExampleText } from './personal-examples.ts'
 
 export interface PersonalPreview {
   title: string
   subjects: { label: string; birthSummary: string; dayMaster: string; pillarSummary: string[] }[]
   headline: string
   summary: { label: string; text: string }[]
-  excerpts: Pick<ReportChapter, 'id' | 'title' | 'icon' | 'lead' | 'paragraphs' | 'evidence'>[]
+  excerpts: Pick<ReportChapter, 'id' | 'title' | 'icon' | 'lead' | 'paragraphs' | 'evidence' | 'example'>[]
   contents: { id: string; title: string }[]
   monthly: { label: string; lead: string }[]
   needsPartner: boolean
   extras: { question: InsightQuestion; symbols: SymbolCard[] } | null
 }
 function excerpt(chapter: ReportChapter, paired = false) {
-  return { id: chapter.id, title: chapter.title.replace(/^\d+ · /, ''), icon: chapter.icon ?? chapter.id, lead: chapter.lead, paragraphs: chapter.paragraphs.slice(0, paired ? 2 : 1), evidence: chapter.evidence.slice(0, 2) }
+  return { id: chapter.id, title: chapter.title.replace(/^\d+ · /, ''), icon: chapter.icon ?? chapter.id, lead: chapter.lead, paragraphs: chapter.example ? [] : chapter.paragraphs.slice(0, paired ? 2 : 1), ...(chapter.example ? { example: chapter.example } : {}), evidence: chapter.evidence.slice(0, 2) }
 }
 function extrasExcerpt(extras: ReportExtras) {
   return { question: extras.questions[0], symbols: extras.symbols }
@@ -63,7 +64,7 @@ export function personalPreviewText(preview: PersonalPreview): string {
     ...preview.subjects.flatMap(person => [person.label, person.birthSummary, person.dayMaster, person.pillarSummary.join(' · ')]),
     preview.headline,
     ...preview.summary.map(theme => `${theme.label}\n${theme.text}`),
-    ...preview.excerpts.flatMap(section => [section.title, section.lead, ...section.paragraphs, 'Chart notes: ' + section.evidence.join(' · ')]),
+    ...preview.excerpts.flatMap(section => [section.title, section.lead, ...(section.example ? everydayExampleText(section.example) : []), ...section.paragraphs, 'Chart notes: ' + section.evidence.join(' · ')]),
     ...(preview.extras ? [preview.extras.question.question, preview.extras.question.answer, 'Chart note: ' + preview.extras.question.basis,
       ...preview.extras.symbols.map(symbol => `${symbol.person} · ${symbol.element}\nColors: ${symbol.colors.map(color => color.name).join(', ')}\nNumbers: ${symbol.numbers.join(' · ')}\n${symbol.use}\n${symbol.basis}`), SYMBOL_NOTE] : []),
     ...preview.monthly.map(month => `${month.label}\n${month.lead}`),

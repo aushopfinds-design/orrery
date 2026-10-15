@@ -5,6 +5,7 @@ import { WORK_CONNECTIONS } from './reading-connections.ts'
 import { WORK_PROFILES } from './reading-profiles.ts'
 import { buildReportExtras } from './report-extras.ts'
 import { LIFE_FOCUS } from './reading-scenarios.ts'
+import { workExample } from './personal-examples.ts'
 
 export function buildCareerReading(result: SajuResult, referenceYear = new Date().getFullYear()) {
   validateYear(referenceYear, result)
@@ -21,12 +22,12 @@ export function buildCareerReading(result: SajuResult, referenceYear = new Date(
     summary: [{ label: 'Your working conditions', text: c.work.setting }, { label: 'Your useful contribution', text: c.work.contribution }, { label: 'Your money conversation', text: money.theme }],
     chapters: [
       chapter('working-style', 'A Work Style You Can Test', '**Look at the work you will do each day.** A job title alone cannot tell you whether the setting will fit.', [
-        `Your starting theme is **${c.personal.focus}**. Your birth-month work theme is **${c.work.theme}**. This report connects those two parts rather than using your birth year as a career label.`,
+        `Your starting style values **${c.personal.focus}**. Your birth month adds **${c.work.theme}**. We use both themes to explore how you work.`,
         WORK_CONNECTIONS[c.day.pillar.stem][c.family],
         `A setting worth comparing is one with **${c.work.setting}**. Ask whether the actual workload and decisions leave room for that setting.`,
         `A pressure point is **${c.work.friction}**. Think of one recent task where that pressure appeared. Write down what happened before deciding that the whole role is wrong.`,
         'Choose one small change you can discuss or test. A clearer brief, a better handover or a useful block of working time can tell you more than a broad label about your career.',
-      ], [pillarFact(result, 1), pillarFact(result, 2)], 'Describe one task that suited you and one that drained your attention. Identify the working condition that differed.', c.work, 'career'),
+      ], [pillarFact(result, 1), pillarFact(result, 2)], 'Describe one task that suited you and one that drained your attention. Identify the working condition that differed.', c.work, 'career', workExample(result, 'career')),
       chapter('two-work-layers', 'What the Daily Routine Needs', '**Your chart may show more than one working theme.** A suitable role can make room for both instead of forcing you into one narrow label.', [
         `The main birth-month theme suggests tasks such as **${focus.tasks}**. Treat these as examples to compare with your experience, rather than occupations you are destined to enter.`,
         c.month.stemSipsin === c.month.branchSipsin ? 'Both parts of the birth month repeat the same traditional theme. Check the everyday routine closely: doing a familiar kind of work well still needs a realistic pace and useful feedback.' : `The inner part of the month adds **${c.inner.theme}**. It points to tasks such as ${innerFocus.tasks}. Notice which part is missing from the work you currently do.`,
@@ -45,14 +46,14 @@ export function buildCareerReading(result: SajuResult, referenceYear = new Date(
         `Your wider-group theme is **${c.group.theme}**. It points to ${c.group.contribution}. Consider whether other people expect that role from you at work.`,
         c.year.stemSipsin === c.month.stemSipsin ? 'The group and work themes match. You may be asked to repeat the same contribution in several settings. Check whether the total responsibility still fits your available time.' : `Your working theme, **${c.work.theme}**, differs from the wider-group theme. The contribution people expect may not be the part you find easiest to sustain. Name the difference before accepting another task.`,
         future ? `The birth-hour theme adds **${future.theme}**. Use that extra perspective when considering the kind of work you want to develop over time.` : 'Your birth hour is unknown. This report leaves the hour-based perspective out instead of inventing a long-term career conclusion.',
-        `Ask your manager or teammate: **“${focus.interview}”** Follow up with who will decide, what support is available and when the result will be checked.`,
+        `Ask your manager or teammate: **“${focus.interview}”** Then check three things: **who decides, what help is available and when you will review the result**.`,
         'If several requests compete, ask which one comes first and which can wait. **A clear limit protects an agreed result.** It does not require treating every request as a personal conflict.',
       ], [pillarFact(result, 3), pillarFact(result, 2), ...(result.input.unknownTime ? [] : [pillarFact(result, 0)])], 'Choose one unclear expectation. Ask for the priority, the definition of a finished result and the support available.', c.group, 'social'),
       chapter('money-commitments', 'Income, Pay and the Work Behind the Number', `**Your checked money theme is ${money.theme}.** Your working theme adds a question about ${life.incomeStyle}.`, [
         money.steady && money.opportunity ? 'The checked chart contains both steady-commitment and opportunity themes. Compare a reliable base with the time a new opening would need. Neither symbol tells you how much you will earn.' : money.opportunity ? 'The checked opportunity theme makes a useful prompt for reviewing a new role or side project. **Separate confirmed pay from hoped-for earnings**, and check the work needed after the appealing first step.' : money.steady ? 'The checked steady-commitment theme gives you a reason to look closely at regular duties and recurring pay. A familiar arrangement can still need a clearer description when the workload changes.' : 'A clear visible money theme is not present in the checked positions. Use your actual work and records to explore income habits; that absence does not mean a lack of earning ability.',
         `One pattern to examine is **${life.moneyWatch}**. This comes from your working theme, not a prediction about your bank balance.`,
         `For example: **${life.moneyExample}** Compare that scene with one offer, payslip or recurring duty you actually understand.`,
-        `Before accepting more responsibility, ask: **“${life.payQuestion}”** Check the agreed pay, expected hours, extra duties, necessary costs and time outside the main task. Keep unanswered points visible.`,
+        `Before accepting more work, ask: **“${life.payQuestion}”** Write down the **agreed pay and expected hours**. Add extra duties, necessary costs and follow-up time. Mark any unanswered points.`,
         'Put two real options beside each other: **what is confirmed, what you must deliver and what remains uncertain**. Use the actual figures and appropriate advice for important financial decisions. The chart supplies a conversation theme; the agreement shows the commitment.',
       ], [...money.facts, pillarFact(result, 2)], 'Compare one real offer or recurring role using five lines: confirmed pay, expected hours, extra duties, necessary costs and unanswered questions.', { keepClose: ['A clear description of the role and how added duties are discussed.', 'Confirmed pay and a record of the time the work actually needs.'], watchFor: [life.moneyWatch, 'Treating a money marker as proof of future earnings.'] }, 'money'),
       chapter('work-chapters', 'Your Longer Working Chapters', '**Use a life-cycle theme to choose a small experiment.** A calculated period does not promise a promotion, a new job or a financial result.', [
@@ -67,7 +68,7 @@ export function buildCareerReading(result: SajuResult, referenceYear = new Date(
         'Compare the completed task with the feedback. Keep the useful part, adjust what did not fit and choose one next step.',
       ], cycleFacts(result, referenceYear), 'Choose one cycle theme and one small task that would let you test it without changing your whole career.', c.work, 'timeline'),
       chapter('career-plan', 'A Thirty-Day Career Experiment', '**Choose one question, one example and one review date.** A small plan gives you something concrete to assess.', [
-        `In the first week, compare a real task with your need for **${c.personal.need}** and a working setting with **${c.work.setting}**. Note one condition you want to keep and one you want to discuss.`,
+        `In the first week, choose one real task. Your own starting need is **${c.personal.need}**. Your work setting calls for **${c.work.setting}**. Check each one. Note a condition to keep and a change to discuss.`,
         `In the second week, build evidence: **${focus.proof}** Ask for feedback from someone who understands the task.`,
         'In the third week, review one commitment around time or money. Clarify what is included, which part may grow and what would need a new agreement.',
         `In the fourth week, use your starting-style practice: **${c.personal.practice}** Compare the result with what you expected, rather than judging the entire month as success or failure.`,
@@ -95,7 +96,7 @@ export function buildBusinessReading(result: SajuResult, referenceYear = new Dat
         `A useful personal condition is **${c.personal.need}**. Leave room for it in the way you organise your work, instead of expecting a business to remove every pressure you already face.`,
         `One habit to watch is **${focus.capacity}**. Notice whether it appears when you imagine serving a real customer with a real deadline.`,
         'Write down one problem, one person who has it and one result you could provide. **Keep the first promise smaller than the whole vision.** A clear test can change the plan without requiring you to abandon the aim.',
-      ], [pillarFact(result, 1), pillarFact(result, 2)], 'Describe one offer in a sentence: who it helps, what result it provides and what the first delivery includes.', c.personal, 'personality'),
+      ], [pillarFact(result, 1), pillarFact(result, 2)], 'Describe one offer in a sentence: who it helps, what result it provides and what the first delivery includes.', c.personal, 'personality', workExample(result, 'business')),
       chapter('offer-test', 'Find Out Whether the Offer Is Useful', '**Listen for a real need before adding more features.** Interest in an idea is not the same as a clear reason to use it.', [
         `The birth-month theme suggests ${focus.offer}. A first experiment is: **${focus.experiment}**`,
         c.month.stemSipsin === c.month.branchSipsin ? 'Both parts of the month repeat the same theme. Keep the test focused so you can see whether the central promise is useful before expanding it.' : `The inner month adds **${c.inner.theme}**. Ask whether the offer needs room for that contribution too. A useful adjustment may be smaller than creating a second product.`,

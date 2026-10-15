@@ -9,6 +9,8 @@ import { plainReadingText } from './reading-text.ts'
 import type { FocusCategory } from './category-catalog.ts'
 import { reportExtrasText, SYMBOL_NOTE } from './report-extras.ts'
 import type { ReportExtras } from './report-extras.ts'
+import { everydayExampleText } from './personal-examples.ts'
+import type { EverydayExample } from './personal-examples.ts'
 
 export const POSITIONS = ['hour', 'day', 'month', 'year']
 export const FAMILY: Record<string, string> = { '比肩': 'ownership', '劫財': 'ownership', '食神': 'making', '傷官': 'making', '正財': 'resources', '偏財': 'resources', '正官': 'responsibility', '偏官': 'responsibility', '七殺': 'responsibility', '正印': 'learning', '偏印': 'learning' }
@@ -56,8 +58,8 @@ export function pairFacts(first: string, second: string, label: string): string[
   const facts = [...pair.stem.map(item => `stem ${item.type}${item.detail ? ' (' + item.detail + ')' : ''}`), ...pair.branch.map(item => `branch ${item.type}${item.detail ? ' (' + item.detail + ')' : ''}`)]
   return [`${label}: ${first} with ${second}. ${facts.length ? facts.join('; ') : 'No pair pattern in the checked tables'}.`]
 }
-export function chapter(id: string, title: string, lead: string, paragraphs: string[], evidence: string[], tryThis: string, guidance: ReadingGuidance, icon = 'personality'): ReportChapter {
-  return { id, title, lead, paragraphs, evidence, tryThis, guidance, icon }
+export function chapter(id: string, title: string, lead: string, paragraphs: string[], evidence: string[], tryThis: string, guidance: ReadingGuidance, icon = 'personality', example?: EverydayExample): ReportChapter {
+  return { id, title, lead, paragraphs, evidence, tryThis, guidance, icon, ...(example ? { example } : {}) }
 }
 export function selectedCycles(result: SajuResult, year: number) {
   return buildEnglishReading(result, year).periods.map(period => result.daewoon.find(cycle => cycle.ganzi === period.pillar && cycle.startDate.getUTCFullYear() === Number(period.period.split('–')[0]))!).filter(Boolean)
@@ -80,7 +82,7 @@ export function commonMethod(result: SajuResult, year: number): string[] {
 }
 export function finishReading(data: Omit<CategoryReading, 'fullText' | 'wordCount'>): CategoryReading {
   const chapters = data.chapters.map((item, index) => ({ ...item, title: `${String(index + 1).padStart(2, '0')} · ${item.title}` }))
-  const chapterText = (item: ReportChapter) => [item.title, item.lead, ...item.paragraphs, 'Keep close:', ...item.guidance.keepClose, 'Watch out for:', ...item.guidance.watchFor, 'A small step to try: ' + item.tryThis, 'From the chart: ' + item.evidence.join(' ')]
+  const chapterText = (item: ReportChapter) => [item.title, item.lead, ...(item.example ? everydayExampleText(item.example) : []), ...item.paragraphs, 'Keep close:', ...item.guidance.keepClose, 'Watch out for:', ...item.guidance.watchFor, 'A small step to try: ' + item.tryThis, 'From the chart: ' + item.evidence.join(' ')]
   const fullText = plainReadingText([
     `THE FATE KEY · ${data.title}`, `Report edition ${REPORT_EDITION} · Reference year ${data.referenceYear}`,
     ...data.subjects.flatMap(item => [item.label, item.birthSummary, item.pillarSummary.join(' · ')]), data.headline,

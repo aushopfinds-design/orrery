@@ -9,6 +9,8 @@ import { WORK_CONNECTIONS, RELATIONSHIP_CONNECTIONS, WORK_REFLECTIONS } from './
 import { buildReportExtras, reportExtrasText } from './report-extras.ts'
 import type { ReportExtras } from './report-extras.ts'
 import { CLOSENESS_PROMPTS } from './reading-scenarios.ts'
+import { everydayExample, workExample, relationshipExample, moneyExample, everydayExampleText } from './personal-examples.ts'
+import type { EverydayExample } from './personal-examples.ts'
 
 export const REPORT_EDITION = '2026.10'
 
@@ -31,6 +33,7 @@ export interface ReportChapter {
   evidence: string[]
   tryThis: string
   guidance: ReadingGuidance
+  example?: EverydayExample
 }
 export interface CompleteReadingPeriod extends ReadingPeriod {
   paragraphs: string[]
@@ -236,6 +239,7 @@ export function buildCompleteReading(result: SajuResult, asOfYear = new Date().g
   const chapters: ReportChapter[] = [
     {
       id: 'personality', title: '01 · Your Personality', lead: personal.strength,
+      example: everydayExample(result, 'personality'),
       paragraphs: [
         `Saju uses your birth day as the starting point for this part of the reading. Your symbol is **${self.name}**, pictured as ${personal.image}. That image points to ${personal.focus}.`,
         `Your birth month adds a focus on **${work.theme}**. Think about how that fits with your need for ${personal.need}.`,
@@ -247,6 +251,7 @@ export function buildCompleteReading(result: SajuResult, asOfYear = new Date().g
     },
     {
       id: 'career', title: '02 · Work That Suits You',
+      example: workExample(result, 'career'),
       lead: `You may prefer work with **${work.setting}**.`,
       paragraphs: [
         `Your birth month connects with your birth day through a theme of **${work.theme}**. In everyday work, that points to ${work.contribution}.`,
@@ -265,6 +270,7 @@ export function buildCompleteReading(result: SajuResult, asOfYear = new Date().g
     },
     {
       id: 'money', title: '03 · Money and Everyday Choices', lead: moneyOpening,
+      example: moneyExample(result, hasSteady, hasOpportunity),
       paragraphs: [
         wealth.length
           ? 'The chart gives this chapter its theme. **Your actual income and costs** tell you what you can afford. Use both parts when thinking about a choice.'
@@ -279,6 +285,7 @@ export function buildCompleteReading(result: SajuResult, asOfYear = new Date().g
     },
     {
       id: 'love', title: '04 · Relationships and Communication',
+      example: relationshipExample(result),
       lead: `**${relationship.headline}.**`,
       paragraphs: [
         `Saju uses the two parts of your birth day to explore close relationships. Your reading points to a need for **${relationship.need}**.`,
@@ -412,7 +419,7 @@ export function buildCompleteReading(result: SajuResult, asOfYear = new Date().g
     { label: 'Your relationship message', text: relationship.headline },
   ]
   const chapterText = (chapter: ReportChapter) => [
-    chapter.title, chapter.lead, ...chapter.paragraphs, guidanceText(chapter.guidance),
+    chapter.title, chapter.lead, ...(chapter.example ? everydayExampleText(chapter.example) : []), ...chapter.paragraphs, guidanceText(chapter.guidance),
     'From your chart: ' + chapter.evidence.join(' '), 'Try this: ' + chapter.tryThis,
   ]
   const extras = buildReportExtras('complete', result)

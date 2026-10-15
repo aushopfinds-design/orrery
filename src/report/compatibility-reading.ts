@@ -5,6 +5,7 @@ import { PAIR_LENSES } from './category-profiles.ts'
 import type { ReadingGuidance } from './reading-profiles.ts'
 import { buildReportExtras } from './report-extras.ts'
 import { CLOSENESS_PROMPTS } from './reading-scenarios.ts'
+import { compatibilityExample } from './personal-examples.ts'
 
 export function buildCompatibilityReading(first: SajuResult, second: SajuResult, referenceYear = new Date().getFullYear()) {
   validateYear(referenceYear, first)
@@ -45,7 +46,7 @@ export function buildCompatibilityReading(first: SajuResult, second: SajuResult,
         `For Person B’s side, try this balance: **${lensB.balance}**`,
         aToB === bToA ? 'Both directions use the same traditional theme. Ask whether both people experience it in the same way. A shared label is a starting question, not a shared answer.' : 'The two labels differ because the reference person changes. Neither direction is a score, and neither tells us who cares more.',
         'Choose a recent, ordinary moment when you missed each other’s meaning. Ask what each person intended and what the other heard. **Compare the two explanations before choosing a solution.**',
-      ], [`A → B: ${a.day.pillar.stem} comparing ${b.day.pillar.stem} = ${aToB}.`, `B → A: ${b.day.pillar.stem} comparing ${a.day.pillar.stem} = ${bToA}.`], `Take turns asking: “${lensA.question}” Then: “${lensB.question}”`, shared(['Time for each person to describe the same situation.', 'A distinction between what was intended and what was heard.'], ['Using one person’s explanation as the whole story.', 'Turning a traditional comparison into a measure of love.']), 'patterns'),
+      ], [`A → B: ${a.day.pillar.stem} comparing ${b.day.pillar.stem} = ${aToB}.`, `B → A: ${b.day.pillar.stem} comparing ${a.day.pillar.stem} = ${bToA}.`], `Take turns asking: “${lensA.question}” Then: “${lensB.question}”`, shared(['Time for each person to describe the same situation.', 'A distinction between what was intended and what was heard.'], ['Using one person’s explanation as the whole story.', 'Turning a traditional comparison into a measure of love.']), 'patterns', compatibilityExample(first, second)),
       chapter('close-conversation', 'Closeness and Everyday Conversation', '**Ask what kind of care is wanted.** A useful response begins with listening to the other person’s actual need.', [
         `Person A’s close-relationship theme is **${a.relationship.need}**. A conversation may work better when that need is stated directly.`,
         `Person B’s theme is **${b.relationship.need}**. Make room for both needs instead of assuming that your own preferred response will help everyone.`,

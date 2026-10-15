@@ -1,5 +1,11 @@
 // English-first homepage copy, shared as the fallback for every supported locale.
 export const homepageCopy: Record<string, string> = {
+  "reading.example.eyebrow": "Your themes in everyday life",
+  "reading.example.title": "An Everyday Example",
+  "reading.example.response": "A response to try",
+  "reading.example.check": "What to notice",
+  "reading.example.basis": "Why this example appears",
+  "reading.example.note": "An imagined situation to explore, not a forecast.",
   "buyer.finder.title": "Not sure which report to choose?",
   "buyer.finder.open": "Find one for your question",
   "buyer.finder.question": "What is on your mind?",
@@ -495,7 +501,7 @@ export const homepageCopy: Record<string, string> = {
   "buyer.preview.fromChart": "From your own birth chart",
   "buyer.preview.excerpts": "Selected passages",
   "buyer.preview.excerptsTitle": "A First Look Inside Your Reading",
-  "buyer.preview.excerptsText": "These are selected passages from your calculated chart. The full version adds the remaining explanations, helpful habits, cautions, practice steps and method notes.",
+  "buyer.preview.excerptsText": "These passages connect your chart themes with possible everyday situations. Try the suggested words where they fit your life. The full version adds the remaining chapters, helpful habits and steps to try.",
   "buyer.preview.monthly": "Your Twelve Monthly Themes",
   "buyer.preview.monthlyText": "These headlines use the calculated reference on the 15th of each month. The full example shows the monthly explanations, steps and chart notes.",
   "buyer.preview.full": "Inside the full version",
