@@ -281,6 +281,9 @@ class Builder:
         else:
             self.add('Inside this example','h2')
             for title in [ch['title'] for ch in r['chapters']]:self.add(title,'small')
+            if r.get('periods'):self.add('08 · Your Life Chapters','small')
+            if r.get('actionPlan'):self.add(r['actionPlan']['title'],'small')
+            if r.get('months'):self.add('Your twelve monthly reflections','small')
             self.add('Also included: practical situation guides, chart-source notes, your Everyday Compass and preparation notes.','small')
             self.story.append(PageBreak());self.h('Start with one small step');brief=r['brief'];self.guidance({'keepClose':brief['support'],'watchFor':brief['watchFor']});self.box('A first step to try',brief['action']);self.add('From the chapter: '+brief['chapterTitle'],'small')
             self.add('Your chart themes at a glance','h2')
