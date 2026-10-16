@@ -45,7 +45,7 @@ export default function CategoryReadingView({ report, embedded = false, controls
     {report.subjects.some(person => person.input.unknownTime) && <p role="status" className="fate-reading-time-note">{t('category.unknown')}</p>}
     {report.subjects.map(person => <CalculationNotice key={person.label} input={person.input} label={report.subjects.length > 1 ? person.label : undefined} />)}
     <section id={`${prefix}-start`} className="fate-report-overview" aria-label={t('reading.complete.summary')}><div className="fate-report-overview-heading"><p className="fate-eyebrow">{t('reading.complete.summary')}</p><h2>{t('reading.design.overview')}</h2></div>
-        <ReportBriefView brief={buildReadingBrief(report.chapters[0])} href={`#${prefix}-${report.chapters[0].id}`} />
+        <ReportBriefView brief={buildReadingBrief(report.chapters[0], undefined, report.focus)} href={`#${prefix}-${report.chapters[0].id}`} />
       <nav id={`${prefix}-contents`} className="fate-reading-toc print:hidden" aria-label={t('reading.complete.contents')}><a href={`#${prefix}-situations`}><ReportIcon kind="next-moves" /><span>{t('reading.application.contents')}</span><span aria-hidden="true">↗</span></a>{contents.map(item => <a key={item.id} href={`#${prefix}-${item.id}`}><ReportIcon kind={item.icon ?? info.icon} /><span>{item.title}</span><span aria-hidden="true">↗</span></a>)}<a href={`#${prefix}-everyday-compass`}><ReportIcon kind="balance" /><span>{t('reading.extras.title')}</span><span aria-hidden="true">↗</span></a></nav>
         <details className="fate-report-chart-details print:hidden"><summary>{t('reading.brief.chart')}</summary>{chartDetails}</details>
         <div className="hidden print:block">{chartDetails}</div>

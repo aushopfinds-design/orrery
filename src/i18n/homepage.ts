@@ -1,5 +1,11 @@
 // English-first homepage copy, shared as the fallback for every supported locale.
 export const homepageCopy: Record<string, string> = {
+  'reading.decision.title': 'Your focus, in plain English',
+  'reading.decision.intro': 'A practical question from the checked chart themes. Use it where it fits your actual situation.',
+  'reading.decision.first': 'Try first',
+  'reading.decision.pause': 'Pause and clarify if',
+  'reading.decision.review': 'Review after the attempt',
+  'reading.decision.why': 'Why this focus appears here',
   'site.public.samples': 'Full Sample Library',
   'site.public.about': 'About The Fate Key',
   'site.public.privacy': 'Privacy Notice',

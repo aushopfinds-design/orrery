@@ -4,3 +4,14 @@
 @media print{.fate-public{font-size:11pt;background:white}.public-header,.public-footer,.public-back,.public-next,.public-button,.public-case-links{display:none!important}.fate-public main{max-width:none;padding:0}.public-page-heading>img{height:130px}.fate-public h1{font-size:27pt}.fate-public h2{font-size:20pt}.fate-public h3{font-size:16pt}.public-chapter{break-before:auto}.fate-public h2,.fate-public h3,.fate-public h4{break-after:avoid}.public-guidance,.public-options{display:block}.public-guidance>section,.public-options>section{break-inside:avoid;margin:15px 0}.public-cards{grid-template-columns:repeat(2,minmax(0,1fr))}}
 
 .fate-public .public-element-table{width:100%;border-collapse:collapse;font-size:15px;margin:18px 0}.public-element-table caption{text-align:left;font-weight:700;padding:8px 0}.public-element-table th,.public-element-table td{padding:7px 10px;text-align:left;border-bottom:1px solid var(--public-line)}
+
+.public-decision-focus > header { display:flex;align-items:flex-start;gap:16px; }
+.public-decision-focus > header > svg { width:28px;height:58px;flex:0 0 28px;color:#977342; }
+.fate-public .public-decision-focus h3 { margin-top:0;font-size:28px; }
+.fate-public .public-decision-focus .fate-eyebrow { font-family:Arial,sans-serif;font-size:12px;font-weight:700;color:#977342;margin-bottom:10px; }
+.public-decision-focus .fate-decision-steps { display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px; }
+.public-decision-focus .fate-decision-steps > div { min-width:0;border-top:2px solid #cbb087;padding-top:14px; }
+.public-decision-focus .fate-decision-steps dt { font-weight:700;color:#75562e;margin-bottom:9px; }
+.public-decision-focus .fate-decision-steps dd { margin:0; }
+.public-decision-focus .fate-decision-evidence { font-size:14px; }
+@media(max-width:760px) { .public-decision-focus .fate-decision-steps { grid-template-columns:minmax(0,1fr);gap:18px; } }

@@ -30,6 +30,8 @@ for item in manifest:
         if i and item['kind']!='bundle' and f'Report page {i+1} of {len(doc)}' not in page.get_text():
             errors.append({'file':str(path),'page':i+1,'type':'page numbering'})
         is_cover='ANCIENT WISDOM. MODERN INSIGHT.' in page.get_text()
+        if i<4 and item['kind']!='bundle' and not is_cover and len(norm(page.get_text(clip=fitz.Rect(30,43,370,600))))<180:
+            errors.append({'file':str(path),'page':i+1,'type':'orphaned front matter'})
         for block in page.get_text('dict')['blocks']:
             for line in block.get('lines',[]):
                 for span in line['spans']:

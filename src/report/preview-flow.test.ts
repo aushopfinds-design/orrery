@@ -66,8 +66,9 @@ describe('A continuous preview before checkout', () => {
       const brief = preview.brief!
       expect(preview.excerpts.find(section => section.id === brief.chapterId)?.title).toBe(brief.chapterTitle)
       const text = personalPreviewText(preview)
-      for (const line of [...brief.support, ...brief.watchFor, brief.action]) expect(text).toContain(plainReadingText(line))
-      expect(brief.action.split(/\s+/).length).toBeLessThanOrEqual(40)
+      const visible = brief.focus ? [brief.focus.headline, brief.focus.synthesis, brief.focus.firstStep, brief.focus.pauseIf, brief.focus.review] : [...brief.support, ...brief.watchFor, brief.action]
+      for (const line of visible) expect(text).toContain(plainReadingText(line))
+      expect((brief.focus?.firstStep ?? brief.action).split(/\s+/).length).toBeLessThanOrEqual(40)
     }
     expect(buildPersonalPreview('bundle', { first, second, year: 2030 }).brief?.scope).toBe('Person A · Complete Life Reading')
     expect(buildPersonalPreview('compatibility', { first }).brief).toBeNull()
@@ -86,9 +87,10 @@ describe('A continuous preview before checkout', () => {
       const full = buildCategoryReading('year', calculateSaju(first), { year })
       expect(preview.brief!.support).toEqual(full.chapters[0].guidance.keepClose)
       expect(preview.brief!.watchFor).toEqual(full.chapters[0].guidance.watchFor)
-      expect(full.fullText).toContain(plainReadingText(preview.brief!.action))
+      expect(preview.brief!.focus).toEqual(full.focus)
+      expect(full.fullText).toContain(plainReadingText(preview.brief!.focus!.firstStep))
     }
-    expect(buildPersonalPreview('year', { first, year: 2027 }).brief?.support).not.toEqual(buildPersonalPreview('year', { first, year: 2028 }).brief?.support)
+    expect(buildPersonalPreview('year', { first, year: 2027 }).brief?.focus).not.toEqual(buildPersonalPreview('year', { first, year: 2028 }).brief?.focus)
   })
 
   it('includes both real subjects and their own symbols for a two-person preview', () => {

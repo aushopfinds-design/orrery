@@ -21,13 +21,13 @@ const samples = CATEGORY_SCENARIOS.map((scenario, index) => {
   const first = calculateSaju(scenario.first)
   const second = calculateSaju(scenario.second)
   const complete = buildCompleteReading(first, referenceYear)
-  const completeReport = { ...complete, kind: 'complete', subjects: [subject(first, 'Example birth details')], brief: buildReadingBrief(complete.chapters[0]) }
+  const completeReport = { ...complete, kind: 'complete', subjects: [subject(first, 'Example birth details')], brief: buildReadingBrief(complete.chapters[0], undefined, complete.focus) }
   const free = buildFreeReading(first)
   const love = complete.chapters.find(chapter => chapter.id === 'love')!
   const freeReport = { ...free, kind: 'free', referenceYear, subjects: [subject(first, 'Example birth details')], relationship: { title: 'Love & Relationships', lead: love.lead, paragraphs: [love.paragraphs[0]], evidence: love.evidence } }
   const focused = FOCUS_CATALOG.map(info => {
     const report = buildCategoryReading(info.kind, first, { second: info.kind === 'compatibility' ? second : undefined, year: info.kind === 'year' ? annualYear : referenceYear })
-    return { ...report, scope: info.scope, brief: buildReadingBrief(report.chapters[0]) }
+    return { ...report, scope: info.scope, brief: buildReadingBrief(report.chapters[0], undefined, report.focus) }
   })
   const bundle = buildBundleReading(first, second, annualYear, referenceYear)
   return { id: scenario.id, label: scenario.label, index, inputs: { first: scenario.first, second: scenario.second }, reports: [freeReport, ...focused, completeReport], bundle: { title: 'Complete Bundle', kind: 'bundle', fullText: bundle.fullText, wordCount: bundle.wordCount } }

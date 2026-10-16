@@ -3,9 +3,16 @@ import type { ReadingBrief } from '../../report/reading-brief.ts'
 import ReadingText from './ReadingText.tsx'
 import ReportIcon from './ReportIcon.tsx'
 import FateKeyMark from './FateKeyMark.tsx'
+import DecisionFocusView from './DecisionFocusView.tsx'
 
 export default function ReportBriefView({ brief, href, onRead }: { brief: ReadingBrief; href?: string; onRead?: () => void }) {
   const { t } = useLocale()
+  if (brief.focus) return <DecisionFocusView focus={brief.focus} scope={brief.scope} labels={{
+    title: t('reading.decision.title'), intro: t('reading.decision.intro'), first: t('reading.decision.first'),
+    pause: t('reading.decision.pause'), review: t('reading.decision.review'), why: t('reading.decision.why'),
+  }}>
+    {onRead ? <button type="button" onClick={onRead} className="print:hidden">{t('reading.brief.read')} →</button> : href ? <a href={href} className="print:hidden">{t('reading.brief.read')} →</a> : null}
+  </DecisionFocusView>
   return <section className="fate-reading-brief" aria-label={t('reading.brief.title')}>
     <header><FateKeyMark /><div>{brief.scope && <p className="fate-eyebrow">{brief.scope}</p>}<h3>{t('reading.brief.title')}</h3><p>{t('reading.brief.intro')}</p></div></header>
     <div className="fate-brief-pair">{[

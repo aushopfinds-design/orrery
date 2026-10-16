@@ -1,3 +1,4 @@
+import { buildDecisionFocus } from './decision-focus.ts'
 import { buildReportApplications } from './report-applications.ts'
 import type { SajuResult } from '@orrery/core/types'
 import { analyzePillarRelations, getFourPillars, getJeonggi, getRelation } from '@orrery/core/pillars'
@@ -43,6 +44,7 @@ const MONTH_REVIEW = [
 export function buildYearAheadReading(result: SajuResult, year = new Date().getFullYear() + 1) {
   validateYear(year, result)
   const c = chartContext(result)
+  const decision = buildDecisionFocus('year', result, year)
   const annualPillar = getFourPillars(year, 7, 15, 12, 0)[0]
   const annualGod = getRelation(c.day.pillar.stem, annualPillar[0])!.hanja
   const annualInnerGod = getRelation(c.day.pillar.stem, getJeonggi(annualPillar[1]))!.hanja
@@ -76,14 +78,14 @@ export function buildYearAheadReading(result: SajuResult, year = new Date().getF
         branchGod === god ? `Both parts repeat the same theme in this reference. **${practice}** Then review the real result.` : `The second part adds **${innerTheme.theme}**. Leave room for it when you try this step: **${practice}**`,
         `**Review this month's attempt:** ${exercise.review} ${clash ? 'The checked clash adds a question about two different needs.' : combine ? 'The checked combination adds a question about how to share the next step.' : ''}`.trim(),
         `**Outside work:** ${monthlyLife.connection}${branchGod !== god ? ` A second idea: ${LIFE_FOCUS[branchGod].connection}` : ''}`,
-      ], [`Reference ${referenceDate}, 12:00 Asia/Seoul (shared comparison clock, not birthplace): year ${yearPillar}; month ${pillar}.`, `Month stem ${pillar[0]} relative to birth-day stem ${c.day.pillar.stem}: ${god}; principal inner stem ${getJeonggi(pillar[1])}: ${branchGod}.`, ...pairFacts(pillar, c.day.pillar.ganzi, 'Month / birth day'), ...pairFacts(pillar, c.month.pillar.ganzi, 'Month / birth month')], practice, { keepClose: [exercise.keep, theme.keepClose[0]], watchFor: [exercise.watch, theme.watchFor[0]] }, 'timeline'),
+      ], [`Reference ${referenceDate}, 12:00 Asia/Seoul (shared comparison clock, not birthplace): year ${yearPillar}; month ${pillar}.`, `Month stem ${pillar[0]} relative to birth-day stem ${c.day.pillar.stem}: ${god}; principal inner stem ${getJeonggi(pillar[1])}: ${branchGod}.`, ...pairFacts(pillar, c.day.pillar.ganzi, 'Month / birth day'), ...pairFacts(pillar, c.month.pillar.ganzi, 'Month / birth month')], practice, { keepClose: [exercise.keep], watchFor: [exercise.watch] }, 'timeline'),
       label, referenceDate, pillar, yearPillar,
     }
   })
-  return finishReading({ kind: 'year', title: `${year} Year Ahead`, referenceYear: year,
+  return finishReading({ focus: decision, kind: 'year', title: `${year} Year Ahead`, referenceYear: year,
     applications: buildReportApplications('year', result, { year }),
     extras: buildReportExtras('year', result, { year, annual: { theme: annual.theme, god: annualGod, pillar: annualPillar } }),
-    headline: `${year}: ${annual.title}`, subjects: [subject(result)],
+    headline: `${year}: ${decision.headline}`, subjects: [subject(result)],
     summary: [{ label: 'The annual theme', text: annual.theme }, { label: 'A second annual theme', text: inner.theme }, { label: 'Your own starting need', text: c.personal.need }],
     chapters: [
       chapter('annual-theme', 'Your Annual Theme and Your Starting Style', `**The added annual theme is ${annual.theme}.** Compare it with your own needs and the plans you actually have.`, [
@@ -92,14 +94,14 @@ export function buildYearAheadReading(result: SajuResult, year = new Date().getF
         `A second yearly theme is **${inner.theme}**. This reading uses both themes. One label cannot describe the whole year.`,
         `A question to carry through **${year}** is: **“${life.yearQuestion}”** Try it with a personal plan as well as a working responsibility.`,
         januaryPillar !== annualPillar ? 'The January reference still belongs to the earlier Saju year. The calendar year and the Saju year do not start at the same boundary. The monthly notes show the actual year and month symbols used.' : 'The monthly notes show the year and month symbols used at each reference point. They are not assumptions that every symbol changes on the first day of a calendar month.',
-      ], [pillarFact(result, 1), pillarFact(result, 2), ...annualFacts, `January reference: ${januaryPillar}; July reference: ${annualPillar}.`], 'Choose one plan for the year. Write the annual theme beside your own starting need and name one question to check.', { keepClose: [annual.keepClose[0], c.personal.keepClose[0]], watchFor: [annual.watchFor[0], c.personal.watchFor[0]] }, 'personality', annualExample(result, year, annualGod, annualInnerGod, annualPillar)),
+      ], [pillarFact(result, 1), pillarFact(result, 2), ...annualFacts, `January reference: ${januaryPillar}; July reference: ${annualPillar}.`], 'Choose one plan for the year. Write the annual theme beside your own starting need and name one question to check.', { keepClose: [`One annual intention that allows ${c.personal.need}.`, 'A distinction between the added annual theme and your existing circumstances.'], watchFor: ['Treating a yearly heading as an instruction to change everything.', 'Calling an annual theme good or bad before relating it to a real choice.'] }, 'personality', annualExample(result, year, annualGod, annualInnerGod, annualPillar)),
       chapter('annual-work', 'Work, Skills and a Useful First Result', '**Turn a broad yearly intention into something you can finish.** A task you can review gives you more information than a promise to change everything.', [
         `The annual theme points to tasks involving **${focus.tasks}**. Choose one example that fits your current responsibilities and interests.`,
         `Your birth-month setting values **${c.work.setting}**. Keep that need visible when you plan the task. An annual symbol does not remove the conditions that help you work well.`,
         `A practical test is: **${focus.proof}** Start with what can be done in a short, realistic block of time.`,
         `Watch for **${annual.friction}**. If that pressure appears, clarify the task or the agreement before treating the whole year as a success or failure.`,
         'Use a review date to compare the work with the result. Ask what helped, what took more time than expected and which part should be tried differently. Keep a record that can guide the next monthly step.',
-      ], [pillarFact(result, 2), `Annual stem ${annualPillar[0]}: ${annualGod}.`], 'Choose one annual skill or project goal. Define the first useful result and a date to review it.', annual, 'career'),
+      ], [pillarFact(result, 2), `Annual stem ${annualPillar[0]}: ${annualGod}.`], 'Choose one annual skill or project goal. Define the first useful result and a date to review it.', { keepClose: ['One skill or project result that can be reviewed this month.', `Time for the birth-month condition of ${c.work.setting}.`], watchFor: ['Adding annual goals without choosing which current task will move.', 'Treating a broad intention as progress before there is a first result.'] }, 'career'),
       chapter('annual-money', 'Money and the Promises Around It', '**Keep confirmed facts separate from hopes.** An annual theme is a prompt for reviewing commitments, not a forecast of earnings.', [
         `Your birth-chart money checks focus on **${money.theme}**. The annual theme adds **${annual.theme}**. Use those two views to examine one real offer or recurring duty.`,
         'Write down the costs and the time you know about. List what is still uncertain in a separate column. A plan is easier to revise when its assumptions are visible.',
@@ -113,7 +115,7 @@ export function buildYearAheadReading(result: SajuResult, year = new Date().getF
         `A sentence to try is: **“${c.relationship.words}”** Use it in an ordinary conversation where you can listen to the answer.`,
         `The annual theme is **${annual.theme}**. For a relationship, try this: **${life.connection}** Ask the other person what would work for them.`,
         'This is a one-person annual report. It does not compare a partner’s birth chart or predict marriage, separation or the arrival of a relationship. Use a two-person reading when you want to explore two sets of chart symbols.',
-      ], [pillarFact(result, 1), ...pairFacts(annualPillar, c.day.pillar.ganzi, 'Annual / birth day')], 'Ask someone close what kind of support would help with one plan. Share your own need and agree a practical next step.', c.relationship, 'love'),
+      ], [pillarFact(result, 1), ...pairFacts(annualPillar, c.day.pillar.ganzi, 'Annual / birth day')], 'Ask someone close what kind of support would help with one plan. Share your own need and agree a practical next step.', { keepClose: [`A conversation that makes room for ${c.relationship.need}.`, 'A shared plan the other person has actually had a chance to answer.'], watchFor: ['Expecting someone to rearrange their year around a plan they have not agreed to.', 'Using a one-person annual theme to predict another person’s feelings.'] }, 'love'),
       chapter('annual-cycle-context', 'The Longer Chapter Around This Year', '**One year sits within a longer story.** A ten-year cycle adds context without deciding what will happen in a particular month.', [
         `The following available cycles are selected using **${year}**. Their year labels are a summary; the notes give the calculated starting dates.`,
         ...(cycles.length ? cycles.map(cycle => {
@@ -123,7 +125,7 @@ export function buildYearAheadReading(result: SajuResult, year = new Date().getF
         }) : ['No ten-year cycle is available in the calculated range for this reference year. This report keeps that gap visible instead of inventing a later period.']),
         'A cycle theme and an annual theme can differ. Choose the part that helps you organise an actual task, then compare the result with your circumstances. Neither layer guarantees a particular event.',
         'If the birth time is unknown, cycle starting dates remain approximate. Keep plans flexible around timing labels and use the monthly references as discussion points rather than exact deadlines.',
-      ], cycleFacts(result, year), 'Write down one annual aim and one longer-term aim. Choose a small task that can support both.', annual, 'timeline'),
+      ], cycleFacts(result, year), 'Write down one annual aim and one longer-term aim. Choose a small task that can support both.', { keepClose: ['An annual task that also supports a longer aim you still value.', 'The stated calculation dates alongside the broad period labels.'], watchFor: ['Turning a ten-year label into a deadline for a major life decision.', 'Abandoning an existing aim before checking whether the annual task could support it.'] }, 'timeline'),
       chapter('annual-plan', 'A Year You Can Review', '**Plan in small steps and keep the evidence.** Your circumstances can change, so the plan needs room to change too.', [
         `Begin with your own starting need: **${c.personal.need}**. Choose one way to protect it in the calendar rather than waiting for a perfect time.`,
         `Begin a personal annual test: **${life.yearStep}** Use the first result to decide what deserves a place in the next month.`,
@@ -131,7 +133,7 @@ export function buildYearAheadReading(result: SajuResult, year = new Date().getF
         'At the end of each month, record one thing that helped, one assumption that changed and one task to carry forward. Keep the record short enough to use.',
         `When you feel stuck, return to the starting-style practice: **${c.personal.practice}** Ask whether it helps with the actual problem in front of you.`,
         'The twelve monthly pages below give calculated themes and guided questions. **They do not promise twelve sets of events.** Read the references, try a useful step and review what really happened.',
-      ], [pillarFact(result, 1), `Annual stem relationship ${annualGod}; annual principal inner-stem relationship ${annualInnerGod}.`], 'Book a brief monthly review. Record one result, one changed assumption and one next step.', { keepClose: [annual.keepClose[0], c.personal.keepClose[0]], watchFor: [annual.watchFor[0], 'Keeping a yearly plan unchanged after the circumstances have changed.'] }, 'next-moves'),
+      ], [pillarFact(result, 1), `Annual stem relationship ${annualGod}; annual principal inner-stem relationship ${annualInnerGod}.`], 'Book a brief monthly review. Record one result, one changed assumption and one next step.', { keepClose: ['A brief record of an actual result and one changed assumption.', 'A next step small enough to revise at the following review.'], watchFor: ['Keeping a yearly plan unchanged after the circumstances have changed.', 'Judging the whole year by a goal you no longer want.'] }, 'next-moves'),
     ], months,
     methodNotes: [...commonMethod(result, year), REFERENCE_CLOCK_NOTE, `The annual label uses the year pillar sampled at 12:00 Asia/Seoul on 15 July ${year}. It does not assume that the Saju year begins on 1 January.`, 'Every monthly reference is calculated separately for the 15th at 12:00 Asia/Seoul. It is a representative point, not the start or the full span of a Gregorian calendar month. Solar-term boundaries can change the pillar within a calendar month.', 'The monthly comparison uses the natal day stem, the reference month stem, its principal inner stem and pair-pattern checks against the natal day and month. It does not use guessed birth-hour relationships.', 'The sequence of monthly planning topics is editorial. The traditional comparison themes come from the calculated symbols. Neither part is an event forecast or a calculation of lucky dates.'],
   })

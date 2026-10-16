@@ -1,3 +1,4 @@
+import { buildDecisionFocus } from './decision-focus.ts'
 import { buildReportApplications } from './report-applications.ts'
 import type { SajuResult } from '@orrery/core/types'
 import { chapter, chartContext, commonMethod, finishReading, pillarFact, subject, validateYear } from './category-shared.ts'
@@ -8,13 +9,14 @@ import { everydayExample } from './personal-examples.ts'
 export function buildBalanceReading(result: SajuResult, referenceYear = new Date().getFullYear()) {
   validateYear(referenceYear, result)
   const c = chartContext(result)
+  const decision = buildDecisionFocus('wellbeing', result)
   const maximum = Math.max(...c.snapshot.elements.map(item => item.count))
   const prominent = c.snapshot.elements.filter(item => item.count === maximum)
   const zero = c.snapshot.elements.filter(item => item.count === 0)
-  return finishReading({ kind: 'wellbeing', title: 'Everyday Balance', referenceYear,
+  return finishReading({ focus: decision, kind: 'wellbeing', title: 'Everyday Balance', referenceYear,
     applications: buildReportApplications('wellbeing', result),
     extras: buildReportExtras('wellbeing', result),
-    headline: 'A more workable routine, with room for your own needs.', subjects: [subject(result)],
+    headline: decision.headline, subjects: [subject(result)],
     summary: [{ label: 'Your own space', text: c.personal.need }, { label: 'A routine to examine', text: c.work.friction }, { label: 'The visible element picture', text: prominent.map(item => item.element).join(' and ') + (prominent.length === 1 ? ' appears most often in this count' : ' appear most often in this count') }],
     chapters: [
       chapter('everyday-pace', 'Your Everyday Pace', '**Notice where effort becomes an automatic yes.** A workable routine makes room for your needs as well as the tasks around you.', [
@@ -51,7 +53,7 @@ export function buildBalanceReading(result: SajuResult, referenceYear = new Date
         `Before the week ends, try a conversation that makes room for **${c.relationship.need}**. Ask for one specific kind of help and let the other person say what they can offer.`,
         'At the end of seven days, note one helpful change, one part that did not fit and one adjustment for the next week. A small observation is enough; you do not need a perfect record.',
         'Use the chart images only where they help you ask a useful question. **Keep what works in your actual life.** If a concern involves your health or safety, seek suitable real-world support rather than relying on this report.',
-      ], [pillarFact(result, 1), pillarFact(result, 2)], 'Book a short review in seven days. Bring one observation and one change you want to keep.', { keepClose: [c.personal.keepClose[0], c.relationship.keepClose[0]], watchFor: [c.personal.watchFor[0], c.relationship.watchFor[0]] }, 'next-moves'),
+      ], [pillarFact(result, 1), pillarFact(result, 2)], 'Book a short review in seven days. Bring one observation and one change you want to keep.', { keepClose: ['One ordinary example from before and after the change.', 'A smaller version of the habit that works on a busy day.'], watchFor: ['Adding several new routine rules after one difficult day.', 'Judging the whole experiment by a perfect record instead of an easier task.'] }, 'next-moves'),
     ], months: [], methodNotes: [...commonMethod(result, referenceYear), 'Visible element counts are unweighted counts of the supplied stems and branches. They do not assess physical health, mental health or the strength of the full chart.', 'This report contains no diagnosis, treatment, symptom assessment, health prediction or recommendation for a medicine, supplement or remedy.'],
   })
 }

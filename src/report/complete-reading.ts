@@ -17,8 +17,10 @@ import { buildReportApplications, applicationText } from './report-applications.
 import type { ReportApplication } from './report-applications.ts'
 import { explainCalculation, PAIR_METHOD_NOTE } from './calculation-notes.ts'
 import type { CalculationExplanation } from './calculation-notes.ts'
+import { buildDecisionFocus } from './decision-focus.ts'
+import type { DecisionFocus } from './decision-focus.ts'
 
-export const REPORT_EDITION = '2026.10-r1'
+export const REPORT_EDITION = '2026.10-r2'
 
 export interface ReadingConnection {
   id: string
@@ -49,6 +51,7 @@ export interface CompleteReadingPeriod extends ReadingPeriod {
 }
 export interface ElementCount { element: ReadingElement; count: number }
 export interface CompleteReading {
+  focus: DecisionFocus
   calculation: CalculationExplanation
   title: string
   birthSummary: string
@@ -174,6 +177,7 @@ const guidanceText = (guidance: ReadingGuidance) => [
  * interpretation, not an observed fact or an advanced useful-element diagnosis. */
 export function buildCompleteReading(result: SajuResult, asOfYear = new Date().getFullYear()): CompleteReading {
   const c = context(result)
+  const focus = buildDecisionFocus('complete', result)
   const base = buildEnglishReading(result, asOfYear)
   const { hour, day, month, year, personal, self, work, available } = c
   const relationship = RELATIONSHIP_PROFILES[day.pillar.branch]
@@ -320,7 +324,7 @@ export function buildCompleteReading(result: SajuResult, asOfYear = new Date().g
       ],
       evidence: [fact(year, 3), ...(result.input.unknownTime ? ['The birth hour was not supplied; no hour interpretation is included.'] : [fact(hour, 0)])],
       tryThis: 'Tell someone one task you are happy to help with. Say which part needs to be shared.',
-      guidance: { keepClose: groupWork.keepClose, watchFor: groupWork.watchFor },
+      guidance: { keepClose: [`A shared task where ${groupWork.contribution} is welcome.`, 'Friends or colleagues who discuss which part of a request you actually want to take.'], watchFor: ['Letting a familiar group role follow you into every setting.', 'Helping with a request before checking whether it needs your particular contribution.'] },
     },
     {
       id: 'balance', title: '06 · Your Five-Element Picture',
@@ -404,7 +408,7 @@ export function buildCompleteReading(result: SajuResult, asOfYear = new Date().g
     ],
     evidence: [`Day stem ${day.pillar.stem}; month stem ${month.pillar.stem} (${month.stemSipsin}); day branch ${day.pillar.branch}.`],
     tryThis: 'Choose one step above. Write down when you will try it.',
-    guidance: { keepClose: [personal.keepClose[0], work.keepClose[0], relationship.keepClose[0]], watchFor: [personal.watchFor[0], work.watchFor[0], relationship.watchFor[0]] },
+    guidance: { keepClose: ['One step with a date and a realistic place in your week.', 'A short note about the response you actually received.', 'Permission to keep only the part that helped.'], watchFor: ['Turning three possible steps into three new obligations.', 'Repeating an exercise after the situation it addressed has changed.', 'Using a missed day to dismiss an otherwise useful change.'] },
   }
   const methodNotes = [
     ...explainCalculation(result.input).notes,
@@ -432,7 +436,7 @@ export function buildCompleteReading(result: SajuResult, asOfYear = new Date().g
   const applications = buildReportApplications('complete', result)
   const fullText = plainReadingText([
     'THE FATE KEY · Complete Life Reading', `Report edition ${REPORT_EDITION} · Timeline reference year ${asOfYear}`, formatBirth(result.input), pillarSummary(result).join(' · '), personal.headline,
-    readingBriefText(buildReadingBrief(chapters[0])),
+    readingBriefText(buildReadingBrief(chapters[0], undefined, focus)),
     ...summary.map(item => `${item.label}: ${item.text}`),
     'How your themes work together', ...connections.flatMap(item => [item.title, item.basis, item.text, 'Ask yourself: ' + item.question, 'From your chart: ' + item.evidence.join(' ')]),
     ...chapters.flatMap(chapterText),
@@ -442,5 +446,5 @@ export function buildCompleteReading(result: SajuResult, asOfYear = new Date().g
     reportExtrasText(extras),
     'How this reading is prepared', ...methodNotes,
   ].join('\n\n'))
-  return { calculation: explainCalculation(result.input), title: 'Complete Life Reading', birthSummary: formatBirth(result.input), pillarSummary: pillarSummary(result), dayMaster: self.name, headline: personal.headline, summary, connections, referenceYear: asOfYear, chapters, periods, actionPlan, applications, extras, elements: c.elements, visibleMarkers: result.input.unknownTime ? 6 : 8, methodNotes, fullText, wordCount: fullText.split(/\s+/).length }
+  return { focus, calculation: explainCalculation(result.input), title: 'Complete Life Reading', birthSummary: formatBirth(result.input), pillarSummary: pillarSummary(result), dayMaster: self.name, headline: personal.headline, summary, connections, referenceYear: asOfYear, chapters, periods, actionPlan, applications, extras, elements: c.elements, visibleMarkers: result.input.unknownTime ? 6 : 8, methodNotes, fullText, wordCount: fullText.split(/\s+/).length }
 }

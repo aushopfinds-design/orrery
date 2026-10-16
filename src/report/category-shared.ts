@@ -17,12 +17,13 @@ import { applicationText } from './report-applications.ts'
 import type { ReportApplication } from './report-applications.ts'
 import { explainCalculation, PAIR_METHOD_NOTE } from './calculation-notes.ts'
 import type { CalculationExplanation } from './calculation-notes.ts'
+import type { DecisionFocus } from './decision-focus.ts'
 export { THEME_FAMILY as FAMILY } from './theme-family.ts'
 
 export const POSITIONS = ['hour', 'day', 'month', 'year']
 export interface ReportSubject { label: string; input: BirthInput; birthSummary: string; pillarSummary: string[]; dayMaster: string; elements: ElementCount[]; visibleMarkers: number; calculation: CalculationExplanation }
 export interface ReportMonth extends ReportChapter { label: string; referenceDate: string; pillar: string; yearPillar: string }
-export interface CategoryReading { kind: FocusCategory; title: string; headline: string; referenceYear: number; subjects: ReportSubject[]; summary: { label: string; text: string }[]; chapters: ReportChapter[]; months: ReportMonth[]; applications: ReportApplication[]; extras: ReportExtras; methodNotes: string[]; fullText: string; wordCount: number }
+export interface CategoryReading { focus: DecisionFocus; kind: FocusCategory; title: string; headline: string; referenceYear: number; subjects: ReportSubject[]; summary: { label: string; text: string }[]; chapters: ReportChapter[]; months: ReportMonth[]; applications: ReportApplication[]; extras: ReportExtras; methodNotes: string[]; fullText: string; wordCount: number }
 
 export function chartContext(result: SajuResult) {
   const [hour, day, month, year] = result.pillars
@@ -96,7 +97,7 @@ export function finishReading(data: Omit<CategoryReading, 'fullText' | 'wordCoun
   const fullText = plainReadingText([
     `THE FATE KEY · ${data.title}`, `Report edition ${REPORT_EDITION} · Reference year ${data.referenceYear}`,
     ...data.subjects.flatMap(item => [item.label, item.birthSummary, item.pillarSummary.join(' · '), `Cycle setting: ${item.calculation.cycleSetting}; direction: ${item.calculation.cycleDirection}.`, ...(data.subjects.length > 1 ? item.calculation.notes : [])]), data.headline,
-    readingBriefText(buildReadingBrief(chapters[0])),
+    readingBriefText(buildReadingBrief(chapters[0], undefined, data.focus)),
     ...data.summary.map(item => `${item.label}: ${item.text}`), ...chapters.flatMap(chapterText),
     ...(data.months.length ? ['Your Twelve Months', ...data.months.flatMap(chapterText)] : []),
     'Situations you can work through', ...data.applications.map(applicationText),

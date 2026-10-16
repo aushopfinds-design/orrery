@@ -50,6 +50,7 @@ STYLES = {
     'h2': ParagraphStyle('h2',fontName='Title',fontSize=17.8,leading=23,textColor=NAVY,spaceBefore=15,spaceAfter=10,keepWithNext=True),
     'h3': ParagraphStyle('h3',fontName='BodyBold',fontSize=11.5,leading=16.2,textColor=NAVY,spaceBefore=12,spaceAfter=7,keepWithNext=True),
     'small': ParagraphStyle('small',fontName='Body',fontSize=9,leading=12.5,textColor=MUTED,spaceAfter=5,allowWidows=0,allowOrphans=0),
+    'contents': ParagraphStyle('contents',fontName='Body',fontSize=9,leading=12.5,textColor=MUTED,spaceAfter=1,allowWidows=0,allowOrphans=0),
     'eyebrow': ParagraphStyle('eyebrow',fontName='BodyBold',fontSize=8,leading=11,textColor=GOLD,spaceBefore=3,spaceAfter=8,keepWithNext=True),
     'quote': ParagraphStyle('quote',fontName='Body',fontSize=12,leading=18,textColor=colors.white,spaceAfter=0),
     'box': ParagraphStyle('box',fontName='Body',fontSize=10.6,leading=15.7,textColor=INK,spaceAfter=6),
@@ -279,17 +280,22 @@ class Builder:
             self.add(DATA['copy']['preview.free.note'],'small');self.note(r['relationship']['evidence'])
             self.add('Your five-element picture','h2');self.story.append(ElementBars(r['elements'],r['visibleMarkers']));self.add('A simple count of visible symbols. A zero is not a missing ability, and this count is not a diagnosis of useful elements.','small')
         else:
-            self.add('Inside this example','h2')
-            for title in [ch['title'] for ch in r['chapters']]:self.add(title,'small')
-            if r.get('periods'):self.add('08 · Your Life Chapters','small')
-            if r.get('actionPlan'):self.add(r['actionPlan']['title'],'small')
-            if r.get('months'):self.add('Your twelve monthly reflections','small')
-            self.add('Also included: practical situation guides, chart-source notes, your Everyday Compass and preparation notes.','small')
-            self.story.append(PageBreak());self.h('Start with one small step');brief=r['brief'];self.guidance({'keepClose':brief['support'],'watchFor':brief['watchFor']});self.box('A first step to try',brief['action']);self.add('From the chapter: '+brief['chapterTitle'],'small')
+            self.add('Inside this example','h3')
+            for title in [ch['title'] for ch in r['chapters']]:self.add(title,'contents')
+            if r.get('periods'):self.add('08 · Your Life Chapters','contents')
+            if r.get('actionPlan'):self.add(r['actionPlan']['title'],'contents')
+            if r.get('months'):self.add('Your twelve monthly reflections','contents')
+            self.story.append(PageBreak());brief=r['brief']
+            if brief.get('focus'):
+                focus=brief['focus'];self.h('Your focus, in plain English');self.add(focus['headline'],'h2');self.add(focus['synthesis'])
+                self.box('Try first',focus['firstStep']);self.add('Pause and clarify if','h3');self.add(focus['pauseIf'])
+                self.add('Review after the attempt','h3');self.add(focus['review']);self.note(focus['evidence'],'Decision focus basis')
+            else:
+                self.h('Start with one small step');self.guidance({'keepClose':brief['support'],'watchFor':brief['watchFor']});self.box('A first step to try',brief['action'])
+            self.add('From the chapter: '+brief['chapterTitle'],'small')
             self.add('Your chart themes at a glance','h2')
             for item in r['summary']:self.add(item['label'],'h3');self.add(item['text'])
-            for person in r['subjects']:
-                self.add(person['label'],'h3');self.add(person['birthSummary'],'small');self.add(' · '.join(person['pillarSummary']));self.add('Starting symbol: '+person['dayMaster'],'small')
+            # Birth details are already on the cover and in the full reading record.
             self.add('Apply your reading to a real situation','h2');self.add('Choose the situation closest to yours. These are hypothetical guides, not events inferred from your birth details. All three guides are included; use the choices where they fit your actual circumstances.')
             for n,a in enumerate(r['applications'],1):self.application(a,n)
             if r.get('connections'):

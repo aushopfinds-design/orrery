@@ -1,3 +1,4 @@
+import { buildPairDecisionFocus } from './decision-focus.ts'
 import { buildReportApplications } from './report-applications.ts'
 import type { SajuResult } from '@orrery/core/types'
 import { getRelation, analyzePillarRelations } from '@orrery/core/pillars'
@@ -11,6 +12,7 @@ import { compatibilityExample } from './personal-examples.ts'
 export function buildCompatibilityReading(first: SajuResult, second: SajuResult, referenceYear = new Date().getFullYear()) {
   validateYear(referenceYear, first)
   validateYear(referenceYear, second)
+  const decision = buildPairDecisionFocus(first, second)
   const a = chartContext(first)
   const b = chartContext(second)
   const aToB = getRelation(a.day.pillar.stem, b.day.pillar.stem)!.hanja
@@ -27,10 +29,10 @@ export function buildCompatibilityReading(first: SajuResult, second: SajuResult,
   const personalGuidance = shared([`Person A: ${a.personal.keepClose[0]}`, `Person B: ${b.personal.keepClose[0]}`], [`Person A: ${a.personal.watchFor[0]}`, `Person B: ${b.personal.watchFor[0]}`])
   const loveGuidance = shared([`Person A: ${a.relationship.keepClose[0]}`, `Person B: ${b.relationship.keepClose[0]}`], [`Person A: ${a.relationship.watchFor[0]}`, `Person B: ${b.relationship.watchFor[0]}`])
   return finishReading({
-    kind: 'compatibility', title: 'Love Compatibility', referenceYear,
+    focus: decision, kind: 'compatibility', title: 'Love Compatibility', referenceYear,
     applications: buildReportApplications('compatibility', first, { second }),
     extras: buildReportExtras('compatibility', first, { second }),
-    headline: 'How you show care, make room for each other and find your way through differences.',
+    headline: decision.headline,
     subjects: [subject(first, 'Person A'), subject(second, 'Person B')],
     summary: [{ label: 'Person A’s starting style', text: a.personal.headline }, { label: 'Person B’s starting style', text: b.personal.headline }, { label: 'Your two-way connection', text: `${lensA.theme} · ${lensB.theme}` }],
     chapters: [
@@ -85,14 +87,14 @@ export function buildCompatibilityReading(first: SajuResult, second: SajuResult,
         `For Person A, a useful starting habit is: **${a.personal.practice}** Make room for that step without treating it as a demand the other person must carry.`,
         `For Person B, the suggested step is: **${b.personal.practice}** Ask what support would make it easier and what they would prefer to do themselves.`,
         'For example, encouragement can mean listening to a draft, taking a practical task for a day or leaving someone uninterrupted. **Agree on the kind of help and when it ends.**',
-      ], [pillarFact(first, 3, 'Person A'), pillarFact(second, 3, 'Person B'), pillarFact(first, 1, 'Person A'), pillarFact(second, 1, 'Person B')], 'Each person asks for one kind of support and names one choice they want to keep for themselves.', personalGuidance, 'support'),
+      ], [pillarFact(first, 3, 'Person A'), pillarFact(second, 3, 'Person B'), pillarFact(first, 1, 'Person A'), pillarFact(second, 1, 'Person B')], 'Each person asks for one kind of support and names one choice they want to keep for themselves.', shared(['An explicit request for help and permission to ask for a different kind.', 'A clear ending to the task one person is helping with.'], ['Turning help into control over the other person’s decision.', 'Assuming the role someone takes in a group is what they need at home.']), 'support'),
       chapter('shared-week', 'A Seven-Day Plan for Both of You', '**Try one conversation and one practical agreement.** Keep the experiment small enough for both people to take part.', [
         'In the first two days, each person describes one ordinary moment when they felt understood. Name the words or actions that helped, rather than asking the other person to guess.',
         `In the next conversation, make room for Person A’s need for **${a.relationship.need}** and Person B’s need for **${b.relationship.need}**. Both people get time to answer.`,
         'Choose one practical task or shared cost. Write down who will do each part, what help can be requested and when the agreement will be reviewed.',
         `For the week’s personal steps, Person A can try: **${a.personal.practice}** Person B can try: **${b.personal.practice}** Each person owns their own experiment.`,
         'At the end of the week, ask what helped and what did not fit. **Keep a useful agreement, change an unhelpful one and leave room for another answer.** The chart starts the discussion; the two people make the relationship.',
-      ], [pillarFact(first, 1, 'Person A'), pillarFact(second, 1, 'Person B'), `Two-way day-stem relationships: ${aToB} / ${bToA}.`], 'Book a short review in seven days. Each person brings one useful example and one request for a change.', loveGuidance, 'next-moves'),
+      ], [pillarFact(first, 1, 'Person A'), pillarFact(second, 1, 'Person B'), `Two-way day-stem relationships: ${aToB} / ${bToA}.`], 'Book a short review in seven days. Each person brings one useful example and one request for a change.', shared(['One example from each person of an agreement that helped.', 'A change either person can request at the seven-day review.'], ['Treating one week as a test of whether the entire relationship is right.', 'Keeping an agreement simply because it was the original plan.']), 'next-moves'),
     ], months: [],
     methodNotes: [...commonMethod(first, referenceYear), ...commonMethod(second, referenceYear).filter(note => /unknown birth time|time zone was provided|Birth longitude|^For /i.test(note)).map(note => 'Person B: ' + note), 'Two-way themes use each person’s day stem as a separate reference. Pair-pattern checks compare only the supplied pillars across the two charts.', 'All cross-chart pairs are shown in the notes without strength weights. There is no compatibility percentage, relationship ranking, marriage forecast or claim of psychological assessment.'],
   })
