@@ -40,6 +40,7 @@ export default function SiteInfoPage({ page, hash, onDataCleared, onOpenSaved }:
       <section id="reading-guide-save" className="fate-info-section"><p className="fate-eyebrow">04</p><h2>{t('site.guide.save.title')}</h2><p>{t('site.guide.save.text')}</p><p>{t('site.guide.print.text')}</p><div className="fate-info-actions"><button type="button" onClick={onOpenSaved} className="fate-outline-button">{t('site.saved.title')}</button><a href="#sample-report" className="fate-outline-button">{t('buyer.guide.sample')}</a></div></section>
     </>}
     {page === 'privacy' && <>
+      <p><a href="/privacy/" className="fate-outline-button">{t('site.public.privacyFull')} →</a></p>
       <section className="fate-info-section"><h2>{t('site.privacy.calc.title')}</h2><p>{t('site.privacy.calc.text')}</p><div className="fate-data-summary">{[
         ['birth', summary.rememberedBirth ? t('site.data.remembered') : t('site.data.none')],
         ['preview', summary.tabPreview ? t('site.data.remembered') : t('site.data.none')],

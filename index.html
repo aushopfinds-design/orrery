@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>The Fate Key | Your Story Holds the Key</title>
     <meta name="description" content="Explore your personality, relationships, career and life chapters with a personalised traditional Korean birth-chart reading, explained in everyday English." />
+    <link rel="canonical" href="https://thefatekey.com/" />
+    <meta name="robots" content="index,follow" />
+    <link rel="stylesheet" href="/public-pages.css" />
     <link rel="preload" as="image" href="/images/fate-key-approved-hero.webp" />
     <meta name="theme-color" content="#071b33" />
     <link rel="manifest" href="/manifest.json" />
@@ -12,17 +15,19 @@
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="en_US" />
     <meta property="og:site_name" content="The Fate Key" />
+    <meta property="og:url" content="https://thefatekey.com/" />
+    <meta property="og:image" content="https://thefatekey.com/images/fate-key-approved-hero.webp" />
     <meta property="og:title" content="The Fate Key | Your Story Holds the Key" />
     <meta property="og:description" content="Discover your personal birth-chart story in clear English." />
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content="The Fate Key | Your Story Holds the Key" />
     <script>
       (function() {
-        var s = localStorage.getItem('orrery-theme');
-        var d = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        if (s === 'dark' || (s !== 'light' && d)) {
-          document.documentElement.classList.add('dark');
-        }
+        try {
+          var s = localStorage.getItem('orrery-theme');
+          var d = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          if (s === 'dark' || (s !== 'light' && d)) document.documentElement.classList.add('dark');
+        } catch (_) {}
       })();
     </script>
 
@@ -37,7 +42,7 @@
     </noscript>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root"><!--PUBLIC_HOME_START--><main class="fate-public"><h1>The Fate Key</h1><p>Traditional Korean birth-chart readings in everyday English. Read a complete public example without entering birth details.</p><p><a href="/samples/">Sample readings</a> · <a href="/reading-guide/">Reading Guide</a> · <a href="/about/">About</a> · <a href="/privacy/">Privacy Notice</a></p></main><!--PUBLIC_HOME_END--></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://sky.told.me/</loc>
-    <lastmod>2026-02-14</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>1.0</priority>
-  </url>
+  <url><loc>https://thefatekey.com/</loc><lastmod>2026-10-16</lastmod></url>
+  <url><loc>https://thefatekey.com/about/</loc><lastmod>2026-10-16</lastmod></url>
+  <url><loc>https://thefatekey.com/reading-guide/</loc><lastmod>2026-10-16</lastmod></url>
+  <url><loc>https://thefatekey.com/privacy/</loc><lastmod>2026-10-16</lastmod></url>
+  <url><loc>https://thefatekey.com/use-and-limitations/</loc><lastmod>2026-10-16</lastmod></url>
+  <url><loc>https://thefatekey.com/samples/</loc><lastmod>2026-10-16</lastmod></url>
+  <url><loc>https://thefatekey.com/samples/year-ahead/</loc><lastmod>2026-10-16</lastmod></url>
+  <url><loc>https://thefatekey.com/samples/career-money/</loc><lastmod>2026-10-16</lastmod></url>
+  <url><loc>https://thefatekey.com/samples/love-compatibility/</loc><lastmod>2026-10-16</lastmod></url>
+  <url><loc>https://thefatekey.com/samples/complete-life-reading/</loc><lastmod>2026-10-16</lastmod></url>
+  <url><loc>https://thefatekey.com/samples/business-entrepreneurship/</loc><lastmod>2026-10-16</lastmod></url>
+  <url><loc>https://thefatekey.com/samples/everyday-balance/</loc><lastmod>2026-10-16</lastmod></url>
 </urlset>

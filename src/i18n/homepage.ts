@@ -1,5 +1,10 @@
 // English-first homepage copy, shared as the fallback for every supported locale.
 export const homepageCopy: Record<string, string> = {
+  'site.public.samples': 'Full Sample Library',
+  'site.public.about': 'About The Fate Key',
+  'site.public.privacy': 'Privacy Notice',
+  'site.public.limitations': 'Use & Limitations',
+  'site.public.privacyFull': 'Read the full Privacy Notice',
   "reading.example.eyebrow": "Your themes in everyday life",
   "reading.example.title": "An Everyday Example",
   "reading.example.response": "A response to try",

@@ -5,15 +5,15 @@ interface Props {
 }
 
 const discoveries = [
-  { key: 'personality', symbol: '✦', image: 'personality', href: '#sample-report-personality' },
-  { key: 'relationships', symbol: '♡', image: 'relationships', href: '#sample-report-love' },
+  { key: 'personality', symbol: '✦', image: 'complete', href: '#sample-report-personality' },
+  { key: 'relationships', symbol: '♡', image: 'compatibility', href: '#sample-report-love' },
   { key: 'compatibility', symbol: '♥', image: 'compatibility', href: '#love-compatibility-sample' },
-  { key: 'money', symbol: '◈', image: 'money', href: '#career-money-sample-money-commitments' },
+  { key: 'money', symbol: '◈', image: 'career', href: '#career-money-sample-money-commitments' },
   { key: 'career', symbol: '◇', image: 'career', href: '#career-money-sample' },
   { key: 'business', symbol: '♧', image: 'business', href: '#business-reading-sample' },
   { key: 'wellbeing', symbol: '☼', image: 'wellbeing', href: '#everyday-balance-sample' },
-  { key: 'timeline', symbol: '↗', image: 'timeline', href: '#sample-report-timeline' },
-  { key: 'yearAhead', symbol: '◷', image: 'year-ahead', href: '#year-ahead-sample' },
+  { key: 'timeline', symbol: '↗', image: 'complete', href: '#sample-report-timeline' },
+  { key: 'yearAhead', symbol: '◷', image: 'year', href: '#year-ahead-sample' },
 ] as const
 
 export function FateEmblem({ className = '' }: { className?: string }) {
@@ -55,7 +55,7 @@ export default function HomeOverview({ onViewSample }: Props) {
           {discoveries.map(({ key, symbol, image, href }) => (
             <a key={key} href={href} className="fate-discovery-card">
               <div className="fate-discovery-image">
-                <img src={`/images/${image}.jpg`} alt="" loading="lazy" width="800" height="500" />
+                <img src={`/images/reports/${image}-v1-640.webp`} alt="" loading="lazy" width="640" height="427" />
                 <span aria-hidden="true">{symbol}</span>
               </div>
               <div className="fate-discovery-content">
@@ -85,6 +85,7 @@ export default function HomeOverview({ onViewSample }: Props) {
           <p className="fate-eyebrow">{t('home.about.eyebrow')}</p>
           <h2>{t('home.about.title')}</h2>
           <p>{t('home.about.text')}</p>
+          <a href="/about/" className="fate-outline-button">{t('site.public.about')} →</a>
           <ol className="fate-how-steps">
             {['details', 'chart', 'reading'].map((key, i) => <li key={key}><span>{String(i + 1).padStart(2, '0')}</span><div><h3>{t(`home.how.${key}.title`)}</h3><p>{t(`home.how.${key}.text`)}</p></div></li>)}
           </ol>
