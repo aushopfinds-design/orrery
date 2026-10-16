@@ -4,6 +4,7 @@ import ProductCatalog from './ProductCatalog.tsx'
 import HomeOverview, { FateEmblem, HomeBenefits, HomeFAQ } from './HomeOverview.tsx'
 import LanguageMenu from './LanguageMenu.tsx'
 import HeroArtwork from './HeroArtwork.tsx'
+import HomeDestinyCard from './HomeDestinyCard.tsx'
 import type { BirthFormHandle, SavedFormState } from './BirthForm.tsx'
 import ProfileModal from './ProfileModal.tsx'
 import CopyButton from './CopyButton.tsx'
@@ -30,6 +31,7 @@ const CategorySamplePage = lazy(() => import('./report/CategorySamplePage.tsx'))
 const BundleSamplePage = lazy(() => import('./report/BundleSamplePage.tsx'))
 const PersonalPreviewPage = lazy(() => import('./report/PersonalPreviewPage.tsx'))
 const HomeReportPreview = lazy(() => import('./HomeReportPreview.tsx'))
+const DestinyCardStudio = lazy(() => import('./DestinyCardStudio.tsx'))
 const SAMPLE_BIRTH: BirthInput = {
   year: 1998, month: 3, day: 25, hour: 3, minute: 0,
   gender: 'M', timezone: 'America/New_York', latitude: 40.7128, longitude: -74.006,
@@ -104,13 +106,13 @@ export default function App() {
   useEffect(() => {
     if (!showingHome) return
     const section = hash.slice(1)
-    if (['home', 'birth-details', 'report-preview', 'reports', 'about', 'faq', 'discover', 'focused-reports'].includes(section)) {
+    if (['home', 'birth-details', 'report-preview', 'reports', 'about', 'faq', 'discover', 'focused-reports', 'destiny-card'].includes(section)) {
       document.getElementById(section)?.scrollIntoView({ block: 'start' })
     }
   }, [hash, showingHome])
   useEffect(() => {
     if (route === 'personal-preview') return
-    const title = route === 'help' ? t('site.help.title') : route === 'guide' ? t('site.guide.title') : route === 'privacy' ? t('site.privacy.title') : route === 'free' ? t('reading.free.title') : route === 'bundle-product' || route === 'bundle-sample' ? t('category.bundle.title') : focusCategory ? previewProduct(focusCategory).title : route === 'sample' || route === 'product' ? t('complete.title') : t('home.hero.title')
+    const title = route === 'card-studio' ? t('destiny.studio.title') : route === 'help' ? t('site.help.title') : route === 'guide' ? t('site.guide.title') : route === 'privacy' ? t('site.privacy.title') : route === 'free' ? t('reading.free.title') : route === 'bundle-product' || route === 'bundle-sample' ? t('category.bundle.title') : focusCategory ? previewProduct(focusCategory).title : route === 'sample' || route === 'product' ? t('complete.title') : t('home.hero.title')
     document.title = title + (route.includes('sample') ? ' — ' + t('site.title.sample') : '') + ' | The Fate Key'
   }, [route, focusCategory, t])
   return (
@@ -141,6 +143,7 @@ export default function App() {
               <a href="#report-preview" className="fate-hero-example-link">{t('preview.home.look')} <span aria-hidden="true">↗</span></a>
             </div>
             <div className="fate-hero-promises">{['free', 'card', 'preview'].map(key => <span key={key}>{t(`buyer.hero.${key}`)}</span>)}</div>
+            <a href="#destiny-card" className="fate-hero-card-link"><span aria-hidden="true">✦</span><span>{t('destiny.hero.link')}<small>{t('destiny.hero.note')}</small></span><span aria-hidden="true">↗</span></a>
           </div>
           <section id="birth-details" className="fate-birth-panel" aria-labelledby="birth-heading">
             <div className="fate-birth-heading"><span aria-hidden="true">✦</span><h2 id="birth-heading">{t('home.form.title')}</h2></div>
@@ -152,6 +155,7 @@ export default function App() {
       <main id="main-content" tabIndex={-1} className={showingFree || showingReport ? 'fate-main fate-main-reading' : 'fate-main'}>
         <ReportBoundary key={route}><Suspense fallback={<p role="status" className="fate-reading-loading">{t('reading.loading')}</p>}>
         {showingHome && <>
+          <HomeDestinyCard />
           <ProductCatalog />
           <HomeBenefits />
           <Suspense fallback={<section id="report-preview" className="fate-section"><p role="status">{t('reading.loading')}</p></section>}>
@@ -167,6 +171,7 @@ export default function App() {
         {route === 'bundle-product' && <CategoryReportPage kind="bundle" />}
         {route === 'category-sample' && focusCategory && <CategorySamplePage key={focusCategory} kind={focusCategory} />}
         {route === 'bundle-sample' && <BundleSamplePage />}
+        {route === 'card-studio' && <DestinyCardStudio input={birthInput} />}
         {(route === 'help' || route === 'guide' || route === 'privacy') && <SiteInfoPage key={route} page={route} hash={hash} onDataCleared={handleDataCleared} onOpenSaved={() => setProfileModalOpen(true)} />}
         {route === 'personal-preview' && previewKind && <PersonalPreviewPage key={previewKind} kind={previewKind} input={birthInput} onFirstBirth={handlePersonalBirth} />}
         {showingFree && birthInput && (
@@ -252,7 +257,7 @@ export default function App() {
         <div className="fate-footer-inner">
           <a href="#home" className="fate-brand" aria-label="The Fate Key" onClick={navigateHomeSection}><FateEmblem className="fate-brand-emblem" /><span><strong>The Fate Key</strong><small>UNLOCK A BRIGHTER YOU</small></span></a>
           <div className="fate-footer-links">{links.slice(1).map(([href,key]) => <a key={href} href={href} aria-current={currentNav === (href.startsWith('#my-report') ? '#my-report' : href) ? 'page' : undefined} onClick={navigateHomeSection}>{t(key)}</a>)}</div>
-          <div className="fate-footer-service-links"><a href="#reading-guide">{t('site.guide.title')}</a><a href="#your-data">{t('site.privacy.title')}</a><a href="#help-faq">{t('home.nav.faq')}</a></div>
+          <div className="fate-footer-service-links"><a href="#destiny-card">{t('destiny.nav')}</a><a href="#reading-guide">{t('site.guide.title')}</a><a href="#your-data">{t('site.privacy.title')}</a><a href="#help-faq">{t('home.nav.faq')}</a></div>
           <div className="fate-footer-service-links"><a href="/samples/">{t('site.public.samples')}</a><a href="/about/">{t('site.public.about')}</a><a href="/privacy/">{t('site.public.privacy')}</a><a href="/use-and-limitations/">{t('site.public.limitations')}</a></div>
           <p>{t('home.footer.note')}</p>
           <p className="fate-footer-credit">© {new Date().getFullYear()} The Fate Key · {t('home.footer.engine')} <a href="https://github.com/rath/orrery" target="_blank" rel="noopener noreferrer">Orrery</a></p>
