@@ -9,7 +9,7 @@ export default function HomeDestinyCard() {
       <h2 id="destiny-feature-title">{t('destiny.home.title')}<br /><em>{t('destiny.home.highlight')}</em></h2>
       <p className="fate-destiny-intro">{t('destiny.home.text')}</p>
       <p className="fate-destiny-included"><span aria-hidden="true">✦</span>{t('destiny.included.launch')}</p>
-      <ul className="fate-destiny-features">{['identity', 'symbols', 'sharing'].map(key => <li key={key}><span aria-hidden="true">✧</span><div><strong>{t(`destiny.feature.${key}.title`)}</strong><p>{t(`destiny.feature.${key}.text`)}</p></div></li>)}</ul>
+      <ul className="fate-destiny-features">{['identity', 'symbols', 'sharing'].map(key => <li key={key}><span aria-hidden="true">✧</span><strong>{t(`destiny.feature.${key}.title`)}</strong></li>)}</ul>
       <div className="fate-destiny-actions"><a href="#card-studio" className="fate-complete-primary">{t('destiny.home.explore')} <span aria-hidden="true">↗</span></a><a href="#birth-details" className="fate-destiny-text-link">{t('destiny.home.start')} →</a></div>
       <p className="fate-destiny-small">{t('destiny.home.availability')}</p>
     </div>

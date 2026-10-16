@@ -1,0 +1,84 @@
+/* A shorter entry form and a real Destiny Card in the first-screen composition. */
+.fate-site .fate-hero-layout:not([hidden]) { display:grid; grid-template-columns:minmax(0,1.08fr) minmax(0,.92fr); gap:24px 58px; align-items:start; padding:30px 32px 48px; }
+.fate-site .fate-hero-layout[hidden] { display:none; }
+.fate-site .fate-hero-intro { grid-column:1; grid-row:1; max-width:none; }
+.fate-site .fate-hero-intro h1 { font-size:clamp(34px,3.5vw,45px); line-height:1.1; margin-top:11px; }
+.fate-site .fate-hero-description { font-size:14px; line-height:1.7; max-width:480px; margin-top:15px; }
+.fate-site .fate-hero-reading-actions { margin-top:18px; gap:15px; }
+.fate-site .fate-hero-promises { margin-top:15px; font-size:11px; }
+.fate-site .fate-birth-panel { grid-column:1; grid-row:2; margin:8px 0 0; width:100%; max-width:none; border-radius:16px; }
+.fate-site .fate-birth-heading { padding:8px 21px; }
+.fate-site .fate-birth-heading h2 { font-size:14px; }
+.fate-site .fate-birth-description { margin:13px 16px 0; font-size:11px; }
+.fate-site .fate-birth-form-compact { padding:14px 20px 17px; }
+.fate-birth-form-compact fieldset.mt-4 { margin-top:12px; }
+.fate-site .fate-birth-form-compact select,.fate-site .fate-birth-form-compact input:not([type=checkbox]),.fate-site .fate-birth-form-compact [role=combobox] { min-height:44px; font-size:16px; }
+.fate-birth-form-compact .fate-birth-place-fields { display:grid; grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr); gap:12px; align-items:start; }
+.fate-birth-form-compact .fate-birth-place-fields > div { min-width:0; }
+.fate-birth-form-compact .fate-birth-place-fields select { margin-bottom:0; }
+.fate-birth-form-compact .fate-city-attribution { font-size:9px; line-height:1.5; margin-top:5px; }
+.fate-birth-location-details { margin-top:7px; color:#7c6548; font-size:11px; }
+.fate-birth-location-details > summary { width:fit-content; padding:6px 0; cursor:pointer; }
+.fate-birth-location-details > div { margin:7px 0 3px; padding:13px; background:#f2e9d9; border:1px solid #ddc8a6; border-radius:8px; }
+.fate-birth-location-details .fate-location-mode { display:flex; width:fit-content; max-width:100%; height:auto; min-height:40px; }
+.fate-birth-location-details .fate-location-mode button { padding:7px 11px; font-size:12px; }
+.fate-birth-location-details p { font-size:11px; }
+.fate-site .fate-birth-form-compact button[type=submit] { min-height:46px; margin-top:15px; }
+.fate-birth-form-compact > div > div > p:last-child { margin-top:10px; font-size:10px; line-height:1.6; }
+.fate-hero-destiny { grid-column:2; grid-row:1 / span 2; align-self:center; display:flex; flex-direction:column; align-items:center; gap:23px; min-width:0; padding:24px 0 12px; }
+.fate-hero-destiny-art { position:relative; isolation:isolate; width:min(100%,370px); transform:rotate(2deg); }
+.fate-hero-destiny-art::before { content:''; position:absolute; z-index:-1; inset:6% -20%; background:radial-gradient(ellipse,#d2ac5838,transparent 68%); border:1px solid #ddbd762c; border-radius:50%; transform:rotate(-18deg); pointer-events:none; }
+.fate-hero-destiny .fate-destiny-video { overflow:visible; background:transparent; }
+.fate-hero-destiny video { border-radius:17px; box-shadow:0 25px 60px #0009,0 0 35px #f4c47120; }
+.fate-hero-destiny .fate-destiny-motion { position:relative; left:auto; bottom:auto; transform:none; margin:12px auto 0; min-height:34px; font-size:10px; }
+.fate-hero-destiny-copy { position:relative; max-width:320px; text-align:center; }
+.fate-hero-destiny-copy .fate-eyebrow { font-size:10px; letter-spacing:.23em; color:#d7b16b; }
+.fate-hero-destiny-copy h2 { margin:9px 0 11px; color:#f7e3bc; font:400 32px/1.15 Georgia,serif; }
+.fate-hero-destiny-copy > p:not(.fate-eyebrow) { font-size:12px; line-height:1.7; color:#d0c7b6; }
+.fate-hero-destiny-copy > a { display:inline-flex; align-items:center; justify-content:center; gap:12px; min-height:42px; margin-top:16px; padding:10px 19px; border:1px solid #cfac6b99; border-radius:99px; color:#f3d797; background:#071b29b3; font-size:12px; text-decoration:none; }
+.fate-hero-destiny-copy > small { display:block; margin:12px auto 0; color:#aab8c2; font-size:9px; line-height:1.7; }
+.fate-site .fate-hero-art { top:110px; height:calc(100% - 110px); width:64%; right:0; opacity:.2; }
+.fate-site .fate-hero-motion-button { top:auto; bottom:22px; right:22px; width:34px; height:34px; }
+.fate-destiny-feature .fate-destiny-features { display:flex; flex-wrap:wrap; gap:12px 17px; margin:22px 0; }
+.fate-destiny-feature .fate-destiny-features li { gap:7px; align-items:center; }
+.fate-destiny-feature .fate-destiny-features strong { font-size:11px; }
+.fate-destiny-feature .fate-destiny-stage-card { width:min(100%,370px); }
+@media (max-width:1100px) and (min-width:901px) {
+  .fate-site .fate-hero-layout:not([hidden]) { gap:23px 30px; grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr); padding-inline:25px; }
+  .fate-site .fate-hero-intro h1 { font-size:35px; }
+  .fate-site .fate-hero-reading-actions { flex-wrap:wrap; gap:10px 14px; }
+  .fate-hero-destiny { padding-inline:8px; }
+  .fate-hero-destiny-copy h2 { font-size:29px; }
+}
+@media (max-width:900px) {
+  .fate-site .fate-hero-layout:not([hidden]) { grid-template-columns:minmax(0,1fr); gap:24px; padding:25px 22px 38px; }
+  .fate-site .fate-hero-intro { grid-column:1; grid-row:1; width:100%; max-width:600px; margin:0 auto; }
+  .fate-site .fate-hero-intro h1 { font-size:clamp(31px,5.2vw,42px); max-width:590px; }
+  .fate-site .fate-birth-panel { grid-column:1; grid-row:3; max-width:600px; margin:8px auto 0; }
+  .fate-hero-destiny { grid-column:1; grid-row:2; align-self:start; display:grid; grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr); gap:24px; width:100%; max-width:600px; padding:20px 23px; margin:0 auto; border:1px solid #c5a16155; border-radius:14px; background:linear-gradient(135deg,#132c3aaf,#041522aa); }
+  .fate-hero-destiny-art { max-width:200px; }
+  .fate-hero-destiny-copy { text-align:left; max-width:none; }
+  .fate-hero-destiny-copy h2 { font-size:30px; }
+  .fate-hero-destiny-copy > a { font-size:12px; margin-top:14px; }
+  .fate-site .fate-hero-art { top:75px; height:calc(100% - 75px); width:100%; opacity:.13; mask-image:linear-gradient(180deg,#000,transparent 80%); }
+}
+@media (max-width:520px) {
+  .fate-site .fate-hero-layout:not([hidden]) { padding:20px 16px 30px; gap:22px; }
+  .fate-site .fate-hero-intro h1 { font-size:31px; }
+  .fate-site .fate-hero-description { font-size:13px; margin-top:12px; }
+  .fate-site .fate-hero-reading-actions { gap:11px; margin-top:16px; flex-wrap:wrap; }
+  .fate-site .fate-hero-promises { font-size:10px; gap:10px; }
+  .fate-hero-destiny { gap:16px; padding:17px 15px; grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr); }
+  .fate-hero-destiny-copy .fate-eyebrow { font-size:8px; letter-spacing:.15em; }
+  .fate-hero-destiny-copy h2 { font-size:24px; margin-top:7px; }
+  .fate-hero-destiny-copy > p:not(.fate-eyebrow) { font-size:10px; }
+  .fate-hero-destiny-copy > a { min-height:40px; padding:9px 12px; font-size:10px; gap:7px; }
+  .fate-hero-destiny-copy > small { font-size:8px; margin-top:9px; }
+  .fate-hero-destiny .fate-destiny-motion { max-width:100%; padding:6px 8px; min-height:32px; font-size:8px; }
+  .fate-site .fate-birth-form-compact { padding:12px 15px 16px; }
+  .fate-birth-form-compact .fate-birth-place-fields { grid-template-columns:minmax(0,1fr); gap:9px; }
+  .fate-site .fate-hero-motion-button { bottom:10px; right:10px; width:28px; height:28px; }
+  .fate-destiny-feature .fate-destiny-features { gap:10px 14px; margin:0; }
+}
+@media (prefers-reduced-motion:reduce) { .fate-hero-destiny-art { transform:none; } }
+@media print { .fate-hero-destiny { display:none; } }

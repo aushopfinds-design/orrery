@@ -5,6 +5,7 @@ import { getCachedBirthplaces, MAX_PLACE_QUERY_LENGTH, MIN_PLACE_QUERY_LENGTH, n
 import { useLocale } from '../i18n/index.ts'
 
 interface Props {
+  compact?: boolean
   countryCode: string
   selectedCity: City | null
   onSelect: (city: City) => void
@@ -21,7 +22,7 @@ const inputClass =
   'w-full min-h-12 pl-3 pr-9 border border-[#ddcbb1] rounded-lg text-base text-[#203049] bg-[#fffdf9] ' +
   'focus:outline-none focus:ring-2 focus:ring-[#c99b56]/35 focus:border-[#b78a47] transition-all'
 
-export default function CityCombobox({ countryCode, selectedCity, onSelect, onSelectionInvalidated }: Props) {
+export default function CityCombobox({ countryCode, selectedCity, onSelect, onSelectionInvalidated, compact = false }: Props) {
   const { t, locale } = useLocale()
   const [query, setQuery] = useState('')
   const [isOpen, setIsOpen] = useState(false)
@@ -142,7 +143,7 @@ export default function CityCombobox({ countryCode, selectedCity, onSelect, onSe
           aria-expanded={isOpen}
           aria-controls={isOpen ? listboxId : undefined}
           aria-autocomplete="list"
-          aria-describedby={hintId}
+          aria-describedby={!compact || isOpen ? hintId : undefined}
           aria-activedescendant={highlightIndex >= 0 && highlightIndex < flatResults.length ? optionId(highlightIndex) : undefined}
           autoComplete="off"
           spellCheck={false}
@@ -182,8 +183,8 @@ export default function CityCombobox({ countryCode, selectedCity, onSelect, onSe
           </ul>
         )}
       </div>
-      <p id={hintId} className="mt-1.5 text-xs text-[#755632] leading-relaxed">{t('city.searchHint')}</p>
-      <p className="mt-1 text-[10px] text-[#85715a] leading-relaxed">
+      {(!compact || isOpen) && <p id={hintId} className="mt-1.5 text-xs text-[#755632] leading-relaxed">{t('city.searchHint')}</p>}
+      <p className="fate-city-attribution mt-1 text-[10px] text-[#85715a] leading-relaxed">
         {t('city.attribution')}{' '}
         <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer" className="underline">© OpenStreetMap contributors</a>
         {' · '}<a href="https://photon.komoot.io/" target="_blank" rel="noreferrer" className="underline">Photon</a>

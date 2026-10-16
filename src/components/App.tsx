@@ -5,6 +5,7 @@ import HomeOverview, { FateEmblem, HomeBenefits, HomeFAQ } from './HomeOverview.
 import LanguageMenu from './LanguageMenu.tsx'
 import HeroArtwork from './HeroArtwork.tsx'
 import HomeDestinyCard from './HomeDestinyCard.tsx'
+import HeroDestinyCard from './HeroDestinyCard.tsx'
 import type { BirthFormHandle, SavedFormState } from './BirthForm.tsx'
 import ProfileModal from './ProfileModal.tsx'
 import CopyButton from './CopyButton.tsx'
@@ -142,14 +143,14 @@ export default function App() {
               <a href="#birth-details" className="fate-complete-primary">{t('preview.home.start')} <span aria-hidden="true">→</span></a>
               <a href="#report-preview" className="fate-hero-example-link">{t('preview.home.look')} <span aria-hidden="true">↗</span></a>
             </div>
-            <div className="fate-hero-promises">{['free', 'card', 'preview'].map(key => <span key={key}>{t(`buyer.hero.${key}`)}</span>)}</div>
-            <a href="#destiny-card" className="fate-hero-card-link"><span aria-hidden="true">✦</span><span>{t('destiny.hero.link')}<small>{t('destiny.hero.note')}</small></span><span aria-hidden="true">↗</span></a>
+            <div className="fate-hero-promises">{['free', 'card'].map(key => <span key={key}>{t(`buyer.hero.${key}`)}</span>)}</div>
           </div>
           <section id="birth-details" className="fate-birth-panel" aria-labelledby="birth-heading">
             <div className="fate-birth-heading"><span aria-hidden="true">✦</span><h2 id="birth-heading">{t('home.form.title')}</h2></div>
             <p className="fate-birth-description">{t('home.form.text')}</p>
-            {showingHome && <BirthForm ref={birthFormRef} onSubmit={handleSubmit} externalState={externalFormState} onExternalStateConsumed={() => setExternalFormState(null)} />}
+            {showingHome && <BirthForm compact ref={birthFormRef} onSubmit={handleSubmit} externalState={externalFormState} onExternalStateConsumed={() => setExternalFormState(null)} />}
           </section>
+          {showingHome && <HeroDestinyCard />}
         </div>
       </header>
       <main id="main-content" tabIndex={-1} className={showingFree || showingReport ? 'fate-main fate-main-reading' : 'fate-main'}>

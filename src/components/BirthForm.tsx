@@ -28,6 +28,7 @@ export interface BirthFormHandle {
 }
 
 interface Props {
+  compact?: boolean
   onSubmit: (input: BirthInput) => void
   submitLabel?: string
   initialInput?: BirthInput
@@ -51,7 +52,7 @@ const inputClass =
   'focus:outline-none focus:ring-2 focus:ring-[#c99b56]/35 focus:border-[#b78a47] transition-all'
 
 
-const BirthForm = forwardRef<BirthFormHandle, Props>(function BirthForm({ onSubmit, externalState, onExternalStateConsumed, submitLabel, initialInput, rememberInput = true }, ref) {
+const BirthForm = forwardRef<BirthFormHandle, Props>(function BirthForm({ onSubmit, externalState, onExternalStateConsumed, submitLabel, initialInput, rememberInput = true, compact = false }, ref) {
   const { t, locale } = useLocale()
   const [saved] = useState<SavedFormState | null>(() => {
     const remembered = rememberInput ? readBirthFormState() : null
@@ -292,8 +293,17 @@ const BirthForm = forwardRef<BirthFormHandle, Props>(function BirthForm({ onSubm
     onSubmit(birthInput)
   }
 
+  const locationModeControls = <div className="fate-location-mode inline-flex h-10 rounded-lg bg-[#f0e5d6] p-1 mb-2">
+    <button type="button" aria-pressed={!manualCoords} onClick={() => { setManualCoords(false); setTimezoneError(null); if (selectedCity) syncCoordinates(selectedCity.lat, selectedCity.lon) }} className={`px-4 text-base rounded-md transition-all ${!manualCoords ? 'bg-[#e9bf81] text-[#10243b] shadow-sm font-medium' : 'text-[#786349] hover:text-[#273b52]'}`}>{t('form.citySearch')}</button>
+    <button type="button" aria-pressed={manualCoords} onClick={() => { setManualCoords(true); setTimezoneError(null) }} className={`px-4 text-base rounded-md transition-all ${manualCoords ? 'bg-[#e9bf81] text-[#10243b] shadow-sm font-medium' : 'text-[#786349] hover:text-[#273b52]'}`}>{t('form.coordInput')}</button>
+  </div>
+  const locationDiagnostics = <>
+    {locationSummary && <p className="mt-2 text-xs text-[#755632] leading-relaxed">{locationSummary}</p>}
+    {timezoneDisplayLabel && <p className="mt-1.5 text-sm text-[#755632] leading-relaxed">{t('form.timezoneDefault')} {timezoneDisplayLabel}{isDstActive && <span className="block text-xs mt-0.5">↳ {t('form.dstActive')}</span>}</p>}
+  </>
+
   return (
-    <form onSubmit={handleSubmit} className="fate-birth-form w-full min-w-0 p-4 pt-3 sm:px-6 sm:pb-5">
+    <form onSubmit={handleSubmit} className={`fate-birth-form ${compact ? 'fate-birth-form-compact' : ''} w-full min-w-0 p-4 pt-3 sm:px-6 sm:pb-5`}>
       <div className="w-full">
         {/* Compact birth form for the English-first experience */}
         <div className="w-full min-w-0">
@@ -361,7 +371,7 @@ const BirthForm = forwardRef<BirthFormHandle, Props>(function BirthForm({ onSubm
                 <span className="text-sm text-[#755632]">{t('form.unknown')}</span>
               </label>
             </div>
-            <div className="grid grid-cols-2 gap-2 items-end sm:grid-cols-[1fr_1fr_1.35fr]">
+            <div className="fate-birth-time-row grid grid-cols-2 gap-2 items-end sm:grid-cols-[1fr_1fr_1.35fr]">
               <select
                 aria-label={t('home.form.hour')}
                 value={hour}
@@ -412,39 +422,7 @@ const BirthForm = forwardRef<BirthFormHandle, Props>(function BirthForm({ onSubm
           {/* 위치 */}
           <fieldset className="mt-4">
             <legend className="text-sm font-medium text-[#755632] mb-2">{t('form.birthPlace')}</legend>
-            <div className="inline-flex h-10 rounded-lg bg-[#f0e5d6] p-1 mb-2">
-              <button
-                type="button"
-                onClick={() => {
-                  setManualCoords(false)
-                  setTimezoneError(null)
-                  if (selectedCity) {
-                    syncCoordinates(selectedCity.lat, selectedCity.lon)
-                  }
-                }}
-                className={`px-4 text-base rounded-md transition-all ${
-                  !manualCoords
-                    ? 'bg-[#e9bf81] text-[#10243b] shadow-sm font-medium'
-                    : 'text-[#786349] hover:text-[#273b52]'
-                }`}
-              >
-                {t('form.citySearch')}
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  setManualCoords(true)
-                  setTimezoneError(null)
-                }}
-                className={`px-4 text-base rounded-md transition-all ${
-                  manualCoords
-                    ? 'bg-[#e9bf81] text-[#10243b] shadow-sm font-medium'
-                    : 'text-[#786349] hover:text-[#273b52]'
-                }`}
-              >
-                {t('form.coordInput')}
-              </button>
-            </div>
+            {!compact && locationModeControls}
             {manualCoords ? (
               <div className="grid grid-cols-2 gap-2">
                 <div>
@@ -479,32 +457,15 @@ const BirthForm = forwardRef<BirthFormHandle, Props>(function BirthForm({ onSubm
                 </div>
               </div>
             ) : (
-              <>
-                <label htmlFor="birth-country" className="block text-sm text-[#755632] mb-1">{t('city.country')}</label>
+              <div className={compact ? 'fate-birth-place-fields' : undefined}>
+                <div><label htmlFor="birth-country" className="block text-sm text-[#755632] mb-1">{t('city.country')}</label>
                 <select id="birth-country" value={countryCode} className={`${selectClass} mb-3`} onChange={e => { setCountryCode(e.target.value); clearCitySelection() }}>
                   {countries.map(country => <option key={country.code} value={country.code}>{country.name}</option>)}
-                </select>
-                <CityCombobox key={countryCode} countryCode={countryCode} selectedCity={selectedCity} onSelect={handleCitySelect} onSelectionInvalidated={clearCitySelection} />
-                {locationSummary && <p className="mt-2 text-xs text-[#755632] leading-relaxed">
-                  {locationSummary}
-                </p>}
-              </>
+                </select></div>
+                <CityCombobox key={countryCode} compact={compact} countryCode={countryCode} selectedCity={selectedCity} onSelect={handleCitySelect} onSelectionInvalidated={clearCitySelection} />
+              </div>
             )}
-            {manualCoords && (
-              <p className="mt-1.5 text-sm text-[#755632] leading-relaxed">
-                {locationSummary}
-              </p>
-            )}
-            {timezoneDisplayLabel && (
-              <p className="mt-1.5 text-sm text-[#755632] leading-relaxed">
-                {t('form.timezoneDefault')} {timezoneDisplayLabel}
-                {isDstActive && (
-                  <span className="block text-xs mt-0.5">
-                    ↳ {t('form.dstActive')}
-                  </span>
-                )}
-              </p>
-            )}
+            {compact ? <details className="fate-birth-location-details"><summary>{t('entry.form.locationDetails')}</summary><div>{locationModeControls}{locationDiagnostics}</div></details> : locationDiagnostics}
             {timezoneError && (
               <div role="alert" className="mt-2 px-3 py-2 bg-red-50 dark:bg-red-950 border border-red-200 dark:border-red-800 rounded-lg text-sm text-red-700 dark:text-red-400 leading-relaxed">
                 {timezoneError}
