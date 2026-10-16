@@ -15,8 +15,10 @@ import { buildReadingBrief, readingBriefText } from './reading-brief.ts'
 import { THEME_FAMILY as FAMILY } from './theme-family.ts'
 import { buildReportApplications, applicationText } from './report-applications.ts'
 import type { ReportApplication } from './report-applications.ts'
+import { explainCalculation, PAIR_METHOD_NOTE } from './calculation-notes.ts'
+import type { CalculationExplanation } from './calculation-notes.ts'
 
-export const REPORT_EDITION = '2026.10'
+export const REPORT_EDITION = '2026.10-r1'
 
 export interface ReadingConnection {
   id: string
@@ -47,6 +49,7 @@ export interface CompleteReadingPeriod extends ReadingPeriod {
 }
 export interface ElementCount { element: ReadingElement; count: number }
 export interface CompleteReading {
+  calculation: CalculationExplanation
   title: string
   birthSummary: string
   pillarSummary: string[]
@@ -404,6 +407,7 @@ export function buildCompleteReading(result: SajuResult, asOfYear = new Date().g
     guidance: { keepClose: [personal.keepClose[0], work.keepClose[0], relationship.keepClose[0]], watchFor: [personal.watchFor[0], work.watchFor[0], relationship.watchFor[0]] },
   }
   const methodNotes = [
+    ...explainCalculation(result.input).notes,
     ...base.caveats.filter(note => !note.startsWith('Each monthly chapter') && !note.startsWith('Monthly headlines')),
     'Visible element counts are not a full assessment of day-master strength, chart structure or useful elements. This report does not claim to diagnose those advanced layers.',
     'The month-branch relationship uses the principal inner stem. Inner-stem money checks list symbols without assigning strength weights.',
@@ -411,6 +415,7 @@ export function buildCompleteReading(result: SajuResult, asOfYear = new Date().g
     'The situation pages are optional editorial exercises. Birth-chart themes shape their personal checks and practice details; the situation itself is not inferred from the chart. Compare the choices with actual circumstances and review what happens.',
     'People, habits and work settings are suggested from the chapter themes. Color palettes and He Tu number pairs are optional symbols linked to the birth-day element, not lucky-event calculations or useful-element prescriptions.',
     'Combination and clash patterns do not automatically predict illness, separation or any other event.',
+    PAIR_METHOD_NOTE,
     'This report covers one person. It does not include a two-person compatibility reading or a separate annual report.',
     ...(result.input.unknownTime ? ['An unknown birth time excludes all hour facts and pair relationships. Ten-year starting dates remain approximate until the time is confirmed.'] : []),
   ]
@@ -431,11 +436,11 @@ export function buildCompleteReading(result: SajuResult, asOfYear = new Date().g
     ...summary.map(item => `${item.label}: ${item.text}`),
     'How your themes work together', ...connections.flatMap(item => [item.title, item.basis, item.text, 'Ask yourself: ' + item.question, 'From your chart: ' + item.evidence.join(' ')]),
     ...chapters.flatMap(chapterText),
-    '08 · Your Ten-Year Chapters', ...periods.map(period => `${period.period} · ${period.pillar} · ${period.headline}\n${period.text}`),
+    '08 · Your Life Chapters', ...periods.map(period => `${period.period} · ${period.pillar} · ${period.headline}\n${period.text}`),
     ...chapterText(actionPlan),
     'Situations you can work through', ...applications.map(applicationText),
     reportExtrasText(extras),
     'How this reading is prepared', ...methodNotes,
   ].join('\n\n'))
-  return { title: 'Complete Life Reading', birthSummary: formatBirth(result.input), pillarSummary: pillarSummary(result), dayMaster: self.name, headline: personal.headline, summary, connections, referenceYear: asOfYear, chapters, periods, actionPlan, applications, extras, elements: c.elements, visibleMarkers: result.input.unknownTime ? 6 : 8, methodNotes, fullText, wordCount: fullText.split(/\s+/).length }
+  return { calculation: explainCalculation(result.input), title: 'Complete Life Reading', birthSummary: formatBirth(result.input), pillarSummary: pillarSummary(result), dayMaster: self.name, headline: personal.headline, summary, connections, referenceYear: asOfYear, chapters, periods, actionPlan, applications, extras, elements: c.elements, visibleMarkers: result.input.unknownTime ? 6 : 8, methodNotes, fullText, wordCount: fullText.split(/\s+/).length }
 }

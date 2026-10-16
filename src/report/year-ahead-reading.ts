@@ -8,6 +8,7 @@ import { FOCUS_WORK, MONTH_TASKS } from './category-profiles.ts'
 import { WORK_PROFILES } from './reading-profiles.ts'
 import { LIFE_FOCUS } from './reading-scenarios.ts'
 import { annualExample, monthlySituation } from './personal-examples.ts'
+import { REFERENCE_CLOCK_NOTE } from './calculation-notes.ts'
 
 const MONTH_FOCUS = [
   ['Review a Promise', 'Which existing promise needs a clearer agreement?'],
@@ -22,6 +23,21 @@ const MONTH_FOCUS = [
   ['Listen before Solving', 'Does this person want an idea, practical help or simply a chance to be heard?'],
   ['Finish One Useful Thing', 'Which open task would be most useful to complete before beginning another?'],
   ['Review What Helped', 'What worked in practice, and what no longer deserves a place in my plan?'],
+] as const
+
+const MONTH_REVIEW = [
+  { action: 'Write the scope, owner and next review date of one existing promise.', keep: 'One agreement with a clear owner and review date.', watch: 'Renewing a promise without checking what it now requires.', review: 'Compare the agreed task with what was actually delivered. Which expectation still needs to be said aloud?' },
+  { action: 'Make a version of the first step that fits into twenty minutes.', keep: 'A small first result you can finish with the resources already available.', watch: 'Adding tools, purchases or extra goals before the first attempt.', review: 'Did the first attempt answer a useful question? Name the next thing to test, rather than expanding the whole plan.' },
+  { action: 'Put one request into a single sentence and ask the other person what they understood.', keep: 'A direct request with enough room for an honest answer.', watch: 'Treating a hint or a silent expectation as an agreement.', review: 'Write down the request and the answer separately. Did you agree on the same practical next step?' },
+  { action: 'List the upfront cost, ongoing work and person responsible for each part of one commitment.', keep: 'The full time and cost of an offer, including follow-up.', watch: 'Comparing a headline price while overlooking recurring work.', review: 'Which cost or responsibility was missing from the first description? Update the plan before extending it.' },
+  { action: 'Track one recurring task for a week and choose a realistic stopping point.', keep: 'A workable finishing rule for the task that keeps expanding.', watch: 'Using every spare moment to improve something already usable.', review: 'Was the routine repeatable on an ordinary week? Keep the part that helped and shorten the part that expanded.' },
+  { action: 'Save one real example of a skill you used and ask for one specific observation about it.', keep: 'A finished example that shows what you can already do.', watch: 'Collecting more preparation without trying the skill in a real task.', review: 'What did the example demonstrate, and what still needs practice? Choose one small change for the next version.' },
+  { action: 'Write who will handle each part of a shared task, including the less visible follow-up.', keep: 'A fair division of both visible tasks and follow-up.', watch: 'Assuming the most reliable person will absorb every unassigned task.', review: 'Compare the agreed responsibilities with the work each person actually did. Reassign one part if needed.' },
+  { action: 'For one decision, name the missing fact and set a time to return to it.', keep: 'A useful pause with a clear return time and one fact to check.', watch: 'Turning a pause into an open-ended delay or answering under avoidable pressure.', review: 'Did the pause bring useful information? Decide what can now be answered and what remains uncertain.' },
+  { action: 'Ask someone to comment on one specific part of a recent piece of work.', keep: 'An observation about the work that you can act on.', watch: 'Asking whether you are good enough when you need feedback on one detail.', review: 'Which observation changed the next version? Set aside vague praise or criticism that gives you no useful action.' },
+  { action: 'Ask someone close whether they want listening, ideas or practical help before you respond.', keep: 'The kind of support the other person actually requested.', watch: 'Offering a solution before understanding what the conversation is for.', review: 'Did your response match the support requested? Ask what helped rather than judging the conversation by your intention.' },
+  { action: 'Choose one open task to finish, reduce or deliberately stop before starting another.', keep: 'A clear decision about an unfinished commitment.', watch: 'Starting something new to avoid deciding what to do with the old task.', review: 'What was completed, changed or stopped? Notice whether closing the task freed time or clarified the next priority.' },
+  { action: 'Review three real results from the year and choose one habit to carry forward.', keep: 'A short record of what helped in your actual circumstances.', watch: 'Judging the year by the original plan while ignoring what changed.', review: 'Keep one useful habit, revise one assumption and release one commitment. Use those three decisions to shape the next year.' },
 ] as const
 
 export function buildYearAheadReading(result: SajuResult, year = new Date().getFullYear() + 1) {
@@ -51,15 +67,16 @@ export function buildYearAheadReading(result: SajuResult, year = new Date().getF
     const dayPattern = analyzePillarRelations(pillar, c.day.pillar.ganzi)
     const clash = [...dayPattern.stem, ...dayPattern.branch].some(item => item.type === '沖')
     const combine = [...dayPattern.stem, ...dayPattern.branch].some(item => item.type === '合')
-    const practice = MONTH_TASKS[FAMILY[god]][index % 3]
+    const exercise = MONTH_REVIEW[index]
+    const practice = `${MONTH_TASKS[FAMILY[god]][index % 3]} ${exercise.action}`
     return {
       ...chapter(`month-${index + 1}`, label, `**${theme.title}.** ${MONTH_FOCUS[index][0]}.`, [
         `The monthly reference adds **${theme.theme}**. For ${label}, use this question: **${MONTH_FOCUS[index][1]}**`,
         `**A situation to explore:** ${situation.scene} Before agreeing, ask: **“${situation.question}”**`,
         branchGod === god ? `Both parts repeat the same theme in this reference. **${practice}** Then review the real result.` : `The second part adds **${innerTheme.theme}**. Leave room for it when you try this step: **${practice}**`,
-        `**Check both themes:** The main focus is **${theme.theme}**. The second focus is **${innerTheme.theme}**. Ask: “${monthlyLife.yearQuestion}” ${clash ? 'The checked pair shows a clash. Discuss two different needs without treating the symbol as a prediction.' : combine ? 'The checked pair shows a combination. Agree how to share the next step; the symbol does not promise an easy month.' : 'The checked pair has no direct combination or clash. Use the answers to plan one small test.'}`,
-        `**Outside work:** ${monthlyLife.connection} ${branchGod !== god ? `A second idea: ${LIFE_FOCUS[branchGod].connection} ` : ''}Your own relationship theme values **${c.relationship.need}**.`,
-      ], [`Reference ${referenceDate}, 12:00 Asia/Seoul: year ${yearPillar}; month ${pillar}.`, `Month stem ${pillar[0]} relative to birth-day stem ${c.day.pillar.stem}: ${god}; principal inner stem ${getJeonggi(pillar[1])}: ${branchGod}.`, ...pairFacts(pillar, c.day.pillar.ganzi, 'Month / birth day'), ...pairFacts(pillar, c.month.pillar.ganzi, 'Month / birth month')], practice, { keepClose: [theme.keepClose[0]], watchFor: [theme.watchFor[0]] }, 'timeline'),
+        `**Review this month's attempt:** ${exercise.review} ${clash ? 'The checked clash adds a question about two different needs.' : combine ? 'The checked combination adds a question about how to share the next step.' : ''}`.trim(),
+        `**Outside work:** ${monthlyLife.connection}${branchGod !== god ? ` A second idea: ${LIFE_FOCUS[branchGod].connection}` : ''}`,
+      ], [`Reference ${referenceDate}, 12:00 Asia/Seoul (shared comparison clock, not birthplace): year ${yearPillar}; month ${pillar}.`, `Month stem ${pillar[0]} relative to birth-day stem ${c.day.pillar.stem}: ${god}; principal inner stem ${getJeonggi(pillar[1])}: ${branchGod}.`, ...pairFacts(pillar, c.day.pillar.ganzi, 'Month / birth day'), ...pairFacts(pillar, c.month.pillar.ganzi, 'Month / birth month')], practice, { keepClose: [exercise.keep, theme.keepClose[0]], watchFor: [exercise.watch, theme.watchFor[0]] }, 'timeline'),
       label, referenceDate, pillar, yearPillar,
     }
   })
@@ -116,6 +133,6 @@ export function buildYearAheadReading(result: SajuResult, year = new Date().getF
         'The twelve monthly pages below give calculated themes and guided questions. **They do not promise twelve sets of events.** Read the references, try a useful step and review what really happened.',
       ], [pillarFact(result, 1), `Annual stem relationship ${annualGod}; annual principal inner-stem relationship ${annualInnerGod}.`], 'Book a brief monthly review. Record one result, one changed assumption and one next step.', { keepClose: [annual.keepClose[0], c.personal.keepClose[0]], watchFor: [annual.watchFor[0], 'Keeping a yearly plan unchanged after the circumstances have changed.'] }, 'next-moves'),
     ], months,
-    methodNotes: [...commonMethod(result, year), `The annual label uses the year pillar sampled at 12:00 Asia/Seoul on 15 July ${year}. It does not assume that the Saju year begins on 1 January.`, 'Every monthly reference is calculated separately for the 15th at 12:00 Asia/Seoul. It is a representative point, not the start or the full span of a Gregorian calendar month. Solar-term boundaries can change the pillar within a calendar month.', 'The monthly comparison uses the natal day stem, the reference month stem, its principal inner stem and pair-pattern checks against the natal day and month. It does not use guessed birth-hour relationships.', 'The sequence of monthly planning topics is editorial. The traditional comparison themes come from the calculated symbols. Neither part is an event forecast or a calculation of lucky dates.'],
+    methodNotes: [...commonMethod(result, year), REFERENCE_CLOCK_NOTE, `The annual label uses the year pillar sampled at 12:00 Asia/Seoul on 15 July ${year}. It does not assume that the Saju year begins on 1 January.`, 'Every monthly reference is calculated separately for the 15th at 12:00 Asia/Seoul. It is a representative point, not the start or the full span of a Gregorian calendar month. Solar-term boundaries can change the pillar within a calendar month.', 'The monthly comparison uses the natal day stem, the reference month stem, its principal inner stem and pair-pattern checks against the natal day and month. It does not use guessed birth-hour relationships.', 'The sequence of monthly planning topics is editorial. The traditional comparison themes come from the calculated symbols. Neither part is an event forecast or a calculation of lucky dates.'],
   })
 }

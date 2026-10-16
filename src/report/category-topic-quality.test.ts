@@ -45,10 +45,12 @@ describe('Each focused report answers the question its buyer chose', () => {
       expect(guide).not.toMatch(/customer|portfolio|interview/i)
       expect(report.chapters[0].paragraphs.join(' ')).toContain('personal plan')
       expect(report.chapters.find(item => item.id === 'annual-plan')!.paragraphs.join(' ')).toContain('What will I begin?')
+      expect(report.chapters.find(item => item.id === 'annual-connections')!.paragraphs.join(' ')).toContain(RELATIONSHIP_PROFILES[chart.pillars[1].pillar.branch].need)
       for (const month of report.months) {
         expect(month.paragraphs.some(text => text.startsWith('**Outside work:**'))).toBe(true)
-        expect(month.paragraphs.join(' ')).toContain(RELATIONSHIP_PROFILES[chart.pillars[1].pillar.branch].need)
+        expect(month.paragraphs.some(text => text.startsWith("**Review this month's attempt:**"))).toBe(true)
       }
+      expect(new Set(report.months.map(month => month.tryThis)).size).toBe(12)
     }
   })
 

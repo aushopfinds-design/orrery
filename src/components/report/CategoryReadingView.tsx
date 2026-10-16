@@ -18,6 +18,7 @@ import ReportExtrasView from './ReportExtrasView.tsx'
 import ReportBriefView, { BackToChapters } from './ReportBriefView.tsx'
 import { buildReadingBrief } from '../../report/reading-brief.ts'
 import ReportApplicationsView from './ReportApplicationsView.tsx'
+import { CalculationNotice, ChartGlossary } from './CalculationDisclosure.tsx'
 
 export default function CategoryReadingView({ report, embedded = false, controls, prefix: customPrefix }: { report: CategoryReading; embedded?: boolean; controls?: ReactNode; prefix?: string }) {
   const { t } = useLocale()
@@ -42,6 +43,7 @@ export default function CategoryReadingView({ report, embedded = false, controls
     </header>
     {!embedded && <div className="fate-reading-controls print:hidden"><CopyButton label={t('reading.complete.copy')} getText={() => `${t('reading.complete.sampleNote')}\n${t('reading.record.preparedOn')}: ${preparedOn}\n\n${report.fullText}`} /><button type="button" className="fate-complete-primary" onClick={() => { setShowPrintHelp(true); window.print() }}>{t('reading.complete.print')}</button>{showPrintHelp && <p role="status">{t('reading.printHelp')}</p>}</div>}
     {report.subjects.some(person => person.input.unknownTime) && <p role="status" className="fate-reading-time-note">{t('category.unknown')}</p>}
+    {report.subjects.map(person => <CalculationNotice key={person.label} input={person.input} label={report.subjects.length > 1 ? person.label : undefined} />)}
     <section id={`${prefix}-start`} className="fate-report-overview" aria-label={t('reading.complete.summary')}><div className="fate-report-overview-heading"><p className="fate-eyebrow">{t('reading.complete.summary')}</p><h2>{t('reading.design.overview')}</h2></div>
         <ReportBriefView brief={buildReadingBrief(report.chapters[0])} href={`#${prefix}-${report.chapters[0].id}`} />
       <nav id={`${prefix}-contents`} className="fate-reading-toc print:hidden" aria-label={t('reading.complete.contents')}><a href={`#${prefix}-situations`}><ReportIcon kind="next-moves" /><span>{t('reading.application.contents')}</span><span aria-hidden="true">↗</span></a>{contents.map(item => <a key={item.id} href={`#${prefix}-${item.id}`}><ReportIcon kind={item.icon ?? info.icon} /><span>{item.title}</span><span aria-hidden="true">↗</span></a>)}<a href={`#${prefix}-everyday-compass`}><ReportIcon kind="balance" /><span>{t('reading.extras.title')}</span><span aria-hidden="true">↗</span></a></nav>
@@ -54,6 +56,7 @@ export default function CategoryReadingView({ report, embedded = false, controls
     <ReportExtrasView extras={report.extras} prefix={prefix} />
     <section className="fate-reading-chapter fate-reading-method print:hidden"><h2>{t('reading.method.title')}</h2><p>{info.scope}</p><details><summary>{t('reading.method.details')}</summary><ul>{report.methodNotes.map(note => <li key={note}>{note}</li>)}</ul></details></section>
     <section className="fate-reading-chapter hidden print:block"><h2>{t('reading.method.title')}</h2><ul>{report.methodNotes.map(note => <li key={note}>{note}</li>)}</ul></section>
+    <ChartGlossary />
     <ReportRecord input={first.input} birthSummary={first.birthSummary} referenceYear={report.referenceYear} preparedOn={preparedOn} secondaryInput={second?.input} secondaryBirthSummary={second?.birthSummary} series={t('category.series')} />
     <footer className="fate-reading-small-note fate-report-footer"><p>{t('reading.footer.note')}</p><p>{t('reading.complete.sampleNote')}</p>{!embedded && <a href={`#${info.slug}`} className="fate-outline-button print:hidden">{t('reading.complete.back')}</a>}</footer>
   </article>

@@ -15,10 +15,12 @@ import { buildReadingBrief, readingBriefText } from './reading-brief.ts'
 import { THEME_FAMILY as FAMILY } from './theme-family.ts'
 import { applicationText } from './report-applications.ts'
 import type { ReportApplication } from './report-applications.ts'
+import { explainCalculation, PAIR_METHOD_NOTE } from './calculation-notes.ts'
+import type { CalculationExplanation } from './calculation-notes.ts'
 export { THEME_FAMILY as FAMILY } from './theme-family.ts'
 
 export const POSITIONS = ['hour', 'day', 'month', 'year']
-export interface ReportSubject { label: string; input: BirthInput; birthSummary: string; pillarSummary: string[]; dayMaster: string; elements: ElementCount[]; visibleMarkers: number }
+export interface ReportSubject { label: string; input: BirthInput; birthSummary: string; pillarSummary: string[]; dayMaster: string; elements: ElementCount[]; visibleMarkers: number; calculation: CalculationExplanation }
 export interface ReportMonth extends ReportChapter { label: string; referenceDate: string; pillar: string; yearPillar: string }
 export interface CategoryReading { kind: FocusCategory; title: string; headline: string; referenceYear: number; subjects: ReportSubject[]; summary: { label: string; text: string }[]; chapters: ReportChapter[]; months: ReportMonth[]; applications: ReportApplication[]; extras: ReportExtras; methodNotes: string[]; fullText: string; wordCount: number }
 
@@ -35,7 +37,7 @@ export function chartContext(result: SajuResult) {
 }
 export function subject(result: SajuResult, label = 'Example birth details'): ReportSubject {
   const snapshot = buildFreeReading(result)
-  return { label, input: result.input, birthSummary: snapshot.birthSummary, pillarSummary: snapshot.pillarSummary, dayMaster: snapshot.dayMaster, elements: snapshot.elements, visibleMarkers: snapshot.visibleMarkers }
+  return { label, input: result.input, birthSummary: snapshot.birthSummary, pillarSummary: snapshot.pillarSummary, dayMaster: snapshot.dayMaster, elements: snapshot.elements, visibleMarkers: snapshot.visibleMarkers, calculation: explainCalculation(result.input) }
 }
 export function pillarFact(result: SajuResult, index: number, person = ''): string {
   if (index === 0 && result.input.unknownTime) return `${person ? person + ': ' : ''}birth time unknown; hour excluded.`
@@ -59,7 +61,8 @@ export function moneyMarkers(result: SajuResult) {
 }
 export function pairFacts(first: string, second: string, label: string): string[] {
   const pair = analyzePillarRelations(first, second)
-  const facts = [...pair.stem.map(item => `stem ${item.type}${item.detail ? ' (' + item.detail + ')' : ''}`), ...pair.branch.map(item => `branch ${item.type}${item.detail ? ' (' + item.detail + ')' : ''}`)]
+  const branches = pair.branch.filter(item => !(item.type === '刑' && (item.detail === '無恩' || item.detail === '恃勢')))
+  const facts = [...pair.stem.map(item => `stem ${item.type}${item.detail ? ' (' + item.detail + ')' : ''}`), ...branches.map(item => `branch ${item.type}${item.detail ? ' (' + item.detail + ')' : ''}`)]
   return [`${label}: ${first} with ${second}. ${facts.length ? facts.join('; ') : 'No pair pattern in the checked tables'}.`]
 }
 export function chapter(id: string, title: string, lead: string, paragraphs: string[], evidence: string[], tryThis: string, guidance: ReadingGuidance, icon = 'personality', example?: EverydayExample): ReportChapter {
@@ -77,11 +80,13 @@ export function validateYear(year: number, result: SajuResult) {
 }
 export function commonMethod(result: SajuResult, year: number): string[] {
   return [
+    ...explainCalculation(result.input).notes,
     ...buildEnglishReading(result, year).caveats.filter(note => !note.startsWith('Each monthly chapter') && !note.startsWith('Monthly headlines')),
     'These chapter examples, questions and helpful habits are editorial cultural interpretations. They are not facts known about the person or a professionally validated assessment.',
     'The situation pages are optional editorial exercises. Birth-chart themes shape their personal checks and practice details; the situation itself is not inferred from the chart. Compare the choices with actual circumstances and review what happens.',
     'The report does not diagnose chart strength, chart structure or useful elements. Counts and pair patterns do not supply those advanced conclusions.',
     SYMBOL_NOTE,
+    PAIR_METHOD_NOTE,
     ...(result.input.unknownTime ? ['An unknown birth time excludes the hour pillar and every hour comparison. Ten-year starting dates remain approximate.'] : []),
   ]
 }
@@ -90,7 +95,7 @@ export function finishReading(data: Omit<CategoryReading, 'fullText' | 'wordCoun
   const chapterText = (item: ReportChapter) => [item.title, item.lead, ...(item.example ? everydayExampleText(item.example) : []), ...item.paragraphs, 'Keep close:', ...item.guidance.keepClose, 'Watch out for:', ...item.guidance.watchFor, 'A small step to try: ' + item.tryThis, 'From the chart: ' + item.evidence.join(' ')]
   const fullText = plainReadingText([
     `THE FATE KEY · ${data.title}`, `Report edition ${REPORT_EDITION} · Reference year ${data.referenceYear}`,
-    ...data.subjects.flatMap(item => [item.label, item.birthSummary, item.pillarSummary.join(' · ')]), data.headline,
+    ...data.subjects.flatMap(item => [item.label, item.birthSummary, item.pillarSummary.join(' · '), `Cycle setting: ${item.calculation.cycleSetting}; direction: ${item.calculation.cycleDirection}.`, ...(data.subjects.length > 1 ? item.calculation.notes : [])]), data.headline,
     readingBriefText(buildReadingBrief(chapters[0])),
     ...data.summary.map(item => `${item.label}: ${item.text}`), ...chapters.flatMap(chapterText),
     ...(data.months.length ? ['Your Twelve Months', ...data.months.flatMap(chapterText)] : []),

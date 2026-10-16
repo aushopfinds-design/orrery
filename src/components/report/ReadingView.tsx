@@ -17,12 +17,13 @@ import ReportExtrasView from './ReportExtrasView.tsx'
 import ReportBriefView, { BackToChapters } from './ReportBriefView.tsx'
 import { buildReadingBrief } from '../../report/reading-brief.ts'
 import ReportApplicationsView from './ReportApplicationsView.tsx'
+import { CalculationNotice, ChartGlossary } from './CalculationDisclosure.tsx'
 
 /** A public sample, never an order confirmation or a client-side paid unlock. */
 export default function ReadingView({ input, embedded = false, prefix = 'sample-report' }: { input: BirthInput; embedded?: boolean; prefix?: string }) {
   const { t } = useLocale()
   const report = useMemo(() => buildCompleteReading(calculateSaju(input)), [input])
-  const contents = [...report.chapters.map(chapter => ({ id: chapter.id, title: chapter.title })), { id: 'timeline', title: t('reading.complete.timeline') }, { id: report.actionPlan.id, title: report.actionPlan.title }]
+  const contents = [...report.chapters.map(chapter => ({ id: chapter.id, title: chapter.title })), { id: 'timeline', title: `08 · ${t('reading.complete.timeline')}` }, { id: report.actionPlan.id, title: report.actionPlan.title }]
   const [showPrintHelp, setShowPrintHelp] = useState(false)
   const [preparedOn] = useState(() => new Date().toLocaleDateString('en-GB', { timeZone: 'UTC', day: 'numeric', month: 'long', year: 'numeric' }))
   useEffect(() => {
@@ -50,6 +51,7 @@ export default function ReadingView({ input, embedded = false, prefix = 'sample-
       </header>
       <div className="fate-reading-controls print:hidden"><CopyButton label={t('reading.complete.copy')} getText={() => `${t('reading.complete.sampleNote')}\n${t('reading.record.preparedOn')}: ${preparedOn}\n\n${report.fullText}`} /><button type="button" className="fate-complete-primary" onClick={() => { setShowPrintHelp(true); window.print() }}>{t('reading.complete.print')}</button>{showPrintHelp && <p role="status">{t('reading.printHelp')}</p>}</div>
       {input.unknownTime && <p role="status" className="fate-reading-time-note">{t('reading.timeUnknown')}</p>}
+      <CalculationNotice input={input} />
       <section id={`${prefix}-start`} className="fate-report-overview" aria-label={t('reading.complete.summary')}>
         <div className="fate-report-overview-heading"><p className="fate-eyebrow">{t('reading.complete.summary')}</p><h2>{t('reading.design.overview')}</h2></div>
         <ReportBriefView brief={buildReadingBrief(report.chapters[0])} href={`#${prefix}-${report.chapters[0].id}`} />
@@ -72,13 +74,14 @@ export default function ReadingView({ input, embedded = false, prefix = 'sample-
       </section>
       {report.chapters.map(chapter => <ReportChapterView key={chapter.id} chapter={chapter} prefix={prefix}>{chapter.id === 'balance' ? <ElementBalance elements={report.elements} visibleMarkers={report.visibleMarkers} /> : null}</ReportChapterView>)}
       <section id={`${prefix}-timeline`} className="fate-reading-chapter">
-        <ChapterHeading title={t('reading.complete.timeline')} kind="timeline" /><p>{t('reading.complete.timelineNote')}</p>
+        <ChapterHeading title={`08 · ${t('reading.complete.timeline')}`} kind="timeline" /><p>{t('reading.complete.timelineNote')}</p>
         <div className="fate-report-periods">{report.periods.length ? report.periods.map((period, index) => <div key={period.period} className="fate-reading-period"><span className="fate-report-period-dot" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span><p className="fate-eyebrow">{period.period}</p><h3>{period.headline}</h3><div className="fate-report-chapter-layout"><div className="fate-report-prose">{period.paragraphs.map(paragraph => <p key={paragraph}><ReadingText text={paragraph} /></p>)}</div><ReadingGuidance guidance={period.guidance} headingLevel="h4" /></div><div className="fate-reading-practice"><FateKeyMark /><div><strong>{t('reading.tryThis')}</strong><p>{period.tryThis}</p></div></div><ChartEvidence facts={period.evidence} /></div>) : <p>{t('reading.complete.noPeriods')}</p>}</div>
       </section>
       <ReportChapterView chapter={report.actionPlan} prefix={prefix} />
       <ReportExtrasView extras={report.extras} prefix={prefix} />
       <section className="fate-reading-chapter fate-reading-method print:hidden"><h2>{t('reading.method.title')}</h2><p>{t('reading.method.intro')}</p><details><summary>{t('reading.method.details')}</summary><p>{report.pillarSummary.join(' · ')}</p><ul>{report.methodNotes.map(note => <li key={note}>{note}</li>)}</ul></details></section>
       <section className="fate-reading-chapter hidden print:block"><h2>{t('reading.method.title')}</h2><p>{report.pillarSummary.join(' · ')}</p><ul>{report.methodNotes.map(note => <li key={note}>{note}</li>)}</ul></section>
+      <ChartGlossary />
       <ReportRecord input={input} birthSummary={report.birthSummary} referenceYear={report.referenceYear} preparedOn={preparedOn} />
       <footer className="fate-reading-small-note fate-report-footer"><p>{t('reading.footer.note')}</p><p>{t('reading.complete.sampleNote')}</p><a href="#complete-life-reading" className="fate-outline-button print:hidden">{t('reading.complete.back')}</a></footer>
     </article>

@@ -40,3 +40,12 @@
   .fate-reading-brief li, .fate-brief-action p { font-size: 12px; line-height: 1.6; }
   .fate-brief-source a, .fate-brief-source button, .fate-chapter-return { display: none !important; }
 }
+.fate-chart-glossary { display: grid; gap: 1rem; margin-block: 1rem; }
+.fate-chart-glossary dd { margin: .35rem 0 0; line-height: 1.7; }
+.fate-report-calculation { margin-block: 1rem; }
+.fate-report-calculation li { margin-block: .65rem; overflow-wrap: anywhere; }
+.fate-report-record-fields dd { overflow-wrap: anywhere; min-width: 0; }
+@media print {
+  .fate-report-glossary details > .fate-chart-glossary,
+  .fate-report-calculation > ul { display: grid !important; }
+}
