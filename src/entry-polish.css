@@ -59,8 +59,8 @@
   .fate-site .fate-hero-intro { grid-column:1; grid-row:1; width:100%; max-width:600px; margin:0 auto; }
   .fate-site .fate-hero-intro h1 { font-size:clamp(31px,5.2vw,42px); max-width:590px; }
   .fate-site .fate-birth-panel { grid-column:1; grid-row:3; max-width:600px; margin:8px auto 0; }
-  .fate-hero-destiny { grid-column:1; grid-row:2; align-self:start; display:grid; grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr); grid-template-areas:"art copy" "details details"; align-items:center; gap:12px 24px; width:100%; max-width:600px; padding:22px 23px 12px; margin:0 auto; border:1px solid #c5a16155; border-radius:14px; background:linear-gradient(135deg,#132c3aaf,#041522aa); }
-  .fate-hero-destiny-art { grid-area:art; width:100%; max-width:240px; transform:none; }
+  .fate-hero-destiny { grid-column:1; grid-row:2; align-self:start; display:grid; grid-template-columns:minmax(0,7fr) minmax(0,3fr); grid-template-areas:"art copy" "details details"; align-items:center; gap:12px 24px; width:100%; max-width:600px; padding:22px 23px 12px; margin:0 auto; border:1px solid #c5a16155; border-radius:14px; background:linear-gradient(135deg,#132c3aaf,#041522aa); }
+  .fate-hero-destiny-art { grid-area:art; width:100%; max-width:none; transform:none; }
   .fate-hero-destiny-copy { grid-area:copy; display:flex; flex-direction:column; align-items:flex-start; justify-content:center; position:relative; width:100%; text-align:left; max-width:none; visibility:visible; opacity:1; }
   .fate-hero-destiny-details { grid-area:details; margin-top:0; }
   .fate-hero-destiny-copy h2 { font-size:30px; }
@@ -73,7 +73,7 @@
   .fate-site .fate-hero-description { font-size:13px; margin-top:12px; }
   .fate-site .fate-hero-reading-actions { gap:11px; margin-top:16px; flex-wrap:wrap; }
   .fate-site .fate-hero-promises { font-size:10px; gap:10px; }
-  .fate-hero-destiny { gap:10px 17px; padding:19px 16px 10px; }
+  .fate-hero-destiny { gap:10px 12px; padding:19px 16px 10px; }
   .fate-hero-destiny-copy .fate-eyebrow { font-size:9px; letter-spacing:.12em; }
   .fate-hero-destiny-copy h2 { font-size:25px; margin:8px 0 10px; }
   .fate-hero-destiny-copy > p:not(.fate-eyebrow) { font-size:11px; line-height:1.7; }
