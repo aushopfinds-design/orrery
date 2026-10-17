@@ -1,4 +1,20 @@
+import { homepageCopy } from '../homepage.ts'
+
 const es: Record<string, string> = {
+  ...homepageCopy,
+  "city.country": "País o territorio",
+  "city.suggestions": "Lugares sugeridos",
+  "city.typeToSearch": "Escriba al menos 2 caracteres para buscar lugares en este país.",
+  "city.searchHint": "Escriba el lugar de nacimiento y seleccione un resultado. También puede buscar pueblos y aldeas.",
+  "city.loading": "Buscando lugares…",
+  "city.searchError": "La búsqueda no está disponible. Reintente o introduzca coordenadas.",
+  "city.retry": "Reintentar",
+  "city.attribution": "Datos de lugares:",
+  "city.selectionRequired": "Seleccione una ciudad, pueblo o aldea de los resultados, o introduzca coordenadas.",
+  "form.invalidDate": "Seleccione una fecha válida.",
+  "city.popular": "Ciudades populares",
+  "city.results": "Resultados",
+  "city.birthCity": "Ciudad, pueblo o aldea",
   // App
   'app.subtitle1': 'Calculadora de',
   'app.subtitle.tool': 'Saju · Zi Wei Dou Shu · Carta natal',
@@ -7,7 +23,8 @@ const es: Record<string, string> = {
   'app.profileManage': 'Gestionar perfiles',
   'app.tab.saju': 'Saju (四柱八字)',
   'app.tab.ziwei': 'Zi Wei Dou Shu (紫微斗数)',
-  'app.tab.natal': 'Carta natal',
+  'app.tab.natal': 'Carta natal',  'app.tab.reading': 'Informe en inglés',
+
   'app.copyAll': 'Para lectura con IA',
   'app.copyAllSub': 'Copiar todo',
   'app.intro': 'Acerca de',
@@ -43,8 +60,8 @@ const es: Record<string, string> = {
   'form.unifiedDesc': 'A partir de las 23:30 rige la hora 子 y el pilar del día avanza al día siguiente.',
   'form.splitDesc': 'De 23:30 a 00:00 (Ja-si nocturno) rige la hora 子, pero el pilar del día se mantiene en el día actual.',
   'form.calculate': 'Calcular',
-  'form.privacy1': 'Todos los cálculos se realizan en su navegador.',
-  'form.privacy2': 'Sus datos nunca se envían a ningún servidor.',
+  "form.privacy1": "La fecha y hora de nacimiento permanecen en este dispositivo.",
+  "form.privacy2": "La búsqueda solo comparte el nombre del lugar y el país.",
 
   // CopyButton
   'copy.copy': 'Copiar',
@@ -63,10 +80,10 @@ const es: Record<string, string> = {
   'date.monthDay': '{d}/{m}',
 
   // CityCombobox
-  'city.noResults': 'Sin resultados',
+  "city.noResults": "No se encontraron lugares. Pruebe otra escritura o introduzca coordenadas.",
   'city.korea': 'Corea',
   'city.world': 'Mundo',
-  'city.placeholder': 'Introduzca el nombre de la ciudad',
+  "city.placeholder": "Buscar ciudad, pueblo o aldea",
 
   // Guide
   'guide.title': 'Cómo usar',

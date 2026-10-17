@@ -1,0 +1,105 @@
+/* The existing card artwork is the campaign's focal point. */
+.fate-hero-card-link { display:flex; align-items:center; gap:12px; width:fit-content; max-width:100%; margin-top:24px; padding:12px 16px; color:#f1d18f; background:linear-gradient(110deg,#bb87331a,#091e2a99); border:1px solid #d4ae5b55; border-radius:10px; font-size:15px; text-decoration:none; }
+.fate-hero-card-link > span:first-child { font-size:26px; }
+.fate-hero-card-link small { display:block; margin-top:4px; font-size:12px; font-weight:400; color:#c2c8cc; }
+.fate-destiny-feature { position:relative; display:grid; grid-template-columns:1.05fr .95fr; gap:26px 64px; align-items:center; overflow:hidden; margin-top:54px; padding:62px 64px 0; border:1px solid #b48b4766; border-radius:24px; background:radial-gradient(ellipse at 80% 36%,#254b4e77,transparent 54%),linear-gradient(135deg,#102536,#04131f 66%); box-shadow:0 22px 60px #0003,inset 0 1px 0 #ecd3a022; color:#e8e5dc; scroll-margin-top:24px; }
+.fate-destiny-feature-copy { position:relative; z-index:1; }
+.fate-destiny-feature .fate-eyebrow,.fate-card-studio .fate-eyebrow { color:#cda966; font-size:11px; letter-spacing:.18em; }
+.fate-destiny-feature h2 { margin:17px 0 22px; font:400 clamp(31px,3.65vw,49px)/1.16 Georgia,serif; color:#fff0d0; letter-spacing:-.025em; }
+.fate-destiny-feature h2 em { color:#e8bf71; font-weight:400; }
+.fate-destiny-intro { max-width:440px; color:#c2ccd1; font-size:15px; line-height:1.85; }
+.fate-destiny-included { display:flex; gap:8px; align-items:center; margin:22px 0; color:#f4d899; font-size:12px; font-weight:600; }
+.fate-destiny-features { display:grid; gap:18px; margin:25px 0; padding:0; list-style:none; }
+.fate-destiny-features li { display:flex; align-items:flex-start; gap:13px; }
+.fate-destiny-features li > span { color:#deb968; font-size:23px; line-height:1; }
+.fate-destiny-features strong { font-size:14px; color:#f4e4c3; font-weight:600; }
+.fate-destiny-features p { margin:4px 0 0; color:#b8c2c9; font-size:12px; line-height:1.75; max-width:350px; }
+.fate-destiny-actions { display:flex; align-items:flex-start; flex-direction:column; gap:17px; margin:28px 0 16px; }
+.fate-destiny-feature .fate-complete-primary { padding:14px 20px; font-size:12px; }
+.fate-destiny-text-link { display:inline-block; color:#93682d; text-decoration:underline; text-underline-offset:5px; font-size:13px; font-weight:600; }
+.fate-destiny-feature .fate-destiny-text-link { color:#ecd09b; }
+.fate-destiny-small { font-size:11px; line-height:1.8; color:#837560; }
+.fate-destiny-feature .fate-destiny-small { max-width:410px; color:#a9b5c0; }
+.fate-destiny-stage { position:relative; display:grid; justify-items:center; margin:0; padding:25px 12px 15px; min-width:0; }
+.fate-destiny-stage-card { position:relative; width:min(100%,335px); transform:rotate(3deg); box-shadow:0 30px 60px #000b,0 0 50px #eab55c18; border-radius:16px; }
+.fate-destiny-orbit { position:absolute; inset:10% -15%; border-radius:50%; border:1px solid #c9a45738; transform:rotate(-24deg); box-shadow:0 0 70px #c28a3810,inset 0 0 70px #c28a380a; pointer-events:none; }
+.fate-destiny-orbit::after { content:'✦'; position:absolute; top:12%; right:16%; color:#e0bd79; font-size:30px; text-shadow:0 0 22px #e6bc6f; }
+.fate-destiny-stage figcaption { position:relative; margin:35px 0 0; text-align:center; }
+.fate-destiny-stage figcaption strong { display:block; color:#e7c789; font:italic 21px Georgia,serif; }
+.fate-destiny-stage figcaption span { display:block; max-width:280px; margin:10px auto 0; font-size:10px; color:#abb6be; line-height:1.8; }
+.fate-destiny-video { position:relative; border-radius:14px; overflow:hidden; background:#04131f; }
+.fate-destiny-video video { display:block; width:100%; height:auto; aspect-ratio:4/5; object-fit:contain; }
+.fate-destiny-motion { position:absolute; bottom:13px; left:50%; transform:translateX(-50%); display:flex; align-items:center; justify-content:center; gap:6px; min-height:34px; max-width:94%; padding:7px 12px; border:1px solid #e0c48b88; background:#051321ed; color:#fce5b1; border-radius:50px; font-size:10px; white-space:nowrap; cursor:pointer; }
+.fate-destiny-motion:focus-visible,.fate-card-studio button:focus-visible,.fate-card-studio a:focus-visible,.fate-hero-card-link:focus-visible { outline:3px solid #dca540; outline-offset:4px; }
+.fate-destiny-policy { grid-column:1/-1; display:grid; grid-template-columns:repeat(3,1fr); gap:24px; margin:24px -64px 0; padding:27px 40px; background:#04121ea8; border-top:1px solid #d0ad6833; }
+.fate-destiny-policy > div { padding:0 16px; }
+.fate-destiny-policy > div + div { border-left:1px solid #d0ad6833; }
+.fate-destiny-policy strong { display:block; color:#ebd4a7; font-size:12px; }
+.fate-destiny-policy span { display:block; margin-top:8px; color:#a8b5be; font-size:11px; line-height:1.8; }
+.fate-catalog-card-included { display:flex; align-items:center; flex-wrap:wrap; gap:10px; margin:18px 0 28px; padding:15px 20px; border:1px solid #c5a96d77; background:linear-gradient(100deg,#f4e6c8,#fff9ec); color:#79572b; border-radius:10px; text-decoration:none; }
+.fate-catalog-card-included > span:first-child { font-size:23px; }
+.fate-catalog-card-included strong { font-size:12px; font-weight:600; }
+.fate-catalog-card-included > span:last-child { margin-left:auto; font-size:11px; }
+.fate-product-content .fate-product-card-bonus,.fate-bundle-copy .fate-product-card-bonus { color:#85602d; font-size:11px; font-weight:600; margin:8px 0 12px; line-height:1.6; }
+.fate-card-studio { max-width:1120px; padding:40px 0 70px; scroll-margin-top:20px; color:#514635; }
+.fate-card-studio-heading { margin:30px 0; max-width:680px; }
+.fate-card-studio-heading h1 { margin:14px 0; color:#372b1c; font:400 clamp(36px,5vw,58px)/1.13 Georgia,serif; }
+.fate-card-studio-heading > p:last-child { color:#776953; font-size:14px; line-height:1.8; }
+.fate-card-studio-modes { display:flex; flex-wrap:wrap; gap:5px; margin:0 0 30px; padding:5px; width:fit-content; background:#e4d8c2; border-radius:12px; }
+.fate-card-studio-modes button { padding:11px 17px; background:transparent; color:#78674f; font-size:12px; font-weight:600; border:1px solid transparent; border-radius:8px; cursor:pointer; }
+.fate-card-studio-modes button[aria-pressed=true] { background:#fffaf0; color:#463622; border-color:#c9ae78; box-shadow:0 2px 8px #60452115; }
+.fate-card-studio-layout { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:40px; align-items:start; padding:34px; background:#faf4e8; border:1px solid #cfb992; border-radius:18px; box-shadow:0 15px 40px #64491912; }
+.fate-card-studio-canvas { padding:24px 22px 16px; border-radius:12px; background:radial-gradient(ellipse at 50% 40%,#254346,#04131f 80%); }
+.fate-card-studio-canvas > .fate-destiny-video,.fate-destiny-personal-card { width:100%; display:block; border-radius:14px; filter:drop-shadow(0 14px 22px #0006); }
+.fate-card-studio-canvas > p { font-size:10px; line-height:1.8; color:#c6c4b4; text-align:center; margin:20px 0 0; }
+.fate-card-studio-panel { padding:14px 0 6px; min-width:0; }
+.fate-card-studio-panel h2 { margin:12px 0 15px; font:400 32px/1.18 Georgia,serif; color:#382e20; }
+.fate-card-studio-panel section > p:not(.fate-eyebrow):not(.fate-destiny-small):not(.fate-card-share-status) { font-size:12px; line-height:1.9; color:#776954; }
+.fate-card-studio-panel label { display:block; margin:21px 0 8px; font-size:12px; font-weight:600; }
+.fate-card-studio-panel input[type=text],.fate-card-studio-panel textarea { width:100%; padding:12px 14px; border:1px solid #c5ae88; border-radius:8px; background:#fffcf5; color:#443722; font:inherit; font-size:13px; line-height:1.8; }
+.fate-card-studio-panel input[type=text]:focus,.fate-card-studio-panel textarea:focus { outline:2px solid #bd903b; outline-offset:2px; }
+.fate-card-studio-panel textarea { resize:vertical; font-size:11px; }
+.fate-card-studio-panel .fate-card-birthday { display:flex; align-items:flex-start; gap:10px; margin:23px 0 10px; line-height:1.7; font-weight:500; }
+.fate-card-birthday input { margin-top:3px; width:17px; height:17px; accent-color:#9c702b; flex-shrink:0; }
+.fate-card-person-switch { display:flex; gap:8px; margin:20px 0; }
+.fate-card-person-switch button { padding:9px 16px; border:1px solid #bfa77a; border-radius:6px; color:#776143; background:#fff9ec; font-size:12px; cursor:pointer; }
+.fate-card-person-switch button[aria-pressed=true] { color:#fff2d7; background:#17313b; border-color:#17313b; }
+.fate-card-basis { padding:12px 14px; background:#eee4d2; border-radius:8px; }
+.fate-card-locked { display:flex; gap:12px; padding:18px; margin:23px 0 18px; background:linear-gradient(120deg,#102b39,#071924); border:1px solid #b99353; color:#e1c794; border-radius:10px; }
+.fate-card-locked > span { font-size:23px; }
+.fate-card-locked strong { color:#f3dbb2; font-size:12px; }
+.fate-card-locked p { margin:8px 0 10px; color:#bac6cb; font-size:11px; line-height:1.8; }
+.fate-card-locked div > span { font-size:10px; color:#ddc698; }
+.fate-card-sample-instead { display:block; padding:0; border:0; background:none; margin:24px 0 0; color:#8c692f; font-size:12px; text-align:left; text-decoration:underline; text-underline-offset:5px; cursor:pointer; }
+.fate-card-downloads { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:25px 0; }
+.fate-card-downloads a { display:flex; flex-direction:column; gap:8px; padding:18px 13px; border:1px solid #c4a66a; color:#f7e3b8; background:linear-gradient(135deg,#173542,#081c28); border-radius:10px; text-decoration:none; }
+.fate-card-downloads a > span { font-size:25px; }
+.fate-card-downloads strong { font-size:12px; line-height:1.5; }
+.fate-card-downloads small { color:#c2c7bf; font-size:10px; }
+.fate-card-share-buttons { display:flex; flex-wrap:wrap; gap:10px; margin-top:14px; }
+.fate-card-share-buttons button { padding:10px 13px; border:1px solid #b9a17a; border-radius:7px; background:#fbf3e4; color:#695336; font-size:11px; cursor:pointer; }
+.fate-card-share-buttons button:disabled { opacity:.65; cursor:wait; }
+.fate-card-share-status { min-height:1em; margin:12px 0; color:#5b765c; font-size:11px; line-height:1.8; }
+.fate-card-delivery-plan { margin:65px 0 30px; }
+.fate-card-delivery-plan h2 { font:400 32px Georgia,serif; color:#42321f; margin:15px 0 25px; }
+.fate-card-delivery-plan ol { display:grid; grid-template-columns:repeat(3,1fr); gap:25px; padding:0; list-style:none; }
+.fate-card-delivery-plan li { border-top:1px solid #c5a879; padding-top:19px; }
+.fate-card-delivery-plan li b { color:#ad8648; font:400 24px Georgia,serif; }
+.fate-card-delivery-plan li h3 { font-size:14px; font-weight:600; margin:15px 0 9px; }
+.fate-card-delivery-plan li p { font-size:12px; line-height:1.85; color:#82705b; }
+.fate-card-symbol-note { padding:18px 20px; border:1px solid #cfba96; border-radius:9px; font-size:12px; color:#76654e; }
+.fate-card-symbol-note summary { cursor:pointer; font-weight:600; }
+.fate-card-symbol-note p { line-height:1.9; margin-top:14px; }
+.fate-destiny-bonus { display:flex; gap:24px; align-items:center; flex-wrap:wrap; padding:26px 30px; margin:36px 0; border-radius:13px; border:1px solid #b9985d; background:linear-gradient(120deg,#112c3b,#071c2a); color:#c6cbd0; }
+.fate-destiny-bonus > svg { width:35px; height:75px; flex-shrink:0; color:#d7b577; }
+.fate-destiny-bonus > div { flex:1; min-width:200px; }
+.fate-destiny-bonus .fate-eyebrow { color:#d7b577; font-size:9px; }
+.fate-destiny-bonus h2 { margin:9px 0 10px; color:#f3e0bc; font:400 25px Georgia,serif; }
+.fate-destiny-bonus div > p:last-of-type { font-size:11px; line-height:1.8; max-width:580px; }
+.fate-destiny-bonus a { display:inline-block; margin-top:12px; color:#f0cc89; font-size:12px; text-decoration:underline; text-underline-offset:5px; }
+.fate-destiny-bonus > span { max-width:150px; font-size:10px; color:#d3bf99; line-height:1.8; }
+.fate-choice-card-included { display:block; margin-top:15px; font-size:11px; color:#85602d; text-decoration:underline; text-underline-offset:4px; }
+@media (max-width:1050px) { .fate-destiny-feature { gap:25px 35px; padding:45px 35px 0; } .fate-destiny-policy { margin-left:-35px; margin-right:-35px; padding:24px 18px; } .fate-card-studio-layout { gap:26px; padding:24px; } .fate-card-studio-canvas { padding:14px 14px 10px; } }
+@media (max-width:760px) { .fate-destiny-feature { grid-template-columns:1fr; padding:30px 24px 0; margin-top:30px; border-radius:17px; } .fate-destiny-feature h2 { font-size:38px; } .fate-destiny-feature-copy { display:contents; } .fate-destiny-feature-copy > .fate-eyebrow { margin-bottom:-10px; } .fate-destiny-feature-copy h2 { margin:0; } .fate-destiny-intro { margin:-5px 0 0; font-size:14px; max-width:none; } .fate-destiny-included { margin:0; font-size:11px; } .fate-destiny-features { margin:0; gap:16px; } .fate-destiny-stage { grid-row:5; padding:14px 14px 0; } .fate-destiny-stage-card { width:min(86%,310px); transform:rotate(2deg); } .fate-destiny-stage figcaption { margin-top:28px; } .fate-destiny-actions { margin:4px 0 -4px; } .fate-destiny-feature-copy > .fate-destiny-small { margin:0; } .fate-destiny-policy { grid-template-columns:1fr; gap:18px; margin:3px -24px 0; padding:23px 24px; } .fate-destiny-policy > div { padding:0; } .fate-destiny-policy > div + div { border-left:0; border-top:1px solid #d0ad6833; padding-top:16px; } .fate-catalog-card-included { padding:13px 15px; gap:7px; } .fate-catalog-card-included > span:last-child { width:100%; margin-left:29px; } .fate-card-studio { padding-top:25px; } .fate-card-studio-heading h1 { font-size:41px; } .fate-card-studio-layout { grid-template-columns:1fr; padding:18px; gap:22px; } .fate-card-studio-canvas { padding:20px 24px 15px; } .fate-card-studio-canvas > svg,.fate-card-studio-canvas > .fate-destiny-video { max-width:360px; margin:auto; } .fate-card-studio-panel { padding:3px 3px 8px; } .fate-card-studio-panel h2 { font-size:30px; } .fate-card-delivery-plan { margin-top:45px; } .fate-card-delivery-plan ol { grid-template-columns:1fr; gap:20px; } .fate-card-delivery-plan h2 { font-size:29px; } .fate-destiny-bonus { padding:22px; gap:17px; } .fate-destiny-bonus > span { max-width:none; width:100%; margin-left:52px; } }
+@media (prefers-reduced-motion:reduce) { .fate-destiny-stage-card { transform:none; } }
+@media print { .fate-destiny-feature,.fate-hero-card-link,.fate-card-studio,.fate-destiny-bonus { display:none !important; } }

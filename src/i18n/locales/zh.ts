@@ -1,4 +1,20 @@
+import { homepageCopy } from '../homepage.ts'
+
 const zh: Record<string, string> = {
+  ...homepageCopy,
+  "city.country": "国家或地区",
+  "city.suggestions": "推荐地点",
+  "city.typeToSearch": "输入至少两个字符，搜索所选国家的地点。",
+  "city.searchHint": "输入出生地名称并选择搜索结果。也可搜索小镇和村庄。",
+  "city.loading": "正在搜索地点…",
+  "city.searchError": "搜索暂不可用。请重试或输入坐标。",
+  "city.retry": "重试",
+  "city.attribution": "地点数据：",
+  "city.selectionRequired": "请从结果中选择城市、城镇或村庄，或输入坐标。",
+  "form.invalidDate": "请选择有效日期。",
+  "city.popular": "常用城市",
+  "city.results": "搜索结果",
+  "city.birthCity": "城市、城镇或村庄",
   // App
   'app.subtitle1': '无需服务器，在浏览器中运行的',
   'app.subtitle.tool': '四柱八字 · 紫微斗数 · 西洋占星术',
@@ -7,7 +23,8 @@ const zh: Record<string, string> = {
   'app.profileManage': '档案管理',
   'app.tab.saju': '四柱八字',
   'app.tab.ziwei': '紫微斗数',
-  'app.tab.natal': '出生星盘',
+  'app.tab.natal': '出生星盘',  'app.tab.reading': '英文命理报告',
+
   'app.copyAll': 'AI 解读用',
   'app.copyAllSub': '全部复制',
   'app.intro': '简介',
@@ -43,8 +60,8 @@ const zh: Record<string, string> = {
   'form.unifiedDesc': '23:30起为子时，日柱顺延至次日。',
   'form.splitDesc': '23:30~00:00（夜子时）为子时，但日柱仍为当日。',
   'form.calculate': '计算',
-  'form.privacy1': '所有计算均在浏览器中完成，',
-  'form.privacy2': '您输入的信息不会发送到任何服务器。',
+  "form.privacy1": "出生日期和时间仅保存在此设备。",
+  "form.privacy2": "地点搜索仅发送地名和国家。",
 
   // CopyButton
   'copy.copy': '复制',
@@ -63,10 +80,10 @@ const zh: Record<string, string> = {
   'date.monthDay': '{m}月 {d}日',
 
   // CityCombobox
-  'city.noResults': '无搜索结果',
+  "city.noResults": "未找到地点。请尝试其他拼写或输入坐标。",
   'city.korea': '韩国',
   'city.world': '世界',
-  'city.placeholder': '请输入城市名称',
+  "city.placeholder": "搜索城市、城镇或村庄",
 
   // Guide
   'guide.title': '使用方法',
