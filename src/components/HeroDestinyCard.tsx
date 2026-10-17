@@ -3,8 +3,9 @@ import DestinyCardVideo from './DestinyCardVideo.tsx'
 
 export default function HeroDestinyCard() {
   const { t } = useLocale()
-  return <aside className="fate-hero-destiny" aria-labelledby="hero-destiny-heading">
+  return <aside id="destiny-card" className="fate-hero-destiny" aria-labelledby="hero-destiny-heading">
     <div className="fate-hero-destiny-art"><DestinyCardVideo /></div>
-    <div className="fate-hero-destiny-copy"><p className="fate-eyebrow">{t('entry.card.eyebrow')}</p><h2 id="hero-destiny-heading">{t('entry.card.title')}</h2><p>{t('entry.card.text')}</p><a href="#card-studio">{t('entry.card.explore')} <span aria-hidden="true">↗</span></a><small>{t('entry.card.sample')}</small></div>
+    <div className="fate-hero-destiny-copy"><p className="fate-eyebrow">{t('entry.card.eyebrow')}</p><h2 id="hero-destiny-heading">{t('entry.card.title')}</h2><p>{t('entry.card.personal')}</p><p>{t('entry.card.text')}</p><a href="#card-studio">{t('entry.card.explore')} <span aria-hidden="true">↗</span></a><small>{t('entry.card.sample')}</small></div>
+    <details className="fate-hero-destiny-details"><summary>{t('entry.card.includes')}</summary><div>{['single', 'pair', 'free'].map(key => <p key={key}><strong>{t(`destiny.policy.${key}.title`)}</strong><span>{t(`destiny.policy.${key}.text`)}</span></p>)}<p>{t('destiny.home.availability')}</p></div></details>
   </aside>
 }

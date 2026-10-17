@@ -2,6 +2,8 @@
 export const homepageCopy: Record<string, string> = {
   'entry.form.locationDetails': 'Location details & options',
   'entry.card.eyebrow': 'YOUR DESTINY CARD',
+  'entry.card.includes': 'What is included?',
+  'entry.card.personal': 'Your name, Saju symbol, colors and numbers — made into a card to keep and share.',
   'entry.card.title': 'Your story. Your key.',
   'entry.card.text': 'A personal keepsake with every paid report at launch.',
   'entry.card.explore': 'Explore the Card',

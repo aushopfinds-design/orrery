@@ -4,7 +4,6 @@ import ProductCatalog from './ProductCatalog.tsx'
 import HomeOverview, { FateEmblem, HomeBenefits, HomeFAQ } from './HomeOverview.tsx'
 import LanguageMenu from './LanguageMenu.tsx'
 import HeroArtwork from './HeroArtwork.tsx'
-import HomeDestinyCard from './HomeDestinyCard.tsx'
 import HeroDestinyCard from './HeroDestinyCard.tsx'
 import type { BirthFormHandle, SavedFormState } from './BirthForm.tsx'
 import ProfileModal from './ProfileModal.tsx'
@@ -156,7 +155,6 @@ export default function App() {
       <main id="main-content" tabIndex={-1} className={showingFree || showingReport ? 'fate-main fate-main-reading' : 'fate-main'}>
         <ReportBoundary key={route}><Suspense fallback={<p role="status" className="fate-reading-loading">{t('reading.loading')}</p>}>
         {showingHome && <>
-          <HomeDestinyCard />
           <ProductCatalog />
           <HomeBenefits />
           <Suspense fallback={<section id="report-preview" className="fate-section"><p role="status">{t('reading.loading')}</p></section>}>
