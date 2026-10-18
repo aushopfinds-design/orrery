@@ -12,6 +12,7 @@ import './report-reader.css'
 import './report-applications.css'
 import './destiny-card.css'
 import './entry-polish.css'
+import './learning.css'
 import App from './components/App.tsx'
 
 createRoot(document.getElementById('root')!).render(

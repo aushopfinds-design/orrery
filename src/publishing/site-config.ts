@@ -1,5 +1,7 @@
+import { LEARNING_GUIDES, learningPath } from './guide-catalog.ts'
+
 export const SITE_ORIGIN = 'https://thefatekey.com'
-export const PUBLISHING_UPDATED = '2026-10-16'
+export const PUBLISHING_UPDATED = '2026-10-19'
 
 /** Public identity must come from the operator, never a guessed address or ID. */
 export function publishingIdentity(env: Record<string, string | undefined>) {
@@ -24,7 +26,7 @@ export const PUBLIC_SAMPLES = [
   { kind: 'wellbeing', slug: 'everyday-balance', title: 'Everyday Balance', description: 'Daily habits, boundaries, support and a routine that fits your actual day.' },
 ] as const
 
-export const INFO_PATHS = ['/', '/about/', '/reading-guide/', '/privacy/', '/use-and-limitations/', '/samples/']
+export const INFO_PATHS = ['/', '/about/', '/reading-guide/', '/privacy/', '/use-and-limitations/', '/samples/', '/learn/', '/editorial-policy/', '/help/']
 export function publicPaths(contactEmail: string | null) {
-  return [...INFO_PATHS, ...PUBLIC_SAMPLES.map(item => `/samples/${item.slug}/`), ...(contactEmail ? ['/contact/'] : [])]
+  return [...INFO_PATHS, ...LEARNING_GUIDES.map(item => learningPath(item.slug)), ...PUBLIC_SAMPLES.map(item => `/samples/${item.slug}/`), ...(contactEmail ? ['/contact/'] : [])]
 }

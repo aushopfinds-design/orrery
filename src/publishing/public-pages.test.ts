@@ -87,7 +87,7 @@ describe('public reading publication and AdSense preflight',()=>{
   })
   it('lists canonical public paths in the sitemap without hash routes, input data or the old hostname',()=>{
     const xml=sitemap(identity)
-    expect(xml.match(/<loc>/g)).toHaveLength(12)
+    expect(xml.match(/<loc>/g)).toHaveLength(20)
     for(const match of xml.matchAll(/<loc>(.*?)<\/loc>/g))expect(match[1]).not.toMatch(/sky\.told\.me|#|my-report|birth-details|\?|New_York|1998/)
     for(const path of publicPaths(null))expect(xml).toContain(`<loc>https://thefatekey.com${path}</loc>`)
   })

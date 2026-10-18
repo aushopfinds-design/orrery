@@ -17,6 +17,7 @@ import { readPreviewDraft, updatePreviewDraft } from '../utils/preview-draft.ts'
 import { formStateFromBirth, matchesBirth, normalizeBirthFormState, readBirthFormState } from '../utils/birth-form-state.ts'
 import { previewProduct } from '../report/personal-products.ts'
 import ReportBoundary from './report/ReportBoundary.tsx'
+import HomeLearning from './HomeLearning.tsx'
 
 type Tab = 'saju' | 'ziwei' | 'natal' | 'reading'
 const SajuView = lazy(() => import('./saju/SajuView.tsx'))
@@ -92,7 +93,7 @@ export default function App() {
   const currentNav = navigationTarget(hash)
   const links = [
     ['#home', 'home.nav.home'], ['#birth-details', 'home.nav.free'],
-    ['#reports', 'home.nav.reports'],
+    ['#reports', 'home.nav.reports'], ['/learn/', 'site.public.learn'],
     ...(birthInput || route === 'personal-preview' ? [[previewHash(previewKind ?? readPreviewDraft().kind), 'site.nav.my']] : []),
     ['#about', 'home.nav.about'], ['#help', 'site.help.nav'],
   ]
@@ -162,6 +163,7 @@ export default function App() {
           </Suspense>
           <BuyerJourney />
           <HomeOverview onViewSample={viewSample} />
+          <HomeLearning />
           <HomeFAQ />
         </>}
         {route === 'product' && <CompleteReportPage onStartFree={startFree} onViewSample={viewSample} />}
@@ -257,7 +259,7 @@ export default function App() {
           <a href="#home" className="fate-brand" aria-label="The Fate Key" onClick={navigateHomeSection}><FateEmblem className="fate-brand-emblem" /><span><strong>The Fate Key</strong><small>UNLOCK A BRIGHTER YOU</small></span></a>
           <div className="fate-footer-links">{links.slice(1).map(([href,key]) => <a key={href} href={href} aria-current={currentNav === (href.startsWith('#my-report') ? '#my-report' : href) ? 'page' : undefined} onClick={navigateHomeSection}>{t(key)}</a>)}</div>
           <div className="fate-footer-service-links"><a href="#destiny-card">{t('destiny.nav')}</a><a href="#reading-guide">{t('site.guide.title')}</a><a href="#your-data">{t('site.privacy.title')}</a><a href="#help-faq">{t('home.nav.faq')}</a></div>
-          <div className="fate-footer-service-links"><a href="/samples/">{t('site.public.samples')}</a><a href="/about/">{t('site.public.about')}</a><a href="/privacy/">{t('site.public.privacy')}</a><a href="/use-and-limitations/">{t('site.public.limitations')}</a></div>
+          <div className="fate-footer-service-links"><a href="/samples/">{t('site.public.samples')}</a><a href="/learn/">{t('site.public.learn')}</a><a href="/about/">{t('site.public.about')}</a><a href="/editorial-policy/">{t('site.public.editorial')}</a><a href="/help/">{t('site.help.title')}</a><a href="/privacy/">{t('site.public.privacy')}</a><a href="/use-and-limitations/">{t('site.public.limitations')}</a></div>
           <p>{t('home.footer.note')}</p>
           <p className="fate-footer-credit">© {new Date().getFullYear()} The Fate Key · {t('home.footer.engine')} <a href="https://github.com/rath/orrery" target="_blank" rel="noopener noreferrer">Orrery</a></p>
         </div>
