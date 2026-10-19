@@ -13,14 +13,15 @@ const text=(html:string)=>html.replace(/<\/?(?:p|h[1-6]|div|section|li|blockquot
 
 describe('public reading publication and AdSense preflight',()=>{
   it('publishes a real, readable document at each canonical path without requiring JavaScript',()=>{
-    expect(pages.map(p=>p.path).sort()).toEqual(publicPaths(null).sort())
+    expect(pages.map(p=>p.path).sort()).toEqual(publicPaths(identity.contactEmail).sort())
     for(const page of pages){
       const html=renderDocument(page,identity)
       expect(html).toContain(`rel="canonical" href="https://thefatekey.com${page.path}"`)
       expect(html).toContain('content="index,follow"')
       expect(html.match(/<h1[ >]/g)).toHaveLength(1)
       expect(html).not.toContain('<script')
-      expect(text(page.body).split(' ').length).toBeGreaterThan(200)
+      // The contact utility page is checked for its real address and guidance below.
+      if(page.path!=='/contact/')expect(text(page.body).split(' ').length).toBeGreaterThan(200)
       expect(html).not.toMatch(/sky\.told\.me|ca-pub-|adsbygoogle|googlesyndication|under construction/i)
     }
   })
@@ -67,11 +68,10 @@ describe('public reading publication and AdSense preflight',()=>{
     expect(html).not.toContain('<script')
     expect(html).not.toContain('adsbygoogle')
   })
-  it('does not create a fake contact address, contact page or publisher identity',()=>{
-    expect(identity).toEqual({contactEmail:null,publisherId:null,accountId:null})
-    expect(publicPaths(null)).not.toContain('/contact/')
-    expect(pages.some(p=>p.path==='/contact/')).toBe(false)
-    for(const page of pages)expect(renderDocument(page,identity)).not.toContain('mailto:')
+  it('uses the approved public contact without inventing a publisher identity',()=>{
+    expect(identity).toEqual({contactEmail:'thefatekey@gmail.com',publisherId:null,accountId:null})
+    expect(pages.some(p=>p.path==='/contact/')).toBe(true)
+    for(const path of ['/contact/','/privacy/'])expect(renderDocument(pages.find(p=>p.path===path)!,identity)).toContain('mailto:thefatekey@gmail.com')
     for(const value of ['pub-123','ca-pub-000','pub-1234567890123456"><script>','pub-1234567890123456\n\nother'])expect(()=>publishingIdentity({FATE_ADSENSE_PUBLISHER_ID:value})).toThrow()
     for(const value of ['bad','x@example.com\r\nBcc:x@example.com','<x>@example.com','x@localhost'])expect(()=>publishingIdentity({FATE_PUBLIC_CONTACT_EMAIL:value})).toThrow()
   })
@@ -87,9 +87,9 @@ describe('public reading publication and AdSense preflight',()=>{
   })
   it('lists canonical public paths in the sitemap without hash routes, input data or the old hostname',()=>{
     const xml=sitemap(identity)
-    expect(xml.match(/<loc>/g)).toHaveLength(20)
+    expect(xml.match(/<loc>/g)).toHaveLength(21)
     for(const match of xml.matchAll(/<loc>(.*?)<\/loc>/g))expect(match[1]).not.toMatch(/sky\.told\.me|#|my-report|birth-details|\?|New_York|1998/)
-    for(const path of publicPaths(null))expect(xml).toContain(`<loc>https://thefatekey.com${path}</loc>`)
+    for(const path of publicPaths(identity.contactEmail))expect(xml).toContain(`<loc>https://thefatekey.com${path}</loc>`)
   })
   it('states current data practices and consent prerequisites without claiming ads are active',()=>{
     const notice=text(pages.find(p=>p.path==='/privacy/')!.body)

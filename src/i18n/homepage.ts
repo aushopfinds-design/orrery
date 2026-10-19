@@ -110,6 +110,7 @@ export const homepageCopy: Record<string, string> = {
   'site.public.samples': 'Full Sample Library',
   'site.public.learn': 'Learn Saju',
   'site.public.editorial': 'Writing & Sources',
+  'site.public.contact': 'Contact',
   'site.learn.eyebrow': 'A little clarity before your reading',
   'site.learn.title': 'New to Saju? Start here.',
   'site.learn.text': 'Simple explanations, worked examples and answers to the questions behind your chart.',

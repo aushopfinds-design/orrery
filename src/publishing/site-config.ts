@@ -3,9 +3,9 @@ import { LEARNING_GUIDES, learningPath } from './guide-catalog.ts'
 export const SITE_ORIGIN = 'https://thefatekey.com'
 export const PUBLISHING_UPDATED = '2026-10-19'
 
-/** Public identity must come from the operator, never a guessed address or ID. */
+/** Default contact approved by the operator on 2026-10-19; publisher ID must be supplied. */
 export function publishingIdentity(env: Record<string, string | undefined>) {
-  const contactEmail = env.FATE_PUBLIC_CONTACT_EMAIL?.trim() || null
+  const contactEmail = env.FATE_PUBLIC_CONTACT_EMAIL?.trim() || 'thefatekey@gmail.com'
   const suppliedId = env.FATE_ADSENSE_PUBLISHER_ID?.trim() || null
   if (contactEmail && !/^[A-Za-z0-9.!#$%&'*+/=?^_`{|}~-]+@[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)+$/.test(contactEmail)) {
     throw new Error('FATE_PUBLIC_CONTACT_EMAIL must be an operator-approved email address')
