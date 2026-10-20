@@ -109,3 +109,16 @@ https://github.com/stripe/stripe-cli/blob/master/pkg/fixtures/triggers/checkout.
 서버 회귀 재실행 한계: 이 후속 작업에서 PGlite 테스트 DB 초기화가 30초와 60초 제한에 걸려 해당 회귀 테스트 본문은 실행되지 못했다. 이를 서버 전체 재검증 통과로 기록하지 않는다. 기존 실제 Stripe Sandbox 승인 7건과 서버 통과 기록은 위 날짜의 결과다.
 
 이번에 수정한 삭제 상품 거부 경로는 테스트 DB 없이 `PaymentService.report()`를 직접 호출하는 독립 검사에서 확인했다. Stripe가 삭제된 상품 객체를 반환하면 HTTP 409 `payment_order_mismatch`로 거부하며, 결제 상태 저장 함수를 호출하지 않았다. 추가로 배포 함수와 같은 비엄격 TypeScript 설정에서 `api/payments.ts`의 컴파일 검사를 실행하여 오류 없이 통과했다.
+
+## 2026-10-21 최신 Preview 구매자 접근 재검증
+
+사용자가 기존 테스트 주문 접근키를 해당 Preview로 전송하는 데 명시적으로 동의한 뒤 검사했다. 키는 출력하거나 저장소에 추가하지 않았다.
+
+- 대상: https://saju-english-report-preview-nmsq5v60b-shopping-shorts-ai.vercel.app
+- 배포 코드: `f4de3be4a29e35634dd9c6a92d2e4fc03396a8d9`.
+- 실제 클라이언트 함수 `waitForPurchasedReport`와 `purchasedPdf`를 Node에서 실행하여 기존 Stripe Sandbox 구매 주문으로 배포 API에 접근했다. sessionStorage는 모의 환경이며 실제 브라우저 조작 검사는 아니다.
+- 종합 상품: 전체 리포트 1개, PDF 53,154바이트. 본문과 PDF 파일 서명 검증 통과.
+- 번들 상품: 전체 리포트 3개, PDF 158,059바이트. 본문과 PDF 파일 서명 검증 통과.
+- 새 결제 생성·실제 카드 청구·실제 결제 활성화·운영 도메인 변경 없음.
+
+이 결과는 최신 배포에서 기존 구매자의 리포트와 PDF 접근을 확인한 것이다. 위에 기록한 실제 휴대폰·브라우저 검수와 최신 서버 전체 회귀 테스트의 미완료 상태는 그대로 남아 있다.
