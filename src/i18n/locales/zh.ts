@@ -224,6 +224,12 @@ const zh: Record<string, string> = {
 
   "sandbox.data": "Your test birth details are sent to our server and stored encrypted to issue the report. Stripe handles card details.",
 
+  "sandbox.paymentPending": "尚未确认付款完成。请重新查询，无需再次购买。",
+  "sandbox.stillPreparing": "报告仍在准备中，请稍后重新查询。",
+  "sandbox.downloadError": "PDF 下载失败。您的报告仍然可用，请重试。",
+  "sandbox.downloading": "正在准备 PDF 下载…",
+  "sandbox.orderReference": "订单编号",
+
 }
 
 export default zh

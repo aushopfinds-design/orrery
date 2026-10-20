@@ -224,6 +224,12 @@ const ko: Record<string, string> = {
 
   "sandbox.data": "Your test birth details are sent to our server and stored encrypted to issue the report. Stripe handles card details.",
 
+  "sandbox.paymentPending": "아직 결제 완료가 확인되지 않았어요. 새로 구매하지 않고 다시 확인할 수 있어요.",
+  "sandbox.stillPreparing": "리포트를 준비하고 있어요. 잠시 후 다시 확인해 주세요.",
+  "sandbox.downloadError": "PDF를 다운로드하지 못했어요. 리포트는 그대로 있으니 다시 시도해 주세요.",
+  "sandbox.downloading": "PDF 다운로드를 준비하고 있어요…",
+  "sandbox.orderReference": "주문 번호",
+
 }
 
 export default ko

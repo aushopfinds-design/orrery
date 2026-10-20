@@ -224,6 +224,12 @@ const ja: Record<string, string> = {
 
   "sandbox.data": "Your test birth details are sent to our server and stored encrypted to issue the report. Stripe handles card details.",
 
+  "sandbox.paymentPending": "お支払いの完了をまだ確認できていません。再購入せずに、もう一度確認できます。",
+  "sandbox.stillPreparing": "レポートを準備しています。しばらくしてから再度ご確認ください。",
+  "sandbox.downloadError": "PDFをダウンロードできませんでした。レポートは引き続きご覧いただけますので、再度お試しください。",
+  "sandbox.downloading": "PDFのダウンロードを準備しています…",
+  "sandbox.orderReference": "注文番号",
+
 }
 
 export default ja

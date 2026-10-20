@@ -1,15 +1,21 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import type { OrderInput } from '../../../server/payments/input.ts'
 import { useLocale } from '../../i18n/index.ts'
 import { reportPrice } from '../../report/pricing.ts'
 
-export const PURCHASES_KEY = 'fate-sandbox-orders-v1'
+import { isSandboxHost, PURCHASES_KEY } from '../../utils/purchase-client.ts'
+export { PURCHASES_KEY } from '../../utils/purchase-client.ts'
 export const TEST_ACCESS_KEY = 'fate-sandbox-access-v1'
 export default function SandboxCheckout({ order }: { order: OrderInput }) {
   const { t } = useLocale()
   const [busy, setBusy] = useState(false), [message, setMessage] = useState('')
   const [access, setAccess] = useState(() => { try { return sessionStorage.getItem(TEST_ACCESS_KEY) ?? '' } catch { return '' } })
+  const activeRequest = useRef<AbortController | null>(null)
+  useEffect(() => () => { activeRequest.current?.abort(); activeRequest.current = null }, [])
   async function checkout() {
+    if (activeRequest.current) return
+    const controller = new AbortController(); activeRequest.current = controller
+    const timeout = setTimeout(() => controller.abort(), 45000)
     setBusy(true); setMessage('')
     try {
       sessionStorage.setItem(TEST_ACCESS_KEY, access)
@@ -19,19 +25,20 @@ export default function SandboxCheckout({ order }: { order: OrderInput }) {
       sessionStorage.setItem('fate-sandbox-attempt', JSON.stringify({ draft, key }))
       const response = await fetch('/api/payments?action=checkout', {
         method: 'POST', headers: { 'Content-Type': 'application/json', 'X-Fate-Test-Token': access, 'Idempotency-Key': key },
-        body: draft,
+        body: draft, signal: controller.signal,
       })
       const result = await response.json()
-      if (!response.ok || !/^https:\/\/checkout\.stripe\.com\//.test(result.checkoutUrl ?? '')) throw new Error(t('sandbox.error') + ' (' + (result.error ?? response.status) + ')')
+      if (controller.signal.aborted) return
+      if (!response.ok || !/^https:\/\/checkout\.stripe\.com\//.test(result.checkoutUrl ?? '')) throw new Error('Checkout unavailable')
       const saved = JSON.parse(sessionStorage.getItem(PURCHASES_KEY) ?? '{}')
       saved[result.orderId] = { accessToken: result.accessToken, kind: order.kind }
       sessionStorage.setItem(PURCHASES_KEY, JSON.stringify(saved))
       window.location.assign(result.checkoutUrl)
-    } catch (error) {
-      setMessage(error instanceof Error ? error.message : t('sandbox.error')); setBusy(false)
-    }
+    } catch {
+      if (activeRequest.current === controller) { setMessage(t('sandbox.error')); setBusy(false) }
+    } finally { clearTimeout(timeout); if (activeRequest.current === controller) activeRequest.current = null }
   }
-  if (!/^saju-english-report-preview(?:-[a-z0-9-]+)?\.vercel\.app$/.test(window.location.hostname)) return null
+  if (!isSandboxHost(window.location.hostname)) return null
   return <section className="fate-personal-delivery" aria-label={t('sandbox.title')}>
     <h3>{t('sandbox.title')} · {reportPrice(order.kind)}</h3>
     <p>{t('sandbox.note')}</p><p>{t('sandbox.data')}</p>

@@ -224,6 +224,12 @@ const en: Record<string, string> = {
 
   "sandbox.data": "Your test birth details are sent to our server and stored encrypted to issue the report. Stripe handles card details.",
 
+  "sandbox.paymentPending": "We have not confirmed a completed payment yet. Check again without starting another purchase.",
+  "sandbox.stillPreparing": "Your report is still being prepared. Please check again shortly.",
+  "sandbox.downloadError": "Your PDF could not be downloaded. Try again; your report is still available.",
+  "sandbox.downloading": "Preparing your PDF download…",
+  "sandbox.orderReference": "Order reference",
+
 }
 
 export default en
