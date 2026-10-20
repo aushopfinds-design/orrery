@@ -193,3 +193,12 @@ This is a substantive first narrative pass, not a claim that every sentence in a
 - React review: no new fetches, effects, subscriptions, dependencies or UI translation keys; supplementary example rendering remains semantic and uses existing translated labels. The markup-order check freezes locale labels and does not claim browser or SSR compatibility testing.
 - The previous real Stripe Sandbox approvals remain historical payment evidence. This editorial change additionally passed local payment/report/PDF integration tests; it did not create new real payments or overwrite existing paid snapshots.
 - Actual phone/browser inspection and an independent English-reader review remain outstanding. Automated passing tests do not establish whether every passage is ready for sale.
+
+## Preview deployment and direct browser check
+
+- Code commit: d4217ef4e88f9885e2745fa464a6d8790f0ca125.
+- Preview deployment: dpl_64SWQpGTJmyw131sz278nhk12w9V, READY. Vercel's configured full build completed in 31 seconds.
+- Verified report URL: https://saju-english-report-preview-mf1kcv51k-shopping-shorts-ai.vercel.app/#sample-report-career
+- Browser connectivity recovered in this session. Opened the deployed homepage, clicked View Sample Report and the Work That Suits You chapter link. The rendered sample shows edition r3 and the new scene, behaviour paragraph, chart explanation and supplementary example in the intended order. This is desktop browser evidence, not an actual-phone or independent-reader check.
+- The inspected browser error entries came from the Chrome extension's metadata sender (chrome-extension URL), not from the report application. This limited log inspection is not an assertion that the application can never error.
+- Production remains deployment dpl_E5zEudKnnYKVK345XryjxcYQJFRG at commit 69f00d4cc4b018a7757930709a6db0df60acab2d. No live activation or operating-domain mutation was performed.
