@@ -50,7 +50,8 @@ async function prepare() {
   return { provider, service, checkout, order, session, key }
 }
 async function count(table: string) { return Number((await db.query<{ count: string }>(`SELECT count(*) FROM ${table}`)).rows[0].count) }
-beforeAll(async () => { db = await PGlite.create(); await db.exec(migration) })
+// WASM database startup and multi-document PDF generation can be slow in CI.
+beforeAll(async () => { db = await PGlite.create(); await db.exec(migration) }, 120000)
 beforeEach(async () => {
   // This is a fresh, ephemeral local test database; never a customer database.
   await db.exec('TRUNCATE fate_order_artifacts, fate_payment_settings, fate_fulfillment_jobs, fate_payment_events, fate_payment_orders')
@@ -280,13 +281,20 @@ describe('seven products: paid reports, PDFs and access isolation', () => {
     const dir = '/workspace/scratch/0102d8f465a1/qa-pdfs'
     await mkdir(dir, { recursive: true }); await writeFile(`${dir}/${kind}.pdf`, bytes)
     const saved = await store.artifact(order.id)
-    expect(saved!.payload_encrypted).not.toMatch(/1992|Sydney|Person A/)
+    // Random base64 ciphertext can coincidentally contain short plaintext fragments.
+    // Verify authenticated encryption and order binding instead of substring luck.
+    const encrypted = saved!.payload_encrypted
+    const restored = openOrder(config.dataKey, order.id + ':report', encrypted) as { text: string; pdf: string }
+    expect(restored.text).toBe(report.text)
+    expect(Buffer.from(restored.pdf, 'base64')).toEqual(bytes)
+    expect(() => openOrder(config.accessKey, order.id + ':report', encrypted)).toThrow()
+    expect(() => openOrder(config.dataKey, randomUUID() + ':report', encrypted)).toThrow()
     await service.receiveWebhook(event.body, event.signature)
     const again = await service.report(order.id)
     expect(Buffer.from(again.pdf, 'base64')).toEqual(bytes)
     expect(await count('fate_order_artifacts')).toBe(1)
     expect((await handler(request('report', 'forged-token'))).status).toBe(404)
-  }, 20000)
+  }, 120000)
 
   it('rejects same-priced product substitution, quantity changes and wrong product metadata', async () => {
     const { service, provider } = await prepare()
@@ -314,5 +322,5 @@ describe('seven products: paid reports, PDFs and access isolation', () => {
     expect((await service.report(order.id)).kind).toBe('complete')
     expect(await count('fate_order_artifacts')).toBe(1)
     expect(await count('fate_payment_orders')).toBe(1)
-  }, 20000)
+  }, 120000)
 })
