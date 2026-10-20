@@ -205,6 +205,23 @@ const ko: Record<string, string> = {
   'zodiac.short.Aries': '양', 'zodiac.short.Taurus': '황소', 'zodiac.short.Gemini': '쌍둥이', 'zodiac.short.Cancer': '게',
   'zodiac.short.Leo': '사자', 'zodiac.short.Virgo': '처녀', 'zodiac.short.Libra': '천칭', 'zodiac.short.Scorpio': '전갈',
   'zodiac.short.Sagittarius': '궁수', 'zodiac.short.Capricorn': '염소', 'zodiac.short.Aquarius': '물병', 'zodiac.short.Pisces': '물고기',
+  // Private Sandbox controls; report delivery is English-only.
+  "sandbox.title": "Private Sandbox checkout",
+  "sandbox.note": "Test payments only. No real money is charged. Reports are in English.",
+  "sandbox.access": "Tester access code",
+  "sandbox.buy": "Buy test report",
+  "sandbox.opening": "Opening test checkout…",
+  "sandbox.error": "Could not open checkout. Please try again.",
+  "sandbox.missingAccess": "This browser does not have the private key for this order. Return using the browser where you started the purchase.",
+  "sandbox.verifyError": "The report could not be verified. Retry to check the payment again.",
+  "sandbox.verifying": "Checking payment and preparing your report…",
+  "sandbox.buyer": "Your private Sandbox purchase",
+  "sandbox.cancelled": "Checkout was cancelled. Your report remains locked until payment is verified.",
+  "sandbox.retry": "Check payment again",
+  "sandbox.download": "Download full PDF",
+  "sandbox.issued": "Issued",
+  "sandbox.home": "Explore the 7 Sandbox report products →",
+
 }
 
 export default ko

@@ -205,6 +205,23 @@ const de: Record<string, string> = {
   'zodiac.short.Aries': 'Wid', 'zodiac.short.Taurus': 'Sti', 'zodiac.short.Gemini': 'Zwi', 'zodiac.short.Cancer': 'Kre',
   'zodiac.short.Leo': 'Löw', 'zodiac.short.Virgo': 'Jun', 'zodiac.short.Libra': 'Waa', 'zodiac.short.Scorpio': 'Sko',
   'zodiac.short.Sagittarius': 'Sch', 'zodiac.short.Capricorn': 'Ste', 'zodiac.short.Aquarius': 'Was', 'zodiac.short.Pisces': 'Fis',
+  // Private Sandbox controls; report delivery is English-only.
+  "sandbox.title": "Private Sandbox checkout",
+  "sandbox.note": "Test payments only. No real money is charged. Reports are in English.",
+  "sandbox.access": "Tester access code",
+  "sandbox.buy": "Buy test report",
+  "sandbox.opening": "Opening test checkout…",
+  "sandbox.error": "Could not open checkout. Please try again.",
+  "sandbox.missingAccess": "This browser does not have the private key for this order. Return using the browser where you started the purchase.",
+  "sandbox.verifyError": "The report could not be verified. Retry to check the payment again.",
+  "sandbox.verifying": "Checking payment and preparing your report…",
+  "sandbox.buyer": "Your private Sandbox purchase",
+  "sandbox.cancelled": "Checkout was cancelled. Your report remains locked until payment is verified.",
+  "sandbox.retry": "Check payment again",
+  "sandbox.download": "Download full PDF",
+  "sandbox.issued": "Issued",
+  "sandbox.home": "Explore the 7 Sandbox report products →",
+
 }
 
 export default de

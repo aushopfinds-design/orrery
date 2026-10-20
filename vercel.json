@@ -1,0 +1,8 @@
+{
+  "functions": {
+    "api/payments.ts": {
+      "includeFiles": "server/payments/assets/**",
+      "maxDuration": 120
+    }
+  }
+}
