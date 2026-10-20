@@ -20,7 +20,7 @@ import type { CalculationExplanation } from './calculation-notes.ts'
 import { buildDecisionFocus } from './decision-focus.ts'
 import type { DecisionFocus } from './decision-focus.ts'
 
-export const REPORT_EDITION = '2026.10-r2'
+export const REPORT_EDITION = '2026.10-r3'
 
 export interface ReadingConnection {
   id: string
@@ -245,12 +245,13 @@ export function buildCompleteReading(result: SajuResult, asOfYear = new Date().g
   ]
   const chapters: ReportChapter[] = [
     {
-      id: 'personality', title: '01 · Your Personality', lead: personal.strength,
+      id: 'personality', title: '01 · Your Personality', lead: personal.example,
       example: everydayExample(result, 'personality'),
       paragraphs: [
+        personal.strength,
         `Saju uses your birth day as the starting point for this part of the reading. Your symbol is **${self.name}**, pictured as ${personal.image}. That image points to ${personal.focus}.`,
         `Your birth month adds a focus on **${work.theme}**. Think about how that fits with your need for ${personal.need}.`,
-        personal.example, personal.pressure, personal.balance,
+        personal.pressure, personal.balance,
       ],
       evidence: [`Your day stem is ${day.pillar.stem} (${self.name}); this is the reference marker for the reading.`, fact(month, 2)],
       tryThis: personal.practice,
@@ -259,13 +260,14 @@ export function buildCompleteReading(result: SajuResult, asOfYear = new Date().g
     {
       id: 'career', title: '02 · Work That Suits You',
       example: workExample(result, 'career'),
-      lead: `You may prefer work with **${work.setting}**.`,
+      lead: workExample(result, 'career').scene,
       paragraphs: [
+        'A task can be something you do well and still be frustrating in the wrong setting. Notice whether the difficult part is the work itself, the pace or the way other people respond to it.',
         `Your birth month connects with your birth day through a theme of **${work.theme}**. In everyday work, that points to ${work.contribution}.`,
         innerWork && month.branchSipsin !== month.stemSipsin
           ? `A second part of your birth month adds **${innerWork.theme}**. A role may feel easier when it leaves room for both ways of working.`
           : `This theme appears in both parts of your birth month. Look at the **daily routine**, as well as the job title.`,
-        `Watch for **${work.friction}**. ${work.scene}`,
+        `Watch for **${work.friction}**. If the opening situation feels familiar, ask which part of the arrangement creates that pressure.`,
         `Before accepting a role, ask about the **workload, feedback and freedom to make decisions**. Compare the answers with what helps you do your best work.`,
       ],
       evidence: [fact(month, 2), fact(month, 2, true), `The comparison uses your day stem ${day.pillar.stem}; it is not based on your birth year alone.`],
@@ -276,9 +278,11 @@ export function buildCompleteReading(result: SajuResult, asOfYear = new Date().g
       },
     },
     {
-      id: 'money', title: '03 · Money and Everyday Choices', lead: moneyOpening,
+      id: 'money', title: '03 · Money and Everyday Choices', lead: hasOpportunity ? 'Imagine being invited into an extra project while your evenings already belong to other plans. The payment sounds appealing; the time is harder to find.' : hasSteady ? 'Imagine checking a familiar monthly payment and realising you would not choose it again today.' : 'Imagine being asked to share a cost before anyone has said how long the arrangement will last.',
       example: moneyExample(result, hasSteady, hasOpportunity),
       paragraphs: [
+        'An offer can feel inexpensive or easy to accept until you see how often it repeats. The useful question is what you would still be agreeing to after the first payment.',
+        moneyOpening,
         wealth.length
           ? 'The chart gives this chapter its theme. **Your actual income and costs** tell you what you can afford. Use both parts when thinking about a choice.'
           : `Your work theme is **${work.theme}**. Check how your time and money support that work before taking on another cost.`,
@@ -293,8 +297,9 @@ export function buildCompleteReading(result: SajuResult, asOfYear = new Date().g
     {
       id: 'love', title: '04 · Relationships and Communication',
       example: relationshipExample(result),
-      lead: `**${relationship.headline}.**`,
+      lead: 'Imagine a plan for time together changing at the last minute. You are disappointed, but do not know whether to say so or let it go.',
       paragraphs: [
+        'You might want to stay easy to be around while also wanting the other person to notice that the plan mattered. Naming the disappointment can be more helpful than expecting them to hear it in a quiet reply.',
         `Saju uses the two parts of your birth day to explore close relationships. Your reading points to a need for **${relationship.need}**.`,
         `Your own starting style also values **${personal.need}**. Notice whether you can say that clearly during an everyday conversation.`,
         `One habit to watch is **${relationship.friction}**. Try asking what the other person needs before deciding how to help.`,
@@ -311,8 +316,9 @@ export function buildCompleteReading(result: SajuResult, asOfYear = new Date().g
     },
     {
       id: 'social', title: '05 · Your Role Around Other People',
-      lead: `In a wider group, your chart brings **${groupWork.theme}** into focus.`,
+      lead: 'Imagine joining friends for a day out and finding yourself organising the transport, answering questions and checking that everyone is ready.',
       paragraphs: [
+        'Being the person who keeps things moving can feel satisfying. It becomes less enjoyable when everyone assumes you will organise the next plan too, without asking whether you want to.',
         `This part comes from how your birth year connects with your birth day. It points to **${groupWork.contribution}**. Think about the role you often take with friends or colleagues.`,
         year.stemSipsin === month.stemSipsin
           ? 'Your group and work themes match. A role you take at work may follow you elsewhere. **Check whether you still want that role.**'
@@ -328,8 +334,9 @@ export function buildCompleteReading(result: SajuResult, asOfYear = new Date().g
     },
     {
       id: 'balance', title: '06 · Your Five-Element Picture',
-      lead: `**${c.prominent.map(item => item.element).join(' and ')}** ${c.prominent.length === 1 ? 'appears' : 'appear'} most often in this simple count.`,
+      lead: 'Imagine trying your usual way of handling a problem and finding that, this time, it only makes you more stuck.',
       paragraphs: [
+        'A familiar response can save effort, but it is not the only response available to you. The five-element images offer a way to describe different habits without treating any one habit as a fixed identity.',
         `Your chart has **${result.input.unknownTime ? 'six' : 'eight'} visible symbols**. Their element count is ${c.elements.map(item => `${item.element} ${item.count}`).join(', ')}. You can see the numbers in the table below.`,
         `In Saju imagery, ${c.prominent.map(item => item.element).join(' and ')} points to **${elementHabits.map(item => item.meaning).join('; ')}**. Use that image to notice a habit you already recognise.`,
         c.absent.length
@@ -347,8 +354,9 @@ export function buildCompleteReading(result: SajuResult, asOfYear = new Date().g
     },
     {
       id: 'patterns', title: '07 · When Different Needs Pull Against Each Other',
-      lead: clash ? '**Two parts of your chart pull in different directions.** Use this as a question about competing needs.' : combine ? '**Two parts of your chart form a connection.** Use this as a question about working together.' : '**No direct combination or clash appears in the pairs checked here.** Your other chart details still give this reading its themes.',
+      lead: 'Imagine wanting to finish something important while someone close asks for your attention. Saying yes to either need feels like letting the other one down.',
       paragraphs: [
+        'Both needs can matter. The pressure often comes from treating the choice as proof of who you care about, instead of discussing what each person actually needs right now.',
         clash
           ? 'For example, you may want to finish work while someone needs your attention. **Name both needs** before choosing what to do. A chart pattern cannot tell us that this has happened.'
           : 'Look at how you handle a shared task. Which needs have been said clearly, and which ones are still being guessed?',
@@ -377,12 +385,14 @@ export function buildCompleteReading(result: SajuResult, asOfYear = new Date().g
         : 'This later period is further ahead. Keep its theme open as your plans and circumstances change.'
       : `${asOfYear} falls within this period. Compare its theme with the tasks and choices in your life now.`
     const paragraphs = [
+      cycleWork.scene,
+      'It can be tempting to treat a new period as a reason to change everything. Instead, use the situation above to ask whether a different approach would help with something you already face.',
       when,
       `The main theme is **${cycleWork.theme}**. Use it to think about ${cycleWork.contribution}.`,
       cycle.branchSipsin === cycle.stemSipsin
         ? `Both parts focus on ${cycleWork.theme}. **Choose a small task** where you can put that theme into practice.`
         : `The second theme is **${inner.theme}**. Look for a plan that leaves room for both.`,
-      index === 0 ? cycleWork.scene : index === 1
+      index === 0 ? `If the situation fits, a possible reply is: **${cycleWork.next}**` : index === 1
         ? `Before this period begins, try one small step: **${cycleWork.next}**`
         : `Keep the later years open to change. When your life changes, review what still fits. One possible step is: **${cycleWork.next}**`,
     ]
@@ -399,8 +409,9 @@ export function buildCompleteReading(result: SajuResult, asOfYear = new Date().g
   })
   const actionPlan: ReportChapter = {
     id: 'next-moves', title: '09 · Three Small Steps to Try',
-    lead: '**Choose one step for this week.** You do not need to change everything at once.',
+    lead: 'Imagine finishing this reading with several things you want to change, then wondering how you would fit them all into an ordinary week.',
     paragraphs: [
+      'Wanting to use an idea does not mean you need to turn every chapter into homework. Begin with the situation you recognise most clearly; leave the other suggestions for when they become relevant.',
       `**For yourself:** ${personal.practice}`,
       `**For work:** ${work.next}`,
       `**For a relationship:** Ask about ${relationship.need}. Listen to the answer before deciding what to do.`,
@@ -429,7 +440,7 @@ export function buildCompleteReading(result: SajuResult, asOfYear = new Date().g
     { label: 'Your relationship message', text: relationship.headline },
   ]
   const chapterText = (chapter: ReportChapter) => [
-    chapter.title, chapter.lead, ...(chapter.example ? everydayExampleText(chapter.example) : []), ...chapter.paragraphs, guidanceText(chapter.guidance),
+    chapter.title, chapter.lead, ...chapter.paragraphs, ...(chapter.example ? everydayExampleText(chapter.example, chapter.lead !== chapter.example.scene) : []), guidanceText(chapter.guidance),
     'From your chart: ' + chapter.evidence.join(' '), 'Try this: ' + chapter.tryThis,
   ]
   const extras = buildReportExtras('complete', result)

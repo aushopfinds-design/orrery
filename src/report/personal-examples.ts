@@ -264,7 +264,7 @@ export function moneyExample(r: SajuResult, steady: boolean, opportunity: boolea
   }
 }
 
-export function everydayExampleText(example: EverydayExample): string[] {
-  return ['An everyday example to try', example.scene, 'A response to try: ' + example.response,
+export function everydayExampleText(example: EverydayExample, includeScene = true): string[] {
+  return ['An everyday example to try', ...(includeScene ? [example.scene] : []), 'A response to try: ' + example.response,
     'What to notice: ' + example.check, 'Why this example: ' + example.basis, ...example.facts]
 }

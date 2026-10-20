@@ -93,7 +93,7 @@ export function commonMethod(result: SajuResult, year: number): string[] {
 }
 export function finishReading(data: Omit<CategoryReading, 'fullText' | 'wordCount'>): CategoryReading {
   const chapters = data.chapters.map((item, index) => ({ ...item, title: `${String(index + 1).padStart(2, '0')} · ${item.title}` }))
-  const chapterText = (item: ReportChapter) => [item.title, item.lead, ...(item.example ? everydayExampleText(item.example) : []), ...item.paragraphs, 'Keep close:', ...item.guidance.keepClose, 'Watch out for:', ...item.guidance.watchFor, 'A small step to try: ' + item.tryThis, 'From the chart: ' + item.evidence.join(' ')]
+  const chapterText = (item: ReportChapter) => [item.title, item.lead, ...item.paragraphs, ...(item.example ? everydayExampleText(item.example, item.lead !== item.example.scene) : []), 'Keep close:', ...item.guidance.keepClose, 'Watch out for:', ...item.guidance.watchFor, 'A small step to try: ' + item.tryThis, 'From the chart: ' + item.evidence.join(' ')]
   const fullText = plainReadingText([
     `THE FATE KEY · ${data.title}`, `Report edition ${REPORT_EDITION} · Reference year ${data.referenceYear}`,
     ...data.subjects.flatMap(item => [item.label, item.birthSummary, item.pillarSummary.join(' · '), `Cycle setting: ${item.calculation.cycleSetting}; direction: ${item.calculation.cycleDirection}.`, ...(data.subjects.length > 1 ? item.calculation.notes : [])]), data.headline,

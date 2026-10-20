@@ -26,6 +26,57 @@ const MONTH_FOCUS = [
   ['Review What Helped', 'What worked in practice, and what no longer deserves a place in my plan?'],
 ] as const
 
+const MONTH_SCENES = [
+  [
+    "Imagine a regular favour taking more of your week than it did when you first agreed to it.",
+    "You can still care about keeping a promise while needing to talk about how it has changed."
+  ],
+  [
+    "Imagine waiting for a free weekend to begin something that could start with twenty minutes today.",
+    "Wanting a good start can quietly become a reason not to begin."
+  ],
+  [
+    "Imagine feeling disappointed that someone did not help, then realising you never actually asked them.",
+    "A need can feel obvious to you while remaining invisible to someone else."
+  ],
+  [
+    "Imagine agreeing to a low first payment and only later reading how often it will repeat.",
+    "The first step can feel manageable while the continuing cost asks for a different decision."
+  ],
+  [
+    "Imagine a task that was meant to take an hour spreading across every spare moment of the day.",
+    "Improving it may still feel useful, even after it has done the job you needed."
+  ],
+  [
+    "Imagine being asked whether you can do something and wishing you had kept an example of the last time you did it.",
+    "Seeing the result can make your ability easier to explain than finding the right words about yourself."
+  ],
+  [
+    "Imagine a shared plan working only because one person remembers every small detail.",
+    "The work can look evenly divided until you include the reminders and follow-up."
+  ],
+  [
+    "Imagine being pressed for an answer while one important detail is still missing.",
+    "Taking time to check that detail is different from avoiding the decision altogether."
+  ],
+  [
+    "Imagine someone saying your work needs improving without explaining which part did not work.",
+    "Vague criticism can feel personal when what you need is an observation you can use."
+  ],
+  [
+    "Imagine someone telling you about a problem and going quiet as soon as you start offering solutions.",
+    "Your intention may be kind while the kind of help you offered was not what they wanted."
+  ],
+  [
+    "Imagine an exciting new idea arriving just as an older project reaches its difficult final part.",
+    "Beginning again can feel easier than deciding whether to finish, reduce or stop the older work."
+  ],
+  [
+    "Imagine looking back at the year and remembering unfinished plans before anything that actually helped.",
+    "A fair review also makes room for changed circumstances and useful results you did not originally plan."
+  ]
+] as const
+
 const MONTH_REVIEW = [
   { action: 'Write the scope, owner and next review date of one existing promise.', keep: 'One agreement with a clear owner and review date.', watch: 'Renewing a promise without checking what it now requires.', review: 'Compare the agreed task with what was actually delivered. Which expectation still needs to be said aloud?' },
   { action: 'Make a version of the first step that fits into twenty minutes.', keep: 'A small first result you can finish with the resources already available.', watch: 'Adding tools, purchases or extra goals before the first attempt.', review: 'Did the first attempt answer a useful question? Name the next thing to test, rather than expanding the whole plan.' },
@@ -72,8 +123,8 @@ export function buildYearAheadReading(result: SajuResult, year = new Date().getF
     const exercise = MONTH_REVIEW[index]
     const practice = `${MONTH_TASKS[FAMILY[god]][index % 3]} ${exercise.action}`
     return {
-      ...chapter(`month-${index + 1}`, label, `**${theme.title}.** ${MONTH_FOCUS[index][0]}.`, [
-        `The monthly reference adds **${theme.theme}**. For ${label}, use this question: **${MONTH_FOCUS[index][1]}**`,
+      ...chapter(`month-${index + 1}`, label, `${MONTH_SCENES[index][0]} ${MONTH_SCENES[index][1]} The chart idea explored here is **${theme.theme}**.`, [
+        `For ${label}, the reference month’s stem is compared with your birth-day stem. This reading connects that relationship with **${theme.theme}**. Use this question: **${MONTH_FOCUS[index][1]}**`,
         `**A situation to explore:** ${situation.scene} Before agreeing, ask: **“${situation.question}”**`,
         branchGod === god ? `Both parts repeat the same theme in this reference. **${practice}** Then review the real result.` : `The second part adds **${innerTheme.theme}**. Leave room for it when you try this step: **${practice}**`,
         `**Review this month's attempt:** ${exercise.review} ${clash ? 'The checked clash adds a question about two different needs.' : combine ? 'The checked combination adds a question about how to share the next step.' : ''}`.trim(),
@@ -88,35 +139,40 @@ export function buildYearAheadReading(result: SajuResult, year = new Date().getF
     headline: `${year}: ${decision.headline}`, subjects: [subject(result)],
     summary: [{ label: 'The annual theme', text: annual.theme }, { label: 'A second annual theme', text: inner.theme }, { label: 'Your own starting need', text: c.personal.need }],
     chapters: [
-      chapter('annual-theme', 'Your Annual Theme and Your Starting Style', `**The added annual theme is ${annual.theme}.** Compare it with your own needs and the plans you actually have.`, [
+      chapter('annual-theme', 'Your Annual Theme and Your Starting Style', "Imagine looking at your plans for the year and realising that several of them no longer feel like your own choices.", [
+        "A plan can become familiar before you ask whether you still want it. This year’s reading gives you another way to look at that question, rather than a list of events you should expect.",
         `Your starting style values **${c.personal.focus}**. This year adds a theme of **${annual.theme}**. Try both ideas with one small choice.`,
         annualGod === c.month.stemSipsin ? 'The annual and main birth-month themes match. That gives you a reason to review an existing working habit closely, rather than assuming that repetition promises a particular event.' : `Your usual working theme is **${c.work.theme}**. The added annual theme is different. Use it as an extra question when a familiar approach does not answer everything.`,
         `A second yearly theme is **${inner.theme}**. This reading uses both themes. One label cannot describe the whole year.`,
         `A question to carry through **${year}** is: **“${life.yearQuestion}”** Try it with a personal plan as well as a working responsibility.`,
         januaryPillar !== annualPillar ? 'The January reference still belongs to the earlier Saju year. The calendar year and the Saju year do not start at the same boundary. The monthly notes show the actual year and month symbols used.' : 'The monthly notes show the year and month symbols used at each reference point. They are not assumptions that every symbol changes on the first day of a calendar month.',
       ], [pillarFact(result, 1), pillarFact(result, 2), ...annualFacts, `January reference: ${januaryPillar}; July reference: ${annualPillar}.`], 'Choose one plan for the year. Write the annual theme beside your own starting need and name one question to check.', { keepClose: [`One annual intention that allows ${c.personal.need}.`, 'A distinction between the added annual theme and your existing circumstances.'], watchFor: ['Treating a yearly heading as an instruction to change everything.', 'Calling an annual theme good or bad before relating it to a real choice.'] }, 'personality', annualExample(result, year, annualGod, annualInnerGod, annualPillar)),
-      chapter('annual-work', 'Work, Skills and a Useful First Result', '**Turn a broad yearly intention into something you can finish.** A task you can review gives you more information than a promise to change everything.', [
+      chapter('annual-work', 'Work, Skills and a Useful First Result', "Imagine wanting to learn something this year, saving several courses and still not trying the skill itself.", [
+        "Preparation can feel reassuring. When it keeps postponing the first attempt, trying a basic version may show you exactly what you need help with.",
         `The annual theme points to tasks involving **${focus.tasks}**. Choose one example that fits your current responsibilities and interests.`,
         `Your birth-month setting values **${c.work.setting}**. Keep that need visible when you plan the task. An annual symbol does not remove the conditions that help you work well.`,
         `A practical test is: **${focus.proof}** Start with what can be done in a short, realistic block of time.`,
         `Watch for **${annual.friction}**. If that pressure appears, clarify the task or the agreement before treating the whole year as a success or failure.`,
         'Use a review date to compare the work with the result. Ask what helped, what took more time than expected and which part should be tried differently. Keep a record that can guide the next monthly step.',
       ], [pillarFact(result, 2), `Annual stem ${annualPillar[0]}: ${annualGod}.`], 'Choose one annual skill or project goal. Define the first useful result and a date to review it.', { keepClose: ['One skill or project result that can be reviewed this month.', `Time for the birth-month condition of ${c.work.setting}.`], watchFor: ['Adding annual goals without choosing which current task will move.', 'Treating a broad intention as progress before there is a first result.'] }, 'career'),
-      chapter('annual-money', 'Money and the Promises Around It', '**Keep confirmed facts separate from hopes.** An annual theme is a prompt for reviewing commitments, not a forecast of earnings.', [
+      chapter('annual-money', 'Money and the Promises Around It', "Imagine checking your spending and finding several small payments for plans you barely use anymore.", [
+        "Each purchase may have made sense at the time. Looking at them together can reveal how much of your next month is already spoken for before you add another plan.",
         `Your birth-chart money checks focus on **${money.theme}**. The annual theme adds **${annual.theme}**. Use those two views to examine one real offer or recurring duty.`,
         'Write down the costs and the time you know about. List what is still uncertain in a separate column. A plan is easier to revise when its assumptions are visible.',
         `The annual pressure to watch is **${life.moneyWatch}**. Check whether a new commitment would add that pressure to the costs and responsibilities you already carry.`,
         'For example, a new subscription, course or project can bring a recurring cost after the first payment. Review how often the promise repeats and what would make you stop or change it.',
         'Use actual figures and suitable advice for important financial choices. **Do not choose a purchase, investment or borrowing decision because a month is labelled favourable.** This report does not calculate lucky dates or financial outcomes.',
       ], [...money.facts, `Annual relationships: stem ${annualGod}; principal inner stem ${annualInnerGod}.`], 'Review one recurring commitment before adding another. Note the full cost, the work needed and the date you will check it again.', { keepClose: ['Confirmed figures and written assumptions.', 'A review date for recurring promises.'], watchFor: [life.moneyWatch, 'Treating an annual theme as a guaranteed financial result.'] }, 'money'),
-      chapter('annual-connections', 'Relationships and Shared Expectations', '**Make room for a real answer.** The most useful relationship plan begins with asking what the other person needs.', [
+      chapter('annual-connections', 'Relationships and Shared Expectations', "Imagine filling the calendar with something important to you, then discovering that someone close expected to spend that time together.", [
+        "Excitement about a new plan does not mean you meant to leave them out. The conversation becomes easier when each person can say what they expected before either gives something up.",
         `Your close-relationship theme values **${c.relationship.need}**. Keep that need visible when busy plans or new responsibilities fill the calendar.`,
         `Your starting style also asks for **${c.personal.need}**. Say which part you need rather than assuming that an annual reading tells another person how to respond.`,
         `A sentence to try is: **“${c.relationship.words}”** Use it in an ordinary conversation where you can listen to the answer.`,
         `The annual theme is **${annual.theme}**. For a relationship, try this: **${life.connection}** Ask the other person what would work for them.`,
         'This is a one-person annual report. It does not compare a partner’s birth chart or predict marriage, separation or the arrival of a relationship. Use a two-person reading when you want to explore two sets of chart symbols.',
       ], [pillarFact(result, 1), ...pairFacts(annualPillar, c.day.pillar.ganzi, 'Annual / birth day')], 'Ask someone close what kind of support would help with one plan. Share your own need and agree a practical next step.', { keepClose: [`A conversation that makes room for ${c.relationship.need}.`, 'A shared plan the other person has actually had a chance to answer.'], watchFor: ['Expecting someone to rearrange their year around a plan they have not agreed to.', 'Using a one-person annual theme to predict another person’s feelings.'] }, 'love'),
-      chapter('annual-cycle-context', 'The Longer Chapter Around This Year', '**One year sits within a longer story.** A ten-year cycle adds context without deciding what will happen in a particular month.', [
+      chapter('annual-cycle-context', 'The Longer Chapter Around This Year', "Imagine a short-term opportunity pulling you away from a longer goal you still care about.", [
+        "The new option may be useful without replacing the older aim. It helps to ask what each choice would require now, instead of assuming one has to be the right direction for every part of your life.",
         `The following available cycles are selected using **${year}**. Their year labels are a summary; the notes give the calculated starting dates.`,
         ...(cycles.length ? cycles.map(cycle => {
           const start = cycle.startDate.getUTCFullYear()
@@ -126,7 +182,8 @@ export function buildYearAheadReading(result: SajuResult, year = new Date().getF
         'A cycle theme and an annual theme can differ. Choose the part that helps you organise an actual task, then compare the result with your circumstances. Neither layer guarantees a particular event.',
         'If the birth time is unknown, cycle starting dates remain approximate. Keep plans flexible around timing labels and use the monthly references as discussion points rather than exact deadlines.',
       ], cycleFacts(result, year), 'Write down one annual aim and one longer-term aim. Choose a small task that can support both.', { keepClose: ['An annual task that also supports a longer aim you still value.', 'The stated calculation dates alongside the broad period labels.'], watchFor: ['Turning a ten-year label into a deadline for a major life decision.', 'Abandoning an existing aim before checking whether the annual task could support it.'] }, 'timeline'),
-      chapter('annual-plan', 'A Year You Can Review', '**Plan in small steps and keep the evidence.** Your circumstances can change, so the plan needs room to change too.', [
+      chapter('annual-plan', 'A Year You Can Review', "Imagine rereading an ambitious January plan months later and feeling that the year has gone off course.", [
+        "Your circumstances may have changed since you wrote it. A useful review makes room for what you have learned, instead of asking you to keep a promise you would no longer choose.",
         `Begin with your own starting need: **${c.personal.need}**. Choose one way to protect it in the calendar rather than waiting for a perfect time.`,
         `Begin a personal annual test: **${life.yearStep}** Use the first result to decide what deserves a place in the next month.`,
         'Give each season a review question: **What will I begin? What will I practise? What will I simplify? What will I carry forward?** These are planning stages you can move to fit your life, rather than predictions assigned to calendar quarters.',

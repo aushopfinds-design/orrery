@@ -1,6 +1,6 @@
 # FATE KEY — everyday English editorial revision
 Date: 2026-10-21 (Australia/Sydney)
-Status: editorial draft and implementation specification; NOT integrated into report generators or deployed.
+Status: first implementation pass completed in the report generators; see validation below. Further reader review is required before treating the copy as a finished paid edition.
 Baseline inspected: feature/english-saju-report-20261013 at 83b7da6f7b1b4efb2c1eda5d21aff3b22058e3e7.
 Priority: finish report language before further payment work. Live activation and operating-domain changes remain prohibited.
 
@@ -162,7 +162,7 @@ Review repeated meaning, not only identical sentences. For each chapter, record 
 
 Do not force every chart into seven different personalities. When the same feature matters in more than one chapter, explain the connection and apply it to a genuinely different decision.
 
-## Implementation and acceptance work still required
+## Acceptance scope and further editorial review
 
 1. Rewrite the actual lead and paragraphs in complete-reading and the subject builders, not only the additional example boxes.
 2. Update decision-focus, reading-profiles, reading-connections, personal-examples, report-applications and period passages wherever their rendered copy is used. Inspect the full files before editing them.
@@ -172,4 +172,24 @@ Do not force every chart into seven different personalities. When the same featu
 6. Test the revised generators, then inspect the online text and rendered PDFs. The previous 470-test result applies to the earlier code, not to this future rewrite.
 7. Have an English reader explain a passage back in their own words before calling it ready for sale. No human reader review has been performed for this draft.
 
-Current completion boundary: this document supplies usable editorial drafts and a concrete revision contract. Product code, regenerated reports, tests and deployment for this language revision are not complete because the execution environment is unavailable.
+## Implemented first pass
+
+- Updated 41 main chapter openings across Complete, Career, Business, Compatibility, Everyday Balance and Year Ahead; added ordinary behavioural or emotional context before the existing calculated explanations. Complete’s action chapter is included in the 41.
+- Added twelve distinct monthly scenes with their calculated monthly meaning retained, and moved cycle-specific scenes before the timing explanation.
+- Changed the initial solo and pair decision focus from a technical-theme opening to an everyday scene. The selected chart positions remain in the explanation and source notes; the annual focus distinguishes its annual symbol from the birth-month comparison.
+- Kept chart-dependent work scenes, money-marker branches, both people’s comparisons, annual/monthly calculations and unknown-time exclusions. This is not a new calculation engine or an added strength assessment.
+- Put supplementary example boxes after the chapter narrative in preview and report HTML, and in the text used for purchased reports and PDFs. Suppress a repeated example scene when it is already the chapter lead.
+- Changed newly issued report edition to 2026.10-r3. Existing encrypted paid artifacts stay unchanged; the new edition is generated for new orders.
+- Added regression coverage for scene-first chapter openings, saved-text and HTML order, non-duplicated scenes, monthly references, bundle edition consistency and unknown-time behaviour.
+
+This is a substantive first narrative pass, not a claim that every sentence in all supporting profile, connection, extra or situation libraries has been rewritten. The remaining acceptance work above includes reading the complete outputs for repeated meaning, a separate English reader’s comprehension check and final editorial approval. No outside English-reader review has been performed. Live payment activation and the operating domain remain unchanged.
+
+## Validation for this implementation
+
+- Full repository run: **36 test files, 475 tests passed**, exit 0, 27.66 seconds. Includes the 26 server payment/issuance tests and five new editorial regression tests.
+- TypeScript build check and ESLint for changed report sources/components: passed.
+- Local Vite production assets and 21 public content paths built successfully. The local standalone Bun launcher was unavailable; Vercel's configured full build remains the deployment build check.
+- Seven newly generated test PDFs contain r3 text. All pages were checked for text extending outside the page. Representative Complete and Year Ahead pages were rendered and visually reviewed; this is not a claim to have visually reviewed every PDF page.
+- React review: no new fetches, effects, subscriptions, dependencies or UI translation keys; supplementary example rendering remains semantic and uses existing translated labels. The markup-order check freezes locale labels and does not claim browser or SSR compatibility testing.
+- The previous real Stripe Sandbox approvals remain historical payment evidence. This editorial change additionally passed local payment/report/PDF integration tests; it did not create new real payments or overwrite existing paid snapshots.
+- Actual phone/browser inspection and an independent English-reader review remain outstanding. Automated passing tests do not establish whether every passage is ready for sale.

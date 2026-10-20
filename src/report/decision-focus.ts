@@ -1,6 +1,7 @@
 import type { SajuResult } from '@orrery/core/types'
 import { getFourPillars, getRelation } from '@orrery/core/pillars'
 import { PERSONAL_PROFILES, RELATIONSHIP_PROFILES, WORK_PROFILES } from './reading-profiles.ts'
+import { everydayExample, workExample, monthlySituation } from './personal-examples.ts'
 import { THEME_FAMILY } from './theme-family.ts'
 
 /** Editorial decision prompts selected by two calculated themes. These do not
@@ -22,14 +23,14 @@ const BRIDGES: Record<string, { title: string; tension: string }> = {
   'ownership/ownership': { title: 'Own a clear part, and leave room for other methods', tension: 'A shared wish for independence still needs an agreement about where each person can decide.' },
   'ownership/making': { title: 'Keep your direction and show an early version', tension: 'Control of the method can protect an idea, but feedback needs something another person can actually see.' },
   'ownership/resources': { title: 'Choose the commitment that leaves room for your own goal', tension: 'An attractive offer can use the time you wanted for an independent priority. Check what would have to move.' },
-  'ownership/responsibility': { title: 'Agree the result, then clarify your freedom to act', tension: 'Independence and accountability can work together when the result is fixed and the method is open to discussion.' },
+  'ownership/responsibility': { title: 'Agree the result, then clarify your freedom to act', tension: 'You may be happy to answer for the result while still wanting a say in how to do the work.' },
   'ownership/learning': { title: 'Use support without handing over the whole decision', tension: 'Advice can widen your options while the next choice remains yours. Decide which question you need help answering.' },
   'making/making': { title: 'Finish a useful version before improving every detail', tension: 'A strong interest in making something useful can still need a finishing rule. Feedback is easier to use on a version that exists.' },
-  'making/resources': { title: 'Check what a useful result really takes to deliver', tension: 'Creating something and keeping its promise are different jobs. Include the preparation and follow-up around the visible result.' },
-  'making/responsibility': { title: 'Make the standard clear enough to test a version', tension: 'A result needs both room to develop and a clear acceptance test. Separate a required correction from an optional improvement.' },
+  'making/resources': { title: 'Check what a useful result really takes to deliver', tension: 'Making the thing may be enjoyable; the preparation and extra replies can take longer than you expect.' },
+  'making/responsibility': { title: 'Make the standard clear enough to test a version', tension: 'You may want to try a different approach and still need to know when the result is finished.' },
   'making/learning': { title: 'Let a small attempt tell you what to learn next', tension: 'More understanding can improve a result, but a short attempt may reveal the missing knowledge faster than more general preparation.' },
   'resources/resources': { title: 'Choose a promise you can still keep after the first step', tension: 'New openings and existing commitments share the same limited time. Compare the ongoing work as carefully as the appealing start.' },
-  'resources/responsibility': { title: 'Match the promise with the time and authority it needs', tension: 'An agreement can name an attractive result without giving you the time, support or authority to deliver it.' },
+  'resources/responsibility': { title: 'Match the promise with the time and authority it needs', tension: 'You may want to say yes before knowing whether you will have enough time or help.' },
   'resources/learning': { title: 'Give the next investment of effort a clear purpose', tension: 'A tool, course or new idea is useful when it answers a question in the current plan. Name that question before adding more preparation.' },
   'responsibility/responsibility': { title: 'Separate what is required from what you keep adding', tension: 'A clear duty can quietly grow when every extra request seems equally urgent. Revisit the original agreement before extending it.' },
   'responsibility/learning': { title: 'Ask for the support that lets you carry the responsibility', tension: 'Being accountable does not require already knowing everything. Identify the missing explanation or practice before promising a result.' },
@@ -39,14 +40,14 @@ const BRIDGES: Record<string, { title: string; tension: string }> = {
 type Route = { action: string; pause: string; review: string }
 const ROUTES: Record<SoloKind, Record<Family, Route>> = {
   career: {
-    ownership: { action: 'Choose one real task. Agree which result is yours and which decisions you can make without asking again.', pause: 'The role holds you accountable while someone else controls every practical decision.', review: 'Did clearer decision rights remove a delay, or is a specific skill or resource still missing?' },
+    ownership: { action: 'Choose one real task. Agree which result is yours and which decisions you can make without asking again.', pause: 'The role holds you accountable while someone else controls every practical decision.', review: 'Could you get on with the task, or did you still need permission, help or more time?' },
     making: { action: 'Choose a small piece of actual work. Show a usable version and ask what it must do to be accepted.', pause: 'Another revision is requested without explaining what is wrong with the current result.', review: 'Which observation improved the work, and which change was only a personal preference?' },
     resources: { action: 'Take one real offer or added duty. Put confirmed pay beside expected hours, extra work and necessary costs.', pause: 'An attractive title or payment leaves the hours, follow-up or added duties unclear.', review: 'What did the work require in practice, and does the confirmed agreement still cover it?' },
-    responsibility: { action: 'Ask the person setting the task for its priority, the acceptance standard and the support available.', pause: 'You are expected to deliver a result without a clear priority, useful support or permission to decide.', review: 'Did the agreed standard make finishing easier, or did the requirement change after the work began?' },
+    responsibility: { action: 'Ask the person setting the task for its priority, what the finished work must include and the support available.', pause: 'You are expected to deliver a result without a clear priority, useful support or permission to decide.', review: 'Did the agreed standard make finishing easier, or did the requirement change after the work began?' },
     learning: { action: 'Pick a skill the current role actually needs. Use it in one small task before choosing more training.', pause: 'More preparation keeps replacing the chance to try the skill with useful feedback.', review: 'What could you do after the attempt that you could not show before it?' },
   },
   business: {
-    ownership: { action: 'Choose one customer promise. Name the delivery owner and the changes that need a shared decision.', pause: 'A delivery depends on several people but nobody owns the handover or the final answer.', review: 'Could the customer tell who was responsible, and did the handover happen as agreed?' },
+    ownership: { action: 'Choose one customer promise. Name the delivery owner and the changes that need a shared decision.', pause: 'A delivery depends on several people but nobody owns the point when someone else takes over or the final answer.', review: 'Could the customer tell who was responsible, and did the point when someone else takes over happen as agreed?' },
     making: { action: 'Make the smallest usable example of one offer. Ask a willing tester to try the actual result.', pause: 'New features keep being added before anyone has tried the central promise.', review: 'What did the tester use without help, and where did they stop or need an explanation?' },
     resources: { action: 'Trial one delivery. Record preparation, materials, customer messages, revisions and follow-up before expanding it.', pause: 'The customer promise grows while its delivery time, costs or included revisions stay unclear.', review: 'Which part used more time or money than expected, and what must the next brief make explicit?' },
     responsibility: { action: 'Write the result, deadline, included changes and customer input needed for one trial delivery.', pause: 'You are accepting responsibility for an outcome that also depends on unconfirmed customer input.', review: 'Did the written brief help both sides recognise completion, or did it leave a different expectation?' },
@@ -117,14 +118,13 @@ export function buildDecisionFocus(kind: SoloKind, result: SajuResult, reference
   const bridge = BRIDGES[pairKey(a, b, ORDER)]
   if (!primary || !secondary || !bridge) throw new Error('Two valid chart themes are needed for a decision focus')
   const first = ROUTES[kind][a], second = ROUTES[kind][b]
-  const setting = annual ? 'The annual reference adds' : 'Your birth month brings'
-  const secondSetting = annual ? 'your usual birth-month theme is' : 'a second working theme adds'
-  const themes = primaryGod === secondaryGod
-    ? `${setting} **${primary.theme}**, and the second checked position repeats it. Repetition selects a shared question; it is not a strength score.`
-    : `${setting} **${primary.theme}**; ${secondSetting} **${secondary.theme}**.`
+  const scene = kind === 'career' || kind === 'business' ? workExample(result, kind).scene
+    : kind === 'year' ? monthlySituation(primaryGod, secondaryGod).scene
+    : everydayExample(result, kind === 'complete' ? 'personality' : 'wellbeing').scene
+  const themes = `This reading compares ${annual ? 'the year’s stem' : 'your birth-month stem'} with your birth-day stem: **${primary.theme}**. ${primaryGod === secondaryGod ? `${annual ? 'Your birth month' : 'The lower birth-month symbol'} repeats this idea.` : `${annual ? 'Your birth month' : 'The lower birth-month symbol'} adds **${secondary.theme}**.`}`
   return {
     headline: kind === 'complete' ? bridge.title : HEADLINES[kind][a],
-    synthesis: `${themes} ${bridge.tension}`,
+    synthesis: `${scene} ${bridge.tension} ${themes}`,
     firstStep: first.action,
     pauseIf: second.pause,
     review: `${second.review} Did the plan leave room for **${PERSONAL_PROFILES[day.pillar.stem].need}**?`,
@@ -170,7 +170,7 @@ export function buildPairDecisionFocus(first: SajuResult, second: SajuResult): D
   if (!protocol) throw new Error('Two valid relationship themes are needed for a shared decision focus')
   return {
     headline: protocol.title,
-    synthesis: `Person A’s theme asks for **${RELATIONSHIP_PROFILES[a.branch].need}**. Person B’s asks for **${RELATIONSHIP_PROFILES[b.branch].need}**. ${a.branch === b.branch ? 'A matching symbol still leaves two people free to want different things in the same moment.' : 'Try the following format only if both people recognise these needs.'}`,
+    synthesis: `Imagine a conversation where you both want to help, but each expects a different response. This reading uses the lower symbol in each birth-day pillar to explore care. Person A’s theme asks for **${RELATIONSHIP_PROFILES[a.branch].need}**. Person B’s asks for **${RELATIONSHIP_PROFILES[b.branch].need}**. ${a.branch === b.branch ? 'A matching symbol still leaves two people free to want different things in the same moment.' : 'Try the following format only if both people recognise these needs.'}`,
     firstStep: protocol.step,
     pauseIf: protocol.pause,
     review: protocol.review,

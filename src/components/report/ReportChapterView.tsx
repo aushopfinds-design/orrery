@@ -17,7 +17,7 @@ export default function ReportChapterView({ chapter, prefix = 'sample-report', c
   return <section id={`${prefix}-${chapter.id}`} className="fate-reading-chapter">
     <ChapterHeading title={chapter.title} kind={chapter.icon ?? chapter.id} />
     <p className="fate-reading-lead"><ReadingText text={chapter.lead} /></p>
-    <div className="fate-report-chapter-layout"><div className="fate-report-prose">{chapter.example && <EverydayExampleView example={chapter.example} />}{chapter.paragraphs.map(paragraph => <p key={paragraph}><ReadingText text={paragraph} /></p>)}{children}</div><ReadingGuidance guidance={chapter.guidance} /></div>
+    <div className="fate-report-chapter-layout"><div className="fate-report-prose">{chapter.paragraphs.map(paragraph => <p key={paragraph}><ReadingText text={paragraph} /></p>)}{chapter.example && <EverydayExampleView example={chapter.example} showScene={chapter.lead !== chapter.example.scene} />}{children}</div><ReadingGuidance guidance={chapter.guidance} /></div>
     <div className="fate-reading-practice"><FateKeyMark /><div><strong>{t('reading.tryThis')}</strong><p>{chapter.tryThis}</p></div></div><ChartEvidence facts={chapter.evidence} />
     <BackToChapters prefix={prefix} />
   </section>
