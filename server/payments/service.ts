@@ -87,7 +87,7 @@ export class PaymentService {
         (order.checkout_session_id && order.checkout_session_id !== session.id) ||
         !lines || lines.has_more || lines.data.length !== 1 || item?.quantity !== 1 || item.amount_total !== order.amount ||
         item.currency !== order.currency || price?.unit_amount !== order.amount || price.currency !== order.currency ||
-        typeof product !== 'object' || !product || product.deleted || product.metadata?.fate_kind !== order.kind || product.metadata?.integration !== integration) {
+        typeof product !== 'object' || !product || !('metadata' in product) || product.deleted || product.metadata?.fate_kind !== order.kind || product.metadata?.integration !== integration) {
       throw new PaymentError('payment_order_mismatch', 409)
     }
     const paid = session.status === 'complete' && session.payment_status === 'paid'

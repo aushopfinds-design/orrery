@@ -298,6 +298,9 @@ describe('seven products: paid reports, PDFs and access isolation', () => {
     await expect(service.report(order.id)).rejects.toMatchObject({ code: 'payment_order_mismatch' })
     product.metadata.fate_kind = 'business'; session.line_items!.data[0].quantity = 2
     await expect(service.report(order.id)).rejects.toMatchObject({ code: 'payment_order_mismatch' })
+    session.line_items!.data[0].quantity = 1
+    session.line_items!.data[0].price!.product = { id: 'prod_deleted_fixture', object: 'product', deleted: true }
+    await expect(service.report(order.id)).rejects.toMatchObject({ code: 'payment_order_mismatch' })
     expect(await count('fate_order_artifacts')).toBe(0)
   })
 
