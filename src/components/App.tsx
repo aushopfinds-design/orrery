@@ -143,8 +143,8 @@ export default function App() {
               <a href="#birth-details" className="fate-complete-primary">{t('preview.home.start')} <span aria-hidden="true">→</span></a>
               <a href="#report-preview" className="fate-hero-example-link">{t('preview.home.look')} <span aria-hidden="true">↗</span></a>
             </div>
-            <div className="fate-hero-reading-actions"><a href="#my-report" className="fate-complete-primary">Test Stripe Checkout · US$14.99 →</a></div>
-            <p className="fate-reading-small-note">Sandbox only · Enter your birth details on the next screen · No real charges</p>
+            {window.location.hostname.endsWith('.vercel.app') && <><div className="fate-hero-reading-actions"><a href="#my-report" className="fate-complete-primary">Test Stripe Checkout · US$14.99 →</a></div>
+            <p className="fate-reading-small-note">Sandbox only · Enter your birth details on the next screen · No real charges</p></>}
             <div className="fate-hero-promises">{['free', 'card'].map(key => <span key={key}>{t(`buyer.hero.${key}`)}</span>)}</div>
           </div>
           <section id="birth-details" className="fate-birth-panel" aria-labelledby="birth-heading">
