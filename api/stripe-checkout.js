@@ -4,8 +4,12 @@ export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' })
   const key = process.env.STRIPE_TEST_SECRET_KEY
   if (!key?.startsWith('sk_test_')) return res.status(503).json({ error: 'Sandbox checkout is not configured yet.' })
-  const origin = process.env.FATE_KEY_PREVIEW_ORIGIN
-  if (!origin || !/^https:\/\/[^/]+$/.test(origin)) return res.status(503).json({ error: 'Preview origin is not configured.' })
+  // Use the current Vercel preview hostname so a redeployment never returns to a stale URL.
+  const host = req.headers.host
+  if (typeof host !== 'string' || !/^saju-english-report-preview(?:-[a-z0-9]+)?(?:-shopping-shorts-ai)?\\.vercel\\.app$/.test(host)) {
+    return res.status(403).json({ error: 'Sandbox checkout is available on the preview site only.' })
+  }
+  const origin = 'https://' + host
   const { birthDraft, kind } = req.body || {}
   if (kind !== 'complete') return res.status(400).json({ error: 'Only the Complete Life Reading sandbox checkout is enabled.' })
   if (typeof birthDraft !== 'string' || birthDraft.length > 5000) return res.status(400).json({ error: 'Invalid report details.' })
