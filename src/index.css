@@ -122,3 +122,4 @@ dialog[open] { border: none; }
 .fate-buyer-card { padding: 2rem; border-radius: 1rem; background: #163934; color: #f4d19b; }
 .fate-buyer-card h3 { font-size: 1.7rem; margin: 1rem 0; }
 .fate-personal-delivery input[type=password] { display: block; max-width: 100%; width: 22rem; padding: .7rem; margin: .5rem 0 1rem; border: 1px solid #b58b52; border-radius: .5rem; background: white; color: #243b39; }
+.fate-buyer-report-text h3 { font-size: 1.3rem; font-weight: 600; margin: 2rem 0 .75rem; padding-top: 1rem; border-top: 1px solid #b58b5260; }

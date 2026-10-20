@@ -23,3 +23,7 @@ describe('report and help navigation', () => {
     expect(resolveReportRoute('#sample-report-method')).toBe('sample')
   })
 })
+
+it('keeps the private purchase return out of the public home layout', () => {
+  expect(resolveReportRoute('#purchase')).toBe('purchase')
+})

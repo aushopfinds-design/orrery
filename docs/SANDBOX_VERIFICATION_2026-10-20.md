@@ -1,0 +1,90 @@
+# THE FATE KEY Sandbox 결제·리포트 검증
+
+작업 브랜치: `feature/english-saju-report-20261013`
+프로젝트: `saju-english-report-preview`
+
+## 결과
+
+7개 상품 모두 실제 Stripe Sandbox Checkout Session을 생성하고 Stripe 테스트 카드 토큰으로 승인했다. Stripe가 반환한 상태를 서버에서 다시 조회하여 금액·통화·상품·수량·주문 연결을 검증한 뒤 개인 리포트와 PDF를 발급했다. 성공 상태를 DB에 직접 주입하거나 URL의 성공 표시로 접근을 허용하지 않았다.
+
+테스트 실행: 2026-10-20T12:56:51.499Z ~ 2026-10-20T13:01:49.886Z (UTC).
+검증된 서버 배포: https://saju-english-report-preview-899av6538-shopping-shorts-ai.vercel.app
+서버 코드 커밋: `e9dba3227f36343a4fc0c525d9a0a26f5960c022`.
+
+| 상품 | USD | Stripe 승인 | 개인 리포트 | PDF 페이지 | PDF 바이트 |
+|---|---:|---|---|---:|---:|
+| complete | 14.99 | paid | complete | 17 | 53154 |
+| compatibility | 9.99 | paid | complete | 17 | 52388 |
+| year | 7.99 | paid | complete | 22 | 75447 |
+| career | 8.99 | paid | complete | 15 | 49715 |
+| business | 9.99 | paid | complete | 15 | 49192 |
+| wellbeing | 6.99 | paid | complete | 13 | 40945 |
+| bundle | 22.99 | paid | complete | 53 | 158059 |
+
+번들은 종합 리포트·궁합·연간 리포트 3개를 포함하며, 종합·연간은 Person A, 궁합은 두 사람을 대상으로 한다. 개인 상품은 운명 카드 1개, 궁합·번들은 2개가 온라인 리포트와 PDF에 포함된다.
+
+모든 상품에서 추가로 확인한 항목:
+- 결제 전 리포트·PDF는 HTTP 402로 차단.
+- 동일 입력·동일 요청키 재전송은 같은 주문과 같은 Checkout Session을 사용.
+- 다른 주문 접근키 또는 위조 키는 HTTP 404.
+- 결제 후 반복 다운로드한 PDF는 바이트 단위로 동일.
+- 서명된 실제 `checkout.session.completed` 웹훅 7건 수신.
+- 주문당 발급 작업·저장된 리포트는 각각 1개. 발급 시도도 각 1회.
+
+## 배포된 서버 오류 검사
+
+| 상황 | 확인 결과 |
+|---|---|
+| decline | declined / HTTP 402 |
+| expire | expired / HTTP 402 |
+| missing tester access | HTTP 401 |
+| browser price tampering | HTTP 400 |
+| unknown product | HTTP 400 |
+| cross origin | HTTP 403 |
+| oversized request | HTTP 413 |
+| forged webhook | HTTP 400 |
+
+## 자동 검사 및 PDF 검수
+
+- 전체 자동 검사: 34개 파일, 455개 테스트 통과.
+- 이후 비공개 테스트 실행 경로 보호를 추가한 뒤 결제·언어 검사 41개 재검증 통과(결제 26개, 언어 15개).
+- 구매 완료 페이지 경로를 분리한 뒤 라우팅·언어 검사 30개 통과(라우팅 15개, 언어 15개).
+- TypeScript 타입 검사, 변경된 결제 파일 ESLint 검사, Git 공백 검사 통과.
+- Vercel 배포 빌드 성공. 서버 계산 엔진은 workspace 의존성과 별도 core build로 포함.
+- 7개 PDF를 파싱하고 첫 페이지·본문·번들 마지막 카드 등을 PNG로 렌더링하여 확인. 한자 폰트 포함, 머리글·바닥글·페이지 번호 확인.
+- 로컬 7개 PDF 전체 페이지의 글자 좌표를 검사하여 페이지 영역 밖으로 잘린 글자 없음.
+
+## 구현
+
+- `api/payments.ts`: checkout, status, report, pdf, 서명 검증 webhook, 비공개 Sandbox QA.
+- `server/payments/`: 서버 소유 가격, 입력 정규화, AES-256-GCM 암호화 주문, Postgres 영속 저장, Stripe 세션 검증, 주문별 HMAC 접근키.
+- 웹훅 이벤트 영수증·결제 상태·고유 발급 작업은 하나의 트랜잭션으로 저장. 임대 시간으로 동시 발급을 막고, 실패 시 안전하게 재시도.
+- 리포트와 PDF는 발급 시점의 전체 내용으로 고정하고 암호화하여 DB에 저장. 공개 파일 URL을 만들지 않음.
+- 리포트·PDF는 주문 접근키를 Authorization 헤더로 보낸 POST 요청에서만 제공. 접근키·생년월일을 URL에 넣지 않음.
+- 개인 입력은 Stripe 메타데이터로 보내지 않음. Stripe에는 임의 주문 ID·상품 종류·금액만 전달.
+- 다운로드 응답은 no-store/private, attachment PDF.
+- 기존 간이 stripe-checkout/stripe-verify 경로는 HTTP 410으로 종료.
+
+## 실제 Stripe 테스트 실행 방법
+
+```sh
+node scripts/qa-sandbox.mjs https://<현재-Preview>.vercel.app
+```
+
+로컬의 gitignored `.env.payments.local`에 있는 비공개 테스트 접근키를 사용한다. 로그·결과 JSON에는 비밀키와 주문 접근키를 쓰지 않는다. 가상의 생년월일과 Stripe 테스트 카드 토큰만 사용한다.
+
+테스트 카드 승인은 Stripe 공식 CLI fixture와 같은 방식으로 실행했다:
+https://github.com/stripe/stripe-cli/blob/master/pkg/fixtures/triggers/checkout.session.completed.json
+
+이 테스트 경로에는 Sandbox 키·비공개 테스터 키·해당 주문 접근키가 모두 필요하다. 실제 승인 결과는 다른 주문과 동일한 서버 검증을 거쳐야 하며 임의 paid 설정 기능은 없다.
+
+## 운영 경계 및 남은 확인
+
+- Production 배포는 기존 `69f00d4cc4b018a7757930709a6db0df60acab2d` 유지.
+- `thefatekey.com` 운영 도메인·DNS 변경 없음. Preview만 배포.
+- 실제 결제 활성화·live 키 사용·실제 카드 청구 없음.
+- 코드와 DB 모두 live 결제를 거부. `VERCEL_ENV=production`에서는 닫힘.
+- 구매자 접근키는 구매를 시작한 브라우저의 sessionStorage에 보관. 이메일 로그인·구매 복구·메일 전달은 이번 Sandbox 범위에 포함하지 않음.
+- 직접 브라우저 카드 입력 화면 검증은 실행 환경의 `credential_state_unavailable` 오류로 수행하지 못했다. 새 실행 환경 재시도도 같은 오류. 실제 휴대폰 화면과 모바일 다운로드 동작은 별도 확인 필요.
+- 실제 Stripe 결제 승인·서버 웹훅·온라인 리포트 응답·PDF 다운로드는 위 표대로 별도 API 경로에서 검증 완료.
+- 운영 출시 전에는 환불 시 접근 취소, 구매 복구, 고객 안내·개인정보 정책, 운영 사업자 정보와 실제 결제 활성화 검수가 별도로 필요하다.
