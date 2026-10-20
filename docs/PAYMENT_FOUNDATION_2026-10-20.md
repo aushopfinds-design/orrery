@@ -33,6 +33,7 @@ The initial schema is `server/payments/migrations/001_test_orders.sql`. It has b
 
 - 446 tests passed in 34 files, including 16 new payment tests.
 - TypeScript and production asset build passed; the build still publishes 21 content paths with ad serving off.
+- The first preview exposed a TypeScript-to-JavaScript import-path mismatch. Root compiler settings now rewrite relative TypeScript extensions for Vercel Functions. Importing and invoking the emitted JavaScript was verified locally: GET returns 405 and an unconfigured POST returns 503 `payments_closed`. A successful site build alone is not proof that the API runs.
 - Payment tests use PGlite PostgreSQL and Stripe's signature verifier. Stripe API requests are simulated in these tests, not live provider evidence.
 - Tests cover concurrent repeated checkout, altered inputs, recovery after a session-attachment failure, unpaid sessions, stale/invalid signatures, incorrect amounts, duplicate notifications, out-of-order states, atomic rollback/retry, worker leases and private status access.
 - The remote test database contains the three expected tables. Direct application-to-Neon connectivity has not yet been verified: the local runtime cannot resolve the database host. No customer data was used.
