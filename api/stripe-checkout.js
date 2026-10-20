@@ -1,0 +1,32 @@
+// Sandbox-only Stripe Checkout. Never accept a price or redirect URL from the browser.
+export default async function handler(req, res) {
+  res.setHeader('Cache-Control', 'no-store')
+  if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' })
+  const key = process.env.STRIPE_TEST_SECRET_KEY
+  if (!key?.startsWith('sk_test_')) return res.status(503).json({ error: 'Sandbox checkout is not configured yet.' })
+  const origin = process.env.FATE_KEY_PREVIEW_ORIGIN
+  if (!origin || !/^https:\/\/[^/]+$/.test(origin)) return res.status(503).json({ error: 'Preview origin is not configured.' })
+  const { birthDraft, kind } = req.body || {}
+  if (kind !== 'complete') return res.status(400).json({ error: 'Only the Complete Life Reading sandbox checkout is enabled.' })
+  if (typeof birthDraft !== 'string' || birthDraft.length > 5000) return res.status(400).json({ error: 'Invalid report details.' })
+  // Personal birth details stay in the customer's browser; do not send them to Stripe metadata.
+  const form = new URLSearchParams({
+    mode: 'payment',
+    'line_items[0][price_data][currency]': 'usd',
+    'line_items[0][price_data][unit_amount]': '1499',
+    'line_items[0][price_data][product_data][name]': 'Complete Life Reading | THE FATE KEY',
+    'line_items[0][quantity]': '1',
+    success_url: origin + '/?checkout=success&session_id={CHECKOUT_SESSION_ID}#my-report',
+    cancel_url: origin + '/?checkout=cancelled#my-report',
+    'metadata[product]': 'complete',
+    'payment_method_types[0]': 'card',
+  })
+  try {
+    const response = await fetch('https://api.stripe.com/v1/checkout/sessions', {
+      method: 'POST', headers: { Authorization: 'Bearer ' + key, 'Content-Type': 'application/x-www-form-urlencoded' }, body: form.toString(),
+    })
+    const data = await response.json()
+    if (!response.ok || !data.url || data.livemode !== false) return res.status(502).json({ error: 'Stripe sandbox could not create the checkout.' })
+    return res.status(200).json({ url: data.url })
+  } catch { return res.status(502).json({ error: 'Stripe sandbox is temporarily unavailable.' }) }
+}
