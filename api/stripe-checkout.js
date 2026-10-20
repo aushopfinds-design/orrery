@@ -21,6 +21,7 @@ export default async function handler(req, res) {
     bundle: ['Complete Bundle', 2299],
   }
   if (typeof kind !== 'string' || !Object.hasOwn(products, kind)) return res.status(400).json({ error: 'Unknown report product.' })
+  if (kind !== 'complete') return res.status(400).json({ error: 'This report checkout is still being prepared.' })
   const [productName, amount] = products[kind]
   if (typeof birthDraft !== 'string' || birthDraft.length > 5000) return res.status(400).json({ error: 'Invalid report details.' })
   // Personal birth details stay in the customer's browser; do not send them to Stripe metadata.
