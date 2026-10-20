@@ -18,6 +18,7 @@ import EverydayExampleView from './EverydayExampleView.tsx'
 import ReportBriefView from './ReportBriefView.tsx'
 import ReportApplicationsView from './ReportApplicationsView.tsx'
 import DestinyCardBonus from './DestinyCardBonus.tsx'
+import SandboxCheckout from './SandboxCheckout.tsx'
 
 function focusSection(id: string) {
   const section = document.getElementById(id)
@@ -119,7 +120,7 @@ export default function PersonalPreviewPage({ kind, input, onFirstBirth }: { kin
         </div><aside className="fate-personal-order-summary" aria-labelledby="personal-preview-contents">
           <FateEmblem /><p className="fate-eyebrow">{t('buyer.preview.full')}</p><h2 id="personal-preview-contents" tabIndex={-1}>{preview.title}</h2><p className="fate-preview-full-scope">{reportScope(kind, t)}</p>
           <p className="fate-personal-price"><ReportPrice kind={kind} /></p><p className="fate-reading-small-note">{t('buyer.price.note')}</p><ul>{preview.contents.map(item => <li key={item.id}><span aria-hidden="true">✓</span>{item.title}</li>)}</ul><p className="fate-reading-small-note">{t('reading.extras.includes')}</p>
-          <div className="fate-personal-delivery"><FateKeyMark /><p>{t('buyer.preview.delivery')}</p></div><p className="fate-personal-pending" role="status">{t('buyer.checkout.pending')}</p><a href={product.sample} className="fate-outline-button">{t('buyer.preview.sample')}</a><p className="fate-reading-small-note">{t('buyer.preview.sampleNote')}</p>
+          <div className="fate-personal-delivery"><FateKeyMark /><p>{t('buyer.preview.delivery')}</p></div>{kind === 'complete' && input ? <SandboxCheckout input={input} /> : <p className="fate-personal-pending" role="status">{t('buyer.checkout.pending')}</p>}<a href={product.sample} className="fate-outline-button">{t('buyer.preview.sample')}</a><p className="fate-reading-small-note">{t('buyer.preview.sampleNote')}</p>
         </aside></div>
         <DestinyCardBonus kind={kind} />
         <section className="fate-personal-next"><h2>{t('buyer.preview.nextTitle')}</h2><p>{t('buyer.preview.nextText')}</p><div className="fate-preview-next-actions"><a href={product.sample} className="fate-complete-primary">{t('buyer.preview.sample')}</a><a href="#reports" className="fate-outline-button">{t('buyer.preview.otherReports')}</a></div></section>
