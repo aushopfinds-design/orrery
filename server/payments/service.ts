@@ -15,6 +15,7 @@ export interface StripeGateway {
   retrieveSession(id: string): Promise<Stripe.Checkout.Session>
   verifyEvent(body: string, signature: string, secret?: string): Stripe.Event
   setupWebhook?(url: string, key: string): Promise<{ id: string; secret?: string }>
+  testPayment?(id: string, amount: number, scenario: 'success' | 'decline' | 'expire'): Promise<{ outcome: string }>
 }
 const integration = 'fate-key-test-v1'
 const events = new Set(['checkout.session.completed', 'checkout.session.async_payment_succeeded', 'checkout.session.async_payment_failed', 'checkout.session.expired'])
@@ -105,6 +106,17 @@ export class PaymentService {
     await this.recordSession(session, eventId, 'server.reconciliation', id)
     if (session.status === 'complete' && session.payment_status === 'paid') await this.fulfill(id)
     return this.store.status(id)
+  }
+
+  /** Private QA only. Stripe itself authorizes/declines the official test-token payment. */
+  async exerciseSandbox(id: string, scenario: unknown) {
+    if (!['success', 'decline', 'expire'].includes(String(scenario)) || !this.stripe.testPayment) throw new PaymentError('invalid_test_scenario')
+    const order = await this.store.get(id)
+    if (!order?.checkout_session_id || order.payment_state !== 'pending') throw new PaymentError('order_not_open_for_checkout', 409)
+    const session = await this.stripe.retrieveSession(order.checkout_session_id)
+    await this.recordSession(session, `qa_before_${session.id}`, 'server.qa', id)
+    const result = await this.stripe.testPayment(session.id, order.amount, scenario as 'success' | 'decline' | 'expire')
+    return { ...result, status: await this.reconcile(id) }
   }
 
   private async fulfill(id: string) {

@@ -209,6 +209,17 @@ describe('verified payment and atomic issuance queue', () => {
 })
 
 describe('HTTP boundary', () => {
+  it('keeps automated Stripe test-token execution behind BOTH tester access and the order capability', async () => {
+    const { service, checkout } = await prepare(), handler = paymentHandler(() => service)
+    const request = (tester: string, token: string) => new Request(config.origin + '/api/payments?action=sandbox-test', {
+      method: 'POST', headers: { 'content-type': 'application/json', 'x-fate-test-token': tester, authorization: 'Bearer ' + token },
+      body: JSON.stringify({ orderId: checkout.orderId, scenario: 'success' }),
+    })
+    expect((await handler(request('', checkout.accessToken))).status).toBe(401)
+    expect((await handler(request(config.testToken, 'forged'))).status).toBe(404)
+    expect((await handler(request(config.testToken, checkout.accessToken))).status).toBe(400)
+    expect(await count('fate_order_artifacts')).toBe(0)
+  })
   it('requires test access and an order token, never returning birth details', async () => {
     const { service, checkout } = await prepare(), handler = paymentHandler(() => service)
     const req = (headers: Record<string,string>, body = { orderId: checkout.orderId }) => new Request(config.origin + '/api/payments?action=status', { method: 'POST', headers: { 'content-type': 'application/json', ...headers }, body: JSON.stringify(body) })

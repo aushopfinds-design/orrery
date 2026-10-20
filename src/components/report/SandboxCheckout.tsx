@@ -34,7 +34,7 @@ export default function SandboxCheckout({ order }: { order: OrderInput }) {
   if (!/^saju-english-report-preview(?:-[a-z0-9-]+)?\.vercel\.app$/.test(window.location.hostname)) return null
   return <section className="fate-personal-delivery" aria-label={t('sandbox.title')}>
     <h3>{t('sandbox.title')} · {reportPrice(order.kind)}</h3>
-    <p>{t('sandbox.note')}</p>
+    <p>{t('sandbox.note')}</p><p>{t('sandbox.data')}</p>
     <label>{t('sandbox.access')}<input type="password" autoComplete="off" value={access} onChange={event => setAccess(event.target.value)} /></label>
     <button type="button" className="fate-complete-primary" onClick={checkout} disabled={busy || access.length < 32}>{t(busy ? 'sandbox.opening' : 'sandbox.buy')}</button>
     {message && <p role="alert">{message}</p>}

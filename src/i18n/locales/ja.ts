@@ -222,6 +222,8 @@ const ja: Record<string, string> = {
   "sandbox.issued": "Issued",
   "sandbox.home": "Explore the 7 Sandbox report products →",
 
+  "sandbox.data": "Your test birth details are sent to our server and stored encrypted to issue the report. Stripe handles card details.",
+
 }
 
 export default ja
