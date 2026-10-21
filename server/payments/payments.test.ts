@@ -276,6 +276,8 @@ describe('seven products: paid reports, PDFs and access isolation', () => {
     expect(pdf.headers.get('cache-control')).toContain('no-store')
     const bytes = Buffer.from(await pdf.arrayBuffer())
     expect(bytes.subarray(0, 5).toString()).toBe('%PDF-')
+    // Leave headroom below the platform's buffered response limit, including two-card bundles.
+    expect(bytes.length).toBeLessThan(4_000_000)
     const { PDFDocument } = await import('pdf-lib')
     const rendered = await PDFDocument.load(bytes)
     expect(rendered.getPageCount()).toBeGreaterThan(3)

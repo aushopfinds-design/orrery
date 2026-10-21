@@ -1,3 +1,7 @@
+import sharp from 'sharp'
+import { createElement } from 'react'
+import { renderToStaticMarkup } from 'react-dom/server'
+import DestinyCardArtwork from '../../src/components/report/DestinyCardArtwork.tsx'
 import { readFile } from 'node:fs/promises'
 import { PDFDocument, rgb, StandardFonts, pushGraphicsState, popGraphicsState, rectangle, clip, endPath } from 'pdf-lib'
 import fontkit from '@pdf-lib/fontkit'
@@ -22,6 +26,7 @@ export interface BuyerReport {
 }
 let fontBytes: Promise<Buffer> | undefined
 let artworkBytes: Promise<Buffer> | undefined
+let cardArtData: Promise<string> | undefined
 
 /** Keep authored emphasis even though the saved plain-text report omits Markdown. */
 export function reportEmphasis(source: unknown): string[] {
@@ -56,7 +61,7 @@ export async function issueReport(input: OrderInput, orderId: string, referenceY
     title: previewProduct(input.kind).title, kind: input.kind, edition: REPORT_EDITION,
     ...(input.recipientName ? { recipientName: input.recipientName } : {}),
     issuedAt: new Date().toISOString(), text: plainReadingText(text), documents,
-    cards: [buildDestinyCard(input.first), ...(input.second ? [buildDestinyCard(input.second)] : [])], pdf: '',
+    cards: [buildDestinyCard(input.first, input.recipientName ?? ''), ...(input.second ? [buildDestinyCard(input.second, 'Person B')] : [])], pdf: '',
   }
   const pdf = await reportPdf(report, orderId, reportEmphasis(source))
   report.pdf = Buffer.from(pdf).toString('base64')
@@ -86,7 +91,7 @@ async function reportPdf(report: BuyerReport, orderId: string, emphasis: string[
   const night = rgb(.07, .10, .17), gold = rgb(.65, .51, .28), paper = rgb(.98, .96, .91)
   const ink = rgb(.17, .20, .25), muted = rgb(.36, .38, .41)
   let page = pdf.addPage([W, H]), y = 748
-  let textX = 54, textWidth = W - 108
+  const textX = 54, textWidth = W - 108
   const centre = (text: string, yy: number, size: number, color = gold, face = display) => {
     page.drawText(text, { x: (W - face.widthOfTextAtSize(text, size)) / 2, y: yy, size, font: face, color })
   }
@@ -215,23 +220,24 @@ async function reportPdf(report: BuyerReport, orderId: string, emphasis: string[
     if (heading) { y -= 10; paragraph(value, 16, gold); y -= 5 }
     else paragraph(value, note ? 9.2 : 10.4, note ? muted : ink, !note)
   }
-  report.cards.forEach((card, index) => {
+  cardArtData ??= readFile(new URL('../../public/images/cards/the-fate-key-sample.webp', import.meta.url))
+    .then(bytes => sharp(bytes).png().toBuffer()).then(bytes => 'data:image/png;base64,' + bytes.toString('base64'))
+  for (const [index, card] of report.cards.entries()) {
     addPage()
     centre('YOUR PERSONAL DESTINY CARD', 721, 12)
-    page.drawRectangle({ x: 86, y: 245, width: W - 172, height: 425, color: night, borderColor: gold, borderWidth: 1 })
-    key(W / 2, 603, .65)
-    centre(report.cards.length === 2 ? `Person ${index === 0 ? 'A' : 'B'}` : 'Your personal keepsake', 480, 12)
-    centre(card.title, 440, 25, paper)
-    // Keep card copy on a parchment inset for reliable contrast and wrapping.
-    page.drawRectangle({ x: 101, y: 270, width: W - 202, height: 137, color: paper })
-    textX = 118; textWidth = W - 236
-    y = 376; paragraph(card.daySymbol, 14); paragraph(card.sentence, 11)
-    textX = 54; textWidth = W - 108
-    y = 207
-    paragraph(`${card.element} | Symbolic numbers: ${card.numbers.join(' and ')}`, 11)
-    paragraph('Symbolic colours: ' + card.colors.map(c => c.name).join(', '), 11)
-    paragraph('A cultural keepsake for personal reflection.', 10, muted)
-  })
+    const svg = renderToStaticMarkup(createElement(DestinyCardArtwork, {
+      card, id: `issued-card-${index}`, artworkHref: await cardArtData, preview: false, showStem: false,
+      labels: { personal: 'MY PERSONAL KEY', element: 'ELEMENT', numbers: 'MY NUMBERS', colour: 'MY COLOUR', watermark: 'SANDBOX EDITION' },
+    }))
+    const raster = await sharp(Buffer.from(svg)).resize(1080, 1350)
+      .flatten({ background: { r: 250, g: 245, b: 232 } }).jpeg({ quality: 94, chromaSubsampling: '4:4:4' }).toBuffer()
+    const cardImage = await pdf.embedJpg(raster)
+    page.drawImage(cardImage, { x: 72.64, y: 120, width: 450, height: 562.5 })
+    const caption = clean(`${card.stem} · ${card.daySymbol.toUpperCase()}`), captionSize = 25 * 450 / 1080
+    page.drawText(caption, { x: (W - font.widthOfTextAtSize(caption, captionSize)) / 2, y: 120 + (1350 - 862) * 450 / 1080, size: captionSize, font, color: rgb(.91, .75, .45) })
+    y = 91
+    paragraph('A personal keepsake. Symbolic colours and numbers are cultural associations.', 9, muted)
+  }
   addPage()
   centre('The letter ends. Your story continues.', 685, 25, ink, italic)
   y = 618

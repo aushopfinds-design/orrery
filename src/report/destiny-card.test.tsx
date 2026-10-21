@@ -5,6 +5,7 @@ import { STEMS } from './reading.ts'
 import { ELEMENT_SYMBOLS } from './report-extras.ts'
 import { PREVIEW_KINDS } from './personal-products.ts'
 import { buildDestinyCard, destinyCardCount, destinyShareText, DESTINY_SHARE_URL } from './destiny-card.ts'
+import DestinyCardArtwork from '../components/report/DestinyCardArtwork.tsx'
 import DestinyCardPreview from '../components/report/DestinyCardPreview.tsx'
 import DestinyCardStudio from '../components/DestinyCardStudio.tsx'
 import { resolveReportRoute } from '../utils/report-route.ts'
@@ -34,6 +35,20 @@ describe('Destiny Card identity, privacy and purchase boundaries', () => {
       expect(card.title).not.toMatch(/undefined|score|guarantee/i)
     }
     expect(seen.size).toBe(10)
+  })
+
+  it('shares the full illustrated artwork while keeping public and issued labels distinct', () => {
+    const card = buildDestinyCard(birth, 'Minji')
+    const labels = { personal: 'MY PERSONAL KEY', element: 'ELEMENT', numbers: 'MY NUMBERS', colour: 'MY COLOUR', watermark: 'SANDBOX EDITION' }
+    const issued = renderToStaticMarkup(<DestinyCardArtwork card={card} id="issued" labels={labels} preview={false} artworkHref="data:image/png;base64,example" />)
+    expect(issued).toContain('viewBox="0 0 1080 1350"')
+    expect(issued).toContain('Minji')
+    expect(issued).toContain(card.title)
+    expect(issued).toContain('data:image/png;base64,example')
+    expect(issued).not.toContain('rotate(-25 540 590)')
+    const preview = renderToStaticMarkup(<DestinyCardPreview card={card} />)
+    expect(preview).toContain('rotate(-25 540 590)')
+    expect(preview).toContain('PERSONAL PREVIEW')
   })
 
   it('keeps birth details hidden until a person explicitly chooses birthday display', () => {
