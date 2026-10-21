@@ -226,3 +226,11 @@ The source rewrite does not mean an independent English reader has approved the 
 - Seven freshly generated purchase-report PDFs contain edition r4: Complete 18 pages, Compatibility 18, Year Ahead 24, Career 15, Business 16, Everyday Balance 13, Bundle 56.
 - Text bounds were checked on every PDF page. Representative Career and Compatibility pages were rendered and read after the final copy change. No independent human reader review is claimed.
 - No live payment activation, operating-domain change or modification of an already issued buyer artifact.
+
+### r4 deployed browser verification
+
+- Code commit: 1eabf4c513f928b936df99be0170f3d72385581a.
+- Preview deployment: dpl_CAFUZastWa6EHLu335LE7KEDNFSP, READY. Vercel's configured deployment build succeeded.
+- Verified URL: https://saju-english-report-preview-npe6s836s-shopping-shorts-ai.vercel.app/#sample-report-career
+- Opened the deployed homepage, clicked View Sample Report and the Work That Suits You chapter link. The rendered report identifies edition 2026.10-r4. Verified the revised focus questions, personal needs, connection passages and scene-first chapter narrative directly in the rendered sample.
+- This is desktop browser verification. An independent English-reader review and an actual-phone review are not claimed. No existing private buyer access key was sent to this deployment.
