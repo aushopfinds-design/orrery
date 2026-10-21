@@ -46,9 +46,13 @@ describe('Destiny Card identity, privacy and purchase boundaries', () => {
     expect(issued).toContain(card.title)
     expect(issued).toContain('data:image/png;base64,example')
     expect(issued).not.toContain('rotate(-25 540 590)')
+    expect(issued).not.toContain('fate-card-celestial-effects')
     const preview = renderToStaticMarkup(<DestinyCardPreview card={card} />)
     expect(preview).toContain('rotate(-25 540 590)')
     expect(preview).toContain('PERSONAL PREVIEW')
+    expect(preview).toContain('fate-card-border-light')
+    expect(preview).toContain('fate-card-star')
+    expect(preview).toContain('aria-pressed="true"')
   })
 
   it('keeps birth details hidden until a person explicitly chooses birthday display', () => {
