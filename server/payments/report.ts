@@ -76,6 +76,34 @@ async function reportPdf(report: BuyerReport, orderId: string) {
     page.drawRectangle({ x: 0, y: 0, width: W, height: H, color: dark ? night : paper })
     page.drawRectangle({ x: 28, y: 28, width: W - 56, height: H - 56, borderColor: gold, borderWidth: .6 })
     page.drawRectangle({ x: 33, y: 33, width: W - 66, height: H - 66, borderColor: gold, borderWidth: .2 })
+    if (!dark) {
+      // Vector ornament remains faint behind type and crisp at print resolution.
+      const star = (x: number, yy: number, r: number, opacity = .17) => {
+        page.drawLine({ start: { x: x - r, y: yy }, end: { x: x + r, y: yy }, color: gold, thickness: .6, opacity })
+        page.drawLine({ start: { x, y: yy - r }, end: { x, y: yy + r }, color: gold, thickness: .6, opacity })
+        page.drawCircle({ x, y: yy, size: 1.1, color: gold, opacity })
+      }
+      for (const x of [43, W - 43]) {
+        for (const yy of [92, H - 92]) {
+          star(x, yy, 6, .35)
+          for (const d of [-17, 17]) page.drawCircle({ x, y: yy + d, size: 2.4, borderColor: gold, borderWidth: .4, borderOpacity: .24 })
+        }
+        for (let yy = 138; yy < H - 130; yy += 71) {
+          star(x, yy, 2.6, .22)
+          page.drawCircle({ x, y: yy + 26, size: .65, color: gold, opacity: .22 })
+        }
+      }
+      // A quiet celestial medallion, visible through the parchment rather than over it.
+      for (const radius of [113, 121, 148]) page.drawCircle({ x: W / 2, y: H / 2, size: radius, borderColor: gold, borderWidth: .7, borderOpacity: .065 })
+      for (let i = 0; i < 12; i++) {
+        const angle = i * Math.PI / 6
+        const x = W / 2 + Math.cos(angle) * 135, yy = H / 2 + Math.sin(angle) * 135
+        star(x, yy, i % 3 === 0 ? 8 : 3, .075)
+      }
+      page.drawCircle({ x: W / 2, y: H / 2 + 24, size: 32, borderColor: gold, borderWidth: 1, borderOpacity: .055 })
+      page.drawLine({ start: { x: W / 2, y: H / 2 - 8 }, end: { x: W / 2, y: H / 2 - 83 }, color: gold, thickness: 1, opacity: .055 })
+      for (const offset of [60, 75]) page.drawLine({ start: { x: W / 2, y: H / 2 - offset }, end: { x: W / 2 + 18, y: H / 2 - offset }, color: gold, thickness: 1, opacity: .055 })
+    }
   }
   const addPage = () => {
     page = pdf.addPage([W, H]); y = 748; frame()
@@ -158,8 +186,31 @@ async function reportPdf(report: BuyerReport, orderId: string) {
   paragraph('You do not have to act on every page. Keep the passage that helped you understand yourself a little more clearly, and come back when another part of life asks for your attention.', 12)
   paragraph('With care, THE FATE KEY', 12, gold)
   const sealY = 370
-  page.drawCircle({ x: W / 2, y: sealY, size: 73, color: rgb(.35, .12, .16), borderColor: gold, borderWidth: 2 })
+  const wax = rgb(.35, .12, .16), lightGold = rgb(.88, .72, .43)
+  // Scalloped wax edge, engraved rays and a beaded double rim.
+  page.drawCircle({ x: W / 2 + 2, y: sealY - 3, size: 84, color: rgb(.20, .10, .12), opacity: .12 })
+  for (let i = 0; i < 32; i++) {
+    const angle = i * Math.PI / 16
+    page.drawCircle({ x: W / 2 + Math.cos(angle) * 76, y: sealY + Math.sin(angle) * 76, size: 7, color: wax, borderColor: gold, borderWidth: .55 })
+  }
+  page.drawCircle({ x: W / 2, y: sealY, size: 76, color: wax, borderColor: lightGold, borderWidth: 1.3 })
+  for (let i = 0; i < 64; i++) {
+    const angle = i * Math.PI / 32
+    page.drawCircle({ x: W / 2 + Math.cos(angle) * 70, y: sealY + Math.sin(angle) * 70, size: .9, color: lightGold })
+  }
   page.drawCircle({ x: W / 2, y: sealY, size: 65, borderColor: gold, borderWidth: .7 })
+  page.drawCircle({ x: W / 2, y: sealY, size: 60, borderColor: gold, borderWidth: .3 })
+  for (const side of [-1, 1]) {
+    for (let i = 0; i < 7; i++) {
+      const angle = side === 1 ? -.5 + i / 6 : Math.PI + .5 - i / 6
+      const x = W / 2 + Math.cos(angle) * 49, yy = sealY + Math.sin(angle) * 49
+      page.drawEllipse({ x, y: yy, xScale: 2.2, yScale: 4.0, color: gold, opacity: .8 })
+    }
+  }
+  for (const dx of [-27, 27]) {
+    page.drawLine({ start: { x: W / 2 + dx - 3, y: sealY + 4 }, end: { x: W / 2 + dx + 3, y: sealY + 4 }, color: lightGold, thickness: .7 })
+    page.drawLine({ start: { x: W / 2 + dx, y: sealY + 1 }, end: { x: W / 2 + dx, y: sealY + 7 }, color: lightGold, thickness: .7 })
+  }
   centre('THE FATE KEY', sealY + 34, 12, paper)
   key(W / 2 - 2, sealY + 12, .40)
   centre('PRIVATE EDITION', sealY - 44, 9, paper)
