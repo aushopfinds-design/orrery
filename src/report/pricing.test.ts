@@ -5,6 +5,7 @@ import { BUNDLE_REPORTS, REPORT_PRICE_CENTS, bundleSavings, formatUSD, reportPri
 
 describe('launch prices and genuine bundle comparison', () => {
   it('provides a positive integer-cent price for every offered report', () => {
+    expect(REPORT_PRICE_CENTS).toEqual({ complete:1699, compatibility:1199, year:999, career:1099, business:1199, wellbeing:899, bundle:2499 })
     expect(Object.keys(REPORT_PRICE_CENTS).sort()).toEqual([...PREVIEW_KINDS].sort())
     for (const kind of PREVIEW_KINDS) {
       expect(Number.isInteger(REPORT_PRICE_CENTS[kind])).toBe(true)
@@ -15,14 +16,14 @@ describe('launch prices and genuine bundle comparison', () => {
   })
 
   it('fills the two pending reports at the intended launch prices', () => {
-    expect(previewProduct('business').price).toBe('US$9.99')
-    expect(previewProduct('wellbeing').price).toBe('US$6.99')
+    expect(previewProduct('business').price).toBe('US$11.99')
+    expect(previewProduct('wellbeing').price).toBe('US$8.99')
   })
 
   it('compares the bundle only with its three included reports', () => {
     expect(BUNDLE_REPORTS).toEqual(['complete', 'compatibility', 'year'])
-    expect(bundleSavings()).toEqual({ separatePrice: 'US$32.97', savedAmount: 'US$9.98', percent: 30 })
-    expect(reportPrice('bundle')).toBe('US$22.99')
+    expect(bundleSavings()).toEqual({ separatePrice: 'US$38.97', savedAmount: 'US$13.98', percent: 35 })
+    expect(reportPrice('bundle')).toBe('US$24.99')
   })
 
   it('never rounds the advertised saving above the actual discount', () => {

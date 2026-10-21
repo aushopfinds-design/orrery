@@ -10,7 +10,7 @@ if (env.FATE_PAYMENTS_MODE !== 'test' || !env.FATE_CHECKOUT_TEST_TOKEN) throw ne
 const access = env.FATE_CHECKOUT_TEST_TOKEN
 const first = { year: 1992, month: 8, day: 17, hour: 0, minute: 0, unknownTime: true, gender: 'M', timezone: 'Australia/Sydney', latitude: -33.8688, longitude: 151.2093 }
 const second = { ...first, year: 1988, gender: 'F', timezone: 'America/New_York', latitude: 40.7128, longitude: -74.006 }
-const cents = { complete: 1499, compatibility: 999, year: 799, career: 899, business: 999, wellbeing: 699, bundle: 2299 }
+const cents = { complete: 1699, compatibility: 1199, year: 999, career: 1099, business: 1199, wellbeing: 899, bundle: 2499 }
 const results = { preview: site, startedAt: new Date().toISOString(), products: [], errors: [] }
 const caps = {}
 const assert = (ok, message) => { if (!ok) throw new Error(message) }

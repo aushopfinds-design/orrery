@@ -1,13 +1,13 @@
 // Integer USD cents are the single source for catalog, product and preview prices.
 // These are launch plans while checkout remains closed, not past selling prices.
 export const REPORT_PRICE_CENTS = {
-  complete: 1499,
-  compatibility: 999,
-  year: 799,
-  career: 899,
-  business: 999,
-  wellbeing: 699,
-  bundle: 2299,
+  complete: 1699,
+  compatibility: 1199,
+  year: 999,
+  career: 1099,
+  business: 1199,
+  wellbeing: 899,
+  bundle: 2499,
 } as const
 
 export type PricedReportKind = keyof typeof REPORT_PRICE_CENTS

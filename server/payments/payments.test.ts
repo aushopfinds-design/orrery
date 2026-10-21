@@ -95,7 +95,7 @@ describe('checkout retry and price ownership', () => {
     expect(provider.sessions.size).toBe(1)
     expect(await count('fate_payment_orders')).toBe(1)
     const params = provider.createSession.mock.calls[0][0]
-    expect(params.line_items![0].price_data!.unit_amount).toBe(1499)
+    expect(params.line_items![0].price_data!.unit_amount).toBe(1699)
     expect(JSON.stringify(params)).not.toMatch(/Sydney|1992|latitude/)
     expect(params.client_reference_id).not.toContain('1992')
   })
@@ -251,6 +251,12 @@ describe('seven products: paid reports, PDFs and access isolation', () => {
     const input = { kind, first: birth, ...(kind === 'complete' ? { recipientName: 'Minji' } : {}), ...(['compatibility', 'bundle'].includes(kind) ? { second: { ...birth, year: 1988, gender: 'F' } } : {}),
       ...(['year', 'bundle'].includes(kind) ? { year: 2027 } : {}) }
     const checkout = await service.createCheckout(input, randomUUID()), order = (await store.get(checkout.orderId))!
+    const expected = { complete:1699, compatibility:1199, year:999, career:1099, business:1199, wellbeing:899, bundle:2499 }[kind]
+    const line = provider.createSession.mock.calls[0][0].line_items![0].price_data!
+    expect(line.unit_amount).toBe(expected)
+    expect(line.currency).toBe('usd')
+    expect(line.product_data!.metadata!.fate_kind).toBe(kind)
+    expect(order.amount).toBe(expected)
     const session = provider.sessions.get(order.checkout_session_id!)!
     const handler = paymentHandler(() => service)
     const request = (action: string, token = checkout.accessToken) => new Request(config.origin + '/api/payments?action=' + action, {
