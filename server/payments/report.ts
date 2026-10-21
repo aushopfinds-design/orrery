@@ -1,11 +1,11 @@
 import { readFile } from 'node:fs/promises'
-import { PDFDocument, rgb, StandardFonts } from 'pdf-lib'
+import { PDFDocument, rgb, StandardFonts, pushGraphicsState, popGraphicsState, rectangle, clip, endPath } from 'pdf-lib'
 import fontkit from '@pdf-lib/fontkit'
 import { calculateSaju } from '../../packages/core/src/saju.ts'
 import { buildCompleteReading, REPORT_EDITION } from '../../src/report/complete-reading.ts'
 import { buildBundleReading, buildCategoryReading } from '../../src/report/category-readings.ts'
 import { buildDestinyCard } from '../../src/report/destiny-card.ts'
-import { plainReadingText } from '../../src/report/reading-text.ts'
+import { plainReadingText, readingTextParts } from '../../src/report/reading-text.ts'
 import { previewProduct } from '../../src/report/personal-products.ts'
 import type { OrderInput } from './input.ts'
 
@@ -21,20 +21,36 @@ export interface BuyerReport {
   pdf: string
 }
 let fontBytes: Promise<Buffer> | undefined
+let artworkBytes: Promise<Buffer> | undefined
+
+/** Keep authored emphasis even though the saved plain-text report omits Markdown. */
+export function reportEmphasis(source: unknown): string[] {
+  const phrases = new Set<string>()
+  const visit = (value: unknown, key = '') => {
+    if (typeof value === 'string') {
+      for (const part of readingTextParts(value)) if (part.bold) phrases.add(part.text)
+      if (key === 'tryThis' || key === 'firstStep') phrases.add(plainReadingText(value))
+    } else if (value && typeof value === 'object') {
+      for (const [k, v] of Object.entries(value)) visit(v, k)
+    }
+  }
+  visit(source)
+  return [...phrases].filter(x => x.length >= 6 && x.length <= 240)
+}
 /** All report content is calculated from the encrypted order, never from the return URL. */
 export async function issueReport(input: OrderInput, orderId: string, referenceYear: number): Promise<BuyerReport> {
   const a = calculateSaju(input.first), b = input.second ? calculateSaju(input.second) : undefined
-  let text: string, documents: string[]
+  let text: string, documents: string[], source: unknown
   if (input.kind === 'complete') {
     const reading = buildCompleteReading(a, referenceYear)
-    text = reading.fullText; documents = [reading.title]
+    source = reading; text = reading.fullText; documents = [reading.title]
   } else if (input.kind === 'bundle') {
     if (!b) throw new Error('Missing second chart')
     const reading = buildBundleReading(a, b, input.year!, referenceYear)
-    text = reading.fullText; documents = [reading.complete.title, reading.compatibility.title, reading.annual.title]
+    source = reading; text = reading.fullText; documents = [reading.complete.title, reading.compatibility.title, reading.annual.title]
   } else {
     const reading = buildCategoryReading(input.kind, a, { second: b, year: input.year ?? referenceYear })
-    text = reading.fullText; documents = [reading.title]
+    source = reading; text = reading.fullText; documents = [reading.title]
   }
   const report: BuyerReport = {
     title: previewProduct(input.kind).title, kind: input.kind, edition: REPORT_EDITION,
@@ -42,16 +58,20 @@ export async function issueReport(input: OrderInput, orderId: string, referenceY
     issuedAt: new Date().toISOString(), text: plainReadingText(text), documents,
     cards: [buildDestinyCard(input.first), ...(input.second ? [buildDestinyCard(input.second)] : [])], pdf: '',
   }
-  const pdf = await reportPdf(report, orderId)
+  const pdf = await reportPdf(report, orderId, reportEmphasis(source))
   report.pdf = Buffer.from(pdf).toString('base64')
   return report
 }
 
-async function reportPdf(report: BuyerReport, orderId: string) {
+async function reportPdf(report: BuyerReport, orderId: string, emphasis: string[]) {
   const pdf = await PDFDocument.create()
   pdf.registerFontkit(fontkit)
   fontBytes ??= readFile(new URL('./assets/NotoSansSC-Report.ttf', import.meta.url))
   const font = await pdf.embedFont(await fontBytes, { subset: true })
+  const boldFont = await pdf.embedFont(StandardFonts.HelveticaBold)
+  const boldCharacters = new Set(boldFont.getCharacterSet())
+  artworkBytes ??= readFile(new URL('./assets/HomepageArtwork.jpg', import.meta.url))
+  const artwork = await pdf.embedJpg(await artworkBytes)
   const display = await pdf.embedFont(StandardFonts.TimesRoman)
   const italic = await pdf.embedFont(StandardFonts.TimesRomanItalic)
   pdf.setTitle(report.title + ' | THE FATE KEY')
@@ -60,6 +80,8 @@ async function reportPdf(report: BuyerReport, orderId: string) {
   const supported = new Set(font.getCharacterSet())
   const clean = (text: string) => Array.from(text.replace(/\*\*/g, '').replace(/[\u2010-\u2015]/g, '-'))
     .map(c => supported.has(c.codePointAt(0)!) ? c : c === '\t' ? ' ' : '?').join('')
+  const phrases = [...new Set(emphasis.map(clean))].sort((a, b) => b.length - a.length)
+  const emphasisPattern = phrases.length ? new RegExp(phrases.map(x => x.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|'), 'g') : undefined
   const W = 595.28, H = 841.89
   const night = rgb(.07, .10, .17), gold = rgb(.65, .51, .28), paper = rgb(.98, .96, .91)
   const ink = rgb(.17, .20, .25), muted = rgb(.36, .38, .41)
@@ -87,24 +109,24 @@ async function reportPdf(report: BuyerReport, orderId: string) {
       }
       for (const x of [43, W - 43]) {
         for (const yy of [92, H - 92]) {
-          star(x, yy, 6, .35)
-          for (const d of [-17, 17]) page.drawCircle({ x, y: yy + d, size: 2.4, borderColor: gold, borderWidth: .4, borderOpacity: .24 })
+          star(x, yy, 7, .72)
+          for (const d of [-17, 17]) page.drawCircle({ x, y: yy + d, size: 2.4, borderColor: gold, borderWidth: .4, borderOpacity: .55 })
         }
         for (let yy = 138; yy < H - 130; yy += 71) {
-          star(x, yy, 2.6, .22)
-          page.drawCircle({ x, y: yy + 26, size: .65, color: gold, opacity: .22 })
+          star(x, yy, 3.4, .52)
+          page.drawCircle({ x, y: yy + 26, size: .65, color: gold, opacity: .48 })
         }
       }
       // A quiet celestial medallion, visible through the parchment rather than over it.
-      for (const radius of [113, 121, 148]) page.drawCircle({ x: W / 2, y: H / 2, size: radius, borderColor: gold, borderWidth: .7, borderOpacity: .065 })
+      for (const radius of [113, 121, 148]) page.drawCircle({ x: W / 2, y: H / 2, size: radius, borderColor: gold, borderWidth: .7, borderOpacity: .28 })
       for (let i = 0; i < 12; i++) {
         const angle = i * Math.PI / 6
         const x = W / 2 + Math.cos(angle) * 135, yy = H / 2 + Math.sin(angle) * 135
-        star(x, yy, i % 3 === 0 ? 8 : 3, .075)
+        star(x, yy, i % 3 === 0 ? 8 : 3, .28)
       }
-      page.drawCircle({ x: W / 2, y: H / 2 + 24, size: 32, borderColor: gold, borderWidth: 1, borderOpacity: .055 })
-      page.drawLine({ start: { x: W / 2, y: H / 2 - 8 }, end: { x: W / 2, y: H / 2 - 83 }, color: gold, thickness: 1, opacity: .055 })
-      for (const offset of [60, 75]) page.drawLine({ start: { x: W / 2, y: H / 2 - offset }, end: { x: W / 2 + 18, y: H / 2 - offset }, color: gold, thickness: 1, opacity: .055 })
+      page.drawCircle({ x: W / 2, y: H / 2 + 24, size: 32, borderColor: gold, borderWidth: 1, borderOpacity: .28 })
+      page.drawLine({ start: { x: W / 2, y: H / 2 - 8 }, end: { x: W / 2, y: H / 2 - 83 }, color: gold, thickness: 1, opacity: .28 })
+      for (const offset of [60, 75]) page.drawLine({ start: { x: W / 2, y: H / 2 - offset }, end: { x: W / 2 + 18, y: H / 2 - offset }, color: gold, thickness: 1, opacity: .28 })
     }
   }
   const addPage = () => {
@@ -112,19 +134,45 @@ async function reportPdf(report: BuyerReport, orderId: string) {
     page.drawText('THE FATE KEY', { x: 54, y: 786, size: 9, font: display, color: gold })
     page.drawLine({ start: { x: 54, y: 774 }, end: { x: W - 54, y: 774 }, thickness: .4, color: gold })
   }
-  const line = (text: string, size = 10.4, color = ink) => {
-    if (y < 83) addPage()
-    page.drawText(text, { x: textX, y, size, font, color }); y -= size * 1.65
-  }
-  const paragraph = (text: string, size = 10.4, color = ink) => {
-    let current = ''
-    for (const word of clean(text).split(/\s+/)) {
-      const proposed = current ? current + ' ' + word : word
-      if (font.widthOfTextAtSize(proposed, size) > textWidth && current) { line(current, size, color); current = word }
-      else current = proposed
+  const paragraph = (text: string, size = 10.4, color = ink, emphasise = false) => {
+    const value = clean(text)
+    const parts: { text: string; bold: boolean }[] = []
+    let last = 0
+    if (emphasise && emphasisPattern) {
+      emphasisPattern.lastIndex = 0
+      for (const match of value.matchAll(emphasisPattern)) {
+        if (match.index! > last) parts.push({ text: value.slice(last, match.index), bold: false })
+        parts.push({ text: match[0], bold: true }); last = match.index! + match[0].length
+      }
     }
-    if (current) line(current, size, color)
-    y -= 9
+    if (last < value.length) parts.push({ text: value.slice(last), bold: false })
+    let runs: { text: string; face: typeof font }[] = [], width = 0
+    const flush = () => {
+      if (!runs.length) return
+      if (y < 83) addPage()
+      let x = textX
+      for (const run of runs) {
+        page.drawText(run.text, { x, y, size, font: run.face, color })
+        x += run.face.widthOfTextAtSize(run.text, size)
+      }
+      y -= size * 1.65; runs = []; width = 0
+    }
+    for (const part of parts) {
+      for (const token of part.text.match(/\S+|\s+/g) ?? []) {
+        if (!width && !token.trim()) continue
+        const face = part.bold && [...token].every(c => boldCharacters.has(c.codePointAt(0)!)) ? boldFont : font
+        const tokenWidth = face.widthOfTextAtSize(token, size)
+        if (width + tokenWidth > textWidth && width) {
+          flush()
+          if (!token.trim()) continue
+        }
+        const previous = runs.at(-1)
+        if (previous?.face === face) previous.text += token
+        else runs.push({ text: token, face })
+        width += tokenWidth
+      }
+    }
+    flush(); y -= 9
   }
   // A private letter, with honest Sandbox labelling kept separate from the story.
   frame(true)
@@ -165,7 +213,7 @@ async function reportPdf(report: BuyerReport, orderId: string) {
     const note = /^(From (your|the) chart:|Why this focus:|Report edition|Sources|Method|Calculated start:)/.test(value)
     if (heading && y < 650) addPage()
     if (heading) { y -= 10; paragraph(value, 16, gold); y -= 5 }
-    else paragraph(value, note ? 9.2 : 10.4, note ? muted : ink)
+    else paragraph(value, note ? 9.2 : 10.4, note ? muted : ink, !note)
   }
   report.cards.forEach((card, index) => {
     addPage()
@@ -215,8 +263,12 @@ async function reportPdf(report: BuyerReport, orderId: string) {
     page.drawLine({ start: { x: W / 2 + dx - 3, y: sealY + 4 }, end: { x: W / 2 + dx + 3, y: sealY + 4 }, color: lightGold, thickness: .7 })
     page.drawLine({ start: { x: W / 2 + dx, y: sealY + 1 }, end: { x: W / 2 + dx, y: sealY + 7 }, color: lightGold, thickness: .7 })
   }
-  centre('THE FATE KEY', sealY + 34, 12, paper)
-  key(W / 2 - 2, sealY + 12, .40)
+  centre('THE FATE KEY', sealY + 47, 11, paper)
+  const markSize = 66, markScale = markSize / 105
+  const markX = W / 2 - markSize / 2, markY = sealY - 30
+  page.pushOperators(pushGraphicsState(), rectangle(markX, markY, markSize, 108 * markScale), clip(), endPath())
+  page.drawImage(artwork, { x: markX - 62 * markScale, y: markY - (979 - 6 - 108) * markScale, width: 1606 * markScale, height: 979 * markScale })
+  page.pushOperators(popGraphicsState())
   centre('PRIVATE EDITION', sealY - 44, 9, paper)
   centre('Issued by THE FATE KEY', 248, 12, ink)
   y = 207
