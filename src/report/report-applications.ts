@@ -119,7 +119,7 @@ function patternFor(kind: ApplicationKind, situation: SituationCase, r: SajuResu
       ]
       : situation.id === 'new-responsibility'
         ? [
-          `For an added responsibility, the yearly theme supplies this question: **“${life.yearQuestion}”** Your own starting need remains **${c.personal.need}**. Check whether the new arrangement leaves room for it.`,
+          `For an added responsibility, the yearly theme supplies this question: **“${life.yearQuestion}”** What helps you feel comfortable remains **${c.personal.need}**. Check whether the new arrangement leaves room for it.`,
           god === c.month.stemSipsin
             ? 'The annual and main birth-month themes match. Examine a recurring commitment you already understand before assuming a new responsibility needs a completely new approach.'
             : `Your usual birth-month theme is **${c.work.theme}**. The annual theme adds a different approach. Try it with one part of the responsibility before changing the whole arrangement.`,
@@ -132,7 +132,7 @@ function patternFor(kind: ApplicationKind, situation: SituationCase, r: SajuResu
       themes: [
         { label: `${year} main planning theme`, text: WORK_PROFILES[god].theme },
         { label: `${year} second planning theme`, text: WORK_PROFILES[innerGod].theme },
-        { label: 'Your own starting need', text: c.personal.need },
+        { label: "What helps you feel comfortable", text: c.personal.need },
       ],
       connections: yearConnections,
       question: situation.id === 'annual-connections' ? `A request you can adapt: “${relationshipExample(r).response}” Then ask for the other person’s own preference.` : example.check,
@@ -141,7 +141,7 @@ function patternFor(kind: ApplicationKind, situation: SituationCase, r: SajuResu
   }
   if (lens === 'closeness') return {
     themes: [
-      { label: 'Your own starting need', text: c.personal.need },
+      { label: "What helps you feel comfortable", text: c.personal.need },
       { label: 'Your close-conversation theme', text: c.relationship.need },
     ],
     connections: [RELATIONSHIP_CONNECTIONS[c.day.pillar.stem], `One request to adapt is: **“${relationshipExample(r).response}”** Ask the other person for their own answer too.`],
@@ -155,7 +155,7 @@ function patternFor(kind: ApplicationKind, situation: SituationCase, r: SajuResu
     const usesGroup = lens === 'shared-work' || situation.id === 'growing-workload'
     const workConnections = situation.id === 'first-offer'
       ? [
-        `Your birth-month theme suggests testing **${focus.offer}**. A first experiment is: **${focus.experiment}** The test still needs a real customer problem.`,
+        `Your birth-month theme suggests testing **${focus.offer}**. One way to try it is: **${focus.experiment}** The test still needs a real customer problem.`,
         `Your own starting style values **${c.personal.focus}**. ${c.personal.balance} Use that check to decide what the first version needs, rather than adding everything you could provide.`,
       ]
       : situation.id === 'delivery-growing'
@@ -168,7 +168,7 @@ function patternFor(kind: ApplicationKind, situation: SituationCase, r: SajuResu
         : situation.id === 'growing-workload'
           ? [
             `Your main working theme points to **${c.work.contribution}**. The wider-group theme points to **${group.contribution}**. Compare both with the duties people actually ask you to carry.`,
-            `Your own starting need is **${c.personal.need}**. When reviewing added work, name the support or condition this would require. The chart does not establish what your employer has agreed.`,
+            `The birth-day reading suggests you may appreciate **${c.personal.need}**. When reviewing added work, name the support or condition this would require. The chart does not establish what your employer has agreed.`,
           ]
           : situation.id === 'career-change'
             ? [
@@ -191,7 +191,7 @@ function patternFor(kind: ApplicationKind, situation: SituationCase, r: SajuResu
       themes: [
         { label: 'Your starting approach', text: c.personal.focus },
         { label: kind === 'business' ? 'An offer suggested by your work theme' : 'Working conditions to compare', text: kind === 'business' ? focus.offer : c.work.setting },
-        { label: usesGroup ? 'Your wider-group theme' : 'The second birth-month theme', text: usesGroup ? group.theme : c.inner.theme },
+        { label: usesGroup ? "The idea taken from your birth year" : 'The second birth-month theme', text: usesGroup ? group.theme : c.inner.theme },
       ],
       connections: workConnections,
       question: `${kind === 'business' ? focus.customer : focus.interview} Then check your own approach: ${ownQuestion}`,
@@ -201,7 +201,7 @@ function patternFor(kind: ApplicationKind, situation: SituationCase, r: SajuResu
   return {
     themes: [
       { label: 'Your starting approach', text: c.personal.focus },
-      { label: 'A daily pressure to examine', text: c.work.friction },
+      { label: "Something that may make the day harder", text: c.work.friction },
     ],
     connections: situation.id === 'routine-fit'
       ? [`Your starting style suggests this practice: **${c.personal.practice}** Try it with one useful habit you already want to keep.`, `A condition suggested by the second birth-month theme is: **${c.inner.keepClose[0]}** Check which part could help the small routine, rather than simply asking yourself for more discipline.`]
@@ -218,7 +218,7 @@ function practicalDetails(kind: ApplicationKind, item: SituationCase, first: Saj
   let say = item.say
   switch (`${kind}/${item.id}`) {
     case 'career/job-offer':
-      steps[0] = `Choose three working conditions to compare. One question suggested by your reading is whether the role has **${c.work.setting}**. Choose the other conditions from your own experience.`
+      steps[0] = `Choose three things about the working day to compare. One question suggested by your reading is whether the role has **${c.work.setting}**. Choose the other conditions from your own experience.`
       say = `${item.say}\n${focus.interview}`
       break
     case 'career/growing-workload':

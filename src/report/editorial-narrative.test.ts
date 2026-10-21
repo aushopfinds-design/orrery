@@ -51,8 +51,16 @@ describe('Everyday narrative before chart terminology', () => {
       expect(month.evidence.join(' ')).toContain(month.pillar)
     }
   })
+  it('keeps rewritten sentences grammatical across shared copy fragments', () => {
+    const reports = [buildCompleteReading(a, 2026), ...kinds.map(kind => buildCategoryReading(kind, a, { second: b, year: 2027 }))]
+    for (const report of reports) {
+      expect(report.fullText).not.toMatch(/Your the way|Which the way|three the way|keep agains| in focus in focus|to \*\*[^*]+\*\* in focus/)
+      expect(report.fullText).not.toContain('decision rights')
+      expect(report.fullText).not.toContain('acceptance standard')
+    }
+  })
   it('uses the new edition in all three bundle documents without inventing a seventh interpretation', () => {
-    expect(REPORT_EDITION).toBe('2026.10-r3')
+    expect(REPORT_EDITION).toBe('2026.10-r4')
     const bundle = buildBundleReading(a, b, 2027, 2026)
     for (const report of [bundle.complete, bundle.compatibility, bundle.annual]) {
       expect(report.fullText).toContain('Report edition ' + REPORT_EDITION)

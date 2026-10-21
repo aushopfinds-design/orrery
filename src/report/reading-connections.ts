@@ -1,76 +1,75 @@
-/** Editorial prompts that connect the day symbol with the month relationship.
- * These are cultural interpretations, not diagnoses or observed life events. */
+/** Everyday interpretations selected by the calculated day symbol and month relationship. */
 export const WORK_CONNECTIONS: Record<string, Record<string, string>> = {
-  '甲': {
-    ownership: 'A clear goal can help you work independently. The pressure comes when your chosen plan becomes the only acceptable route. **Agree on the result, then leave room to change the method.**',
-    making: 'A clear goal can give your ideas direction. Making something useful also takes feedback and repeated attempts. **Keep the aim steady while you test a smaller version.**',
-    resources: 'You may enjoy taking an opportunity toward a clear result. An offer can still pull you away from your original goal. **Check whether it moves your main plan forward.**',
-    responsibility: 'A clear goal can help you take charge of a demanding task. A new request may need a different route. **Confirm the priority before defending your original plan.**',
-    learning: 'Learning may feel most useful when it supports a clear goal. You can still discover that the goal needs adjusting. **Use one new idea to test your current direction.**',
+  "甲": {
+    "ownership": "You may like knowing where a job is heading and being trusted to get it there. If someone suggests another way, you do not have to give up the goal. **Ask what their approach would make easier before defending your own.**",
+    "making": "Having something to aim for can make it easier to begin. You may get frustrated when a first attempt does not match the picture in your head. **Show an early version and ask what is already useful.**",
+    "resources": "A new offer may catch your attention because you can see where it could lead. The harder question is whether it belongs beside the plans you already have. **Name the thing you would have to put aside to take it on.**",
+    "responsibility": "You may feel ready to take charge when a job needs doing. When the deadline changes, staying with the original plan can create extra work. **Ask what matters most now, then change the route if you need to.**",
+    "learning": "Learning can feel worthwhile when you know what you want to do with it. Sometimes the answer changes your original aim. **Try what you have learned before deciding that the old plan must stay the same.**"
   },
-  '乙': {
-    ownership: 'Being flexible can help a team find another route. Your own task still needs room and a clear limit. **Say which part you can adapt and which part you need to keep.**',
-    making: 'Your ability to adapt can help you improve a draft. Too many changes for other people may blur its purpose. **Choose the main job your next version needs to do.**',
-    resources: 'Flexibility can help you spot an opening or keep an agreement working. It can also make every new request seem possible. **Check your available time before changing a commitment.**',
-    responsibility: 'You may find a workable route when expectations change. Constant adjustment can leave your own needs unclear. **Ask which requirement is essential and which one can move.**',
-    learning: 'You may learn well from different people and methods. Adapting to each suggestion can make it hard to choose. **Try one approach before asking for another.**',
+  "乙": {
+    "ownership": "You may be the person who finds a way around a problem when plans change. That does not mean your own task has to keep moving. **Say which part you can change and which part you still need time for.**",
+    "making": "You may find it easy to improve a draft after hearing other ideas. After several rounds, it can become hard to remember what you wanted it to do. **Keep the main purpose in front of you when choosing the next change.**",
+    "resources": "It may feel easier to adjust your week than to disappoint someone with a no. Several small changes can leave you with very little room. **Look at the week you actually have before accepting another request.**",
+    "responsibility": "You may keep finding ways to make a difficult request work. The effort can go unnoticed if you never explain what you had to change. **Ask which part really cannot move, and say what you would need to do it.**",
+    "learning": "Advice from different people may give you plenty of ways forward. Trying to follow all of them can leave you stuck. **Choose the suggestion that fits your situation and see what happens before asking for another opinion.**"
   },
-  '丙': {
-    ownership: 'Your energy can help a group get started. Taking charge does not require answering every message yourself. **Agree when you will be available and who will handle the other requests.**',
-    making: 'Enthusiasm can bring people toward an idea. A useful result also needs quiet time to make and revise it. **Protect a block of working time after sharing the idea.**',
-    resources: 'Warm contact can help an opportunity take shape. Each new connection can also bring another promise. **Check the work behind the invitation before saying yes.**',
-    responsibility: 'You may bring energy to a task that matters to others. Their expectations can keep expanding when you seem always ready. **Name the task, the deadline and your available time.**',
-    learning: 'Sharing what you learn can make it easier for others to begin. You also need time to absorb it yourself. **Try the idea quietly before explaining it to everyone.**',
+  "丙": {
+    "ownership": "Your enthusiasm may make it easy for people to come to you. Once you are leading the work, every question can start coming your way too. **Tell the team when you will answer and who can help while you are busy.**",
+    "making": "You may enjoy getting people excited about an idea. Making it happen can need quieter time than talking about it did. **Leave a stretch of time after the conversation when you can work without answering messages.**",
+    "resources": "A good conversation may quickly turn into a new plan. It is easy to promise more while everyone is excited. **Before agreeing, ask who will do the work after the first meeting.**",
+    "responsibility": "People may assume you are ready for another task because you sound positive about the current one. You can care about the result and still be full. **Say what you can finish today and what would have to wait.**",
+    "learning": "Explaining an idea can help you understand it, and your interest may encourage others. You may still need a chance to use it yourself. **Try the idea once before becoming the person who answers everyone’s questions about it.**"
   },
-  '丁': {
-    ownership: 'Thoughtful details can make your own part of a job more useful. Independence can also leave you checking alone for too long. **Agree when to share a draft and ask for feedback.**',
-    making: 'Careful attention can improve something you make. The pressure appears when every small choice needs another revision. **Choose a finishing point before beginning the next version.**',
-    resources: 'Your attention to detail can help you understand an offer or a regular commitment. Not every detail carries the same cost. **Choose the three checks that matter most.**',
-    responsibility: 'You may care about meeting an expectation thoughtfully. A clear standard helps you know when that care has done enough. **Ask what a finished result must include.**',
-    learning: 'Close attention can help you understand a difficult idea. More preparation can also delay using it. **Choose one question to study, then try the answer in a small task.**',
+  "丁": {
+    "ownership": "You may take care over a job because you want the result to feel right. Working alone can make it hard to tell when another check is useful. **Agree when to show someone the draft instead of checking it by yourself again.**",
+    "making": "You may notice a detail that would make something better. When every detail deserves another look, finishing can feel surprisingly difficult. **Decide which changes someone will actually notice and leave the rest for another time.**",
+    "resources": "You may read the small print because you do not want an unpleasant surprise. Checking every possible detail can leave the decision open for days. **Choose the questions that could change your answer and get those answered first.**",
+    "responsibility": "You may put care into meeting someone’s expectations. If you keep adding your own checks, the job can grow after it is already finished. **Ask what they actually need to see before you do another round.**",
+    "learning": "You may like understanding an idea properly before using it. There can always be another article to read. **Try the part you understand now, then look for help with the point where you actually get stuck.**"
   },
-  '戊': {
-    ownership: 'Your steady approach can help a group trust your part of the work. That trust can turn into extra tasks if roles stay unclear. **Agree who owns the next step before taking it over.**',
-    making: 'Reliability can support regular practice and useful results. You may also keep a difficult process running by doing more yourself. **Improve the process before adding more effort.**',
-    resources: 'Keeping promises can help you manage a commitment. It can also make you carry costs that should be shared. **Agree each person\'s part before accepting the full task.**',
-    responsibility: 'You may stay practical when a task becomes difficult. A demanding role still needs support. **Ask for the authority and help that match the responsibility.**',
-    learning: 'A steady approach can help you turn learning into something dependable. You do not need to become everyone\'s only source of help. **Share a method that another person can use independently.**',
+  "戊": {
+    "ownership": "People may trust you to keep things moving when a job gets messy. That trust can quietly become an expectation that you will fill every gap. **Ask who is taking the next task before automatically picking it up.**",
+    "making": "You may keep a familiar job running by putting more effort into it. That solves the day’s problem but can leave you doing the same rescue tomorrow. **Change the step that keeps going wrong rather than always working around it.**",
+    "resources": "Once you have promised to help, you may find it hard to step back. A shared cost or task can gradually become yours alone. **Ask what each person has agreed to contribute before covering the rest.**",
+    "responsibility": "You may stay practical when other people feel under pressure. Being the calm person does not give you unlimited time or help. **Ask for what the job needs instead of assuming you must make do.**",
+    "learning": "You may want an explanation that people can depend on. Answering every question yourself can make it hard for them to learn the job. **Show them how to find the answer, then let them try the next step.**"
   },
-  '己': {
-    ownership: 'Everyday care can help a team notice practical needs. Your own work may wait while you fill each small gap. **Book time for your task before offering more help.**',
-    making: 'Patient care can help you improve a useful process. A familiar routine may keep expanding without a clear end. **Choose one improvement and a time to stop.**',
-    resources: 'Regular attention can help you keep track of commitments. Small duties can quietly fill all your available time. **Review the total workload before adding another promise.**',
-    responsibility: 'You may notice what a demanding task needs each day. Being helpful does not make every missing task yours. **Ask who will handle each recurring duty.**',
-    learning: 'Patient support can help others understand a new task. Your own learning also deserves protected time. **Plan a small task for yourself before helping with another explanation.**',
+  "己": {
+    "ownership": "You may notice the small jobs that would make everyone else’s day easier. Your own work can disappear behind them. **Put time aside for your task before offering to sort out the next thing.**",
+    "making": "You may improve something through patient, regular care. The job can also keep growing because there is always another small thing to tidy. **Choose the part you will improve today and a time to leave it alone.**",
+    "resources": "You may remember the little things people rely on you for. Together they can take far longer than any single request suggests. **Look at the whole week before saying that another regular job will only take a minute.**",
+    "responsibility": "You may spot what a task needs before anyone asks. That does not make you responsible for every part that is missing. **Ask who is doing each regular job rather than silently adding it to your own list.**",
+    "learning": "You may be patient when someone needs something explained again. Your own chance to learn can keep getting postponed. **Finish a little of your own practice before taking on the next explanation.**"
   },
-  '庚': {
-    ownership: 'Clear decisions can help you take ownership of a result. Other people may use a different method to reach it. **Agree the goal, then ask why their approach works for them.**',
-    making: 'Direct thinking can help you identify what needs improving. An idea is easier to hear when people can see its benefit. **Show a small example before correcting the whole process.**',
-    resources: 'Clear decisions can help you sort an offer or commitment. Moving quickly can leave an important condition unasked. **Explain your main requirement and check the full agreement.**',
-    responsibility: 'You may act decisively when a standard or deadline matters. Others may need the reason behind your direction. **Explain what is urgent and invite one useful question.**',
-    learning: 'You may want learning to lead to a clear answer. A different explanation can still improve your decision. **Test one alternative before ruling it out.**',
+  "庚": {
+    "ownership": "You may like knowing what needs doing and getting started. Someone else may reach the same result in a way you would not choose. **Ask them to explain their method before deciding it needs correcting.**",
+    "making": "You may see the part of a process that is wasting time. Saying so directly can sound harsher than you mean. **Show what your change would make easier, then ask what you might have missed.**",
+    "resources": "You may want to settle an offer quickly once it looks useful. A quick decision can miss a condition that matters later. **Say what you need the offer to include before you give your answer.**",
+    "responsibility": "You may speak firmly when a deadline matters. Other people may hear the firmness before they understand the reason. **Explain what must happen now and give them room to ask about the rest.**",
+    "learning": "You may want a useful answer rather than a long explanation. An unfamiliar idea can still be worth trying. **Test it on a small task before deciding it will not work.**"
   },
-  '辛': {
-    ownership: 'Your eye for quality can help you deliver work you own. Independence can also leave you polishing without feedback. **Agree a short checklist and a time to share the result.**',
-    making: 'Careful finishing can make an idea easier to use. More refinement is not always the next useful step. **Show a working version and let feedback guide the next change.**',
-    resources: 'Your eye for detail can help you check an offer or commitment. More options can make the checking feel endless. **Choose one option and three conditions that really matter.**',
-    responsibility: 'Quality and clear expectations can work well together. The pressure comes when your private standard keeps rising after the task is agreed. **Use the agreed standard to decide when to finish.**',
-    learning: 'Attention to detail can help you understand a subject deeply. Looking for a complete explanation can delay a useful test. **Use what you know in one small task, then review the result.**',
+  "辛": {
+    "ownership": "You may want your work to show the care you put into it. Without another person’s view, small corrections can go on for a long time. **Agree the few things the result must do and a time to send it.**",
+    "making": "You may make something easier to use by noticing the finishing touches. After a point, another change may tell you less than someone actually trying it. **Let their experience guide the next version.**",
+    "resources": "You may look closely at the differences between several good options. More choice can make the checking feel endless. **Choose the details that would change your decision and let the smaller differences go.**",
+    "responsibility": "You may want to do the job properly, even when nobody is asking for more. If your own standard keeps rising, finishing can start to feel impossible. **Use what was agreed to decide when this version is ready.**",
+    "learning": "You may enjoy understanding a subject in detail. Waiting for a complete explanation can stop you finding out what you already know. **Use it in a real task and notice which question still needs an answer.**"
   },
-  '壬': {
-    ownership: 'Seeing several routes can help you solve a task independently. Keeping all of them open can delay a decision. **Choose the route you will test first and save the others.**',
-    making: 'Connections between ideas can lead to a useful new approach. A new idea may arrive before the first version is finished. **Complete one small test before opening another project.**',
-    resources: 'You may see more than one use for an opportunity. Exploring every possibility can hide the immediate cost. **Choose one purpose and check the time and money it needs.**',
-    responsibility: 'Seeing different routes can help when a task gets complicated. A deadline still needs one clear decision. **Name the next step you will take and when you will review it.**',
-    learning: 'Exploring connections can help you understand a subject. Each answer may lead to another question. **Choose one question whose answer you will use this week.**',
+  "壬": {
+    "ownership": "You may see several ways through a problem while someone else sees only one. Keeping every route open can make choosing harder. **Try the one that answers the most important question and save the other ideas for later.**",
+    "making": "One idea may lead you to another before the first has taken shape. That can be exciting, but it leaves you with little to show. **Finish a version someone can try before opening another project.**",
+    "resources": "You may spot several things a new opportunity could become. Thinking about all of them can hide what the first step actually costs. **Choose what you would use it for now and check the time and money that needs.**",
+    "responsibility": "You may find another way when a job becomes complicated. A real deadline still needs you to settle on something. **Say what you will do next and when you will check whether it worked.**",
+    "learning": "You may follow an interesting question into several others. That curiosity is useful until you lose the answer you came for. **Choose a question that matters this week and use the answer before following the next one.**"
   },
-  '癸': {
-    ownership: 'Quiet observation can help you notice what a task needs. Other people may not know which part you want to own. **Say what you have noticed and name the step you will take.**',
-    making: 'Listening closely can reveal a useful improvement. An idea cannot be tested while it stays unspoken. **Share a small example before you feel ready to explain everything.**',
-    resources: 'Careful listening can help you understand an offer. Silence may be taken as agreement while you are still thinking. **Ask for the time you need before giving an answer.**',
-    responsibility: 'Quiet attention can help you understand what is expected. Unspoken doubts can make an agreed task harder. **Ask one clear question before accepting the responsibility.**',
-    learning: 'Listening and noticing details can support thoughtful learning. Others cannot use an insight you keep to yourself. **Share what you understand so far and name what is still uncertain.**',
-  },
+  "癸": {
+    "ownership": "You may notice what is missing before you feel ready to say it. Other people cannot make room for an idea they have not heard. **Share what you have noticed and say which part you would like to handle.**",
+    "making": "Listening may help you spot a change that would make someone’s work easier. Waiting for the perfect explanation can leave that idea untried. **Show a rough example and let the conversation help you explain the rest.**",
+    "resources": "You may listen carefully while deciding what an offer means. Someone else may take your quietness as a yes. **Say that you are still thinking and tell them when you can answer.**",
+    "responsibility": "You may want to understand what is expected before agreeing to do it. An unasked question can become a worry you carry through the job. **Ask about the part you are unsure of before saying yes.**",
+    "learning": "You may understand more than you feel ready to explain. Keeping it all to yourself makes it harder to hear what needs clarifying. **Share what makes sense so far and be clear about the part you are still working out.**"
+  }
 }
 
 export const RELATIONSHIP_CONNECTIONS: Record<string, string> = {

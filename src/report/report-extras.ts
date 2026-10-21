@@ -77,7 +77,7 @@ const LIFE_DETAILS: Record<string, LifeDetail> = {
   },
   '丁': {
     people: 'Someone who appreciates the care behind your work and helps you decide when it is ready.',
-    space: 'One task in view, useful light and a finishing point agreed before you begin.',
+    space: "One task in view, useful light and a point when you can stop agreed before you begin.",
     habit: 'Choose the detail that changes the result. Give the rest a shorter time limit.',
     limit: 'Spending the same effort on a tiny finishing touch as on the main purpose.',
     misread: 'Thinking carefully can look like hesitation when you have not explained what you are checking.',
@@ -189,9 +189,9 @@ export function buildReportExtras(kind: ExtrasKind, result: SajuResult, options:
       break
     case 'career':
       questions = [
-        q('Which working conditions are worth looking for?', `Look for **${work.setting}**. Then ask: **“${focus.interview}”** A useful answer includes a recent example of how the team works, not only a promise about its culture.`, workBasis),
+        q("What should I ask about a new job?", `Look for **${work.setting}**. Then ask: **“${focus.interview}”** A useful answer includes a recent example of how the team works, not only a promise about its culture.`, workBasis),
         q('How can I show what I can do?', `**${detail.gift}** Make it visible in a real example: **${focus.proof}** Add one sentence about the problem you solved and one about your own part. This gives someone a result to discuss alongside the chart’s suggested theme.`, `${dayBasis} ${workBasis}`),
-        q('Should I change jobs or change the way I work?', `First separate the **task, workload and working conditions**. A role that uses ${work.contribution} may still feel difficult when you face ${work.friction}. Test one change you can discuss, then compare the result with a real alternative. The chart cannot choose the job for you.`, workBasis),
+        q('Should I change jobs or change the way I work?', `Look separately at the job itself, how much there is to do and how the day is organised. A role that uses ${work.contribution} may still feel difficult when you face ${work.friction}. Test one change you can discuss, then compare the result with a real alternative. The chart cannot choose the job for you.`, workBasis),
         q('What money habit should I watch at work?', `Watch for **${life.moneyWatch}**. Ask: **“${life.payQuestion}”** Put confirmed pay, expected hours and added duties on one page. Compare the whole agreement, rather than judging an offer by the headline amount alone.`, workBasis),
       ]
       keepClose = [card('Useful feedback', `Ask someone to discuss a piece of work involving **${focus.tasks}**.`), card('Working conditions', `Check for **${work.setting}** before judging a job by its title.`), card('A clear boundary', detail.habit)]
@@ -248,9 +248,9 @@ export function buildReportExtras(kind: ExtrasKind, result: SajuResult, options:
       const basis = `Person A’s comparison theme is ${lensA.theme}; Person B’s is ${lensB.theme}.`
       questions = [
         q('Why can the same connection feel different to each of us?', `From Person A’s side, the comparison highlights **${lensA.theme}**. From Person B’s side, it highlights **${lensB.theme}**. Ask each person what they hoped for in the same recent moment. Two different answers can explain more than a match score.`, basis),
-        q('What helps each of us feel cared for?', `**Person A:** make room for ${relationship.need}. **Person B:** make room for ${otherLove.need}. Each person names one small action that would help this week. A useful request is something the other person can understand and respond to.`, 'Each person’s birth-day branch supplies their own relationship theme.'),
+        q('What helps each of us feel cared for?', `**Person A:** make room for ${relationship.need}. **Person B:** make room for ${otherLove.need}. Each person names one small action that would help this week. Ask for something specific enough that the other person knows what you mean.`, 'Each person’s birth-day branch supplies their own relationship theme.'),
         q('How can we handle a disagreement more clearly?', `**For Person A:** ${lensA.balance} **For Person B:** ${lensB.balance} Choose one topic and let both people finish an answer. Return to what was actually said before deciding what it means about the relationship.`, basis),
-        q('What should we agree before sharing a plan?', `Person A’s starting style needs **${personal.need}**. Person B’s needs **${otherPersonal.need}**. Name the time, tasks and choices each person can offer. If those needs pull in different directions, change one part of the plan together.`, 'Both birth-day starting symbols are used separately.'),
+        q('What should we agree before sharing a plan?', `How Person A tends to begin needs **${personal.need}**. Person B’s needs **${otherPersonal.need}**. Name the time, tasks and choices each person can offer. If those needs pull in different directions, change one part of the plan together.`, 'Both birth-day starting symbols are used separately.'),
       ]
       keepClose = [card('Care Person A can recognise', relationship.keepClose[0]), card('Care Person B can recognise', otherLove.keepClose[0]), card('A shared way to ask', `Take turns asking: **“${lensA.question}”** Then listen to the other answer.`)]
       stepBack = [card('A misunderstanding for Person A', detail.misread), card('A misunderstanding for Person B', otherDetail.misread), card('Assuming a chart replaces an answer', 'Check what each person wants today. Similar symbols do not make two people identical.')]

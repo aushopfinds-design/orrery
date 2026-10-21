@@ -97,7 +97,7 @@ const SITUATIONS: Record<string, WorkSituation> = {
 SITUATIONS['七殺'] = SITUATIONS['偏官']
 
 const STYLE: Record<string, { say: string; daily: string; social: string }> = {
-  '甲': { say: 'I want to keep the goal, but I can change the way we reach it.', daily: 'Imagine keeping the same plan after a delay leaves too little time to finish it.', social: 'Imagine arranging a group plan, then hearing an idea that changes the route you had chosen.' },
+  '甲': { say: 'I want to keep the goal, but I can change the way we reach it.', daily: "Imagine a delay leaving you too little time for the plan you had in mind. You still want the same result, but the original route no longer fits.", social: 'Imagine arranging a group plan, then hearing an idea that changes the route you had chosen.' },
   '乙': { say: 'I can change this part. I still need to keep time for my own task.', daily: 'Imagine adjusting your day for several small requests until your own plan disappears.', social: 'Imagine a group changing its plan again, while you have a need you have not yet mentioned.' },
   '丙': { say: 'I can help with the start. After that, I need time when I am not answering messages.', daily: 'Imagine answering messages between every task until there is no quiet time left.', social: 'Imagine getting everyone excited about a plan, then becoming the person who handles every reply.' },
   '丁': { say: 'I can give this careful attention. Let us agree when it needs to be finished.', daily: 'Imagine rewriting a short message several times after it already says what you mean.', social: 'Imagine choosing a thoughtful detail for someone, then worrying about whether it is quite right.' },
@@ -187,7 +187,7 @@ export function workExample(r: SajuResult, kind: 'career' | 'business'): Everyda
     scene: outer[kind],
     response: outer[kind === 'career' ? 'question' : 'customer'],
     check: `${month.stemSipsin === month.branchSipsin ? 'This theme repeats in both parts of your birth month.' : `Before agreeing, ask: “${inner.inner}”`} ${WORK_CHECK[day.pillar.stem]} Check the actual ${kind === 'career' ? 'role and workload' : 'customer brief and delivery time'}.`,
-    basis: `${month.stemSipsin === month.branchSipsin ? `Both parts of your birth month repeat ${WORK_PROFILES[month.stemSipsin].theme}.` : `Your main birth-month theme is ${WORK_PROFILES[month.stemSipsin].theme}. The second theme is ${WORK_PROFILES[month.branchSipsin].theme}.`} Your birth-day style values ${PERSONAL_PROFILES[day.pillar.stem].focus}.`,
+    basis: `${month.stemSipsin === month.branchSipsin ? `Both parts of your birth month lead to the same idea here: ${WORK_PROFILES[month.stemSipsin].theme}.` : `This example compares both parts of your birth month with your birth-day symbol and reads them as ${WORK_PROFILES[month.stemSipsin].theme} and ${WORK_PROFILES[month.branchSipsin].theme}.`} The birth-day reading suggests you may appreciate ${PERSONAL_PROFILES[day.pillar.stem].focus}.`,
     facts: [dayFact(r), monthFact(r)],
   }
 }
@@ -201,7 +201,7 @@ export function everydayExample(r: SajuResult, kind: 'personality' | 'wellbeing'
     check: kind === 'personality'
       ? `Ask one more question: “${SITUATIONS[month.branchSipsin].inner}” Notice whether your reply protects your own need and leaves room for another person.`
       : `If you want support, try: “${REQUEST[day.pillar.branch]}” Notice whether the task has a clearer ending after this conversation.`,
-    basis: `Your birth-day style points to ${PERSONAL_PROFILES[day.pillar.stem].focus}. ${kind === 'personality' ? `The second birth-month theme adds ${WORK_PROFILES[month.branchSipsin].theme}.` : `Your relationship theme adds a need for ${RELATIONSHIP_PROFILES[day.pillar.branch].need}.`}`,
+    basis: `The birth-day reading explores ${PERSONAL_PROFILES[day.pillar.stem].focus}. ${kind === 'personality' ? `The second birth-month theme adds ${WORK_PROFILES[month.branchSipsin].theme}.` : `Your relationship theme adds a need for ${RELATIONSHIP_PROFILES[day.pillar.branch].need}.`}`,
     facts: [dayFact(r), ...(kind === 'personality' ? [monthFact(r)] : [])],
   }
 }
@@ -212,7 +212,7 @@ export function relationshipExample(r: SajuResult): EverydayExample {
     scene: 'Imagine that a plan for time together changes at the last moment. You want to explain what matters without guessing the other person’s reason.',
     response: REQUEST[day.pillar.branch],
     check: RELATIONSHIP_CHECK[day.pillar.stem] + ' Listen for the other person’s own request before agreeing on the next step.',
-    basis: `Your birth-day style points to ${PERSONAL_PROFILES[day.pillar.stem].focus}. Its relationship theme values ${RELATIONSHIP_PROFILES[day.pillar.branch].need}. These two parts shape the suggested conversation.`,
+    basis: `The birth-day reading explores ${PERSONAL_PROFILES[day.pillar.stem].focus}. The lower birth-day symbol is used to explore ${RELATIONSHIP_PROFILES[day.pillar.branch].need}. That is why this example asks you to put the need into words.`,
     facts: [dayFact(r)],
   }
 }
@@ -238,7 +238,7 @@ export function annualExample(r: SajuResult, year: number, god: string, innerGod
     scene: SITUATIONS[god].year,
     response: YEAR_REPLY[god],
     check: `For ${year}, ask: “${YEAR_CHECK[innerGod]}” Try it with one personal plan. Keep the step small enough to review.`,
-    basis: `Your birth-day symbol is the reference for both yearly themes. The main yearly theme is ${WORK_PROFILES[god].theme}. The second adds ${WORK_PROFILES[innerGod].theme}.`,
+    basis: `Both parts of the selected year are compared with your birth-day symbol. The first idea is ${WORK_PROFILES[god].theme}. The other part adds ${WORK_PROFILES[innerGod].theme}.`,
     facts: [dayFact(r), `Annual reference ${year}-07-15, 12:00 Asia/Seoul: ${pillar}; ${god} / ${innerGod}.`],
   }
 }

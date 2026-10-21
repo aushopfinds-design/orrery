@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { calculateSaju } from '@orrery/core/saju'
-import { buildEnglishReading } from './reading'
+import { buildEnglishReading, STEMS } from './reading'
 
 const input = { year: 1998, month: 3, day: 25, hour: 3, minute: 0, gender: 'M' as const, timezone: 'Asia/Seoul', longitude: 127, latitude: 37.5 }
 
@@ -13,8 +13,9 @@ describe('paid report editorial quality', () => {
   })
 
   it('does not repeat personality caution verbatim in career', () => {
-    const caution = report.sections[0].paragraphs[3].split('Your personal reflection: ')[1]?.split(' Notice whether')[0]
+    const caution = STEMS[result.pillars[1].pillar.stem].caution
     expect(caution).toBeTruthy()
+    expect(report.sections[0].paragraphs[3]).toContain(caution)
     expect(report.sections[1].paragraphs.join(' ')).not.toContain(caution)
   })
 

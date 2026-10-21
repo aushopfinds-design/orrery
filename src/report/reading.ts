@@ -178,19 +178,19 @@ export function buildEnglishReading(result: SajuResult, asOfYear = new Date().ge
     {
       heading: '01 · Your Core Personality Themes',
       paragraphs: [
-        'In traditional Korean Saju, your birth-day stem is ' + day.pillar.stem + ' (' + self.name + '). Think of it as a way to reflect on how you respond to challenges and people—not a label that defines you. '
-          + self.approach + ' This is a lens for reflection, not a fixed personality label.',
-        'Your day stem is ' + self.name + ', while your month stem is ' + month.pillar.stem + ' (' + (monthGod?.title ?? 'a traditional supporting theme') + '). We read these together rather than treating everyone born in the same year alike. The month symbol offers a second question to test against your real work habits.',
+        'In Korean Saju, the main symbol for your birth day is ' + day.pillar.stem + ' (' + self.name + '). Its traditional image offers a way to think about familiar habits. '
+          + self.approach + ' Keep what you recognise; it does not have to describe every part of you.',
+        'Your birth-day symbol is ' + self.name + ', while the main symbol for your birth month is ' + month.pillar.stem + ' (' + (monthGod?.title ?? 'a traditional supporting theme') + '). We read these together rather than treating everyone born in the same year alike. The month comparison gives you another question to ask about a real working day.',
         fiveElementReading,
-        'Your personal reflection: ' + self.caution + ' Notice whether this feels familiar in a recent decision. The chart offers a symbolic starting point, not knowledge of your personal history.',
-        'One small experiment: ' + self.practice + ' Try it for a week, then decide whether it genuinely helps.',
+        'Something you might recognise: ' + self.caution + ' Notice whether this feels familiar in a recent decision. The chart offers a symbolic starting point, not knowledge of your personal history.',
+        'Something you could try: ' + self.practice + ' Try it during an ordinary week and see whether it makes anything easier.',
       ],
     },
     {
       heading: '02 · Career: Where You Can Thrive',
       paragraphs: [
         describeGod(month.stemSipsin, 'month'),
-        'Compare possible roles by the work environment, not just the title: autonomy, pace, expectations and the kind of progress you can see. This gives you a practical way to test whether the traditional work theme fits.',
+        'Think about a normal day in the job, not only the title. Would you know what was expected, have time to do it and be able to make the choices it needs?',
         'The birth-month ' + month.pillar.stem + ' symbol suggests ' + (monthGod?.lens ?? 'practical work habits') + '. Your ' + self.name + ' day stem adds a different perspective: ' + self.approach + ' Compare both with your real work experience rather than treating them as a guaranteed career outcome.',
       ],
     },
@@ -201,7 +201,7 @@ export function buildEnglishReading(result: SajuResult, asOfYear = new Date().ge
         'A useful money habit is to write down one specific goal and its actual cost. Consider what you can afford each month before taking on a new commitment.',
         'The symbol connected with your birth month emphasizes '
           + (monthGod?.title.toLowerCase() ?? 'your everyday choices')
-          + '. When considering a purchase, business idea or career change, compare the up-front cost, ongoing obligations and what you would give up. This is a practical decision tool, not a forecast of profit.',
+          + ". When considering a purchase, business idea or career change, compare the up-front cost, things you have already agreed to do and what you would give up. This is a practical decision tool, not a forecast of profit.",
       ],
     },
     {

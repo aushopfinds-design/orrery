@@ -1,6 +1,6 @@
 # FATE KEY — everyday English editorial revision
 Date: 2026-10-21 (Australia/Sydney)
-Status: first implementation pass completed in the report generators; see validation below. Further reader review is required before treating the copy as a finished paid edition.
+Status: r4 full-copy editing pass implemented across the report sources; see the r4 validation below. Independent reader feedback is still separate from automated verification.
 Baseline inspected: feature/english-saju-report-20261013 at 83b7da6f7b1b4efb2c1eda5d21aff3b22058e3e7.
 Priority: finish report language before further payment work. Live activation and operating-domain changes remain prohibited.
 
@@ -202,3 +202,27 @@ This is a substantive first narrative pass, not a claim that every sentence in a
 - Browser connectivity recovered in this session. Opened the deployed homepage, clicked View Sample Report and the Work That Suits You chapter link. The rendered sample shows edition r3 and the new scene, behaviour paragraph, chart explanation and supplementary example in the intended order. This is desktop browser evidence, not an actual-phone or independent-reader check.
 - The inspected browser error entries came from the Chrome extension's metadata sender (chrome-extension URL), not from the report application. This limited log inspection is not an assertion that the application can never error.
 - Production remains deployment dpl_E5zEudKnnYKVK345XryjxcYQJFRG at commit 69f00d4cc4b018a7757930709a6db0df60acab2d. No live activation or operating-domain mutation was performed.
+
+
+## r4 — everyday wording throughout the report sources
+
+The follow-up request was to revise the wording beyond the chapter openings. This pass edits the actual report copy and shared interpretation libraries, not a runtime word-substitution layer.
+
+- Reauthored all 50 day-symbol/month-family connection passages as ordinary sentences.
+- Reauthored all 25 solo focus routes (the action, difficulty and review question) and all 15 pair conversation routes. Reworded their headings so they read as recognisable choices rather than management instructions.
+- Revised main-report paragraphs, summaries, work examples, business descriptions, relationship explanations, everyday-life guidance, annual and monthly copy, longer-period passages, situation plans and supplementary questions.
+- Simplified shared work descriptions and explanations of how birth-day, month, year and period symbols are compared. The original calculated relationships, money-marker branches, annual/monthly dates and exact technical source notes remain available.
+- Made the ten personal-need fragments neutral so the two-person report does not switch from describing Person A or B into addressing an unrelated “you”. Checked the grammar where fragments are inserted into sentences.
+- Kept the previous scene-first order and chapter-specific choices. Existing tests still check meaningful differences across charts, separate subjects, no identical chapter guidance and exclusion of a guessed birth hour.
+- Newly issued reports use edition 2026.10-r4. Existing paid artifacts remain unchanged.
+- Updated one old editorial test that depended on the literal label “Your personal reflection”. It now checks the actual selected caution in the personality passage and its absence from the career passage, retaining the repetition check without freezing the label.
+
+The source rewrite does not mean an independent English reader has approved the copy. No such review is claimed. Calculation labels and technical references are deliberately preserved where they identify evidence; they are not replaced by invented interpretations.
+
+### r4 verification
+
+- Full repository suite: 36 files, **476 tests passed**, exit 0, 28.93 seconds. The new check covers malformed sentence fragments introduced by copy composition as well as the existing chart/subject/unknown-time checks.
+- TypeScript build check, report-source ESLint, Vite production build and generation of 21 public content paths passed.
+- Seven freshly generated purchase-report PDFs contain edition r4: Complete 18 pages, Compatibility 18, Year Ahead 24, Career 15, Business 16, Everyday Balance 13, Bundle 56.
+- Text bounds were checked on every PDF page. Representative Career and Compatibility pages were rendered and read after the final copy change. No independent human reader review is claimed.
+- No live payment activation, operating-domain change or modification of an already issued buyer artifact.

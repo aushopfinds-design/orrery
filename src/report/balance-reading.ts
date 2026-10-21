@@ -21,10 +21,10 @@ export function buildBalanceReading(result: SajuResult, referenceYear = new Date
     chapters: [
       chapter('everyday-pace', 'Your Everyday Pace', "Imagine reaching the end of an ordinary day and realising that you answered everyone else but never started the thing you meant to do.", [
         "Being helpful can feel natural in the moment. The frustration may only arrive later, when you notice how little of the day you chose for yourself.",
-        `Your starting theme is **${c.personal.focus}**. The image behind it, ${c.personal.image}, can help you describe a familiar habit without treating the habit as a fixed identity.`,
+        `The idea taken from your birth-day symbol is **${c.personal.focus}**. The image behind it, ${c.personal.image}, can help you describe a familiar habit without treating the habit as a fixed identity.`,
         c.personal.pressure,
         `A useful condition for you is **${c.personal.need}**. Look at one ordinary day and ask where that condition appears, where it is missing and which small change is possible.`,
-        'Try a brief **look back at one day**: what did you choose, what interrupted you and what did you take on without being asked? One sentence for each is enough. Look for the moment a useful task turned into an automatic duty.',
+        "Think back over yesterday. What did you choose to do, what interrupted you and what did you take on without anyone asking? One sentence for each is enough. Look for the moment a useful task turned into an automatic duty.",
         'For a smaller response, try: **“I can help with this part. The other part will need to wait or be shared.”** Choose an ordinary task where that answer is realistic, and notice what changes.',
       ], [pillarFact(result, 1)], c.personal.practice, c.personal, 'personality', everydayExample(result, 'wellbeing')),
       chapter('visible-elements', 'Five Elements as a Habit Picture', "Imagine a small change to the day upsetting you more than you expected, while someone else seems happy to improvise.", [
@@ -37,28 +37,28 @@ export function buildBalanceReading(result: SajuResult, referenceYear = new Date
       ], c.available.map(item => pillarFact(result, item.index)), 'Choose one familiar response. Try another approach to a small task and record whether it helps.', { keepClose: ['Curiosity about a habit you already recognise.', 'A small experiment you can stop or adjust.'], watchFor: ['Turning an element count into a judgment of your health.', 'Treating a zero as a defect that needs a purchase or a remedy.'] }, 'balance'),
       chapter('workload-rhythm', 'A Routine with Clear Edges', "Imagine sitting down for a break, spotting a small job and getting up again. There always seems to be another job after it.", [
         "Noticing what needs doing can keep things running smoothly. It can also make stopping difficult when seeing an unfinished task feels the same as agreeing to do it.",
-        `Your working theme is **${c.work.theme}**. A helpful setting has ${c.work.setting}. Check whether your daily routine offers that condition in practice.`,
-        `The pressure to watch is **${c.work.friction}**. It may be easier to address one unclear duty than to describe the whole week as too much.`,
+        `The birth-month part of this reading explores **${c.work.theme}**. It suggests you may do better with ${c.work.setting}. Think about where that is missing from the day you actually have.`,
+        `You may find it difficult when you are **${c.work.friction}**. It may be easier to address one unclear duty than to describe the whole week as too much.`,
         c.work.scene,
-        'Choose one recurring task at home or work. Write its **start, stopping point and owner**. Add a small transition after it, such as putting the materials away before opening another task. The aim is a visible ending rather than another ideal routine to maintain.',
-        'Leave a point at which the work can be reviewed rather than endlessly carried forward. **A clear edge helps you see what is unfinished and what can wait.** It does not make every delay a personal failure.',
+        "Choose one recurring task at home or work. Write its **start, stopping point and owner**. Add a small transition after it, such as putting the materials away before opening another task. The point is to let the task end, not give yourself another routine you must keep perfectly.",
+        "Choose a time to stop and look at what is left, rather than carrying the task into every spare moment. **Once the job has an ending, it is easier to see which part can wait until tomorrow.** It does not make every delay a personal failure.",
       ], [pillarFact(result, 2)], c.work.next, c.work, 'career'),
       chapter('support-and-space', 'Support, Conversation and Your Own Space', "Imagine telling someone you have had a difficult day and receiving advice when you mainly wanted a little company.", [
         "Their answer may be kind while still missing what you needed. Naming the help you want can feel awkward at first, but it gives the other person a better chance to understand.",
-        `Your close-conversation theme values **${c.relationship.need}**. Your own starting style also needs **${c.personal.need}**. Try naming both parts in an ordinary conversation.`,
+        `Your close-conversation theme values **${c.relationship.need}**. You may also appreciate **${c.personal.need}**. Try naming both parts in an ordinary conversation.`,
         `You could say: **“${c.relationship.words}”** Give the other person a chance to say what they can offer too.`,
-        `A wider-group theme of **${c.group.theme}** may help you reflect on the role you take around other people. That role does not need to fill every private moment.`,
+        `Comparing your birth-year symbol with your birth-day symbol brings up **${c.group.theme}**. See whether that fits a role people often give you. You do not have to keep being that person during your time off.`,
         'For example, being the person who notices an unfinished task can become a habit of silently taking it over. Ask who will handle the work before assuming it belongs to you.',
         'Keep a distinction between requesting support and expecting someone to guess. **Name one need and one clear next step.** Let the answer tell you whether another form of help is needed.',
       ], [pillarFact(result, 1), pillarFact(result, 3)], 'Tell someone one kind of support you would welcome, and one task or choice you want to keep for yourself.', c.relationship, 'love'),
       chapter('balance-week', 'A Seven-Day Routine Experiment', "Imagine trying a new routine on a busy Monday, missing it by Tuesday and deciding you have failed again.", [
         "A plan that works only on a quiet day may ask too much of an ordinary week. Trying a smaller version can tell you more than judging yourself for not keeping the original one.",
-        `For the first two days, observe one situation connected with **${c.personal.focus}**. Note the task, the interruption and the response you chose. You are collecting an example, not grading the whole day.`,
+        `For the first two days, observe one situation connected with **${c.personal.focus}**. Note the task, the interruption and the response you chose. You are trying to notice what happened, not give the whole day a score.`,
         `In the middle of the week, try one change that makes room for **${c.personal.need}**. Choose a clear stopping point, a smaller promise or a task to share. Keep the change small enough to compare with your first observations.`,
         `Before the week ends, try a conversation that makes room for **${c.relationship.need}**. Ask for one specific kind of help and let the other person say what they can offer.`,
-        'At the end of seven days, note one helpful change, one part that did not fit and one adjustment for the next week. A small observation is enough; you do not need a perfect record.',
-        'Use the chart images only where they help you ask a useful question. **Keep what works in your actual life.** If a concern involves your health or safety, seek suitable real-world support rather than relying on this report.',
-      ], [pillarFact(result, 1), pillarFact(result, 2)], 'Book a short review in seven days. Bring one observation and one change you want to keep.', { keepClose: ['One ordinary example from before and after the change.', 'A smaller version of the habit that works on a busy day.'], watchFor: ['Adding several new routine rules after one difficult day.', 'Judging the whole experiment by a perfect record instead of an easier task.'] }, 'next-moves'),
+        "At the end of seven days, note one helpful change, one part that did not fit and one adjustment for the next week. A few words about what happened are enough. You do not need to keep a perfect diary.",
+        "Keep the parts of the reading that help you understand something in your own life. **Keep what works in your actual life.** If a concern involves your health or safety, seek suitable real-world support rather than relying on this report.",
+      ], [pillarFact(result, 1), pillarFact(result, 2)], 'At the end of the week, ask what felt easier and whether you want to keep the change.', { keepClose: ['One ordinary example from before and after the change.', 'A smaller version of the habit that works on a busy day.'], watchFor: ['Adding several new routine rules after one difficult day.', 'Judging the whole experiment by a perfect record instead of an easier task.'] }, 'next-moves'),
     ], months: [], methodNotes: [...commonMethod(result, referenceYear), 'Visible element counts are unweighted counts of the supplied stems and branches. They do not assess physical health, mental health or the strength of the full chart.', 'This report contains no diagnosis, treatment, symptom assessment, health prediction or recommendation for a medicine, supplement or remedy.'],
   })
 }

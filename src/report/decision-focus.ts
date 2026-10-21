@@ -20,90 +20,190 @@ const ORDER: Family[] = ['ownership', 'making', 'resources', 'responsibility', '
 const pairKey = (a: string, b: string, order: readonly string[]) => [a, b].sort((x, y) => order.indexOf(x) - order.indexOf(y)).join('/')
 
 const BRIDGES: Record<string, { title: string; tension: string }> = {
-  'ownership/ownership': { title: 'Own a clear part, and leave room for other methods', tension: 'A shared wish for independence still needs an agreement about where each person can decide.' },
-  'ownership/making': { title: 'Keep your direction and show an early version', tension: 'Control of the method can protect an idea, but feedback needs something another person can actually see.' },
-  'ownership/resources': { title: 'Choose the commitment that leaves room for your own goal', tension: 'An attractive offer can use the time you wanted for an independent priority. Check what would have to move.' },
-  'ownership/responsibility': { title: 'Agree the result, then clarify your freedom to act', tension: 'You may be happy to answer for the result while still wanting a say in how to do the work.' },
-  'ownership/learning': { title: 'Use support without handing over the whole decision', tension: 'Advice can widen your options while the next choice remains yours. Decide which question you need help answering.' },
-  'making/making': { title: 'Finish a useful version before improving every detail', tension: 'A strong interest in making something useful can still need a finishing rule. Feedback is easier to use on a version that exists.' },
-  'making/resources': { title: 'Check what a useful result really takes to deliver', tension: 'Making the thing may be enjoyable; the preparation and extra replies can take longer than you expect.' },
-  'making/responsibility': { title: 'Make the standard clear enough to test a version', tension: 'You may want to try a different approach and still need to know when the result is finished.' },
-  'making/learning': { title: 'Let a small attempt tell you what to learn next', tension: 'More understanding can improve a result, but a short attempt may reveal the missing knowledge faster than more general preparation.' },
-  'resources/resources': { title: 'Choose a promise you can still keep after the first step', tension: 'New openings and existing commitments share the same limited time. Compare the ongoing work as carefully as the appealing start.' },
-  'resources/responsibility': { title: 'Match the promise with the time and authority it needs', tension: 'You may want to say yes before knowing whether you will have enough time or help.' },
-  'resources/learning': { title: 'Give the next investment of effort a clear purpose', tension: 'A tool, course or new idea is useful when it answers a question in the current plan. Name that question before adding more preparation.' },
-  'responsibility/responsibility': { title: 'Separate what is required from what you keep adding', tension: 'A clear duty can quietly grow when every extra request seems equally urgent. Revisit the original agreement before extending it.' },
-  'responsibility/learning': { title: 'Ask for the support that lets you carry the responsibility', tension: 'Being accountable does not require already knowing everything. Identify the missing explanation or practice before promising a result.' },
-  'learning/learning': { title: 'Choose a question whose answer you will actually use', tension: 'A thoughtful search can keep opening new questions. Give one question a practical use and a point at which to try the answer.' },
+  'ownership/ownership': { title: 'Know which choices are yours', tension: "You may both want a say. It helps to know which choices you are making together." },
+  'ownership/making': { title: 'Let someone try what you have made', tension: "You may want to do it your own way, while still needing someone else to try the result." },
+  'ownership/resources': { title: 'Leave time for your own plans', tension: "A tempting offer may use the time you wanted for your own plan. Decide what would have to wait." },
+  'ownership/responsibility': { title: 'Know what is needed and what you can decide', tension: 'You may be happy to answer for the result while still wanting a say in how to do the work.' },
+  'ownership/learning': { title: 'Ask for help without giving up your choice', tension: "Advice can help without deciding for you. Ask about the part you are unsure of." },
+  'making/making': { title: 'Let this version be finished', tension: "You may enjoy improving it and still struggle to send it. Let someone try the version you have." },
+  'making/resources': { title: 'Count the work around the main job', tension: 'Making the thing may be enjoyable; the preparation and extra replies can take longer than you expect.' },
+  'making/responsibility': { title: 'Ask what the finished work needs to do', tension: 'You may want to try a different approach and still need to know when the result is finished.' },
+  'making/learning': { title: 'Try it and see where you need help', tension: "Learning more may help, but trying it once can show exactly what you still need to understand." },
+  'resources/resources': { title: 'Look beyond the exciting beginning', tension: "The new plan has to fit beside things you already promised. Check what it will need after the exciting start." },
+  'resources/responsibility': { title: 'Check that you have the time and help', tension: 'You may want to say yes before knowing whether you will have enough time or help.' },
+  'resources/learning': { title: 'Know what you want to use it for', tension: 'Before getting another tool or course, ask what you need it to help you do.' },
+  'responsibility/responsibility': { title: 'Notice when you are doing more than was asked', tension: "A job can grow when every extra request sounds urgent. Check what you first agreed before adding more." },
+  'responsibility/learning': { title: 'You can be responsible and still ask for help', tension: "Being responsible does not mean knowing everything already. Ask for the explanation or practice you need." },
+  'learning/learning': { title: 'Use an answer before looking for another', tension: "Looking for an answer can keep giving you more things to read. Choose a question you need answered, then try the answer before searching again." },
 }
 
 type Route = { action: string; pause: string; review: string }
 const ROUTES: Record<SoloKind, Record<Family, Route>> = {
-  career: {
-    ownership: { action: 'Choose one real task. Agree which result is yours and which decisions you can make without asking again.', pause: 'The role holds you accountable while someone else controls every practical decision.', review: 'Could you get on with the task, or did you still need permission, help or more time?' },
-    making: { action: 'Choose a small piece of actual work. Show a usable version and ask what it must do to be accepted.', pause: 'Another revision is requested without explaining what is wrong with the current result.', review: 'Which observation improved the work, and which change was only a personal preference?' },
-    resources: { action: 'Take one real offer or added duty. Put confirmed pay beside expected hours, extra work and necessary costs.', pause: 'An attractive title or payment leaves the hours, follow-up or added duties unclear.', review: 'What did the work require in practice, and does the confirmed agreement still cover it?' },
-    responsibility: { action: 'Ask the person setting the task for its priority, what the finished work must include and the support available.', pause: 'You are expected to deliver a result without a clear priority, useful support or permission to decide.', review: 'Did the agreed standard make finishing easier, or did the requirement change after the work began?' },
-    learning: { action: 'Pick a skill the current role actually needs. Use it in one small task before choosing more training.', pause: 'More preparation keeps replacing the chance to try the skill with useful feedback.', review: 'What could you do after the attempt that you could not show before it?' },
+  "career": {
+    "ownership": {
+      "action": "Think of a job you are doing now. Ask which choices are yours to make and which ones you need to check with someone else.",
+      "pause": "You are expected to answer for the result, but cannot make the decisions needed to finish it.",
+      "review": "Could you get on with the job after that conversation, or were you still waiting for permission?"
+    },
+    "making": {
+      "action": "Show someone a piece of work they can actually try. Ask what helped and where they got stuck.",
+      "pause": "You are being asked to change it again without being told what is not working.",
+      "review": "Which part of their answer gave you something useful to change?"
+    },
+    "resources": {
+      "action": "Look at an actual job offer. Put the pay beside the hours, travel and extra jobs you would be agreeing to.",
+      "pause": "The pay sounds good, but nobody can explain what a normal week would involve.",
+      "review": "Did the work take the time you expected, or were there jobs nobody had mentioned?"
+    },
+    "responsibility": {
+      "action": "When another task arrives, ask what should come first and what can wait. Say what help you would need to finish it.",
+      "pause": "Everything is called urgent and nobody is deciding which deadline can move.",
+      "review": "Did you know what to finish first, or did the priorities keep changing while you worked?"
+    },
+    "learning": {
+      "action": "Try a skill on a real task before signing up for more training. Ask someone who knows the job to look at the result.",
+      "pause": "You keep preparing but never get a chance to use what you have learned.",
+      "review": "What could you do afterwards that you could not do before?"
+    }
   },
-  business: {
-    ownership: { action: 'Choose one customer promise. Name the delivery owner and the changes that need a shared decision.', pause: 'A delivery depends on several people but nobody owns the point when someone else takes over or the final answer.', review: 'Could the customer tell who was responsible, and did the point when someone else takes over happen as agreed?' },
-    making: { action: 'Make the smallest usable example of one offer. Ask a willing tester to try the actual result.', pause: 'New features keep being added before anyone has tried the central promise.', review: 'What did the tester use without help, and where did they stop or need an explanation?' },
-    resources: { action: 'Trial one delivery. Record preparation, materials, customer messages, revisions and follow-up before expanding it.', pause: 'The customer promise grows while its delivery time, costs or included revisions stay unclear.', review: 'Which part used more time or money than expected, and what must the next brief make explicit?' },
-    responsibility: { action: 'Write the result, deadline, included changes and customer input needed for one trial delivery.', pause: 'You are accepting responsibility for an outcome that also depends on unconfirmed customer input.', review: 'Did the written brief help both sides recognise completion, or did it leave a different expectation?' },
-    learning: { action: 'Name one uncertainty about a customer problem. Test it with a small demonstration or a direct question.', pause: 'Research about a possible audience keeps replacing contact with a willing person who has the problem.', review: 'Which answer changed the offer, and which assumption still has no observation behind it?' },
+  "business": {
+    "ownership": {
+      "action": "Talk through an actual order with anyone helping you. Agree who finishes the work and who answers if the customer asks for a change.",
+      "pause": "Several people are involved, but each thinks someone else will answer the customer.",
+      "review": "Did the customer know who to contact, and did that person have what they needed to help?"
+    },
+    "making": {
+      "action": "Let a willing tester use a simple version of the offer. Watch where they need help instead of explaining every part in advance.",
+      "pause": "You are adding features before anyone has tried the thing you first promised.",
+      "review": "What could the tester do on their own, and where did they need you to step in?"
+    },
+    "resources": {
+      "action": "Follow a customer order from the first message to the last reply. Count the preparation and changes as well as the time spent making it.",
+      "pause": "The customer keeps asking for more while the price and deadline stay the same.",
+      "review": "Which part took longer or cost more than you expected?"
+    },
+    "responsibility": {
+      "action": "Before starting an order, send a short message saying what is included, when it will be ready and what you need from the customer.",
+      "pause": "You have promised a deadline but are still waiting for something only the customer can provide.",
+      "review": "Did you both recognise when the job was finished, or were you expecting different things?"
+    },
+    "learning": {
+      "action": "Ask someone who might use the offer how they handle the problem now. Let them try a small example before you buy another tool.",
+      "pause": "You know plenty about the possible audience but have not spoken to anyone who actually has the problem.",
+      "review": "Which answer changed what you would offer, and what are you still guessing about?"
+    }
   },
-  wellbeing: {
-    ownership: { action: 'Choose one ordinary part of the day you want to decide for yourself. Tell the people affected where that boundary begins.', pause: 'A request removes the only time you had reserved for your own ordinary priority.', review: 'Did the protected choice make the day easier to manage, and what still needs to be shared?' },
-    making: { action: 'Choose one recurring task. Decide what a usable finish looks like and stop at that point once.', pause: 'A useful task keeps turning into another round of improvements after its purpose has been met.', review: 'Was the simpler finish enough, and what happened to the time you kept?' },
-    resources: { action: 'Look at one recurring promise. Count the preparation and follow-up as well as the task itself.', pause: 'You keep renewing a small promise without looking at what it adds to an ordinary week.', review: 'Was the full commitment manageable on a normal day, rather than only on a good one?' },
-    responsibility: { action: 'Name the owner, stopping point and next handover for one recurring duty at home or work.', pause: 'An unassigned task automatically becomes yours whenever you notice it.', review: 'Did the task stay with its agreed owner, or did the work quietly return to you?' },
-    learning: { action: 'Observe one familiar situation, then try one small change. Use that example before collecting more routine advice.', pause: 'Reading about a better routine becomes another task while the ordinary problem stays untested.', review: 'Which change was easy enough to repeat without needing an ideal day?' },
+  "wellbeing": {
+    "ownership": {
+      "action": "Keep a little time for something you want to do. Tell the people affected when you will be available again.",
+      "pause": "Another request would take the only time you had left for your own plans.",
+      "review": "Did having that time make the day feel more like your own?"
+    },
+    "making": {
+      "action": "Before beginning a familiar task, decide what it needs to do. When it does that, try leaving the smaller improvements for another day.",
+      "pause": "You are still improving something after it has already done the job you needed.",
+      "review": "Was the simpler version enough, and what did you do with the time you kept?"
+    },
+    "resources": {
+      "action": "Look at a favour you keep doing. Include the reminders, getting ready and clearing up when you think about how much time it takes.",
+      "pause": "You keep agreeing because each request sounds small, although the week is already full.",
+      "review": "Was it manageable on an ordinary busy day, or only when everything went well?"
+    },
+    "responsibility": {
+      "action": "For a regular task at home or work, agree who is doing it and when it can be left until tomorrow.",
+      "pause": "A job becomes yours every time you happen to notice it first.",
+      "review": "Did the task stay with the person who agreed to do it, or quietly come back to you?"
+    },
+    "learning": {
+      "action": "Try changing a small part of a familiar routine. Notice what happens before looking for another set of tips.",
+      "pause": "Reading about a better routine has become another job while the original problem stays the same.",
+      "review": "Was the change easy enough to repeat when the day was busy?"
+    }
   },
-  year: {
-    ownership: { action: 'Choose one personal plan for the year. Mark the decisions you want to own and the ones that involve someone else.', pause: 'A yearly aim assumes that another person has agreed to the same pace or priority.', review: 'What did you choose for yourself, and which part still needs a shared agreement?' },
-    making: { action: 'Choose one annual intention. Turn it into a small result you can finish and review this month.', pause: 'The annual plan keeps gaining goals while the first result stays unfinished.', review: 'What exists now that did not exist before the attempt, and what is worth trying next?' },
-    resources: { action: 'Review one recurring commitment before adding a new yearly promise. Include time, money and the work around it.', pause: 'A new plan needs resources already promised elsewhere, with no decision about what will move.', review: 'Which commitment still earns a place in the plan through its actual use or value to you?' },
-    responsibility: { action: 'Choose one responsibility that matters this year. Agree its limit and a review date with anyone else involved.', pause: 'Every new request becomes a yearly obligation without a limit or a conversation about support.', review: 'Was the responsibility still fair and workable after the circumstances changed?' },
-    learning: { action: 'Choose one thing you want to understand this year. Plan a small use for it before expanding the learning goal.', pause: 'Another source or plan delays a simple attempt you already have enough information to make.', review: 'Which idea helped with an actual choice, and which question can wait?' },
+  "year": {
+    "ownership": {
+      "action": "Look at a plan you have for the year. Which parts are your choice, and which would need someone else to agree too?",
+      "pause": "Your plan assumes another person wants the same pace or has the same time available.",
+      "review": "Which part did you choose for yourself, and which part still needs a conversation?"
+    },
+    "making": {
+      "action": "Take something you want to do this year and make the first version small enough to finish this month.",
+      "pause": "The plan keeps getting bigger while the first thing you wanted to make is still unfinished.",
+      "review": "What do you have now that you did not have before you tried?"
+    },
+    "resources": {
+      "action": "Before adding another yearly plan, look at the money and time you have already promised elsewhere. Decide what would need to change.",
+      "pause": "The new idea needs time or money already being used for something you still want to keep.",
+      "review": "Which plans still matter enough to keep giving them space?"
+    },
+    "responsibility": {
+      "action": "Talk about a responsibility you expect to carry this year. Agree what it includes and when you will look at it again.",
+      "pause": "A new request is becoming a long-term job before anyone has asked what help you would need.",
+      "review": "Did the arrangement still work after your circumstances changed?"
+    },
+    "learning": {
+      "action": "Think of something you want to learn this year. Give yourself a chance to use it before deciding you need another course.",
+      "pause": "Looking for another source keeps delaying something you already know enough to try.",
+      "review": "Which idea helped with an actual decision, and which question can wait?"
+    }
   },
-  complete: {
-    ownership: { action: 'Choose one decision in your current life. Name what you want to own and what genuinely needs another person’s agreement.', pause: 'Keeping control of every detail makes it harder to hear a useful alternative.', review: 'Did you protect the goal while allowing a different way to reach it?' },
-    making: { action: 'Choose one useful thing you have been improving. Share a small finished version with someone who can use it.', pause: 'Another private revision changes little about what the result can actually do.', review: 'What did another person’s use reveal that checking alone did not?' },
-    resources: { action: 'Choose one appealing invitation, purchase or promise. Write what it would add to your ordinary week.', pause: 'The appealing first step hides a recurring commitment you have not chosen deliberately.', review: 'Did the choice support something you value enough to keep giving it time?' },
-    responsibility: { action: 'Choose one duty you keep carrying. Clarify what you agreed to do and which part needs a new conversation.', pause: 'Reliability is being measured by how much extra work you absorb without asking.', review: 'Did the clearer agreement protect the result as well as your available time?' },
-    learning: { action: 'Choose one question that matters now. Try the best answer you already have in a small, reversible way.', pause: 'More understanding has become a condition for taking any next step at all.', review: 'What did the attempt clarify, and what genuinely needs more information?' },
-  },
+  "complete": {
+    "ownership": {
+      "action": "Think about a decision that matters to you now. Say what you want to choose yourself and what you need to decide with someone else.",
+      "pause": "Keeping control of every detail is making it hard to hear another useful way forward.",
+      "review": "Could you keep what mattered to you while allowing a different way to get there?"
+    },
+    "making": {
+      "action": "Let someone use a version of something you have been working on. Ask what it helped them do before polishing another detail.",
+      "pause": "Another private revision would change very little about what the result can do.",
+      "review": "What did you learn from someone using it that you did not notice by yourself?"
+    },
+    "resources": {
+      "action": "Before accepting a tempting invitation or offer, picture an ordinary week after you have said yes. Where would it fit?",
+      "pause": "The exciting beginning is hiding something you would have to keep doing every week.",
+      "review": "Was it something you still wanted to give time to after the first excitement passed?"
+    },
+    "responsibility": {
+      "action": "Look at a duty you keep taking on. What did you first agree to do, and which extra parts have appeared since?",
+      "pause": "Being reliable has started to mean accepting more work without being asked what you can manage.",
+      "review": "Did talking about it help you keep the promise without carrying every extra job too?"
+    },
+    "learning": {
+      "action": "Try the best answer you already have on something small. You can change your mind after seeing how it goes.",
+      "pause": "You are waiting to understand everything before letting yourself take any step at all.",
+      "review": "What became clearer when you tried, and what do you still need to find out?"
+    }
+  }
 }
 
 const HEADLINES: Record<Exclude<SoloKind, 'complete'>, Record<Family, string>> = {
   career: {
-    ownership: 'Choose work with clear ownership and room to decide',
-    making: 'Let a finished example show the skill you offer',
-    resources: 'See the whole commitment behind the pay',
-    responsibility: 'Match the job’s standard with the support to meet it',
-    learning: 'Choose learning you can put to work',
+    ownership: 'Look for a job where you can get on with the work',
+    making: 'Show what you can do',
+    resources: 'Look at the week behind the pay figure',
+    responsibility: 'Ask what is expected and who can help',
+    learning: 'Learn something you will actually use',
   },
   business: {
-    ownership: 'Give each customer promise a clear owner',
-    making: 'Put one usable offer in front of a willing tester',
-    resources: 'Count one delivery before expanding the offer',
-    responsibility: 'Make the customer promise clear enough to deliver',
-    learning: 'Let a customer question shape the next experiment',
+    ownership: 'Make sure someone is answering the customer',
+    making: 'Let someone try the thing you want to sell',
+    resources: 'Find out what an order really takes',
+    responsibility: 'Say what the customer will receive',
+    learning: 'Start with what the customer needs',
   },
   wellbeing: {
-    ownership: 'Leave one ordinary choice in your own hands',
-    making: 'Give a useful task a simpler finishing point',
-    resources: 'Make a recurring promise fit an ordinary week',
-    responsibility: 'Stop the unassigned duty from becoming automatic',
-    learning: 'Try one small change before adding another routine rule',
+    ownership: 'Keep a little of the day for yourself',
+    making: 'Let a useful job be done',
+    resources: "See how the favour fits a normal week",
+    responsibility: 'Noticing a job does not make it yours',
+    learning: 'Try a change before collecting more advice',
   },
   year: {
-    ownership: 'Choose what you want to own in the year ahead',
-    making: 'Turn an annual intention into a first result',
-    resources: 'Make room before adding another yearly promise',
-    responsibility: 'Give this year’s responsibilities a clear limit',
-    learning: 'Give this year’s learning a practical use',
+    ownership: 'Decide which plans you want for yourself',
+    making: 'Make a start you can actually finish',
+    resources: 'See what would have to wait',
+    responsibility: 'Talk about what you are agreeing to',
+    learning: 'Use what you learn while you learn it',
   },
 }
 
@@ -121,7 +221,7 @@ export function buildDecisionFocus(kind: SoloKind, result: SajuResult, reference
   const scene = kind === 'career' || kind === 'business' ? workExample(result, kind).scene
     : kind === 'year' ? monthlySituation(primaryGod, secondaryGod).scene
     : everydayExample(result, kind === 'complete' ? 'personality' : 'wellbeing').scene
-  const themes = `This reading compares ${annual ? 'the year’s stem' : 'your birth-month stem'} with your birth-day stem: **${primary.theme}**. ${primaryGod === secondaryGod ? `${annual ? 'Your birth month' : 'The lower birth-month symbol'} repeats this idea.` : `${annual ? 'Your birth month' : 'The lower birth-month symbol'} adds **${secondary.theme}**.`}`
+  const themes = `This compares ${annual ? 'the year’s symbol' : 'your birth-month symbol'} with your birth-day symbol: **${primary.theme}**. ${primaryGod === secondaryGod ? `${annual ? 'Your birth month' : 'The lower birth-month symbol'} repeats this idea.` : `${annual ? 'Your birth month' : 'The lower birth-month symbol'} adds **${secondary.theme}**.`}`
   return {
     headline: kind === 'complete' ? bridge.title : HEADLINES[kind][a],
     synthesis: `${scene} ${bridge.tension} ${themes}`,
@@ -147,21 +247,96 @@ const CARE_STEP: Record<Care, string> = {
   listening: 'Say whether you want listening, ideas or practical help before describing the problem.',
 }
 const CONVERSATIONS: Record<string, { title: string; step: string; pause: string; review: string }> = {
-  'pause/pause': { title: 'Make the pause safe by agreeing how you will return', step: 'Both people write one sentence before talking. Agree who will reopen the conversation and when.', pause: 'Both people are waiting for the other to restart a conversation that has no return time.', review: 'Did the agreed return happen, and was there room for each person’s unfinished thought?' },
-  'pause/reliability': { title: 'Give thinking time a dependable next step', step: 'Agree a time to return to one conversation and one small action that can wait until both people have answered.', pause: 'A request for thinking time is treated as a broken promise, or a promise is used to demand an immediate answer.', review: 'Was the pause respected and the next action kept, without either person having to guess?' },
-  'pause/voice': { title: 'Make room to think and still give both preferences a voice', step: 'Each person names one preference. Leave the undecided part open until the agreed return time.', pause: 'The quicker answer becomes the final decision before the quieter person has had time to respond.', review: 'Did the later answer have a real chance to change the plan?' },
-  'pause/presence': { title: 'Make space feel clear, and closeness feel chosen', step: 'Agree a period apart and a specific way to reconnect afterwards. Check that both parts are welcome.', pause: 'Time apart has no explanation, or shared time is used as proof that someone cares.', review: 'Did the arrangement give useful space and a welcome return, rather than another obligation?' },
-  'pause/listening': { title: 'Let a feeling be heard without demanding an answer now', step: 'Hold one short conversation for listening only. Set another time for any decision that still needs thought.', pause: 'A feeling is being pushed toward a solution before the person is ready to choose one.', review: 'Could the person finish their thought, and is it clear which decision remains open?' },
-  'reliability/reliability': { title: 'Make the promise small enough for both people to keep', step: 'Each person chooses one action for the week. Say what a change of plan would need to look like.', pause: 'Both people assume their own routine is the obvious way to show care.', review: 'Which action actually felt supportive, and which expectation had never been said aloud?' },
-  'reliability/voice': { title: 'Keep the promise while leaving the method open to discussion', step: 'Agree one shared result. Let each person name a preferred way to reach it before dividing the work.', pause: 'A different preference is treated as refusal to follow through.', review: 'Was the agreed result kept, and did each person have a real say in the method?' },
-  'reliability/presence': { title: 'Turn care into a plan that includes together and apart', step: 'Choose one dependable shared moment and one separate plan. Say how you will discuss a change.', pause: 'Keeping every routine together leaves one person no room for an interest of their own.', review: 'Did the plan feel dependable without making every separate activity a problem?' },
-  'reliability/listening': { title: 'Hear the need before choosing the helpful action', step: 'First repeat the need in your own words. Then agree one action and when you will check whether it helped.', pause: 'Completing a practical task is being used to close a conversation the other person still needs to have.', review: 'Did the action answer the need that was actually expressed?' },
-  'voice/voice': { title: 'Let both preferences affect the shared decision', step: 'Each person names one important detail. Choose an option that preserves one detail for each person.', pause: 'The conversation is becoming a contest over whose preference is more reasonable.', review: 'Can each person point to a part of the plan that reflects their own answer?' },
-  'voice/presence': { title: 'Choose shared time without giving up a personal preference', step: 'Plan one shared activity and let each person choose a detail. Leave room for a separate interest too.', pause: 'Agreeing to everything is becoming the price of spending time together.', review: 'Was the shared time welcome to both people, and could either person say what they would change?' },
-  'voice/listening': { title: 'Hear the feeling, then make the request clear', step: 'Give each person a turn to describe the feeling and then make one specific request. Ask what the other understood.', pause: 'A kind response is being taken as an agreement to a request that was never clearly made.', review: 'Did both people agree to the same request, including the part either person could decline?' },
-  'presence/presence': { title: 'Choose closeness that leaves room for two separate lives', step: 'Each person chooses a shared moment and an independent plan for the week. Discuss both with equal interest.', pause: 'One person is cancelling an independent interest to avoid having to explain it.', review: 'Could both people enjoy closeness without having to give up the separate plan?' },
-  'presence/listening': { title: 'Ask what kind of company would help today', step: 'Offer company, a listening conversation or practical help. Let the person choose before making the plan.', pause: 'Being together is assumed to help when the person has asked for a different kind of support.', review: 'Did the time together match the support requested, and could the person ask for something else?' },
-  'listening/listening': { title: 'Make room for two stories before trying to solve either', step: 'Take one uninterrupted turn each. Before offering a solution, say back what you understood and ask whether it is right.', pause: 'Both people are preparing advice while the other is still speaking.', review: 'Did each person feel accurately heard, and which practical request still needs an answer?' },
+  "pause/pause": {
+    "title": "Take a break without losing the conversation",
+    "step": "If you both need a break, agree who will bring the conversation up again and when. You can each write down what you want the other to understand first.",
+    "pause": "Both of you are waiting for the other to speak, and neither knows when that will happen.",
+    "review": "Did you come back when you said you would, and could both people finish what they wanted to say?"
+  },
+  "pause/reliability": {
+    "title": "Say when you will be ready to talk",
+    "step": "One person can ask for thinking time while the other asks for a clear plan. Agree a time to talk and stick to it, even if part of the answer is still uncertain.",
+    "pause": "Time to think is starting to feel like being left without an answer.",
+    "review": "Did knowing when you would talk make the wait easier?"
+  },
+  "pause/voice": {
+    "title": "Give a quiet answer time to arrive",
+    "step": "Let each person say what they want without correcting the first answer. If someone is not ready, agree when to return rather than deciding for them.",
+    "pause": "The quicker answer is becoming the plan before the other person has had a turn.",
+    "review": "Could both people recognise their own wishes in what you decided?"
+  },
+  "pause/presence": {
+    "title": "Being quiet does not have to mean being distant",
+    "step": "Try saying, “I want to be with you, but I need a little time to think.” Agree whether quiet company or time alone would help, and when you will talk.",
+    "pause": "A request for quiet is being heard as a wish not to be together.",
+    "review": "Did the pause feel comfortable for both of you, or did something still need explaining?"
+  },
+  "pause/listening": {
+    "title": "Say a little now, and come back to the rest",
+    "step": "The quieter person can share what they know so far. The other can listen without filling in the gaps. Agree when to talk about anything still unfinished.",
+    "pause": "One person is guessing what the silence means instead of asking.",
+    "review": "Did you understand more after listening, without asking for an answer the person was not ready to give?"
+  },
+  "reliability/reliability": {
+    "title": "Let a small promise matter",
+    "step": "Agree to something you can both realistically do this week. Say how you will let each other know if the plan needs to change.",
+    "pause": "A change of plan is becoming proof that someone does not care.",
+    "review": "Were the promises kept, or were changes explained before someone was left waiting?"
+  },
+  "reliability/voice": {
+    "title": "Make a plan without deciding for each other",
+    "step": "Let each person name something that matters to them. Agree the parts you want to rely on, and leave room for a choice the other person would make differently.",
+    "pause": "Keeping the plan is starting to mean that one person never gets a say.",
+    "review": "Did the plan feel dependable while still leaving room for both people’s preferences?"
+  },
+  "reliability/presence": {
+    "title": "Plan time together and time for yourselves",
+    "step": "Choose some time you both want to spend together. Also talk about the separate plans each person wants to keep, rather than leaving them to be discovered later.",
+    "pause": "Doing something separately is being treated as breaking an agreement you never discussed.",
+    "review": "Could you count on the time together without feeling guilty about the time apart?"
+  },
+  "reliability/listening": {
+    "title": "Ask what would actually help",
+    "step": "Before doing something for the other person, say what you think they need and ask whether you have understood. Then agree what help they would welcome.",
+    "pause": "Finishing a practical job is being used to end a conversation the other person still needs.",
+    "review": "Did the help answer what they asked for, rather than what you assumed would be useful?"
+  },
+  "voice/voice": {
+    "title": "Let both wishes change the plan",
+    "step": "Each person can name a detail they care about. Look for a plan that includes something from both answers, rather than deciding whose wish is more sensible.",
+    "pause": "The conversation is turning into a contest about who has the better reason.",
+    "review": "Can each person name something in the plan that they actually chose?"
+  },
+  "voice/presence": {
+    "title": "Enjoy being together without agreeing to everything",
+    "step": "Choose something you both want to do, and let each person suggest a detail. You can be close without giving up every separate preference.",
+    "pause": "One person keeps saying yes because disagreeing feels like spoiling the time together.",
+    "review": "Did you both enjoy it, and could either person say what they would change next time?"
+  },
+  "voice/listening": {
+    "title": "Hear the feeling before answering the request",
+    "step": "Give each person time to explain how they feel. Then ask what they would like to happen. Listening kindly does not mean you have already agreed to everything being asked.",
+    "pause": "One person thinks a kind response was a yes to something the other person never meant to promise.",
+    "review": "Did you agree to the same thing, and was either person able to say no?"
+  },
+  "presence/presence": {
+    "title": "Stay close while keeping your own plans",
+    "step": "Make time for something you both enjoy this week. Give the separate things each person wants to do the same chance to be discussed.",
+    "pause": "One person is cancelling a personal plan because explaining it feels harder than giving it up.",
+    "review": "Could you enjoy being together without either person losing the separate plan they wanted?"
+  },
+  "presence/listening": {
+    "title": "Ask what kind of company feels right today",
+    "step": "Offer to listen, spend quiet time together or help with a practical task. Let the person say which one they want before making the plan.",
+    "pause": "Being together is being offered as the answer when the person has asked for something else.",
+    "review": "Did the time together give them the kind of support they wanted?"
+  },
+  "listening/listening": {
+    "title": "Hear both stories before trying to fix either",
+    "step": "Take turns talking without interruptions. Before giving advice, say what you think the other person meant and ask whether you have it right.",
+    "pause": "You are both preparing advice while the other person is still speaking.",
+    "review": "Did each person feel understood, and is there still something practical you need to decide?"
+  }
 }
 
 export function buildPairDecisionFocus(first: SajuResult, second: SajuResult): DecisionFocus {

@@ -20,7 +20,7 @@ import type { CalculationExplanation } from './calculation-notes.ts'
 import { buildDecisionFocus } from './decision-focus.ts'
 import type { DecisionFocus } from './decision-focus.ts'
 
-export const REPORT_EDITION = '2026.10-r3'
+export const REPORT_EDITION = '2026.10-r4'
 
 export interface ReadingConnection {
   id: string
@@ -198,9 +198,9 @@ export function buildCompleteReading(result: SajuResult, asOfYear = new Date().g
   const moneyOpening = hasSteady && hasOpportunity
     ? '**Keep a steady base while checking new opportunities.** Both money themes appear in the parts of your chart used here.'
     : hasSteady
-      ? '**Know what comes in, what goes out and what you have promised.** Your chart puts steady resources in focus.'
+      ? '**Know what comes in, what goes out and what you have promised.** The checked money symbols are used here to explore everyday costs and promises.'
       : hasOpportunity
-        ? '**An exciting offer needs a clear plan.** Your chart brings new opportunities and useful connections into focus.'
+        ? "**An exciting offer needs a clear plan.** Your chart brings trying new things and getting to know people into focus."
         : hiddenWealth.length
           ? '**Look at the whole picture before judging your money habits.** A money theme appears within a less visible part of your chart.'
           : '**Start with your real costs and commitments.** The parts checked here do not show a clear money theme.'
@@ -249,11 +249,11 @@ export function buildCompleteReading(result: SajuResult, asOfYear = new Date().g
       example: everydayExample(result, 'personality'),
       paragraphs: [
         personal.strength,
-        `Saju uses your birth day as the starting point for this part of the reading. Your symbol is **${self.name}**, pictured as ${personal.image}. That image points to ${personal.focus}.`,
-        `Your birth month adds a focus on **${work.theme}**. Think about how that fits with your need for ${personal.need}.`,
+        `This part starts with the main symbol for your birth day: **${self.name}**. Its traditional image is ${personal.image}. Here, that image is used to explore ${personal.focus}.`,
+        `Comparing your birth month with that day symbol adds **${work.theme}**. Does that idea leave room for ${personal.need} in the situation you are thinking about?`,
         personal.pressure, personal.balance,
       ],
-      evidence: [`Your day stem is ${day.pillar.stem} (${self.name}); this is the reference marker for the reading.`, fact(month, 2)],
+      evidence: [`Your birth-day symbol is ${day.pillar.stem} (${self.name}); this is the reference marker for the reading.`, fact(month, 2)],
       tryThis: personal.practice,
       guidance: { keepClose: personal.keepClose, watchFor: personal.watchFor },
     },
@@ -263,7 +263,7 @@ export function buildCompleteReading(result: SajuResult, asOfYear = new Date().g
       lead: workExample(result, 'career').scene,
       paragraphs: [
         'A task can be something you do well and still be frustrating in the wrong setting. Notice whether the difficult part is the work itself, the pace or the way other people respond to it.',
-        `Your birth month connects with your birth day through a theme of **${work.theme}**. In everyday work, that points to ${work.contribution}.`,
+        `Here, Saju compares the main symbol in your birth month with the one for your birth day. This reading connects that relationship with **${work.theme}**. At work, that may show up as ${work.contribution}.`,
         innerWork && month.branchSipsin !== month.stemSipsin
           ? `A second part of your birth month adds **${innerWork.theme}**. A role may feel easier when it leaves room for both ways of working.`
           : `This theme appears in both parts of your birth month. Look at the **daily routine**, as well as the job title.`,
@@ -288,7 +288,7 @@ export function buildCompleteReading(result: SajuResult, asOfYear = new Date().g
           : `Your work theme is **${work.theme}**. Check how your time and money support that work before taking on another cost.`,
         MONEY_PROMPTS[FAMILY[month.stemSipsin]],
         'For example, a low first payment may hide a regular cost. Write down **what you will pay each month** and how long it will continue.',
-        '**Check the full commitment.** Include the money, the time and any work someone expects from you. A clear agreement makes a small choice easier to understand.',
+        "**Check everything you would be agreeing to.** Include the money, the time and any work someone expects from you. A clear agreement makes a small choice easier to understand.",
       ],
       evidence: wealth.length ? wealth.map(item => `${item.location}: ${item.symbol} (${label(item.symbol)}).`) : hiddenWealth.length ? hiddenWealth : ['No 正財 or 偏財 appears in the checked top or main branch markers.', fact(month, 2)],
       tryThis: hasOpportunity ? 'Choose one appealing offer. Write down its full cost, the time it needs and what is still unknown.' : 'Choose one regular cost. Check whether it still fits your budget and what you need it for.',
@@ -300,14 +300,14 @@ export function buildCompleteReading(result: SajuResult, asOfYear = new Date().g
       lead: 'Imagine a plan for time together changing at the last minute. You are disappointed, but do not know whether to say so or let it go.',
       paragraphs: [
         'You might want to stay easy to be around while also wanting the other person to notice that the plan mattered. Naming the disappointment can be more helpful than expecting them to hear it in a quiet reply.',
-        `Saju uses the two parts of your birth day to explore close relationships. Your reading points to a need for **${relationship.need}**.`,
-        `Your own starting style also values **${personal.need}**. Notice whether you can say that clearly during an everyday conversation.`,
+        `The two parts of your birth-day symbol are used here to think about close relationships. This reading suggests you may appreciate **${relationship.need}**. See whether that fits what you wanted in a recent conversation.`,
+        `Your birth-day reading also points to **${personal.need}**. Notice whether you can say that clearly during an everyday conversation.`,
         `One habit to watch is **${relationship.friction}**. Try asking what the other person needs before deciding how to help.`,
         `You could say: **“${relationship.words}”** Give the other person time to answer.`,
         `For a small moment of connection, try this idea: **${CLOSENESS_PROMPTS[day.pillar.branch]}** Ask whether it fits what the other person enjoys, rather than assuming that your own preferred kind of care is theirs too.`,
         clashes.length
-          ? 'Your chart also shows two parts pulling in different directions. If that fits, notice when one person wants space while another wants an answer. **Agree when to talk again.**'
-          : 'The pairs checked here do not show a direct conflict in this part of the chart. You still need to talk about what each person wants.',
+          ? 'The checked chart includes a clash pattern, which this reading uses as an image for different needs. If that reminds you of a real conversation, ask what each person needs and when you could talk again.'
+          : 'No direct clash was found in the symbol pairs checked here. That is not a promise that you will always agree; you still need to ask what each person wants.',
         '**Ask about the real situation.** This reading is about one person. Understanding a partner also takes listening to them.',
       ],
       evidence: [`Day pillar ${day.pillar.ganzi}: stem ${day.pillar.stem} (${self.name}) with branch ${day.pillar.branch}.`, fact(day, 1, true), ...clashes],
@@ -319,13 +319,13 @@ export function buildCompleteReading(result: SajuResult, asOfYear = new Date().g
       lead: 'Imagine joining friends for a day out and finding yourself organising the transport, answering questions and checking that everyone is ready.',
       paragraphs: [
         'Being the person who keeps things moving can feel satisfying. It becomes less enjoyable when everyone assumes you will organise the next plan too, without asking whether you want to.',
-        `This part comes from how your birth year connects with your birth day. It points to **${groupWork.contribution}**. Think about the role you often take with friends or colleagues.`,
+        `Here, the symbol for your birth year is compared with the one for your birth day. This reading connects that relationship with **${groupWork.contribution}**. Is that a role you find yourself taking with friends or colleagues?`,
         year.stemSipsin === month.stemSipsin
-          ? 'Your group and work themes match. A role you take at work may follow you elsewhere. **Check whether you still want that role.**'
-          : `Your work theme is **${work.theme}**. Your group theme is different. You can offer a different kind of help in each setting.`,
+          ? 'The birth-year and birth-month comparisons lead to the same idea. A role you take at work may follow you into other parts of life. **Do you still want to be the person doing that job?**'
+          : `Your birth-month reading points instead to **${work.theme}**. It is fine to help in one way at work and in another way with friends.`,
         result.input.unknownTime
           ? 'Your birth time is unknown, so this report uses three pillars. The time-based part is left out. An accurate time could add detail later.'
-          : `Your birth time adds a focus on **${hourWork.theme}**. Leave room for that interest alongside what other people ask of you.`,
+          : `The supplied birth hour adds **${hourWork.theme}** to the reading. You can leave room for that interest without making it another thing you owe other people.`,
         'Think of a request you hear often. Choose which part you enjoy and which part needs a new agreement. **You can be helpful and have limits.**',
       ],
       evidence: [fact(year, 3), ...(result.input.unknownTime ? ['The birth hour was not supplied; no hour interpretation is included.'] : [fact(hour, 0)])],
@@ -362,7 +362,7 @@ export function buildCompleteReading(result: SajuResult, asOfYear = new Date().g
           : 'Look at how you handle a shared task. Which needs have been said clearly, and which ones are still being guessed?',
         combine
           ? 'Your chart also has a connection between two parts. Ask where a **shared goal** could make a task easier. Cooperation still needs a clear agreement.'
-          : `Your starting style values **${personal.need}**. Your work theme adds **${work.theme}**. Make room for both when planning a task.`,
+          : `Your birth-day reading points to **${personal.need}**. Your work theme adds **${work.theme}**. Make room for both when planning a task.`,
         'If a decision keeps going in circles, write down what each side needs. **Choose one small change** that gives both needs a place.',
         'Use a pattern only when it helps you understand a real choice. Leave examples that do not fit. Your experience gives the reading its everyday detail.',
       ],
@@ -388,13 +388,13 @@ export function buildCompleteReading(result: SajuResult, asOfYear = new Date().g
       cycleWork.scene,
       'It can be tempting to treat a new period as a reason to change everything. Instead, use the situation above to ask whether a different approach would help with something you already face.',
       when,
-      `The main theme is **${cycleWork.theme}**. Use it to think about ${cycleWork.contribution}.`,
+      `The calculated period is compared with your birth-day symbol. This reading connects it with **${cycleWork.theme}**, which may show up as ${cycleWork.contribution}.`,
       cycle.branchSipsin === cycle.stemSipsin
-        ? `Both parts focus on ${cycleWork.theme}. **Choose a small task** where you can put that theme into practice.`
-        : `The second theme is **${inner.theme}**. Look for a plan that leaves room for both.`,
+        ? `Both parts lead to the same idea: ${cycleWork.theme}. See whether it helps you understand something you are already doing.`
+        : `The other part adds **${inner.theme}**. You do not have to choose between the two ideas; ask whether both matter in the situation you are thinking about.`,
       index === 0 ? `If the situation fits, a possible reply is: **${cycleWork.next}**` : index === 1
         ? `Before this period begins, try one small step: **${cycleWork.next}**`
-        : `Keep the later years open to change. When your life changes, review what still fits. One possible step is: **${cycleWork.next}**`,
+        : `Your life may look different by then. Keep this as an idea you can come back to, rather than a plan you have to follow. Something you could try is: **${cycleWork.next}**`,
     ]
     const evidence = [
       `Calculated start: ${startDate}. The year label ${period.period} is a short label for the ten-year cycle.`,
