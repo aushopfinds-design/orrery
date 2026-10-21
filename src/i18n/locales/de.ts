@@ -232,6 +232,12 @@ const de: Record<string, string> = {
   "sandbox.downloading": "Dein PDF-Download wird vorbereitet…",
   "sandbox.orderReference": "Bestellnummer",
 
+  'card.export.png': "Kartenbild speichern",
+  'card.export.mp4': "Animierte Karte speichern (MP4)",
+  'card.export.note': "Sechs Sekunden ohne Ton, 1080 × 1350. Lassen Sie diese Seite beim Speichern sichtbar. Die Dateien entstehen auf Ihrem Gerät.",
+  'card.export.progress': "Karte wird vorbereitet… {percent}%",
+  'card.export.unsupported': "Dieser Browser kann kein MP4 speichern. Verwenden Sie aktuelles Chrome oder Safari oder speichern Sie das Bild.",
+  'card.export.error': "Die Karte konnte nicht gespeichert werden. Lassen Sie die Seite geöffnet und versuchen Sie es erneut.",
 }
 
 export default de

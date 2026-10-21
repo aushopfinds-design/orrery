@@ -232,6 +232,12 @@ const es: Record<string, string> = {
   "sandbox.downloading": "Preparando la descarga del PDF…",
   "sandbox.orderReference": "Referencia del pedido",
 
+  'card.export.png': "Guardar imagen de la tarjeta",
+  'card.export.mp4': "Guardar tarjeta animada (MP4)",
+  'card.export.note': "Vídeo de seis segundos sin sonido, 1080 × 1350. Mantén esta página visible mientras se guarda. Los archivos se crean en tu dispositivo.",
+  'card.export.progress': "Preparando tu tarjeta… {percent}%",
+  'card.export.unsupported': "Este navegador no puede guardar MP4. Usa Chrome o Safari actualizado, o guarda la imagen.",
+  'card.export.error': "No se pudo guardar la tarjeta. Mantén esta página abierta e inténtalo de nuevo.",
 }
 
 export default es

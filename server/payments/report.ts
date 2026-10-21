@@ -27,6 +27,7 @@ export interface BuyerReport {
 let fontBytes: Promise<Buffer> | undefined
 let artworkBytes: Promise<Buffer> | undefined
 let cardArtData: Promise<string> | undefined
+let cardKeyData: Promise<string> | undefined
 
 /** Keep authored emphasis even though the saved plain-text report omits Markdown. */
 export function reportEmphasis(source: unknown): string[] {
@@ -220,13 +221,15 @@ async function reportPdf(report: BuyerReport, orderId: string, emphasis: string[
     if (heading) { y -= 10; paragraph(value, 16, gold); y -= 5 }
     else paragraph(value, note ? 9.2 : 10.4, note ? muted : ink, !note)
   }
-  cardArtData ??= readFile(new URL('../../public/images/cards/the-fate-key-sample.webp', import.meta.url))
+  cardArtData ??= readFile(new URL('../../public/images/cards/destiny-background-v2.webp', import.meta.url))
     .then(bytes => sharp(bytes).png().toBuffer()).then(bytes => 'data:image/png;base64,' + bytes.toString('base64'))
+  cardKeyData ??= readFile(new URL('../../public/images/cards/destiny-key-v2.png', import.meta.url))
+    .then(bytes => 'data:image/png;base64,' + bytes.toString('base64'))
   for (const [index, card] of report.cards.entries()) {
     addPage()
     centre('YOUR PERSONAL DESTINY CARD', 721, 12)
     const svg = renderToStaticMarkup(createElement(DestinyCardArtwork, {
-      card, id: `issued-card-${index}`, artworkHref: await cardArtData, preview: false, showStem: false,
+      card, id: `issued-card-${index}`, artworkHref: await cardArtData, keyHref: await cardKeyData, preview: false, showStem: false,
       labels: { personal: 'MY PERSONAL KEY', element: 'ELEMENT', numbers: 'MY NUMBERS', colour: 'MY COLOUR', watermark: 'SANDBOX EDITION' },
     }))
     const raster = await sharp(Buffer.from(svg)).resize(1080, 1350)

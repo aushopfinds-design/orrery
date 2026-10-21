@@ -232,6 +232,12 @@ const ja: Record<string, string> = {
   "sandbox.downloading": "PDFのダウンロードを準備しています…",
   "sandbox.orderReference": "注文番号",
 
+  'card.export.png': "カード画像を保存",
+  'card.export.mp4': "動くカードを保存 (MP4)",
+  'card.export.note': "6秒の無音動画、1080 × 1350。保存中はこの画面を表示してください。ファイルは端末内で作成されます。",
+  'card.export.progress': "カードを準備中… {percent}%",
+  'card.export.unsupported': "このブラウザーではMP4を保存できません。最新のChromeやSafariを使うか、画像を保存してください。",
+  'card.export.error': "保存できませんでした。この画面を開いたまま、もう一度お試しください。",
 }
 
 export default ja

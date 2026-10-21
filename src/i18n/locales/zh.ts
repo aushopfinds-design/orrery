@@ -232,6 +232,12 @@ const zh: Record<string, string> = {
   "sandbox.downloading": "正在准备 PDF 下载…",
   "sandbox.orderReference": "订单编号",
 
+  'card.export.png': "保存卡片图片",
+  'card.export.mp4': "保存动态卡片 (MP4)",
+  'card.export.note': "6秒无声视频，1080 × 1350。保存时请保持页面可见。文件在您的设备上生成。",
+  'card.export.progress': "正在准备卡片… {percent}%",
+  'card.export.unsupported': "此浏览器不支持保存MP4。请使用新版Chrome或Safari，或保存图片。",
+  'card.export.error': "无法保存卡片。请保持页面打开并重试。",
 }
 
 export default zh

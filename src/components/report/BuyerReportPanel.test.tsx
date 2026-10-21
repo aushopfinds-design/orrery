@@ -4,13 +4,17 @@ import { act } from 'react'
 import { createRoot } from 'react-dom/client'
 import type { Root } from 'react-dom/client'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import { buildDestinyCard } from '../../report/destiny-card.ts'
 import BuyerReportPanel from './BuyerReportPanel.tsx'
 import { PURCHASES_KEY } from '../../utils/purchase-client.ts'
+
+vi.mock('../../utils/card-export.tsx', () => ({ exportCard: vi.fn(), saveCardBlob: vi.fn() }))
+import { exportCard, saveCardBlob } from '../../utils/card-export.tsx'
 
 const orderId = '11111111-1111-4111-8111-111111111111'
 const report = { title: 'Complete Life Reading', kind: 'complete', edition: '2026.10-r2', issuedAt: '2026-10-20T12:00:00.000Z',
   text: '01 · Your Work\nA private full report paragraph.', documents: ['Complete Life Reading'],
-  cards: [{ title: 'The Steady Grower', sentence: 'A personal reflection.', daySymbol: 'Yang Wood', displayName: 'Your Personal Key' }] }
+  cards: [buildDestinyCard({ year:1998, month:3, day:25, hour:3, minute:0, gender:'M', timezone:'America/New_York', latitude:40.7128, longitude:-74.006 })] }
 let root: Root | null, container: HTMLDivElement
 let fetchMock: ReturnType<typeof vi.fn>
 const ok = () => Response.json(report)
@@ -20,6 +24,7 @@ async function mount() {
 }
 const button = (text: string) => [...container.querySelectorAll('button')].find(b => b.textContent?.includes(text))!
 beforeEach(() => {
+  vi.clearAllMocks()
   vi.useFakeTimers()
   Object.assign(globalThis, { IS_REACT_ACT_ENVIRONMENT: true })
   window.history.replaceState(null, '', '/?checkout=success&order_id=' + orderId + '#purchase')
@@ -48,6 +53,23 @@ describe('Buyer report screen: API response to customer actions', () => {
     expect(init.headers.Authorization).toBe('Bearer private-test-order-capability')
     expect(JSON.parse(init.body)).toEqual({ orderId })
     expect(url).not.toContain('capability')
+  })
+  it('rechecks purchase access before exporting the server-issued card', async () => {
+    fetchMock.mockResolvedValueOnce(ok()).mockResolvedValueOnce(ok())
+    vi.mocked(exportCard).mockResolvedValueOnce(new Blob(['PNG'], { type:'image/png' }))
+    await mount()
+    await act(async () => { button('Save card image').click() })
+    expect(fetchMock).toHaveBeenCalledTimes(2)
+    expect(exportCard).toHaveBeenCalledWith(report.cards[0], 'png', expect.any(AbortSignal), expect.any(Function))
+    expect(saveCardBlob).toHaveBeenCalledWith(expect.any(Blob), 'the-fate-key-card-1.png')
+  })
+  it('does not export if the server rejects access after the report was loaded', async () => {
+    fetchMock.mockResolvedValueOnce(ok()).mockResolvedValueOnce(failure(404, 'order_not_found'))
+    await mount()
+    await act(async () => { button('Save animated card').click() })
+    expect(exportCard).not.toHaveBeenCalled()
+    expect(saveCardBlob).not.toHaveBeenCalled()
+    expect(container.querySelector('[role=alert]')).not.toBeNull()
   })
   it('waits automatically across preparing and unpaid responses, without a second purchase', async () => {
     fetchMock.mockResolvedValueOnce(failure(409, 'report_being_prepared')).mockResolvedValueOnce(failure(402, 'payment_not_complete')).mockResolvedValueOnce(ok())

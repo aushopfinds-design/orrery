@@ -119,3 +119,16 @@
  .fate-card-is-animated .fate-card-border-light,.fate-card-is-animated .fate-card-star,.fate-card-is-animated .fate-card-key-glow { animation:none; }
 }
 @media print { .fate-personal-card-motion .fate-destiny-motion,.fate-card-celestial-effects { display:none; } }
+
+.fate-destiny-personal-card { height:auto; }
+.fate-card-is-animated .fate-card-turning-key { animation:fate-card-key-turn 6s ease-in-out infinite; transform-origin:0 0; }
+@keyframes fate-card-key-turn { 0%,100% { transform:scaleX(1); } 25%,75% { transform:scaleX(.025); } 50% { transform:scaleX(-1); } }
+@media (prefers-reduced-motion:reduce) { .fate-card-is-animated .fate-card-turning-key { animation:none; } }
+.fate-buyer-card .fate-personal-card-motion { max-width:420px; margin:18px auto; }
+.fate-card-export-actions { display:flex; flex-wrap:wrap; gap:12px; margin:16px 0; }
+.fate-card-export-actions button { padding:12px 18px; border:1px solid #a17c43; border-radius:8px; color:#f7e9c7; background:#0b2535; }
+.fate-card-export-actions button:disabled { opacity:.55; cursor:wait; }
+.fate-card-export-note { font-size:12px; line-height:1.7; }
+
+.fate-card-downloads button { display:grid; gap:6px; text-align:left; border:1px solid #b9985d; border-radius:10px; padding:16px; color:#f3e0bc; background:#102c3c; cursor:pointer; }
+.fate-card-downloads button:disabled { opacity:.55; cursor:wait; }

@@ -232,6 +232,12 @@ const en: Record<string, string> = {
   "sandbox.downloading": "Preparing your PDF download…",
   "sandbox.orderReference": "Order reference",
 
+  'card.export.png': "Save card image",
+  'card.export.mp4': "Save animated card (MP4)",
+  'card.export.note': "A six-second silent video, 1080 × 1350. Keep this page visible while saving. Files are created on your device.",
+  'card.export.progress': "Preparing your card… {percent}%",
+  'card.export.unsupported': "This browser cannot save MP4. Try a current Chrome or Safari browser, or save the image.",
+  'card.export.error': "Your card could not be saved. Keep this page open and try again.",
 }
 
 export default en

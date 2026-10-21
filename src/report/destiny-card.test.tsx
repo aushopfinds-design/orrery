@@ -91,8 +91,8 @@ describe('Destiny Card identity, privacy and purchase boundaries', () => {
 
   it('offers genuine public image and MP4 samples, clearly distinguished from a customer result', () => {
     const html = renderToStaticMarkup(<DestinyCardStudio input={null} />)
-    expect(html).toContain('Design-Sample.png')
-    expect(html).toContain('Design-Sample.mp4')
+    expect(html).toContain('data-export-format="png"')
+    expect(html).toContain('data-export-format="mp4"')
     expect(html).toContain('public promotional samples')
     expect(resolveReportRoute('#card-studio')).toBe('card-studio')
     expect(resolveReportRoute('#destiny-card')).toBe('home')
