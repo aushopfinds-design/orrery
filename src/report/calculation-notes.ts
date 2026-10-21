@@ -86,6 +86,11 @@ export function explainCalculation(input: BirthInput): CalculationExplanation {
 }
 
 export const CHART_GLOSSARY = [
+  { term: '比肩 / 劫財', meaning: 'These compare the day stem with stems of the same element. In this report they introduce questions about independence, shared decisions and working alongside others.' },
+  { term: '食神 / 傷官', meaning: 'These describe the element produced by the day stem. Here they introduce themes of making, expressing ideas and improving what you create.' },
+  { term: '正財 / 偏財', meaning: 'These describe the element controlled by the day stem. Here they introduce themes of managing everyday resources or exploring opportunities; they do not state how wealthy someone is.' },
+  { term: '正官 / 偏官', meaning: 'These describe the element that controls the day stem. Here they introduce questions about expectations, responsibility and responding under pressure.' },
+  { term: '正印 / 偏印', meaning: 'These describe the element that produces the day stem. Here they introduce themes of learning, receiving support and finding your own way to understand something.' },
   { term: 'Ten-year cycle / 大運', meaning: 'A traditional sequence calculated from the birth month, year-stem polarity and selected male/female cycle setting. The recorded start date is a calculation reference, not a promised event date.' },
   { term: 'Combination / 合', meaning: 'A traditional relationship between chart symbols. It is a prompt to explore how needs can work together, not proof of an easy relationship.' },
   { term: 'Clash / 沖', meaning: 'A directly opposing pair of chart symbols. Use it to ask about competing needs; it does not establish that conflict has happened.' },

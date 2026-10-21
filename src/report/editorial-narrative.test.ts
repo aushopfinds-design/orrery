@@ -59,8 +59,19 @@ describe('Everyday narrative before chart terminology', () => {
       expect(report.fullText).not.toContain('acceptance standard')
     }
   })
+  it('fixes reviewed grammar and explains the chart labels in complete outputs', () => {
+    for (const sample of CATEGORY_SCENARIOS) {
+      const result = calculateSaju(sample.first)
+      const report = buildCompleteReading(result, 2026)
+      expect(report.fullText).not.toMatch(/1 visible markers|Earth and Metal points|This compares your birth-month symbol|editorial theme families|Lucky colors|Notice adding/)
+      expect(report.fullText).toContain('正財 / 偏財:')
+      expect(report.fullText).toContain('Chart terms in plain English')
+      expect(report.periods.every(period => period.paragraphs[1].includes('ten-year cycle'))).toBe(true)
+      expect(report.periods.map(period => period.paragraphs[1]).join(' ')).not.toContain('It can be tempting to treat a new period')
+    }
+  })
   it('uses the new edition in all three bundle documents without inventing a seventh interpretation', () => {
-    expect(REPORT_EDITION).toBe('2026.10-r4')
+    expect(REPORT_EDITION).toBe('2026.10-r5')
     const bundle = buildBundleReading(a, b, 2027, 2026)
     for (const report of [bundle.complete, bundle.compatibility, bundle.annual]) {
       expect(report.fullText).toContain('Report edition ' + REPORT_EDITION)

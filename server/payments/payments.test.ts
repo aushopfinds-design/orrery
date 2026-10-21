@@ -276,7 +276,11 @@ describe('seven products: paid reports, PDFs and access isolation', () => {
     const bytes = Buffer.from(await pdf.arrayBuffer())
     expect(bytes.subarray(0, 5).toString()).toBe('%PDF-')
     const { PDFDocument } = await import('pdf-lib')
-    expect((await PDFDocument.load(bytes)).getPageCount()).toBeGreaterThan(3)
+    const rendered = await PDFDocument.load(bytes)
+    expect(rendered.getPageCount()).toBeGreaterThan(3)
+    expect(rendered.getAuthor()).toBe('THE FATE KEY')
+    expect(rendered.getSubject()).toContain(report.edition)
+    expect(rendered.getTitle()).toContain(report.title)
     const { mkdir, writeFile } = await import('node:fs/promises')
     const dir = '/workspace/scratch/0102d8f465a1/qa-pdfs'
     await mkdir(dir, { recursive: true }); await writeFile(`${dir}/${kind}.pdf`, bytes)

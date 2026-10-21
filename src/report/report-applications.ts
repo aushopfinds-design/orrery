@@ -44,7 +44,7 @@ function context(r: SajuResult) {
   return { day, month, year, personal, work, inner, relationship }
 }
 const dayFact = (r: SajuResult, name = '') => `${name}birth-day pillar ${r.pillars[1].pillar.ganzi}: starting stem ${r.pillars[1].pillar.stem}, relationship branch ${r.pillars[1].pillar.branch}.`
-const monthFact = (r: SajuResult, name = '') => `${name}birth-month pillar ${r.pillars[2].pillar.ganzi}: main theme ${r.pillars[2].stemSipsin}, principal inner-stem theme ${r.pillars[2].branchSipsin}.`
+const monthFact = (r: SajuResult, name = '') => `${name}birth-month pillar ${r.pillars[2].pillar.ganzi}: main theme ${r.pillars[2].stemSipsin}, main hidden-stem theme ${r.pillars[2].branchSipsin}.`
 const title: Record<Exclude<ApplicationKind, 'year'>, string> = {
   complete: 'Complete Life Reading', career: 'Career & Money', business: 'Business & Entrepreneurship',
   compatibility: 'Love Compatibility · Person A and Person B', wellbeing: 'Everyday Balance',
@@ -239,13 +239,13 @@ function practicalDetails(kind: ApplicationKind, item: SituationCase, first: Saj
       steps[1] = `Compare the suggested group contribution of **${WORK_PROFILES[c.year.stemSipsin].contribution}** with the work you actually want to own. Assign tasks using real time, skill and authority, including a backup and a point for asking for help.`
       break
     case 'complete/two-good-options':
-      steps[1] = `Use your starting-style check: **${SELF_CHECK[c.day.pillar.stem]}** Choose one small test that answers that question without taking on the whole plan.`
+      steps[1] = `Use your personal check: **${SELF_CHECK[c.day.pillar.stem]}** Choose one small test that answers that question without taking on the whole plan.`
       break
     case 'complete/competing-needs':
       steps[0] = `Name the plan that keeps being moved. Your reading suggests making room for **${c.personal.need}**. Check whether that describes the part you actually want to protect.`
       break
     case 'complete/promise-growing':
-      steps[1] = `Check the added request with your starting-style question: **${SELF_CHECK[c.day.pillar.stem]}** Then name the extra time, help or changed deadline it would need.`
+      steps[1] = `Check the added request with your personal question: **${SELF_CHECK[c.day.pillar.stem]}** Then name the extra time, help or changed deadline it would need.`
       break
     case 'compatibility/repeated-argument': {
       if (!second) throw new Error('Two birth charts are needed for relationship situation plans')
@@ -275,13 +275,13 @@ function practicalDetails(kind: ApplicationKind, item: SituationCase, first: Saj
       break
     }
     case 'year/new-responsibility':
-      steps[1] = `Use your starting-style check: **${SELF_CHECK[c.day.pillar.stem]}** Name an existing duty to reduce, move or share so the new arrangement leaves room for **${c.personal.need}**.`
+      steps[1] = `Use your personal check: **${SELF_CHECK[c.day.pillar.stem]}** Name an existing duty to reduce, move or share so the new arrangement leaves room for **${c.personal.need}**.`
       break
     case 'wellbeing/unfinished-day':
       steps[1] = `${c.personal.practice} Adapt the size and stopping point to the interruptions your actual day requires.`
       break
     case 'wellbeing/automatic-yes':
-      steps[1] = `Before answering, use your starting-style question: **${SELF_CHECK[c.day.pillar.stem]}** Compare the request with something you have already promised, including your own task.`
+      steps[1] = `Before answering, use your personal question: **${SELF_CHECK[c.day.pillar.stem]}** Compare the request with something you have already promised, including your own task.`
       break
     case 'wellbeing/routine-fit':
       steps[1] = `${c.personal.practice} Attach a small version of that step to a reliable event or a realistic window in your actual day.`

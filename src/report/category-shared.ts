@@ -1,3 +1,4 @@
+import { CHART_GLOSSARY } from './calculation-notes.ts'
 import type { SajuResult, BirthInput } from '@orrery/core/types'
 import { getRelation, analyzePillarRelations } from '@orrery/core/pillars'
 import { buildFreeReading, REPORT_EDITION } from './complete-reading.ts'
@@ -102,6 +103,7 @@ export function finishReading(data: Omit<CategoryReading, 'fullText' | 'wordCoun
     ...(data.months.length ? ['Your Twelve Months', ...data.months.flatMap(chapterText)] : []),
     'Situations you can work through', ...data.applications.map(applicationText),
     reportExtrasText(data.extras),
+    'Chart terms in plain English', ...CHART_GLOSSARY.map(item => `${item.term}: ${item.meaning}`),
     'How this reading is prepared', ...data.methodNotes,
   ].join('\n\n'))
   return { ...data, chapters, fullText, wordCount: fullText.split(/\s+/).length }

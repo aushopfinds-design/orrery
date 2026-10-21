@@ -2,6 +2,7 @@ import type { SajuResult } from '@orrery/core/types'
 import { getFourPillars, getRelation } from '@orrery/core/pillars'
 import { PERSONAL_PROFILES, RELATIONSHIP_PROFILES, WORK_PROFILES } from './reading-profiles.ts'
 import { everydayExample, workExample, monthlySituation } from './personal-examples.ts'
+import { TEN_GODS } from './reading.ts'
 import { THEME_FAMILY } from './theme-family.ts'
 
 /** Editorial decision prompts selected by two calculated themes. These do not
@@ -221,7 +222,7 @@ export function buildDecisionFocus(kind: SoloKind, result: SajuResult, reference
   const scene = kind === 'career' || kind === 'business' ? workExample(result, kind).scene
     : kind === 'year' ? monthlySituation(primaryGod, secondaryGod).scene
     : everydayExample(result, kind === 'complete' ? 'personality' : 'wellbeing').scene
-  const themes = `This compares ${annual ? 'the year’s symbol' : 'your birth-month symbol'} with your birth-day symbol: **${primary.theme}**. ${primaryGod === secondaryGod ? `${annual ? 'Your birth month' : 'The lower birth-month symbol'} repeats this idea.` : `${annual ? 'Your birth month' : 'The lower birth-month symbol'} adds **${secondary.theme}**.`}`
+  const themes = `${annual ? 'In this year’s reading' : 'In your birth-month reading'}, the main theme is **${primary.theme}**. ${primaryGod === secondaryGod ? 'The same theme appears in both chart positions.' : `The second theme is **${secondary.theme}**.`}`
   return {
     headline: kind === 'complete' ? bridge.title : HEADLINES[kind][a],
     synthesis: `${scene} ${bridge.tension} ${themes}`,
@@ -229,9 +230,9 @@ export function buildDecisionFocus(kind: SoloKind, result: SajuResult, reference
     pauseIf: second.pause,
     review: `${second.review} Did the plan leave room for **${PERSONAL_PROFILES[day.pillar.stem].need}**?`,
     evidence: [
-      `Birth-day stem ${day.pillar.stem}: starting-style need used in the review question.`,
-      annual ? `Annual reference ${referenceYear}-07-15 12:00 Asia/Seoul: ${annual}; stem relationship ${primaryGod}. Birth-month stem ${month.pillar.stem}: ${secondaryGod}.` : `Birth-month pillar ${month.pillar.ganzi}: stem relationship ${primaryGod}; principal inner-stem relationship ${secondaryGod}.`,
-      'The decision focus combines two editorial theme families. It does not infer an observed situation, weight chart strength or predict an outcome.',
+      `Birth-day stem ${day.pillar.stem}: the day’s main stem, used here to describe your personal needs.`,
+      annual ? `Annual reference ${referenceYear}-07-15 12:00 Asia/Seoul: ${annual}; stem relationship ${primaryGod}. Birth-month stem ${month.pillar.stem}: ${secondaryGod}.` : `Birth-month pillar ${month.pillar.ganzi}: stem relationship ${primaryGod} (${TEN_GODS[primaryGod].title}); main hidden-stem relationship ${secondaryGod} (${TEN_GODS[secondaryGod].title}).`,
+      'These two chart relationships are read together to explore the choice above. The scene is an example, rather than an event known from your life.',
     ],
   }
 }

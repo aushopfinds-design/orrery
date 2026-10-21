@@ -37,7 +37,7 @@ export const ELEMENT_SYMBOLS: Record<ReadingElement, { colors: SymbolCard['color
   Metal: { colors: [{ name: 'White', hex: '#fffdf7' }, { name: 'Soft silver', hex: '#bbc4c9' }], numbers: [4, 9] },
   Water: { colors: [{ name: 'Black', hex: '#252b34' }, { name: 'Deep navy', hex: '#203d60' }], numbers: [1, 6] },
 }
-export const SYMBOL_NOTE = 'These “lucky” colors and numbers are traditional symbols for your birth-day element. Use them as personal reminders. They do not change the odds of an event or promise a result.'
+export const SYMBOL_NOTE = 'These colours and numbers are traditional symbols for your birth-day element. Use them as personal reminders. They do not change the odds of an event or promise a result.'
 export const SYMBOL_SOURCES = [
   { label: 'Five-color tradition · Korea.net', url: 'https://www.korea.net/NewsFocus/HonoraryReporters/view?articleId=218521' },
   { label: 'He Tu number pairs · historical text', url: 'https://zh.wikisource.org/wiki/河圖原' },
@@ -145,7 +145,7 @@ const SYMBOL_USES: Record<ExtrasKind, string> = {
   compatibility: 'Choose a shade each for a shared note. Use the note to record one request from each person; neither palette is the better one.',
   year: 'Use a color to mark your own priorities in the year’s planner. The numbers can label a personal reminder, not a lucky date.',
   career: 'Use a shade to mark the tasks that show your best work. Keep the numbers as a reminder to review a choice before committing.',
-  business: 'Try a shade in your private planning notes. Choose customer-facing colors for clarity and fit with your audience.',
+  business: 'Try a shade in your private planning notes. Choose customer-facing colours for clarity and fit with your audience.',
   wellbeing: 'Try a small accent in a space you already use. Let it remind you to pause and notice what would make the routine easier.',
 }
 function symbolCard(result: SajuResult, kind: ExtrasKind, person = 'Your birth-day symbol'): SymbolCard {
@@ -153,7 +153,7 @@ function symbolCard(result: SajuResult, kind: ExtrasKind, person = 'Your birth-d
   const element = STEM_ELEMENTS[stem]
   if (!element) throw new Error('A valid birth-day element is needed')
   const symbols = ELEMENT_SYMBOLS[element]
-  return { person, element, colors: symbols.colors.map(color => ({ ...color })), numbers: [...symbols.numbers], use: SYMBOL_USES[kind], basis: `Your ${STEMS[stem].name} birth-day symbol belongs to ${element}. The colors and number pair follow that traditional association.` }
+  return { person, element, colors: symbols.colors.map(color => ({ ...color })), numbers: [...symbols.numbers], use: SYMBOL_USES[kind], basis: `Your ${STEMS[stem].name} birth-day symbol belongs to ${element}. The colours and number pair follow that traditional association.` }
 }
 
 /** Added questions combine day, month and relationship themes; no invented events. */
@@ -173,7 +173,7 @@ export function buildReportExtras(kind: ExtrasKind, result: SajuResult, options:
   const card = (title: string, text: string): EverydayChoice => ({ title, text })
   let questions: InsightQuestion[]
   let keepClose = [card('People who make room for you', detail.people), card('A setting to try', detail.space), card('A habit worth keeping', detail.habit)]
-  let stepBack = [card('A familiar trap', detail.limit), card('A misunderstanding to clear up', detail.misread), card('Pressure that needs a name', `Notice **${work.friction}**. Describe one real example before agreeing to more of it.`)]
+  let stepBack = [card('A familiar trap', detail.limit), card('A misunderstanding to clear up', detail.misread), card('Pressure that needs a name', `Watch for **${work.friction}**. Describe one real example before agreeing to more of it.`)]
   let experiment = { title: 'One week, one useful change', steps: [detail.habit, `Say to someone close: “${relationship.words}”`, 'After seven days, keep one change that helped and drop one that did not fit.'] }
   const symbols = [symbolCard(result, kind)]
   let reminder = detail.reminder
@@ -217,7 +217,7 @@ export function buildReportExtras(kind: ExtrasKind, result: SajuResult, options:
       questions = [
         q(`What deserves my attention in ${options.year}?`, `Use **${annual.theme}** as a planning question. Your own style still needs **${personal.need}**. Pick one current plan where both can fit, instead of treating the year as a promise that something will happen.`, basis),
         q('How should I judge a new opportunity?', `Start with one question: **“${annualLife.yearQuestion}”** Then try a smaller version: **${annualLife.yearStep}** Compare what happens with your need for **${personal.need}** before adding another plan.`, `${basis} ${dayBasis}`),
-        q(`What should I avoid carrying into ${options.year}?`, `Notice **${detail.limit.charAt(0).toLowerCase() + detail.limit.slice(1)}** The annual theme can also bring a reason to examine **${annual.friction}**. Name one commitment you want to review before adding another.`, basis),
+        q(`What should I avoid carrying into ${options.year}?`, `A habit to reconsider: **${detail.limit}** The annual theme can also bring a reason to examine **${annual.friction}**. Name one commitment you want to review before adding another.`, basis),
         q('When should I make my next move?', 'Use the twelve monthly reflections as **check-in points**, then choose a date that fits your information, responsibilities and readiness. A reference-month symbol is not a lucky day. Start with a small step you can review rather than waiting for a date to guarantee the result.', basis),
       ]
       keepClose = [card('One focus for the year', `Bring **${annual.theme}** into one plan you already care about.`), card('A realistic way to try it', annualLife.yearStep), card('Your own pace', detail.habit)]
@@ -271,8 +271,8 @@ export function reportExtrasText(extras: ReportExtras): string {
     ...extras.questions.flatMap(item => [item.question, item.answer, 'Why this appears: ' + item.basis]),
     'Bring closer', ...extras.keepClose.map(item => `${item.title}: ${item.text}`),
     'Give less space to', ...extras.stepBack.map(item => `${item.title}: ${item.text}`),
-    'Lucky colors & numbers · traditional symbols',
-    ...extras.symbols.flatMap(item => [item.person + ' · ' + item.element, 'Colors: ' + item.colors.map(color => color.name).join(' / '), 'Numbers: ' + item.numbers.join(' / '), item.basis, item.use]),
+    'Symbolic colours & numbers',
+    ...extras.symbols.flatMap(item => [item.person + ' · ' + item.element, 'Colours: ' + item.colors.map(color => color.name).join(' / '), 'Numbers: ' + item.numbers.join(' / '), item.basis, item.use]),
     SYMBOL_NOTE, 'A reminder to keep: ' + extras.reminder,
     extras.experiment.title, ...extras.experiment.steps.map((step, index) => `${index + 1}. ${step}`),
     'From the chart: ' + extras.evidence.join(' '),

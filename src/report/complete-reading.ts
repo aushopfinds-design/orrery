@@ -15,12 +15,12 @@ import { buildReadingBrief, readingBriefText } from './reading-brief.ts'
 import { THEME_FAMILY as FAMILY } from './theme-family.ts'
 import { buildReportApplications, applicationText } from './report-applications.ts'
 import type { ReportApplication } from './report-applications.ts'
-import { explainCalculation, PAIR_METHOD_NOTE } from './calculation-notes.ts'
+import { CHART_GLOSSARY, explainCalculation, PAIR_METHOD_NOTE } from './calculation-notes.ts'
 import type { CalculationExplanation } from './calculation-notes.ts'
 import { buildDecisionFocus } from './decision-focus.ts'
 import type { DecisionFocus } from './decision-focus.ts'
 
-export const REPORT_EDITION = '2026.10-r4'
+export const REPORT_EDITION = '2026.10-r5'
 
 export interface ReadingConnection {
   id: string
@@ -338,14 +338,14 @@ export function buildCompleteReading(result: SajuResult, asOfYear = new Date().g
       paragraphs: [
         'A familiar response can save effort, but it is not the only response available to you. The five-element images offer a way to describe different habits without treating any one habit as a fixed identity.',
         `Your chart has **${result.input.unknownTime ? 'six' : 'eight'} visible symbols**. Their element count is ${c.elements.map(item => `${item.element} ${item.count}`).join(', ')}. You can see the numbers in the table below.`,
-        `In Saju imagery, ${c.prominent.map(item => item.element).join(' and ')} points to **${elementHabits.map(item => item.meaning).join('; ')}**. Use that image to notice a habit you already recognise.`,
+        `In Saju imagery, ${c.prominent.map(item => item.element).join(' and ')} ${c.prominent.length === 1 ? 'points' : 'point'} to **${elementHabits.map(item => item.meaning).join('; ')}**. Use that image to notice a habit you already recognise.`,
         c.absent.length
           ? `${c.absent.map(item => item.element).join(' and ')} ${c.absent.length === 1 ? 'is' : 'are'} absent from this simple count. **A zero does not mean a missing ability.** Other parts of the full chart can contain those elements.`
           : 'All five elements appear in this count. That gives a varied picture. **It does not tell us how balanced your daily life feels.**',
         '**Try a different response to one small problem.** If you usually rush, pause and ask a question. If you usually wait, take one small step.',
         'The habits below are ideas to try. This count alone cannot identify a lucky element, colour or direction for you.',
       ],
-      evidence: c.elements.map(item => `${item.element}: ${item.count} visible markers.`),
+      evidence: c.elements.map(item => `${item.element}: ${item.count} visible ${item.count === 1 ? 'marker' : 'markers'}.`),
       tryThis: 'Choose one small problem. Try a response you would not usually choose and note what changes.',
       guidance: {
         keepClose: unique(elementHabits.flatMap(item => item.keepClose)),
@@ -382,11 +382,11 @@ export function buildCompleteReading(result: SajuResult, asOfYear = new Date().g
     const when = asOfYear < cycle.startDate.getUTCFullYear()
       ? index < 2
         ? 'This period is still ahead of you. Think about what you could practise before it begins.'
-        : 'This later period is further ahead. Keep its theme open as your plans and circumstances change.'
+        : 'For this later chapter, consider what you would want to carry forward from earlier experience.'
       : `${asOfYear} falls within this period. Compare its theme with the tasks and choices in your life now.`
     const paragraphs = [
       cycleWork.scene,
-      'It can be tempting to treat a new period as a reason to change everything. Instead, use the situation above to ask whether a different approach would help with something you already face.',
+      `Here, the ten-year cycle draws attention to **${cycleWork.contribution}**. Alongside your familiar working theme of **${work.theme}**, this can offer a different way to approach the situation above.`,
       when,
       `The calculated period is compared with your birth-day symbol. This reading connects it with **${cycleWork.theme}**, which may show up as ${cycleWork.contribution}.`,
       cycle.branchSipsin === cycle.stemSipsin
@@ -455,6 +455,7 @@ export function buildCompleteReading(result: SajuResult, asOfYear = new Date().g
     ...chapterText(actionPlan),
     'Situations you can work through', ...applications.map(applicationText),
     reportExtrasText(extras),
+    'Chart terms in plain English', ...CHART_GLOSSARY.map(item => `${item.term}: ${item.meaning}`),
     'How this reading is prepared', ...methodNotes,
   ].join('\n\n'))
   return { focus, calculation: explainCalculation(result.input), title: 'Complete Life Reading', birthSummary: formatBirth(result.input), pillarSummary: pillarSummary(result), dayMaster: self.name, headline: personal.headline, summary, connections, referenceYear: asOfYear, chapters, periods, actionPlan, applications, extras, elements: c.elements, visibleMarkers: result.input.unknownTime ? 6 : 8, methodNotes, fullText, wordCount: fullText.split(/\s+/).length }

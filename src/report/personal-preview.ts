@@ -78,7 +78,7 @@ export function personalPreviewText(preview: PersonalPreview): string {
     ...preview.summary.map(theme => `${theme.label}\n${theme.text}`),
     ...preview.excerpts.flatMap(section => [section.title, section.lead, ...(section.example ? everydayExampleText(section.example) : []), ...section.paragraphs, 'Chart notes: ' + section.evidence.join(' · ')]),
     ...(preview.extras ? [preview.extras.question.question, preview.extras.question.answer, 'Chart note: ' + preview.extras.question.basis,
-      ...preview.extras.symbols.map(symbol => `${symbol.person} · ${symbol.element}\nColors: ${symbol.colors.map(color => color.name).join(', ')}\nNumbers: ${symbol.numbers.join(' · ')}\n${symbol.use}\n${symbol.basis}`), SYMBOL_NOTE] : []),
+      ...preview.extras.symbols.map(symbol => `${symbol.person} · ${symbol.element}\nColours: ${symbol.colors.map(color => color.name).join(', ')}\nNumbers: ${symbol.numbers.join(' · ')}\n${symbol.use}\n${symbol.basis}`), SYMBOL_NOTE] : []),
     ...preview.monthly.map(month => `${month.label}\n${month.lead}`),
     'Full report contents (the full chapters are not included in this preview)',
     ...preview.contents.map((item, index) => `${index + 1}. ${item.title}`),
