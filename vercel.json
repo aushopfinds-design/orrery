@@ -1,5 +1,8 @@
 {
   "functions": {
+    "api/admin-review.ts": {
+      "maxDuration": 90
+    },
     "api/payments.ts": {
       "includeFiles": "{server/payments/assets/**,public/images/cards/destiny-background-v2.webp,public/images/cards/destiny-key-v2.png}",
       "maxDuration": 120
