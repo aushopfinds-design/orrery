@@ -8,6 +8,7 @@ export { PURCHASES_KEY } from '../../utils/purchase-client.ts'
 export const TEST_ACCESS_KEY = 'fate-sandbox-access-v1'
 export default function SandboxCheckout({ order }: { order: OrderInput }) {
   const { t } = useLocale()
+  const [recipientName, setRecipientName] = useState('')
   const [busy, setBusy] = useState(false), [message, setMessage] = useState('')
   const [access, setAccess] = useState(() => { try { return sessionStorage.getItem(TEST_ACCESS_KEY) ?? '' } catch { return '' } })
   const activeRequest = useRef<AbortController | null>(null)
@@ -20,7 +21,7 @@ export default function SandboxCheckout({ order }: { order: OrderInput }) {
     try {
       sessionStorage.setItem(TEST_ACCESS_KEY, access)
       // A retry of the same input reuses its order/session, including after a network error.
-      const draft = JSON.stringify(order), previous = JSON.parse(sessionStorage.getItem('fate-sandbox-attempt') ?? 'null')
+      const draft = JSON.stringify({ ...order, ...(recipientName.trim() ? { recipientName: recipientName.trim() } : {}) }), previous = JSON.parse(sessionStorage.getItem('fate-sandbox-attempt') ?? 'null')
       const key = previous?.draft === draft ? previous.key : crypto.randomUUID()
       sessionStorage.setItem('fate-sandbox-attempt', JSON.stringify({ draft, key }))
       const response = await fetch('/api/payments?action=checkout', {
@@ -42,6 +43,8 @@ export default function SandboxCheckout({ order }: { order: OrderInput }) {
   return <section className="fate-personal-delivery" aria-label={t('sandbox.title')}>
     <h3>{t('sandbox.title')} · {reportPrice(order.kind)}</h3>
     <p>{t('sandbox.note')}</p><p>{t('sandbox.data')}</p>
+    <label>{t('letter.name.label')}<input type="text" autoComplete="given-name" maxLength={40} value={recipientName} disabled={busy} onChange={event => setRecipientName(event.target.value)} aria-describedby="letter-name-note" /></label>
+    <p id="letter-name-note">{t('letter.name.note')}</p>
     <label>{t('sandbox.access')}<input type="password" autoComplete="off" value={access} onChange={event => setAccess(event.target.value)} /></label>
     <button type="button" className="fate-complete-primary" onClick={checkout} disabled={busy || access.length < 32}>{t(busy ? 'sandbox.opening' : 'sandbox.buy')}</button>
     {message && <p role="alert">{message}</p>}

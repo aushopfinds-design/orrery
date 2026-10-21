@@ -8,12 +8,12 @@ import ChapterHeading from './ChapterHeading.tsx'
 import { ChartEvidence } from './ReportChapterView.tsx'
 import { BackToChapters } from './ReportBriefView.tsx'
 
-function QuestionCard({ item }: { item: InsightQuestion }) {
+function QuestionCard({ item, showBasis = true }: { item: InsightQuestion; showBasis?: boolean }) {
   const { t } = useLocale()
   return <section className="fate-compass-question">
     <h4>{item.question}</h4>
     <p><ReadingText text={item.answer} /></p>
-    <p className="fate-compass-basis"><strong>{t('reading.extras.why')}</strong> {item.basis}</p>
+    {showBasis && <p className="fate-compass-basis"><strong>{t('reading.extras.why')}</strong> {item.basis}</p>}
   </section>
 }
 
@@ -52,7 +52,7 @@ export default function ReportExtrasView({ extras, prefix }: { extras: ReportExt
     <ChapterHeading title={t('reading.extras.title')} kind="balance" />
     <p className="fate-compass-intro">{t('reading.extras.intro')}</p>
     <h3 className="fate-compass-subtitle">{t('reading.extras.questions')}</h3>
-    <div className="fate-compass-questions">{extras.questions.map(item => <QuestionCard key={item.question} item={item} />)}</div>
+    <div className="fate-compass-questions">{extras.questions.map((item, index) => <QuestionCard key={item.question} item={item} showBasis={extras.questions.findIndex(other => other.basis === item.basis) === index} />)}</div>
     <div className="fate-compass-choices">{[
       { key: 'closer', icon: 'support', items: extras.keepClose },
       { key: 'less', icon: 'caution', items: extras.stepBack },

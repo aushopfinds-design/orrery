@@ -67,6 +67,7 @@ export default function BuyerReportPanel() {
       {report && <button type="button" onClick={download} disabled={Boolean(busy)}>{t('sandbox.download')}</button>}</div>
     {report && <><p>{t('sandbox.issued')} {report.issuedAt.slice(0, 10)} · {report.edition}</p>
       <p>{report.documents.join(' · ')}</p>
+      {report.recipientName && <p>{`Dear ${report.recipientName},`}</p>}
       <div className="fate-buyer-report-text">{report.text.split(/\n+/).filter(Boolean).map((line, i) => /^\d{2} · |^THE FATE KEY · /.test(line) ? <h3 key={i}>{line}</h3> : <p key={i}>{line}</p>)}</div>
       <div className="fate-buyer-card-grid">{report.cards.map((card, index) => <section key={index} className="fate-buyer-card"><p>{report.cards.length === 2 ? `Person ${index === 0 ? 'A' : 'B'}` : card.displayName}</p><h3>{card.title}</h3><p>{card.daySymbol}</p><p>{card.sentence}</p></section>)}</div>
     </>}

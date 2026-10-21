@@ -274,7 +274,7 @@ export function buildEnglishReading(result: SajuResult, asOfYear = new Date().ge
     'The input is interpreted as a Gregorian (solar-calendar) birth date. Place, historical time zone and birth time can change the calculated chart.',
     input.timezone === 'Asia/Seoul' || !input.timezone
       ? 'For Korean births, this calculator uses a Korean half-hour hour-boundary convention (for example, 03:00 is still the Chou hour). Other calculators may use standard two-hour clock boundaries and display a different hour pillar.'
-      : 'For births outside Korea, this calculator applies longitude and an approximate equation-of-time adjustment, together with its half-hour hour-pillar convention. Near a two-hour or solar-term boundary, compare with another reputable calculator.',
+      : 'The calculation uses your birthplace time zone and adjusts the local clock for longitude and the seasonal difference between clock time and solar time. Hour windows begin at half past the odd-numbered hours; a birth near a window or seasonal boundary may need a closer check.',
     !input.timezone ? 'No birth time zone was provided, so the engine used Asia/Seoul. Re-enter the birth location for an overseas birth.' : '',
     !input.unknownTime && input.timezone && input.timezone !== 'Asia/Seoul' && input.longitude == null
       ? 'Birth longitude was missing. The calculation fell back to Seoul longitude. Re-enter the birthplace before relying on the hour pillar.' : '',

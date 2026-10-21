@@ -14,7 +14,7 @@ import FateKeyMark from './FateKeyMark.tsx'
 import ReportRecord from './ReportRecord.tsx'
 import ReportChapterView, { ChartEvidence } from './ReportChapterView.tsx'
 import ReportExtrasView from './ReportExtrasView.tsx'
-import ReportBriefView, { BackToChapters } from './ReportBriefView.tsx'
+import ReportBriefView from './ReportBriefView.tsx'
 import { buildReadingBrief } from '../../report/reading-brief.ts'
 import ReportApplicationsView from './ReportApplicationsView.tsx'
 import { CalculationNotice, ChartGlossary } from './CalculationDisclosure.tsx'
@@ -81,7 +81,7 @@ export default function ReadingView({ input, embedded = false, prefix = 'sample-
       <ReportExtrasView extras={report.extras} prefix={prefix} />
       <section className="fate-reading-chapter fate-reading-method print:hidden"><h2>{t('reading.method.title')}</h2><p>{t('reading.method.intro')}</p><details><summary>{t('reading.method.details')}</summary><p>{report.pillarSummary.join(' · ')}</p><ul>{report.methodNotes.map(note => <li key={note}>{note}</li>)}</ul></details></section>
       <section className="fate-reading-chapter hidden print:block"><h2>{t('reading.method.title')}</h2><p>{report.pillarSummary.join(' · ')}</p><ul>{report.methodNotes.map(note => <li key={note}>{note}</li>)}</ul></section>
-      <ChartGlossary />
+      <ChartGlossary evidence={[...report.chapters.flatMap(chapter => chapter.evidence), ...report.periods.flatMap(period => period.evidence), ...report.focus.evidence, '大運']} />
       <ReportRecord input={input} birthSummary={report.birthSummary} referenceYear={report.referenceYear} preparedOn={preparedOn} />
       <footer className="fate-reading-small-note fate-report-footer"><p>{t('reading.footer.note')}</p><p>{t('reading.complete.sampleNote')}</p><a href="#complete-life-reading" className="fate-outline-button print:hidden">{t('reading.complete.back')}</a></footer>
     </article>

@@ -56,7 +56,7 @@ export default function CategoryReadingView({ report, embedded = false, controls
     <ReportExtrasView extras={report.extras} prefix={prefix} />
     <section className="fate-reading-chapter fate-reading-method print:hidden"><h2>{t('reading.method.title')}</h2><p>{info.scope}</p><details><summary>{t('reading.method.details')}</summary><ul>{report.methodNotes.map(note => <li key={note}>{note}</li>)}</ul></details></section>
     <section className="fate-reading-chapter hidden print:block"><h2>{t('reading.method.title')}</h2><ul>{report.methodNotes.map(note => <li key={note}>{note}</li>)}</ul></section>
-    <ChartGlossary />
+    <ChartGlossary evidence={[...report.chapters.flatMap(chapter => chapter.evidence), ...report.months.flatMap(month => month.evidence), ...report.focus.evidence]} />
     <ReportRecord input={first.input} birthSummary={first.birthSummary} referenceYear={report.referenceYear} preparedOn={preparedOn} secondaryInput={second?.input} secondaryBirthSummary={second?.birthSummary} series={t('category.series')} />
     <footer className="fate-reading-small-note fate-report-footer"><p>{t('reading.footer.note')}</p><p>{t('reading.complete.sampleNote')}</p>{!embedded && <a href={`#${info.slug}`} className="fate-outline-button print:hidden">{t('reading.complete.back')}</a>}</footer>
   </article>

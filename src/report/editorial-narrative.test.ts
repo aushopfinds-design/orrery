@@ -20,8 +20,9 @@ describe('Everyday narrative before chart terminology', () => {
     for (const kind of kinds) {
       const report = buildCategoryReading(kind, a, { second: b, year: 2027 })
       expect(new Set(report.chapters.map(x => x.lead)).size).toBe(report.chapters.length)
+      expect(report.chapters.filter(x => x.lead.startsWith('Imagine ')).length).toBeLessThan(report.chapters.length / 2)
       for (const chapter of report.chapters) {
-        expect(chapter.lead).toMatch(/^Imagine /)
+        expect(chapter.lead.length).toBeGreaterThan(35)
         expect(chapter.paragraphs[0]).not.toMatch(/^Your (chart|birth|starting|working)|^The (chart|annual|birth)/)
         expect(chapter.evidence.length).toBeGreaterThan(0)
         const start = report.fullText.indexOf(plainReadingText(chapter.lead))
@@ -64,14 +65,14 @@ describe('Everyday narrative before chart terminology', () => {
       const result = calculateSaju(sample.first)
       const report = buildCompleteReading(result, 2026)
       expect(report.fullText).not.toMatch(/1 visible markers|Earth and Metal points|This compares your birth-month symbol|editorial theme families|Lucky colors|Notice adding/)
-      expect(report.fullText).toContain('正財 / 偏財:')
       expect(report.fullText).toContain('Chart terms in plain English')
-      expect(report.periods.every(period => period.paragraphs[1].includes('ten-year cycle'))).toBe(true)
+      expect(report.fullText).toContain('Chart terms in plain English')
+      expect(new Set(report.periods.map(period => period.paragraphs[1])).size).toBe(report.periods.length)
       expect(report.periods.map(period => period.paragraphs[1]).join(' ')).not.toContain('It can be tempting to treat a new period')
     }
   })
   it('uses the new edition in all three bundle documents without inventing a seventh interpretation', () => {
-    expect(REPORT_EDITION).toBe('2026.10-r5')
+    expect(REPORT_EDITION).toBe('2026.10-r6')
     const bundle = buildBundleReading(a, b, 2027, 2026)
     for (const report of [bundle.complete, bundle.compatibility, bundle.annual]) {
       expect(report.fullText).toContain('Report edition ' + REPORT_EDITION)

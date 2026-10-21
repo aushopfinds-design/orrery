@@ -60,6 +60,7 @@ export function paymentHandler(getService: () => PaymentService) {
           'Cache-Control': 'no-store, private', 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'no-referrer',
         } })
         return json({ title: report.title, kind: report.kind, edition: report.edition, issuedAt: report.issuedAt,
+          ...(report.recipientName ? { recipientName: report.recipientName } : {}),
           text: report.text, documents: report.documents, cards: report.cards, orderId: id, mode: 'test' })
       }
       const status = await service.reconcile(id)

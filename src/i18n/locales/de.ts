@@ -2,6 +2,8 @@ import { homepageCopy } from '../homepage.ts'
 
 const de: Record<string, string> = {
   ...homepageCopy,
+  "letter.name.label": "Name im Brief (optional)",
+  "letter.name.note": "Vorname oder Spitzname, bis zu 40 Zeichen. Er wird mit der Bestellung gespeichert und im Brief verwendet, ohne die Berechnung zu ändern.",
   "city.country": "Land oder Gebiet",
   "city.suggestions": "Vorgeschlagene Orte",
   "city.typeToSearch": "Geben Sie mindestens 2 Zeichen ein, um Orte in diesem Land zu suchen.",

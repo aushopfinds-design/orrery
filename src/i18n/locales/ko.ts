@@ -2,6 +2,8 @@ import { homepageCopy } from '../homepage.ts'
 
 const ko: Record<string, string> = {
   ...homepageCopy,
+  "letter.name.label": "편지에 쓸 이름 (선택)",
+  "letter.name.note": "40자 이내의 이름이나 별명을 입력하세요. 주문과 함께 저장되어 편지에 표시되며 사주 계산에는 쓰이지 않습니다.",
   "city.country": "국가 또는 지역",
   "city.suggestions": "추천 출생지",
   "city.typeToSearch": "두 글자 이상 입력하면 선택한 국가의 출생지를 검색합니다.",

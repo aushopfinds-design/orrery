@@ -2,6 +2,8 @@ import { homepageCopy } from '../homepage.ts'
 
 const ja: Record<string, string> = {
   ...homepageCopy,
+  "letter.name.label": "手紙に載せる名前（任意）",
+  "letter.name.note": "40文字以内の名前やニックネーム。注文と共に保存され手紙に表示されますが、計算には使いません。",
   "city.country": "国または地域",
   "city.suggestions": "おすすめの場所",
   "city.typeToSearch": "2文字以上入力して、選択した国の場所を検索してください。",

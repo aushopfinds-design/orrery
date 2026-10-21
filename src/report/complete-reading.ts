@@ -9,18 +9,18 @@ import { WORK_CONNECTIONS, RELATIONSHIP_CONNECTIONS, WORK_REFLECTIONS } from './
 import { buildReportExtras, reportExtrasText } from './report-extras.ts'
 import type { ReportExtras } from './report-extras.ts'
 import { CLOSENESS_PROMPTS } from './reading-scenarios.ts'
-import { everydayExample, workExample, relationshipExample, moneyExample, everydayExampleText } from './personal-examples.ts'
+import { everydayExample, workExample, relationshipExample, everydayExampleText } from './personal-examples.ts'
 import type { EverydayExample } from './personal-examples.ts'
 import { buildReadingBrief, readingBriefText } from './reading-brief.ts'
 import { THEME_FAMILY as FAMILY } from './theme-family.ts'
 import { buildReportApplications, applicationText } from './report-applications.ts'
 import type { ReportApplication } from './report-applications.ts'
-import { CHART_GLOSSARY, explainCalculation, PAIR_METHOD_NOTE } from './calculation-notes.ts'
+import { chartGlossaryFor, explainCalculation, PAIR_METHOD_NOTE } from './calculation-notes.ts'
 import type { CalculationExplanation } from './calculation-notes.ts'
 import { buildDecisionFocus } from './decision-focus.ts'
 import type { DecisionFocus } from './decision-focus.ts'
 
-export const REPORT_EDITION = '2026.10-r5'
+export const REPORT_EDITION = '2026.10-r6'
 
 export interface ReadingConnection {
   id: string
@@ -91,13 +91,7 @@ export interface FreeReading {
 const POSITIONS = ['hour', 'day', 'month', 'year']
 const ELEMENT_ORDER: ReadingElement[] = ['Wood', 'Fire', 'Earth', 'Metal', 'Water']
 const WEALTH_SYMBOLS = new Set(['正財', '偏財'])
-const MONEY_PROMPTS: Record<string, string> = {
-  ownership: 'Before sharing a cost, agree **who will pay for each part**. Helping someone is easier when you know what you have already promised.',
-  making: 'Count the **time and materials** behind something you make. Enjoying the work does not remove its cost.',
-  resources: 'Check what an offer will cost **after the first week**. A good start still needs a plan you can keep up.',
-  responsibility: 'A request can matter without needing an instant yes. **Check the deadline and the cost** before taking it on.',
-  learning: 'Before buying another tool or course, decide **what you will use it for**. Give the things you already have a chance to help.',
-}
+
 
 function context(result: SajuResult) {
   const [hour, day, month, year] = result.pillars
@@ -278,31 +272,34 @@ export function buildCompleteReading(result: SajuResult, asOfYear = new Date().g
       },
     },
     {
-      id: 'money', title: '03 · Money and Everyday Choices', lead: hasOpportunity ? 'Imagine being invited into an extra project while your evenings already belong to other plans. The payment sounds appealing; the time is harder to find.' : hasSteady ? 'Imagine checking a familiar monthly payment and realising you would not choose it again today.' : 'Imagine being asked to share a cost before anyone has said how long the arrangement will last.',
-      example: moneyExample(result, hasSteady, hasOpportunity),
+      id: 'money', title: '03 · Money and Everyday Choices',
+      lead: hasSteady && hasOpportunity ? 'A regular income feels reassuring, but a new offer makes you wonder whether you are missing something better.' : hasOpportunity ? 'An offer promises a good return. Before you count it as income, you want to know what has actually been agreed.' : hasSteady ? 'A few small subscriptions renew on the same week. None feels expensive until you see their combined total.' : 'A shared purchase sounds reasonable, until you realise that nobody has agreed who pays the next bill.',
       paragraphs: [
-        'An offer can feel inexpensive or easy to accept until you see how often it repeats. The useful question is what you would still be agreeing to after the first payment.',
         moneyOpening,
-        wealth.length
-          ? 'The chart gives this chapter its theme. **Your actual income and costs** tell you what you can afford. Use both parts when thinking about a choice.'
-          : `Your work theme is **${work.theme}**. Check how your time and money support that work before taking on another cost.`,
-        MONEY_PROMPTS[FAMILY[month.stemSipsin]],
-        'For example, a low first payment may hide a regular cost. Write down **what you will pay each month** and how long it will continue.',
-        "**Check everything you would be agreeing to.** Include the money, the time and any work someone expects from you. A clear agreement makes a small choice easier to understand.",
+        hasSteady && hasOpportunity
+          ? 'Your chart contains both Direct Wealth and Indirect Wealth in the positions checked here. In this tradition, one introduces regular resources and the other introduces opportunities. The useful distinction is between income you can plan around and income that is still a possibility.'
+          : hasSteady ? 'Direct Wealth appears in the positions listed below. It gives this chapter a focus on regular income, everyday spending and the satisfaction of knowing where the money goes.'
+          : hasOpportunity ? 'Indirect Wealth appears in the positions listed below. Here it opens a discussion of offers, variable income and the difference between an attractive possibility and money already received.'
+          : hiddenWealth.length ? 'A wealth relationship appears among the less visible part of the chart rather than the main positions checked here. It is one part of the chart, rather than a reason to label you good or bad with money.'
+          : 'No Direct or Indirect Wealth relationship appears in the positions checked here. That does not describe your bank balance. This chapter therefore begins with spending decisions you can actually observe.',
+        hasSteady ? 'You might enjoy a purchase more when it fits a familiar budget. The less obvious risk is letting a cost continue simply because you stopped noticing it. Compare what you pay over a year with what you still use.' : 'A discount can make a purchase feel urgent. Compare the total amount you would spend with the value you expected before seeing the offer.',
+        hasOpportunity ? 'Keep an expected payment separate from an agreed payment. Ask about fees, payment dates and who carries the cost if the plan changes. An opportunity can remain interesting while those answers are still being checked.' : 'For shared costs, discuss the amount and the payment date before either person pays. A clear agreement can prevent generosity from turning into an unspoken expectation.',
+        `The evidence below identifies ${wealth.length} visible wealth ${wealth.length === 1 ? 'relationship' : 'relationships'} in the checked positions. This is a count of symbols, not a measure of financial strength.`,
+        'For your next review, write down regular income, regular bills and one optional purchase separately. That gives a real money decision a clearer shape than a general promise to spend less.',
       ],
       evidence: wealth.length ? wealth.map(item => `${item.location}: ${item.symbol} (${label(item.symbol)}).`) : hiddenWealth.length ? hiddenWealth : ['No 正財 or 偏財 appears in the checked top or main branch markers.', fact(month, 2)],
-      tryThis: hasOpportunity ? 'Choose one appealing offer. Write down its full cost, the time it needs and what is still unknown.' : 'Choose one regular cost. Check whether it still fits your budget and what you need it for.',
+      tryThis: hasOpportunity ? 'For one offer, separate confirmed income, possible income and costs you would pay either way.' : 'Add up a year of one recurring payment. Decide whether you would choose it again today.',
       guidance: moneyGuidance,
     },
     {
       id: 'love', title: '04 · Relationships and Communication',
       example: relationshipExample(result),
-      lead: 'Imagine a plan for time together changing at the last minute. You are disappointed, but do not know whether to say so or let it go.',
+      lead: relationshipExample(result).scene,
       paragraphs: [
         'You might want to stay easy to be around while also wanting the other person to notice that the plan mattered. Naming the disappointment can be more helpful than expecting them to hear it in a quiet reply.',
-        `The two parts of your birth-day symbol are used here to think about close relationships. This reading suggests you may appreciate **${relationship.need}**. See whether that fits what you wanted in a recent conversation.`,
-        `Your birth-day reading also points to **${personal.need}**. Notice whether you can say that clearly during an everyday conversation.`,
-        `One habit to watch is **${relationship.friction}**. Try asking what the other person needs before deciding how to help.`,
+        `The lower half of your birth-day pair gives this chapter its relationship theme: **${relationship.need}**. This is about how care may become recognisable to you, rather than how much you can do for someone.`,
+        `A caring action may miss the mark if it is not the kind of care you hoped for. For you, the distinction to explore is **${relationship.friction}**. Naming the feeling gives the other person something more useful than a hint.`,
+        'When you feel let down, separate what happened from what you thought it meant. A changed plan and the feeling of not being valued may need two different conversations.',
         `You could say: **“${relationship.words}”** Give the other person time to answer.`,
         `For a small moment of connection, try this idea: **${CLOSENESS_PROMPTS[day.pillar.branch]}** Ask whether it fits what the other person enjoys, rather than assuming that your own preferred kind of care is theirs too.`,
         clashes.length
@@ -316,7 +313,7 @@ export function buildCompleteReading(result: SajuResult, asOfYear = new Date().g
     },
     {
       id: 'social', title: '05 · Your Role Around Other People',
-      lead: 'Imagine joining friends for a day out and finding yourself organising the transport, answering questions and checking that everyone is ready.',
+      lead: 'A day out with friends turns into transport arrangements, questions and a final check that everyone is ready. Somehow, you are doing all three.',
       paragraphs: [
         'Being the person who keeps things moving can feel satisfying. It becomes less enjoyable when everyone assumes you will organise the next plan too, without asking whether you want to.',
         `Here, the symbol for your birth year is compared with the one for your birth day. This reading connects that relationship with **${groupWork.contribution}**. Is that a role you find yourself taking with friends or colleagues?`,
@@ -330,11 +327,11 @@ export function buildCompleteReading(result: SajuResult, asOfYear = new Date().g
       ],
       evidence: [fact(year, 3), ...(result.input.unknownTime ? ['The birth hour was not supplied; no hour interpretation is included.'] : [fact(hour, 0)])],
       tryThis: 'Tell someone one task you are happy to help with. Say which part needs to be shared.',
-      guidance: { keepClose: [`A shared task where ${groupWork.contribution} is welcome.`, 'Friends or colleagues who discuss which part of a request you actually want to take.'], watchFor: ['Letting a familiar group role follow you into every setting.', 'Helping with a request before checking whether it needs your particular contribution.'] },
+      guidance: { keepClose: [`People who value ${groupWork.contribution}.`, 'Friends or colleagues who discuss which part of a request you actually want to take.'], watchFor: ['Letting a familiar group role follow you into every setting.', 'Helping with a request before checking whether it needs your particular contribution.'] },
     },
     {
       id: 'balance', title: '06 · Your Five-Element Picture',
-      lead: 'Imagine trying your usual way of handling a problem and finding that, this time, it only makes you more stuck.',
+      lead: 'Your usual way of handling a problem leaves you more stuck this time.',
       paragraphs: [
         'A familiar response can save effort, but it is not the only response available to you. The five-element images offer a way to describe different habits without treating any one habit as a fixed identity.',
         `Your chart has **${result.input.unknownTime ? 'six' : 'eight'} visible symbols**. Their element count is ${c.elements.map(item => `${item.element} ${item.count}`).join(', ')}. You can see the numbers in the table below.`,
@@ -354,7 +351,7 @@ export function buildCompleteReading(result: SajuResult, asOfYear = new Date().g
     },
     {
       id: 'patterns', title: '07 · When Different Needs Pull Against Each Other',
-      lead: 'Imagine wanting to finish something important while someone close asks for your attention. Saying yes to either need feels like letting the other one down.',
+      lead: 'Something important needs finishing just as someone close asks for your attention. Saying yes to either need feels like letting the other one down.',
       paragraphs: [
         'Both needs can matter. The pressure often comes from treating the choice as proof of who you care about, instead of discussing what each person actually needs right now.',
         clash
@@ -386,12 +383,12 @@ export function buildCompleteReading(result: SajuResult, asOfYear = new Date().g
       : `${asOfYear} falls within this period. Compare its theme with the tasks and choices in your life now.`
     const paragraphs = [
       cycleWork.scene,
-      `Here, the ten-year cycle draws attention to **${cycleWork.contribution}**. Alongside your familiar working theme of **${work.theme}**, this can offer a different way to approach the situation above.`,
+      index === 0 ? `The current cycle highlights **${cycleWork.contribution}**. Consider where that approach is already helping, and where it asks something different of you.` : index === 1 ? `The next cycle introduces **${cycleWork.theme}**. A useful preparation is to notice one part of life where that approach is unfamiliar.` : `In this later cycle, **${cycleWork.contribution}** becomes the theme to revisit. Experience gained before then may change how you understand it.`,
       when,
       `The calculated period is compared with your birth-day symbol. This reading connects it with **${cycleWork.theme}**, which may show up as ${cycleWork.contribution}.`,
       cycle.branchSipsin === cycle.stemSipsin
         ? `Both parts lead to the same idea: ${cycleWork.theme}. See whether it helps you understand something you are already doing.`
-        : `The other part adds **${inner.theme}**. You do not have to choose between the two ideas; ask whether both matter in the situation you are thinking about.`,
+        : index === 0 ? `The lower half of this cycle adds **${inner.theme}**. Look for a present situation where these two needs meet.` : index === 1 ? `Alongside that, the lower half brings **${inner.theme}**. Keep both in mind when considering what to practise next.` : `A second thread in this later chapter is **${inner.theme}**. Leave space for that reading to develop as your circumstances change.`,
       index === 0 ? `If the situation fits, a possible reply is: **${cycleWork.next}**` : index === 1
         ? `Before this period begins, try one small step: **${cycleWork.next}**`
         : `Your life may look different by then. Keep this as an idea you can come back to, rather than a plan you have to follow. Something you could try is: **${cycleWork.next}**`,
@@ -409,7 +406,7 @@ export function buildCompleteReading(result: SajuResult, asOfYear = new Date().g
   })
   const actionPlan: ReportChapter = {
     id: 'next-moves', title: '09 · Three Small Steps to Try',
-    lead: 'Imagine finishing this reading with several things you want to change, then wondering how you would fit them all into an ordinary week.',
+    lead: 'Several ideas from this reading feel worth trying. The question is which one deserves a place in your week first.',
     paragraphs: [
       'Wanting to use an idea does not mean you need to turn every chapter into homework. Begin with the situation you recognise most clearly; leave the other suggestions for when they become relevant.',
       `**For yourself:** ${personal.practice}`,
@@ -428,7 +425,7 @@ export function buildCompleteReading(result: SajuResult, asOfYear = new Date().g
     'The month-branch relationship uses the principal inner stem. Inner-stem money checks list symbols without assigning strength weights.',
     'Everyday examples and the Keep close / Watch out for lists are original cultural interpretations. They are ideas to try, not facts known about your life.',
     'The situation pages are optional editorial exercises. Birth-chart themes shape their personal checks and practice details; the situation itself is not inferred from the chart. Compare the choices with actual circumstances and review what happens.',
-    'People, habits and work settings are suggested from the chapter themes. Color palettes and He Tu number pairs are optional symbols linked to the birth-day element, not lucky-event calculations or useful-element prescriptions.',
+    'People, habits and work settings are suggested from the chapter themes. Colour palettes and He Tu number pairs are optional symbols linked to the birth-day element, not lucky-event calculations or useful-element prescriptions.',
     'Combination and clash patterns do not automatically predict illness, separation or any other event.',
     PAIR_METHOD_NOTE,
     'This report covers one person. It does not include a two-person compatibility reading or a separate annual report.',
@@ -455,7 +452,7 @@ export function buildCompleteReading(result: SajuResult, asOfYear = new Date().g
     ...chapterText(actionPlan),
     'Situations you can work through', ...applications.map(applicationText),
     reportExtrasText(extras),
-    'Chart terms in plain English', ...CHART_GLOSSARY.map(item => `${item.term}: ${item.meaning}`),
+    'Chart terms in plain English', ...chartGlossaryFor([...chapters.flatMap(chapter => chapter.evidence), ...periods.flatMap(period => period.evidence), ...focus.evidence, '大運']).map(item => `${item.term}: ${item.meaning}`),
     'How this reading is prepared', ...methodNotes,
   ].join('\n\n'))
   return { focus, calculation: explainCalculation(result.input), title: 'Complete Life Reading', birthSummary: formatBirth(result.input), pillarSummary: pillarSummary(result), dayMaster: self.name, headline: personal.headline, summary, connections, referenceYear: asOfYear, chapters, periods, actionPlan, applications, extras, elements: c.elements, visibleMarkers: result.input.unknownTime ? 6 : 8, methodNotes, fullText, wordCount: fullText.split(/\s+/).length }

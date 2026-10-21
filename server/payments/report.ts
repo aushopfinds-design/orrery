@@ -11,6 +11,7 @@ import type { OrderInput } from './input.ts'
 
 export interface BuyerReport {
   title: string
+  recipientName?: string
   kind: OrderInput['kind']
   edition: string
   issuedAt: string
@@ -37,6 +38,7 @@ export async function issueReport(input: OrderInput, orderId: string, referenceY
   }
   const report: BuyerReport = {
     title: previewProduct(input.kind).title, kind: input.kind, edition: REPORT_EDITION,
+    ...(input.recipientName ? { recipientName: input.recipientName } : {}),
     issuedAt: new Date().toISOString(), text: plainReadingText(text), documents,
     cards: [buildDestinyCard(input.first), ...(input.second ? [buildDestinyCard(input.second)] : [])], pdf: '',
   }
@@ -147,7 +149,9 @@ async function reportPdf(report: BuyerReport, orderId: string) {
   centre('Edition ' + report.edition + ' / ' + report.issuedAt.slice(0, 10), 163, 9)
   centre('SANDBOX TEST / No real payment charged', 83, 9, paper, display)
   addPage()
-  centre('Dear reader,', 720, 27, ink, italic); y = 668
+  const greeting = report.recipientName ? clean(`Dear ${report.recipientName},`) : 'Dear reader,'
+  const greetingSize = Math.min(27, (W - 108) / font.widthOfTextAtSize(greeting, 1))
+  centre(greeting, 720, greetingSize, ink, report.recipientName ? font : italic); y = 668
   paragraph('Some parts of your story may feel familiar. Others may give you a new way to look at a choice, a relationship or the work you do every day.', 12)
   paragraph('This letter follows the patterns in your Saju chart. Read slowly, notice what feels relevant, and leave room for the life you know better than any report can.', 12)
   paragraph('The chart notes explain where each interpretation begins. You can return to them whenever you want to look more closely.', 12)

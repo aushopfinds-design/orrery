@@ -96,9 +96,22 @@ export const CHART_GLOSSARY = [
   { term: 'Clash / 沖', meaning: 'A directly opposing pair of chart symbols. Use it to ask about competing needs; it does not establish that conflict has happened.' },
   { term: 'Friction pattern / 刑', meaning: 'A traditional pattern name. In the naming convention used here, 子卯 is 無禮, 寅巳申 is 無恩 and 丑戌未 is 恃勢. The latter two are three-branch families; a matched pair must not be described as a complete three-branch group.' },
   { term: 'Disruption / 破; strain / 害', meaning: 'Names for symbol-pair relationships in the checked tables. They are not diagnoses, damage scores or predictions of harm.' },
-  { term: 'Wonjin / 怨嗔; Gwimun / 鬼門', meaning: 'Traditional pair-marker names. Here they are source labels for reflection on friction or sensitivity, not proof of resentment, a mental-health condition or supernatural ability.' },
+  { term: 'Wonjin / 怨嗔; Gwimun / 鬼門', meaning: 'Traditional pair-marker names. Here they are source labels for reflection on friction or sensitivity, a way to discuss sensitivity and misunderstandings without deciding what either person has experienced.' },
   { term: 'Ten Gods / 十神', meaning: 'Traditional names comparing other stems with the birth-day stem. The everyday English headings describe reflection themes, not literal gods or fixed personality types.' },
 ] as const
+
+/** Only labels actually used in the selected report evidence belong in its glossary. */
+export function chartGlossaryFor(evidence: readonly string[]) {
+  const used = evidence.filter(fact => !/^No\b/i.test(fact.trim())).join(' ')
+  return CHART_GLOSSARY.flatMap(item => {
+    const labels = item.term.match(/[\u3400-\u9fff]+/g) ?? []
+    const present = labels.filter(label => used.includes(label))
+    if (!present.length) return []
+    const english = item.term.split(' / ')[0]
+    const term = /[A-Za-z]/.test(english) ? `${english} / ${present.join(' / ')}` : present.join(' / ')
+    return [{ term, meaning: item.meaning }]
+  })
+}
 
 export const PAIR_METHOD_NOTE = 'Isolated two-branch comparisons do not claim a complete three-branch punishment group. The report retains directly checked clashes and other pair relationships.'
 export const REFERENCE_CLOCK_NOTE = 'Annual and monthly comparison points use 12:00 Asia/Seoul as one shared calculation reference. This is separate from the birthplace time zone used for the birth chart; it does not move an overseas birth to Seoul.'

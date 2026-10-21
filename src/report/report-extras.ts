@@ -39,7 +39,7 @@ export const ELEMENT_SYMBOLS: Record<ReadingElement, { colors: SymbolCard['color
 }
 export const SYMBOL_NOTE = 'These colours and numbers are traditional symbols for your birth-day element. Use them as personal reminders. They do not change the odds of an event or promise a result.'
 export const SYMBOL_SOURCES = [
-  { label: 'Five-color tradition · Korea.net', url: 'https://www.korea.net/NewsFocus/HonoraryReporters/view?articleId=218521' },
+  { label: 'Five-colour tradition · Korea.net', url: 'https://www.korea.net/NewsFocus/HonoraryReporters/view?articleId=218521' },
   { label: 'He Tu number pairs · historical text', url: 'https://zh.wikisource.org/wiki/河圖原' },
 ]
 
@@ -141,9 +141,9 @@ const LIFE_DETAILS: Record<string, LifeDetail> = {
 }
 
 const SYMBOL_USES: Record<ExtrasKind, string> = {
-  complete: 'Use a color in a notebook or phone background. Let it remind you of one choice you want to make more deliberately.',
+  complete: 'Use a colour in a notebook or phone background. Let it remind you of one choice you want to make more deliberately.',
   compatibility: 'Choose a shade each for a shared note. Use the note to record one request from each person; neither palette is the better one.',
-  year: 'Use a color to mark your own priorities in the year’s planner. The numbers can label a personal reminder, not a lucky date.',
+  year: 'Use a colour to mark your own priorities in the year’s planner. The numbers can label a personal reminder, not a lucky date.',
   career: 'Use a shade to mark the tasks that show your best work. Keep the numbers as a reminder to review a choice before committing.',
   business: 'Try a shade in your private planning notes. Choose customer-facing colours for clarity and fit with your audience.',
   wellbeing: 'Try a small accent in a space you already use. Let it remind you to pause and notice what would make the routine easier.',
@@ -172,9 +172,9 @@ export function buildReportExtras(kind: ExtrasKind, result: SajuResult, options:
   const q = (question: string, answer: string, basis: string): InsightQuestion => ({ question, answer, basis })
   const card = (title: string, text: string): EverydayChoice => ({ title, text })
   let questions: InsightQuestion[]
-  let keepClose = [card('People who make room for you', detail.people), card('A setting to try', detail.space), card('A habit worth keeping', detail.habit)]
-  let stepBack = [card('A familiar trap', detail.limit), card('A misunderstanding to clear up', detail.misread), card('Pressure that needs a name', `Watch for **${work.friction}**. Describe one real example before agreeing to more of it.`)]
-  let experiment = { title: 'One week, one useful change', steps: [detail.habit, `Say to someone close: “${relationship.words}”`, 'After seven days, keep one change that helped and drop one that did not fit.'] }
+  let keepClose = [card('A setting to try', detail.space), card('A habit worth keeping', detail.habit), card('An honest conversation', 'A chance to disagree gently, without having to defend every preference.')]
+  let stepBack = [card('An answer made on your behalf', 'Discuss a shared plan before someone commits both of you.'), card('Guessing what a quiet reply means', 'Ask what the person meant before answering the meaning you supplied.'), card('Pressure that needs a name', `Watch for **${work.friction}**. Describe one real example before agreeing to more of it.`)]
+  let experiment = { title: 'One week, one useful change', steps: ['Choose a recent situation from the questions above. Name what you would like to do differently.', `Say to someone close: “${relationship.words}”`, 'After seven days, keep one change that helped and drop one that did not fit.'] }
   const symbols = [symbolCard(result, kind)]
   let reminder = detail.reminder
   const evidence = [`Birth-day stem ${day.pillar.stem} (${STEMS[day.pillar.stem].name}); birth-day branch ${day.pillar.branch}.`, `Birth-month stem ${month.pillar.stem}: ${month.stemSipsin}; day-stem reference ${day.pillar.stem}.`]
@@ -268,7 +268,7 @@ export function buildReportExtras(kind: ExtrasKind, result: SajuResult, options:
 export function reportExtrasText(extras: ReportExtras): string {
   return plainReadingText([
     'Your Everyday Compass', 'Questions you may be asking',
-    ...extras.questions.flatMap(item => [item.question, item.answer, 'Why this appears: ' + item.basis]),
+    ...extras.questions.flatMap((item, index) => [item.question, item.answer, ...(extras.questions.findIndex(other => other.basis === item.basis) === index ? ['Why this appears: ' + item.basis] : [])]),
     'Bring closer', ...extras.keepClose.map(item => `${item.title}: ${item.text}`),
     'Give less space to', ...extras.stepBack.map(item => `${item.title}: ${item.text}`),
     'Symbolic colours & numbers',

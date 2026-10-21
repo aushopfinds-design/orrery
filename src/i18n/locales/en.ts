@@ -2,6 +2,8 @@ import { homepageCopy } from '../homepage.ts'
 
 const en: Record<string, string> = {
   ...homepageCopy,
+  "letter.name.label": "Name on your letter (optional)",
+  "letter.name.note": "Use a first name or nickname, up to 40 characters. It is saved with your order and printed in your letter; it does not change the calculation.",
   "city.country": "Country or territory",
   "city.suggestions": "Suggested places",
   "city.typeToSearch": "Type at least 2 characters to search places in this country.",

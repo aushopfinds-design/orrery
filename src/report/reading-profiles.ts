@@ -240,7 +240,7 @@ export const WORK_PROFILES: Record<string, WorkProfile> = {
   '正印': {
     title: 'Use support and share what you know', theme: "learning from someone and passing it on",
     setting: "someone who can explain things and a chance to help others learn",
-    contribution: 'helping people understand enough to take the next step',
+    contribution: 'helping others understand what to do next',
     friction: 'preparing every detail before trying anything',
     scene: 'You want a full explanation before you begin. Find out what you need to know for the first small attempt.',
     next: 'Use something you already understand to help someone finish one small task.',

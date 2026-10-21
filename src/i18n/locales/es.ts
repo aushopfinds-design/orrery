@@ -2,6 +2,8 @@ import { homepageCopy } from '../homepage.ts'
 
 const es: Record<string, string> = {
   ...homepageCopy,
+  "letter.name.label": "Nombre en tu carta (opcional)",
+  "letter.name.note": "Usa tu nombre o apodo, hasta 40 caracteres. Se guarda con el pedido y aparece en tu carta; no cambia el cálculo.",
   "city.country": "País o territorio",
   "city.suggestions": "Lugares sugeridos",
   "city.typeToSearch": "Escriba al menos 2 caracteres para buscar lugares en este país.",

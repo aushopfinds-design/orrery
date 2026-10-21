@@ -248,7 +248,7 @@ describe('seven products: paid reports, PDFs and access isolation', () => {
   const kinds = ['complete', 'compatibility', 'year', 'career', 'business', 'wellbeing', 'bundle'] as const
   for (const kind of kinds) it(`issues only the purchased ${kind} report and an immutable downloadable PDF`, async () => {
     const provider = gateway(), service = new PaymentService(config, store, provider)
-    const input = { kind, first: birth, ...(['compatibility', 'bundle'].includes(kind) ? { second: { ...birth, year: 1988, gender: 'F' } } : {}),
+    const input = { kind, first: birth, ...(kind === 'complete' ? { recipientName: 'Minji' } : {}), ...(['compatibility', 'bundle'].includes(kind) ? { second: { ...birth, year: 1988, gender: 'F' } } : {}),
       ...(['year', 'bundle'].includes(kind) ? { year: 2027 } : {}) }
     const checkout = await service.createCheckout(input, randomUUID()), order = (await store.get(checkout.orderId))!
     const session = provider.sessions.get(order.checkout_session_id!)!
@@ -264,6 +264,7 @@ describe('seven products: paid reports, PDFs and access isolation', () => {
     const response = await handler(request('report')), report = await response.json()
     expect(response.status).toBe(200)
     expect(report.kind).toBe(kind)
+    expect(report.recipientName).toBe(kind === 'complete' ? 'Minji' : undefined)
     expect(report.text.length).toBeGreaterThan(5000)
     expect(report).not.toHaveProperty('pdf')
     expect(report.documents).toHaveLength(kind === 'bundle' ? 3 : 1)

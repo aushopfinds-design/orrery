@@ -212,7 +212,7 @@ export function relationshipExample(r: SajuResult): EverydayExample {
     scene: 'Imagine that a plan for time together changes at the last moment. You want to explain what matters without guessing the other person’s reason.',
     response: REQUEST[day.pillar.branch],
     check: RELATIONSHIP_CHECK[day.pillar.stem] + ' Listen for the other person’s own request before agreeing on the next step.',
-    basis: `The birth-day reading explores ${PERSONAL_PROFILES[day.pillar.stem].focus}. The lower birth-day symbol is used to explore ${RELATIONSHIP_PROFILES[day.pillar.branch].need}. That is why this example asks you to put the need into words.`,
+    basis: `The birth-day reading explores ${PERSONAL_PROFILES[day.pillar.stem].focus}. The lower half of your birth-day pair introduces a need for ${RELATIONSHIP_PROFILES[day.pillar.branch].need}. That is why this example asks you to put the need into words.`,
     facts: [dayFact(r)],
   }
 }

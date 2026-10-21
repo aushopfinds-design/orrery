@@ -30,7 +30,8 @@ function wait(ms: number, signal: AbortSignal) {
 function validReport(value: unknown): value is PurchasedReport {
   if (!value || typeof value !== 'object') return false
   const v = value as Record<string, unknown>
-  return typeof v.title === 'string' && typeof v.kind === 'string' && isPreviewKind(v.kind) &&
+  return (v.recipientName === undefined || (typeof v.recipientName === 'string' && v.recipientName.length <= 40)) &&
+    typeof v.title === 'string' && typeof v.kind === 'string' && isPreviewKind(v.kind) &&
     typeof v.text === 'string' && typeof v.edition === 'string' && typeof v.issuedAt === 'string' &&
     Number.isFinite(Date.parse(v.issuedAt)) && Array.isArray(v.documents) && v.documents.every(x => typeof x === 'string') &&
     Array.isArray(v.cards) && v.cards.every(x => x && typeof x.title === 'string' && typeof x.sentence === 'string' && typeof x.daySymbol === 'string')

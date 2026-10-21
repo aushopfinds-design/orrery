@@ -2,6 +2,8 @@ import { homepageCopy } from '../homepage.ts'
 
 const zh: Record<string, string> = {
   ...homepageCopy,
+  "letter.name.label": "信中的称呼（可选）",
+  "letter.name.note": "请输入40字以内的名字或昵称。它会随订单保存并印在信中，不影响命盘计算。",
   "city.country": "国家或地区",
   "city.suggestions": "推荐地点",
   "city.typeToSearch": "输入至少两个字符，搜索所选国家的地点。",
