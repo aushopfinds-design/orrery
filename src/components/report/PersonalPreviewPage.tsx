@@ -77,13 +77,13 @@ export default function PersonalPreviewPage({ kind, input, onFirstBirth }: { kin
   }
 
   return <article id="my-report" className="fate-personal-preview" lang="en" aria-labelledby="personal-preview-title">
-    <nav className="fate-preview-steps" aria-label={t('buyer.flow.label')}><ol>
+    <nav className="fate-preview-steps" aria-label={t(checkoutIntent ? 'purchase.checkout' : 'buyer.flow.label')}><ol>
       <li><a href="#reports"><b>1</b>{t('buyer.flow.choose')}</a></li>
       <li data-current={!ready ? '' : undefined}>{input ? <button type="button" onClick={() => editPerson('first')} aria-current={!ready ? 'step' : undefined}><b>2</b>{t('site.steps.details')}</button> : <span aria-current="step"><b>2</b>{t('site.steps.details')}</span>}</li>
       <li data-current={ready ? '' : undefined}><span aria-current={ready ? 'step' : undefined}><b>3</b>{t(checkoutIntent ? 'purchase.checkout' : 'site.steps.preview')}</span></li>
     </ol></nav>
     <a href="#reports" className="fate-product-back">← {t('complete.back')}</a>
-    <header className="fate-personal-preview-heading"><FateKeyMark /><div><p className="fate-eyebrow">{t('buyer.preview.eyebrow')}</p><h1 id="personal-preview-title">{pageTitle}</h1><p>{t('buyer.preview.intro')}</p></div></header>
+    <header className="fate-personal-preview-heading"><FateKeyMark /><div><p className="fate-eyebrow">{t(checkoutIntent ? 'purchase.checkout' : 'buyer.preview.eyebrow')}</p><h1 id="personal-preview-title">{pageTitle}</h1>{!checkoutIntent && <p>{t('buyer.preview.intro')}</p>}</div></header>
     <div className="fate-personal-preview-controls"><div><label htmlFor="personal-report-kind">{t('buyer.preview.kind')}</label><select id="personal-report-kind" value={kind} onChange={event => window.location.assign(checkoutIntent ? checkoutHash(event.target.value as PreviewKind) : previewHash(event.target.value as PreviewKind))}>{PREVIEW_KINDS.map(value => <option key={value} value={value}>{previewProduct(value).title}</option>)}</select></div>{(kind === 'year' || kind === 'bundle') && <div><label htmlFor="personal-report-year">{t('category.examples.year')}</label><select id="personal-report-year" value={year} onChange={event => chooseYear(Number(event.target.value))}>{Array.from({ length: 11 }, (_, index) => currentYear + index).map(value => <option key={value} value={value}>{value}</option>)}</select></div>}</div>
     <section id="personal-checkout" className="fate-checkout-summary" tabIndex={-1} aria-labelledby="personal-checkout-title">
       <div><p className="fate-eyebrow">{t('purchase.heading')}</p><h2 id="personal-checkout-title">{product.title}</h2><ReportPrice kind={kind} /></div>
@@ -93,7 +93,7 @@ export default function PersonalPreviewPage({ kind, input, onFirstBirth }: { kin
 
     {!input || editing === 'first' ? <section className="fate-personal-birth-form">
       <h2 id="personal-first-heading" tabIndex={-1}>{t(input ? 'buyer.preview.change' : 'buyer.preview.enter')}</h2><p>{t('buyer.preview.enterText')}</p>
-      <BirthForm key={input ? 'edit-first' : 'new-first'} initialInput={input ?? undefined} onSubmit={submitFirst} submitLabel={t(input ? 'buyer.preview.update' : 'buyer.preview.calculate')} />
+      <BirthForm key={input ? 'edit-first' : 'new-first'} initialInput={input ?? undefined} onSubmit={submitFirst} submitLabel={t(checkoutIntent ? 'purchase.continue' : input ? 'buyer.preview.update' : 'buyer.preview.calculate')} />
       {input && <button type="button" className="fate-outline-button" onClick={() => { setEditing(null); requestAnimationFrame(() => focusSection(needsPartner ? 'personal-partner-heading' : checkoutIntent ? 'personal-checkout' : 'personal-opening-heading')) }}>{t('buyer.preview.cancel')}</button>}
     </section> : <>
       <section className="fate-personal-subjects" aria-label={t('buyer.preview.details')}>
@@ -101,7 +101,7 @@ export default function PersonalPreviewPage({ kind, input, onFirstBirth }: { kin
       </section>
       {needsPartner || editing === 'second' ? <section className="fate-personal-birth-form">
         <h2 id="personal-partner-heading" tabIndex={-1}>{t('buyer.preview.partner')}</h2><p>{t('buyer.preview.partnerText')}</p>
-        <BirthForm key="partner" onSubmit={submitSecond} initialInput={second} rememberInput={false} submitLabel={t(second ? 'buyer.preview.update' : 'buyer.preview.compare')} />
+        <BirthForm key="partner" onSubmit={submitSecond} initialInput={second} rememberInput={false} submitLabel={t(checkoutIntent ? 'purchase.continue' : second ? 'buyer.preview.update' : 'buyer.preview.compare')} />
         {second && <button type="button" className="fate-outline-button" onClick={() => { setEditing(null); requestAnimationFrame(() => focusSection('personal-opening-heading')) }}>{t('buyer.preview.cancel')}</button>}
       </section> : preview ? <>
         {(input.unknownTime || (paired && second?.unknownTime)) && <p role="status" className="fate-personal-pending">{t('buyer.preview.unknown')}</p>}

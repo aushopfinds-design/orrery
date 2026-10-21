@@ -245,6 +245,7 @@ const ja: Record<string, string> = {
   'purchase.needDetails': "下で必要な出生情報を入力すると決済に進めます。2人用レポートには相手の情報も必要です。",
   'purchase.testNote': "非公開のテスト決済です。テスト用アクセスコードを入力すると決済ボタンが有効になります。実際の請求はありません。",
   'purchase.checkout': '決済',
+  'purchase.continue': '決済へ進む',
 }
 
 export default ja

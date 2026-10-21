@@ -245,6 +245,7 @@ const zh: Record<string, string> = {
   'purchase.needDetails': "请在下方填写所需出生信息以继续结账。双人报告还需要另一人的信息。",
   'purchase.testNote': "这是私人测试结账。输入测试访问码即可启用付款按钮。不会收取真实费用。",
   'purchase.checkout': '结账',
+  'purchase.continue': '继续结账',
 }
 
 export default zh

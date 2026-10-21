@@ -245,6 +245,7 @@ const es: Record<string, string> = {
   'purchase.needDetails': "Introduce los datos de nacimiento necesarios abajo para continuar al pago. Los informes de dos personas también necesitan los datos de la otra persona.",
   'purchase.testNote': "Pago de prueba privado: introduce tu código de acceso de pruebas para activar el botón de pago. No se cobra dinero real.",
   'purchase.checkout': 'Pago',
+  'purchase.continue': 'Continuar al pago',
 }
 
 export default es

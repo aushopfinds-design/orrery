@@ -245,6 +245,7 @@ const ko: Record<string, string> = {
   'purchase.needDetails': "아래에서 필요한 출생 정보를 입력하면 결제로 이어집니다. 2인 리포트는 상대방의 정보도 필요합니다.",
   'purchase.testNote': "비공개 테스트 결제입니다. 테스트 접근 코드를 입력하면 결제 버튼이 활성화됩니다. 실제 돈은 청구되지 않습니다.",
   'purchase.checkout': '결제',
+  'purchase.continue': '결제로 계속하기',
 }
 
 export default ko

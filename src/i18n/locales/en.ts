@@ -245,6 +245,7 @@ const en: Record<string, string> = {
   'purchase.needDetails': "Enter the required birth details below to continue to checkout. Two-person reports also need the other person’s details.",
   'purchase.testNote': "Private test checkout: enter your tester access code to enable the payment button. No real money is charged.",
   'purchase.checkout': 'Checkout',
+  'purchase.continue': 'Continue to checkout',
 }
 
 export default en

@@ -245,6 +245,7 @@ const de: Record<string, string> = {
   'purchase.needDetails': "Geben Sie unten die erforderlichen Geburtsdaten ein, um zur Kasse zu gelangen. Berichte für zwei Personen benötigen auch die Daten der anderen Person.",
   'purchase.testNote': "Privater Test-Checkout: Geben Sie Ihren Testzugangscode ein, um die Zahlungsschaltfläche zu aktivieren. Es wird kein echtes Geld berechnet.",
   'purchase.checkout': 'Kasse',
+  'purchase.continue': 'Weiter zur Kasse',
 }
 
 export default de
