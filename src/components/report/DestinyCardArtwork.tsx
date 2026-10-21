@@ -1,28 +1,4 @@
-import { cardTextLines } from '../../report/destiny-card.ts'
-import { CARD_BACKGROUND, CARD_KEY, CARD_STARS } from '../../report/card-motion.ts'
-import type { DestinyCardData } from '../../report/destiny-card.ts'
-
-export interface DestinyCardLabels { personal: string; element: string; numbers: string; colour: string; watermark: string }
-/** Shared artwork for the site preview and verified purchaser PDF. */
-export default function DestinyCardArtwork({ card, id, labels, artworkHref = CARD_BACKGROUND, preview = true, showStem = true, animated = false, keyHref = CARD_KEY }: { card: DestinyCardData; id: string; labels: DestinyCardLabels; artworkHref?: string; preview?: boolean; showStem?: boolean; animated?: boolean; keyHref?: string }) {
-  const lines = cardTextLines(card.sentence)
-  return <svg className={`fate-destiny-personal-card${animated ? " fate-card-is-animated" : ""}`} xmlns="http://www.w3.org/2000/svg" width="1080" height="1350" viewBox="0 0 1080 1350" role="img" aria-labelledby={`${id}-title ${id}-desc`}>
-    <title id={`${id}-title`}>{`${card.displayName} · ${card.title}`}</title>
-    <desc id={`${id}-desc`}>{[card.daySymbol, card.numbers.join(' / '), card.colors.map(color => color.name).join(' / '), card.sentence, card.birthDate, labels.watermark].filter(Boolean).join('. ')}</desc>
-    <defs><linearGradient id={`${id}-bg`} x2="1" y2="1"><stop stopColor="#102c3c" /><stop offset=".45" stopColor="#020d19" /><stop offset="1" stopColor="#092131" /></linearGradient><linearGradient id={`${id}-gold`}><stop stopColor="#b8843b" /><stop offset=".45" stopColor="#ffe5a1" /><stop offset="1" stopColor="#b8843b" /></linearGradient><linearGradient id={`${id}-fade`} x2="0" y2="1"><stop stopColor="#04121d" /><stop offset=".15" stopColor="#04121d" stopOpacity="0" /><stop offset=".8" stopColor="#04121d" stopOpacity="0" /><stop offset="1" stopColor="#04121d" /></linearGradient><clipPath id={`${id}-art`}><rect x="28" y="290" width="1024" height="530" rx="12" /></clipPath></defs>
-    <rect width="1080" height="1350" rx="40" fill={`url(#${id}-bg)`} />
-    <rect x="20" y="20" width="1040" height="1310" rx="35" fill="none" stroke={`url(#${id}-gold)`} strokeWidth="3" /><rect x="30" y="30" width="1020" height="1290" rx="29" fill="none" stroke="#c99f58" strokeOpacity=".35" />
-    <g textAnchor="middle" fill="#f7e9c7"><text x="540" y="78" fontSize="22" letterSpacing="11">THE FATE KEY</text><text x="540" y="129" fontSize="18" letterSpacing="8">{labels.personal}</text><text x="540" y="203" fontFamily="Georgia, serif" fontSize={Array.from(card.displayName).length > 16 ? 49 : 65} textLength={Array.from(card.displayName).length > 16 ? 850 : undefined} lengthAdjust="spacingAndGlyphs">{card.displayName}</text><text x="540" y="252" fontFamily="Georgia, serif" fontSize="32" fill="#e8c37c">{card.title}</text>{card.birthDate && <text x="540" y="285" fontSize="19" letterSpacing="4">{card.birthDate}</text>}</g>
-    <image href={artworkHref} x="26" y="70" width="1028" height="1285" clipPath={`url(#${id}-art)`} /><rect x="28" y="290" width="1024" height="530" fill={`url(#${id}-fade)`} />
-    {keyHref && <g transform="translate(540 505)" aria-hidden="true"><g className="fate-card-turning-key"><image href={keyHref} x="-150" y="-225" width="300" height="450" /></g></g>}
-    {animated && <g className="fate-card-celestial-effects" aria-hidden="true" pointerEvents="none">
-      <rect className="fate-card-border-light" x="20" y="20" width="1040" height="1310" rx="35" fill="none" stroke="#fff2bd" strokeWidth="5" pathLength="100" strokeDasharray="4 46" />
-      {CARD_STARS.map(([x,y], index) => <g key={index} className={`fate-card-star fate-card-star-${index % 4}`} transform={`translate(${x} ${y})`}><path d="M0 -10 L2 -2 L10 0 L2 2 L0 10 L-2 2 L-10 0 L-2 -2Z" fill="#ffe8a8" /><circle r="3" fill="#fff9e6" /></g>)}
-      <ellipse className="fate-card-key-glow" cx="540" cy="390" rx="52" ry="62" fill="#ffdf8d" opacity=".12" />
-    </g>}
-    <g fill="#e7bf72" textAnchor="middle">{showStem && <text x="540" y="862" fontSize="25" letterSpacing="3">{card.stem} · {card.daySymbol.toUpperCase()}</text>}<path d="M100 891H980 M365 917V1025 M715 917V1025" stroke="#a67c3a" strokeOpacity=".7" /><text x="205" y="947" fontSize="17" letterSpacing="4">{labels.element}</text><text x="540" y="947" fontSize="17" letterSpacing="4">{labels.numbers}</text><text x="875" y="947" fontSize="17" letterSpacing="4">{labels.colour}</text><text x="205" y="1007" fontSize="40" fontFamily="Georgia, serif" fill="#fff4db">{card.element.toUpperCase()}</text><text x="540" y="1011" fontSize="66" fontFamily="Georgia, serif">{card.numbers.join(' · ')}</text><circle cx="875" cy="988" r="24" fill={card.colors[0].hex} stroke="#efd194" strokeWidth="3" /><text x="875" y="1054" fontSize="21" fill="#fff4db">{card.colors[0].name}</text></g>
-    <g textAnchor="middle" fill="#fff0cd" fontFamily="Georgia, serif" fontSize="37">{lines.map((line, index) => <text key={index} x="540" y={1127 + index * 45}>{line}</text>)}</g>
-    <text x="540" y="1260" textAnchor="middle" fill="#e7bf72" fontSize="26" letterSpacing="5">thefatekey.com</text><text x="540" y="1300" textAnchor="middle" fill="#d1c4a6" fontSize="15" letterSpacing="3">{labels.watermark}</text>
-    {preview && <g transform="rotate(-25 540 590)" textAnchor="middle"><rect x="125" y="551" width="830" height="75" rx="10" fill="#03111e" fillOpacity=".74" /><text x="540" y="601" fill="#fff0cc" fontSize="35" letterSpacing="7">{labels.watermark}</text></g>}
-  </svg>
-}
+// Keep the screen import stable; the shared implementation is plain TypeScript
+// so the serverless dependency tracer includes its compiled JavaScript.
+export { default } from './destiny-card-artwork.ts'
+export type { DestinyCardLabels } from './destiny-card-artwork.ts'

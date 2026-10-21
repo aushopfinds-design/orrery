@@ -1,7 +1,7 @@
 import sharp from 'sharp'
 import { createElement } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
-import DestinyCardArtwork from '../../src/components/report/DestinyCardArtwork.tsx'
+import DestinyCardArtwork from '../../src/components/report/destiny-card-artwork.ts'
 import { readFile } from 'node:fs/promises'
 import { PDFDocument, rgb, StandardFonts, pushGraphicsState, popGraphicsState, rectangle, clip, endPath } from 'pdf-lib'
 import fontkit from '@pdf-lib/fontkit'
