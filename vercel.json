@@ -1,7 +1,7 @@
 {
   "functions": {
     "api/payments.ts": {
-      "includeFiles": ["server/payments/assets/**", "public/images/cards/the-fate-key-sample.webp"],
+      "includeFiles": "{server/payments/assets/**,public/images/cards/the-fate-key-sample.webp}",
       "maxDuration": 120
     }
   }
