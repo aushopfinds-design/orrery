@@ -1,3 +1,4 @@
+import BuyReportLink from './report/BuyReportLink.tsx'
 import { useEffect, useMemo } from 'react'
 import { calculateSaju } from '@orrery/core/saju'
 import { useLocale } from '../i18n/index.ts'
@@ -37,7 +38,7 @@ export default function CategoryReportPage({ kind }: { kind: FocusCategory | 'bu
     <a href="#reports" className="fate-product-back">← {t('complete.back')}</a>
     <header className="fate-complete-product-hero">
       <div><p className="fate-eyebrow">{t('category.series')}</p><h1 id={`${slug}-title`}>{title}</h1><p className="fate-complete-description">{info?.description ?? t('category.bundle.description')}</p><p className="fate-complete-price"><ReportPrice kind={kind} /><span>{t('category.product.priceNote')}</span></p>
-        <div className="fate-complete-actions"><a href={previewHash(kind)} className="fate-complete-primary">{t('buyer.preview.cta')}</a><a href={`#${slug}-sample`} className="fate-outline-button">{t('complete.sample')}</a></div><p className="fate-reading-small-note">{t('category.product.status')}</p>
+        <div className="fate-complete-actions"><BuyReportLink kind={kind} /><a href={previewHash(kind)} className="fate-complete-primary">{t('buyer.preview.cta')}</a><a href={`#${slug}-sample`} className="fate-outline-button">{t('complete.sample')}</a></div><p className="fate-reading-small-note">{t('category.product.status')}</p>
       </div>
       <div className="fate-complete-book" aria-hidden="true"><FateEmblem className="fate-complete-book-emblem" /><span>THE FATE KEY</span><strong>{title}</strong><small>YOUR STORY HOLDS THE KEY</small></div>
     </header>

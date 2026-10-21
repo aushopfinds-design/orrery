@@ -39,14 +39,15 @@ export default function SandboxCheckout({ order }: { order: OrderInput }) {
       if (activeRequest.current === controller) { setMessage(t('sandbox.error')); setBusy(false) }
     } finally { clearTimeout(timeout); if (activeRequest.current === controller) activeRequest.current = null }
   }
-  if (!isSandboxHost(window.location.hostname)) return null
+  if (!isSandboxHost(window.location.hostname)) return <p role="status">{t('buyer.checkout.pending')}</p>
   return <section className="fate-personal-delivery" aria-label={t('sandbox.title')}>
     <h3>{t('sandbox.title')} · {reportPrice(order.kind)}</h3>
     <p>{t('sandbox.note')}</p><p>{t('sandbox.data')}</p>
     <label>{t('letter.name.label')}<input type="text" autoComplete="given-name" maxLength={40} value={recipientName} disabled={busy} onChange={event => setRecipientName(event.target.value)} aria-describedby="letter-name-note" /></label>
     <p id="letter-name-note">{t('letter.name.note')}</p>
+    <p id="checkout-access-help" className="fate-checkout-access-note">{t('purchase.testNote')}</p>
     <label>{t('sandbox.access')}<input type="password" autoComplete="off" value={access} onChange={event => setAccess(event.target.value)} /></label>
-    <button type="button" className="fate-complete-primary" onClick={checkout} disabled={busy || access.length < 32}>{t(busy ? 'sandbox.opening' : 'sandbox.buy')}</button>
+    <button type="button" className="fate-complete-primary" onClick={checkout} disabled={busy || access.length < 32} aria-describedby="checkout-access-help">{t(busy ? 'sandbox.opening' : 'sandbox.buy')}</button>
     {message && <p role="alert">{message}</p>}
   </section>
 }

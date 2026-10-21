@@ -239,6 +239,12 @@ const ko: Record<string, string> = {
   'card.export.unsupported': "이 브라우저는 MP4 저장을 지원하지 않습니다. 최신 Chrome 또는 Safari를 사용하거나 이미지를 저장해 주세요.",
   'card.export.error': "카드를 저장하지 못했습니다. 이 화면을 열어 둔 채 다시 시도해 주세요.",
   'card.export.done': "카드 파일을 저장할 수 있어요.",
+  'purchase.buy': "리포트 구매",
+  'purchase.testBuy': "테스트 구매",
+  'purchase.heading': "선택한 리포트",
+  'purchase.needDetails': "아래에서 필요한 출생 정보를 입력하면 결제로 이어집니다. 2인 리포트는 상대방의 정보도 필요합니다.",
+  'purchase.testNote': "비공개 테스트 결제입니다. 테스트 접근 코드를 입력하면 결제 버튼이 활성화됩니다. 실제 돈은 청구되지 않습니다.",
+  'purchase.checkout': '결제',
 }
 
 export default ko

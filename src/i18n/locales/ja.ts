@@ -239,6 +239,12 @@ const ja: Record<string, string> = {
   'card.export.unsupported': "このブラウザーではMP4を保存できません。最新のChromeやSafariを使うか、画像を保存してください。",
   'card.export.error': "保存できませんでした。この画面を開いたまま、もう一度お試しください。",
   'card.export.done': "カードファイルを保存できます。",
+  'purchase.buy': "レポートを購入",
+  'purchase.testBuy': "テスト購入",
+  'purchase.heading': "選択したレポート",
+  'purchase.needDetails': "下で必要な出生情報を入力すると決済に進めます。2人用レポートには相手の情報も必要です。",
+  'purchase.testNote': "非公開のテスト決済です。テスト用アクセスコードを入力すると決済ボタンが有効になります。実際の請求はありません。",
+  'purchase.checkout': '決済',
 }
 
 export default ja

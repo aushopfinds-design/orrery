@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { PREVIEW_KINDS, previewHash, previewProduct } from '../report/personal-products.ts'
+import { PREVIEW_KINDS, checkoutHash, previewHash, previewProduct } from '../report/personal-products.ts'
 import { navigationTarget, resolveReportRoute } from './report-route.ts'
 
 describe('report and help navigation', () => {
@@ -9,6 +9,8 @@ describe('report and help navigation', () => {
   })
   it.each(PREVIEW_KINDS)('keeps %s personal previews and public examples reachable', kind => {
     expect(resolveReportRoute(previewHash(kind))).toBe('personal-preview')
+    expect(resolveReportRoute(checkoutHash(kind))).toBe('personal-preview')
+    expect(navigationTarget(checkoutHash(kind))).toBe('#my-report')
     expect(navigationTarget(previewHash(kind))).toBe('#my-report')
     expect(resolveReportRoute(previewProduct(kind).sample)).toMatch(/sample$/)
     expect(navigationTarget(previewProduct(kind).sample)).toBe('#reports')

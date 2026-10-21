@@ -239,6 +239,12 @@ const zh: Record<string, string> = {
   'card.export.unsupported': "此浏览器不支持保存MP4。请使用新版Chrome或Safari，或保存图片。",
   'card.export.error': "无法保存卡片。请保持页面打开并重试。",
   'card.export.done': "卡片文件已准备好保存。",
+  'purchase.buy': "购买报告",
+  'purchase.testBuy': "测试购买",
+  'purchase.heading': "您选择的报告",
+  'purchase.needDetails': "请在下方填写所需出生信息以继续结账。双人报告还需要另一人的信息。",
+  'purchase.testNote': "这是私人测试结账。输入测试访问码即可启用付款按钮。不会收取真实费用。",
+  'purchase.checkout': '结账',
 }
 
 export default zh

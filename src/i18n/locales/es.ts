@@ -239,6 +239,12 @@ const es: Record<string, string> = {
   'card.export.unsupported': "Este navegador no puede guardar MP4. Usa Chrome o Safari actualizado, o guarda la imagen.",
   'card.export.error': "No se pudo guardar la tarjeta. Mantén esta página abierta e inténtalo de nuevo.",
   'card.export.done': "El archivo de tu tarjeta está listo para guardar.",
+  'purchase.buy': "Comprar informe",
+  'purchase.testBuy': "Compra de prueba",
+  'purchase.heading': "Tu informe seleccionado",
+  'purchase.needDetails': "Introduce los datos de nacimiento necesarios abajo para continuar al pago. Los informes de dos personas también necesitan los datos de la otra persona.",
+  'purchase.testNote': "Pago de prueba privado: introduce tu código de acceso de pruebas para activar el botón de pago. No se cobra dinero real.",
+  'purchase.checkout': 'Pago',
 }
 
 export default es

@@ -1063,3 +1063,11 @@
   .fate-info-heading { color: #20374a; background: #fff; border-color: #b9a07c; }
   .fate-info-heading > p:last-child { color: #625849; }
 }
+
+.fate-product-content > .fate-buy-report { display:flex; justify-content:center; margin:12px 0; min-height:48px; align-items:center; }
+.fate-bundle-action > .fate-buy-report { display:flex; justify-content:center; margin-bottom:12px; }
+.fate-checkout-summary { padding:24px; margin:22px 0; border:1px solid #b38b50; border-radius:14px; background:#f8f1e2; scroll-margin-top:100px; }
+.fate-checkout-summary h2 { font:400 28px Georgia,serif; margin:8px 0 12px; }
+.fate-checkout-summary > .fate-buy-report { display:inline-flex; margin-top:16px; }
+.fate-checkout-access-note { font-weight:600; }
+@media (max-width:760px) { .fate-checkout-summary { padding:18px; } .fate-buy-report { width:100%; justify-content:center; } }

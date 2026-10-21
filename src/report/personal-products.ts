@@ -6,7 +6,9 @@ export type PreviewKind = 'complete' | FocusCategory | 'bundle'
 export const PREVIEW_KINDS: PreviewKind[] = ['complete', 'compatibility', 'year', 'career', 'business', 'wellbeing', 'bundle']
 export function isPreviewKind(value: string): value is PreviewKind { return PREVIEW_KINDS.includes(value as PreviewKind) }
 export function previewHash(kind: PreviewKind = 'complete') { return kind === 'complete' ? '#my-report' : `#my-report-${kind}` }
+export function checkoutHash(kind: PreviewKind = 'complete') { return previewHash(kind) + '-checkout' }
 export function resolvePreviewKind(hash: string): PreviewKind | undefined {
+  if (hash.endsWith('-checkout')) hash = hash.slice(0, -9)
   if (hash === '#my-report') return 'complete'
   const kind = hash.replace(/^#my-report-/, '')
   return hash.startsWith('#my-report-') && isPreviewKind(kind) ? kind : undefined

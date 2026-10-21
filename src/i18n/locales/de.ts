@@ -239,6 +239,12 @@ const de: Record<string, string> = {
   'card.export.unsupported': "Dieser Browser kann kein MP4 speichern. Verwenden Sie aktuelles Chrome oder Safari oder speichern Sie das Bild.",
   'card.export.error': "Die Karte konnte nicht gespeichert werden. Lassen Sie die Seite geöffnet und versuchen Sie es erneut.",
   'card.export.done': "Ihre Kartendatei ist zum Speichern bereit.",
+  'purchase.buy': "Bericht kaufen",
+  'purchase.testBuy': "Testkauf",
+  'purchase.heading': "Ihr gewählter Bericht",
+  'purchase.needDetails': "Geben Sie unten die erforderlichen Geburtsdaten ein, um zur Kasse zu gelangen. Berichte für zwei Personen benötigen auch die Daten der anderen Person.",
+  'purchase.testNote': "Privater Test-Checkout: Geben Sie Ihren Testzugangscode ein, um die Zahlungsschaltfläche zu aktivieren. Es wird kein echtes Geld berechnet.",
+  'purchase.checkout': 'Kasse',
 }
 
 export default de

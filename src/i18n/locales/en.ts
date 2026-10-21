@@ -239,6 +239,12 @@ const en: Record<string, string> = {
   'card.export.unsupported': "This browser cannot save MP4. Try a current Chrome or Safari browser, or save the image.",
   'card.export.error': "Your card could not be saved. Keep this page open and try again.",
   'card.export.done': "Your card file is ready to save.",
+  'purchase.buy': "Buy report",
+  'purchase.testBuy': "Test purchase",
+  'purchase.heading': "Your selected report",
+  'purchase.needDetails': "Enter the required birth details below to continue to checkout. Two-person reports also need the other person’s details.",
+  'purchase.testNote': "Private test checkout: enter your tester access code to enable the payment button. No real money is charged.",
+  'purchase.checkout': 'Checkout',
 }
 
 export default en

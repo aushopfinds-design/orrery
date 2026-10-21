@@ -1,3 +1,4 @@
+import BuyReportLink from './report/BuyReportLink.tsx'
 import { useLocale } from '../i18n/index.ts'
 import { FateEmblem } from './HomeOverview.tsx'
 import { useEffect } from 'react'
@@ -11,7 +12,7 @@ export default function CompleteReportPage({ onStartFree, onViewSample }: { onSt
       <a href="#reports" className="fate-product-back">← {t('complete.back')}</a>
       <header className="fate-complete-product-hero">
         <div><p className="fate-eyebrow">{t('complete.eyebrow')}</p><h1 id="complete-product-title">{t('complete.title')}</h1><p className="fate-complete-description">{t('complete.description')}</p><p className="fate-complete-price"><ReportPrice kind="complete" /><span>{t('complete.priceNote')}</span></p>
-          <div className="fate-complete-actions"><a href="#my-report" className="fate-complete-primary">{t('buyer.preview.cta')}</a><button type="button" onClick={onViewSample} className="fate-outline-button">{t('complete.sample')}</button><a href="#birth-details" onClick={onStartFree} className="fate-buyer-sample-link">{t('complete.tryFree')}</a></div>
+          <div className="fate-complete-actions"><BuyReportLink kind="complete" /><a href="#my-report" className="fate-complete-primary">{t('buyer.preview.cta')}</a><button type="button" onClick={onViewSample} className="fate-outline-button">{t('complete.sample')}</button><a href="#birth-details" onClick={onStartFree} className="fate-buyer-sample-link">{t('complete.tryFree')}</a></div>
           <p className="fate-reading-small-note">{t('complete.status')}</p>
         </div>
         <div className="fate-complete-book" aria-hidden="true"><FateEmblem className="fate-complete-book-emblem" /><span>THE FATE KEY</span><strong>Complete<br />Life Reading</strong><small>YOUR STORY HOLDS THE KEY</small></div>
