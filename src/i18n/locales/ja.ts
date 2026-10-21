@@ -238,6 +238,7 @@ const ja: Record<string, string> = {
   'card.export.progress': "カードを準備中… {percent}%",
   'card.export.unsupported': "このブラウザーではMP4を保存できません。最新のChromeやSafariを使うか、画像を保存してください。",
   'card.export.error': "保存できませんでした。この画面を開いたまま、もう一度お試しください。",
+  'card.export.done': "カードファイルを保存できます。",
 }
 
 export default ja

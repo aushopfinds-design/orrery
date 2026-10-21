@@ -238,6 +238,7 @@ const de: Record<string, string> = {
   'card.export.progress': "Karte wird vorbereitet… {percent}%",
   'card.export.unsupported': "Dieser Browser kann kein MP4 speichern. Verwenden Sie aktuelles Chrome oder Safari oder speichern Sie das Bild.",
   'card.export.error': "Die Karte konnte nicht gespeichert werden. Lassen Sie die Seite geöffnet und versuchen Sie es erneut.",
+  'card.export.done': "Ihre Kartendatei ist zum Speichern bereit.",
 }
 
 export default de

@@ -238,6 +238,7 @@ const zh: Record<string, string> = {
   'card.export.progress': "正在准备卡片… {percent}%",
   'card.export.unsupported': "此浏览器不支持保存MP4。请使用新版Chrome或Safari，或保存图片。",
   'card.export.error': "无法保存卡片。请保持页面打开并重试。",
+  'card.export.done': "卡片文件已准备好保存。",
 }
 
 export default zh

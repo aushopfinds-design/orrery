@@ -58,24 +58,26 @@ export async function exportCard(card: DestinyCardData, format: 'png' | 'mp4', s
     draw(0, format === 'mp4')
     if (format === 'png') return await new Promise<Blob>((resolve,reject) => canvas.toBlob(value => value ? resolve(value) : reject(new Error('card_encode_failed')), 'image/png'))
     if (document.hidden) throw new Error('card_keep_open')
-    const stream = canvas.captureStream(30)
+    const stream = canvas.captureStream(0)
     try {
       return await new Promise<Blob>((resolve, reject) => {
         const recorder = new MediaRecorder(stream, { mimeType: mime!, videoBitsPerSecond: 5_000_000 })
         const chunks: Blob[] = []; let frame = 0, failure: Error | undefined
-        const cleanup = () => { cancelAnimationFrame(frame); clearTimeout(watchdog); signal.removeEventListener('abort', abort); document.removeEventListener('visibilitychange', visibility) }
-        const stop = (error?: Error) => { failure = error; cancelAnimationFrame(frame); if (recorder.state !== 'inactive') recorder.stop(); else { cleanup(); reject(error ?? new Error('card_encode_failed')) } }
+        const cleanup = () => { clearInterval(frame); clearTimeout(watchdog); signal.removeEventListener('abort', abort); document.removeEventListener('visibilitychange', visibility) }
+        const stop = (error?: Error) => { failure = error; clearInterval(frame); if (recorder.state !== 'inactive') recorder.stop(); else { cleanup(); reject(error ?? new Error('card_encode_failed')) } }
         const abort = () => stop(new DOMException('Aborted', 'AbortError'))
         const visibility = () => { if (document.hidden) stop(new Error('card_keep_open')) }
         const watchdog = setTimeout(() => stop(new Error('card_encode_failed')), 20000)
         recorder.ondataavailable = event => { if (event.data.size) chunks.push(event.data) }
         recorder.onerror = () => stop(new Error('card_encode_failed'))
-        recorder.onstop = () => { cleanup(); const blob = new Blob(chunks, { type: 'video/mp4' }); if (failure || !blob.size) reject(failure ?? new Error('card_encode_failed')); else { progress(100); resolve(blob) } }
+        recorder.onstop = async () => { cleanup(); const blob = new Blob(chunks, { type: 'video/mp4' }); const header = await blob.slice(4,8).text(); if (failure || !blob.size || header !== 'ftyp') reject(failure ?? new Error('card_encode_failed')); else { progress(100); resolve(blob) } }
         signal.addEventListener('abort', abort, { once: true }); document.addEventListener('visibilitychange', visibility)
         if (signal.aborted) { abort(); return }
         const start = performance.now(); recorder.start(250)
-        const tick = (now: number) => { const seconds = Math.min((now-start)/1000, 6); draw(seconds, true); progress(Math.round(seconds / 6 * 100)); if (seconds >= 6) stop(); else frame = requestAnimationFrame(tick) }
-        frame = requestAnimationFrame(tick)
+        const track = stream.getVideoTracks()[0] as CanvasCaptureMediaStreamTrack
+        track.requestFrame()
+        const tick = () => { const seconds = Math.min((performance.now()-start)/1000, 6); draw(seconds, true); track.requestFrame(); progress(Math.round(seconds / 6 * 100)); if (seconds >= 6) stop() }
+        frame = window.setInterval(tick, 1000 / 30)
       })
     } finally { stream.getTracks().forEach(track => track.stop()) }
   } finally { URL.revokeObjectURL(baseUrl) }

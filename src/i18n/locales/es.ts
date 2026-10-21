@@ -238,6 +238,7 @@ const es: Record<string, string> = {
   'card.export.progress': "Preparando tu tarjeta… {percent}%",
   'card.export.unsupported': "Este navegador no puede guardar MP4. Usa Chrome o Safari actualizado, o guarda la imagen.",
   'card.export.error': "No se pudo guardar la tarjeta. Mantén esta página abierta e inténtalo de nuevo.",
+  'card.export.done': "El archivo de tu tarjeta está listo para guardar.",
 }
 
 export default es

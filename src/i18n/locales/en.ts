@@ -238,6 +238,7 @@ const en: Record<string, string> = {
   'card.export.progress': "Preparing your card… {percent}%",
   'card.export.unsupported': "This browser cannot save MP4. Try a current Chrome or Safari browser, or save the image.",
   'card.export.error': "Your card could not be saved. Keep this page open and try again.",
+  'card.export.done': "Your card file is ready to save.",
 }
 
 export default en

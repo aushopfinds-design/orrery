@@ -29,7 +29,7 @@ export default function DestinyCardStudio({ input }: { input: BirthInput | null 
   async function saveSample(format: 'png' | 'mp4') {
     if (sharing) return
     setSharing(true); setShareStatus('')
-    try { saveCardBlob(await sampleFile(format), `The-Fate-Key-Design-Sample.${format}`); setShareStatus(t('destiny.share.done')) }
+    try { saveCardBlob(await sampleFile(format), `The-Fate-Key-Design-Sample.${format}`); setShareStatus(t('card.export.done')) }
     catch (error) { if (!(error instanceof DOMException && error.name === 'AbortError')) setShareStatus(t(error instanceof Error && error.message === 'card_video_unsupported' ? 'card.export.unsupported' : 'card.export.error')) }
     finally { setSharing(false) }
   }

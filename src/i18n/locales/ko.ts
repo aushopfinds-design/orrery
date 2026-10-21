@@ -238,6 +238,7 @@ const ko: Record<string, string> = {
   'card.export.progress': "카드 준비 중… {percent}%",
   'card.export.unsupported': "이 브라우저는 MP4 저장을 지원하지 않습니다. 최신 Chrome 또는 Safari를 사용하거나 이미지를 저장해 주세요.",
   'card.export.error': "카드를 저장하지 못했습니다. 이 화면을 열어 둔 채 다시 시도해 주세요.",
+  'card.export.done': "카드 파일을 저장할 수 있어요.",
 }
 
 export default ko
