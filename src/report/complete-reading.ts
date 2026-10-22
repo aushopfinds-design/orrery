@@ -389,6 +389,9 @@ export function buildCompleteReading(result: SajuResult, asOfYear = new Date().g
       cycle.branchSipsin === cycle.stemSipsin
         ? `Both parts lead to the same idea: ${cycleWork.theme}. See whether it helps you understand something you are already doing.`
         : index === 0 ? `The lower half of this cycle adds **${inner.theme}**. Look for a present situation where these two needs meet.` : index === 1 ? `Alongside that, the lower half brings **${inner.theme}**. Keep both in mind when considering what to practise next.` : `A second thread in this later chapter is **${inner.theme}**. Leave space for that reading to develop as your circumstances change.`,
+      cycle.stemSipsin === '正財' || cycle.branchSipsin === '正財' || cycle.stemSipsin === '偏財' || cycle.branchSipsin === '偏財'
+        ? `**Money in this life chapter:** ${cycle.stemSipsin === '正財' || cycle.branchSipsin === '正財' ? 'The steady-income theme appears in this cycle.' : ''} ${cycle.stemSipsin === '偏財' || cycle.branchSipsin === '偏財' ? 'A theme of new financial opportunities appears too.' : ''} It marks a topic to examine, not an amount you will earn.`.replace(/\s+/g, ' ').trim()
+        : 'This ten-year pairing has no direct money symbol in the parts checked here. That does not mean your income will stand still.',
       index === 0 ? `If the situation fits, a possible reply is: **${cycleWork.next}**` : index === 1
         ? `Before this period begins, try one small step: **${cycleWork.next}**`
         : `Your life may look different by then. Keep this as an idea you can come back to, rather than a plan you have to follow. Something you could try is: **${cycleWork.next}**`,

@@ -120,11 +120,13 @@ export function buildYearAheadReading(result: SajuResult, year = new Date().getF
     const dayPattern = analyzePillarRelations(pillar, c.day.pillar.ganzi)
     const clash = [...dayPattern.stem, ...dayPattern.branch].some(item => item.type === '沖')
     const combine = [...dayPattern.stem, ...dayPattern.branch].some(item => item.type === '合')
+    const monthMoney = [god, branchGod].filter(value => value === '正財' || value === '偏財')
     const exercise = MONTH_REVIEW[index]
     const practice = `${MONTH_TASKS[FAMILY[god]][index % 3]} ${exercise.action}`
     return {
       ...chapter(`month-${index + 1}`, label, `${MONTH_SCENES[index][0]} ${MONTH_SCENES[index][1]} The chart idea explored here is **${theme.theme}**.`, [
         `For ${label}, the reference month’s stem is compared with your birth-day stem. This reading connects that relationship with **${theme.theme}**. Use this question: **${MONTH_FOCUS[index][1]}**`,
+        `**What makes this reference distinct:** ${monthMoney.length ? `A ${monthMoney.includes('正財') ? 'steady-income' : 'new-offer'} money theme appears in the month symbols.` : 'No direct money symbol appears in the checked month symbols.'} ${clash ? 'The month also clashes with your birth-day pillar, so compare competing priorities.' : combine ? 'The month combines with your birth-day pillar, so notice where cooperation is possible.' : 'There is no direct clash or combination with your birth-day pillar.'}`,
         `**A situation to explore:** ${situation.scene} Before agreeing, ask: **“${situation.question}”**`,
         branchGod === god ? `Both parts repeat the same theme in this reference. **${practice}** Then review the real result.` : `The second part adds **${innerTheme.theme}**. Leave room for it when you try this step: **${practice}**`,
         `**Review this month's attempt:** ${exercise.review} ${clash ? 'The checked clash adds a question about two different needs.' : combine ? 'The checked combination adds a question about how to share the next step.' : ''}`.trim(),
@@ -134,8 +136,8 @@ export function buildYearAheadReading(result: SajuResult, year = new Date().getF
     }
   })
   const moneyMonths = months.filter(month => {
-    const god = getRelation(c.day.pillar.stem, month.pillar[0])!.hanja
-    return god === '正財' || god === '偏財'
+    const gods = [month.pillar[0], getJeonggi(month.pillar[1])].map(stem => getRelation(c.day.pillar.stem, stem)!.hanja)
+    return gods.some(god => god === '正財' || god === '偏財')
   })
   const clashMonths = months.filter(month => {
     const relation = analyzePillarRelations(month.pillar, c.day.pillar.ganzi)
@@ -145,10 +147,11 @@ export function buildYearAheadReading(result: SajuResult, year = new Date().getF
     applications: buildReportApplications('year', result, { year }),
     extras: buildReportExtras('year', result, { year, annual: { theme: annual.theme, god: annualGod, pillar: annualPillar } }),
     headline: `${year}: ${decision.headline}`, subjects: [subject(result)],
-    summary: [{ label: `${year} at a glance`, text: `The year's stem brings ${annual.theme}; the principal branch stem adds ${inner.theme}.` }, { label: 'Money themes in the monthly references', text: moneyMonths.length ? moneyMonths.map(month => month.label).join(', ') : 'No month stem carries a direct money symbol at the sampled dates.' }, { label: 'Months with a day-pillar clash', text: clashMonths.length ? clashMonths.map(month => month.label).join(', ') : 'No direct day-pillar clash at the sampled dates.' }],
+    summary: [{ label: `${year} at a glance`, text: `The year's stem brings ${annual.theme}; the principal branch stem adds ${inner.theme}.` }, { label: 'Money themes in the monthly references', text: moneyMonths.length ? moneyMonths.map(month => month.label).join(', ') : 'No direct money symbol in the sampled month stems or principal branch stems.' }, { label: 'Months with a day-pillar clash', text: clashMonths.length ? clashMonths.map(month => month.label).join(', ') : 'No direct day-pillar clash at the sampled dates.' }],
     chapters: [
       chapter('annual-theme', "What You Want From This Year", "Looking at your plans for the year, you realise that several no longer feel like your own choices.", [
-        `**The chart answer for ${year}:** The year stem brings **${annual.theme}**, while the branch's principal stem adds **${inner.theme}**. ${moneyMonths.length ? `The sampled month stems connect with money themes in ${moneyMonths.map(month => month.label).join(', ')}.` : 'No sampled month stem directly carries a money symbol.'} ${clashMonths.length ? `The birth-day pillar meets a clash in the ${clashMonths.map(month => month.label).join(', ')} references; those months may be useful times to check competing priorities.` : 'None of the sampled months forms a direct clash with your birth-day pillar.'}`,
+        `**The chart answer for ${year}:** The year stem brings **${annual.theme}**, while the branch's principal stem adds **${inner.theme}**. ${moneyMonths.length ? `The sampled month symbols connect with money themes in ${moneyMonths.map(month => month.label).join(', ')}.` : 'No sampled month symbol directly carries a money theme.'}`,
+        `**Points of friction to examine:** ${clashMonths.length ? `The birth-day pillar meets a clash in the ${clashMonths.map(month => month.label).join(', ')} references. Compare competing priorities then.` : 'None of the sampled months forms a direct clash with your birth-day pillar.'} A sampled date does not cover an entire calendar month.`,
         "A plan can become familiar before you ask whether you still want it. This year’s reading gives you another way to look at that question, rather than a list of events you should expect.",
         `Your birth-day symbol is used here to explore **${c.personal.focus}**. Comparing it with the selected year’s symbol adds **${annual.theme}**. Think about a plan you already have: does either idea help you see what you want from it?`,
         annualGod === c.month.stemSipsin ? "The year and your birth month bring up the same idea in this reading. You can use it to look again at a familiar habit. Repetition in the chart does not mean an event is bound to happen." : `The birth-month reading points to **${c.work.theme}**, which is different from the annual idea. You can try a different response without deciding that the way you have always worked is wrong.`,
@@ -165,7 +168,7 @@ export function buildYearAheadReading(result: SajuResult, year = new Date().getF
         'Use a review date to compare the work with the result. Ask what helped, what took more time than expected and which part should be tried differently. Keep a record that can guide the next monthly step.',
       ], [pillarFact(result, 2), `Annual stem ${annualPillar[0]}: ${annualGod}.`], 'Choose one annual skill or project goal. Define the first useful result and a date to review it.', { keepClose: ['One skill or project result that can be reviewed this month.', `Time for the birth-month condition of ${c.work.setting}.`], watchFor: ['Adding annual goals without choosing which current task will move.', 'Treating a broad intention as progress before there is a first result.'] }, 'career'),
       chapter('annual-money', 'Money and the Promises Around It', "Your spending record shows several small payments for things you barely use anymore.", [
-        `**When to pay attention:** ${moneyMonths.length ? `The ${moneyMonths.map(month => month.label).join(', ')} reference month stems relate to money for your day stem. Those are periods to examine concrete pay or offer decisions; they do not guarantee income.` : 'None of the twelve sampled month stems directly carries a money symbol. That does not rule out earning or opportunities.'}`,
+        `**When to pay attention:** ${moneyMonths.length ? `The ${moneyMonths.map(month => month.label).join(', ')} reference month symbols relate to money for your day stem. Examine concrete pay or offer decisions then; these do not guarantee income.` : 'None of the twelve sampled month symbols directly carries a money theme. That does not rule out earning or opportunities.'}`,
         "Each purchase may have made sense at the time. Looking at them together can reveal how much of your next month is already spoken for before you add another plan.",
         `The money symbols in your birth chart are used here to explore **${money.theme}**. Comparing the selected year with your birth-day symbol adds **${annual.theme}**. See whether either idea helps you understand a real offer or regular task.`,
         "Write down the costs and the time you know about. List what is still uncertain in a separate column. It is easier to change a plan when you know which parts you were only guessing about.",

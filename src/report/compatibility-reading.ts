@@ -20,9 +20,13 @@ export function buildCompatibilityReading(first: SajuResult, second: SajuResult,
   const lensA = PAIR_LENSES[aToB]
   const lensB = PAIR_LENSES[bToA]
   const dayPair = analyzePillarRelations(a.day.pillar.ganzi, b.day.pillar.ganzi)
+  const monthPair = analyzePillarRelations(a.month.pillar.ganzi, b.month.pillar.ganzi)
   const hasClash = [...dayPair.stem, ...dayPair.branch].some(item => item.type === '沖')
   const hasCombine = [...dayPair.stem, ...dayPair.branch].some(item => item.type === '合')
+  const monthClash = [...monthPair.stem, ...monthPair.branch].some(item => item.type === '沖')
+  const monthCombine = [...monthPair.stem, ...monthPair.branch].some(item => item.type === '合')
   const meeting = hasClash ? 'Your birth-day pillars show a clash, so differences in how you respond to the same choice deserve attention.' : hasCombine ? 'Your birth-day pillars show a combination, a traditional image of finding a way to cooperate.' : 'Your birth-day pillars show neither a direct clash nor a combination in the checked pair rules.'
+  const routineMeeting = monthClash ? 'The birth-month pillars also show a clash: compare how you each handle work, plans and shared duties.' : monthCombine ? 'The birth-month pillars show a combination: notice which daily routines are easier to coordinate.' : 'The birth-month pillars show no direct clash or combination in the checked pair rules.'
   const crossFacts = a.available.flatMap(left => b.available.flatMap(right => pairFacts(left.pillar.pillar.ganzi, right.pillar.pillar.ganzi, `Person A ${['hour', 'day', 'month', 'year'][left.index]} / Person B ${['hour', 'day', 'month', 'year'][right.index]}`)))
   const moneyA = moneyMarkers(first)
   const moneyB = moneyMarkers(second)
@@ -35,7 +39,7 @@ export function buildCompatibilityReading(first: SajuResult, second: SajuResult,
     extras: buildReportExtras('compatibility', first, { second }),
     headline: decision.headline,
     subjects: [subject(first, 'Person A'), subject(second, 'Person B')],
-    summary: [{ label: 'What stands out between you', text: meeting }, { label: 'How it can feel from each side', text: `Person A: ${lensA.theme}; Person B: ${lensB.theme}` }, { label: 'Where to look for friction', text: `Person A may need ${a.relationship.need}; Person B may need ${b.relationship.need}. Ask each other whether this fits.` }],
+    summary: [{ label: 'What stands out between you', text: meeting }, { label: 'How it can feel from each side', text: `Person A: ${lensA.theme}; Person B: ${lensB.theme}` }, { label: 'How everyday styles meet', text: routineMeeting }],
     chapters: [
       chapter('two-styles', "How You Each Make a Choice", "You are planning a weekend together. One person wants an answer now; the other wants to talk through a few possibilities first.", [
         `**What stands out in your match:** ${meeting} This is a traditional pattern between your birth-day pillars, not a score or a prediction of whether you will stay together.`,
@@ -70,10 +74,11 @@ export function buildCompatibilityReading(first: SajuResult, second: SajuResult,
         "Doing the visible job can feel like doing your share, while the less visible work keeps landing on someone else. That difference is easier to discuss when you name the actual tasks.",
         `Person A’s working theme is **${a.work.theme}**. That points to a preference for ${a.work.setting}. Consider how this appears in shared planning or practical tasks.`,
         `Person B’s theme is **${b.work.theme}**. Their suggested way of working includes ${b.work.setting}. You can do things differently and still finish the job together.`,
+        `**Where your routines meet:** ${routineMeeting} This describes a chart pattern, not who actually does more at home.`,
         a.month.stemSipsin === b.month.stemSipsin ? "The birth-month readings bring up the same idea. You may both reach for the same job. Say who is doing it, so neither of you is doing it twice while another task is missed." : "The birth-month readings bring up different ideas. Ask which jobs each person actually enjoys. A chart label does not mean someone has to keep doing the same job forever.",
         `Person A may find it difficult when they are **${a.work.friction}**. For Person B, that may mean **${b.work.friction}**. Choose a division that avoids adding unnecessary pressure to either side.`,
         'For example, planning a trip includes choosing, booking, checking details and following up. **Write down who will do each part.** Review the plan if someone’s available time changes.',
-      ], [pillarFact(first, 2, 'Person A'), pillarFact(second, 2, 'Person B')], 'Choose one shared task. Agree the owner, the deadline and the support each person can ask for.', shared([`Person A: ${a.work.keepClose[0]}`, `Person B: ${b.work.keepClose[0]}`], ['Treating an agreed role as permanent when circumstances change.', 'Taking over a task without checking whether help is wanted.']), 'social'),
+      ], [pillarFact(first, 2, 'Person A'), pillarFact(second, 2, 'Person B'), ...pairFacts(a.month.pillar.ganzi, b.month.pillar.ganzi, 'Birth-month comparison')], 'Choose one shared task. Agree the owner, the deadline and the support each person can ask for.', shared([`Person A: ${a.work.keepClose[0]}`, `Person B: ${b.work.keepClose[0]}`], ['Treating an agreed role as permanent when circumstances change.', 'Taking over a task without checking whether help is wanted.']), 'social'),
       chapter('shared-money', 'Money, Promises and Fair Agreements', "One person calls a payment a loan; the other remembers it as a gift.", [
         "The uncomfortable part may be the expectation attached to the money. Saying what the payment means before it is made can protect both people from a very different conversation later.",
         `The money-related symbols checked for Person A are used to explore **${moneyA.theme}**. For Person B, the reading explores **${moneyB.theme}**. Do either of those descriptions help explain how you think about a cost you share?`,

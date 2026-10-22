@@ -54,20 +54,22 @@ export function moneyMarkers(result: SajuResult) {
   ]).filter(item => item.god === '正財' || item.god === '偏財')
   const inner = c.available.flatMap(({ pillar, index }) => [...pillar.jigang.replace(/\s/g, '')].flatMap(stem => {
     const god = getRelation(c.day.pillar.stem, stem)?.hanja
-    return god === '正財' || god === '偏財' ? [`${stem} (${god}) inside the ${POSITIONS[index]} branch ${pillar.pillar.branch}.`] : []
+    return god === '正財' || god === '偏財' ? [{ god, source: `${stem} inside the ${POSITIONS[index]} branch ${pillar.pillar.branch}` }] : []
   }))
   const steady = visible.some(item => item.god === '正財')
   const opportunity = visible.some(item => item.god === '偏財')
+  const hiddenSteady = inner.some(item => item.god === '正財')
+  const hiddenOpportunity = inner.some(item => item.god === '偏財')
   const theme = steady && opportunity ? 'a steady base and room for an opportunity' : steady ? 'steady commitments and clear records' : opportunity ? 'new offers and useful connections' : inner.length ? 'checking the quieter commitments behind a visible choice' : 'starting with real costs and promises'
-  return { steady, opportunity, theme, facts: visible.length ? visible.map(item => `${item.source}: ${item.god} (${TEN_GODS[item.god].title}).`) : inner.length ? inner : ['No 正財 or 偏財 was found in the checked visible markers or inner stems. This does not measure financial ability.'] }
+  return { steady, opportunity, hiddenSteady, hiddenOpportunity, theme, facts: visible.length || inner.length ? [...visible, ...inner].map(item => `${item.source}: ${item.god} (${TEN_GODS[item.god].title}).`) : ['No 正財 or 偏財 was found in the checked visible markers or inner stems. This does not measure financial ability.'] }
 }
 export function moneyTiming(result: SajuResult, year: number) {
   const dayStem = result.pillars[1].pillar.stem
-  const years = [year, year + 1].filter(value => value <= 2100).map(value => {
+  const years = Array.from({ length: 5 }, (_, index) => year + index).filter(value => value <= 2100).map(value => {
     const pillar = getFourPillars(value, 7, 15, 12, 0)[0]
     const stem = getRelation(dayStem, pillar[0])!.hanja
     const inner = getRelation(dayStem, getJeonggi(pillar[1]))!.hanja
-    return { year: value, pillar, stem, inner, money: [stem, inner].filter(god => god === '正財' || god === '偏財') }
+    return { year: value, pillar, stem, inner, money: [...new Set([stem, inner].filter(god => god === '正財' || god === '偏財'))] }
   })
   return years
 }
