@@ -35,7 +35,12 @@ export async function translateReview(config: ReviewConfig, blocks: ReviewBlock[
       body: JSON.stringify({ model: config.model, temperature: 0.2, max_tokens: 10000,
         response_format: { type: 'json_object' }, messages: [{ role: 'system', content: instructions },
           { role: 'user', content: JSON.stringify({ blocks }) }] }), signal: AbortSignal.timeout(60000) })
-    if (!response.ok) throw new Error()
+    if (!response.ok) {
+      const code = response.status === 401 || response.status === 403 ? 'translation_auth_failed'
+        : response.status === 402 ? 'translation_credit_required'
+        : response.status === 429 ? 'translation_rate_limited' : 'translation_provider_failed'
+      throw new ReviewError(code, 502)
+    }
     const data = await response.json() as { choices?: { message?: { content?: string }; finish_reason?: string }[] }
     if (data.choices?.[0]?.finish_reason !== 'stop') throw new Error()
     return validateTranslation(blocks, JSON.parse(data.choices[0].message?.content ?? ''))
