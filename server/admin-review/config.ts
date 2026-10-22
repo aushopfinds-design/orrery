@@ -1,3 +1,5 @@
+import { getVercelOidcToken } from '@vercel/oidc'
+
 export class ReviewError extends Error {
   readonly code: string
   readonly status: number
@@ -5,7 +7,7 @@ export class ReviewError extends Error {
 }
 export interface ReviewConfig {
   origin: string; clientId: string; adminEmail: string; signingKey: Uint8Array
-  gatewayKey?: string; model?: string
+  gatewayKey?: string; gatewayToken?: () => Promise<string>; model?: string
 }
 /** No payment secret, customer order database or public VITE_* setting is used here. */
 export function reviewConfig(env: NodeJS.ProcessEnv): ReviewConfig {
@@ -20,5 +22,10 @@ export function reviewConfig(env: NodeJS.ProcessEnv): ReviewConfig {
     || !/^[a-f0-9]{64}$/.test(env.FATE_REVIEW_SIGNING_KEY ?? '')) throw new ReviewError('review_not_configured', 503)
   return { origin, clientId: env.FATE_REVIEW_GOOGLE_CLIENT_ID!, adminEmail: env.FATE_REVIEW_ADMIN_EMAIL!,
     signingKey: Buffer.from(env.FATE_REVIEW_SIGNING_KEY!, 'hex'),
-    gatewayKey: env.FATE_REVIEW_AI_GATEWAY_KEY, model: env.FATE_REVIEW_TRANSLATION_MODEL }
+    gatewayKey: env.FATE_REVIEW_AI_GATEWAY_KEY,
+    ...(env.FATE_REVIEW_AUTH_MODE === 'vercel-oidc' ? { gatewayToken: async () => getVercelOidcToken() } : {}),
+    model: env.FATE_REVIEW_TRANSLATION_MODEL }
 }
+
+
+export function translationConfigured(config: ReviewConfig) { return Boolean(config.model && (config.gatewayKey || config.gatewayToken)) }

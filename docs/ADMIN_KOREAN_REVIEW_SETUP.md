@@ -47,10 +47,10 @@ Google Identity Services의 ID token 방식을 사용하므로 이 구현에는 
 
 ### 2. 한국어 해석 생성
 
-현재 프로젝트에는 번역용 AI 설정이 없다. 자동 생성은 별도 AI Gateway 자격 증명과 모델을 준비한 뒤에만 작동한다.
+한국어 생성은 Vercel 배포의 OIDC 인증을 사용하도록 연결했다. 별도 AI API key 없이 요청 시점마다 배포 토큰을 얻는다. 실제 생성 성공 여부와 Gateway 이용 가능 상태는 관리자 로그인 설정 후 확인해야 한다.
 한국어는 승인된 번역본이 아니라 **검수 전 초안**으로 명확히 표시한다.
 
-- `FATE_REVIEW_AI_GATEWAY_KEY`: Vercel AI Gateway 전용 API key (서버 전용).
+- `FATE_REVIEW_AUTH_MODE=vercel-oidc`: Vercel 배포 인증 사용. `FATE_REVIEW_AI_GATEWAY_KEY`는 로컬/별도 키 사용을 선택할 때만 필요하다.
 - `FATE_REVIEW_TRANSLATION_MODEL`: 한국어 및 JSON 응답을 지원하는 검수용 모델 ID.
 - Gateway/provider 사용 비용·예산을 먼저 정한다. 이 변경에서는 유료 호출을 실행하지 않았다.
 - 관리자 화면에서 영어 본문 전송 동의 체크 후 생성 버튼을 눌러야 호출한다.
@@ -66,7 +66,7 @@ Google Identity Services의 ID token 방식을 사용하므로 이 구현에는 
 | `FATE_REVIEW_GOOGLE_CLIENT_ID` | Google Web client ID |
 | `FATE_REVIEW_ADMIN_EMAIL` | `thefatekey@gmail.com` |
 | `FATE_REVIEW_SIGNING_KEY` | 암호학적으로 생성한 32바이트 랜덤값의 hex 64자리 |
-| `FATE_REVIEW_AI_GATEWAY_KEY` | 전용 Gateway key |
+| `FATE_REVIEW_AUTH_MODE` | `vercel-oidc` (배포에서 별도 API key 불필요) |
 | `FATE_REVIEW_TRANSLATION_MODEL` | 검증할 모델 ID |
 
 모든 변수는 `Preview` + **지정 브랜치에만** 설정한다. `VITE_` 접두사를 사용하지 않는다.
@@ -109,3 +109,12 @@ POST는 고정 origin과 JSON 형식을 요구한다. 보고서·응답·토큰�
 - TypeScript, 변경 소스 ESLint, Vite build 통과. 기존의 큰 청크/동적 import 경고는 남아 있다.
 - 설정이 없는 실제 API 모듈을 Node에서 실행해 404와 `not_found` 응답 확인.
 - 외부 Google 로그인, 외부 번역 모델 호출, 실제 Preview 브라우저 테스트, 한국어 전편 품질 검수: 미실행.
+
+## 2026-10-22 배포 연결 작업
+
+- Preview/지정 브랜치에만 관리자 Gmail, 고정 origin, `FATE_REVIEW_AUTH_MODE=vercel-oidc`, `FATE_REVIEW_TRANSLATION_MODEL=google/gemini-2.5-flash`를 설정했다.
+- 모델은 당일 Gateway 모델 목록에서 확인했다. 모델 설정 변경 시 목록과 비용을 다시 확인한다.
+- `FATE_REVIEW_ENABLED=false`를 명시해 관리자 인증 준비 전 검수 페이지를 차단한다. Google client ID와 서버 서명 키는 Vercel에 아직 설정하지 않았다.
+- Google Cloud Clients 페이지가 이 브라우저에서 Site Unavailable로 표시되어 Google 앱 등록을 완료하지 못했다. 사용자에게 Google 로그인 앱 등록 단계의 직접 진행이 필요하다.
+- 관리자/화면/사전/원문/다국어 로컬 검사 60개 통과. OIDC 토큰을 요청마다 새로 얻는 경로를 테스트 더블로 확인했다. 실제 모델 생성은 아직 실행하지 않았다.
+- 이 배포는 관리자 검수 기능을 비활성 상태로 전달하는 Preview이다. 실제 관리자 접속 가능 상태로 보고하지 않는다. 운영 배포·Stripe 설정은 변경하지 않는다.

@@ -1,5 +1,5 @@
 import type { ReviewBlock } from './report.ts'
-import { ReviewError } from './config.ts'
+import { ReviewError, translationConfigured } from './config.ts'
 import type { ReviewConfig } from './config.ts'
 
 const instructions = `You edit Korean interpretations of THE FATE KEY English Saju reports for a private administrator.
@@ -25,11 +25,13 @@ export function validateTranslation(blocks: ReviewBlock[], value: unknown) {
 }
 /** Only explicit per-batch admin action calls this provider; no customer report uses it. */
 export async function translateReview(config: ReviewConfig, blocks: ReviewBlock[], fetcher: typeof fetch = fetch) {
-  if (!config.gatewayKey || !config.model) throw new ReviewError('translation_not_configured', 503)
+  if (!translationConfigured(config)) throw new ReviewError('translation_not_configured', 503)
   let response: Response
   try {
+    const token = config.gatewayKey || await config.gatewayToken?.()
+    if (!token) throw new ReviewError('translation_not_configured', 503)
     response = await fetcher('https://ai-gateway.vercel.sh/v1/chat/completions', { method: 'POST',
-      headers: { Authorization: `Bearer ${config.gatewayKey}`, 'Content-Type': 'application/json' },
+      headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
       body: JSON.stringify({ model: config.model, temperature: 0.2, max_tokens: 10000,
         response_format: { type: 'json_object' }, messages: [{ role: 'system', content: instructions },
           { role: 'user', content: JSON.stringify({ blocks }) }] }), signal: AbortSignal.timeout(60000) })

@@ -152,6 +152,20 @@ describe('Korean translation boundary', () => {
     await expect(translateReview(config, blocks, fetcher)).rejects.toThrow('translation_not_configured')
     expect(fetcher).not.toHaveBeenCalled()
   })
+  it('resolves a fresh deployment OIDC credential for every translation request', async () => {
+    let number = 0
+    const token = vi.fn(async () => `test-oidc-${++number}`)
+    const fetcher = vi.fn(async (url: string | URL | Request, init?: RequestInit) => {
+      void url; void init
+      return Response.json({ choices: [{ finish_reason: 'stop', message: { content: JSON.stringify({ blocks: [{ id: '1.1', korean: '乙 일간이며 목 기운은 1개예요.' }] }) } }] })
+    })
+    const settings = { ...config, gatewayToken: token, model: 'test/model' }
+    await translateReview(settings, blocks, fetcher)
+    await translateReview(settings, blocks, fetcher)
+    expect(token).toHaveBeenCalledTimes(2)
+    expect(fetcher.mock.calls[0][1]?.headers).toHaveProperty('Authorization', 'Bearer test-oidc-1')
+    expect(fetcher.mock.calls[1][1]?.headers).toHaveProperty('Authorization', 'Bearer test-oidc-2')
+  })
   it('sends only the signed English blocks to the fixed Gateway endpoint and checks truncation', async () => {
     const fetcher = vi.fn(async (url: string | URL | Request, init?: RequestInit) => {
       void url; void init

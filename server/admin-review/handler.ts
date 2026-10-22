@@ -1,5 +1,5 @@
 import { createHash, randomBytes } from 'node:crypto'
-import { ReviewError, reviewConfig } from './config.ts'
+import { ReviewError, reviewConfig, translationConfigured } from './config.ts'
 import type { ReviewConfig } from './config.ts'
 import { cookie, NONCE_COOKIE, readCookie, requireAdmin, SESSION_COOKIE, ticket, verifyGoogle, verifyTicket } from './auth.ts'
 import { buildReview } from './report.ts'
@@ -81,7 +81,7 @@ export function reviewHandler(deps: Dependencies = { config: () => reviewConfig(
         const documents = await Promise.all(result.documents.map(async doc => ({ ...doc,
           blocks: await Promise.all(doc.blocks.map(async block => ({ ...block, proof: await ticket(config, sub, 'source',
             { report: result.digest, blockId: block.id, hash: hash(block.english) }, 3600) }))) })))
-        return json({ ...result, documents, translationReady: Boolean(config.gatewayKey && config.model), koreanStatus: 'draft' })
+        return json({ ...result, documents, translationReady: translationConfigured(config), koreanStatus: 'draft' })
       }
       if (action === 'translate') {
         const data = await body(request)
