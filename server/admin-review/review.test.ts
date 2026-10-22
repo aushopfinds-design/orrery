@@ -139,6 +139,11 @@ describe('Protected page and translation API', () => {
 
 describe('Korean translation boundary', () => {
   const blocks = [{ id: '1.1', english: 'Your 乙 chart has 1 Wood marker.' }]
+  it('accepts numeric Korean months without accepting a changed birth date', () => {
+    const dates = [{ id: 'date', english: '25 March 1998 · birth time unknown · Australia/Sydney' }]
+    expect(validateTranslation(dates, { blocks: [{ id: 'date', korean: '1998년 3월 25일 · 출생 시간 미상 · Australia/Sydney' }] })).toHaveLength(1)
+    expect(() => validateTranslation(dates, { blocks: [{ id: 'date', korean: '1998년 4월 25일 · 출생 시간 미상 · Australia/Sydney' }] })).toThrow('translation_mismatch')
+  })
   it('accepts a complete natural Korean interpretation with the same markers', () => {
     expect(validateTranslation(blocks, { blocks: [{ id: '1.1', korean: '당신의 사주에서 일간은 乙이고, 겉으로 드러난 목 기운은 1개예요.' }] })).toHaveLength(1)
   })

@@ -9,7 +9,12 @@ Explain technical Saju terms briefly in familiar Korean where the English explai
 Return JSON only: {"blocks":[{"id":"original id","korean":"complete Korean interpretation"}]}.`
 
 function anchors(text: string) {
-  return [...text.matchAll(/\d+(?:\.\d+)?|[甲乙丙丁戊己庚辛壬癸子丑寅卯辰巳午未申酉戌亥木火土金水]/g)].map(m => m[0]).sort()
+  // English month names become numeric months in ordinary Korean dates.
+  // Compare their values, not their spelling, while retaining exact chart markers.
+  const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+  const comparable = text.replace(/\b(\d{1,2}) (January|February|March|April|May|June|July|August|September|October|November|December) (\d{4})\b/g,
+    (_match, day: string, month: string, year: string) => `${year} ${months.indexOf(month) + 1} ${Number(day)}`)
+  return [...comparable.matchAll(/\d+(?:\.\d+)?|[甲乙丙丁戊己庚辛壬癸子丑寅卯辰巳午未申酉戌亥木火土金水]/g)].map(m => m[0]).sort()
 }
 export function validateTranslation(blocks: ReviewBlock[], value: unknown) {
   const result = (value as { blocks?: unknown } | null)?.blocks
