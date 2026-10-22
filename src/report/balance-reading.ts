@@ -17,9 +17,10 @@ export function buildBalanceReading(result: SajuResult, referenceYear = new Date
     applications: buildReportApplications('wellbeing', result),
     extras: buildReportExtras('wellbeing', result),
     headline: decision.headline, subjects: [subject(result)],
-    summary: [{ label: 'Your own space', text: c.personal.need }, { label: 'A routine to examine', text: c.work.friction }, { label: 'The visible element picture', text: prominent.map(item => item.element).join(' and ') + (prominent.length === 1 ? ' appears most often in this count' : ' appear most often in this count') }],
+    summary: [{ label: 'A strength to use', text: c.personal.strength }, { label: 'A pressure to notice', text: c.personal.pressure }, { label: 'The visible element picture', text: prominent.map(item => item.element).join(' and ') + (prominent.length === 1 ? ' appears most often in this count' : ' appear most often in this count') }],
     chapters: [
       chapter('everyday-pace', 'Your Everyday Pace', "At the end of the day, everyone has had an answer from you except the part of your life you meant to give attention to.", [
+        `**The chart's starting point:** Your birth-day symbol suggests **${c.personal.focus}**; the birth-month comparison adds **${c.work.theme}**. That gives this reading a specific strength and a possible pressure point: ${c.personal.strength} ${c.personal.pressure}`,
         "Being helpful can feel natural in the moment. The frustration may only arrive later, when you notice how little of the day you chose for yourself.",
         `The idea taken from your birth-day symbol is **${c.personal.focus}**. The image behind it, ${c.personal.image}, can help you describe a familiar habit without treating the habit as a fixed identity.`,
         c.personal.pressure,

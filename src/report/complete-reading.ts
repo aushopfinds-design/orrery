@@ -432,9 +432,9 @@ export function buildCompleteReading(result: SajuResult, asOfYear = new Date().g
     ...(result.input.unknownTime ? ['An unknown birth time excludes all hour facts and pair relationships. Ten-year starting dates remain approximate until the time is confirmed.'] : []),
   ]
   const summary = [
-    { label: 'Your personality', text: personal.headline },
-    { label: 'Your work theme', text: work.title },
-    { label: 'Your relationship message', text: relationship.headline },
+    { label: 'Who you are in this chart', text: `${personal.headline} Your birth-day stem is ${self.name}; your birth-month comparison brings ${work.theme}.` },
+    { label: 'Important longer chapters', text: periods.length ? periods.map(period => `${period.period}: ${period.headline}`).join('; ') : 'No ten-year period is available in the calculated range for this reference year.' },
+    { label: 'Your close relationship theme', text: `${relationship.headline} This comes from your birth-day branch.` },
   ]
   const chapterText = (chapter: ReportChapter) => [
     chapter.title, chapter.lead, ...chapter.paragraphs, ...(chapter.example ? everydayExampleText(chapter.example, chapter.lead !== chapter.example.scene) : []), guidanceText(chapter.guidance),
