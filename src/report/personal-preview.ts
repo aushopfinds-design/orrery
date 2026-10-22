@@ -55,7 +55,7 @@ export function buildPersonalPreview(kind: PreviewKind, draft: PreviewDraft): Pe
   const b = second ? calculateSaju(second) : undefined
   if (kind === 'bundle') {
     const bundle = buildBundleReading(a, b!, year, currentYear)
-    return { title: 'Complete Bundle', subjects: bundle.compatibility.subjects, headline: bundle.complete.headline, brief: buildReadingBrief(bundle.complete.chapters[0], 'Person A · Complete Life Reading', bundle.complete.focus), summary: bundle.complete.summary, applications: [
+    return { title: 'Complete Bundle', subjects: bundle.compatibility.subjects, headline: bundle.complete.headline, brief: buildReadingBrief(bundle.complete.chapters[0], 'Person A · Complete Life Reading', bundle.complete.focus), summary: bundle.summary, applications: [
       { ...bundle.complete.applications[0], scope: 'Person A · Complete Life Reading' },
       bundle.compatibility.applications[0],
       { ...bundle.annual.applications[0], scope: `Person A · ${year} Year Ahead` },

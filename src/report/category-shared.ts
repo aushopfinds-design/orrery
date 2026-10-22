@@ -1,6 +1,6 @@
 import { chartGlossaryFor } from './calculation-notes.ts'
 import type { SajuResult, BirthInput } from '@orrery/core/types'
-import { getRelation, analyzePillarRelations, getFourPillars, getJeonggi } from '@orrery/core/pillars'
+import { getRelation, analyzePillarRelations } from '@orrery/core/pillars'
 import { buildFreeReading, REPORT_EDITION } from './complete-reading.ts'
 import type { ReportChapter, ElementCount } from './complete-reading.ts'
 import { buildEnglishReading, STEMS, TEN_GODS } from './reading.ts'
@@ -20,6 +20,7 @@ import { explainCalculation, PAIR_METHOD_NOTE } from './calculation-notes.ts'
 import type { CalculationExplanation } from './calculation-notes.ts'
 import type { DecisionFocus } from './decision-focus.ts'
 export { THEME_FAMILY as FAMILY } from './theme-family.ts'
+export { moneyTiming, moneyTimingFacts } from './timing-observations.ts'
 
 export const POSITIONS = ['hour', 'day', 'month', 'year']
 export interface ReportSubject { label: string; input: BirthInput; birthSummary: string; pillarSummary: string[]; dayMaster: string; elements: ElementCount[]; visibleMarkers: number; calculation: CalculationExplanation }
@@ -62,16 +63,6 @@ export function moneyMarkers(result: SajuResult) {
   const hiddenOpportunity = inner.some(item => item.god === '偏財')
   const theme = steady && opportunity ? 'a steady base and room for an opportunity' : steady ? 'steady commitments and clear records' : opportunity ? 'new offers and useful connections' : inner.length ? 'checking the quieter commitments behind a visible choice' : 'starting with real costs and promises'
   return { steady, opportunity, hiddenSteady, hiddenOpportunity, theme, facts: visible.length || inner.length ? [...visible, ...inner].map(item => `${item.source}: ${item.god} (${TEN_GODS[item.god].title}).`) : ['No 正財 or 偏財 was found in the checked visible markers or inner stems. This does not measure financial ability.'] }
-}
-export function moneyTiming(result: SajuResult, year: number) {
-  const dayStem = result.pillars[1].pillar.stem
-  const years = Array.from({ length: 5 }, (_, index) => year + index).filter(value => value <= 2100).map(value => {
-    const pillar = getFourPillars(value, 7, 15, 12, 0)[0]
-    const stem = getRelation(dayStem, pillar[0])!.hanja
-    const inner = getRelation(dayStem, getJeonggi(pillar[1]))!.hanja
-    return { year: value, pillar, stem, inner, money: [...new Set([stem, inner].filter(god => god === '正財' || god === '偏財'))] }
-  })
-  return years
 }
 export function pairFacts(first: string, second: string, label: string): string[] {
   const pair = analyzePillarRelations(first, second)

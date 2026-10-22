@@ -4,7 +4,7 @@ import { getFourPillars, getJeonggi, getRelation } from '@orrery/core/pillars'
 import type { BirthInput } from '@orrery/core/types'
 import { buildBundleReading, buildCategoryReading, buildCompatibilityReading, buildCareerReading, buildBusinessReading, buildYearAheadReading, buildBalanceReading } from './category-readings.ts'
 import { CATEGORY_SCENARIOS, FOCUS_CATALOG } from './category-catalog.ts'
-import { cycleFacts } from './category-shared.ts'
+import { cycleFacts, moneyTimingFacts } from './category-shared.ts'
 import { plainReadingText } from './reading-text.ts'
 import { resolveFocusCategory, resolveReportRoute } from '../utils/report-route.ts'
 
@@ -156,7 +156,7 @@ describe('Work, money, cycles and daily balance', () => {
         expect(reading.chapters[0].evidence.join(' ')).toContain(chart.pillars[1].pillar.ganzi)
         expect(reading.chapters[0].evidence.join(' ')).toContain(chart.pillars[2].stemSipsin)
         const cycle = reading.chapters.find(chapter => chapter.id === (index === 0 ? 'work-chapters' : 'business-chapters'))!
-        expect(cycle.evidence).toEqual(cycleFacts(chart, 2026))
+        expect(cycle.evidence).toEqual([...cycleFacts(chart, 2026), ...(reading.kind === 'business' ? moneyTimingFacts(chart, 2026) : [])])
         for (const fact of cycle.evidence) expect(reading.fullText).toContain(fact)
       }
       expect(readings[0].chapters[5].paragraphs).not.toEqual(readings[1].chapters[5].paragraphs)

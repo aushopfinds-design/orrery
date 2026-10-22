@@ -57,7 +57,7 @@ export const LIFE_FOCUS: Record<string, LifeFocus> = {
   '正財': {
     incomeStyle: "keeping regular promises manageable and making work that needs doing again each week visible",
     payQuestion: 'What repeats each week, and what changes if the regular workload grows?',
-    moneyExample: 'A recurring payment or duty looks small on its own. Write down how often it repeats and what you are already committed to. A dependable routine still needs a point at which the promise can be reviewed.',
+    moneyExample: 'A job adds weekly stock checks and training, but the pay stays the same. Put those duties beside the original role. A dependable arrangement can still need new terms when the regular work changes.',
     moneyWatch: "accepting another small regular cost or duty without looking at the total",
     yearQuestion: 'Which steady promise still supports my life, and which routine needs updating?',
     yearStep: 'Review one recurring plan. Keep the part that works and discuss the part that has grown.',
@@ -94,7 +94,7 @@ export const LIFE_FOCUS: Record<string, LifeFocus> = {
     incomeStyle: 'making teaching, guidance and ongoing support visible parts of the work',
     payQuestion: 'How much training or follow-up is included, and when does the other person take the next step?',
     moneyExample: 'You finish the main task but keep answering questions afterwards. Record the support you are providing. Agree a handover and a review point so a helpful explanation does not become an endless extra role.',
-    moneyWatch: "providing ongoing support without an agreed point when the other person takes over or finishing point",
+    moneyWatch: 'providing ongoing support without agreeing when the other person will take over',
     yearQuestion: 'What support helps me take a step, and what can I now try for myself?',
     yearStep: 'Ask for one useful explanation, then use it to complete a small step yourself.',
     connection: 'Ask whether reassurance, a suggestion or quiet company would help. Let care include room for the other person to choose.',

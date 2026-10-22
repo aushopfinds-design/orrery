@@ -19,8 +19,9 @@ import { chartGlossaryFor, explainCalculation, PAIR_METHOD_NOTE } from './calcul
 import type { CalculationExplanation } from './calculation-notes.ts'
 import { buildDecisionFocus } from './decision-focus.ts'
 import type { DecisionFocus } from './decision-focus.ts'
+import { moneyTiming, moneyTimingFacts } from './timing-observations.ts'
 
-export const REPORT_EDITION = '2026.10-r6'
+export const REPORT_EDITION = '2026.10-r7'
 
 export interface ReadingConnection {
   id: string
@@ -189,6 +190,9 @@ export function buildCompleteReading(result: SajuResult, asOfYear = new Date().g
   }))
   const hasSteady = wealth.some(item => item.symbol === '正財')
   const hasOpportunity = wealth.some(item => item.symbol === '偏財')
+  const annualMoney = moneyTiming(result, asOfYear)
+  const steadyYears = annualMoney.filter(item => item.money.includes('正財')).map(item => item.year)
+  const opportunityYears = annualMoney.filter(item => item.money.includes('偏財')).map(item => item.year)
   const moneyOpening = hasSteady && hasOpportunity
     ? '**Keep a steady base while checking new opportunities.** Both money themes appear in the parts of your chart used here.'
     : hasSteady
@@ -282,13 +286,14 @@ export function buildCompleteReading(result: SajuResult, asOfYear = new Date().g
           : hasOpportunity ? 'Indirect Wealth appears in the positions listed below. Here it opens a discussion of offers, variable income and the difference between an attractive possibility and money already received.'
           : hiddenWealth.length ? 'A wealth relationship appears among the less visible part of the chart rather than the main positions checked here. It is one part of the chart, rather than a reason to label you good or bad with money.'
           : 'No Direct or Indirect Wealth relationship appears in the positions checked here. That does not describe your bank balance. This chapter therefore begins with spending decisions you can actually observe.',
-        hasSteady ? 'You might enjoy a purchase more when it fits a familiar budget. The less obvious risk is letting a cost continue simply because you stopped noticing it. Compare what you pay over a year with what you still use.' : 'A discount can make a purchase feel urgent. Compare the total amount you would spend with the value you expected before seeing the offer.',
-        hasOpportunity ? 'Keep an expected payment separate from an agreed payment. Ask about fees, payment dates and who carries the cost if the plan changes. An opportunity can remain interesting while those answers are still being checked.' : 'For shared costs, discuss the amount and the payment date before either person pays. A clear agreement can prevent generosity from turning into an unspoken expectation.',
+        `Your birth-month work theme adds **${work.theme}**. Consider how ${work.contribution} could contribute to work someone is willing to pay for. A useful skill and a money symbol answer different questions; this reading connects them without assuming that either guarantees demand.`,
+        `**Steady-income themes in the five-year sample:** ${steadyYears.length ? steadyYears.join(', ') + '.' : 'none in the checked annual comparisons.'} These are July reference dates. They can help you choose when to review an existing income arrangement, rather than predict the amount it will bring.`,
+        `**New-opportunity themes in that sample:** ${opportunityYears.length ? opportunityYears.join(', ') + '.' : 'none in the checked annual comparisons.'} If an offer appears, look at how it would be paid and what you would risk. A year without this symbol can still contain opportunities.`,
         `The evidence below identifies ${wealth.length} visible wealth ${wealth.length === 1 ? 'relationship' : 'relationships'} in the checked positions. This is a count of symbols, not a measure of financial strength.`,
         'For your next review, write down regular income, regular bills and one optional purchase separately. That gives a real money decision a clearer shape than a general promise to spend less.',
       ],
-      evidence: wealth.length ? wealth.map(item => `${item.location}: ${item.symbol} (${label(item.symbol)}).`) : hiddenWealth.length ? hiddenWealth : ['No 正財 or 偏財 appears in the checked top or main branch markers.', fact(month, 2)],
-      tryThis: hasOpportunity ? 'For one offer, separate confirmed income, possible income and costs you would pay either way.' : 'Add up a year of one recurring payment. Decide whether you would choose it again today.',
+      evidence: [...(wealth.length ? wealth.map(item => `${item.location}: ${item.symbol} (${label(item.symbol)}).`) : hiddenWealth.length ? hiddenWealth : ['No 正財 or 偏財 appears in the checked top or main branch markers.', fact(month, 2)]), ...moneyTimingFacts(result, asOfYear)],
+      tryThis: hasOpportunity ? 'For one offer, separate confirmed income, possible income and costs you would pay either way.' : 'Choose one way you earn. Compare the work people pay for with the work you give away, and decide which agreement needs a review.',
       guidance: moneyGuidance,
     },
     {
@@ -443,7 +448,7 @@ export function buildCompleteReading(result: SajuResult, asOfYear = new Date().g
     chapter.title, chapter.lead, ...chapter.paragraphs, ...(chapter.example ? everydayExampleText(chapter.example, chapter.lead !== chapter.example.scene) : []), guidanceText(chapter.guidance),
     'From your chart: ' + chapter.evidence.join(' '), 'Try this: ' + chapter.tryThis,
   ]
-  const extras = buildReportExtras('complete', result)
+  const extras = buildReportExtras('complete', result, { year: asOfYear })
   const applications = buildReportApplications('complete', result)
   const fullText = plainReadingText([
     'THE FATE KEY · Complete Life Reading', `Report edition ${REPORT_EDITION} · Timeline reference year ${asOfYear}`, formatBirth(result.input), pillarSummary(result).join(' · '), personal.headline,

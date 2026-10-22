@@ -9,6 +9,7 @@ import FateKeyMark from './FateKeyMark.tsx'
 import { SamplePicker } from './CategorySamplePage.tsx'
 import ReadingView from './ReadingView.tsx'
 import CategoryReadingView from './CategoryReadingView.tsx'
+import ReadingText from './ReadingText.tsx'
 
 type BundleTab = 'life' | 'compatibility' | 'year'
 const tabs: BundleTab[] = ['life', 'compatibility', 'year']
@@ -30,6 +31,7 @@ export default function BundleSamplePage() {
     <div className="fate-sample-toolbar print:hidden"><a href="#complete-bundle">← {t('category.bundle.title')}</a><span>{t('reading.complete.sampleBadge')}</span></div>
     <header className="fate-bundle-intro"><FateKeyMark /><div><p className="fate-eyebrow">{t('category.series')}</p><h1>{t('category.bundle.title')}</h1><p>{t('category.bundle.description')}</p><p>{t('category.bundle.people')}</p><p className="fate-reading-small-note">{t('reading.complete.sampleNote')}</p></div></header>
     <SamplePicker scenarioIndex={scenarioIndex} onScenarioChange={setScenarioIndex} paired year={year} onYearChange={setYear} />
+    <section className="fate-report-chapter"><h2>{bundle.overview.title}</h2><div className="fate-report-prose">{bundle.overview.paragraphs.map(text => <p key={text}><ReadingText text={text} /></p>)}</div></section>
     <div className="fate-reading-controls print:hidden"><CopyButton label={t('category.bundle.copy')} getText={() => `${t('reading.complete.sampleNote')}\n\n${bundle.fullText}`} /><button type="button" className="fate-complete-primary" onClick={() => { setShowPrintHelp(true); window.print() }}>{t('category.bundle.print')}</button>{showPrintHelp && <p role="status">{t('reading.printHelp')}</p>}</div>
     <div className="fate-bundle-tabs print:hidden" role="tablist" aria-label={t('category.bundle.tabs')}>{tabs.map(value => <button key={value} id={`bundle-tab-${value}`} type="button" role="tab" aria-selected={tab === value} aria-controls={`complete-bundle-sample-${value}`} onClick={() => selectTab(value)} onKeyDown={event => {
       if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return

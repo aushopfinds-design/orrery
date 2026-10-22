@@ -2,6 +2,7 @@ import { describe, expect, it, vi } from 'vitest'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { createElement } from 'react'
 import ReportChapterView from '../components/report/ReportChapterView.tsx'
+import BundleSamplePage from '../components/report/BundleSamplePage.tsx'
 import { calculateSaju } from '@orrery/core/saju'
 import { CATEGORY_SCENARIOS } from './category-catalog.ts'
 import { buildCompleteReading, REPORT_EDITION } from './complete-reading.ts'
@@ -71,9 +72,16 @@ describe('Everyday narrative before chart terminology', () => {
       expect(report.periods.map(period => period.paragraphs[1]).join(' ')).not.toContain('It can be tempting to treat a new period')
     }
   })
-  it('uses the new edition in all three bundle documents without inventing a seventh interpretation', () => {
-    expect(REPORT_EDITION).toBe('2026.10-r6')
+  it('keeps an integrated bundle overview visible in the sample and complete export', () => {
+    expect(REPORT_EDITION).toBe('2026.10-r7')
     const bundle = buildBundleReading(a, b, 2027, 2026)
+    expect(bundle.fullText.indexOf(bundle.overview.fullText)).toBeLessThan(bundle.fullText.indexOf(bundle.complete.fullText))
+    expect(bundle.synthesis).not.toBe(buildBundleReading(a, b, 2028, 2026).synthesis)
+    expect(bundle.synthesis).not.toBe(buildBundleReading(a, a, 2027, 2026).synthesis)
+    expect(bundle.fullText).not.toContain('**')
+    const html = renderToStaticMarkup(createElement(BundleSamplePage))
+    expect(html).toContain(bundle.overview.title)
+    expect(html.indexOf(bundle.overview.title)).toBeLessThan(html.indexOf('fate-bundle-tabs'))
     for (const report of [bundle.complete, bundle.compatibility, bundle.annual]) {
       expect(report.fullText).toContain('Report edition ' + REPORT_EDITION)
       expect(bundle.fullText).toContain(report.fullText)

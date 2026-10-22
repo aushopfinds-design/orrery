@@ -65,7 +65,7 @@ describe('Shared English chart and complete product coverage', () => {
     // Customer order input normalises an unknown hour to zero before calculation.
     const a = calculateSaju({ ...first, hour: 0 }), b = calculateSaju({ ...second, hour: 0 })
     const expected = kind === 'complete' ? [buildCompleteReading(a, 2026)] : kind === 'bundle' ? (() => {
-      const r = buildBundleReading(a, b, 2027, 2026); return [r.complete, r.compatibility, r.annual]
+      const r = buildBundleReading(a, b, 2027, 2026); return [r.overview, r.complete, r.compatibility, r.annual]
     })() : [buildCategoryReading(kind, a, { second: ['compatibility'].includes(kind) ? b : undefined, year: kind === 'year' ? 2027 : 2026 })]
     expect(result.charts[0]).toEqual(a)
     expect(result.documents.map(d => d.english)).toEqual(expected.map(r => plainReadingText(r.fullText)))

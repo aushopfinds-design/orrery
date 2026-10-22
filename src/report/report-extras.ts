@@ -1,11 +1,12 @@
 import type { SajuResult } from '@orrery/core/types'
-import { getRelation } from '@orrery/core/pillars'
+import { getRelation, getFourPillars, getJeonggi, analyzePillarRelations } from '@orrery/core/pillars'
 import { PERSONAL_PROFILES, WORK_PROFILES, RELATIONSHIP_PROFILES } from './reading-profiles.ts'
 import { FOCUS_WORK, PAIR_LENSES } from './category-profiles.ts'
 import { STEM_ELEMENTS, STEMS } from './reading.ts'
 import type { ReadingElement } from './reading.ts'
 import { plainReadingText } from './reading-text.ts'
 import { LIFE_FOCUS } from './reading-scenarios.ts'
+import { moneyTiming, moneyTimingFacts } from './timing-observations.ts'
 
 export type ExtrasKind = 'complete' | 'compatibility' | 'year' | 'career' | 'business' | 'wellbeing'
 export interface InsightQuestion { question: string; answer: string; basis: string }
@@ -165,6 +166,11 @@ export function buildReportExtras(kind: ExtrasKind, result: SajuResult, options:
   const detail = LIFE_DETAILS[day.pillar.stem]
   const focus = FOCUS_WORK[month.stemSipsin]
   const life = LIFE_FOCUS[month.stemSipsin]
+  const referenceYear = options.year ?? new Date().getFullYear()
+  const moneyYears = moneyTiming(result, referenceYear)
+  const steady = moneyYears.filter(item => item.money.includes('正財')).map(item => item.year)
+  const offers = moneyYears.filter(item => item.money.includes('偏財')).map(item => item.year)
+  const timingAnswer = `In the July references from ${moneyYears[0].year} to ${moneyYears.at(-1)!.year}, steady-income themes appear in ${steady.join(', ') || 'none of the sampled years'}; new-offer themes appear in ${offers.join(', ') || 'none of the sampled years'}. These are topics to review, not predicted financial results.`
   if (!personal || !work || !relationship || !detail || !focus) throw new Error('A valid chart is needed for the everyday guide')
   const dayBasis = `Your birth-day starting theme is ${personal.focus}.`
   const workBasis = `Your birth-month comparison brings ${work.theme} into focus.`
@@ -184,14 +190,14 @@ export function buildReportExtras(kind: ExtrasKind, result: SajuResult, options:
         q('What is one strength I may overlook?', `**${detail.gift}** You may dismiss it because it feels ordinary to you. Think of a recent moment when someone found your contribution useful, and ask what part helped them.`, dayBasis),
         q('What kind of people should I keep close?', `**${detail.people}** In a close relationship, also look for room to discuss **${relationship.need}**. Notice how a person responds to an ordinary request; a birth sign cannot tell you whether they will respect it.`, `${dayBasis} ${loveBasis}`),
         q('What kind of work may feel more natural?', `Compare your experience with **${focus.tasks}**. The useful question is whether the actual role leaves room for **${personal.need}**. Choose one example from your past work before deciding whether the description fits.`, workBasis),
-        q('What tends to get in my way?', `Watch for **${detail.limit.charAt(0).toLowerCase() + detail.limit.slice(1)}** Another person may see it differently: ${detail.misread.charAt(0).toLowerCase() + detail.misread.slice(1)} **Explain what matters to you before assuming the other person knows.**`, dayBasis),
+        q('Which upcoming years bring money themes into focus?', timingAnswer, `Annual comparisons use your birth-day reference and separately calculated July samples. ${dayBasis}`),
       ]
       break
     case 'career':
       questions = [
         q("What should I ask about a new job?", `Look for **${work.setting}**. Then ask: **“${focus.interview}”** A useful answer includes a recent example of how the team works, not only a promise about its culture.`, workBasis),
         q('How can I show what I can do?', `**${detail.gift}** Make it visible in a real example: **${focus.proof}** Add one sentence about the problem you solved and one about your own part. This gives someone a result to discuss alongside the chart’s suggested theme.`, `${dayBasis} ${workBasis}`),
-        q('Should I change jobs or change the way I work?', `Look separately at the job itself, how much there is to do and how the day is organised. A role that uses ${work.contribution} may still feel difficult when you face ${work.friction}. Test one change you can discuss, then compare the result with a real alternative. The chart cannot choose the job for you.`, workBasis),
+        q('When should I review a pay or career opportunity?', timingAnswer, `The five-year comparison starts in ${referenceYear} and uses the same birth-day reference as your career reading.`),
         q('What money habit should I watch at work?', `Watch for **${life.moneyWatch}**. Ask: **“${life.payQuestion}”** Put confirmed pay, expected hours and added duties on one page. Compare the whole agreement, rather than judging an offer by the headline amount alone.`, workBasis),
       ]
       keepClose = [card('Useful feedback', `Ask someone to discuss a piece of work involving **${focus.tasks}**.`), card('Working conditions', `Check for **${work.setting}** before judging a job by its title.`), card('A clear boundary', detail.habit)]
@@ -203,7 +209,7 @@ export function buildReportExtras(kind: ExtrasKind, result: SajuResult, options:
         q('What could I build an offer around?', `An idea to explore is **${focus.offer}**. Keep the first version specific enough that a customer can explain what they receive. **${focus.experiment}**`, workBasis),
         q('Who should I work with?', `Ask a possible collaborator: **“${focus.customer}”** You also need room for **${personal.need}**. Agree who owns the decision, who delivers the work and how a disagreement will be handled. Notice whether both people can explain the agreement in the same way.`, `${workBasis} ${dayBasis}`),
         q('What could make a good idea harder to finish?', `One pressure to examine is **${focus.capacity}**. Your starting style adds another: **${detail.limit.charAt(0).toLowerCase() + detail.limit.slice(1)}** Before adding a feature, ask which customer problem it solves and what existing work it replaces.`, `${workBasis} ${dayBasis}`),
-        q('When is it worth growing the idea?', `Start with a delivery you can repeat and feedback from a real customer. **${focus.customer}** Check what you learned, what the next version needs and who will do the work. A chart theme can start the discussion; it cannot establish demand or profitability.`, workBasis),
+        q('What timing themes matter for a new offer or repeat business?', `New-offer symbols appear in the July samples for ${offers.join(', ') || 'none of the next five years'}. Steady-commitment symbols appear in ${steady.join(', ') || 'none of those samples'}. Use a new-offer theme to examine customer acquisition; use a steady-commitment theme to review repeat delivery. Actual demand and capacity decide whether to expand.`, `Five annual comparisons beginning in ${referenceYear}, calculated against your birth-day reference.`),
       ]
       keepClose = [card('A customer with a clear need', focus.customer), card('A small offer you can deliver', `Explore **${focus.offer}** before adding another line of work.`), card('A partner who leaves room to discuss', detail.people)]
       stepBack = [card('A capacity trap', `Watch for **${focus.capacity}**.`), card('An offer nobody can explain', 'Write down the result, what is included and what needs a separate agreement.'), card('A personal habit to notice', detail.limit)]
@@ -212,13 +218,20 @@ export function buildReportExtras(kind: ExtrasKind, result: SajuResult, options:
     case 'year': {
       if (!options.annual || !options.year) throw new Error('The calculated annual theme and report year are needed')
       const annual = WORK_PROFILES[options.annual.god]
+      const annualInner = WORK_PROFILES[getRelation(day.pillar.stem, getJeonggi(options.annual.pillar[1]))!.hanja]
       const annualLife = LIFE_FOCUS[options.annual.god]
-      const basis = `The ${options.year} annual comparison adds ${annual.theme} to your birth-day starting theme.`
+      const basis = `The year's stem brings ${annual.theme}; the principal branch stem adds ${annualInner.theme}. Annual July reference: ${options.year}.`
+      const monthChecks = Array.from({ length: 12 }, (_, index) => {
+        const pillar = getFourPillars(options.year!, index + 1, 15, 12, 0)[1]
+        const gods = [pillar[0], getJeonggi(pillar[1])].map(stem => getRelation(day.pillar.stem, stem)!.hanja)
+        const pair = analyzePillarRelations(pillar, day.pillar.ganzi)
+        return { name: new Date(Date.UTC(options.year!, index, 15)).toLocaleDateString('en-GB', { month: 'short', timeZone: 'UTC' }), money: gods.some(god => god === '正財' || god === '偏財'), clash: [...pair.stem, ...pair.branch].some(item => item.type === '沖') }
+      })
       questions = [
         q(`What deserves my attention in ${options.year}?`, `Use **${annual.theme}** as a planning question. Your own style still needs **${personal.need}**. Pick one current plan where both can fit, instead of treating the year as a promise that something will happen.`, basis),
         q('How should I judge a new opportunity?', `Start with one question: **“${annualLife.yearQuestion}”** Then try a smaller version: **${annualLife.yearStep}** Compare what happens with your need for **${personal.need}** before adding another plan.`, `${basis} ${dayBasis}`),
         q(`What should I avoid carrying into ${options.year}?`, `A habit to reconsider: **${detail.limit}** The annual theme can also bring a reason to examine **${annual.friction}**. Name one commitment you want to review before adding another.`, basis),
-        q('When should I make my next move?', 'Use the twelve monthly reflections as **check-in points**, then choose a date that fits your information, responsibilities and readiness. A reference-month symbol is not a lucky day. Start with a small step you can review rather than waiting for a date to guarantee the result.', basis),
+        q('Which parts of the year deserve a closer look?', `Money themes appear in the mid-month samples for **${monthChecks.filter(item => item.money).map(item => item.name).join(', ') || 'none of the twelve months'}**. Day-pillar clashes appear in **${monthChecks.filter(item => item.clash).map(item => item.name).join(', ') || 'none of those samples'}**. These show where to examine offers or competing needs. Each sample is one date, so check the monthly explanation before treating it as a whole-month label.`, basis),
       ]
       keepClose = [card('One focus for the year', `Bring **${annual.theme}** into one plan you already care about.`), card('A realistic way to try it', annualLife.yearStep), card('Your own pace', detail.habit)]
       stepBack = [card('An annual pressure to notice', `Watch for **${annual.friction}**.`), card('A habit to leave less room for', detail.limit), card('Waiting for a perfect date', 'Use actual readiness and the monthly questions to choose your next step.')]
@@ -262,6 +275,7 @@ export function buildReportExtras(kind: ExtrasKind, result: SajuResult, options:
       break
     }
   }
+  if (kind === 'complete' || kind === 'career' || kind === 'business') evidence.push(...moneyTimingFacts(result, referenceYear))
   return { questions, keepClose, stepBack, symbols, reminder, experiment, evidence }
 }
 

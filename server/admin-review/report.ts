@@ -18,7 +18,7 @@ export function buildReview(value: unknown, referenceYear = new Date().getUTCFul
   if (input.kind === 'complete') sources = [buildCompleteReading(a, referenceYear)]
   else if (input.kind === 'bundle') {
     const bundle = buildBundleReading(a, b!, input.year!, referenceYear)
-    sources = [bundle.complete, bundle.compatibility, bundle.annual]
+    sources = [bundle.overview, bundle.complete, bundle.compatibility, bundle.annual]
   } else sources = [buildCategoryReading(input.kind, a, { second: b, year: input.year ?? referenceYear })]
   const documents: ReviewDocument[] = sources.map((source, d) => {
     const english = plainReadingText(source.fullText)

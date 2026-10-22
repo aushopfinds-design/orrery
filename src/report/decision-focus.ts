@@ -222,7 +222,9 @@ export function buildDecisionFocus(kind: SoloKind, result: SajuResult, reference
   const scene = kind === 'career' || kind === 'business' ? workExample(result, kind).scene
     : kind === 'year' ? monthlySituation(primaryGod, secondaryGod).scene
     : everydayExample(result, kind === 'complete' ? 'personality' : 'wellbeing').scene
-  const themes = `${annual ? 'In this year’s reading' : 'In your birth-month reading'}, the main theme is **${primary.theme}**. ${primaryGod === secondaryGod ? 'The same theme appears in both chart positions.' : `The second theme is **${secondary.theme}**.`}`
+  const themes = annual
+    ? `The selected year adds **${primary.theme}**. ${primaryGod === secondaryGod ? 'Your birth-month comparison repeats that relationship, so the annual theme echoes a familiar working pattern.' : `Your birth-month pattern is **${secondary.theme}**. This comparison shows how the added annual theme meets the way you already approach things.`}`
+    : `In your birth-month reading, the main theme is **${primary.theme}**. ${primaryGod === secondaryGod ? 'The same theme appears in both chart positions.' : `The inner layer adds **${secondary.theme}**.`}`
   return {
     headline: kind === 'complete' ? bridge.title : HEADLINES[kind][a],
     synthesis: `${scene} ${bridge.tension} ${themes}`,
