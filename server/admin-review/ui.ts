@@ -1,4 +1,4 @@
-import ko from '../../src/i18n/locales/ko.ts'
+import ko from './locales/ko.ts'
 import { guideText as g, operatorProducts, operatorSiteGuide } from './operators-guide.ts'
 
 const t = (key: string) => ko[`admin.review.${key}`]

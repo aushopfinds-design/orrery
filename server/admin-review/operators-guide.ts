@@ -1,5 +1,5 @@
 import en from '../../src/i18n/locales/en.ts'
-import ko from '../../src/i18n/locales/ko.ts'
+import ko from './locales/ko.ts'
 import { PREVIEW_KINDS, previewProduct } from '../../src/report/personal-products.ts'
 
 export const guideText = (key: string) => ko[`admin.guide.${key}`]

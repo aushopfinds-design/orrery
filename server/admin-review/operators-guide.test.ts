@@ -2,8 +2,20 @@ import { describe, expect, it } from 'vitest'
 import { operatorProducts, operatorSiteGuide } from './operators-guide.ts'
 import { PREVIEW_KINDS, previewProduct } from '../../src/report/personal-products.ts'
 import en from '../../src/i18n/locales/en.ts'
+import privateEn from './locales/en.ts'
+import privateKo from './locales/ko.ts'
+import privateZh from './locales/zh.ts'
+import privateJa from './locales/ja.ts'
+import privateDe from './locales/de.ts'
+import privateEs from './locales/es.ts'
 
 describe('Korean operator guide follows the actual product and site sources', () => {
+  it('keeps private UI copy in six server-only dictionaries, outside customer locales', () => {
+    for (const dictionary of [privateKo, privateZh, privateJa, privateDe, privateEs]) {
+      expect(Object.keys(dictionary).sort()).toEqual(Object.keys(privateEn).sort())
+    }
+    expect(Object.keys(en).some(key => key.startsWith('admin.'))).toBe(false)
+  })
   it('uses current prices, scope and chapter counts for all seven products', () => {
     const products = operatorProducts()
     expect(products.map(p => p.kind)).toEqual(PREVIEW_KINDS)
