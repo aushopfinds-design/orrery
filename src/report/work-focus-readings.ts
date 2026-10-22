@@ -1,7 +1,7 @@
 import { buildDecisionFocus } from './decision-focus.ts'
 import { buildReportApplications } from './report-applications.ts'
 import type { SajuResult } from '@orrery/core/types'
-import { chapter, chartContext, commonMethod, cycleFacts, finishReading, moneyMarkers, pillarFact, selectedCycles, subject, validateYear } from './category-shared.ts'
+import { chapter, chartContext, commonMethod, cycleFacts, finishReading, moneyMarkers, moneyTiming, pillarFact, selectedCycles, subject, validateYear } from './category-shared.ts'
 import { FOCUS_WORK } from './category-profiles.ts'
 import { WORK_CONNECTIONS } from './reading-connections.ts'
 import { WORK_PROFILES } from './reading-profiles.ts'
@@ -17,13 +17,14 @@ export function buildCareerReading(result: SajuResult, referenceYear = new Date(
   const innerFocus = FOCUS_WORK[c.month.branchSipsin]
   const life = LIFE_FOCUS[c.month.stemSipsin]
   const money = moneyMarkers(result)
+  const timing = moneyTiming(result, referenceYear)
   const cycles = selectedCycles(result, referenceYear)
   const future = result.input.unknownTime ? null : WORK_PROFILES[c.hour.stemSipsin]
   return finishReading({ focus: decision, kind: 'career', title: 'Career & Money', referenceYear,
     applications: buildReportApplications('career', result),
     extras: buildReportExtras('career', result),
     headline: decision.headline, subjects: [subject(result)],
-    summary: [{ label: "What helps you do the work", text: c.work.setting }, { label: "What you can bring to the job", text: c.work.contribution }, { label: "What to ask about pay", text: money.theme }],
+    summary: [{ label: "The kind of work to explore", text: `${c.work.theme}; look for room for ${c.work.setting}` }, { label: "Your money pattern", text: money.steady && money.opportunity ? 'Both steady-income and opportunity symbols appear in the checked birth chart.' : money.steady ? 'The steady-income symbol appears in the checked birth chart.' : money.opportunity ? 'The opportunity symbol appears in the checked birth chart.' : 'Neither money symbol appears in the checked positions; this is not a verdict on earning potential.' }, { label: "When the money theme is more visible", text: timing.map(item => `${item.year}: ${item.money.length ? item.money.map(god => god === '正財' ? 'steady income' : 'new opportunities').join(' and ') : 'no direct money symbol in the annual stem or principal branch stem'}`).join('; ') }],
     chapters: [
       chapter('working-style', "What a Good Working Day Feels Like", "The same task can feel very different in two jobs. In one, you can get on with it. In the other, you spend the day waiting for answers.", [
         "The task may suit you while the way the job is organised does not. It can be a relief to name that difference instead of deciding you are simply bad at the work.",
@@ -58,6 +59,8 @@ export function buildCareerReading(result: SajuResult, referenceYear = new Date(
         "If several people need something at the same time, ask which one comes first and which can wait. **Saying what can wait helps you finish what was already promised.** You can discuss the order of the work without making it an argument about who cares more.",
       ], [pillarFact(result, 3), pillarFact(result, 2), ...(result.input.unknownTime ? [] : [pillarFact(result, 0)])], 'Ask about a job that feels unclear: what comes first, what needs to be finished and who can help?', { keepClose: ['A manager who can name the priority and provide the authority to deliver it.', `An explicit conversation about the expectation of ${c.group.contribution}.`], watchFor: ['Several urgent requests with no decision about which one can wait.', 'Taking responsibility for a result while the needed decision remains with someone else.'] }, 'social'),
       chapter('money-commitments', 'Income, Pay and the Work Behind the Number', "The new role offers more pay, but also expects late replies and another regular shift.", [
+        `**Your chart's money pattern:** ${money.steady && money.opportunity ? 'Both regular-income and opportunity symbols appear. Neither has been ranked as stronger here.' : money.steady ? 'The regular-income symbol appears; the opportunity symbol is not visible in the checked positions.' : money.opportunity ? 'The opportunity symbol appears; the regular-income symbol is not visible in the checked positions.' : 'Neither money symbol appears in the checked positions. That does not mean you lack financial potential.'}`,
+        `**Timing to watch:** ${timing.map(item => `${item.year} brings ${item.money.length ? item.money.map(god => god === '正財' ? 'a regular-income theme' : 'an opportunity theme').join(' and ') : 'no direct money theme in the checked annual symbols'}`).join('; ')}. These are July reference-year symbols, not predictions of a raise or a profitable deal.`,
         "The extra money can still matter. But you may feel differently about the offer once you know what an ordinary week would look like.",
         money.steady && money.opportunity ? 'The checked symbols include both kinds of money-related relationship. This reading uses one to look at regular costs and the other to look at new offers. Neither tells you how much you will earn.' : money.opportunity ? 'A money-related symbol connected with new offers appears in the checked positions. Think about a job or side project you are considering. **What pay has actually been agreed, and what are you hoping it might become?**' : money.steady ? 'A money-related symbol connected with regular costs and promises appears in the checked positions. Look at a job you do each week. If the work has grown, it may be time to ask whether the pay and the agreement still fit.' : 'The money-related symbols looked for here do not appear in the checked positions. That does not tell us how well you can earn or manage money. Start with the hours you work, the pay you receive and the costs you already know.',
         `One thing you might recognise is **${life.moneyWatch}**. This is the interpretation selected from your birth month, not a prediction about your bank balance.`,
@@ -97,13 +100,15 @@ export function buildBusinessReading(result: SajuResult, referenceYear = new Dat
   const groupFocus = FOCUS_WORK[c.year.stemSipsin]
   const money = moneyMarkers(result)
   const cycles = selectedCycles(result, referenceYear)
+  const timing = moneyTiming(result, referenceYear)
   return finishReading({ focus: decision, kind: 'business', title: 'Business & Entrepreneurship', referenceYear,
     applications: buildReportApplications('business', result),
     extras: buildReportExtras('business', result),
     headline: decision.headline, subjects: [subject(result)],
-    summary: [{ label: "How you approach starting something", text: c.personal.focus }, { label: 'An offer to test', text: focus.offer }, { label: "Where the work can become too much", text: focus.capacity }],
+    summary: [{ label: 'Your founder approach', text: `The birth-day theme suggests ${c.personal.focus}; the birth-month work theme suggests ${c.work.theme}. These are ways to test an idea, not proof that a business will succeed.` }, { label: 'An offer to test', text: focus.offer }, { label: 'Yearly money themes to examine', text: timing.map(item => `${item.year}: ${item.money.length ? item.money.map(god => god === '正財' ? 'steady commitments' : 'new offers').join(' and ') : 'no direct money marker in the checked annual symbols'}`).join('; ') }],
     chapters: [
       chapter('founder-style', 'How You Begin Something of Your Own', "You can talk about an idea for half an hour. Explaining what the first customer receives is harder.", [
+        `**Does business fit this chart?** Your birth-day theme of **${c.personal.focus}** meets a birth-month theme of **${c.work.theme}**. That suggests a way to approach an offer: ${focus.offer}. The chart alone cannot decide whether you should leave a job or start a company.`,
         "The larger idea may be exciting while the first offer is still unclear. Making that offer smaller can feel uncomfortable, but it lets someone decide whether it solves a real problem.",
         `Your birth-day symbol is pictured as ${c.personal.image}. This reading uses that image to explore **${c.personal.focus}**. See whether you recognise that in the way you begin an idea or change it after talking to someone.`,
         `The birth-month comparison adds **${c.work.theme}**. In a business, that could mean trying ${focus.offer}. It is a way to begin exploring an offer, not a rule about which industry you belong in.`,

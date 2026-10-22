@@ -22,6 +22,7 @@ export function buildCompatibilityReading(first: SajuResult, second: SajuResult,
   const dayPair = analyzePillarRelations(a.day.pillar.ganzi, b.day.pillar.ganzi)
   const hasClash = [...dayPair.stem, ...dayPair.branch].some(item => item.type === '沖')
   const hasCombine = [...dayPair.stem, ...dayPair.branch].some(item => item.type === '合')
+  const meeting = hasClash ? 'Your birth-day pillars show a clash, so differences in how you respond to the same choice deserve attention.' : hasCombine ? 'Your birth-day pillars show a combination, a traditional image of finding a way to cooperate.' : 'Your birth-day pillars show neither a direct clash nor a combination in the checked pair rules.'
   const crossFacts = a.available.flatMap(left => b.available.flatMap(right => pairFacts(left.pillar.pillar.ganzi, right.pillar.pillar.ganzi, `Person A ${['hour', 'day', 'month', 'year'][left.index]} / Person B ${['hour', 'day', 'month', 'year'][right.index]}`)))
   const moneyA = moneyMarkers(first)
   const moneyB = moneyMarkers(second)
@@ -34,16 +35,18 @@ export function buildCompatibilityReading(first: SajuResult, second: SajuResult,
     extras: buildReportExtras('compatibility', first, { second }),
     headline: decision.headline,
     subjects: [subject(first, 'Person A'), subject(second, 'Person B')],
-    summary: [{ label: 'How Person A tends to begin', text: a.personal.headline }, { label: 'How Person B tends to begin', text: b.personal.headline }, { label: 'How it can feel from each side', text: `${lensA.theme} · ${lensB.theme}` }],
+    summary: [{ label: 'What stands out between you', text: meeting }, { label: 'How it can feel from each side', text: `Person A: ${lensA.theme}; Person B: ${lensB.theme}` }, { label: 'Where to look for friction', text: `Person A may need ${a.relationship.need}; Person B may need ${b.relationship.need}. Ask each other whether this fits.` }],
     chapters: [
       chapter('two-styles', "How You Each Make a Choice", "You are planning a weekend together. One person wants an answer now; the other wants to talk through a few possibilities first.", [
+        `**What stands out in your match:** ${meeting} This is a traditional pattern between your birth-day pillars, not a score or a prediction of whether you will stay together.`,
+        `Person A’s view of the connection points to **${lensA.theme}**; Person B’s points to **${lensB.theme}**. These differ because the reference person changes. Ask whether each description fits your actual experience.`,
         "Both may want a good weekend. The tension can come from how each person reaches a decision, rather than from how much they care about spending time together.",
         `Person A’s birth-day symbol is pictured as ${a.personal.image}. The reading connects that image with **${a.personal.focus}**. Ask Person A whether it sounds like the way they approach a decision.`,
         `Person B’s symbol is pictured as ${b.personal.image}, which is used here to explore **${b.personal.focus}**. Let Person B explain what fits and what does not, even if their answer surprises you.`,
         `The reading suggests Person A may appreciate **${a.personal.need}**, while Person B may appreciate **${b.personal.need}**. These are ideas to discuss, not answers either person has to accept.`,
         a.day.pillar.stem === b.day.pillar.stem ? "Your birth-day symbols match, so the descriptions may sound familiar to both of you. You can still want different things and have different reasons for wanting them." : "Your birth-day symbols are different. Let that open a question about how each person thinks, rather than deciding that one way is better or more caring.",
         'For example, one person may want to settle a plan while another wants more time to explain a concern. **Agree what needs deciding today** and which part can stay open.',
-      ], [pillarFact(first, 1, 'Person A'), pillarFact(second, 1, 'Person B')], 'Take turns saying something you wish the other person understood. Let the first answer finish before explaining your own view.', personalGuidance, 'personality'),
+      ], [pillarFact(first, 1, 'Person A'), pillarFact(second, 1, 'Person B'), ...pairFacts(a.day.pillar.ganzi, b.day.pillar.ganzi, 'Birth-day comparison')], 'Take turns saying something you wish the other person understood. Let the first answer finish before explaining your own view.', personalGuidance, 'personality'),
       chapter('two-directions', 'How the Connection Looks from Each Side', "You offer a suggestion as encouragement, but the other person hears criticism.", [
         "The same sentence can land differently from each side. Explaining your intention matters, but so does hearing what the other person actually took from it.",
         `Comparing the birth-day symbols from Person A’s side gives this reading an idea about **${lensA.theme}**. ${lensA.meaning}`,

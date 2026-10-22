@@ -1,6 +1,6 @@
 import { chartGlossaryFor } from './calculation-notes.ts'
 import type { SajuResult, BirthInput } from '@orrery/core/types'
-import { getRelation, analyzePillarRelations } from '@orrery/core/pillars'
+import { getRelation, analyzePillarRelations, getFourPillars, getJeonggi } from '@orrery/core/pillars'
 import { buildFreeReading, REPORT_EDITION } from './complete-reading.ts'
 import type { ReportChapter, ElementCount } from './complete-reading.ts'
 import { buildEnglishReading, STEMS, TEN_GODS } from './reading.ts'
@@ -60,6 +60,16 @@ export function moneyMarkers(result: SajuResult) {
   const opportunity = visible.some(item => item.god === '偏財')
   const theme = steady && opportunity ? 'a steady base and room for an opportunity' : steady ? 'steady commitments and clear records' : opportunity ? 'new offers and useful connections' : inner.length ? 'checking the quieter commitments behind a visible choice' : 'starting with real costs and promises'
   return { steady, opportunity, theme, facts: visible.length ? visible.map(item => `${item.source}: ${item.god} (${TEN_GODS[item.god].title}).`) : inner.length ? inner : ['No 正財 or 偏財 was found in the checked visible markers or inner stems. This does not measure financial ability.'] }
+}
+export function moneyTiming(result: SajuResult, year: number) {
+  const dayStem = result.pillars[1].pillar.stem
+  const years = [year, year + 1].filter(value => value <= 2100).map(value => {
+    const pillar = getFourPillars(value, 7, 15, 12, 0)[0]
+    const stem = getRelation(dayStem, pillar[0])!.hanja
+    const inner = getRelation(dayStem, getJeonggi(pillar[1]))!.hanja
+    return { year: value, pillar, stem, inner, money: [stem, inner].filter(god => god === '正財' || god === '偏財') }
+  })
+  return years
 }
 export function pairFacts(first: string, second: string, label: string): string[] {
   const pair = analyzePillarRelations(first, second)
