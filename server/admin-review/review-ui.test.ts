@@ -21,11 +21,15 @@ describe('Private review interactions (local DOM, no provider or deployment)', (
     try {
       const doc = dom.window.document
       const form = doc.querySelector('form')!
+      ;(doc.querySelector(`[data-review-kind="${kind}"]`) as HTMLButtonElement).click()
+      expect(doc.getElementById('panel-reports')!.hidden).toBe(false)
+      expect(doc.getElementById('panel-overview')!.hidden).toBe(true)
+      expect(requests).toHaveLength(0)
       const select = form.querySelector<HTMLSelectElement>('select[name=kind]')!
       select.value = kind; select.dispatchEvent(new dom.window.Event('change', { bubbles: true }))
       expect(doc.getElementById('partner')!.hidden).toBe(!['compatibility', 'bundle'].includes(kind))
       form.dispatchEvent(new dom.window.Event('submit', { bubbles: true, cancelable: true }))
-      await vi.waitFor(() => expect(doc.querySelector('.pair [lang=en] .passage')?.textContent).toBe(blocks[0].english))
+      await vi.waitFor(() => expect(doc.querySelector('#documents .pair [lang=en] .passage')?.textContent).toBe(blocks[0].english))
       const button = doc.getElementById('translate') as HTMLButtonElement
       expect(button.disabled).toBe(true)
       expect(requests[0].body.kind).toBe(kind)
@@ -34,12 +38,30 @@ describe('Private review interactions (local DOM, no provider or deployment)', (
       consent.checked = true; consent.dispatchEvent(new dom.window.Event('change'))
       expect(button.disabled).toBe(false)
       button.click()
-      await vi.waitFor(() => expect(doc.querySelector('.pair [lang=ko] .passage')?.textContent).toBe('상대방에게 조금 더 분명하게 설명해 달라고 요청해 보세요.'))
+      await vi.waitFor(() => expect(doc.querySelector('#documents .pair [lang=ko] .passage')?.textContent).toBe('상대방에게 조금 더 분명하게 설명해 달라고 요청해 보세요.'))
       expect(requests[1].body).toEqual({ digest: 'test-digest', blocks, consent: true })
-      expect(doc.querySelector('.pair [lang=en] .passage')!.textContent).toBe(blocks[0].english)
+      expect(doc.querySelector('#documents .pair [lang=en] .passage')!.textContent).toBe(blocks[0].english)
       ;(doc.getElementById('clear') as HTMLButtonElement).click()
       expect(doc.getElementById('workspace')!.hidden).toBe(true)
       expect(doc.getElementById('documents')!.textContent).toBe('')
+    } finally { dom.window.close() }
+  })
+  it('explains products and the website without AI or order requests', () => {
+    const fetcher = vi.fn()
+    const dom = new JSDOM(reviewPage('nonce'), { url: 'https://review.example/api/admin-review', runScripts: 'dangerously',
+      beforeParse(window) { window.fetch = fetcher } })
+    try {
+      const doc = dom.window.document
+      expect(doc.querySelectorAll('[data-product]')).toHaveLength(7)
+      expect(doc.querySelector('[data-product=complete]')!.textContent).toContain('US$16.99')
+      expect(doc.querySelector('[data-product=bundle]')!.textContent).toContain('US$24.99')
+      expect(doc.getElementById('panel-overview')!.hidden).toBe(false)
+      ;(doc.querySelector('[data-panel=site]') as HTMLButtonElement).click()
+      expect(doc.getElementById('panel-site')!.hidden).toBe(false)
+      expect(doc.querySelectorAll('[data-site-step]')).toHaveLength(8)
+      expect(doc.querySelector('[data-panel=site]')!.getAttribute('aria-pressed')).toBe('true')
+      expect(doc.querySelector('[data-site-step=preview] [lang=ko]')!.textContent).toContain('일부 문단')
+      expect(fetcher).not.toHaveBeenCalled()
     } finally { dom.window.close() }
   })
 })
