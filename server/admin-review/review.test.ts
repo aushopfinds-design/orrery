@@ -139,6 +139,13 @@ describe('Protected page and translation API', () => {
 
 describe('Korean translation boundary', () => {
   const blocks = [{ id: '1.1', english: 'Your 乙 chart has 1 Wood marker.' }]
+  it('compares ten-year periods by value in Korean without accepting a different duration', () => {
+    const period = [{ id: 'period', english: 'Birth time is unknown; ten-year starting dates are approximate.' }]
+    for (const duration of ['10년', '십 년']) {
+      expect(validateTranslation(period, { blocks: [{ id: 'period', korean: `태어난 시간을 몰라 ${duration} 대운의 시작 날짜는 대략적이에요.` }] })).toHaveLength(1)
+    }
+    expect(() => validateTranslation(period, { blocks: [{ id: 'period', korean: '20년 대운의 시작 날짜는 대략적이에요.' }] })).toThrow('translation_mismatch')
+  })
   it('accepts numeric Korean months without accepting a changed birth date', () => {
     const dates = [{ id: 'date', english: '25 March 1998 · birth time unknown · Australia/Sydney' }]
     expect(validateTranslation(dates, { blocks: [{ id: 'date', korean: '1998년 3월 25일 · 출생 시간 미상 · Australia/Sydney' }] })).toHaveLength(1)

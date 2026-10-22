@@ -12,7 +12,7 @@ function anchors(text: string) {
   // English month names become numeric months in ordinary Korean dates.
   // Compare their values, not their spelling, while retaining exact chart markers.
   const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
-  const comparable = text.replace(/\b(\d{1,2}) (January|February|March|April|May|June|July|August|September|October|November|December) (\d{4})\b/g,
+  const comparable = text.replace(/\bten[- ]year\b/gi, '10-year').replace(/십\s*년/g, '10년').replace(/\b(\d{1,2}) (January|February|March|April|May|June|July|August|September|October|November|December) (\d{4})\b/g,
     (_match, day: string, month: string, year: string) => `${year} ${months.indexOf(month) + 1} ${Number(day)}`)
   return [...comparable.matchAll(/\d+(?:\.\d+)?|[甲乙丙丁戊己庚辛壬癸子丑寅卯辰巳午未申酉戌亥木火土金水]/g)].map(m => m[0]).sort()
 }
