@@ -1,4 +1,7 @@
 const copy: Record<string, string> = {
+  "admin.review.readEnglish": "Read full English original",
+  "admin.review.readKorean": "Read full Korean draft",
+  "admin.review.readingView": "Report language",
   "admin.review.title": "Private report review",
   "admin.review.login": "Sign in with your administrator Google account",
   "admin.review.loginNote": "Only the configured administrator account can enter. No customer access.",
@@ -58,7 +61,7 @@ const copy: Record<string, string> = {
   "admin.guide.freeDifferenceText": "The free reading is a short introduction. The personal preview shows selected passages from the customer’s chart. A full example uses fictional details. The purchased report is issued only after the server confirms payment.",
   "admin.guide.cardNote": "The PDF contains a still card. The buyer screen has separate PNG and animated video download controls. Video download depends on browser support.",
   "admin.guide.bundleNote": "The bundle contains Complete Life Reading, Love Compatibility and Year Ahead. The first person is the subject of the life and annual reports. Compatibility compares both people.",
-  "admin.guide.reportIntro": "Choose a report and sample birth details below. English stays on the left; the Korean draft appears beside it after generation. Product and website guides can be read without AI translation.",
+  "admin.guide.reportIntro": "Choose a report and sample birth details below. Switch between the full English original and the full Korean draft after generation. Product and website guides can be read without AI translation.",
   "admin.guide.complete.what": "Personality, relationships, work, money habits and ten-year life chapters, brought together in one reading.",
   "admin.guide.compatibility.what": "Compare two charts to understand communication, shared responsibilities and everyday relationship habits.",
   "admin.guide.year.what": "The selected year’s themes, ten-year context and twelve monthly reference points.",

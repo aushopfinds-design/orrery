@@ -1,4 +1,7 @@
 const copy: Record<string, string> = {
+  "admin.review.readEnglish": "Read full English original",
+  "admin.review.readKorean": "Read full Korean draft",
+  "admin.review.readingView": "Report language",
   "admin.review.title": "Private report review",
   "admin.review.login": "Sign in with your administrator Google account",
   "admin.review.loginNote": "Only the configured administrator account can enter. No customer access.",

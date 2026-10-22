@@ -1,4 +1,7 @@
 const copy: Record<string, string> = {
+  "admin.review.readEnglish": "영어 전체 읽기",
+  "admin.review.readKorean": "한국어 전체 읽기",
+  "admin.review.readingView": "리포트 언어 선택",
   "admin.review.title": "관리자 전용 리포트 검수",
   "admin.review.login": "관리자 Google 계정으로 로그인",
   "admin.review.loginNote": "등록된 관리자 계정만 들어올 수 있어요. 고객에게는 제공되지 않아요.",
@@ -58,7 +61,7 @@ const copy: Record<string, string> = {
   "admin.guide.freeDifferenceText": "무료 풀이는 짧은 소개예요. 개인 미리보기는 고객 사주로 만든 일부 문단만 보여줘요. 전체 예시는 가상 인물의 리포트예요. 구매 리포트는 서버에서 결제를 확인한 뒤에만 발급해요.",
   "admin.guide.cardNote": "PDF에는 멈춰 있는 카드가 들어가요. 구매자 화면에서는 카드 이미지(PNG)와 움직이는 영상을 따로 저장할 수 있어요. 영상 저장은 브라우저 지원 여부에 따라 달라요.",
   "admin.guide.bundleNote": "번들은 종합·궁합·연간 리포트 3개를 묶은 상품이에요. 종합과 연간은 첫 번째 사람의 사주를 사용하고, 궁합은 두 사람을 함께 비교해요.",
-  "admin.guide.reportIntro": "아래에서 리포트와 검수용 출생 정보를 선택해 주세요. 영어 원문 옆에 한국어 초안을 붙여서 읽을 수 있어요. 상품 설명과 사이트 안내는 AI 번역 없이도 바로 읽을 수 있어요.",
+  "admin.guide.reportIntro": "아래에서 리포트와 검수용 출생 정보를 선택해 주세요. 한국어 전체 읽기와 영어 전체 읽기 버튼으로 리포트 전체를 한 언어씩 편하게 읽을 수 있어요. 상품 설명과 사이트 안내는 AI 번역 없이도 바로 읽을 수 있어요.",
   "admin.guide.complete.what": "성격·관계·일·돈을 대하는 습관과 10년 단위 흐름을 한꺼번에 살펴보는 종합 상품이에요.",
   "admin.guide.compatibility.what": "두 사람의 사주를 비교해서 대화 방식, 역할 분담, 함께 지내는 습관을 이해하도록 돕는 상품이에요.",
   "admin.guide.year.what": "선택한 해의 주제와 대운의 맥락, 12개월의 기준 시점을 바탕으로 생활 속 계획을 생각해 보는 상품이에요.",
