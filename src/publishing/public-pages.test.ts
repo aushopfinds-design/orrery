@@ -1,4 +1,5 @@
 import { describe, it, expect } from 'vitest'
+import { JSDOM } from 'jsdom'
 import { calculateSaju } from '@orrery/core/saju'
 import { CATEGORY_SCENARIOS } from '../report/category-catalog.ts'
 import { buildCategoryReading } from '../report/category-readings.ts'
@@ -100,4 +101,28 @@ describe('public reading publication and AdSense preflight',()=>{
     expect(notice).toContain('Clearing site data does not delete a downloaded backup')
     expect(pages.find(p=>p.path==='/privacy/')!.body).toContain('/#your-data')
   })
+})
+
+
+describe('r14 actual public reading layout',()=>{
+ it('shows all twelve months in the overview and links each to its full reading',()=>{
+  const dom=new JSDOM(pages.find(p=>p.path==='/samples/year-ahead/')!.body)
+  const table=dom.window.document.querySelector('.public-month-overview')!
+  expect(table.querySelectorAll('tbody tr')).toHaveLength(12)
+  for(let month=1;month<=12;month++){
+   expect(table.querySelector(`a[href="#month-${month}"]`)).not.toBeNull()
+   expect(dom.window.document.getElementById('month-'+month)).not.toBeNull()
+  }
+  dom.window.close()
+ })
+ it('prints a chapter practical point once, including short summary chapters',()=>{
+  const report=buildCategoryReading('year',calculateSaju(CATEGORY_SCENARIOS[0].first),{year:2027})
+  const dom=new JSDOM(pages.find(p=>p.path==='/samples/year-ahead/')!.body)
+  for(const chapter of [...report.chapters,...report.months]){
+   const node=dom.window.document.getElementById(chapter.id)!
+   const copies=[...node.querySelectorAll('p,li')].filter(p=>p.textContent===plainReadingText(chapter.tryThis))
+   expect(copies,chapter.id).toHaveLength(1)
+  }
+  dom.window.close()
+ })
 })
