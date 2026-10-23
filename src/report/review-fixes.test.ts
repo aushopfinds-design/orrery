@@ -69,7 +69,7 @@ describe('Customer PDF review regressions', () => {
   })
   it('keeps the preparation basis and chapter 08 in the complete export', () => {
     const report = buildCompleteReading(calculateSaju(input), 2026)
-    expect(report.fullText).toContain('08 · Your Life Chapters')
+    expect(report.fullText).toContain('08 · What Do Your Ten-Year Life Cycles Reveal?')
     expect(report.methodNotes.join(' ')).toContain('Traditional cycle setting: Male')
     expect(report.calculation.hourPillar).toBe(getFourPillars(1998, 3, 25, 2, 57)[3])
   })

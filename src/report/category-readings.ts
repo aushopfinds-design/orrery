@@ -1,6 +1,7 @@
+import { bundleInterpretationPlans } from './interpretation-plan.ts'
+import { buildTraditionalCompleteFromPlan, buildTraditionalCategoryFromPlan } from './traditional-reading.ts'
 import type { SajuResult } from '@orrery/core/types'
 import type { FocusCategory } from './category-catalog.ts'
-import { buildCompleteReading } from './complete-reading.ts'
 import { buildCompatibilityReading } from './compatibility-reading.ts'
 import { buildCareerReading, buildBusinessReading } from './work-focus-readings.ts'
 import { buildYearAheadReading } from './year-ahead-reading.ts'
@@ -21,9 +22,13 @@ export function buildCategoryReading(kind: FocusCategory, first: SajuResult, opt
   }
 }
 export function buildBundleReading(first: SajuResult, second: SajuResult, annualYear = new Date().getFullYear() + 1, referenceYear = new Date().getFullYear()) {
-  const complete = buildCompleteReading(first, referenceYear)
-  const compatibility = buildCompatibilityReading(first, second, referenceYear)
-  const annual = buildYearAheadReading(first, annualYear)
+  return buildBundleFromPlans(bundleInterpretationPlans(first, second, annualYear, referenceYear))
+}
+export function buildBundleFromPlans(plans: ReturnType<typeof bundleInterpretationPlans>) {
+  const annualYear = plans.annual.referenceYear
+  const complete = buildTraditionalCompleteFromPlan(plans.complete)
+  const compatibility = buildTraditionalCategoryFromPlan(plans.compatibility)
+  const annual = buildTraditionalCategoryFromPlan(plans.annual)
   // The life report owns the shared glossary, method and symbolic keepsake appendix.
   // The relationship and annual sections retain their own calculated evidence.
   for (const report of [compatibility, annual]) {
@@ -31,9 +36,9 @@ export function buildBundleReading(first: SajuResult, second: SajuResult, annual
     report.fullText = report.fullText.split('\n\nYour Everyday Compass')[0]
     report.wordCount = report.fullText.split(/\s+/).length
   }
-  const overviewTitle = 'Reading the Three Reports Together'
+  const overviewTitle = 'How Do Your Life, Love and Year Connect?'
   const overviewParagraphs = [
-    'Person A is the subject of the life and annual readings. The relationship reading compares Person A and Person B. Shared method explanations, glossary and symbolic keepsake notes appear with the life reading rather than three times.',
+    'This reading connects Person A’s life pattern, the relationship between both people and Person A’s selected year. It separates what lasts from what changes, then brings the three readings together around the choices they share.',
     `**The lasting pattern:** ${complete.summary[0].text} ${complete.summary[1].text}`,
     `**The relationship:** ${compatibility.chapters[0].lead} ${compatibility.chapters[0].paragraphs[0]}`,
     `**The annual layer:** ${annual.chapters[0].lead} Read its twelve monthly comparisons as a temporary layer around Person A’s natal pattern.`,
@@ -41,7 +46,7 @@ export function buildBundleReading(first: SajuResult, second: SajuResult, annual
   ]
   const synthesis = plainReadingText(overviewParagraphs.join('\n\n'))
   const overview = { title: overviewTitle, fullText: [overviewTitle, synthesis].join('\n\n'), paragraphs: overviewParagraphs }
-  const fullText = ['THE FATE KEY · Complete Bundle', overview.fullText, complete.fullText, compatibility.fullText, annual.fullText].join('\n\n')
+  const fullText = ['THE FATE KEY · Your Destiny Collection', overview.fullText, complete.fullText, compatibility.fullText, annual.fullText].join('\n\n')
   const summary = [{ label: 'The life pattern', text: complete.summary[0].text }, { label: 'The connection', text: compatibility.summary[0].text }, { label: `${annualYear} adds`, text: annual.summary[0].text }]
   return { complete, compatibility, annual, overview, summary, synthesis, fullText, wordCount: fullText.split(/\s+/).length }
 }

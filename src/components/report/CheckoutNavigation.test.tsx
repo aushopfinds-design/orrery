@@ -20,7 +20,7 @@ describe('visible purchase entry points', () => {
     window.history.replaceState(null,'',checkoutHash('compatibility'))
     const html=renderToStaticMarkup(<PersonalPreviewPage kind="compatibility" input={null} onFirstBirth={()=>{}} />)
     expect(html).toContain('id="personal-checkout"')
-    expect(html).toContain('Love Compatibility')
+    expect(html).toContain('Are We Meant to Be?')
     expect(html).toContain('US$11.99')
     expect(html).toContain('Two-person reports also need')
     expect(html).not.toContain('Buy test report')

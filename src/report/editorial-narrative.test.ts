@@ -1,3 +1,4 @@
+import { JSDOM } from 'jsdom'
 import { describe, expect, it, vi } from 'vitest'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { createElement } from 'react'
@@ -40,7 +41,10 @@ describe('Calculated interpretation before optional advice', () => {
     expect(html).toContain('fate-report-prose')
     expect(html).not.toContain('fate-everyday-example')
     expect(html).toContain(chapter.paragraphs[0])
-    expect(html.split(chapter.lead).length - 1).toBe(1)
+    const dom = new JSDOM(html)
+    expect(dom.window.document.querySelectorAll('.fate-reading-lead')).toHaveLength(1)
+    expect(dom.window.document.querySelector('.fate-reading-lead')!.textContent).toBe(plainReadingText(chapter.lead))
+    dom.window.close()
     const saved = report.fullText.indexOf(plainReadingText(chapter.lead))
     expect(report.fullText.indexOf(plainReadingText(chapter.paragraphs[0]), saved)).toBeGreaterThan(saved)
   })
@@ -74,7 +78,7 @@ describe('Calculated interpretation before optional advice', () => {
     }
   })
   it('keeps an integrated bundle overview visible in the sample and complete export', () => {
-    expect(REPORT_EDITION).toBe('2026.10-r9')
+    expect(REPORT_EDITION).toBe('2026.10-r10')
     const bundle = buildBundleReading(a, b, 2027, 2026)
     expect(bundle.fullText.indexOf(bundle.overview.fullText)).toBeLessThan(bundle.fullText.indexOf(bundle.complete.fullText))
     expect(bundle.synthesis).not.toBe(buildBundleReading(a, b, 2028, 2026).synthesis)
@@ -100,7 +104,7 @@ describe('Calculated interpretation before optional advice', () => {
       expect(x.focus).toEqual(y.focus)
     }
     const full = buildCompleteReading(one, 2026)
-    expect(full.focus.synthesis).toContain('career')
+    expect(full.focus.synthesis).toContain('strength')
     expect(full.chapters[0].lead).toBeTruthy()
   })
 })

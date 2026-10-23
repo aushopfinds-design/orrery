@@ -28,7 +28,7 @@ export function classifyStrength(s: StrengthSignals): StrengthTendency {
   if (!s.seasonalSupport && !s.anyRoot && s.exposedDemand && s.exposedSupport) return 'support-needed'
   return 'mixed'
 }
-export function structuralAssessment(result: SajuResult) {
+export function structuralFacts(result: SajuResult) {
   const day = result.pillars[1].pillar.stem, month = result.pillars[2]
   const positions = availablePillars(result)
   const exposed = positions.filter(item => item.index !== 1).map(({ pillar, index }) => ({ stem: pillar.pillar.stem, god: pillar.stemSipsin, position: POSITION[index] }))
@@ -46,6 +46,13 @@ export function structuralAssessment(result: SajuResult) {
   const exceptional = noSupport || noDemand || groups.some(item => item.type === '三合' || item.type === '方合')
   const signals: StrengthSignals = { unknownTime: !!result.input.unknownTime, seasonalSupport: SUPPORT.has(seasonalGod), principalRoot: roots.some(item => item.principal), anyRoot: !!roots.length, exposedSupport: exposed.some(item => SUPPORT.has(item.god)), exposedDemand: exposed.some(item => !SUPPORT.has(item.god)), exceptional }
   const tendency = classifyStrength(signals)
+  return { policy: STRUCTURE_POLICY, day, month, seasonalGod, exposed, hidden, roots, monthlyHidden, patternCandidate, groups, noSupport, noDemand, signals, tendency }
+}
+export function structuralAssessment(result: SajuResult) {
+  return englishStructuralAssessment(structuralFacts(result))
+}
+export function englishStructuralAssessment(facts: ReturnType<typeof structuralFacts>) {
+  const { month, seasonalGod, exposed, hidden, roots, monthlyHidden, patternCandidate, groups, noSupport, noDemand, signals, tendency } = facts
   const cautiousReasons = [
     ...(signals.unknownTime ? ['The birth hour is unknown; the missing support or demand could change the assessment.'] : []),
     ...(noSupport ? ['No checked supporting relationship is present. A following structure must be examined before applying an ordinary weak-chart rule.'] : []),
@@ -90,7 +97,7 @@ export function activeCycleAt(result: SajuResult, reference: Date): DaewoonItem 
   })
 }
 export function periodAssessment(result: SajuResult, pillar: string, date: string, yearPillar = pillar) {
-  const natal = structuralAssessment(result), day = result.pillars[1].pillar.stem
+  const natal = structuralFacts(result), day = result.pillars[1].pillar.stem
   const reference = new Date(date + 'T12:00:00Z') // shared Asia/Seoul comparison wall-clock representation, as in core DaewoonItem
   const cycle = activeCycleAt(result, reference)
   const god = getRelation(day, pillar[0])!.hanja, inner = getRelation(day, getJeonggi(pillar[1]))!.hanja
