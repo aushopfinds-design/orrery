@@ -1,3 +1,4 @@
+import { resolutionEnglish } from './resolution-language.ts'
 import { buildInterpretationPlan } from './interpretation-plan.ts'
 import type { InterpretationPlan } from './interpretation-plan.ts'
 import { buyerOutline } from './buyer-outline.ts'
@@ -21,7 +22,7 @@ const METHOD = [
   'This is a traditional Saju interpretation of calculated symbols, not a factual assessment of your personality or a validated prediction. The situations describe possible expressions, not events known to have happened.',
   'Emphasis means repetition in named positions. Visible relationships, principal branch stems and all hidden stems are listed separately; they are not added into a fortune score. A hidden principal stem also appears in the principal-branch comparison and is not an extra independent vote.',
   'Visible counts are not a full assessment of day-master strength. This report does not claim to diagnose that from counts. The separate FATE-qualitative-r1 rule requires agreement between the month, roots and exposed relationships. Mixed, unknown-hour and exceptional cases are deferred. It is a provisional interpretation policy, not a universal school or a validated outcome model.',
-  'A month-led structure candidate and a support-versus-demand balancing candidate group answer different questions. Neither is presented as a confirmed useful element. Climate adjustment, special structures, full structure success and element transformation remain unresolved.',
+  'The separate FATE-ordinary-structure-r1 policy checks the month anchor, observed production chains and competing exposed relationships. It can return a conditional single balancing preference only for its bounded ordinary cases. A withheld result is explicit; no element transformation, universal structure success or climate prescription is certified.',
   'A money relationship is a traditional topic, not a forecast of income or return. A clash is not a forecast of loss, illness or separation; a combination does not guarantee cooperation or marriage.',
   PAIR_METHOD_NOTE,
   REFERENCE_CLOCK_NOTE,
@@ -128,12 +129,12 @@ function withStructuralEvidence(chapters: ReportChapter[], plan: InterpretationP
   const facts = (item: ReturnType<typeof structuralAssessment>) => [...item.evidence, item.verdict, item.paragraphs[3], item.balanceText]
   return chapters.map((item, index) => index ? item : { ...item,
     paragraphs: [...item.paragraphs, ...(b ? ['Person A: ' + brief(a), 'Person B: ' + brief(b)] : [brief(a)])].flatMap(shortParagraphs),
-    evidence: [...item.evidence, ...facts(a).map(text => b ? 'Person A: ' + text : text), ...(b ? facts(b).map(text => 'Person B: ' + text) : [])],
+    evidence: [...item.evidence, ...facts(a).map(text => b ? 'Person A: ' + text : text), ...resolutionEnglish(plan.primary.resolution).map(c => 'Person A: ' + c.text), ...(b ? [...facts(b), ...resolutionEnglish(plan.partner!.resolution).map(c => c.text)].map(text => 'Person B: ' + text) : [])],
   })
 }
 function distinctChapters(chapters: ReportChapter[]) {
   const seen = new Set<string>()
-  return chapters.map(item => { seen.add(item.lead); return { ...item, paragraphs: item.paragraphs.filter(text => { if (seen.has(text)) return false; seen.add(text); return true }) } })
+  return chapters.map(item => { seen.add(item.lead); if (['support-each-other', 'work-chapters', 'business-chapters', 'business-plan', 'patterns', 'annual-cycle-context', 'annual-plan'].includes(item.id)) return item; return { ...item, paragraphs: item.paragraphs.filter(text => { if (seen.has(text)) return false; seen.add(text); return true }) } })
 }
 function focusFrom(chapters: ReportChapter[]) {
   const first = chapters[0], next = chapters[1] ?? first

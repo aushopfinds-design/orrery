@@ -85,12 +85,10 @@ describe('Conservative structural policy: no scores or unsupported definitive us
   })
 })
 describe('24 international charts: structural evidence reaches all seven purchased outputs', () => {
-  it('keeps calculated source features, scope and uncertainty in every product', () => {
-    const states = new Set<string>()
-    for (let i = 0; i < 24; i++) {
+  it.each(Array.from({ length: 24 }, (_, i) => i))('chart %i keeps calculated source features, scope and uncertainty in every product', i => {
       const chart = calculateSaju({ ...CATEGORY_SCENARIOS[i % 2].first, year: 1960 + i, month: i % 12 + 1, day: 5 + i % 20, unknownTime: i % 5 === 0 })
       const other = calculateSaju(CATEGORY_SCENARIOS[1].second)
-      const assessment = structuralAssessment(chart); states.add(assessment.tendency)
+      const assessment = structuralAssessment(chart)
       const complete = buildCompleteReading(chart, 2026)
       const focused = (['career', 'business', 'year', 'wellbeing', 'compatibility'] as const).map(kind => buildCategoryReading(kind, chart, { year: 2027, second: kind === 'compatibility' ? other : undefined }))
       for (const report of [complete, ...focused]) {
@@ -102,7 +100,9 @@ describe('24 international charts: structural evidence reaches all seven purchas
       const bundle = buildBundleReading(chart, other, 2027, 2026)
       expect(bundle.fullText).toContain(assessment.verdict)
       expect(bundle.fullText.match(/Your Everyday Compass/g)).toHaveLength(1)
-    }
+  })
+  it('retains distinct support outcomes across the population', () => {
+    const states = new Set(Array.from({ length: 24 }, (_, i) => structuralAssessment(calculateSaju({ ...CATEGORY_SCENARIOS[i % 2].first, year: 1960 + i, month: i % 12 + 1, day: 5 + i % 20, unknownTime: i % 5 === 0 })).tendency))
     expect(states.size).toBeGreaterThanOrEqual(3)
   })
 })

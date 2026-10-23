@@ -1,4 +1,5 @@
 const copy: Record<string, string> = {
+  "admin.review.sentenceReview": "Kernaussagen und Zeitverlauf vergleichen",
   "admin.review.sourceKoreanNote": "Die koreanische und die englische Deutung beruhen auf derselben Analyse. Die Absatzanzahl kann abweichen; beide sind Prüfentwürfe.",
   "admin.review.readCompare": "Englisch und Koreanisch nebeneinander",
   "admin.review.readEnglish": "Read full English original",

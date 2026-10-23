@@ -5,6 +5,7 @@ import { STEM_ELEMENTS, BRANCH_ELEMENTS } from './reading.ts'
 import { BUYER_OUTLINES } from './buyer-outline.ts'
 import type { BuyerOutlineKind } from './buyer-outline.ts'
 import { natalAnalysis, natalPatterns, fiveYearPoints, monthlyPoint, POSITION } from './traditional-analysis.ts'
+import { resolveStructure } from './structure-resolution.ts'
 import { structuralFacts, periodAssessment } from './structural-assessment.ts'
 
 /** Shared facts/codes, not an English draft or a Korean draft. No provider calls. */
@@ -12,7 +13,7 @@ function subjectPlan(chart: SajuResult) {
   const n = natalAnalysis(chart), a = structuralFacts(chart)
   return { dayStem: n.day.pillar.stem, dayBranch: n.day.pillar.branch, monthStemGod: n.month.stemSipsin, monthBranchGod: n.month.branchSipsin,
     dayBranchGod: n.day.branchSipsin, yearStemGod: chart.pillars[3].stemSipsin,
-    strength: a,
+    strength: a, resolution: resolveStructure(a),
     elements: (['Wood', 'Fire', 'Earth', 'Metal', 'Water'] as const).map(element => ({ element, count: n.available.flatMap(({ pillar }) => [STEM_ELEMENTS[pillar.pillar.stem], BRANCH_ELEMENTS[pillar.pillar.branch]]).filter(value => value === element).length })),
     positions: n.available.map(({ pillar, index }) => ({ position: POSITION[index], ganzi: pillar.pillar.ganzi, stemGod: index === 1 ? null : pillar.stemSipsin, principalGod: pillar.branchSipsin })),
     visibleMoney: n.available.flatMap(({ pillar, index }) => [...(index === 1 ? [] : [{ god: pillar.stemSipsin, position: POSITION[index], part: 'stem' }]), { god: pillar.branchSipsin, position: POSITION[index], part: 'principal' }]).filter(item => ['正財', '偏財'].includes(item.god)),
@@ -24,7 +25,7 @@ function subjectPlan(chart: SajuResult) {
 function timingPlan(chart: SajuResult, p: ReturnType<typeof monthlyPoint>) {
   const a = periodAssessment(chart, p.pillar, p.date, p.yearPillar)
   return { date: p.date, pillar: p.pillar, yearPillar: p.yearPillar, god: p.god, innerGod: p.innerGod,
-    direction: a.direction, friction: a.tension, activeCycle: a.cycle ? { ganzi: a.cycle.ganzi, start: a.cycle.startDate.toISOString(), stemGod: a.cycle.stemSipsin, branchGod: a.cycle.branchSipsin } : null,
+    direction: a.direction, friction: a.tension, balancingComparison: a.usefulComparison, activeCycle: a.cycle ? { ganzi: a.cycle.ganzi, start: a.cycle.startDate.toISOString(), stemGod: a.cycle.stemSipsin, branchGod: a.cycle.branchSipsin } : null,
     clashes: p.clash.map(item => POSITION[item.index]),
     comparisons: p.comparisons.map(item => ({ position: POSITION[item.index], patterns: item.found.map(pattern => ({ type: pattern.type, detail: pattern.detail, layer: pattern.layer })) })),
   }

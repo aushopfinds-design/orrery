@@ -94,6 +94,8 @@ describe('Private whole-document native-language review UI', () => {
       expect((document.getElementById('translate') as HTMLButtonElement).disabled).toBe(true)
       ;(document.querySelector('[data-reading=ko]') as HTMLButtonElement).click()
       expect(document.getElementById('reading-ko')!.hidden).toBe(false)
+      expect(document.querySelectorAll('[data-claim-id]').length).toBe(review.documents.reduce((n, d) => n + d.reviewedClaims.length, 0))
+      if (kind !== 'bundle') expect(document.querySelector('#reading-compare details summary')?.textContent).toContain('핵심 문장 대조')
       expect(fetcher).toHaveBeenCalledTimes(1)
     } finally { dom.window.close() }
   })

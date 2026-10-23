@@ -1,4 +1,5 @@
 const copy: Record<string, string> = {
+  "admin.review.sentenceReview": "核心解读与时机判断逐句对照",
   "admin.review.sourceKoreanNote": "韩文与英文解读分别依据同一分析结果撰写。段落数量可能不同，两者均为审核草稿。",
   "admin.review.readCompare": "英韩对照阅读",
   "admin.review.readEnglish": "Read full English original",
