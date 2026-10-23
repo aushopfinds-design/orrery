@@ -1,3 +1,4 @@
+import { purchaseMonths } from '../../src/report/purchase-timing.ts'
 import { describe, expect, it, vi } from 'vitest'
 import { JSDOM } from 'jsdom'
 import { calculateSaju } from '../../packages/core/src/saju.ts'
@@ -64,10 +65,10 @@ describe('Native Korean and English from one neutral plan', () => {
         expect(en.fullText).toContain(point.pillar)
         expect(ko).toContain(point.pillar)
       }
-      const support = plan.months.filter(p => ['potential-support', 'potential-outlet'].includes(p.direction) && !p.friction)
+      const support = purchaseMonths(a,2027).filter(p => ['conditional-opening','opening-with-caution','conditional-support'].includes(p.status))
       if (!support.length) {
-        expect(en.chapters.find(c => c.id === 'annual-cycle-context')!.lead).toContain('No month')
-        expect(ko).toContain('조건을 모두 만족하는 달이 없습니다')
+        expect(en.chapters.find(c => c.id === 'annual-cycle-context')!.lead).toContain('None of the twelve monthly comparisons establishes a supported opening')
+        expect(ko).toContain('12개 월별 비교에서 뒷받침되는 기회를 확정할 수 없습니다')
       }
       if (a.input.unknownTime) expect(plan.months.every(p => p.direction === 'unresolved')).toBe(true)
       const full = buildTraditionalCompleteFromPlan(buildInterpretationPlan('complete', a, 2026))

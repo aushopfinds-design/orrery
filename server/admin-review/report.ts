@@ -1,3 +1,4 @@
+import { bundleNarrative } from '../../src/report/purchase-narrative.ts'
 import { structureClaimReview, verifyClaimCoverage, sentenceInventory } from './claim-review.ts'
 import type { ReviewedClaim } from './claim-review.ts'
 import { createHash } from 'node:crypto'
@@ -25,7 +26,7 @@ export function buildReview(value: unknown, referenceYear = new Date().getUTCFul
     const plans = bundleInterpretationPlans(a, b!, input.year!, referenceYear)
     const korean = { overview: koreanBundleOverview(plans), complete: koreanReadingFromPlan(plans.complete), compatibility: koreanReadingFromPlan(plans.compatibility), annual: koreanReadingFromPlan(plans.annual) }
     const bundle = buildBundleFromPlans(plans)
-    sources = [{ ...bundle.overview, korean: korean.overview, analysisId: id(plans), reviewedClaims: [] }, ...(['complete', 'compatibility', 'annual'] as const).map(key => ({ ...bundle[key], korean: korean[key], analysisId: id(plans[key]), reviewedClaims: structureClaimReview(plans[key]) }))]
+    sources = [{ ...bundle.overview, korean: korean.overview, analysisId: id(plans), reviewedClaims: bundleNarrative(plans).map((line,index)=>({id:'customer.bundle.'+index,english:line.en,korean:line.ko})) }, ...(['complete', 'compatibility', 'annual'] as const).map(key => ({ ...bundle[key], korean: korean[key], analysisId: id(plans[key]), reviewedClaims: structureClaimReview(plans[key]) }))]
   } else {
     const plan = buildInterpretationPlan(input.kind, a, input.year ?? referenceYear, input.kind === 'compatibility' ? b : undefined)
     const korean = koreanReadingFromPlan(plan)
@@ -35,7 +36,7 @@ export function buildReview(value: unknown, referenceYear = new Date().getUTCFul
   const documents: ReviewDocument[] = sources.map((source, d) => {
     const english = plainReadingText(source.fullText)
     verifyClaimCoverage(source.reviewedClaims, english, source.korean)
-    return { id: `document-${d + 1}`, title: source.title, english, koreanOriginal: source.korean, analysisId: source.analysisId, reviewedClaims: source.reviewedClaims, sentenceReview: { status: 'authored-core-pairs-checked', englishSentences: sentenceInventory(english).length, koreanSentences: sentenceInventory(source.korean).length, coverage: 'Core structure, selected personal strengths and timing conclusions are paired and present in both outputs. The remaining narrative is separately authored, not a complete sentence-by-sentence translation.' },
+    return { id: `document-${d + 1}`, title: source.title, english, koreanOriginal: source.korean, analysisId: source.analysisId, reviewedClaims: source.reviewedClaims, sentenceReview: { status: 'authored-core-pairs-checked', englishSentences: sentenceInventory(english).length, koreanSentences: sentenceInventory(source.korean).length, coverage: 'Customer chapter passages, monthly passages, longer-period passages and bundle overview are authored in matched English and Korean pairs and checked against both delivered texts. Technical evidence, headings, metadata and method notes are outside this coverage: the whole export is not a complete sentence-by-sentence translation.' },
       blocks: english.split('\n\n').map((text, i) => ({ id: `${d + 1}.${i + 1}`, english: text })) }
   })
   const digest = createHash('sha256').update(JSON.stringify({ edition: REPORT_EDITION, referenceYear, input, documents })).digest('hex')

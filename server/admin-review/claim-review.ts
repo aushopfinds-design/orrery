@@ -1,3 +1,4 @@
+import { customerNarrative, customerPeriod } from '../../src/report/purchase-narrative.ts'
 import { customerEnglish } from '../../src/report/customer-language.ts'
 import { periodAssessment } from '../../src/report/structural-assessment.ts'
 import { PERSONAL_PROFILES } from '../../src/report/reading-profiles.ts'
@@ -19,7 +20,9 @@ export function structureClaimReview(plan: InterpretationPlan): ReviewedClaim[] 
   const years = plan.kind === 'wellbeing' ? [] : plan.kind === 'year' ? plan.annual.slice(0, 1) : plan.annual
   const periods: ReviewedClaim[] = [...years, ...plan.months].map((point, index) => ({ id: 'A.timing.' + (index < years.length ? 'annual.' : 'monthly.') + point.date, english: customerEnglish(periodAssessment(plan.first, point.pillar, point.date, point.yearPillar).text), korean: timing(point) }))
   if (plan.second && plan.kind === 'compatibility') periods.push(...plan.partnerAnnual.map(point => ({ id: 'B.timing.' + point.date, english: customerEnglish(periodAssessment(plan.second!, point.pillar, point.date, point.yearPillar).text), korean: timing(point) })))
-  return [...structural, ...personal, ...periods]
+  const activity = Object.entries(customerNarrative(plan)).flatMap(([id,section])=>[...section.lines.map((line,i)=>({id:'customer.'+id+'.'+i,english:line.en,korean:line.ko})),{id:'customer.'+id+'.action',english:section.action.en,korean:section.action.ko},{id:'customer.'+id+'.caution',english:section.caution.en,korean:section.caution.ko}])
+  if(plan.kind==='complete')plan.selectedCycles.forEach((_,index)=>activity.push(...customerPeriod(plan,index).map((line,i)=>({id:`customer.period.${index}.${i}`,english:line.en,korean:line.ko}))))
+  return [...structural, ...personal, ...periods, ...activity]
 }
 const normal = (text: string) => text.replace(/\s+/g, ' ').trim()
 export function verifyClaimCoverage(claims: ReviewedClaim[], english: string, korean: string) {

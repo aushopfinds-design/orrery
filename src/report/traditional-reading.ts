@@ -1,3 +1,5 @@
+import { customerNarrative, customerPeriod } from './purchase-narrative.ts'
+import { purchaseTimingSections } from './purchase-timing-sections.ts'
 import { customerEnglish } from './customer-language.ts'
 import { resolutionEnglish } from './resolution-language.ts'
 import { buildInterpretationPlan } from './interpretation-plan.ts'
@@ -82,7 +84,7 @@ function yearFlow(result: SajuResult, year: number, topic: 'work' | 'money' | 'b
     return `${year + i} — ${g.name}${point.god !== point.innerGod ? `, with ${inner.name} underneath` : ' repeated in both checked layers'}. ${g[topic]} ${periodAssessment(result, point.pillar, point.date).text} ${point.clash.length ? `A clash touches the birth ${point.clash.map(item => POSITION[item.index]).join(' and ')} pillar${point.clash.length > 1 ? 's' : ''}; changing responsibilities or conflicting schedules are the caution to examine.` : point.active.length ? `A recorded pair pattern touches the birth ${point.active.map(item => POSITION[item.index]).join(' and ')} pillar${point.active.length > 1 ? 's' : ''}; the detailed evidence records which pattern.` : 'No pair pattern is recorded against the available birth pillars at this reference.'}`
   })
 }
-function timelineFacts(result: SajuResult, year: number) { return fiveYearPoints(result, year).flatMap(point => [...point.facts, ...periodAssessment(result, point.pillar, point.date).evidence]) }
+function timelineFacts(result: SajuResult, year: number) { return fiveYearPoints(result, year).flatMap(point => { const assessment = periodAssessment(result, point.pillar, point.date); return [...point.facts, ...assessment.evidence, customerEnglish(assessment.text)] }) }
 function cycles(result: SajuResult, year: number, topic: 'work' | 'business' | 'love' = 'work') {
   const found = selectedCycles(result, year)
   return found.length ? found.map(cycle => {
@@ -120,27 +122,39 @@ function extras(kind: 'complete' | FocusCategory, result: SajuResult, chapters: 
     evidence: [...new Set(chosen.flatMap(item => item.evidence).slice(0, 5))],
   }
 }
+function withPurchaseTiming(chapters: ReportChapter[], plan: InterpretationPlan) {
+  const written = customerNarrative(plan), timing = purchaseTimingSections(plan)
+  return chapters.map(item => {
+    const added = written[item.id]
+    if (!added) return item
+    const body = added.lines.map(line => line.en).flatMap(shortParagraphs)
+    const paragraphs = body.slice(1)
+    if(!paragraphs.length) paragraphs.push(added.action.en)
+    return { ...item, lead: body[0], paragraphs, evidence: [...new Set([...item.evidence, ...(timing[item.id]?.evidence ?? [])])],
+      tryThis: added.action.en, guidance:{keepClose:[added.action.en],watchFor:[added.caution.en]} }
+  })
+}
 function withStructuralEvidence(chapters: ReportChapter[], plan: InterpretationPlan) {
   const a = englishStructuralAssessment(plan.primary.strength), b = plan.partner ? englishStructuralAssessment(plan.partner.strength) : undefined
-  const brief = (item: ReturnType<typeof structuralAssessment>) => ({
-    supported: 'The season, established roots and visible support point in the same direction. Within this limited reading, taking on work or managing resources can give that support a practical outlet; it does not promise an easy result.',
-    'support-needed': 'The season and lack of roots suggest that extra demands can weigh more heavily. In this reading, a bigger opportunity needs support and capacity alongside it; more activity does not automatically mean a better result.',
-    mixed: 'Your chart shows both support and added demands. An opportunity may be worth exploring while still bringing extra work or responsibility.',
-    deferred: 'The available birth details do not give a clear answer about how easily you may handle extra demands. The reading explains the patterns it can support and leaves the rest open.',
-  })[item.tendency]
+  const periodFacts = plan.kind==='wellbeing' ? [] : [...(plan.kind==='year'?plan.annual.slice(0,1):plan.annual),...plan.months].map(point=>customerEnglish(periodAssessment(plan.first,point.pillar,point.date,point.yearPillar).text))
+  const partnerFacts = plan.kind==='compatibility' && plan.second ? plan.partnerAnnual.map(point=>customerEnglish(periodAssessment(plan.second!,point.pillar,point.date,point.yearPillar).text)) : []
   const facts = (item: ReturnType<typeof structuralAssessment>) => [...item.evidence, item.verdict, item.paragraphs[3], item.balanceText]
   return chapters.map((item, index) => index ? item : { ...item,
-    paragraphs: [...item.paragraphs, ...(b ? ['Person A: ' + brief(a), 'Person B: ' + brief(b)] : [brief(a)])].flatMap(shortParagraphs),
-    evidence: [...item.evidence, ...facts(a).map(text => b ? 'Person A: ' + text : text), ...resolutionEnglish(plan.primary.resolution).map(c => 'Person A: ' + c.text), ...(b ? [...facts(b), ...resolutionEnglish(plan.partner!.resolution).map(c => c.text)].map(text => 'Person B: ' + text) : [])],
+    paragraphs: item.paragraphs,
+    evidence: [...item.evidence, ...periodFacts, ...partnerFacts, ...facts(a).map(text => b ? 'Person A: ' + text : text), ...resolutionEnglish(plan.primary.resolution).map(c => 'Person A: ' + c.text), ...(b ? [...facts(b), ...resolutionEnglish(plan.partner!.resolution).map(c => c.text)].map(text => 'Person B: ' + text) : [])],
   })
 }
 function distinctChapters(chapters: ReportChapter[]) {
-  const seen = new Set<string>()
-  return chapters.map(item => { seen.add(item.lead); if (['support-each-other', 'work-chapters', 'business-chapters', 'business-plan', 'patterns', 'annual-cycle-context', 'annual-plan'].includes(item.id)) return item; return { ...item, paragraphs: item.paragraphs.filter(text => { if (seen.has(text)) return false; seen.add(text); return true }) } })
+  const seen = new Set(chapters.map(item=>item.lead))
+  return chapters.map(item=>{
+    const paragraphs=item.paragraphs.filter(text=>{if(seen.has(text))return false;seen.add(text);return true})
+    if(!paragraphs.length)paragraphs.push(item.tryThis)
+    return {...item,paragraphs}
+  })
 }
 function focusFrom(chapters: ReportChapter[]) {
   const first = chapters[0], next = chapters[1] ?? first
-  return { headline: first.lead, synthesis: next.lead, firstStep: first.tryThis, pauseIf: first.guidance.watchFor[0], review: 'Compare this traditional reading with the actual situation before making a consequential decision.', evidence: first.evidence }
+  return { headline: first.lead, synthesis: next.lead, firstStep: first.tryThis, pauseIf: first.guidance.watchFor[0], review: 'Compare this traditional reading with the actual situation before making a consequential decision.', evidence: first.evidence.filter(fact=>!/^\d{4}-\d{2}-\d{2}:|^Reference|^Active cycle|^Assessment/.test(fact)).slice(0,5) }
 }
 function opportunityWindow(result: SajuResult, year: number, gods: string[], area: string) {
   const points = fiveYearPoints(result, year)
@@ -258,17 +272,17 @@ export function buildTraditionalCategoryFromPlan(plan: InterpretationPlan): Cate
   if (kind === 'compatibility' && !second) throw new Error('Two birth charts are needed for compatibility')
   if (second) validateYear(year, second)
   const annual = kind === 'year' ? annualChapters(first, year) : undefined
-  const chapters = distinctChapters(withStructuralEvidence(buyerOutline(kind, annual?.chapters ?? (kind === 'compatibility' ? compatibilityChapters(first, second!, year) : buildSoloChapters(kind as 'career' | 'business' | 'wellbeing', first, year))), plan))
+  const chapters = distinctChapters(withStructuralEvidence(withPurchaseTiming(buyerOutline(kind, annual?.chapters ?? (kind === 'compatibility' ? compatibilityChapters(first, second!, year) : buildSoloChapters(kind as 'career' | 'business' | 'wellbeing', first, year))), plan), plan))
   const title = { career: 'Success, Money & Your Future', business: 'Born to Build a Business?', wellbeing: 'The Real You: Strengths & Weaknesses', compatibility: 'Are We Meant to Be?', year: `What Awaits You This Year? — ${year}` }[kind]
   const focus = focusFrom(chapters)
   return finishReading({ focus, kind, title, headline: chapters[0].lead, referenceYear: year,
     subjects: second ? [subject(first, 'Person A'), subject(second, 'Person B')] : [subject(first)],
     summary: kind === 'year' ? [{ label: 'The annual direction', text: chapters[0].lead }, { label: 'Monthly money references', text: (annual?.months ?? []).filter((_, i) => monthlyPoint(first, year, i + 1).money.length).map(item => item.label).join(', ') || 'None of the twelve reference points contains a direct money relationship.' }, { label: 'Monthly clash references', text: (annual?.months ?? []).filter((_, i) => monthlyPoint(first, year, i + 1).clash.length).map(item => item.label).join(', ') || 'None of the twelve reference points clashes with an available birth pillar.' }] : kind === 'compatibility' ? [{ label: 'The connection', text: chapters[0].lead }, { label: 'Two directions', text: chapters[1].lead }, { label: 'Daily routine', text: pairObservation(first.pillars[2].pillar.ganzi, second!.pillars[2].pillar.ganzi, 'Birth-month comparison').text }] : chapters.slice(0, 3).map(item => ({ label: item.title, text: item.lead })),
-    chapters, months: annual?.months ?? [], applications: [], extras: extras(kind, first, chapters, year, second), methodNotes: methods(first, second),
+    chapters, months: annual ? withPurchaseTiming(annual.months, plan).map((chapter,index) => ({...annual.months[index], ...chapter})) : [], applications: [], extras: extras(kind, first, chapters, year, second), methodNotes: methods(first, second),
   })
 }
 function chapterText(item: ReportChapter) {
-  return [item.title, item.lead, ...item.paragraphs, 'Key practical point: ' + item.tryThis, 'Main caution: ' + item.guidance.watchFor.join(' '), 'From the chart: ' + item.evidence.join(' ')].join('\n\n')
+  return [item.title, item.lead, ...item.paragraphs, 'Key practical point: ' + item.tryThis, 'Main caution: ' + item.guidance.watchFor.join(' '), ...item.evidence.map(fact=>'From the chart: ' + fact)].join('\n\n')
 }
 export function buildTraditionalComplete(result: SajuResult, year: number): CompleteReading {
   return buildTraditionalCompleteFromPlan(buildInterpretationPlan('complete', result, year))
@@ -278,17 +292,17 @@ export function buildTraditionalCompleteFromPlan(plan: InterpretationPlan): Comp
   const { first: result, referenceYear: year } = plan
   validateYear(year, result)
   const snap = buildFreeReading(result), a = natalAnalysis(result)
-  const chapters = distinctChapters(withStructuralEvidence(buyerOutline('complete', buildSoloChapters('complete', result, year)), plan)).map((item, index) => ({ ...item, title: `${String(index + 1).padStart(2, '0')} · ${item.title}` }))
+  const chapters = distinctChapters(withStructuralEvidence(withPurchaseTiming(buyerOutline('complete', buildSoloChapters('complete', result, year)), plan), plan)).map((item, index) => ({ ...item, title: `${String(index + 1).padStart(2, '0')} · ${item.title}` }))
   const selected = selectedCycles(result, year)
   const periods = selected.map((cycle, index) => {
     const cycleIndex = result.daewoon.indexOf(cycle), next = result.daewoon[cycleIndex + 1]
     const g = godText(cycle.stemSipsin), inner = godText(cycle.branchSipsin)
     const start = cycle.startDate.toISOString().slice(0, 10), end = next?.startDate.toISOString().slice(0, 10)
-    const ps = [cycles(result, year)[index], `Work and public role: ${g.work}`, `Money and commitments: ${g.money} ${inner.money}`, `Love and private life: ${inner.love}`, ...availablePillars(result).map(({ pillar, index: position }) => pairObservation(cycle.ganzi, pillar.pillar.ganzi, `Cycle / birth ${POSITION[position]}`)).filter(item => item.found.length).map(item => item.text)].flatMap(shortParagraphs)
+    const ps = customerPeriod(plan,index).map(line=>line.en).flatMap(shortParagraphs)
     const evidence = [`Calculated cycle start ${start}${end ? `; next cycle starts ${end}` : ''}. Cycle ${cycle.ganzi}: stem ${cycle.stemSipsin}; principal branch relationship ${cycle.branchSipsin}.`, ...availablePillars(result).map(({ pillar, index }) => pairObservation(cycle.ganzi, pillar.pillar.ganzi, `Cycle / birth ${POSITION[index]}`).facts)]
     return { period: `${cycle.startDate.getUTCFullYear()}–${(next?.startDate.getUTCFullYear() ?? cycle.startDate.getUTCFullYear() + 10) - 1}`, pillar: cycle.ganzi, headline: `${g.name} with ${inner.name}`, paragraphs: ps, evidence, guidance: { keepClose: [`Read the calculated start ${start} alongside actual changes in responsibility.`], watchFor: [g.pressure] }, tryThis: 'Compare work, money and private-life demands separately within this timing layer.', text: plainReadingText([...ps, `Read the calculated start ${start} alongside actual changes in responsibility.`, g.pressure, ...evidence].join('\n\n')) }
   })
-  const actionPlan = section('next-moves', '09 · What Might the Next Five Years Bring?', yearFlow(result, year, 'work'), timelineFacts(result, year), 'Annual themes are not guaranteed events or deadlines for major life changes.', 'Compare a real change with its annual and longer-cycle evidence.', 'timeline')
+  const actionPlan = withPurchaseTiming([section('next-moves', '09 · What Might the Next Ten Years Bring?', yearFlow(result, year, 'work'), timelineFacts(result, year), 'Annual themes are not guaranteed events or deadlines for major life changes.', 'Compare a real change with its annual and longer-cycle evidence.', 'timeline')], plan)[0]
   const summary = [{ label: 'Overall pattern', text: `${STEMS[a.day.pillar.stem].name}; birth-month ${godText(a.month.stemSipsin).name}, with ${godText(a.month.branchSipsin).name} underneath.` }, { label: 'Money pattern', text: wealth(result)[0] }, { label: 'Longer cycles', text: periods.length ? periods.map(item => `${item.period}: ${item.headline}`).join('; ') : 'No current or upcoming cycle is available in the calculated range.' }]
   const connections = [
     { id: 'work-fit', chapterId: 'career', title: 'Personal Style and Career', basis: `${STEMS[a.day.pillar.stem].name} / ${godText(a.month.stemSipsin).name}`, text: `The personal starting point is ${PERSONAL_PROFILES[a.day.pillar.stem].focus}; the public work relationship is ${godText(a.month.stemSipsin).name}. ${godText(a.month.stemSipsin).work}`, question: 'Does the role allow this contribution with enough authority and resources?', evidence: chartFacts(result) },

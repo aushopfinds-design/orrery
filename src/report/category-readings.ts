@@ -1,3 +1,4 @@
+import { bundleNarrative } from './purchase-narrative.ts'
 import { bundleInterpretationPlans } from './interpretation-plan.ts'
 import { buildTraditionalCompleteFromPlan, buildTraditionalCategoryFromPlan } from './traditional-reading.ts'
 import type { SajuResult } from '@orrery/core/types'
@@ -37,13 +38,7 @@ export function buildBundleFromPlans(plans: ReturnType<typeof bundleInterpretati
     report.wordCount = report.fullText.split(/\s+/).length
   }
   const overviewTitle = 'How Do Your Life, Love and Year Connect?'
-  const overviewParagraphs = [
-    'This reading connects Person A’s life pattern, the relationship between both people and Person A’s selected year. It separates what lasts from what changes, then brings the three readings together around the choices they share.',
-    `**The lasting pattern:** ${complete.summary[0].text} ${complete.summary[1].text}`,
-    `**The relationship:** ${compatibility.chapters[0].lead} ${compatibility.chapters[0].paragraphs[0]}`,
-    `**The annual layer:** ${annual.chapters[0].lead} Read its twelve monthly comparisons as a temporary layer around Person A’s natal pattern.`,
-    'These layers answer different questions: the life reading describes the natal pattern and longer cycles; compatibility describes how two charts meet; the annual reading describes a calculated reference year. Repeated themes reinforce a topic, not the probability of a promised event.',
-  ]
+  const overviewParagraphs = bundleNarrative(plans).map(line=>line.en)
   const synthesis = plainReadingText(overviewParagraphs.join('\n\n'))
   const overview = { title: overviewTitle, fullText: [overviewTitle, synthesis].join('\n\n'), paragraphs: overviewParagraphs }
   const fullText = ['THE FATE KEY · Your Destiny Collection', overview.fullText, complete.fullText, compatibility.fullText, annual.fullText].join('\n\n')

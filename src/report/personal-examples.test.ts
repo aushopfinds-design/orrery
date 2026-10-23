@@ -69,7 +69,7 @@ describe('Concrete examples use several chart features', () => {
       expect(relationship.response + relationship.check).not.toMatch(/customer|delivery|portfolio|publish|share a useful version|job offer/i)
       const annual = buildCategoryReading('year', chart, { year: 2027 })
       expect(annual.chapters[0].example).toBeUndefined()
-      expect(annual.chapters.find(x => x.id === 'annual-connections')!.lead).toContain('annual')
+      expect(annual.chapters.find(x => x.id === 'annual-connections')!.lead).toContain('2027')
     }
   })
 

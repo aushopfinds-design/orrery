@@ -1,9 +1,10 @@
+import { WORKING_LANGUAGE } from './purchase-language.ts'
 import { describe, expect, it } from 'vitest'
 import { calculateSaju } from '@orrery/core/saju'
 import { getFourPillars, getJeonggi, getRelation } from '@orrery/core/pillars'
 import { buildCategoryReading } from './category-readings.ts'
 import { CATEGORY_SCENARIOS } from './category-catalog.ts'
-import { godText, monthlyPoint, pairObservation } from './traditional-analysis.ts'
+import { monthlyPoint, pairObservation } from './traditional-analysis.ts'
 const charts = Array.from({ length: 30 }, (_, i) => calculateSaju({ ...CATEGORY_SCENARIOS[i % 2].first, year: 1960 + i, month: i % 12 + 1, day: i % 20 + 5 }))
 describe('Direct subject-specific traditional interpretation', () => {
   it('identifies exactly the calculated money reference months for each chart', () => {
@@ -27,8 +28,8 @@ describe('Direct subject-specific traditional interpretation', () => {
     for (const chart of charts) {
       const career = buildCategoryReading('career', chart, { year: 2026 })
       const business = buildCategoryReading('business', chart, { year: 2026 })
-      expect(career.chapters[0].lead).toContain('career pattern')
-      expect(business.chapters[0].lead).toContain('business pattern')
+      expect(career.chapters[0].lead).toContain(WORKING_LANGUAGE[chart.pillars[2].stemSipsin].name.en)
+      expect(business.chapters[0].lead).toContain(WORKING_LANGUAGE[chart.pillars[2].stemSipsin].name.en)
       const money = career.chapters.find(x => x.id === 'money-commitments')!
       expect(money.paragraphs.join(' ')).toContain('confirmed pay')
       expect(money.paragraphs.join(' ')).toContain('expected hours')
@@ -46,7 +47,7 @@ describe('Direct subject-specific traditional interpretation', () => {
         expect(text).toContain('Work and activity:')
         expect(text).toContain('Money and commitments:')
         expect(text).toContain('Relationships and home:')
-        expect(text).toContain(godText(point.god).pressure)
+        expect(month.guidance.watchFor.join(' ')).toContain(WORKING_LANGUAGE[point.god].pressure.en)
         expect(month.pillar).toBe(getFourPillars(year, i + 1, 15, 12, 0)[1])
       }
     }
@@ -56,8 +57,8 @@ describe('Direct subject-specific traditional interpretation', () => {
       const a = charts[i], b = charts[i + 7], report = buildCategoryReading('compatibility', a, { second: b, year: 2026 })
       const ab = getRelation(a.pillars[1].pillar.stem, b.pillars[1].pillar.stem)!.hanja
       const ba = getRelation(b.pillars[1].pillar.stem, a.pillars[1].pillar.stem)!.hanja
-      expect(report.chapters[1].lead).toContain(godText(ab).name)
-      expect(report.chapters[1].paragraphs[0]).toContain(godText(ba).name)
+      expect(report.chapters[1].lead).toContain(WORKING_LANGUAGE[ab].name.en)
+      expect(report.chapters[1].lead).toContain(WORKING_LANGUAGE[ba].name.en)
       const flow = report.chapters.find(x => x.id === 'support-each-other')!
       expect(flow.evidence.join(' ')).toContain('Person A: Reference 2026-07-15')
       expect(flow.evidence.join(' ')).toContain('Person B: Reference 2030-07-15')

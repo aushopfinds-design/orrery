@@ -1,0 +1,53 @@
+{
+  "edition": "2026.10-r13",
+  "assessment": "Internal content and delivery-shape assessment; not paid checkout certification or external expert/reader endorsement.",
+  "products": [
+    {
+      "kind": "complete",
+      "name": "종합 인생",
+      "status": "ready-within-stated-interpretive-scope",
+      "koreanStatus": "현재 설명 범위에서 내용 기준 판매 가능"
+    },
+    {
+      "kind": "compatibility",
+      "name": "궁합",
+      "status": "ready-within-stated-interpretive-scope",
+      "koreanStatus": "현재 설명 범위에서 내용 기준 판매 가능"
+    },
+    {
+      "kind": "year",
+      "name": "올해 운세",
+      "status": "ready-within-stated-interpretive-scope",
+      "koreanStatus": "현재 설명 범위에서 내용 기준 판매 가능"
+    },
+    {
+      "kind": "career",
+      "name": "직업·재물",
+      "status": "ready-within-stated-interpretive-scope",
+      "koreanStatus": "현재 설명 범위에서 내용 기준 판매 가능"
+    },
+    {
+      "kind": "business",
+      "name": "사업",
+      "status": "ready-within-stated-interpretive-scope",
+      "koreanStatus": "현재 설명 범위에서 내용 기준 판매 가능"
+    },
+    {
+      "kind": "wellbeing",
+      "name": "성향·강점과 약점",
+      "status": "ready-within-stated-interpretive-scope",
+      "koreanStatus": "현재 설명 범위에서 내용 기준 판매 가능"
+    },
+    {
+      "kind": "bundle",
+      "name": "전체 묶음",
+      "status": "ready-within-stated-interpretive-scope",
+      "koreanStatus": "현재 설명 범위에서 내용 기준 판매 가능"
+    }
+  ],
+  "commonRemaining": [
+    "새 풀이 전체는 검수 화면에만 반영. 운영 판매 적용과 실제 결제·수령 확인은 별도.",
+    "복잡한 경우에는 하나의 종합 판단이나 좋은 시기를 확정하지 않고 이유를 표시.",
+    "외부 전문가와 실제 미국·영국·호주 고객의 별도 검수는 완료하지 않음."
+  ]
+}

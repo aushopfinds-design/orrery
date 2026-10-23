@@ -1,10 +1,10 @@
+import { purchaseMonths } from './purchase-timing.ts'
 import { describe, expect, it } from 'vitest'
 import { calculateSaju } from '@orrery/core/saju'
 import { CATEGORY_SCENARIOS } from './category-catalog.ts'
 import { buildCompleteReading } from './complete-reading.ts'
 import { buildCategoryReading } from './category-readings.ts'
 import { BUYER_OUTLINES } from './buyer-outline.ts'
-import { buildInterpretationPlan } from './interpretation-plan.ts'
 const a = calculateSaju(CATEGORY_SCENARIOS[0].first), b = calculateSaju(CATEGORY_SCENARIOS[0].second)
 describe('Buyer questions, not a repeated six-part technical template', () => {
   it.each(Object.keys(BUYER_OUTLINES) as (keyof typeof BUYER_OUTLINES)[])('%s uses its own titles and reading order without breaking chapter anchors', kind => {
@@ -15,12 +15,11 @@ describe('Buyer questions, not a repeated six-part technical template', () => {
     expect(report.chapters[0].evidence.join(' ')).toContain('Month hidden stem')
   })
   it('does not label a money-topic month a good month without the shared balance and friction checks', () => {
-    const plan = buildInterpretationPlan('year', a, 2027)
     const report = buildCategoryReading('year', a, { year: 2027 })
     const supportive = report.chapters.find(c => c.id === 'annual-cycle-context')!
-    const selected = plan.months.filter(p => ['potential-support', 'potential-outlet'].includes(p.direction) && !p.friction)
-    if (!selected.length) expect(supportive.lead).toContain('No month meets')
-    for (const point of selected) expect([supportive.lead, ...supportive.paragraphs].join(' ')).toContain(point.date)
+    const selected = purchaseMonths(a,2027).filter(p => ['conditional-opening','opening-with-caution','conditional-support'].includes(p.status))
+    if (!selected.length) expect(supportive.lead).toContain('None of the twelve monthly comparisons establishes a supported opening')
+    for (const point of selected) expect(supportive.evidence.join(' ')).toContain(point.date)
     expect(report.months).toHaveLength(12)
   })
   it('actually answers job-change, promotion, launch and expansion topics with calculated years', () => {
