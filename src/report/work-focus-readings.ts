@@ -19,7 +19,7 @@ export function buildCareerReading(result: SajuResult, referenceYear = new Date(
   const money = moneyMarkers(result)
   const cycles = selectedCycles(result, referenceYear)
   const future = result.input.unknownTime ? null : WORK_PROFILES[c.hour.stemSipsin]
-  return finishReading({ focus: decision, kind: 'career', title: 'Career & Money', referenceYear,
+  return finishReading({ focus: decision, kind: 'career', title: 'Success, Money & Your Future', referenceYear,
     applications: buildReportApplications('career', result),
     extras: buildReportExtras('career', result),
     headline: decision.headline, subjects: [subject(result)],
@@ -90,7 +90,7 @@ export function buildBusinessReading(result: SajuResult, referenceYear = new Dat
   const groupFocus = FOCUS_WORK[c.year.stemSipsin]
   const money = moneyMarkers(result)
   const cycles = selectedCycles(result, referenceYear)
-  return finishReading({ focus: decision, kind: 'business', title: 'Business & Entrepreneurship', referenceYear,
+  return finishReading({ focus: decision, kind: 'business', title: 'Born to Build a Business?', referenceYear,
     applications: buildReportApplications('business', result),
     extras: buildReportExtras('business', result),
     headline: decision.headline, subjects: [subject(result)],

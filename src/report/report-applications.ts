@@ -46,8 +46,8 @@ function context(r: SajuResult) {
 const dayFact = (r: SajuResult, name = '') => `${name}birth-day pillar ${r.pillars[1].pillar.ganzi}: starting stem ${r.pillars[1].pillar.stem}, relationship branch ${r.pillars[1].pillar.branch}.`
 const monthFact = (r: SajuResult, name = '') => `${name}birth-month pillar ${r.pillars[2].pillar.ganzi}: main theme ${r.pillars[2].stemSipsin}, principal inner-stem theme ${r.pillars[2].branchSipsin}.`
 const title: Record<Exclude<ApplicationKind, 'year'>, string> = {
-  complete: 'Complete Life Reading', career: 'Career & Money', business: 'Business & Entrepreneurship',
-  compatibility: 'Love Compatibility · Person A and Person B', wellbeing: 'Everyday Balance',
+  complete: 'Your Life, Your Destiny', career: 'Success, Money & Your Future', business: 'Born to Build a Business?',
+  compatibility: 'Are We Meant to Be? · Person A and Person B', wellbeing: 'The Real You: Strengths & Weaknesses',
 }
 
 function pairPattern(a: SajuResult, b: SajuResult, lens: ApplicationLens, situation: string): ApplicationPattern {
@@ -293,7 +293,7 @@ function practicalDetails(kind: ApplicationKind, item: SituationCase, first: Saj
 export function buildReportApplications(kind: ApplicationKind, first: SajuResult, options: { second?: SajuResult; year?: number } = {}): ReportApplication[] {
   return SITUATION_CASES[kind].map(item => ({
     ...item, ...practicalDetails(kind, item, first, options.second, options.year), id: `${kind}-${item.id}`, kind,
-    scope: kind === 'year' ? `${options.year ?? new Date().getFullYear() + 1} Year Ahead` : title[kind],
+    scope: kind === 'year' ? `${options.year ?? new Date().getFullYear() + 1} What Awaits You This Year?` : title[kind],
     pattern: patternFor(kind, item, first, options.second, options.year),
   }))
 }

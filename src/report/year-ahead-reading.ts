@@ -82,7 +82,7 @@ export function buildYearAheadReading(result: SajuResult, year = new Date().getF
       label, referenceDate, pillar, yearPillar,
     }
   })
-  return finishReading({ focus: decision, kind: 'year', title: `${year} Year Ahead`, referenceYear: year,
+  return finishReading({ focus: decision, kind: 'year', title: `What Awaits You This Year? — ${year}`, referenceYear: year,
     applications: buildReportApplications('year', result, { year }),
     extras: buildReportExtras('year', result, { year, annual: { theme: annual.theme, god: annualGod, pillar: annualPillar } }),
     headline: `${year}: ${decision.headline}`, subjects: [subject(result)],

@@ -29,7 +29,7 @@ export function buildCompatibilityReading(first: SajuResult, second: SajuResult,
   const personalGuidance = shared([`Person A: ${a.personal.keepClose[0]}`, `Person B: ${b.personal.keepClose[0]}`], [`Person A: ${a.personal.watchFor[0]}`, `Person B: ${b.personal.watchFor[0]}`])
   const loveGuidance = shared([`Person A: ${a.relationship.keepClose[0]}`, `Person B: ${b.relationship.keepClose[0]}`], [`Person A: ${a.relationship.watchFor[0]}`, `Person B: ${b.relationship.watchFor[0]}`])
   return finishReading({
-    focus: decision, kind: 'compatibility', title: 'Love Compatibility', referenceYear,
+    focus: decision, kind: 'compatibility', title: 'Are We Meant to Be?', referenceYear,
     applications: buildReportApplications('compatibility', first, { second }),
     extras: buildReportExtras('compatibility', first, { second }),
     headline: decision.headline,

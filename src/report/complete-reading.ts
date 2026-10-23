@@ -435,7 +435,7 @@ export function buildCompleteReading(result: SajuResult, asOfYear = new Date().g
   const extras = buildReportExtras('complete', result)
   const applications = buildReportApplications('complete', result)
   const fullText = plainReadingText([
-    'THE FATE KEY · Complete Life Reading', `Report edition ${REPORT_EDITION} · Timeline reference year ${asOfYear}`, formatBirth(result.input), pillarSummary(result).join(' · '), personal.headline,
+    'THE FATE KEY · Your Life, Your Destiny', `Report edition ${REPORT_EDITION} · Timeline reference year ${asOfYear}`, formatBirth(result.input), pillarSummary(result).join(' · '), personal.headline,
     readingBriefText(buildReadingBrief(chapters[0], undefined, focus)),
     ...summary.map(item => `${item.label}: ${item.text}`),
     'How your themes work together', ...connections.flatMap(item => [item.title, item.basis, item.text, 'Ask yourself: ' + item.question, 'From your chart: ' + item.evidence.join(' ')]),
@@ -446,5 +446,5 @@ export function buildCompleteReading(result: SajuResult, asOfYear = new Date().g
     reportExtrasText(extras),
     'How this reading is prepared', ...methodNotes,
   ].join('\n\n'))
-  return { focus, calculation: explainCalculation(result.input), title: 'Complete Life Reading', birthSummary: formatBirth(result.input), pillarSummary: pillarSummary(result), dayMaster: self.name, headline: personal.headline, summary, connections, referenceYear: asOfYear, chapters, periods, actionPlan, applications, extras, elements: c.elements, visibleMarkers: result.input.unknownTime ? 6 : 8, methodNotes, fullText, wordCount: fullText.split(/\s+/).length }
+  return { focus, calculation: explainCalculation(result.input), title: 'Your Life, Your Destiny', birthSummary: formatBirth(result.input), pillarSummary: pillarSummary(result), dayMaster: self.name, headline: personal.headline, summary, connections, referenceYear: asOfYear, chapters, periods, actionPlan, applications, extras, elements: c.elements, visibleMarkers: result.input.unknownTime ? 6 : 8, methodNotes, fullText, wordCount: fullText.split(/\s+/).length }
 }

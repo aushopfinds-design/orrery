@@ -13,7 +13,7 @@ export function buildBalanceReading(result: SajuResult, referenceYear = new Date
   const maximum = Math.max(...c.snapshot.elements.map(item => item.count))
   const prominent = c.snapshot.elements.filter(item => item.count === maximum)
   const zero = c.snapshot.elements.filter(item => item.count === 0)
-  return finishReading({ focus: decision, kind: 'wellbeing', title: 'Everyday Balance', referenceYear,
+  return finishReading({ focus: decision, kind: 'wellbeing', title: 'The Real You: Strengths & Weaknesses', referenceYear,
     applications: buildReportApplications('wellbeing', result),
     extras: buildReportExtras('wellbeing', result),
     headline: decision.headline, subjects: [subject(result)],

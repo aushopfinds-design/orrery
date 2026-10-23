@@ -23,6 +23,6 @@ export function buildBundleReading(first: SajuResult, second: SajuResult, annual
   const complete = buildCompleteReading(first, referenceYear)
   const compatibility = buildCompatibilityReading(first, second, referenceYear)
   const annual = buildYearAheadReading(first, annualYear)
-  const fullText = ['THE FATE KEY · Complete Bundle', 'Person A is the subject of the Complete Life Reading and Year Ahead. Love Compatibility compares Person A and Person B.', complete.fullText, compatibility.fullText, annual.fullText].join('\n\n')
+  const fullText = ['THE FATE KEY · Your Destiny Collection', 'Person A is the subject of the Your Life, Your Destiny and What Awaits You This Year?. Are We Meant to Be? compares Person A and Person B.', complete.fullText, compatibility.fullText, annual.fullText].join('\n\n')
   return { complete, compatibility, annual, fullText, wordCount: fullText.split(/\s+/).length }
 }

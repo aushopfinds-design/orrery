@@ -18,12 +18,12 @@ export function publishingIdentity(env: Record<string, string | undefined>) {
 }
 
 export const PUBLIC_SAMPLES = [
-  { kind: 'year', slug: 'year-ahead', title: '2027 Year Ahead', description: 'The year ahead, twelve monthly reflections and a plan you can review.' },
-  { kind: 'career', slug: 'career-money', title: 'Career & Money', description: 'Working conditions, useful skills, workload and the real cost of a commitment.' },
-  { kind: 'compatibility', slug: 'love-compatibility', title: 'Love Compatibility', description: 'Two points of view, clearer conversations and shared responsibilities.' },
-  { kind: 'complete', slug: 'complete-life-reading', title: 'Complete Life Reading', description: 'Personality, work, money, relationships and your broader life chapters.' },
-  { kind: 'business', slug: 'business-entrepreneurship', title: 'Business & Entrepreneurship', description: 'An offer to test, customer expectations, delivery and working with others.' },
-  { kind: 'wellbeing', slug: 'everyday-balance', title: 'Everyday Balance', description: 'Daily habits, boundaries, support and a routine that fits your actual day.' },
+  { kind: 'year', slug: 'year-ahead', title: 'What Awaits You This Year?', description: 'The year ahead, twelve monthly reflections and a plan you can review.' },
+  { kind: 'career', slug: 'career-money', title: 'Success, Money & Your Future', description: 'Working conditions, useful skills, workload and the real cost of a commitment.' },
+  { kind: 'compatibility', slug: 'love-compatibility', title: 'Are We Meant to Be?', description: 'Two points of view, clearer conversations and shared responsibilities.' },
+  { kind: 'complete', slug: 'complete-life-reading', title: 'Your Life, Your Destiny', description: 'Personality, work, money, relationships and your broader life chapters.' },
+  { kind: 'business', slug: 'business-entrepreneurship', title: 'Born to Build a Business?', description: 'An offer to test, customer expectations, delivery and working with others.' },
+  { kind: 'wellbeing', slug: 'everyday-balance', title: 'The Real You: Strengths & Weaknesses', description: 'Daily habits, boundaries, support and a routine that fits your actual day.' },
 ] as const
 
 export const INFO_PATHS = ['/', '/about/', '/reading-guide/', '/privacy/', '/use-and-limitations/', '/samples/', '/learn/', '/editorial-policy/', '/help/']

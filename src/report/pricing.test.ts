@@ -14,15 +14,15 @@ describe('launch prices and genuine bundle comparison', () => {
     for (const category of FOCUS_CATALOG) expect(category.price).toBe(reportPrice(category.kind))
   })
 
-  it('fills the two pending reports at the intended launch prices', () => {
-    expect(previewProduct('business').price).toBe('US$9.99')
-    expect(previewProduct('wellbeing').price).toBe('US$6.99')
+  it('preserves the currently published prices', () => {
+    expect(previewProduct('business').price).toBe('US$11.99')
+    expect(previewProduct('wellbeing').price).toBe('US$8.99')
   })
 
   it('compares the bundle only with its three included reports', () => {
     expect(BUNDLE_REPORTS).toEqual(['complete', 'compatibility', 'year'])
-    expect(bundleSavings()).toEqual({ separatePrice: 'US$32.97', savedAmount: 'US$9.98', percent: 30 })
-    expect(reportPrice('bundle')).toBe('US$22.99')
+    expect(bundleSavings()).toEqual({ separatePrice: 'US$38.97', savedAmount: 'US$13.98', percent: 35 })
+    expect(reportPrice('bundle')).toBe('US$24.99')
   })
 
   it('never rounds the advertised saving above the actual discount', () => {

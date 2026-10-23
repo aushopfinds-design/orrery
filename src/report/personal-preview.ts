@@ -55,10 +55,10 @@ export function buildPersonalPreview(kind: PreviewKind, draft: PreviewDraft): Pe
   const b = second ? calculateSaju(second) : undefined
   if (kind === 'bundle') {
     const bundle = buildBundleReading(a, b!, year, currentYear)
-    return { title: 'Complete Bundle', subjects: bundle.compatibility.subjects, headline: bundle.complete.headline, brief: buildReadingBrief(bundle.complete.chapters[0], 'Person A · Complete Life Reading', bundle.complete.focus), summary: bundle.complete.summary, applications: [
-      { ...bundle.complete.applications[0], scope: 'Person A · Complete Life Reading' },
+    return { title: 'Your Destiny Collection', subjects: bundle.compatibility.subjects, headline: bundle.complete.headline, brief: buildReadingBrief(bundle.complete.chapters[0], 'Person A · Your Life, Your Destiny', bundle.complete.focus), summary: bundle.complete.summary, applications: [
+      { ...bundle.complete.applications[0], scope: 'Person A · Your Life, Your Destiny' },
       bundle.compatibility.applications[0],
-      { ...bundle.annual.applications[0], scope: `Person A · ${year} Year Ahead` },
+      { ...bundle.annual.applications[0], scope: `Person A · What Awaits You This Year? — ${year}` },
     ], excerpts: [excerpt(bundle.complete.chapters[0]), excerpt(bundle.compatibility.chapters[1], true), excerpt(bundle.annual.chapters[0])], contents: [bundle.complete, bundle.compatibility, bundle.annual].map((report, index) => ({ id: `report-${index + 1}`, title: report.title })), monthly: [], needsPartner: false, extras: extrasExcerpt(bundle.compatibility.extras) }
   }
   const full = buildCategoryReading(kind, a, { second: b, year: kind === 'year' ? year : currentYear })
