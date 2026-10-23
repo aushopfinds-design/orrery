@@ -263,15 +263,15 @@ Your 2026–2035 timeline: each year below gives the main opportunity or pressur
 
 ### customer.next-moves.1
 
-2026: a useful period to explore taking on a role that makes better use of your knowledge, with extra demands to manage. Learning or specialist knowledge in your birth chart meets responsibility in this period and a related ten-year period. Work routines may need some adjustment, such as a new schedule, a changed role or a different division of tasks. The ten-year background pulls against this shorter period. A new commitment may have to compete with work or plans already in progress. Watch for accepting a title without the authority or pay to match it; and letting urgency replace enough staff, time or authority.
+2026: a useful period to explore taking on a role that makes better use of your knowledge, with extra demands to manage. The focus is a recognised role with clear responsibilities and demanding targets and decisions that need a firm response. Learning or specialist knowledge in your birth chart meets responsibility in this period and a related ten-year period. Work routines may need some adjustment, such as a new schedule, a changed role or a different division of tasks. The ten-year background pulls against this shorter period. A new commitment may have to compete with work or plans already in progress. Watch for accepting a title without the authority or pay to match it; and letting urgency replace enough staff, time or authority.
 
-2026: 지식을 더 잘 활용하는 역할을 맡는 일을 살펴볼 만한 시기입니다. 다만 함께 늘어나는 부담도 관리해야 합니다. 타고난 사주의 배움·전문 지식이 이번 시기의 책임과 연결되고 긴 흐름에서도 관련 주제가 나타납니다. 근무 일정과 역할, 업무 분담을 조정할 주제로 읽습니다. 긴 흐름과 이번 짧은 시기가 부딪힙니다. 새로운 약속이 이미 진행 중인 일이나 계획과 겹칠 수 있습니다. 주의할 점은 권한이나 보상이 따르지 않는 직함을 받아들이는 것·인력과 시간, 권한이 부족한데 급하게 밀어붙이는 것입니다.
+2026: 지식을 더 잘 활용하는 역할을 맡는 일을 살펴볼 만한 시기입니다. 다만 함께 늘어나는 부담도 관리해야 합니다. 중심 주제는 책임이 분명하고 인정받는 역할·높은 목표와 단호한 대응이 필요한 결정입니다. 타고난 사주의 배움·전문 지식이 이번 시기의 책임과 연결되고 긴 흐름에서도 관련 주제가 나타납니다. 근무 일정과 역할, 업무 분담을 조정할 주제로 읽습니다. 긴 흐름과 이번 짧은 시기가 부딪힙니다. 새로운 약속이 이미 진행 중인 일이나 계획과 겹칠 수 있습니다. 주의할 점은 권한이나 보상이 따르지 않는 직함을 받아들이는 것·인력과 시간, 권한이 부족한데 급하게 밀어붙이는 것입니다.
 
 ### customer.next-moves.2
 
-2027: a useful period to explore taking on a role that makes better use of your knowledge, with extra demands to manage. Learning or specialist knowledge in your birth chart meets responsibility in this period and a related ten-year period. Watch for letting urgency replace enough staff, time or authority; and making the offer too complicated for a customer or employer to understand.
+2027: a useful period to explore taking on a role that makes better use of your knowledge, with extra demands to manage. The focus is demanding targets and decisions that need a firm response and specialist knowledge and time to work something out. Learning or specialist knowledge in your birth chart meets responsibility in this period and a related ten-year period. Watch for letting urgency replace enough staff, time or authority; and making the offer too complicated for a customer or employer to understand.
 
-2027: 지식을 더 잘 활용하는 역할을 맡는 일을 살펴볼 만한 시기입니다. 다만 함께 늘어나는 부담도 관리해야 합니다. 타고난 사주의 배움·전문 지식이 이번 시기의 책임과 연결되고 긴 흐름에서도 관련 주제가 나타납니다. 주의할 점은 인력과 시간, 권한이 부족한데 급하게 밀어붙이는 것·고객이나 고용주가 이해하기 어렵게 일을 복잡하게 만드는 것입니다.
+2027: 지식을 더 잘 활용하는 역할을 맡는 일을 살펴볼 만한 시기입니다. 다만 함께 늘어나는 부담도 관리해야 합니다. 중심 주제는 높은 목표와 단호한 대응이 필요한 결정·전문 지식과 깊이 생각할 시간입니다. 타고난 사주의 배움·전문 지식이 이번 시기의 책임과 연결되고 긴 흐름에서도 관련 주제가 나타납니다. 주의할 점은 인력과 시간, 권한이 부족한데 급하게 밀어붙이는 것·고객이나 고용주가 이해하기 어렵게 일을 복잡하게 만드는 것입니다.
 
 ### customer.next-moves.3
 
@@ -1033,9 +1033,9 @@ The blind spot is increasing urgency before checking the authority and resources
 
 ### customer.annual-work.0
 
-Work in 2027 puts demanding targets and decisive action first.
+2027: You lean towards demanding work that needs a firm response. Handling a difficult situation can use your strengths, while permanent urgency can overuse them.
 
-올해 일에서는 높은 목표와 단호한 행동이 먼저 나타납니다.
+2027년: 단호한 대응이 필요한 어려운 일에 기웁니다. 어려운 상황을 다루는 일은 강점을 쓰지만 긴급함이 계속되면 강점이 소모될 수 있습니다.
 
 ### customer.annual-work.1
 
@@ -1051,9 +1051,9 @@ The work-related part of your birth chart emphasises new customers and commercia
 
 ### customer.annual-work.3
 
-Sales, account development, sourcing, brokerage and commercial projects fit this pattern. Recognising an opening and connecting people matter more here than repeating one narrow task.
+A role with room to build relationships and act on an opportunity fits you. A system that adds sales targets without control over delivery creates a sharper mismatch.
 
-영업과 고객 개발, 소싱, 중개, 거래 프로젝트에 맞는 흐름입니다. 한 가지 업무의 반복보다 기회를 알아보고 사람을 연결하는 일이 중요합니다.
+관계를 만들고 기회에 대응할 여지가 있는 자리가 맞습니다. 납품을 조정할 권한 없이 영업 목표만 늘어나는 체계는 맞지 않는 부분이 커집니다.
 
 ### customer.annual-work.4
 
@@ -1075,23 +1075,17 @@ The blind spot is reopening the explanation instead of making a limited decision
 
 ### customer.annual-money.0
 
-Your money reading for 2027 starts with demanding targets and decisive action, while specialist knowledge and independent thought adds a second demand.
+2027: Targets, penalties or a large commitment can create financial pressure. This describes what needs to be managed, rather than how much you will earn or lose.
 
-올해 재물은 높은 목표와 단호한 행동에서 시작하며 전문 지식과 독립적인 생각이 다른 요구를 더합니다.
+2027년: 목표와 불이익 조건, 큰 약속이 재정적 부담이 될 수 있습니다. 벌거나 잃을 금액이 아니라 관리해야 할 대상을 설명합니다.
 
 ### customer.annual-money.1
 
-Targets, penalties or a large commitment can create financial pressure. This describes what needs to be managed, rather than how much you will earn or lose.
+The money-related signs sit in the parts read for work and everyday responsibilities and wider contacts. That is why the earning interpretation is tied to those areas.
 
-목표와 불이익 조건, 큰 약속이 재정적 부담이 될 수 있습니다. 벌거나 잃을 금액이 아니라 관리해야 할 대상을 설명합니다.
+재물과 관련된 글자가 일과 일상 책임·주변 인맥로 읽는 부분에 있습니다. 그래서 그 영역과 연결해 수입 방식을 풀이합니다.
 
 ### customer.annual-money.2
-
-Your money pattern combines a steady base with income from new customers or deals. Relying on only one of those routes would leave out part of the reading.
-
-꾸준한 기반 수입과 새 고객·거래의 수입이 함께 나타납니다. 한쪽 통로만 보면 재물 풀이의 일부가 빠집니다.
-
-### customer.annual-money.3
 
 The monthly comparisons with a direct earning-and-money theme are 2027-02, 2027-03, 2027-04, 2027-05. They identify financial activity, rather than profitable months.
 
@@ -1111,29 +1105,23 @@ A new source of income can bring continuing costs and responsibilities with it.
 
 ### customer.annual-connections.0
 
-In relationships, 2027 adds demanding targets and decisive action and specialist knowledge and independent thought.
+2027: Intensity and decisiveness can be attractive. The tension is setting the pace so firmly that the other person has too little room to disagree.
 
-올해 관계에서는 높은 목표와 단호한 행동, 그리고 전문 지식과 독립적인 생각이 더해집니다.
+2027년: 강한 몰입과 결단력이 매력으로 느껴질 수 있습니다. 관계의 속도를 너무 강하게 정해서 상대가 다른 의견을 말할 여지가 줄어드는 점이 부담입니다.
 
 ### customer.annual-connections.1
-
-Intensity and decisiveness can be attractive. The tension is setting the pace so firmly that the other person has too little room to disagree.
-
-강한 몰입과 결단력이 매력으로 느껴질 수 있습니다. 관계의 속도를 너무 강하게 정해서 상대가 다른 의견을 말할 여지가 줄어드는 점이 부담입니다.
-
-### customer.annual-connections.2
 
 Privacy and being understood without constant explanation can matter. Withdrawing to think may look like distance to someone waiting for an immediate answer.
 
 계속 설명하지 않아도 이해받는 느낌과 사생활이 중요할 수 있습니다. 즉시 답을 기다리는 상대에게는 생각하려고 물러난 행동이 거리 두기로 보일 수 있습니다.
 
-### customer.annual-connections.3
+### customer.annual-connections.2
 
 In close relationships, your chart points to a need for being heard before someone offers a solution.
 
 가까운 관계에서 원하는 것은 해결책을 듣기 전에 내 이야기를 들어 주는 것입니다.
 
-### customer.annual-connections.4
+### customer.annual-connections.3
 
 A recurring difficulty may be solving a problem before asking what help is wanted.
 
@@ -1369,9 +1357,9 @@ The blind spot is taking on a cost or duty simply because you are able to organi
 
 ### customer.month-5.0
 
-May 2027: a useful period to explore taking on a role that makes better use of your knowledge, with extra demands to manage.
+May 2027: a useful period to explore taking on a role that makes better use of your knowledge, with extra demands to manage. The focus is new customers, deals and work with changing fees and a recognised role with clear responsibilities.
 
-2027-05: 지식을 더 잘 활용하는 역할을 맡는 일을 살펴볼 만한 시기입니다. 다만 함께 늘어나는 부담도 관리해야 합니다.
+2027-05: 지식을 더 잘 활용하는 역할을 맡는 일을 살펴볼 만한 시기입니다. 다만 함께 늘어나는 부담도 관리해야 합니다. 중심 주제는 새 고객과 거래, 수입이 달라지는 일·책임이 분명하고 인정받는 역할입니다.
 
 ### customer.month-5.1
 
@@ -1417,9 +1405,9 @@ The blind spot is treating an attractive possibility as money already secured.
 
 ### customer.month-6.0
 
-June 2027: a useful period to explore taking on a role that makes better use of your knowledge, with extra demands to manage.
+June 2027: a useful period to explore taking on a role that makes better use of your knowledge, with extra demands to manage. The focus is a recognised role with clear responsibilities and demanding targets and decisions that need a firm response.
 
-2027-06: 지식을 더 잘 활용하는 역할을 맡는 일을 살펴볼 만한 시기입니다. 다만 함께 늘어나는 부담도 관리해야 합니다.
+2027-06: 지식을 더 잘 활용하는 역할을 맡는 일을 살펴볼 만한 시기입니다. 다만 함께 늘어나는 부담도 관리해야 합니다. 중심 주제는 책임이 분명하고 인정받는 역할·높은 목표와 단호한 대응이 필요한 결정입니다.
 
 ### customer.month-6.1
 
@@ -1471,9 +1459,9 @@ The blind spot is accepting an obligation because it looks proper even when it e
 
 ### customer.month-7.0
 
-July 2027: a useful period to explore taking on a role that makes better use of your knowledge, with extra demands to manage.
+July 2027: a useful period to explore taking on a role that makes better use of your knowledge, with extra demands to manage. The focus is demanding targets and decisions that need a firm response and specialist knowledge and time to work something out.
 
-2027-07: 지식을 더 잘 활용하는 역할을 맡는 일을 살펴볼 만한 시기입니다. 다만 함께 늘어나는 부담도 관리해야 합니다.
+2027-07: 지식을 더 잘 활용하는 역할을 맡는 일을 살펴볼 만한 시기입니다. 다만 함께 늘어나는 부담도 관리해야 합니다. 중심 주제는 높은 목표와 단호한 대응이 필요한 결정·전문 지식과 깊이 생각할 시간입니다.
 
 ### customer.month-7.1
 
@@ -1970,15 +1958,15 @@ Your 2026–2035 career timeline follows how the work changes, not a list of luc
 
 ### customer.work-chapters.1
 
-2026: a useful period to explore taking on a role that makes better use of your knowledge, with extra demands to manage. Learning or specialist knowledge in your birth chart meets responsibility in this period and a related ten-year period. Work routines may need some adjustment, such as a new schedule, a changed role or a different division of tasks. The ten-year background pulls against this shorter period. A new commitment may have to compete with work or plans already in progress. Watch for accepting a title without the authority or pay to match it; and letting urgency replace enough staff, time or authority.
+2026: a useful period to explore taking on a role that makes better use of your knowledge, with extra demands to manage. The focus is a recognised role with clear responsibilities and demanding targets and decisions that need a firm response. Learning or specialist knowledge in your birth chart meets responsibility in this period and a related ten-year period. Work routines may need some adjustment, such as a new schedule, a changed role or a different division of tasks. The ten-year background pulls against this shorter period. A new commitment may have to compete with work or plans already in progress. Watch for accepting a title without the authority or pay to match it; and letting urgency replace enough staff, time or authority.
 
-2026: 지식을 더 잘 활용하는 역할을 맡는 일을 살펴볼 만한 시기입니다. 다만 함께 늘어나는 부담도 관리해야 합니다. 타고난 사주의 배움·전문 지식이 이번 시기의 책임과 연결되고 긴 흐름에서도 관련 주제가 나타납니다. 근무 일정과 역할, 업무 분담을 조정할 주제로 읽습니다. 긴 흐름과 이번 짧은 시기가 부딪힙니다. 새로운 약속이 이미 진행 중인 일이나 계획과 겹칠 수 있습니다. 주의할 점은 권한이나 보상이 따르지 않는 직함을 받아들이는 것·인력과 시간, 권한이 부족한데 급하게 밀어붙이는 것입니다.
+2026: 지식을 더 잘 활용하는 역할을 맡는 일을 살펴볼 만한 시기입니다. 다만 함께 늘어나는 부담도 관리해야 합니다. 중심 주제는 책임이 분명하고 인정받는 역할·높은 목표와 단호한 대응이 필요한 결정입니다. 타고난 사주의 배움·전문 지식이 이번 시기의 책임과 연결되고 긴 흐름에서도 관련 주제가 나타납니다. 근무 일정과 역할, 업무 분담을 조정할 주제로 읽습니다. 긴 흐름과 이번 짧은 시기가 부딪힙니다. 새로운 약속이 이미 진행 중인 일이나 계획과 겹칠 수 있습니다. 주의할 점은 권한이나 보상이 따르지 않는 직함을 받아들이는 것·인력과 시간, 권한이 부족한데 급하게 밀어붙이는 것입니다.
 
 ### customer.work-chapters.2
 
-2027: a useful period to explore taking on a role that makes better use of your knowledge, with extra demands to manage. Learning or specialist knowledge in your birth chart meets responsibility in this period and a related ten-year period. Watch for letting urgency replace enough staff, time or authority; and making the offer too complicated for a customer or employer to understand.
+2027: a useful period to explore taking on a role that makes better use of your knowledge, with extra demands to manage. The focus is demanding targets and decisions that need a firm response and specialist knowledge and time to work something out. Learning or specialist knowledge in your birth chart meets responsibility in this period and a related ten-year period. Watch for letting urgency replace enough staff, time or authority; and making the offer too complicated for a customer or employer to understand.
 
-2027: 지식을 더 잘 활용하는 역할을 맡는 일을 살펴볼 만한 시기입니다. 다만 함께 늘어나는 부담도 관리해야 합니다. 타고난 사주의 배움·전문 지식이 이번 시기의 책임과 연결되고 긴 흐름에서도 관련 주제가 나타납니다. 주의할 점은 인력과 시간, 권한이 부족한데 급하게 밀어붙이는 것·고객이나 고용주가 이해하기 어렵게 일을 복잡하게 만드는 것입니다.
+2027: 지식을 더 잘 활용하는 역할을 맡는 일을 살펴볼 만한 시기입니다. 다만 함께 늘어나는 부담도 관리해야 합니다. 중심 주제는 높은 목표와 단호한 대응이 필요한 결정·전문 지식과 깊이 생각할 시간입니다. 타고난 사주의 배움·전문 지식이 이번 시기의 책임과 연결되고 긴 흐름에서도 관련 주제가 나타납니다. 주의할 점은 인력과 시간, 권한이 부족한데 급하게 밀어붙이는 것·고객이나 고용주가 이해하기 어렵게 일을 복잡하게 만드는 것입니다.
 
 ### customer.work-chapters.3
 
@@ -2862,15 +2850,15 @@ Your 2026–2035 timeline: each year below gives the main opportunity or pressur
 
 ### customer.next-moves.1
 
-2026: a useful period to explore taking on a role that makes better use of your knowledge, with extra demands to manage. Learning or specialist knowledge in your birth chart meets responsibility in this period and a related ten-year period. Work routines may need some adjustment, such as a new schedule, a changed role or a different division of tasks. The ten-year background pulls against this shorter period. A new commitment may have to compete with work or plans already in progress. Watch for accepting a title without the authority or pay to match it; and letting urgency replace enough staff, time or authority.
+2026: a useful period to explore taking on a role that makes better use of your knowledge, with extra demands to manage. The focus is a recognised role with clear responsibilities and demanding targets and decisions that need a firm response. Learning or specialist knowledge in your birth chart meets responsibility in this period and a related ten-year period. Work routines may need some adjustment, such as a new schedule, a changed role or a different division of tasks. The ten-year background pulls against this shorter period. A new commitment may have to compete with work or plans already in progress. Watch for accepting a title without the authority or pay to match it; and letting urgency replace enough staff, time or authority.
 
-2026: 지식을 더 잘 활용하는 역할을 맡는 일을 살펴볼 만한 시기입니다. 다만 함께 늘어나는 부담도 관리해야 합니다. 타고난 사주의 배움·전문 지식이 이번 시기의 책임과 연결되고 긴 흐름에서도 관련 주제가 나타납니다. 근무 일정과 역할, 업무 분담을 조정할 주제로 읽습니다. 긴 흐름과 이번 짧은 시기가 부딪힙니다. 새로운 약속이 이미 진행 중인 일이나 계획과 겹칠 수 있습니다. 주의할 점은 권한이나 보상이 따르지 않는 직함을 받아들이는 것·인력과 시간, 권한이 부족한데 급하게 밀어붙이는 것입니다.
+2026: 지식을 더 잘 활용하는 역할을 맡는 일을 살펴볼 만한 시기입니다. 다만 함께 늘어나는 부담도 관리해야 합니다. 중심 주제는 책임이 분명하고 인정받는 역할·높은 목표와 단호한 대응이 필요한 결정입니다. 타고난 사주의 배움·전문 지식이 이번 시기의 책임과 연결되고 긴 흐름에서도 관련 주제가 나타납니다. 근무 일정과 역할, 업무 분담을 조정할 주제로 읽습니다. 긴 흐름과 이번 짧은 시기가 부딪힙니다. 새로운 약속이 이미 진행 중인 일이나 계획과 겹칠 수 있습니다. 주의할 점은 권한이나 보상이 따르지 않는 직함을 받아들이는 것·인력과 시간, 권한이 부족한데 급하게 밀어붙이는 것입니다.
 
 ### customer.next-moves.2
 
-2027: a useful period to explore taking on a role that makes better use of your knowledge, with extra demands to manage. Learning or specialist knowledge in your birth chart meets responsibility in this period and a related ten-year period. Watch for letting urgency replace enough staff, time or authority; and making the offer too complicated for a customer or employer to understand.
+2027: a useful period to explore taking on a role that makes better use of your knowledge, with extra demands to manage. The focus is demanding targets and decisions that need a firm response and specialist knowledge and time to work something out. Learning or specialist knowledge in your birth chart meets responsibility in this period and a related ten-year period. Watch for letting urgency replace enough staff, time or authority; and making the offer too complicated for a customer or employer to understand.
 
-2027: 지식을 더 잘 활용하는 역할을 맡는 일을 살펴볼 만한 시기입니다. 다만 함께 늘어나는 부담도 관리해야 합니다. 타고난 사주의 배움·전문 지식이 이번 시기의 책임과 연결되고 긴 흐름에서도 관련 주제가 나타납니다. 주의할 점은 인력과 시간, 권한이 부족한데 급하게 밀어붙이는 것·고객이나 고용주가 이해하기 어렵게 일을 복잡하게 만드는 것입니다.
+2027: 지식을 더 잘 활용하는 역할을 맡는 일을 살펴볼 만한 시기입니다. 다만 함께 늘어나는 부담도 관리해야 합니다. 중심 주제는 높은 목표와 단호한 대응이 필요한 결정·전문 지식과 깊이 생각할 시간입니다. 타고난 사주의 배움·전문 지식이 이번 시기의 책임과 연결되고 긴 흐름에서도 관련 주제가 나타납니다. 주의할 점은 인력과 시간, 권한이 부족한데 급하게 밀어붙이는 것·고객이나 고용주가 이해하기 어렵게 일을 복잡하게 만드는 것입니다.
 
 ### customer.next-moves.3
 
@@ -3632,9 +3620,9 @@ The blind spot is increasing urgency before checking the authority and resources
 
 ### customer.annual-work.0
 
-Work in 2027 puts demanding targets and decisive action first.
+2027: You lean towards demanding work that needs a firm response. Handling a difficult situation can use your strengths, while permanent urgency can overuse them.
 
-올해 일에서는 높은 목표와 단호한 행동이 먼저 나타납니다.
+2027년: 단호한 대응이 필요한 어려운 일에 기웁니다. 어려운 상황을 다루는 일은 강점을 쓰지만 긴급함이 계속되면 강점이 소모될 수 있습니다.
 
 ### customer.annual-work.1
 
@@ -3650,9 +3638,9 @@ The work-related part of your birth chart emphasises new customers and commercia
 
 ### customer.annual-work.3
 
-Sales, account development, sourcing, brokerage and commercial projects fit this pattern. Recognising an opening and connecting people matter more here than repeating one narrow task.
+A role with room to build relationships and act on an opportunity fits you. A system that adds sales targets without control over delivery creates a sharper mismatch.
 
-영업과 고객 개발, 소싱, 중개, 거래 프로젝트에 맞는 흐름입니다. 한 가지 업무의 반복보다 기회를 알아보고 사람을 연결하는 일이 중요합니다.
+관계를 만들고 기회에 대응할 여지가 있는 자리가 맞습니다. 납품을 조정할 권한 없이 영업 목표만 늘어나는 체계는 맞지 않는 부분이 커집니다.
 
 ### customer.annual-work.4
 
@@ -3674,23 +3662,17 @@ The blind spot is reopening the explanation instead of making a limited decision
 
 ### customer.annual-money.0
 
-Your money reading for 2027 starts with demanding targets and decisive action, while specialist knowledge and independent thought adds a second demand.
+2027: Targets, penalties or a large commitment can create financial pressure. This describes what needs to be managed, rather than how much you will earn or lose.
 
-올해 재물은 높은 목표와 단호한 행동에서 시작하며 전문 지식과 독립적인 생각이 다른 요구를 더합니다.
+2027년: 목표와 불이익 조건, 큰 약속이 재정적 부담이 될 수 있습니다. 벌거나 잃을 금액이 아니라 관리해야 할 대상을 설명합니다.
 
 ### customer.annual-money.1
 
-Targets, penalties or a large commitment can create financial pressure. This describes what needs to be managed, rather than how much you will earn or lose.
+The money-related signs sit in the parts read for work and everyday responsibilities and wider contacts. That is why the earning interpretation is tied to those areas.
 
-목표와 불이익 조건, 큰 약속이 재정적 부담이 될 수 있습니다. 벌거나 잃을 금액이 아니라 관리해야 할 대상을 설명합니다.
+재물과 관련된 글자가 일과 일상 책임·주변 인맥로 읽는 부분에 있습니다. 그래서 그 영역과 연결해 수입 방식을 풀이합니다.
 
 ### customer.annual-money.2
-
-Your money pattern combines a steady base with income from new customers or deals. Relying on only one of those routes would leave out part of the reading.
-
-꾸준한 기반 수입과 새 고객·거래의 수입이 함께 나타납니다. 한쪽 통로만 보면 재물 풀이의 일부가 빠집니다.
-
-### customer.annual-money.3
 
 The monthly comparisons with a direct earning-and-money theme are 2027-02, 2027-03, 2027-04, 2027-05. They identify financial activity, rather than profitable months.
 
@@ -3710,29 +3692,23 @@ A new source of income can bring continuing costs and responsibilities with it.
 
 ### customer.annual-connections.0
 
-In relationships, 2027 adds demanding targets and decisive action and specialist knowledge and independent thought.
+2027: Intensity and decisiveness can be attractive. The tension is setting the pace so firmly that the other person has too little room to disagree.
 
-올해 관계에서는 높은 목표와 단호한 행동, 그리고 전문 지식과 독립적인 생각이 더해집니다.
+2027년: 강한 몰입과 결단력이 매력으로 느껴질 수 있습니다. 관계의 속도를 너무 강하게 정해서 상대가 다른 의견을 말할 여지가 줄어드는 점이 부담입니다.
 
 ### customer.annual-connections.1
-
-Intensity and decisiveness can be attractive. The tension is setting the pace so firmly that the other person has too little room to disagree.
-
-강한 몰입과 결단력이 매력으로 느껴질 수 있습니다. 관계의 속도를 너무 강하게 정해서 상대가 다른 의견을 말할 여지가 줄어드는 점이 부담입니다.
-
-### customer.annual-connections.2
 
 Privacy and being understood without constant explanation can matter. Withdrawing to think may look like distance to someone waiting for an immediate answer.
 
 계속 설명하지 않아도 이해받는 느낌과 사생활이 중요할 수 있습니다. 즉시 답을 기다리는 상대에게는 생각하려고 물러난 행동이 거리 두기로 보일 수 있습니다.
 
-### customer.annual-connections.3
+### customer.annual-connections.2
 
 In close relationships, your chart points to a need for being heard before someone offers a solution.
 
 가까운 관계에서 원하는 것은 해결책을 듣기 전에 내 이야기를 들어 주는 것입니다.
 
-### customer.annual-connections.4
+### customer.annual-connections.3
 
 A recurring difficulty may be solving a problem before asking what help is wanted.
 
@@ -3968,9 +3944,9 @@ The blind spot is taking on a cost or duty simply because you are able to organi
 
 ### customer.month-5.0
 
-May 2027: a useful period to explore taking on a role that makes better use of your knowledge, with extra demands to manage.
+May 2027: a useful period to explore taking on a role that makes better use of your knowledge, with extra demands to manage. The focus is new customers, deals and work with changing fees and a recognised role with clear responsibilities.
 
-2027-05: 지식을 더 잘 활용하는 역할을 맡는 일을 살펴볼 만한 시기입니다. 다만 함께 늘어나는 부담도 관리해야 합니다.
+2027-05: 지식을 더 잘 활용하는 역할을 맡는 일을 살펴볼 만한 시기입니다. 다만 함께 늘어나는 부담도 관리해야 합니다. 중심 주제는 새 고객과 거래, 수입이 달라지는 일·책임이 분명하고 인정받는 역할입니다.
 
 ### customer.month-5.1
 
@@ -4016,9 +3992,9 @@ The blind spot is treating an attractive possibility as money already secured.
 
 ### customer.month-6.0
 
-June 2027: a useful period to explore taking on a role that makes better use of your knowledge, with extra demands to manage.
+June 2027: a useful period to explore taking on a role that makes better use of your knowledge, with extra demands to manage. The focus is a recognised role with clear responsibilities and demanding targets and decisions that need a firm response.
 
-2027-06: 지식을 더 잘 활용하는 역할을 맡는 일을 살펴볼 만한 시기입니다. 다만 함께 늘어나는 부담도 관리해야 합니다.
+2027-06: 지식을 더 잘 활용하는 역할을 맡는 일을 살펴볼 만한 시기입니다. 다만 함께 늘어나는 부담도 관리해야 합니다. 중심 주제는 책임이 분명하고 인정받는 역할·높은 목표와 단호한 대응이 필요한 결정입니다.
 
 ### customer.month-6.1
 
@@ -4070,9 +4046,9 @@ The blind spot is accepting an obligation because it looks proper even when it e
 
 ### customer.month-7.0
 
-July 2027: a useful period to explore taking on a role that makes better use of your knowledge, with extra demands to manage.
+July 2027: a useful period to explore taking on a role that makes better use of your knowledge, with extra demands to manage. The focus is demanding targets and decisions that need a firm response and specialist knowledge and time to work something out.
 
-2027-07: 지식을 더 잘 활용하는 역할을 맡는 일을 살펴볼 만한 시기입니다. 다만 함께 늘어나는 부담도 관리해야 합니다.
+2027-07: 지식을 더 잘 활용하는 역할을 맡는 일을 살펴볼 만한 시기입니다. 다만 함께 늘어나는 부담도 관리해야 합니다. 중심 주제는 높은 목표와 단호한 대응이 필요한 결정·전문 지식과 깊이 생각할 시간입니다.
 
 ### customer.month-7.1
 

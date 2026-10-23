@@ -50,6 +50,7 @@ describe('Buyer review r14: direct answers without repeated warnings or lost dat
   const plan=buildInterpretationPlan('year',a,2027),sections=customerNarrative(plan)
   const report=buildTraditionalCategoryFromPlan(plan)
   expect(report.months).toHaveLength(12)
+  expect(new Set(report.months.map(m=>m.lead.replace(m.label+': ',''))).size).toBe(12)
   expect(sections['annual-plan'].lines).toHaveLength(1)
   for(const month of report.months){
    expect([month.lead,...month.paragraphs].join(' ')).toContain('Money:')

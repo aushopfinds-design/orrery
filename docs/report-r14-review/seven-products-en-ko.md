@@ -128,7 +128,7 @@ Your focus, in plain English
 
 2027 brings demanding targets and decisive action, alongside specialist knowledge and independent thought. Compared with your lasting new customers and commercial opportunities work theme, this adds a different demand.
 
-Your money reading for 2027 starts with demanding targets and decisive action, while specialist knowledge and independent thought adds a second demand.
+2027: Targets, penalties or a large commitment can create financial pressure. This describes what needs to be managed, rather than how much you will earn or lose.
 
 Try first: Compare the changing demands of the selected year with the work and relationship needs that repeat in your birth chart.
 

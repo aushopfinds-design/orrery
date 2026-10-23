@@ -94,9 +94,9 @@ Main caution: A change signal identifies an area to examine, rather than an even
 
 Your 2026–2035 timeline: each year below gives the main opportunity or pressure, the reason and what needs attention.
 
-2026: a useful period to explore taking on a role that makes better use of your knowledge, with extra demands to manage. Learning or specialist knowledge in your birth chart meets responsibility in this period and a related ten-year period. Work routines may need some adjustment, such as a new schedule, a changed role or a different division of tasks. The ten-year background pulls against this shorter period. A new commitment may have to compete with work or plans already in progress. Watch for accepting a title without the authority or pay to match it; and letting urgency replace enough staff, time or authority.
+2026: a useful period to explore taking on a role that makes better use of your knowledge, with extra demands to manage. The focus is a recognised role with clear responsibilities and demanding targets and decisions that need a firm response. Learning or specialist knowledge in your birth chart meets responsibility in this period and a related ten-year period. Work routines may need some adjustment, such as a new schedule, a changed role or a different division of tasks. The ten-year background pulls against this shorter period. A new commitment may have to compete with work or plans already in progress. Watch for accepting a title without the authority or pay to match it; and letting urgency replace enough staff, time or authority.
 
-2027: a useful period to explore taking on a role that makes better use of your knowledge, with extra demands to manage. Learning or specialist knowledge in your birth chart meets responsibility in this period and a related ten-year period. Watch for letting urgency replace enough staff, time or authority; and making the offer too complicated for a customer or employer to understand.
+2027: a useful period to explore taking on a role that makes better use of your knowledge, with extra demands to manage. The focus is demanding targets and decisions that need a firm response and specialist knowledge and time to work something out. Learning or specialist knowledge in your birth chart meets responsibility in this period and a related ten-year period. Watch for letting urgency replace enough staff, time or authority; and making the offer too complicated for a customer or employer to understand.
 
 2028: focus on training, qualifications and dependable support and working through contacts and shared projects. The period brings training, qualifications and dependable support and working through contacts and shared projects; your birth chart gives these themes their personal context. Watch for spending more time or money preparing when you could already use the skill; and sharing costs or fees without agreeing who owns what.
 
@@ -226,9 +226,9 @@ Main caution: A new source of income can bring continuing costs and responsibili
 
 Your 2026–2035 career timeline follows how the work changes, not a list of lucky job titles.
 
-2026: a useful period to explore taking on a role that makes better use of your knowledge, with extra demands to manage. Learning or specialist knowledge in your birth chart meets responsibility in this period and a related ten-year period. Work routines may need some adjustment, such as a new schedule, a changed role or a different division of tasks. The ten-year background pulls against this shorter period. A new commitment may have to compete with work or plans already in progress. Watch for accepting a title without the authority or pay to match it; and letting urgency replace enough staff, time or authority.
+2026: a useful period to explore taking on a role that makes better use of your knowledge, with extra demands to manage. The focus is a recognised role with clear responsibilities and demanding targets and decisions that need a firm response. Learning or specialist knowledge in your birth chart meets responsibility in this period and a related ten-year period. Work routines may need some adjustment, such as a new schedule, a changed role or a different division of tasks. The ten-year background pulls against this shorter period. A new commitment may have to compete with work or plans already in progress. Watch for accepting a title without the authority or pay to match it; and letting urgency replace enough staff, time or authority.
 
-2027: a useful period to explore taking on a role that makes better use of your knowledge, with extra demands to manage. Learning or specialist knowledge in your birth chart meets responsibility in this period and a related ten-year period. Watch for letting urgency replace enough staff, time or authority; and making the offer too complicated for a customer or employer to understand.
+2027: a useful period to explore taking on a role that makes better use of your knowledge, with extra demands to manage. The focus is demanding targets and decisions that need a firm response and specialist knowledge and time to work something out. Learning or specialist knowledge in your birth chart meets responsibility in this period and a related ten-year period. Watch for letting urgency replace enough staff, time or authority; and making the offer too complicated for a customer or employer to understand.
 
 2028: focus on training, qualifications and dependable support and working through contacts and shared projects. The period brings training, qualifications and dependable support and working through contacts and shared projects; your birth chart gives these themes their personal context. Watch for spending more time or money preparing when you could already use the skill; and sharing costs or fees without agreeing who owns what.
 
@@ -504,11 +504,9 @@ Main caution: The blind spot is increasing urgency before checking the authority
 
 ## What Could Shape Your Money This Year?
 
-Your money reading for 2027 starts with demanding targets and decisive action, while specialist knowledge and independent thought adds a second demand.
+2027: Targets, penalties or a large commitment can create financial pressure. This describes what needs to be managed, rather than how much you will earn or lose.
 
-Targets, penalties or a large commitment can create financial pressure. This describes what needs to be managed, rather than how much you will earn or lose.
-
-Your money pattern combines a steady base with income from new customers or deals. Relying on only one of those routes would leave out part of the reading.
+The money-related signs sit in the parts read for work and everyday responsibilities and wider contacts. That is why the earning interpretation is tied to those areas.
 
 The monthly comparisons with a direct earning-and-money theme are 2027-02, 2027-03, 2027-04, 2027-05. They identify financial activity, rather than profitable months.
 
@@ -518,13 +516,13 @@ Main caution: A new source of income can bring continuing costs and responsibili
 
 ## Where Could Work Take You This Year?
 
-Work in 2027 puts demanding targets and decisive action first.
+2027: You lean towards demanding work that needs a firm response. Handling a difficult situation can use your strengths, while permanent urgency can overuse them.
 
 Specialist research, analysis and strategy fit this pattern. Protected thinking time matters more than a job filled with immediate responses.
 
 The work-related part of your birth chart emphasises new customers and commercial opportunities. This is why the reading puts this way of working first.
 
-Sales, account development, sourcing, brokerage and commercial projects fit this pattern. Recognising an opening and connecting people matter more here than repeating one narrow task.
+A role with room to build relationships and act on an opportunity fits you. A system that adds sales targets without control over delivery creates a sharper mismatch.
 
 The blind spot is increasing urgency before checking the authority and resources available.
 
@@ -534,9 +532,7 @@ Main caution: The blind spot is reopening the explanation instead of making a li
 
 ## What Could This Year Bring to Your Love Life?
 
-In relationships, 2027 adds demanding targets and decisive action and specialist knowledge and independent thought.
-
-Intensity and decisiveness can be attractive. The tension is setting the pace so firmly that the other person has too little room to disagree.
+2027: Intensity and decisiveness can be attractive. The tension is setting the pace so firmly that the other person has too little room to disagree.
 
 Privacy and being understood without constant explanation can matter. Withdrawing to think may look like distance to someone waiting for an immediate answer.
 
@@ -578,11 +574,11 @@ Main caution: The blind spot is increasing urgency before checking the authority
 
 | 2027-04 | April 2027: Changing responsibilities may pull work and private plans in different directions. The focus is steady pay, repeat customers and ongoing commitments and training, qualifications and dependable support. |
 
-| 2027-05 | May 2027: a useful period to explore taking on a role that makes better use of your knowledge, with extra demands to manage. |
+| 2027-05 | May 2027: a useful period to explore taking on a role that makes better use of your knowledge, with extra demands to manage. The focus is new customers, deals and work with changing fees and a recognised role with clear responsibilities. |
 
-| 2027-06 | June 2027: a useful period to explore taking on a role that makes better use of your knowledge, with extra demands to manage. |
+| 2027-06 | June 2027: a useful period to explore taking on a role that makes better use of your knowledge, with extra demands to manage. The focus is a recognised role with clear responsibilities and demanding targets and decisions that need a firm response. |
 
-| 2027-07 | July 2027: a useful period to explore taking on a role that makes better use of your knowledge, with extra demands to manage. |
+| 2027-07 | July 2027: a useful period to explore taking on a role that makes better use of your knowledge, with extra demands to manage. The focus is demanding targets and decisions that need a firm response and specialist knowledge and time to work something out. |
 
 | 2027-08 | August 2027: focus on training, qualifications and dependable support and working through contacts and shared projects. |
 
@@ -664,7 +660,7 @@ Main caution: The blind spot is taking on a cost or duty simply because you are 
 
 ## 2027-05
 
-May 2027: a useful period to explore taking on a role that makes better use of your knowledge, with extra demands to manage.
+May 2027: a useful period to explore taking on a role that makes better use of your knowledge, with extra demands to manage. The focus is new customers, deals and work with changing fees and a recognised role with clear responsibilities.
 
 Learning or specialist knowledge in your birth chart meets responsibility in this period and a related ten-year period.
 
@@ -682,7 +678,7 @@ Main caution: The blind spot is treating an attractive possibility as money alre
 
 ## 2027-06
 
-June 2027: a useful period to explore taking on a role that makes better use of your knowledge, with extra demands to manage.
+June 2027: a useful period to explore taking on a role that makes better use of your knowledge, with extra demands to manage. The focus is a recognised role with clear responsibilities and demanding targets and decisions that need a firm response.
 
 Learning or specialist knowledge in your birth chart meets responsibility in this period and a related ten-year period.
 
@@ -702,7 +698,7 @@ Main caution: The blind spot is accepting an obligation because it looks proper 
 
 ## 2027-07
 
-July 2027: a useful period to explore taking on a role that makes better use of your knowledge, with extra demands to manage.
+July 2027: a useful period to explore taking on a role that makes better use of your knowledge, with extra demands to manage. The focus is demanding targets and decisions that need a firm response and specialist knowledge and time to work something out.
 
 Learning or specialist knowledge in your birth chart meets responsibility in this period and a related ten-year period.
 

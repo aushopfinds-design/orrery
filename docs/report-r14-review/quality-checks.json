@@ -43,7 +43,7 @@
         {
           "kind": "year",
           "documents": 1,
-          "pairedPassages": 140,
+          "pairedPassages": 138,
           "allSourcesPresent": true
         },
         {
@@ -67,7 +67,7 @@
         {
           "kind": "bundle",
           "documents": 4,
-          "pairedPassages": 268,
+          "pairedPassages": 266,
           "allSourcesPresent": true
         }
       ]
@@ -113,7 +113,7 @@
         {
           "kind": "year",
           "documents": 1,
-          "pairedPassages": 142,
+          "pairedPassages": 140,
           "allSourcesPresent": true
         },
         {
@@ -137,7 +137,7 @@
         {
           "kind": "bundle",
           "documents": 4,
-          "pairedPassages": 265,
+          "pairedPassages": 263,
           "allSourcesPresent": true
         }
       ]
@@ -183,7 +183,7 @@
         {
           "kind": "year",
           "documents": 1,
-          "pairedPassages": 130,
+          "pairedPassages": 129,
           "allSourcesPresent": true
         },
         {
@@ -207,7 +207,7 @@
         {
           "kind": "bundle",
           "documents": 4,
-          "pairedPassages": 256,
+          "pairedPassages": 255,
           "allSourcesPresent": true
         }
       ]
@@ -253,7 +253,7 @@
         {
           "kind": "year",
           "documents": 1,
-          "pairedPassages": 134,
+          "pairedPassages": 132,
           "allSourcesPresent": true
         },
         {
@@ -277,7 +277,7 @@
         {
           "kind": "bundle",
           "documents": 4,
-          "pairedPassages": 261,
+          "pairedPassages": 259,
           "allSourcesPresent": true
         }
       ]
@@ -323,7 +323,7 @@
         {
           "kind": "year",
           "documents": 1,
-          "pairedPassages": 139,
+          "pairedPassages": 137,
           "allSourcesPresent": true
         },
         {
@@ -347,7 +347,7 @@
         {
           "kind": "bundle",
           "documents": 4,
-          "pairedPassages": 265,
+          "pairedPassages": 263,
           "allSourcesPresent": true
         }
       ]
@@ -393,7 +393,7 @@
         {
           "kind": "year",
           "documents": 1,
-          "pairedPassages": 140,
+          "pairedPassages": 138,
           "allSourcesPresent": true
         },
         {
@@ -417,7 +417,7 @@
         {
           "kind": "bundle",
           "documents": 4,
-          "pairedPassages": 266,
+          "pairedPassages": 264,
           "allSourcesPresent": true
         }
       ]
@@ -463,7 +463,7 @@
         {
           "kind": "year",
           "documents": 1,
-          "pairedPassages": 127,
+          "pairedPassages": 126,
           "allSourcesPresent": true
         },
         {
@@ -487,7 +487,7 @@
         {
           "kind": "bundle",
           "documents": 4,
-          "pairedPassages": 254,
+          "pairedPassages": 253,
           "allSourcesPresent": true
         }
       ]
@@ -533,7 +533,7 @@
         {
           "kind": "year",
           "documents": 1,
-          "pairedPassages": 128,
+          "pairedPassages": 126,
           "allSourcesPresent": true
         },
         {
@@ -557,7 +557,7 @@
         {
           "kind": "bundle",
           "documents": 4,
-          "pairedPassages": 253,
+          "pairedPassages": 251,
           "allSourcesPresent": true
         }
       ]
@@ -603,7 +603,7 @@
         {
           "kind": "year",
           "documents": 1,
-          "pairedPassages": 139,
+          "pairedPassages": 137,
           "allSourcesPresent": true
         },
         {
@@ -627,7 +627,7 @@
         {
           "kind": "bundle",
           "documents": 4,
-          "pairedPassages": 263,
+          "pairedPassages": 261,
           "allSourcesPresent": true
         }
       ]
@@ -673,7 +673,7 @@
         {
           "kind": "year",
           "documents": 1,
-          "pairedPassages": 129,
+          "pairedPassages": 127,
           "allSourcesPresent": true
         },
         {
@@ -697,7 +697,7 @@
         {
           "kind": "bundle",
           "documents": 4,
-          "pairedPassages": 253,
+          "pairedPassages": 251,
           "allSourcesPresent": true
         }
       ]
@@ -743,7 +743,7 @@
         {
           "kind": "year",
           "documents": 1,
-          "pairedPassages": 127,
+          "pairedPassages": 125,
           "allSourcesPresent": true
         },
         {
@@ -767,7 +767,7 @@
         {
           "kind": "bundle",
           "documents": 4,
-          "pairedPassages": 251,
+          "pairedPassages": 249,
           "allSourcesPresent": true
         }
       ]
@@ -813,7 +813,7 @@
         {
           "kind": "year",
           "documents": 1,
-          "pairedPassages": 131,
+          "pairedPassages": 129,
           "allSourcesPresent": true
         },
         {
@@ -837,7 +837,7 @@
         {
           "kind": "bundle",
           "documents": 4,
-          "pairedPassages": 258,
+          "pairedPassages": 256,
           "allSourcesPresent": true
         }
       ]
@@ -883,7 +883,7 @@
         {
           "kind": "year",
           "documents": 1,
-          "pairedPassages": 137,
+          "pairedPassages": 135,
           "allSourcesPresent": true
         },
         {
@@ -907,7 +907,7 @@
         {
           "kind": "bundle",
           "documents": 4,
-          "pairedPassages": 265,
+          "pairedPassages": 263,
           "allSourcesPresent": true
         }
       ]
@@ -953,7 +953,7 @@
         {
           "kind": "year",
           "documents": 1,
-          "pairedPassages": 128,
+          "pairedPassages": 126,
           "allSourcesPresent": true
         },
         {
@@ -977,7 +977,7 @@
         {
           "kind": "bundle",
           "documents": 4,
-          "pairedPassages": 252,
+          "pairedPassages": 250,
           "allSourcesPresent": true
         }
       ]
@@ -1023,7 +1023,7 @@
         {
           "kind": "year",
           "documents": 1,
-          "pairedPassages": 132,
+          "pairedPassages": 130,
           "allSourcesPresent": true
         },
         {
@@ -1047,7 +1047,7 @@
         {
           "kind": "bundle",
           "documents": 4,
-          "pairedPassages": 256,
+          "pairedPassages": 254,
           "allSourcesPresent": true
         }
       ]
@@ -1093,7 +1093,7 @@
         {
           "kind": "year",
           "documents": 1,
-          "pairedPassages": 128,
+          "pairedPassages": 126,
           "allSourcesPresent": true
         },
         {
@@ -1117,7 +1117,7 @@
         {
           "kind": "bundle",
           "documents": 4,
-          "pairedPassages": 253,
+          "pairedPassages": 251,
           "allSourcesPresent": true
         }
       ]
@@ -1163,7 +1163,7 @@
         {
           "kind": "year",
           "documents": 1,
-          "pairedPassages": 137,
+          "pairedPassages": 136,
           "allSourcesPresent": true
         },
         {
@@ -1187,7 +1187,7 @@
         {
           "kind": "bundle",
           "documents": 4,
-          "pairedPassages": 264,
+          "pairedPassages": 263,
           "allSourcesPresent": true
         }
       ]
@@ -1233,7 +1233,7 @@
         {
           "kind": "year",
           "documents": 1,
-          "pairedPassages": 129,
+          "pairedPassages": 127,
           "allSourcesPresent": true
         },
         {
@@ -1257,7 +1257,7 @@
         {
           "kind": "bundle",
           "documents": 4,
-          "pairedPassages": 256,
+          "pairedPassages": 254,
           "allSourcesPresent": true
         }
       ]
@@ -1303,7 +1303,7 @@
         {
           "kind": "year",
           "documents": 1,
-          "pairedPassages": 130,
+          "pairedPassages": 128,
           "allSourcesPresent": true
         },
         {
@@ -1327,7 +1327,7 @@
         {
           "kind": "bundle",
           "documents": 4,
-          "pairedPassages": 257,
+          "pairedPassages": 255,
           "allSourcesPresent": true
         }
       ]
@@ -1373,7 +1373,7 @@
         {
           "kind": "year",
           "documents": 1,
-          "pairedPassages": 142,
+          "pairedPassages": 140,
           "allSourcesPresent": true
         },
         {
@@ -1397,7 +1397,7 @@
         {
           "kind": "bundle",
           "documents": 4,
-          "pairedPassages": 268,
+          "pairedPassages": 266,
           "allSourcesPresent": true
         }
       ]
@@ -1443,7 +1443,7 @@
         {
           "kind": "year",
           "documents": 1,
-          "pairedPassages": 137,
+          "pairedPassages": 136,
           "allSourcesPresent": true
         },
         {
@@ -1467,7 +1467,7 @@
         {
           "kind": "bundle",
           "documents": 4,
-          "pairedPassages": 264,
+          "pairedPassages": 263,
           "allSourcesPresent": true
         }
       ]
@@ -1513,7 +1513,7 @@
         {
           "kind": "year",
           "documents": 1,
-          "pairedPassages": 136,
+          "pairedPassages": 134,
           "allSourcesPresent": true
         },
         {
@@ -1537,7 +1537,7 @@
         {
           "kind": "bundle",
           "documents": 4,
-          "pairedPassages": 259,
+          "pairedPassages": 257,
           "allSourcesPresent": true
         }
       ]
@@ -1583,7 +1583,7 @@
         {
           "kind": "year",
           "documents": 1,
-          "pairedPassages": 128,
+          "pairedPassages": 126,
           "allSourcesPresent": true
         },
         {
@@ -1607,7 +1607,7 @@
         {
           "kind": "bundle",
           "documents": 4,
-          "pairedPassages": 253,
+          "pairedPassages": 251,
           "allSourcesPresent": true
         }
       ]
@@ -1653,7 +1653,7 @@
         {
           "kind": "year",
           "documents": 1,
-          "pairedPassages": 129,
+          "pairedPassages": 128,
           "allSourcesPresent": true
         },
         {
@@ -1677,7 +1677,7 @@
         {
           "kind": "bundle",
           "documents": 4,
-          "pairedPassages": 255,
+          "pairedPassages": 254,
           "allSourcesPresent": true
         }
       ]
