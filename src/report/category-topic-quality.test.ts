@@ -1,3 +1,4 @@
+import { BUYER_ANSWERS } from './buyer-answers.ts'
 import { WORKING_LANGUAGE } from './purchase-language.ts'
 import { describe, expect, it } from 'vitest'
 import { calculateSaju } from '@orrery/core/saju'
@@ -28,8 +29,8 @@ describe('Direct subject-specific traditional interpretation', () => {
     for (const chart of charts) {
       const career = buildCategoryReading('career', chart, { year: 2026 })
       const business = buildCategoryReading('business', chart, { year: 2026 })
-      expect(career.chapters[0].lead).toContain(WORKING_LANGUAGE[chart.pillars[2].stemSipsin].name.en)
-      expect(business.chapters[0].lead).toContain(WORKING_LANGUAGE[chart.pillars[2].stemSipsin].name.en)
+      expect(career.chapters[0].lead).toBe(BUYER_ANSWERS[chart.pillars[2].stemSipsin].career.en)
+      expect(business.chapters[0].lead).toBe(BUYER_ANSWERS[chart.pillars[2].stemSipsin].founder.en)
       const money = career.chapters.find(x => x.id === 'money-commitments')!
       expect(money.paragraphs.join(' ')).toContain('confirmed pay')
       expect(money.paragraphs.join(' ')).toContain('expected hours')
@@ -44,9 +45,9 @@ describe('Direct subject-specific traditional interpretation', () => {
       for (let i = 0; i < 12; i++) {
         const month = report.months[i], point = monthlyPoint(chart, year, i + 1)
         const text = [month.lead, ...month.paragraphs].join(' ')
-        expect(text).toContain('Work and activity:')
-        expect(text).toContain('Money and commitments:')
-        expect(text).toContain('Relationships and home:')
+        expect(text).toContain(month.label)
+        expect(text).toContain('Money:')
+        expect(text).toContain('At home:')
         expect(month.guidance.watchFor.join(' ')).toContain(WORKING_LANGUAGE[point.god].pressure.en)
         expect(month.pillar).toBe(getFourPillars(year, i + 1, 15, 12, 0)[1])
       }
@@ -57,8 +58,9 @@ describe('Direct subject-specific traditional interpretation', () => {
       const a = charts[i], b = charts[i + 7], report = buildCategoryReading('compatibility', a, { second: b, year: 2026 })
       const ab = getRelation(a.pillars[1].pillar.stem, b.pillars[1].pillar.stem)!.hanja
       const ba = getRelation(b.pillars[1].pillar.stem, a.pillars[1].pillar.stem)!.hanja
-      expect(report.chapters[1].lead).toContain(WORKING_LANGUAGE[ab].name.en)
-      expect(report.chapters[1].lead).toContain(WORKING_LANGUAGE[ba].name.en)
+      expect(report.chapters[1].lead).toContain('From your side:')
+      expect(report.chapters[1].evidence.join(' ')).toContain(ab)
+      expect(report.chapters[1].evidence.join(' ')).toContain(ba)
       const flow = report.chapters.find(x => x.id === 'support-each-other')!
       expect(flow.evidence.join(' ')).toContain('Person A: Reference 2026-07-15')
       expect(flow.evidence.join(' ')).toContain('Person B: Reference 2030-07-15')

@@ -45,7 +45,7 @@ export const WORKING_LANGUAGE:Record<string,{name:Passage;work:Passage;money:Pas
  偏財:{
   name:pair('new customers and commercial opportunities','새 고객과 거래 기회'),
   work:pair('Sales, account development, sourcing, brokerage and commercial projects fit this pattern. Recognising an opening and connecting people matter more here than repeating one narrow task.','영업과 고객 개발, 소싱, 중개, 거래 프로젝트에 맞는 흐름입니다. 한 가지 업무의 반복보다 기회를 알아보고 사람을 연결하는 일이 중요합니다.'),
-  money:pair('Deals, changing fees and customers beyond a fixed routine stand out. More openings can also mean more commitments; the chart does not promise a windfall or an investment return.','거래와 변동 수수료, 정해진 일상 밖의 고객이 두드러집니다. 기회가 많아지면 의무도 늘 수 있으며 횡재나 투자 수익을 약속하지 않습니다.'),
+  money:pair('Deals, changing fees and customers beyond a fixed routine stand out. More openings can also mean more customers to follow up and more work to finish.','거래와 변동 수수료, 정해진 일상 밖의 고객이 두드러집니다. 기회가 많아지면 후속 대응할 고객과 마칠 업무도 늘 수 있습니다.'),
   love:pair('Interest may show through shared experiences, generosity and a wide social world. Early enthusiasm needs steady attention if the relationship is to feel dependable.','함께하는 경험과 너그러움, 넓은 사회생활로 관심을 표현할 수 있습니다. 관계가 믿음직하게 느껴지려면 처음의 열정 뒤에도 꾸준한 관심이 필요합니다.'),
   business:pair('Finding customers, trading and selling through several channels fit this pattern. Expansion becomes harder to manage when orders grow before delivery and payment collection are settled.','고객 확보와 거래, 여러 판매 경로를 쓰는 방식에 맞습니다. 납품과 수금이 정리되기 전에 주문이 늘면 확장을 감당하기 어려워질 수 있습니다.'),
   pressure:pair('The blind spot is treating an attractive possibility as money already secured.','매력적인 가능성을 이미 확보한 돈처럼 여기는 점이 약점으로 나타날 수 있습니다.'),

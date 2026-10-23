@@ -67,8 +67,8 @@ describe('Native Korean and English from one neutral plan', () => {
       }
       const support = purchaseMonths(a,2027).filter(p => ['conditional-opening','opening-with-caution','conditional-support'].includes(p.status))
       if (!support.length) {
-        expect(en.chapters.find(c => c.id === 'annual-cycle-context')!.lead).toContain('None of the twelve monthly comparisons establishes a supported opening')
-        expect(ko).toContain('12개 월별 비교에서 뒷받침되는 기회를 확정할 수 없습니다')
+        expect(en.chapters.find(c => c.id === 'annual-cycle-context')!.lead).toContain('The monthly comparison does not identify a clearly supported opening')
+        expect(ko).toContain('월별 비교에서 유리한 기회를 분명히 고를 근거는 부족합니다')
       }
       if (a.input.unknownTime) expect(plan.months.every(p => p.direction === 'unresolved')).toBe(true)
       const full = buildTraditionalCompleteFromPlan(buildInterpretationPlan('complete', a, 2026))

@@ -1,0 +1,195 @@
+{
+  "edition": "2026.10-r14",
+  "sourceMode": "parallel-analysis",
+  "first": {
+    "year": 1998,
+    "month": 3,
+    "day": 25,
+    "hour": 3,
+    "minute": 0,
+    "gender": "M",
+    "timezone": "America/New_York",
+    "latitude": 40.7128,
+    "longitude": -74.006
+  },
+  "second": {
+    "year": 2000,
+    "month": 8,
+    "day": 18,
+    "hour": 14,
+    "minute": 30,
+    "gender": "F",
+    "timezone": "Europe/London",
+    "latitude": 51.5074,
+    "longitude": -0.1278
+  },
+  "referenceYear": 2026,
+  "annualYear": 2027,
+  "products": [
+    {
+      "kind": "complete",
+      "documents": [
+        {
+          "title": "Your Life, Your Destiny",
+          "analysisId": "aba66a93531eea697bec60137c575729115934606e8bbecd856ac46394f8500b",
+          "englishCharacters": 56321,
+          "koreanCharacters": 8750,
+          "pairedClaims": 76,
+          "sentenceReview": {
+            "status": "authored-core-pairs-checked",
+            "englishSentences": 607,
+            "koreanSentences": 211,
+            "coverage": "Customer chapter passages, monthly passages, longer-period passages and bundle overview are authored in matched English and Korean pairs and checked against both delivered texts. Technical evidence, headings, metadata and method notes are outside this coverage: the whole export is not a complete sentence-by-sentence translation."
+          }
+        }
+      ]
+    },
+    {
+      "kind": "compatibility",
+      "documents": [
+        {
+          "title": "Are We Meant to Be?",
+          "analysisId": "8fd268c1cacb5743d66be2d1bbb1a1c01807dd73ef3e431c36874d774d20da56",
+          "englishCharacters": 48446,
+          "koreanCharacters": 7762,
+          "pairedClaims": 71,
+          "sentenceReview": {
+            "status": "authored-core-pairs-checked",
+            "englishSentences": 551,
+            "koreanSentences": 192,
+            "coverage": "Customer chapter passages, monthly passages, longer-period passages and bundle overview are authored in matched English and Korean pairs and checked against both delivered texts. Technical evidence, headings, metadata and method notes are outside this coverage: the whole export is not a complete sentence-by-sentence translation."
+          }
+        }
+      ]
+    },
+    {
+      "kind": "year",
+      "documents": [
+        {
+          "title": "What Awaits You This Year? — 2027",
+          "analysisId": "f9eb92d3bfb3a377539b394fdf1f0adfb334164186e9952c3385a2326035e336",
+          "englishCharacters": 65345,
+          "koreanCharacters": 13595,
+          "pairedClaims": 143,
+          "sentenceReview": {
+            "status": "authored-core-pairs-checked",
+            "englishSentences": 700,
+            "koreanSentences": 329,
+            "coverage": "Customer chapter passages, monthly passages, longer-period passages and bundle overview are authored in matched English and Korean pairs and checked against both delivered texts. Technical evidence, headings, metadata and method notes are outside this coverage: the whole export is not a complete sentence-by-sentence translation."
+          }
+        }
+      ]
+    },
+    {
+      "kind": "career",
+      "documents": [
+        {
+          "title": "Success, Money & Your Future",
+          "analysisId": "003c9338d6985d462e15caedd2d1e586e253bbd93f8620e22462c16019738b8d",
+          "englishCharacters": 56262,
+          "koreanCharacters": 6979,
+          "pairedClaims": 54,
+          "sentenceReview": {
+            "status": "authored-core-pairs-checked",
+            "englishSentences": 586,
+            "koreanSentences": 168,
+            "coverage": "Customer chapter passages, monthly passages, longer-period passages and bundle overview are authored in matched English and Korean pairs and checked against both delivered texts. Technical evidence, headings, metadata and method notes are outside this coverage: the whole export is not a complete sentence-by-sentence translation."
+          }
+        }
+      ]
+    },
+    {
+      "kind": "business",
+      "documents": [
+        {
+          "title": "Born to Build a Business?",
+          "analysisId": "77b3476e684a725f00017e0c82f2e4fce5acef086d5e3b69aecd4046e717f60b",
+          "englishCharacters": 60941,
+          "koreanCharacters": 6944,
+          "pairedClaims": 51,
+          "sentenceReview": {
+            "status": "authored-core-pairs-checked",
+            "englishSentences": 629,
+            "koreanSentences": 167,
+            "coverage": "Customer chapter passages, monthly passages, longer-period passages and bundle overview are authored in matched English and Korean pairs and checked against both delivered texts. Technical evidence, headings, metadata and method notes are outside this coverage: the whole export is not a complete sentence-by-sentence translation."
+          }
+        }
+      ]
+    },
+    {
+      "kind": "wellbeing",
+      "documents": [
+        {
+          "title": "The Real You: Strengths & Weaknesses",
+          "analysisId": "b8bee4d63e4407847b5c7414c59a4fd0b490aa9b9ed7e24396eb33eb7d668a20",
+          "englishCharacters": 20402,
+          "koreanCharacters": 3764,
+          "pairedClaims": 32,
+          "sentenceReview": {
+            "status": "authored-core-pairs-checked",
+            "englishSentences": 287,
+            "koreanSentences": 97,
+            "coverage": "Customer chapter passages, monthly passages, longer-period passages and bundle overview are authored in matched English and Korean pairs and checked against both delivered texts. Technical evidence, headings, metadata and method notes are outside this coverage: the whole export is not a complete sentence-by-sentence translation."
+          }
+        }
+      ]
+    },
+    {
+      "kind": "bundle",
+      "documents": [
+        {
+          "title": "How Do Your Life, Love and Year Connect?",
+          "analysisId": "b41b6fda8d6c9b6c615293a7a7c9487dc0facef154c2a68d667d2043d4b673ed",
+          "englishCharacters": 1106,
+          "koreanCharacters": 477,
+          "pairedClaims": 5,
+          "sentenceReview": {
+            "status": "authored-core-pairs-checked",
+            "englishSentences": 11,
+            "koreanSentences": 12,
+            "coverage": "Customer chapter passages, monthly passages, longer-period passages and bundle overview are authored in matched English and Korean pairs and checked against both delivered texts. Technical evidence, headings, metadata and method notes are outside this coverage: the whole export is not a complete sentence-by-sentence translation."
+          }
+        },
+        {
+          "title": "Your Life, Your Destiny",
+          "analysisId": "aba66a93531eea697bec60137c575729115934606e8bbecd856ac46394f8500b",
+          "englishCharacters": 56321,
+          "koreanCharacters": 8750,
+          "pairedClaims": 76,
+          "sentenceReview": {
+            "status": "authored-core-pairs-checked",
+            "englishSentences": 607,
+            "koreanSentences": 211,
+            "coverage": "Customer chapter passages, monthly passages, longer-period passages and bundle overview are authored in matched English and Korean pairs and checked against both delivered texts. Technical evidence, headings, metadata and method notes are outside this coverage: the whole export is not a complete sentence-by-sentence translation."
+          }
+        },
+        {
+          "title": "Are We Meant to Be?",
+          "analysisId": "8fd268c1cacb5743d66be2d1bbb1a1c01807dd73ef3e431c36874d774d20da56",
+          "englishCharacters": 38371,
+          "koreanCharacters": 7762,
+          "pairedClaims": 71,
+          "sentenceReview": {
+            "status": "authored-core-pairs-checked",
+            "englishSentences": 412,
+            "koreanSentences": 192,
+            "coverage": "Customer chapter passages, monthly passages, longer-period passages and bundle overview are authored in matched English and Korean pairs and checked against both delivered texts. Technical evidence, headings, metadata and method notes are outside this coverage: the whole export is not a complete sentence-by-sentence translation."
+          }
+        },
+        {
+          "title": "What Awaits You This Year? — 2027",
+          "analysisId": "f9eb92d3bfb3a377539b394fdf1f0adfb334164186e9952c3385a2326035e336",
+          "englishCharacters": 56698,
+          "koreanCharacters": 13595,
+          "pairedClaims": 143,
+          "sentenceReview": {
+            "status": "authored-core-pairs-checked",
+            "englishSentences": 589,
+            "koreanSentences": 329,
+            "coverage": "Customer chapter passages, monthly passages, longer-period passages and bundle overview are authored in matched English and Korean pairs and checked against both delivered texts. Technical evidence, headings, metadata and method notes are outside this coverage: the whole export is not a complete sentence-by-sentence translation."
+          }
+        }
+      ]
+    }
+  ]
+}

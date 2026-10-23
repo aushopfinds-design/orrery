@@ -17,14 +17,15 @@ describe('Activity timing: opportunity requires a personal route and retains con
   const a=purchaseTiming(supported,pointForPillar(supported,'戊戌','2027-07-15'),'business'), b=purchaseTiming(limited,pointForPillar(limited,'戊戌','2027-07-15'),'business')
   expect(a.status).toBe('conditional-opening');expect(a.route).toBe('skill-to-customers')
   expect(b.status).toBe('extra-care');expect(b.route).toBeNull()
-  expect(a.lines.map(l=>l.en).join(' ')).toContain('not a prediction')
-  expect(b.lines.map(l=>l.en).join(' ')).toContain('more bills')
+  expect(a.lines.map(l=>l.en).join(' ')).not.toMatch(/will (?:earn|succeed|get promoted)/)
+  expect(a.lines.some(l=>l.id.endsWith('.reason'))).toBe(true)
+  expect(b.lines.map(l=>l.en).join(' ')).toContain('Extra duties')
  })
  it('retains a useful activity and a conflicting obligation together without calling the period easy',()=>{
   const chart=symbolic(['丙辰','甲寅','甲寅','壬子'],'丁巳')
   const row=purchaseTiming(chart,pointForPillar(chart,'戊戌','2027-07-15'),'business')
   expect(row.status).toBe('opening-with-caution');expect(row.route).toBe('skill-to-customers')
-  expect(row.lines.map(l=>l.en).join(' ')).toContain('not an easy-period recommendation')
+  expect(row.lines.map(l=>l.en).join(' ')).toContain('extra demands to manage')
   expect(row.lines.some(l=>l.id.endsWith('wider-pressure'))).toBe(true)
  })
  it('cannot promote a money symbol or an unavailable longer period into a launch recommendation',()=>{
@@ -38,7 +39,7 @@ describe('Activity timing: opportunity requires a personal route and retains con
   const chart=symbolic(['丙午','甲寅','甲寅','壬子'],'丁巳')
   const row=purchaseTiming(chart,pointForPillar(chart,'庚申','2028-07-15'),'work')
   expect(row.status).toBe('extra-care');expect(row.lines.some(l=>l.id.endsWith('change-month'))).toBe(true)
-  expect(row.lines.map(l=>l.en).join(' ')).toContain('does not establish a dismissal')
+  expect(row.lines.map(l=>l.en).join(' ')).toContain('Work routines may need a bigger adjustment')
   expect(row.route).toBeNull()
  })
  it('excludes a guessed birth hour from both timing conclusions and evidence',()=>{

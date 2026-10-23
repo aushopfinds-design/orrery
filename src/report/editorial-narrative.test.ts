@@ -53,7 +53,8 @@ describe('Calculated interpretation before optional advice', () => {
     expect(new Set(report.months.map(x => x.lead)).size).toBe(12)
     for (const month of report.months) {
       expect(month.lead).toContain(month.label)
-      expect(month.paragraphs.join(' ')).toContain('Work and activity:')
+      expect(month.paragraphs.join(' ')).toContain('Money:')
+      expect(month.paragraphs.join(' ')).toContain('At home:')
       expect(month.evidence.join(' ')).toContain(month.referenceDate)
       expect(month.evidence.join(' ')).toContain(month.pillar)
     }
@@ -78,7 +79,7 @@ describe('Calculated interpretation before optional advice', () => {
     }
   })
   it('keeps an integrated bundle overview visible in the sample and complete export', () => {
-    expect(REPORT_EDITION).toBe('2026.10-r13')
+    expect(REPORT_EDITION).toBe('2026.10-r14')
     const bundle = buildBundleReading(a, b, 2027, 2026)
     expect(bundle.fullText.indexOf(bundle.overview.fullText)).toBeLessThan(bundle.fullText.indexOf(bundle.complete.fullText))
     expect(bundle.synthesis).not.toBe(buildBundleReading(a, b, 2028, 2026).synthesis)

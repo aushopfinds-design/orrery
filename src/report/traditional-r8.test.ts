@@ -48,7 +48,7 @@ describe('r8: all seven products over 24 distinct international charts', () => {
         expect(report.fullText).not.toMatch(/undefined|NaN|\[object Object\]|\*\*/)
         expect(report.applications).toEqual([])
         expect(report.chapters.every(chapter => chapter.evidence.length && chapter.lead.length > 30 && !chapter.lead.startsWith('Imagine '))).toBe(true)
-        expect(report.fullText).toContain('2026.10-r13')
+        expect(report.fullText).toContain('2026.10-r14')
         expect(report.fullText).toContain(report.referenceYear === 2027 ? '2027-07-15' : '2026-07-15')
         expect(report.methodNotes.join(' ')).toContain('not a factual assessment')
         const key = report.title, body = report.chapters.map(chapter => [chapter.lead, ...chapter.paragraphs].join(' ')).join('\n')

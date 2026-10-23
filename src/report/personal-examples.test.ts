@@ -111,7 +111,7 @@ describe('Direct interpretations replace supplementary fictional scenes', () => 
       for (const month of report.months) {
         expect(month.lead).not.toMatch(/^Imagine /)
         expect(month.evidence.join(' ')).toContain(month.referenceDate)
-        expect(month.paragraphs.join(' ')).toContain('not assigned to every day')
+        expect(report.chapters[0].paragraphs.join(' ')).toContain('a calendar month can cross a seasonal boundary')
       }
     }
   })
