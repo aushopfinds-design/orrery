@@ -1,7 +1,7 @@
 /** Reproducible fictional samples. Run with bun; no network, orders or translation provider. */
 import { mkdirSync, writeFileSync } from 'node:fs'
 import { calculateSaju } from '../packages/core/src/saju.ts'
-import { buildCompleteReading } from '../src/report/complete-reading.ts'
+import { buildCompleteReading, REPORT_EDITION } from '../src/report/complete-reading.ts'
 import { buildCategoryReading, buildBundleReading } from '../src/report/category-readings.ts'
 import { CATEGORY_SCENARIOS } from '../src/report/category-catalog.ts'
 const target = process.argv[2] ?? 'docs/report-r8-review'
@@ -18,7 +18,7 @@ const reports = {
   bundle: buildBundleReading(a, b, 2027, 2026),
 }
 const titles = { complete: 'Complete', compatibility: 'Compatibility', year: 'Year', career: 'Career', business: 'Business', wellbeing: 'Wellbeing', bundle: 'Bundle' }
-const manifest = { edition: '2026.10-r8', referenceYear: 2026, annualYear: 2027, inputs: scenario, reports: Object.entries(reports).map(([kind, report]) => ({ kind, words: report.wordCount })) }
+const manifest = { edition: REPORT_EDITION, referenceYear: 2026, annualYear: 2027, inputs: scenario, reports: Object.entries(reports).map(([kind, report]) => ({ kind, words: report.wordCount })) }
 writeFileSync(`${target}/sample-manifest.json`, JSON.stringify(manifest, null, 2) + '\n')
 writeFileSync(`${target}/all-seven-en.md`, '# All seven paid reports — English review copy\n\nFictional sample. See sample-manifest.json for the exact birth inputs.\n\n' + Object.entries(reports).map(([kind, report]) => `# ${titles[kind as keyof typeof titles]}\n\n${report.fullText}`).join('\n\n---\n\n') + '\n')
 // Machine-readable selected passages for the authored Korean review excerpts.

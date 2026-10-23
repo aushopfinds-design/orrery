@@ -1,3 +1,5 @@
+import { structuralAssessment } from './structural-assessment.ts'
+import { shortParagraphs } from './traditional-reading.ts'
 import { describe, expect, it } from 'vitest'
 import { calculateSaju } from '@orrery/core/saju'
 import { getFourPillars, getJeonggi, getRelation } from '@orrery/core/pillars'
@@ -62,9 +64,11 @@ describe('Distinct complete category readings across 60 international charts', (
     expect([...workByDay.values()].some(group => group.size >= 3)).toBe(true)
   })
   it('makes career and business substantively different reports', () => {
-    for (const { readings } of reports) {
-      const career = readings[0].chapters.flatMap(chapter => chapter.paragraphs)
-      const business = readings[1].chapters.flatMap(chapter => chapter.paragraphs)
+    for (const { chart, readings } of reports) {
+      // Shared natal analysis should agree across products; compare the topic-specific prose.
+      const shared = new Set(structuralAssessment(chart).paragraphs.flatMap(shortParagraphs))
+      const career = readings[0].chapters.flatMap(chapter => chapter.paragraphs).filter(text => !shared.has(text))
+      const business = readings[1].chapters.flatMap(chapter => chapter.paragraphs).filter(text => !shared.has(text))
       expect(business.filter(paragraph => career.includes(paragraph)).length).toBeLessThan(career.length * 0.5)
       expect(readings[0].chapters).toHaveLength(7)
       expect(readings[1].chapters).toHaveLength(7)
@@ -79,7 +83,7 @@ describe('Distinct complete category readings across 60 international charts', (
       expect(person.elements.reduce((sum, item) => sum + item.count, 0)).toBe(chart.input.unknownTime ? 6 : 8)
       if (chart.input.unknownTime) {
         expect(person.pillarSummary).toContain('Hour: Unknown')
-        expect(report.chapters.flatMap(chapter => chapter.evidence).join(' ')).not.toMatch(/(?:A|birth) hour [^e]|hour pillar [甲乙丙丁戊己庚辛壬癸]/)
+        expect(report.chapters.flatMap(chapter => chapter.evidence).join(' ')).not.toMatch(/(?:A|birth) hour (?!(?:is )?unknown)[^e]|hour pillar [甲乙丙丁戊己庚辛壬癸]/)
       }
     }
   })

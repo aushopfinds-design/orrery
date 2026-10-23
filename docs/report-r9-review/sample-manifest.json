@@ -1,0 +1,61 @@
+{
+  "edition": "2026.10-r9",
+  "referenceYear": 2026,
+  "annualYear": 2027,
+  "inputs": {
+    "id": "new-york-london",
+    "label": "New York 1998 · London 2000",
+    "first": {
+      "year": 1998,
+      "month": 3,
+      "day": 25,
+      "hour": 3,
+      "minute": 0,
+      "gender": "M",
+      "timezone": "America/New_York",
+      "latitude": 40.7128,
+      "longitude": -74.006
+    },
+    "second": {
+      "year": 2000,
+      "month": 8,
+      "day": 18,
+      "hour": 14,
+      "minute": 30,
+      "gender": "F",
+      "timezone": "Europe/London",
+      "latitude": 51.5074,
+      "longitude": -0.1278
+    }
+  },
+  "reports": [
+    {
+      "kind": "complete",
+      "words": 6150
+    },
+    {
+      "kind": "compatibility",
+      "words": 7299
+    },
+    {
+      "kind": "year",
+      "words": 9036
+    },
+    {
+      "kind": "career",
+      "words": 4998
+    },
+    {
+      "kind": "business",
+      "words": 4868
+    },
+    {
+      "kind": "wellbeing",
+      "words": 4222
+    },
+    {
+      "kind": "bundle",
+      "words": 19830
+    }
+  ]
+}

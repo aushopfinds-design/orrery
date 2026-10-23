@@ -1,0 +1,1850 @@
+{
+  "policy": "FATE-qualitative-r1",
+  "status": "provisional-review-only",
+  "expertValidated": false,
+  "examples": {
+    "id": "new-york-london",
+    "label": "New York 1998 · London 2000",
+    "first": {
+      "year": 1998,
+      "month": 3,
+      "day": 25,
+      "hour": 3,
+      "minute": 0,
+      "gender": "M",
+      "timezone": "America/New_York",
+      "latitude": 40.7128,
+      "longitude": -74.006
+    },
+    "second": {
+      "year": 2000,
+      "month": 8,
+      "day": 18,
+      "hour": 14,
+      "minute": 30,
+      "gender": "F",
+      "timezone": "Europe/London",
+      "latitude": 51.5074,
+      "longitude": -0.1278
+    }
+  },
+  "population": [
+    {
+      "input": {
+        "year": 1960,
+        "month": 1,
+        "day": 5,
+        "hour": 3,
+        "minute": 0,
+        "gender": "M",
+        "timezone": "America/New_York",
+        "latitude": 40.7128,
+        "longitude": -74.006,
+        "unknownTime": true
+      },
+      "tendency": "deferred",
+      "signals": {
+        "unknownTime": true,
+        "seasonalSupport": true,
+        "principalRoot": true,
+        "anyRoot": true,
+        "exposedSupport": false,
+        "exposedDemand": true,
+        "exceptional": false
+      },
+      "monthExposures": [
+        {
+          "stem": "壬",
+          "god": "比肩",
+          "exposedAt": []
+        },
+        {
+          "stem": "癸",
+          "god": "劫財",
+          "exposedAt": []
+        }
+      ],
+      "patternCandidate": null,
+      "annual": {
+        "direction": "unresolved",
+        "text": "2027-07-15: No favourable-or-unfavourable verdict is assigned: the natal balance or an active longer cycle is unresolved. A checked clash, punishment, harm or break adds structural friction; a supportive balance reading therefore still has a caution.",
+        "evidence": [
+          "Assessment FATE-qualitative-r1: natal deferred; reference 丁未 (正財 / 正官); direction unresolved; friction true.",
+          "Active cycle at 2027-07-15 12:00 shared comparison wall clock: 庚午; approximate calculated start (birth hour unknown) 2019-06-06T02:47:25.000Z.",
+          "Reference / active ten-year cycle: 丁未 / 庚午: branch 合 (fire)."
+        ],
+        "cycle": {
+          "index": 6,
+          "ganzi": "庚午",
+          "startDate": "2019-06-06T02:47:25.000Z",
+          "age": 59,
+          "stemSipsin": "偏印",
+          "branchSipsin": "正財",
+          "unseong": "胎",
+          "sinsal": "六害",
+          "isGongmang": true
+        },
+        "tension": true,
+        "cyclePair": {
+          "found": [
+            {
+              "type": "合",
+              "detail": "fire",
+              "layer": "branch"
+            }
+          ],
+          "facts": "Reference / active ten-year cycle: 丁未 / 庚午: branch 合 (fire).",
+          "text": "Reference / active ten-year cycle contains a combination. Traditionally, a combination draws the two sides together: cooperation, attachment or an obligation that becomes harder to separate are possible expressions."
+        }
+      }
+    },
+    {
+      "input": {
+        "year": 1961,
+        "month": 2,
+        "day": 6,
+        "hour": 9,
+        "minute": 15,
+        "gender": "F",
+        "timezone": "Asia/Seoul",
+        "latitude": 37.5665,
+        "longitude": 126.978,
+        "unknownTime": false
+      },
+      "tendency": "mixed",
+      "signals": {
+        "unknownTime": false,
+        "seasonalSupport": false,
+        "principalRoot": false,
+        "anyRoot": true,
+        "exposedSupport": true,
+        "exposedDemand": false,
+        "exceptional": false
+      },
+      "monthExposures": [
+        {
+          "stem": "戊",
+          "god": "偏印",
+          "exposedAt": []
+        },
+        {
+          "stem": "丙",
+          "god": "偏官",
+          "exposedAt": []
+        },
+        {
+          "stem": "甲",
+          "god": "偏財",
+          "exposedAt": []
+        }
+      ],
+      "patternCandidate": null,
+      "annual": {
+        "direction": "unresolved",
+        "text": "2027-07-15: No favourable-or-unfavourable verdict is assigned: the natal balance or an active longer cycle is unresolved. A checked clash, punishment, harm or break adds structural friction; a supportive balance reading therefore still has a caution.",
+        "evidence": [
+          "Assessment FATE-qualitative-r1: natal mixed; reference 丁未 (正官 / 正印); direction unresolved; friction true.",
+          "Active cycle at 2027-07-15 12:00 shared comparison wall clock: 丙申; calculated start 2020-05-13T05:00:10.000Z.",
+          "Reference / active ten-year cycle: 丁未 / 丙申: no pattern in the checked pair tables."
+        ],
+        "cycle": {
+          "index": 6,
+          "ganzi": "丙申",
+          "startDate": "2020-05-13T05:00:10.000Z",
+          "age": 59,
+          "stemSipsin": "偏官",
+          "branchSipsin": "比肩",
+          "unseong": "乾祿",
+          "sinsal": "亡身",
+          "isGongmang": false
+        },
+        "tension": true,
+        "cyclePair": {
+          "found": [],
+          "facts": "Reference / active ten-year cycle: 丁未 / 丙申: no pattern in the checked pair tables.",
+          "text": "Reference / active ten-year cycle has no recorded pair pattern. That removes this particular structural signal; it does not establish an easy relationship or a quiet period."
+        }
+      }
+    },
+    {
+      "input": {
+        "year": 1962,
+        "month": 3,
+        "day": 7,
+        "hour": 3,
+        "minute": 0,
+        "gender": "M",
+        "timezone": "America/New_York",
+        "latitude": 40.7128,
+        "longitude": -74.006,
+        "unknownTime": false
+      },
+      "tendency": "deferred",
+      "signals": {
+        "unknownTime": false,
+        "seasonalSupport": true,
+        "principalRoot": true,
+        "anyRoot": true,
+        "exposedSupport": true,
+        "exposedDemand": false,
+        "exceptional": true
+      },
+      "monthExposures": [
+        {
+          "stem": "甲",
+          "god": "比肩",
+          "exposedAt": []
+        },
+        {
+          "stem": "乙",
+          "god": "劫財",
+          "exposedAt": [
+            "hour"
+          ]
+        }
+      ],
+      "patternCandidate": null,
+      "annual": {
+        "direction": "unresolved",
+        "text": "2027-07-15: No favourable-or-unfavourable verdict is assigned: the natal balance or an active longer cycle is unresolved. A checked clash, punishment, harm or break adds structural friction; a supportive balance reading therefore still has a caution.",
+        "evidence": [
+          "Assessment FATE-qualitative-r1: natal deferred; reference 丁未 (傷官 / 正財); direction unresolved; friction true.",
+          "Active cycle at 2027-07-15 12:00 shared comparison wall clock: 己酉; calculated start 2022-01-07T18:45:10.000Z.",
+          "Reference / active ten-year cycle: 丁未 / 己酉: no pattern in the checked pair tables."
+        ],
+        "cycle": {
+          "index": 6,
+          "ganzi": "己酉",
+          "startDate": "2022-01-07T18:45:10.000Z",
+          "age": 60,
+          "stemSipsin": "正財",
+          "branchSipsin": "正官",
+          "unseong": "胎",
+          "sinsal": "六害",
+          "isGongmang": false
+        },
+        "tension": true,
+        "cyclePair": {
+          "found": [],
+          "facts": "Reference / active ten-year cycle: 丁未 / 己酉: no pattern in the checked pair tables.",
+          "text": "Reference / active ten-year cycle has no recorded pair pattern. That removes this particular structural signal; it does not establish an easy relationship or a quiet period."
+        }
+      }
+    },
+    {
+      "input": {
+        "year": 1963,
+        "month": 4,
+        "day": 8,
+        "hour": 9,
+        "minute": 15,
+        "gender": "F",
+        "timezone": "Asia/Seoul",
+        "latitude": 37.5665,
+        "longitude": 126.978,
+        "unknownTime": false
+      },
+      "tendency": "mixed",
+      "signals": {
+        "unknownTime": false,
+        "seasonalSupport": true,
+        "principalRoot": false,
+        "anyRoot": true,
+        "exposedSupport": false,
+        "exposedDemand": true,
+        "exceptional": false
+      },
+      "monthExposures": [
+        {
+          "stem": "乙",
+          "god": "偏財",
+          "exposedAt": []
+        },
+        {
+          "stem": "癸",
+          "god": "食神",
+          "exposedAt": [
+            "year"
+          ]
+        },
+        {
+          "stem": "戊",
+          "god": "正印",
+          "exposedAt": []
+        }
+      ],
+      "patternCandidate": {
+        "stem": "癸",
+        "god": "食神",
+        "exposedAt": [
+          "year"
+        ]
+      },
+      "annual": {
+        "direction": "unresolved",
+        "text": "2027-07-15: No favourable-or-unfavourable verdict is assigned: the natal balance or an active longer cycle is unresolved. A checked clash, punishment, harm or break adds structural friction; a supportive balance reading therefore still has a caution.",
+        "evidence": [
+          "Assessment FATE-qualitative-r1: natal mixed; reference 丁未 (偏官 / 偏印); direction unresolved; friction true.",
+          "Active cycle at 2027-07-15 12:00 shared comparison wall clock: 壬戌; calculated start 2022-09-02T20:38:47.000Z.",
+          "Reference / active ten-year cycle: 丁未 / 壬戌: stem 合 (tree); branch 破."
+        ],
+        "cycle": {
+          "index": 6,
+          "ganzi": "壬戌",
+          "startDate": "2022-09-02T20:38:47.000Z",
+          "age": 59,
+          "stemSipsin": "傷官",
+          "branchSipsin": "正印",
+          "unseong": "冠帶",
+          "sinsal": "天殺",
+          "isGongmang": false
+        },
+        "tension": true,
+        "cyclePair": {
+          "found": [
+            {
+              "type": "合",
+              "detail": "tree",
+              "layer": "stem"
+            },
+            {
+              "type": "破",
+              "detail": null,
+              "layer": "branch"
+            }
+          ],
+          "facts": "Reference / active ten-year cycle: 丁未 / 壬戌: stem 合 (tree); branch 破.",
+          "text": "Reference / active ten-year cycle contains a combination and a break pattern. Traditionally, a combination draws the two sides together: cooperation, attachment or an obligation that becomes harder to separate are possible expressions."
+        }
+      }
+    },
+    {
+      "input": {
+        "year": 1964,
+        "month": 5,
+        "day": 9,
+        "hour": 3,
+        "minute": 0,
+        "gender": "M",
+        "timezone": "America/New_York",
+        "latitude": 40.7128,
+        "longitude": -74.006,
+        "unknownTime": false
+      },
+      "tendency": "supported",
+      "signals": {
+        "unknownTime": false,
+        "seasonalSupport": true,
+        "principalRoot": true,
+        "anyRoot": true,
+        "exposedSupport": true,
+        "exposedDemand": true,
+        "exceptional": false
+      },
+      "monthExposures": [
+        {
+          "stem": "戊",
+          "god": "比肩",
+          "exposedAt": []
+        },
+        {
+          "stem": "庚",
+          "god": "食神",
+          "exposedAt": []
+        },
+        {
+          "stem": "丙",
+          "god": "偏印",
+          "exposedAt": []
+        }
+      ],
+      "patternCandidate": null,
+      "annual": {
+        "direction": "mixed",
+        "text": "2027-07-15: The active cycle and this reference do not give one consistent support-versus-demand direction. The reading keeps the opportunity and its burden separate. A checked clash, punishment, harm or break adds structural friction; a supportive balance reading therefore still has a caution.",
+        "evidence": [
+          "Assessment FATE-qualitative-r1: natal supported; reference 丁未 (正印 / 劫財); direction mixed; friction true.",
+          "Active cycle at 2027-07-15 12:00 shared comparison wall clock: 乙亥; calculated start 2023-08-30T21:34:21.000Z.",
+          "Reference / active ten-year cycle: 丁未 / 乙亥: no pattern in the checked pair tables."
+        ],
+        "cycle": {
+          "index": 6,
+          "ganzi": "乙亥",
+          "startDate": "2023-08-30T21:34:21.000Z",
+          "age": 59,
+          "stemSipsin": "正官",
+          "branchSipsin": "偏財",
+          "unseong": "絶",
+          "sinsal": "亡身",
+          "isGongmang": false
+        },
+        "tension": true,
+        "cyclePair": {
+          "found": [],
+          "facts": "Reference / active ten-year cycle: 丁未 / 乙亥: no pattern in the checked pair tables.",
+          "text": "Reference / active ten-year cycle has no recorded pair pattern. That removes this particular structural signal; it does not establish an easy relationship or a quiet period."
+        }
+      }
+    },
+    {
+      "input": {
+        "year": 1965,
+        "month": 6,
+        "day": 10,
+        "hour": 9,
+        "minute": 15,
+        "gender": "F",
+        "timezone": "Asia/Seoul",
+        "latitude": 37.5665,
+        "longitude": 126.978,
+        "unknownTime": true
+      },
+      "tendency": "deferred",
+      "signals": {
+        "unknownTime": true,
+        "seasonalSupport": false,
+        "principalRoot": false,
+        "anyRoot": true,
+        "exposedSupport": true,
+        "exposedDemand": false,
+        "exceptional": true
+      },
+      "monthExposures": [
+        {
+          "stem": "丙",
+          "god": "傷官",
+          "exposedAt": []
+        },
+        {
+          "stem": "己",
+          "god": "偏財",
+          "exposedAt": []
+        },
+        {
+          "stem": "丁",
+          "god": "食神",
+          "exposedAt": []
+        }
+      ],
+      "patternCandidate": null,
+      "annual": {
+        "direction": "unresolved",
+        "text": "2027-07-15: No favourable-or-unfavourable verdict is assigned: the natal balance or an active longer cycle is unresolved. A checked clash, punishment, harm or break adds structural friction; a supportive balance reading therefore still has a caution.",
+        "evidence": [
+          "Assessment FATE-qualitative-r1: natal deferred; reference 丁未 (食神 / 偏財); direction unresolved; friction true.",
+          "Active cycle at 2027-07-15 12:00 shared comparison wall clock: 戊子; approximate calculated start (birth hour unknown) 2024-07-04T02:22:53.000Z.",
+          "Reference / active ten-year cycle: 丁未 / 戊子: branch 害; branch 怨嗔."
+        ],
+        "cycle": {
+          "index": 6,
+          "ganzi": "戊子",
+          "startDate": "2024-07-04T02:22:53.000Z",
+          "age": 59,
+          "stemSipsin": "正財",
+          "branchSipsin": "偏印",
+          "unseong": "病",
+          "sinsal": "六害",
+          "isGongmang": false
+        },
+        "tension": true,
+        "cyclePair": {
+          "found": [
+            {
+              "type": "害",
+              "detail": null,
+              "layer": "branch"
+            },
+            {
+              "type": "怨嗔",
+              "detail": null,
+              "layer": "branch"
+            }
+          ],
+          "facts": "Reference / active ten-year cycle: 丁未 / 戊子: branch 害; branch 怨嗔.",
+          "text": "Reference / active ten-year cycle contains a harm pattern and a 怨嗔. Traditionally, these patterns draw attention to repeated friction, crossed expectations or an arrangement that needs revising."
+        }
+      }
+    },
+    {
+      "input": {
+        "year": 1966,
+        "month": 7,
+        "day": 11,
+        "hour": 3,
+        "minute": 0,
+        "gender": "M",
+        "timezone": "America/New_York",
+        "latitude": 40.7128,
+        "longitude": -74.006,
+        "unknownTime": false
+      },
+      "tendency": "mixed",
+      "signals": {
+        "unknownTime": false,
+        "seasonalSupport": true,
+        "principalRoot": false,
+        "anyRoot": true,
+        "exposedSupport": true,
+        "exposedDemand": true,
+        "exceptional": false
+      },
+      "monthExposures": [
+        {
+          "stem": "丁",
+          "god": "偏官",
+          "exposedAt": []
+        },
+        {
+          "stem": "乙",
+          "god": "偏財",
+          "exposedAt": [
+            "month"
+          ]
+        },
+        {
+          "stem": "己",
+          "god": "偏印",
+          "exposedAt": [
+            "hour"
+          ]
+        }
+      ],
+      "patternCandidate": {
+        "stem": "己",
+        "god": "偏印",
+        "exposedAt": [
+          "hour"
+        ]
+      },
+      "annual": {
+        "direction": "unresolved",
+        "text": "2027-07-15: No favourable-or-unfavourable verdict is assigned: the natal balance or an active longer cycle is unresolved. A checked clash, punishment, harm or break adds structural friction; a supportive balance reading therefore still has a caution.",
+        "evidence": [
+          "Assessment FATE-qualitative-r1: natal mixed; reference 丁未 (偏官 / 偏印); direction unresolved; friction true.",
+          "Active cycle at 2027-07-15 12:00 shared comparison wall clock: 辛丑; calculated start 2025-12-11T17:08:23.000Z.",
+          "Reference / active ten-year cycle: 丁未 / 辛丑: branch 沖."
+        ],
+        "cycle": {
+          "index": 6,
+          "ganzi": "辛丑",
+          "startDate": "2025-12-11T17:08:23.000Z",
+          "age": 59,
+          "stemSipsin": "比肩",
+          "branchSipsin": "偏印",
+          "unseong": "養",
+          "sinsal": "天殺",
+          "isGongmang": false
+        },
+        "tension": true,
+        "cyclePair": {
+          "found": [
+            {
+              "type": "沖",
+              "detail": null,
+              "layer": "branch"
+            }
+          ],
+          "facts": "Reference / active ten-year cycle: 丁未 / 辛丑: branch 沖.",
+          "text": "Reference / active ten-year cycle contains a clash. Traditionally, the clash points to a part of life that is less settled: competing schedules, a change in responsibility or a different personal preference are possible expressions."
+        }
+      }
+    },
+    {
+      "input": {
+        "year": 1967,
+        "month": 8,
+        "day": 12,
+        "hour": 9,
+        "minute": 15,
+        "gender": "F",
+        "timezone": "Asia/Seoul",
+        "latitude": 37.5665,
+        "longitude": 126.978,
+        "unknownTime": false
+      },
+      "tendency": "mixed",
+      "signals": {
+        "unknownTime": false,
+        "seasonalSupport": false,
+        "principalRoot": true,
+        "anyRoot": true,
+        "exposedSupport": true,
+        "exposedDemand": false,
+        "exceptional": false
+      },
+      "monthExposures": [
+        {
+          "stem": "戊",
+          "god": "比肩",
+          "exposedAt": [
+            "month"
+          ]
+        },
+        {
+          "stem": "壬",
+          "god": "偏財",
+          "exposedAt": []
+        },
+        {
+          "stem": "庚",
+          "god": "食神",
+          "exposedAt": []
+        }
+      ],
+      "patternCandidate": null,
+      "annual": {
+        "direction": "unresolved",
+        "text": "2027-07-15: No favourable-or-unfavourable verdict is assigned: the natal balance or an active longer cycle is unresolved. No checked clash, punishment, harm or break adds a separate friction signal at this reference; this is not a guarantee of an easy period.",
+        "evidence": [
+          "Assessment FATE-qualitative-r1: natal mixed; reference 丁未 (正印 / 劫財); direction unresolved; friction false.",
+          "Active cycle at 2027-07-15 12:00 shared comparison wall clock: 甲寅; calculated start 2026-09-19T08:55:54.000Z.",
+          "Reference / active ten-year cycle: 丁未 / 甲寅: branch 鬼門."
+        ],
+        "cycle": {
+          "index": 6,
+          "ganzi": "甲寅",
+          "startDate": "2026-09-19T08:55:54.000Z",
+          "age": 59,
+          "stemSipsin": "偏官",
+          "branchSipsin": "偏官",
+          "unseong": "長生",
+          "sinsal": "亡身",
+          "isGongmang": true
+        },
+        "tension": false,
+        "cyclePair": {
+          "found": [
+            {
+              "type": "鬼門",
+              "detail": null,
+              "layer": "branch"
+            }
+          ],
+          "facts": "Reference / active ten-year cycle: 丁未 / 甲寅: branch 鬼門.",
+          "text": "Reference / active ten-year cycle contains a 鬼門. Traditionally, these patterns draw attention to repeated friction, crossed expectations or an arrangement that needs revising."
+        }
+      }
+    },
+    {
+      "input": {
+        "year": 1968,
+        "month": 9,
+        "day": 13,
+        "hour": 3,
+        "minute": 0,
+        "gender": "M",
+        "timezone": "America/New_York",
+        "latitude": 40.7128,
+        "longitude": -74.006,
+        "unknownTime": false
+      },
+      "tendency": "deferred",
+      "signals": {
+        "unknownTime": false,
+        "seasonalSupport": false,
+        "principalRoot": false,
+        "anyRoot": true,
+        "exposedSupport": false,
+        "exposedDemand": true,
+        "exceptional": true
+      },
+      "monthExposures": [
+        {
+          "stem": "庚",
+          "god": "偏財",
+          "exposedAt": []
+        },
+        {
+          "stem": "辛",
+          "god": "正財",
+          "exposedAt": [
+            "month"
+          ]
+        }
+      ],
+      "patternCandidate": {
+        "stem": "辛",
+        "god": "正財",
+        "exposedAt": [
+          "month"
+        ]
+      },
+      "annual": {
+        "direction": "unresolved",
+        "text": "2027-07-15: No favourable-or-unfavourable verdict is assigned: the natal balance or an active longer cycle is unresolved. A checked clash, punishment, harm or break adds structural friction; a supportive balance reading therefore still has a caution.",
+        "evidence": [
+          "Assessment FATE-qualitative-r1: natal deferred; reference 丁未 (劫財 / 傷官); direction unresolved; friction true.",
+          "Active cycle at 2027-07-15 12:00 shared comparison wall clock: 丁卯; calculated start 2027-03-15T11:50:57.000Z.",
+          "Reference / active ten-year cycle: 丁未 / 丁卯: branch 半合 (tree)."
+        ],
+        "cycle": {
+          "index": 6,
+          "ganzi": "丁卯",
+          "startDate": "2027-03-15T11:50:57.000Z",
+          "age": 59,
+          "stemSipsin": "劫財",
+          "branchSipsin": "正印",
+          "unseong": "沐浴",
+          "sinsal": "六害",
+          "isGongmang": false
+        },
+        "tension": true,
+        "cyclePair": {
+          "found": [
+            {
+              "type": "半合",
+              "detail": "tree",
+              "layer": "branch"
+            }
+          ],
+          "facts": "Reference / active ten-year cycle: 丁未 / 丁卯: branch 半合 (tree).",
+          "text": "Reference / active ten-year cycle contains a partial combination. Traditionally, these patterns draw attention to repeated friction, crossed expectations or an arrangement that needs revising."
+        }
+      }
+    },
+    {
+      "input": {
+        "year": 1969,
+        "month": 10,
+        "day": 14,
+        "hour": 9,
+        "minute": 15,
+        "gender": "F",
+        "timezone": "Asia/Seoul",
+        "latitude": 37.5665,
+        "longitude": 126.978,
+        "unknownTime": false
+      },
+      "tendency": "mixed",
+      "signals": {
+        "unknownTime": false,
+        "seasonalSupport": false,
+        "principalRoot": false,
+        "anyRoot": true,
+        "exposedSupport": false,
+        "exposedDemand": true,
+        "exceptional": false
+      },
+      "monthExposures": [
+        {
+          "stem": "辛",
+          "god": "正印",
+          "exposedAt": []
+        },
+        {
+          "stem": "丁",
+          "god": "正財",
+          "exposedAt": []
+        },
+        {
+          "stem": "戊",
+          "god": "偏官",
+          "exposedAt": []
+        }
+      ],
+      "patternCandidate": null,
+      "annual": {
+        "direction": "unresolved",
+        "text": "2027-07-15: No favourable-or-unfavourable verdict is assigned: the natal balance or an active longer cycle is unresolved. A checked clash, punishment, harm or break adds structural friction; a supportive balance reading therefore still has a caution.",
+        "evidence": [
+          "Assessment FATE-qualitative-r1: natal mixed; reference 丁未 (正財 / 正官); direction unresolved; friction true.",
+          "Active cycle at 2027-07-15 12:00 shared comparison wall clock: 己卯; calculated start 2017-12-24T08:12:54.000Z.",
+          "Reference / active ten-year cycle: 丁未 / 己卯: branch 半合 (tree)."
+        ],
+        "cycle": {
+          "index": 5,
+          "ganzi": "己卯",
+          "startDate": "2017-12-24T08:12:54.000Z",
+          "age": 48,
+          "stemSipsin": "正官",
+          "branchSipsin": "傷官",
+          "unseong": "死",
+          "sinsal": "災殺",
+          "isGongmang": false
+        },
+        "tension": true,
+        "cyclePair": {
+          "found": [
+            {
+              "type": "半合",
+              "detail": "tree",
+              "layer": "branch"
+            }
+          ],
+          "facts": "Reference / active ten-year cycle: 丁未 / 己卯: branch 半合 (tree).",
+          "text": "Reference / active ten-year cycle contains a partial combination. Traditionally, these patterns draw attention to repeated friction, crossed expectations or an arrangement that needs revising."
+        }
+      }
+    },
+    {
+      "input": {
+        "year": 1970,
+        "month": 11,
+        "day": 15,
+        "hour": 3,
+        "minute": 0,
+        "gender": "M",
+        "timezone": "America/New_York",
+        "latitude": 40.7128,
+        "longitude": -74.006,
+        "unknownTime": true
+      },
+      "tendency": "deferred",
+      "signals": {
+        "unknownTime": true,
+        "seasonalSupport": false,
+        "principalRoot": true,
+        "anyRoot": true,
+        "exposedSupport": true,
+        "exposedDemand": true,
+        "exceptional": false
+      },
+      "monthExposures": [
+        {
+          "stem": "戊",
+          "god": "劫財",
+          "exposedAt": []
+        },
+        {
+          "stem": "甲",
+          "god": "正官",
+          "exposedAt": []
+        },
+        {
+          "stem": "壬",
+          "god": "正財",
+          "exposedAt": []
+        }
+      ],
+      "patternCandidate": null,
+      "annual": {
+        "direction": "unresolved",
+        "text": "2027-07-15: No favourable-or-unfavourable verdict is assigned: the natal balance or an active longer cycle is unresolved. A checked clash, punishment, harm or break adds structural friction; a supportive balance reading therefore still has a caution.",
+        "evidence": [
+          "Assessment FATE-qualitative-r1: natal deferred; reference 丁未 (偏印 / 比肩); direction unresolved; friction true.",
+          "Active cycle at 2027-07-15 12:00 shared comparison wall clock: 壬辰; approximate calculated start (birth hour unknown) 2018-05-04T15:42:05.000Z.",
+          "Reference / active ten-year cycle: 丁未 / 壬辰: stem 合 (tree)."
+        ],
+        "cycle": {
+          "index": 5,
+          "ganzi": "壬辰",
+          "startDate": "2018-05-04T15:42:05.000Z",
+          "age": 48,
+          "stemSipsin": "正財",
+          "branchSipsin": "劫財",
+          "unseong": "衰",
+          "sinsal": "月殺",
+          "isGongmang": true
+        },
+        "tension": true,
+        "cyclePair": {
+          "found": [
+            {
+              "type": "合",
+              "detail": "tree",
+              "layer": "stem"
+            }
+          ],
+          "facts": "Reference / active ten-year cycle: 丁未 / 壬辰: stem 合 (tree).",
+          "text": "Reference / active ten-year cycle contains a combination. Traditionally, a combination draws the two sides together: cooperation, attachment or an obligation that becomes harder to separate are possible expressions."
+        }
+      }
+    },
+    {
+      "input": {
+        "year": 1971,
+        "month": 12,
+        "day": 16,
+        "hour": 9,
+        "minute": 15,
+        "gender": "F",
+        "timezone": "Asia/Seoul",
+        "latitude": 37.5665,
+        "longitude": 126.978,
+        "unknownTime": false
+      },
+      "tendency": "mixed",
+      "signals": {
+        "unknownTime": false,
+        "seasonalSupport": true,
+        "principalRoot": false,
+        "anyRoot": true,
+        "exposedSupport": false,
+        "exposedDemand": true,
+        "exceptional": false
+      },
+      "monthExposures": [
+        {
+          "stem": "壬",
+          "god": "正印",
+          "exposedAt": []
+        },
+        {
+          "stem": "癸",
+          "god": "偏印",
+          "exposedAt": []
+        }
+      ],
+      "patternCandidate": null,
+      "annual": {
+        "direction": "unresolved",
+        "text": "2027-07-15: No favourable-or-unfavourable verdict is assigned: the natal balance or an active longer cycle is unresolved. A checked clash, punishment, harm or break adds structural friction; a supportive balance reading therefore still has a caution.",
+        "evidence": [
+          "Assessment FATE-qualitative-r1: natal mixed; reference 丁未 (食神 / 偏財); direction unresolved; friction true.",
+          "Active cycle at 2027-07-15 12:00 shared comparison wall clock: 乙巳; calculated start 2019-01-13T21:52:11.000Z.",
+          "Reference / active ten-year cycle: 丁未 / 乙巳: no pattern in the checked pair tables."
+        ],
+        "cycle": {
+          "index": 5,
+          "ganzi": "乙巳",
+          "startDate": "2019-01-13T21:52:11.000Z",
+          "age": 48,
+          "stemSipsin": "比肩",
+          "branchSipsin": "傷官",
+          "unseong": "沐浴",
+          "sinsal": "驛馬",
+          "isGongmang": false
+        },
+        "tension": true,
+        "cyclePair": {
+          "found": [],
+          "facts": "Reference / active ten-year cycle: 丁未 / 乙巳: no pattern in the checked pair tables.",
+          "text": "Reference / active ten-year cycle has no recorded pair pattern. That removes this particular structural signal; it does not establish an easy relationship or a quiet period."
+        }
+      }
+    },
+    {
+      "input": {
+        "year": 1972,
+        "month": 1,
+        "day": 17,
+        "hour": 3,
+        "minute": 0,
+        "gender": "M",
+        "timezone": "America/New_York",
+        "latitude": 40.7128,
+        "longitude": -74.006,
+        "unknownTime": false
+      },
+      "tendency": "mixed",
+      "signals": {
+        "unknownTime": false,
+        "seasonalSupport": false,
+        "principalRoot": false,
+        "anyRoot": true,
+        "exposedSupport": false,
+        "exposedDemand": true,
+        "exceptional": false
+      },
+      "monthExposures": [
+        {
+          "stem": "癸",
+          "god": "偏官",
+          "exposedAt": []
+        },
+        {
+          "stem": "辛",
+          "god": "偏財",
+          "exposedAt": [
+            "hour",
+            "month",
+            "year"
+          ]
+        },
+        {
+          "stem": "己",
+          "god": "食神",
+          "exposedAt": []
+        }
+      ],
+      "patternCandidate": {
+        "stem": "辛",
+        "god": "偏財",
+        "exposedAt": [
+          "hour",
+          "month",
+          "year"
+        ]
+      },
+      "annual": {
+        "direction": "unresolved",
+        "text": "2027-07-15: No favourable-or-unfavourable verdict is assigned: the natal balance or an active longer cycle is unresolved. A checked clash, punishment, harm or break adds structural friction; a supportive balance reading therefore still has a caution.",
+        "evidence": [
+          "Assessment FATE-qualitative-r1: natal mixed; reference 丁未 (比肩 / 食神); direction unresolved; friction true.",
+          "Active cycle at 2027-07-15 12:00 shared comparison wall clock: 乙未; calculated start 2025-07-18T07:11:10.000Z.",
+          "Reference / active ten-year cycle: 丁未 / 乙未: no pattern in the checked pair tables."
+        ],
+        "cycle": {
+          "index": 6,
+          "ganzi": "乙未",
+          "startDate": "2025-07-18T07:11:10.000Z",
+          "age": 53,
+          "stemSipsin": "偏印",
+          "branchSipsin": "食神",
+          "unseong": "冠帶",
+          "sinsal": "華蓋",
+          "isGongmang": false
+        },
+        "tension": true,
+        "cyclePair": {
+          "found": [],
+          "facts": "Reference / active ten-year cycle: 丁未 / 乙未: no pattern in the checked pair tables.",
+          "text": "Reference / active ten-year cycle has no recorded pair pattern. That removes this particular structural signal; it does not establish an easy relationship or a quiet period."
+        }
+      }
+    },
+    {
+      "input": {
+        "year": 1973,
+        "month": 2,
+        "day": 18,
+        "hour": 9,
+        "minute": 15,
+        "gender": "F",
+        "timezone": "Asia/Seoul",
+        "latitude": 37.5665,
+        "longitude": 126.978,
+        "unknownTime": false
+      },
+      "tendency": "supported",
+      "signals": {
+        "unknownTime": false,
+        "seasonalSupport": true,
+        "principalRoot": true,
+        "anyRoot": true,
+        "exposedSupport": true,
+        "exposedDemand": true,
+        "exceptional": false
+      },
+      "monthExposures": [
+        {
+          "stem": "戊",
+          "god": "正財",
+          "exposedAt": []
+        },
+        {
+          "stem": "丙",
+          "god": "傷官",
+          "exposedAt": []
+        },
+        {
+          "stem": "甲",
+          "god": "劫財",
+          "exposedAt": [
+            "month"
+          ]
+        }
+      ],
+      "patternCandidate": null,
+      "annual": {
+        "direction": "potential-outlet",
+        "text": "2027-07-15: Both the active cycle and this reference add output, management or responsibility to a chart that leans supported. This can provide an outlet for its support, provided real skills and capacity match the obligation. A checked clash, punishment, harm or break adds structural friction; a supportive balance reading therefore still has a caution.",
+        "evidence": [
+          "Assessment FATE-qualitative-r1: natal supported; reference 丁未 (食神 / 偏財); direction potential-outlet; friction true.",
+          "Active cycle at 2027-07-15 12:00 shared comparison wall clock: 己未; calculated start 2018-05-16T14:16:53.000Z.",
+          "Reference / active ten-year cycle: 丁未 / 己未: no pattern in the checked pair tables."
+        ],
+        "cycle": {
+          "index": 5,
+          "ganzi": "己未",
+          "startDate": "2018-05-16T14:16:53.000Z",
+          "age": 45,
+          "stemSipsin": "偏財",
+          "branchSipsin": "偏財",
+          "unseong": "養",
+          "sinsal": "月殺",
+          "isGongmang": true
+        },
+        "tension": true,
+        "cyclePair": {
+          "found": [],
+          "facts": "Reference / active ten-year cycle: 丁未 / 己未: no pattern in the checked pair tables.",
+          "text": "Reference / active ten-year cycle has no recorded pair pattern. That removes this particular structural signal; it does not establish an easy relationship or a quiet period."
+        }
+      }
+    },
+    {
+      "input": {
+        "year": 1974,
+        "month": 3,
+        "day": 19,
+        "hour": 3,
+        "minute": 0,
+        "gender": "M",
+        "timezone": "America/New_York",
+        "latitude": 40.7128,
+        "longitude": -74.006,
+        "unknownTime": false
+      },
+      "tendency": "mixed",
+      "signals": {
+        "unknownTime": false,
+        "seasonalSupport": false,
+        "principalRoot": true,
+        "anyRoot": true,
+        "exposedSupport": true,
+        "exposedDemand": true,
+        "exceptional": false
+      },
+      "monthExposures": [
+        {
+          "stem": "甲",
+          "god": "正官",
+          "exposedAt": [
+            "year"
+          ]
+        },
+        {
+          "stem": "乙",
+          "god": "偏官",
+          "exposedAt": [
+            "hour"
+          ]
+        }
+      ],
+      "patternCandidate": {
+        "stem": "乙",
+        "god": "偏官",
+        "exposedAt": [
+          "hour"
+        ]
+      },
+      "annual": {
+        "direction": "unresolved",
+        "text": "2027-07-15: No favourable-or-unfavourable verdict is assigned: the natal balance or an active longer cycle is unresolved. A checked clash, punishment, harm or break adds structural friction; a supportive balance reading therefore still has a caution.",
+        "evidence": [
+          "Assessment FATE-qualitative-r1: natal mixed; reference 丁未 (偏印 / 比肩); direction unresolved; friction true.",
+          "Active cycle at 2027-07-15 12:00 shared comparison wall clock: 壬申; calculated start 2020-01-13T10:22:04.000Z.",
+          "Reference / active ten-year cycle: 丁未 / 壬申: stem 合 (tree)."
+        ],
+        "cycle": {
+          "index": 5,
+          "ganzi": "壬申",
+          "startDate": "2020-01-13T10:22:04.000Z",
+          "age": 46,
+          "stemSipsin": "正財",
+          "branchSipsin": "傷官",
+          "unseong": "沐浴",
+          "sinsal": "驛馬",
+          "isGongmang": false
+        },
+        "tension": true,
+        "cyclePair": {
+          "found": [
+            {
+              "type": "合",
+              "detail": "tree",
+              "layer": "stem"
+            }
+          ],
+          "facts": "Reference / active ten-year cycle: 丁未 / 壬申: stem 合 (tree).",
+          "text": "Reference / active ten-year cycle contains a combination. Traditionally, a combination draws the two sides together: cooperation, attachment or an obligation that becomes harder to separate are possible expressions."
+        }
+      }
+    },
+    {
+      "input": {
+        "year": 1975,
+        "month": 4,
+        "day": 20,
+        "hour": 9,
+        "minute": 15,
+        "gender": "F",
+        "timezone": "Asia/Seoul",
+        "latitude": 37.5665,
+        "longitude": 126.978,
+        "unknownTime": true
+      },
+      "tendency": "deferred",
+      "signals": {
+        "unknownTime": true,
+        "seasonalSupport": false,
+        "principalRoot": false,
+        "anyRoot": false,
+        "exposedSupport": true,
+        "exposedDemand": true,
+        "exceptional": false
+      },
+      "monthExposures": [
+        {
+          "stem": "乙",
+          "god": "正印",
+          "exposedAt": [
+            "year"
+          ]
+        },
+        {
+          "stem": "癸",
+          "god": "正官",
+          "exposedAt": []
+        },
+        {
+          "stem": "戊",
+          "god": "食神",
+          "exposedAt": []
+        }
+      ],
+      "patternCandidate": {
+        "stem": "乙",
+        "god": "正印",
+        "exposedAt": [
+          "year"
+        ]
+      },
+      "annual": {
+        "direction": "unresolved",
+        "text": "2027-07-15: No favourable-or-unfavourable verdict is assigned: the natal balance or an active longer cycle is unresolved. No checked clash, punishment, harm or break adds a separate friction signal at this reference; this is not a guarantee of an easy period.",
+        "evidence": [
+          "Assessment FATE-qualitative-r1: natal deferred; reference 丁未 (劫財 / 傷官); direction unresolved; friction false.",
+          "Active cycle at 2027-07-15 12:00 shared comparison wall clock: 乙酉; approximate calculated start (birth hour unknown) 2020-08-20T21:29:46.000Z.",
+          "Reference / active ten-year cycle: 丁未 / 乙酉: no pattern in the checked pair tables."
+        ],
+        "cycle": {
+          "index": 5,
+          "ganzi": "乙酉",
+          "startDate": "2020-08-20T21:29:46.000Z",
+          "age": 45,
+          "stemSipsin": "正印",
+          "branchSipsin": "正財",
+          "unseong": "死",
+          "sinsal": "災殺",
+          "isGongmang": false
+        },
+        "tension": false,
+        "cyclePair": {
+          "found": [],
+          "facts": "Reference / active ten-year cycle: 丁未 / 乙酉: no pattern in the checked pair tables.",
+          "text": "Reference / active ten-year cycle has no recorded pair pattern. That removes this particular structural signal; it does not establish an easy relationship or a quiet period."
+        }
+      }
+    },
+    {
+      "input": {
+        "year": 1976,
+        "month": 5,
+        "day": 21,
+        "hour": 3,
+        "minute": 0,
+        "gender": "M",
+        "timezone": "America/New_York",
+        "latitude": 40.7128,
+        "longitude": -74.006,
+        "unknownTime": false
+      },
+      "tendency": "deferred",
+      "signals": {
+        "unknownTime": false,
+        "seasonalSupport": false,
+        "principalRoot": false,
+        "anyRoot": true,
+        "exposedSupport": true,
+        "exposedDemand": true,
+        "exceptional": true
+      },
+      "monthExposures": [
+        {
+          "stem": "戊",
+          "god": "正官",
+          "exposedAt": []
+        },
+        {
+          "stem": "庚",
+          "god": "正印",
+          "exposedAt": []
+        },
+        {
+          "stem": "丙",
+          "god": "正財",
+          "exposedAt": [
+            "year"
+          ]
+        }
+      ],
+      "patternCandidate": {
+        "stem": "丙",
+        "god": "正財",
+        "exposedAt": [
+          "year"
+        ]
+      },
+      "annual": {
+        "direction": "unresolved",
+        "text": "2027-07-15: No favourable-or-unfavourable verdict is assigned: the natal balance or an active longer cycle is unresolved. A checked clash, punishment, harm or break adds structural friction; a supportive balance reading therefore still has a caution.",
+        "evidence": [
+          "Assessment FATE-qualitative-r1: natal deferred; reference 丁未 (偏財 / 偏官); direction unresolved; friction true.",
+          "Active cycle at 2027-07-15 12:00 shared comparison wall clock: 戊戌; calculated start 2021-08-31T18:28:39.000Z.",
+          "Reference / active ten-year cycle: 丁未 / 戊戌: branch 破."
+        ],
+        "cycle": {
+          "index": 5,
+          "ganzi": "戊戌",
+          "startDate": "2021-08-31T18:28:39.000Z",
+          "age": 45,
+          "stemSipsin": "正官",
+          "branchSipsin": "正官",
+          "unseong": "衰",
+          "sinsal": "月殺",
+          "isGongmang": true
+        },
+        "tension": true,
+        "cyclePair": {
+          "found": [
+            {
+              "type": "破",
+              "detail": null,
+              "layer": "branch"
+            }
+          ],
+          "facts": "Reference / active ten-year cycle: 丁未 / 戊戌: branch 破.",
+          "text": "Reference / active ten-year cycle contains a break pattern. Traditionally, these patterns draw attention to repeated friction, crossed expectations or an arrangement that needs revising."
+        }
+      }
+    },
+    {
+      "input": {
+        "year": 1977,
+        "month": 6,
+        "day": 22,
+        "hour": 9,
+        "minute": 15,
+        "gender": "F",
+        "timezone": "Asia/Seoul",
+        "latitude": 37.5665,
+        "longitude": 126.978,
+        "unknownTime": false
+      },
+      "tendency": "mixed",
+      "signals": {
+        "unknownTime": false,
+        "seasonalSupport": false,
+        "principalRoot": false,
+        "anyRoot": true,
+        "exposedSupport": true,
+        "exposedDemand": true,
+        "exceptional": false
+      },
+      "monthExposures": [
+        {
+          "stem": "丙",
+          "god": "偏官",
+          "exposedAt": [
+            "month"
+          ]
+        },
+        {
+          "stem": "己",
+          "god": "正印",
+          "exposedAt": []
+        },
+        {
+          "stem": "丁",
+          "god": "正官",
+          "exposedAt": [
+            "year"
+          ]
+        }
+      ],
+      "patternCandidate": {
+        "stem": "丁",
+        "god": "正官",
+        "exposedAt": [
+          "year"
+        ]
+      },
+      "annual": {
+        "direction": "unresolved",
+        "text": "2027-07-15: No favourable-or-unfavourable verdict is assigned: the natal balance or an active longer cycle is unresolved. A checked clash, punishment, harm or break adds structural friction; a supportive balance reading therefore still has a caution.",
+        "evidence": [
+          "Assessment FATE-qualitative-r1: natal mixed; reference 丁未 (正官 / 正印); direction unresolved; friction true.",
+          "Active cycle at 2027-07-15 12:00 shared comparison wall clock: 辛亥; calculated start 2022-07-18T19:20:30.000Z.",
+          "Reference / active ten-year cycle: 丁未 / 辛亥: no pattern in the checked pair tables."
+        ],
+        "cycle": {
+          "index": 5,
+          "ganzi": "辛亥",
+          "startDate": "2022-07-18T19:20:30.000Z",
+          "age": 45,
+          "stemSipsin": "劫財",
+          "branchSipsin": "食神",
+          "unseong": "病",
+          "sinsal": "驛馬",
+          "isGongmang": false
+        },
+        "tension": true,
+        "cyclePair": {
+          "found": [],
+          "facts": "Reference / active ten-year cycle: 丁未 / 辛亥: no pattern in the checked pair tables.",
+          "text": "Reference / active ten-year cycle has no recorded pair pattern. That removes this particular structural signal; it does not establish an easy relationship or a quiet period."
+        }
+      }
+    },
+    {
+      "input": {
+        "year": 1978,
+        "month": 7,
+        "day": 23,
+        "hour": 3,
+        "minute": 0,
+        "gender": "M",
+        "timezone": "America/New_York",
+        "latitude": 40.7128,
+        "longitude": -74.006,
+        "unknownTime": false
+      },
+      "tendency": "mixed",
+      "signals": {
+        "unknownTime": false,
+        "seasonalSupport": false,
+        "principalRoot": true,
+        "anyRoot": true,
+        "exposedSupport": false,
+        "exposedDemand": true,
+        "exceptional": false
+      },
+      "monthExposures": [
+        {
+          "stem": "丁",
+          "god": "劫財",
+          "exposedAt": []
+        },
+        {
+          "stem": "乙",
+          "god": "正印",
+          "exposedAt": []
+        },
+        {
+          "stem": "己",
+          "god": "傷官",
+          "exposedAt": [
+            "hour",
+            "month"
+          ]
+        }
+      ],
+      "patternCandidate": {
+        "stem": "己",
+        "god": "傷官",
+        "exposedAt": [
+          "hour",
+          "month"
+        ]
+      },
+      "annual": {
+        "direction": "unresolved",
+        "text": "2027-07-15: No favourable-or-unfavourable verdict is assigned: the natal balance or an active longer cycle is unresolved. A checked clash, punishment, harm or break adds structural friction; a supportive balance reading therefore still has a caution.",
+        "evidence": [
+          "Assessment FATE-qualitative-r1: natal mixed; reference 丁未 (劫財 / 傷官); direction unresolved; friction true.",
+          "Active cycle at 2027-07-15 12:00 shared comparison wall clock: 甲子; calculated start 2023-12-12T16:03:25.000Z.",
+          "Reference / active ten-year cycle: 丁未 / 甲子: branch 害; branch 怨嗔."
+        ],
+        "cycle": {
+          "index": 5,
+          "ganzi": "甲子",
+          "startDate": "2023-12-12T16:03:25.000Z",
+          "age": 45,
+          "stemSipsin": "偏印",
+          "branchSipsin": "正官",
+          "unseong": "胎",
+          "sinsal": "災殺",
+          "isGongmang": false
+        },
+        "tension": true,
+        "cyclePair": {
+          "found": [
+            {
+              "type": "害",
+              "detail": null,
+              "layer": "branch"
+            },
+            {
+              "type": "怨嗔",
+              "detail": null,
+              "layer": "branch"
+            }
+          ],
+          "facts": "Reference / active ten-year cycle: 丁未 / 甲子: branch 害; branch 怨嗔.",
+          "text": "Reference / active ten-year cycle contains a harm pattern and a 怨嗔. Traditionally, these patterns draw attention to repeated friction, crossed expectations or an arrangement that needs revising."
+        }
+      }
+    },
+    {
+      "input": {
+        "year": 1979,
+        "month": 8,
+        "day": 24,
+        "hour": 9,
+        "minute": 15,
+        "gender": "F",
+        "timezone": "Asia/Seoul",
+        "latitude": 37.5665,
+        "longitude": 126.978,
+        "unknownTime": false
+      },
+      "tendency": "supported",
+      "signals": {
+        "unknownTime": false,
+        "seasonalSupport": true,
+        "principalRoot": true,
+        "anyRoot": true,
+        "exposedSupport": true,
+        "exposedDemand": true,
+        "exceptional": false
+      },
+      "monthExposures": [
+        {
+          "stem": "戊",
+          "god": "正官",
+          "exposedAt": []
+        },
+        {
+          "stem": "壬",
+          "god": "劫財",
+          "exposedAt": [
+            "month"
+          ]
+        },
+        {
+          "stem": "庚",
+          "god": "正印",
+          "exposedAt": []
+        }
+      ],
+      "patternCandidate": null,
+      "annual": {
+        "direction": "potential-outlet",
+        "text": "2027-07-15: Both the active cycle and this reference add output, management or responsibility to a chart that leans supported. This can provide an outlet for its support, provided real skills and capacity match the obligation. A checked clash, punishment, harm or break adds structural friction; a supportive balance reading therefore still has a caution.",
+        "evidence": [
+          "Assessment FATE-qualitative-r1: natal supported; reference 丁未 (偏財 / 偏官); direction potential-outlet; friction true.",
+          "Active cycle at 2027-07-15 12:00 shared comparison wall clock: 丁丑; calculated start 2024-09-20T05:50:12.000Z.",
+          "Reference / active ten-year cycle: 丁未 / 丁丑: branch 沖."
+        ],
+        "cycle": {
+          "index": 5,
+          "ganzi": "丁丑",
+          "startDate": "2024-09-20T05:50:12.000Z",
+          "age": 45,
+          "stemSipsin": "偏財",
+          "branchSipsin": "偏官",
+          "unseong": "冠帶",
+          "sinsal": "月殺",
+          "isGongmang": true
+        },
+        "tension": true,
+        "cyclePair": {
+          "found": [
+            {
+              "type": "沖",
+              "detail": null,
+              "layer": "branch"
+            }
+          ],
+          "facts": "Reference / active ten-year cycle: 丁未 / 丁丑: branch 沖.",
+          "text": "Reference / active ten-year cycle contains a clash. Traditionally, the clash points to a part of life that is less settled: competing schedules, a change in responsibility or a different personal preference are possible expressions."
+        }
+      }
+    },
+    {
+      "input": {
+        "year": 1980,
+        "month": 9,
+        "day": 5,
+        "hour": 3,
+        "minute": 0,
+        "gender": "M",
+        "timezone": "America/New_York",
+        "latitude": 40.7128,
+        "longitude": -74.006,
+        "unknownTime": true
+      },
+      "tendency": "deferred",
+      "signals": {
+        "unknownTime": true,
+        "seasonalSupport": true,
+        "principalRoot": true,
+        "anyRoot": true,
+        "exposedSupport": true,
+        "exposedDemand": true,
+        "exceptional": false
+      },
+      "monthExposures": [
+        {
+          "stem": "戊",
+          "god": "正印",
+          "exposedAt": []
+        },
+        {
+          "stem": "壬",
+          "god": "傷官",
+          "exposedAt": []
+        },
+        {
+          "stem": "庚",
+          "god": "劫財",
+          "exposedAt": [
+            "year"
+          ]
+        }
+      ],
+      "patternCandidate": null,
+      "annual": {
+        "direction": "unresolved",
+        "text": "2027-07-15: No favourable-or-unfavourable verdict is assigned: the natal balance or an active longer cycle is unresolved. A checked clash, punishment, harm or break adds structural friction; a supportive balance reading therefore still has a caution.",
+        "evidence": [
+          "Assessment FATE-qualitative-r1: natal deferred; reference 丁未 (偏官 / 偏印); direction unresolved; friction true.",
+          "Active cycle at 2027-07-15 12:00 shared comparison wall clock: 己丑; approximate calculated start (birth hour unknown) 2021-06-23T17:25:47.000Z.",
+          "Reference / active ten-year cycle: 丁未 / 己丑: branch 沖."
+        ],
+        "cycle": {
+          "index": 5,
+          "ganzi": "己丑",
+          "startDate": "2021-06-23T17:25:47.000Z",
+          "age": 41,
+          "stemSipsin": "偏印",
+          "branchSipsin": "偏印",
+          "unseong": "養",
+          "sinsal": "攀鞍",
+          "isGongmang": false
+        },
+        "tension": true,
+        "cyclePair": {
+          "found": [
+            {
+              "type": "沖",
+              "detail": null,
+              "layer": "branch"
+            }
+          ],
+          "facts": "Reference / active ten-year cycle: 丁未 / 己丑: branch 沖.",
+          "text": "Reference / active ten-year cycle contains a clash. Traditionally, the clash points to a part of life that is less settled: competing schedules, a change in responsibility or a different personal preference are possible expressions."
+        }
+      }
+    },
+    {
+      "input": {
+        "year": 1981,
+        "month": 10,
+        "day": 6,
+        "hour": 9,
+        "minute": 15,
+        "gender": "F",
+        "timezone": "Asia/Seoul",
+        "latitude": 37.5665,
+        "longitude": 126.978,
+        "unknownTime": false
+      },
+      "tendency": "mixed",
+      "signals": {
+        "unknownTime": false,
+        "seasonalSupport": false,
+        "principalRoot": true,
+        "anyRoot": true,
+        "exposedSupport": true,
+        "exposedDemand": true,
+        "exceptional": false
+      },
+      "monthExposures": [
+        {
+          "stem": "庚",
+          "god": "正財",
+          "exposedAt": []
+        },
+        {
+          "stem": "辛",
+          "god": "偏財",
+          "exposedAt": [
+            "year"
+          ]
+        }
+      ],
+      "patternCandidate": {
+        "stem": "辛",
+        "god": "偏財",
+        "exposedAt": [
+          "year"
+        ]
+      },
+      "annual": {
+        "direction": "unresolved",
+        "text": "2027-07-15: No favourable-or-unfavourable verdict is assigned: the natal balance or an active longer cycle is unresolved. No checked clash, punishment, harm or break adds a separate friction signal at this reference; this is not a guarantee of an easy period.",
+        "evidence": [
+          "Assessment FATE-qualitative-r1: natal mixed; reference 丁未 (比肩 / 食神); direction unresolved; friction false.",
+          "Active cycle at 2027-07-15 12:00 shared comparison wall clock: 壬寅; calculated start 2022-07-20T22:17:54.000Z.",
+          "Reference / active ten-year cycle: 丁未 / 壬寅: stem 合 (tree); branch 鬼門."
+        ],
+        "cycle": {
+          "index": 5,
+          "ganzi": "壬寅",
+          "startDate": "2022-07-20T22:17:54.000Z",
+          "age": 41,
+          "stemSipsin": "正官",
+          "branchSipsin": "正印",
+          "unseong": "死",
+          "sinsal": "劫殺",
+          "isGongmang": false
+        },
+        "tension": false,
+        "cyclePair": {
+          "found": [
+            {
+              "type": "合",
+              "detail": "tree",
+              "layer": "stem"
+            },
+            {
+              "type": "鬼門",
+              "detail": null,
+              "layer": "branch"
+            }
+          ],
+          "facts": "Reference / active ten-year cycle: 丁未 / 壬寅: stem 合 (tree); branch 鬼門.",
+          "text": "Reference / active ten-year cycle contains a combination and a 鬼門. Traditionally, a combination draws the two sides together: cooperation, attachment or an obligation that becomes harder to separate are possible expressions."
+        }
+      }
+    },
+    {
+      "input": {
+        "year": 1982,
+        "month": 11,
+        "day": 7,
+        "hour": 3,
+        "minute": 0,
+        "gender": "M",
+        "timezone": "America/New_York",
+        "latitude": 40.7128,
+        "longitude": -74.006,
+        "unknownTime": false
+      },
+      "tendency": "support-needed",
+      "signals": {
+        "unknownTime": false,
+        "seasonalSupport": false,
+        "principalRoot": false,
+        "anyRoot": false,
+        "exposedSupport": true,
+        "exposedDemand": true,
+        "exceptional": false
+      },
+      "monthExposures": [
+        {
+          "stem": "辛",
+          "god": "正官",
+          "exposedAt": []
+        },
+        {
+          "stem": "丁",
+          "god": "傷官",
+          "exposedAt": []
+        },
+        {
+          "stem": "戊",
+          "god": "偏財",
+          "exposedAt": []
+        }
+      ],
+      "patternCandidate": null,
+      "annual": {
+        "direction": "mixed",
+        "text": "2027-07-15: The active cycle and this reference do not give one consistent support-versus-demand direction. The reading keeps the opportunity and its burden separate. A checked clash, punishment, harm or break adds structural friction; a supportive balance reading therefore still has a caution.",
+        "evidence": [
+          "Assessment FATE-qualitative-r1: natal support-needed; reference 丁未 (傷官 / 正財); direction mixed; friction true.",
+          "Active cycle at 2027-07-15 12:00 shared comparison wall clock: 乙卯; calculated start 2023-03-06T12:27:19.000Z.",
+          "Reference / active ten-year cycle: 丁未 / 乙卯: branch 半合 (tree)."
+        ],
+        "cycle": {
+          "index": 5,
+          "ganzi": "乙卯",
+          "startDate": "2023-03-06T12:27:19.000Z",
+          "age": 41,
+          "stemSipsin": "劫財",
+          "branchSipsin": "劫財",
+          "unseong": "帝旺",
+          "sinsal": "年殺",
+          "isGongmang": false
+        },
+        "tension": true,
+        "cyclePair": {
+          "found": [
+            {
+              "type": "半合",
+              "detail": "tree",
+              "layer": "branch"
+            }
+          ],
+          "facts": "Reference / active ten-year cycle: 丁未 / 乙卯: branch 半合 (tree).",
+          "text": "Reference / active ten-year cycle contains a partial combination. Traditionally, these patterns draw attention to repeated friction, crossed expectations or an arrangement that needs revising."
+        }
+      }
+    },
+    {
+      "input": {
+        "year": 1983,
+        "month": 12,
+        "day": 8,
+        "hour": 9,
+        "minute": 15,
+        "gender": "F",
+        "timezone": "Asia/Seoul",
+        "latitude": 37.5665,
+        "longitude": 126.978,
+        "unknownTime": false
+      },
+      "tendency": "support-needed",
+      "signals": {
+        "unknownTime": false,
+        "seasonalSupport": false,
+        "principalRoot": false,
+        "anyRoot": false,
+        "exposedSupport": true,
+        "exposedDemand": true,
+        "exceptional": false
+      },
+      "monthExposures": [
+        {
+          "stem": "壬",
+          "god": "食神",
+          "exposedAt": []
+        },
+        {
+          "stem": "癸",
+          "god": "傷官",
+          "exposedAt": [
+            "year"
+          ]
+        }
+      ],
+      "patternCandidate": {
+        "stem": "癸",
+        "god": "傷官",
+        "exposedAt": [
+          "year"
+        ]
+      },
+      "annual": {
+        "direction": "mixed",
+        "text": "2027-07-15: The active cycle and this reference do not give one consistent support-versus-demand direction. The reading keeps the opportunity and its burden separate. A checked clash, punishment, harm or break adds structural friction; a supportive balance reading therefore still has a caution.",
+        "evidence": [
+          "Assessment FATE-qualitative-r1: natal support-needed; reference 丁未 (正官 / 正印); direction mixed; friction true.",
+          "Active cycle at 2027-07-15 12:00 shared comparison wall clock: 戊辰; calculated start 2023-08-25T17:31:34.000Z.",
+          "Reference / active ten-year cycle: 丁未 / 戊辰: no pattern in the checked pair tables."
+        ],
+        "cycle": {
+          "index": 4,
+          "ganzi": "戊辰",
+          "startDate": "2023-08-25T17:31:34.000Z",
+          "age": 40,
+          "stemSipsin": "偏印",
+          "branchSipsin": "偏印",
+          "unseong": "養",
+          "sinsal": "攀鞍",
+          "isGongmang": false
+        },
+        "tension": true,
+        "cyclePair": {
+          "found": [],
+          "facts": "Reference / active ten-year cycle: 丁未 / 戊辰: no pattern in the checked pair tables.",
+          "text": "Reference / active ten-year cycle has no recorded pair pattern. That removes this particular structural signal; it does not establish an easy relationship or a quiet period."
+        }
+      }
+    }
+  ]
+}
