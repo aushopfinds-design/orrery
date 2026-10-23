@@ -36,7 +36,7 @@ function patterns(first: string, second: string) {
   const pair = analyzePillarRelations(first, second)
   return [...pair.stem.map(item => ({ ...item, layer: 'stem' })), ...pair.branch.filter(item => !(item.type === '刑' && (item.detail === '無恩' || item.detail === '恃勢'))).map(item => ({ ...item, layer: 'branch' }))]
 }
-const RELATION_NAME: Record<string, string> = { 合: 'combination', 沖: 'clash', 刑: 'punishment pattern', 害: 'harm pattern', 破: 'break pattern', 半合: 'partial combination', 三合: 'three-branch combination', 方合: 'directional combination' }
+const RELATION_NAME: Record<string, string> = { 合: 'combination', 沖: 'clash', 刑: 'punishment pattern', 害: 'harm pattern', 破: 'break pattern', 半合: 'partial combination', 三合: 'three-branch combination', 方合: 'directional combination', 怨嗔: 'pattern of crossed expectations', 鬼門: 'pattern of crossed expectations' }
 export function pairObservation(first: string, second: string, label: string) {
   const found = patterns(first, second)
   const facts = `${label}: ${first} / ${second}: ${found.length ? found.map(item => `${item.layer} ${item.type}${item.detail ? ` (${item.detail})` : ''}`).join('; ') : 'no pattern in the checked pair tables'}.`

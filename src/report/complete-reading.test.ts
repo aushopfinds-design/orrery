@@ -138,7 +138,7 @@ describe('Complete reading quality across 60 international profiles', () => {
       expect(reading.methodNotes.join(' ')).toContain('not a full assessment of day-master strength')
       expect(reading.methodNotes.join(' ')).toContain('does not claim to diagnose')
       const balance = reading.chapters.find(chapter => chapter.id === 'balance')!
-      if (reading.elements.some(element => element.count === 0)) expect(balance.paragraphs.join(' ')).toContain('does not mean a missing ability')
+      if (reading.elements.some(element => element.count === 0)) expect(balance.paragraphs.join(' ')).toContain('does not mean you lack an ability')
     }
   })
 

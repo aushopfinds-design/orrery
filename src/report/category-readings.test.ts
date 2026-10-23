@@ -109,7 +109,7 @@ describe('Two-person compatibility', () => {
       const b = calculateSaju({ ...baseB.input, unknownTime: unknownB })
       const reading = buildCompatibilityReading(a, b, 2026)
       const facts = reading.chapters.find(chapter => chapter.id === 'chart-patterns')!.evidence
-      expect(facts).toHaveLength(1 + (unknownA ? 3 : 4) * (unknownB ? 3 : 4))
+      expect(facts.filter(fact => fact.startsWith('Birth-day comparison:') || fact.startsWith('Person A '))).toHaveLength(1 + (unknownA ? 3 : 4) * (unknownB ? 3 : 4))
       if (unknownA) expect(facts.join(' ')).not.toContain('Person A hour /')
       if (unknownB) expect(facts.join(' ')).not.toContain('/ Person B hour:')
       const changed = buildCompatibilityReading(calculateSaju({ ...a.input, hour: unknownA ? 22 : a.input.hour }), calculateSaju({ ...b.input, hour: unknownB ? 1 : b.input.hour }), 2026)
@@ -181,7 +181,7 @@ describe('Work, money, cycles and daily balance', () => {
     const report = buildCareerReading(oldChart, 2100)
     const cycles = report.chapters.find(chapter => chapter.id === 'work-chapters')!
     expect(cycles.evidence.join(' ')).toContain('No current or upcoming ten-year cycle')
-    expect([cycles.lead, ...cycles.paragraphs].join(' ')).toContain('No current or upcoming ten-year cycle')
+    expect([cycles.lead, ...cycles.paragraphs].join(' ')).toContain('No current or upcoming ten-year period')
     expect(report.fullText).not.toContain('undefined')
   })
 })

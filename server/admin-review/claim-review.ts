@@ -1,3 +1,4 @@
+import { customerEnglish } from '../../src/report/customer-language.ts'
 import { periodAssessment } from '../../src/report/structural-assessment.ts'
 import { PERSONAL_PROFILES } from '../../src/report/reading-profiles.ts'
 import { plainReadingText } from '../../src/report/reading-text.ts'
@@ -16,8 +17,8 @@ export function structureClaimReview(plan: InterpretationPlan): ReviewedClaim[] 
   })
   const personal: ReviewedClaim[] = ['complete', 'wellbeing'].includes(plan.kind) ? (['strength', 'pressure'] as const).map(field => ({ id: 'A.personal.' + field, english: plainReadingText(PERSONAL_PROFILES[plan.primary.dayStem][field]), korean: PERSONAL_KO[plan.primary.dayStem][field] })) : []
   const years = plan.kind === 'wellbeing' ? [] : plan.kind === 'year' ? plan.annual.slice(0, 1) : plan.annual
-  const periods: ReviewedClaim[] = [...years, ...plan.months].map((point, index) => ({ id: 'A.timing.' + (index < years.length ? 'annual.' : 'monthly.') + point.date, english: periodAssessment(plan.first, point.pillar, point.date, point.yearPillar).text, korean: timing(point) }))
-  if (plan.second && plan.kind === 'compatibility') periods.push(...plan.partnerAnnual.map(point => ({ id: 'B.timing.' + point.date, english: periodAssessment(plan.second!, point.pillar, point.date, point.yearPillar).text, korean: timing(point) })))
+  const periods: ReviewedClaim[] = [...years, ...plan.months].map((point, index) => ({ id: 'A.timing.' + (index < years.length ? 'annual.' : 'monthly.') + point.date, english: customerEnglish(periodAssessment(plan.first, point.pillar, point.date, point.yearPillar).text), korean: timing(point) }))
+  if (plan.second && plan.kind === 'compatibility') periods.push(...plan.partnerAnnual.map(point => ({ id: 'B.timing.' + point.date, english: customerEnglish(periodAssessment(plan.second!, point.pillar, point.date, point.yearPillar).text), korean: timing(point) })))
   return [...structural, ...personal, ...periods]
 }
 const normal = (text: string) => text.replace(/\s+/g, ' ').trim()

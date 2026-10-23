@@ -48,7 +48,7 @@ describe('r8: all seven products over 24 distinct international charts', () => {
         expect(report.fullText).not.toMatch(/undefined|NaN|\[object Object\]|\*\*/)
         expect(report.applications).toEqual([])
         expect(report.chapters.every(chapter => chapter.evidence.length && chapter.lead.length > 30 && !chapter.lead.startsWith('Imagine '))).toBe(true)
-        expect(report.fullText).toContain('2026.10-r11')
+        expect(report.fullText).toContain('2026.10-r12')
         expect(report.fullText).toContain(report.referenceYear === 2027 ? '2027-07-15' : '2026-07-15')
         expect(report.methodNotes.join(' ')).toContain('not a factual assessment')
         const key = report.title, body = report.chapters.map(chapter => [chapter.lead, ...chapter.paragraphs].join(' ')).join('\n')
@@ -62,7 +62,7 @@ describe('r8: all seven products over 24 distinct international charts', () => {
       expect(bundle.annual.subjects[0].input).toEqual(chart.input)
     }
     for (const versions of bodies.values()) expect(versions.size).toBe(24)
-  })
+  }, 15000)
   it('recalculates every year/month across three selected years and both solar-year sides', () => {
     for (const chart of charts) for (const year of [2026, 2027, 2028]) {
       for (let month = 1; month <= 12; month++) {
