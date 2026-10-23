@@ -1,4 +1,5 @@
 const copy: Record<string, string> = {
+  "admin.review.readCompare": "영어·한국어 나란히",
   "admin.review.readEnglish": "영어 전체 읽기",
   "admin.review.readKorean": "한국어 전체 읽기",
   "admin.review.readingView": "리포트 언어 선택",

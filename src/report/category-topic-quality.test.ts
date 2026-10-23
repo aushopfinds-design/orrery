@@ -1,105 +1,66 @@
 import { describe, expect, it } from 'vitest'
 import { calculateSaju } from '@orrery/core/saju'
-import { analyzePillarRelations, getFourPillars, getJeonggi, getRelation } from '@orrery/core/pillars'
-import { buildCompleteReading } from './complete-reading.ts'
+import { getFourPillars, getJeonggi, getRelation } from '@orrery/core/pillars'
 import { buildCategoryReading } from './category-readings.ts'
 import { CATEGORY_SCENARIOS } from './category-catalog.ts'
-import { LIFE_FOCUS, CLOSENESS_PROMPTS } from './reading-scenarios.ts'
-import { FOCUS_WORK } from './category-profiles.ts'
-import { RELATIONSHIP_PROFILES } from './reading-profiles.ts'
-import { moneyTiming } from './category-shared.ts'
-
-const charts = Array.from({ length: 30 }, (_, index) => calculateSaju({ ...CATEGORY_SCENARIOS[index % 2].first, year: 1960 + index, month: index % 12 + 1, day: index % 20 + 5 }))
-
-describe('Each focused report answers the question its buyer chose', () => {
-  it('ties the five-year money window and monthly money references to calculated symbols', () => {
-    for (const chart of charts.slice(0, 12)) {
-      const day = chart.pillars[1].pillar.stem
-      const windows = moneyTiming(chart, 2026)
-      expect(windows.map(item => item.year)).toEqual([2026, 2027, 2028, 2029, 2030])
-      for (const window of windows) {
-        const annual = getFourPillars(window.year, 7, 15, 12, 0)[0]
-        const gods = [annual[0], getJeonggi(annual[1])].map(stem => getRelation(day, stem)!.hanja)
-        expect(window.pillar).toBe(annual)
-        expect(window.money).toEqual([...new Set(gods.filter(god => god === '正財' || god === '偏財'))])
-      }
+import { godText, monthlyPoint, pairObservation } from './traditional-analysis.ts'
+const charts = Array.from({ length: 30 }, (_, i) => calculateSaju({ ...CATEGORY_SCENARIOS[i % 2].first, year: 1960 + i, month: i % 12 + 1, day: i % 20 + 5 }))
+describe('Direct subject-specific traditional interpretation', () => {
+  it('identifies exactly the calculated money reference months for each chart', () => {
+    for (const chart of charts) {
       const report = buildCategoryReading('year', chart, { year: 2027 })
       for (const month of report.months) {
-        const gods = [month.pillar[0], getJeonggi(month.pillar[1])].map(stem => getRelation(day, stem)!.hanja)
-        const hasMoney = gods.some(god => god === '正財' || god === '偏財')
-        expect(report.summary[1].text.includes(month.label)).toBe(hasMoney)
+        const gods = [month.pillar[0], getJeonggi(month.pillar[1])].map(stem => getRelation(chart.pillars[1].pillar.stem, stem)!.hanja)
+        expect(report.summary[1].text.includes(month.label)).toBe(gods.some(god => ['正財', '偏財'].includes(god)))
       }
     }
   })
-
-  it('explains the actual birth-month interaction for both people', () => {
-    for (let index = 0; index < 12; index++) {
-      const first = charts[index], second = charts[index + 7]
-      const reading = buildCategoryReading('compatibility', first, { second, year: 2026 })
-      const pair = analyzePillarRelations(first.pillars[2].pillar.ganzi, second.pillars[2].pillar.ganzi)
-      const clash = [...pair.stem, ...pair.branch].some(item => item.type === '沖')
-      const combine = [...pair.stem, ...pair.branch].some(item => item.type === '合')
-      const daily = reading.summary[2].text
-      expect(daily.includes('show a clash')).toBe(clash)
-      if (!clash) expect(daily.includes('show a combination')).toBe(combine)
-      expect(reading.chapters.find(chapter => chapter.id === 'shared-routine')!.evidence.join(' ')).toContain('Birth-month comparison')
+  it('explains the actual month-pillar comparison for both people', () => {
+    for (let i = 0; i < 20; i++) {
+      const a = charts[i], b = charts[i + 7]
+      const report = buildCategoryReading('compatibility', a, { second: b, year: 2026 })
+      expect(report.summary[2].text).toBe(pairObservation(a.pillars[2].pillar.ganzi, b.pillars[2].pillar.ganzi, 'Birth-month comparison').text)
+      expect(report.chapters.find(x => x.id === 'shared-routine')!.evidence.join(' ')).toContain(b.pillars[2].pillar.ganzi)
     }
   })
-  it('keeps career money questions about pay, hours and the role rather than customers', () => {
+  it('answers career and business in their own practical language', () => {
     for (const chart of charts) {
-      const report = buildCategoryReading('career', chart, { year: 2026 })
-      const god = chart.pillars[2].stemSipsin
-      const money = report.chapters.find(chapter => chapter.id === 'money-commitments')!
-      const text = money.paragraphs.join(' ')
-      expect(text).toContain(LIFE_FOCUS[god].payQuestion)
-      expect(text).toContain('expected hours')
-      expect(text).toContain('necessary costs')
-      expect(report.extras.questions[3].answer).not.toContain(FOCUS_WORK[god].customer)
-      expect(report.extras.questions[3].answer).toContain('confirmed pay')
-      expect(money.evidence.join(' ')).toContain(chart.pillars[2].stemSipsin)
+      const career = buildCategoryReading('career', chart, { year: 2026 })
+      const business = buildCategoryReading('business', chart, { year: 2026 })
+      expect(career.chapters[0].lead).toContain('career pattern')
+      expect(business.chapters[0].lead).toContain('business pattern')
+      const money = career.chapters.find(x => x.id === 'money-commitments')!
+      expect(money.paragraphs.join(' ')).toContain('confirmed pay')
+      expect(money.paragraphs.join(' ')).toContain('expected hours')
+      expect(business.chapters.find(x => x.id === 'customer-communication')!.tryThis).toMatch(/customer.*deadline.*revision/)
+      expect(career.fullText).toContain('2026-07-15')
+      expect(business.fullText).toContain('2030-07-15')
     }
   })
-
-  it('keeps business customer guidance about delivery, scope and communication', () => {
-    for (const chart of charts) {
-      const report = buildCategoryReading('business', chart, { year: 2026 })
-      const chapter = report.chapters.find(item => item.id === 'customer-communication')!
-      const text = [...chapter.paragraphs, ...chapter.guidance.keepClose, ...chapter.guidance.watchFor].join(' ')
-      expect(text).toContain('customer')
-      expect(text).toContain('deadline')
-      expect(text).toContain('revision')
-      expect(chapter.icon).not.toBe('love')
-      for (const romanticCaution of RELATIONSHIP_PROFILES[chart.pillars[1].pillar.branch].watchFor) expect(chapter.guidance.watchFor).not.toContain(romanticCaution)
-    }
-  })
-
-  it('gives annual readers personal-life prompts as well as work themes', () => {
-    for (const chart of charts.slice(0, 12)) for (const year of [2027, 2028]) {
+  it('includes work, money, private life and cautions for all twelve months', () => {
+    for (const chart of charts.slice(0, 20)) for (const year of [2027, 2028]) {
       const report = buildCategoryReading('year', chart, { year })
-      const guide = [...report.extras.questions.map(item => item.answer), ...report.extras.experiment.steps].join(' ')
-      expect(guide).not.toMatch(/customer|portfolio|interview/i)
-      expect(report.chapters[0].paragraphs.join(' ')).toContain('personal plan')
-      expect(report.chapters.find(item => item.id === 'annual-plan')!.paragraphs.join(' ')).toContain('What will I begin?')
-      expect(report.chapters.find(item => item.id === 'annual-connections')!.paragraphs.join(' ')).toContain(RELATIONSHIP_PROFILES[chart.pillars[1].pillar.branch].need)
-      for (const month of report.months) {
-        expect(month.paragraphs.some(text => text.startsWith('**Outside work:**'))).toBe(true)
-        expect(month.paragraphs.some(text => text.startsWith("**Review this month's attempt:**"))).toBe(true)
+      for (let i = 0; i < 12; i++) {
+        const month = report.months[i], point = monthlyPoint(chart, year, i + 1)
+        const text = [month.lead, ...month.paragraphs].join(' ')
+        expect(text).toContain('Work and activity:')
+        expect(text).toContain('Money and commitments:')
+        expect(text).toContain('Relationships and home:')
+        expect(text).toContain(godText(point.god).pressure)
+        expect(month.pillar).toBe(getFourPillars(year, i + 1, 15, 12, 0)[1])
       }
-      expect(new Set(report.months.map(month => month.tryThis)).size).toBe(12)
     }
   })
-
-  it('uses each person’s relationship theme for actual closeness examples', () => {
-    for (let index = 0; index < charts.length; index++) {
-      const a = charts[index]
-      const b = charts[(index + 7) % charts.length]
-      const pair = buildCategoryReading('compatibility', a, { second: b, year: 2026 })
-      const conversation = pair.chapters.find(item => item.id === 'close-conversation')!
-      const aPrompt = CLOSENESS_PROMPTS[a.pillars[1].pillar.branch]
-      const bPrompt = CLOSENESS_PROMPTS[b.pillars[1].pillar.branch]
-      expect(conversation.paragraphs.find(text => text.startsWith('**An idea to try with Person A:**'))).toContain(aPrompt)
-      expect(conversation.paragraphs.find(text => text.startsWith('**An idea to try with Person B:**'))).toContain(bPrompt)
-      expect(buildCompleteReading(a, 2026).chapters.find(item => item.id === 'love')!.paragraphs.join(' ')).toContain(aPrompt)
+  it('retains different directional readings and the same-year flow for both people', () => {
+    for (let i = 0; i < 20; i++) {
+      const a = charts[i], b = charts[i + 7], report = buildCategoryReading('compatibility', a, { second: b, year: 2026 })
+      const ab = getRelation(a.pillars[1].pillar.stem, b.pillars[1].pillar.stem)!.hanja
+      const ba = getRelation(b.pillars[1].pillar.stem, a.pillars[1].pillar.stem)!.hanja
+      expect(report.chapters[1].lead).toContain(godText(ab).name)
+      expect(report.chapters[1].paragraphs[0]).toContain(godText(ba).name)
+      const flow = report.chapters.find(x => x.id === 'support-each-other')!
+      expect(flow.evidence.join(' ')).toContain('Person A: Reference 2026-07-15')
+      expect(flow.evidence.join(' ')).toContain('Person B: Reference 2030-07-15')
     }
   })
 })

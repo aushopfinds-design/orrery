@@ -67,8 +67,9 @@ describe('Concrete examples use several chart features', () => {
     for (const chart of charts.slice(0, 24)) {
       const relationship = relationshipExample(chart)
       expect(relationship.response + relationship.check).not.toMatch(/customer|delivery|portfolio|publish|share a useful version|job offer/i)
-      const annual = buildCategoryReading('year', chart, { year: 2027 }).chapters[0].example!
-      expect(annual.response).not.toMatch(/customer|delivery|manager|portfolio|publish|share a useful version/i)
+      const annual = buildCategoryReading('year', chart, { year: 2027 })
+      expect(annual.chapters[0].example).toBeUndefined()
+      expect(annual.chapters.find(x => x.id === 'annual-connections')!.lead).toContain('annual')
     }
   })
 
@@ -83,56 +84,35 @@ describe('Concrete examples use several chart features', () => {
   })
 })
 
-describe('Useful previews and honest complete copies', () => {
-  it('shows the same worked examples in the preview and full report without exposing the rest of the chapter', () => {
+describe('Direct interpretations replace supplementary fictional scenes', () => {
+  it('shows actual chapter excerpts in previews without the remaining paid prose', () => {
     for (const kind of PREVIEW_KINDS) {
       const full = fullReports(kind)
       const preview = buildPersonalPreview(kind, { first: a.input, second: b.input, year: 2030 })
-      expect(preview.excerpts.some(section => section.example)).toBe(true)
-      for (const excerpt of preview.excerpts.filter(item => item.example)) {
+      for (const excerpt of preview.excerpts) {
         const chapter = full.flatMap(report => report.chapters).find(item => item.id === excerpt.id)!
-        expect(excerpt.example).toEqual(chapter.example)
-        expect(excerpt.paragraphs).toEqual([])
-        expect(chapter.paragraphs.length).toBeGreaterThanOrEqual(4)
-        const text = personalPreviewText(preview)
-        for (const line of everydayExampleText(excerpt.example!)) {
-          expect(text).toContain(plainReadingText(line))
-          expect(full.some(report => report.fullText.includes(plainReadingText(line)))).toBe(true)
-        }
+        expect(excerpt.example).toBeUndefined()
+        expect(excerpt.lead).toBe(chapter.lead)
+        expect(excerpt.paragraphs.length).toBeLessThan(chapter.paragraphs.length)
+        expect(personalPreviewText(preview)).toContain(plainReadingText(excerpt.lead))
       }
     }
   })
-
-  it('keeps examples short, concrete and free of technical symbols outside their source notes', () => {
-    for (const chart of charts.slice(0, 24)) {
-      const reports = [buildCompleteReading(chart, 2026), ...['career', 'business', 'wellbeing', 'year', 'compatibility'].map(kind =>
-        buildCategoryReading(kind as 'career' | 'business' | 'wellbeing' | 'year' | 'compatibility', chart, { second: b, year: 2027 }))]
-      for (const report of reports) for (const example of report.chapters.flatMap(chapter => chapter.example ? [chapter.example] : [])) {
-        expect(example.scene).toMatch(/^Imagine /)
-        expect(example.facts.length).toBeGreaterThan(0)
-        for (const text of [example.scene, example.response, example.check, example.basis]) {
-          expect(text.split(/\s+/).length).toBeLessThanOrEqual(80)
-          expect(text).not.toMatch(/[\u3400-\u9FFF]|undefined|NaN|guaranteed|destined/)
-          for (const sentence of text.split(/(?<=[.!?])[”’"]?\s+/)) expect(sentence.split(/\s+/).length).toBeLessThanOrEqual(35)
-        }
-      }
-    }
+  it('changes annual interpretation and evidence with the selected year', () => {
+    const x = buildCategoryReading('year', a, { year: 2027 }), y = buildCategoryReading('year', a, { year: 2028 })
+    expect(x.chapters[0].lead).not.toBe(y.chapters[0].lead)
+    expect(x.chapters[0].evidence.join(' ')).toContain('2027-07-15')
+    expect(y.chapters[0].evidence.join(' ')).toContain('2028-07-15')
   })
-
-  it('changes an annual situation with the chosen year and keeps its exact reference visible', () => {
-    const first = buildCategoryReading('year', a, { year: 2027 }).chapters[0].example!
-    const second = buildCategoryReading('year', a, { year: 2028 }).chapters[0].example!
-    expect(first.scene + first.check).not.toBe(second.scene + second.check)
-    expect(first.facts.join(' ')).toContain('2027-07-15')
-    expect(second.facts.join(' ')).toContain('2028-07-15')
-  })
-
-  it('removes repeated monthly body paragraphs by using both calculated monthly themes', () => {
+  it('does not invent situations or event forecasts for a monthly slot', () => {
     for (const chart of charts.slice(0, 24)) for (const year of [2027, 2028]) {
       const report = buildCategoryReading('year', chart, { year })
-      const paragraphs = report.months.flatMap(month => month.paragraphs)
-      expect(new Set(paragraphs).size, `${chart.input.year}/${chart.input.month} · ${year}`).toBe(paragraphs.length)
-      for (const month of report.months) expect(month.paragraphs[1]).toContain('Before agreeing, ask:')
+      expect(new Set(report.months.map(month => month.lead)).size).toBe(12)
+      for (const month of report.months) {
+        expect(month.lead).not.toMatch(/^Imagine /)
+        expect(month.evidence.join(' ')).toContain(month.referenceDate)
+        expect(month.paragraphs.join(' ')).toContain('not assigned to every day')
+      }
     }
   })
 })

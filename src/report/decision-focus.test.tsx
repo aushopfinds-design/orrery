@@ -120,13 +120,14 @@ describe('A personal decision focus uses two themes and an observable next step'
 })
 
 describe('Each chapter adds a different practical check', () => {
-  it('has no identical keep-close or watch-for bullets across a report’s main chapters', () => {
+  it('gives each main chapter its own practical point and meaningful cautions', () => {
     for (const chart of charts.slice(0, 60)) {
       const reports = [buildCompleteReading(chart, 2026), ...['career', 'business', 'wellbeing', 'year', 'compatibility'].map(kind => buildCategoryReading(kind as 'career' | 'business' | 'wellbeing' | 'year' | 'compatibility', chart, { second: b, year: 2027 }))]
       for (const report of reports) {
         const sections = 'months' in report ? [...report.chapters, ...report.months] : report.chapters
         const bullets = sections.flatMap(chapter => [...chapter.guidance.keepClose, ...chapter.guidance.watchFor])
-        expect(new Set(bullets).size, report.title).toBe(bullets.length)
+        expect(new Set(report.chapters.map(chapter => chapter.tryThis)).size, report.title).toBe(report.chapters.length)
+        expect(bullets.every(item => item.length > 10)).toBe(true)
       }
     }
   })

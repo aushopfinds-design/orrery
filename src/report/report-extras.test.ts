@@ -22,7 +22,7 @@ describe('A distinct everyday guide in every full report', () => {
     const questions = new Set<string>()
     for (const report of reports()) {
       const extras = report.extras
-      expect(extras.questions).toHaveLength(4)
+      expect(extras.questions).toHaveLength(3)
       expect(extras.keepClose).toHaveLength(3)
       expect(extras.stepBack).toHaveLength(3)
       expect(extras.experiment.steps).toHaveLength(3)
@@ -31,7 +31,7 @@ describe('A distinct everyday guide in every full report', () => {
         expect(report.fullText).toContain(plainReadingText(item.answer))
         expect(item.basis.length).toBeGreaterThan(20)
         expect(plainReadingText(item.answer).split(/\s+/).length).toBeLessThanOrEqual(85)
-        expect(item.answer).not.toMatch(/[\u3400-\u9fff]|undefined|NaN|\.\./)
+        expect(item.answer).not.toMatch(/undefined|NaN|\.\./)
       }
       for (const item of [...extras.keepClose, ...extras.stepBack]) expect(report.fullText).toContain(plainReadingText(item.text))
       for (const item of extras.symbols) {
@@ -42,7 +42,7 @@ describe('A distinct everyday guide in every full report', () => {
       expect(report.fullText).toContain('do not change the odds')
       expect(reportExtrasText(extras)).not.toMatch(/undefined|NaN|\*\*/)
     }
-    expect(questions.size).toBe(24)
+    expect(questions.size).toBe(18)
   })
 
   it('changes the new answers with real birth profiles, beyond the labels', () => {
@@ -89,7 +89,7 @@ describe('A distinct everyday guide in every full report', () => {
     expect(current.extras.questions[0].answer).not.toBe(later.extras.questions[0].answer)
     expect(current.extras.evidence.join(' ')).toContain('2027-07-15')
     expect(later.extras.evidence.join(' ')).toContain('2028-07-15')
-    expect(current.extras.questions[0].basis).toContain(current.summary[0].text)
+    expect(current.extras.questions[0].answer).toBe(current.chapters[0].lead)
     expect(current.extras.symbols).toEqual(later.extras.symbols)
   })
 
@@ -102,10 +102,10 @@ describe('A distinct everyday guide in every full report', () => {
     }
   })
 
-  it('includes all three full guides in a bundle export', () => {
+  it('keeps one shared appendix and retains each report’s opening answer in a bundle', () => {
     const bundle = buildBundleReading(a, b, 2027, 2026)
-    expect(bundle.fullText.match(/Your Everyday Compass/g)).toHaveLength(3)
-    for (const report of [bundle.complete, bundle.compatibility, bundle.annual]) expect(bundle.fullText).toContain(plainReadingText(report.extras.questions[3].answer))
+    expect(bundle.fullText.match(/Your Everyday Compass/g)).toHaveLength(1)
+    for (const report of [bundle.complete, bundle.compatibility, bundle.annual]) expect(bundle.fullText).toContain(plainReadingText(report.extras.questions[0].answer))
   })
 })
 

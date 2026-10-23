@@ -55,7 +55,7 @@ export default function ReadingView({ input, embedded = false, prefix = 'sample-
       <section id={`${prefix}-start`} className="fate-report-overview" aria-label={t('reading.complete.summary')}>
         <div className="fate-report-overview-heading"><p className="fate-eyebrow">{t('reading.complete.summary')}</p><h2>{t('reading.design.overview')}</h2></div>
         <ReportBriefView brief={buildReadingBrief(report.chapters[0], undefined, report.focus)} href={`#${prefix}-${report.chapters[0].id}`} />
-        <nav id={`${prefix}-contents`} className="fate-reading-toc print:hidden" aria-label={t('reading.complete.contents')}><a href={`#${prefix}-situations`}><ReportIcon kind="next-moves" /><span>{t('reading.application.contents')}</span><span aria-hidden="true">↗</span></a>
+        <nav id={`${prefix}-contents`} className="fate-reading-toc print:hidden" aria-label={t('reading.complete.contents')}>{report.applications.length > 0 && <a href={`#${prefix}-situations`}><ReportIcon kind="next-moves" /><span>{t('reading.application.contents')}</span><span aria-hidden="true">↗</span></a>}
           {contents.map(item => <a key={item.id} href={`#${prefix}-${item.id}`}><ReportIcon kind={item.id} /><span>{item.title}</span><span aria-hidden="true">↗</span></a>)}
           <a href={`#${prefix}-everyday-compass`}><ReportIcon kind="balance" /><span>{t('reading.extras.title')}</span><span aria-hidden="true">↗</span></a>
         </nav>

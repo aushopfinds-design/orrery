@@ -30,7 +30,7 @@ describe('Private review interactions (local DOM, no provider or deployment)', (
       expect(doc.getElementById('partner')!.hidden).toBe(!['compatibility', 'bundle'].includes(kind))
       form.dispatchEvent(new dom.window.Event('submit', { bubbles: true, cancelable: true }))
       await vi.waitFor(() => expect(doc.querySelector('#reading-en .passage')?.textContent).toBe(blocks[0].english))
-      expect(doc.getElementById('reading-ko')!.hidden).toBe(false)
+      expect(doc.getElementById('reading-compare')!.hidden).toBe(false)
       expect(doc.getElementById('reading-en')!.hidden).toBe(true)
       ;(doc.querySelector('[data-reading=en]') as HTMLButtonElement).click()
       expect(doc.getElementById('reading-en')!.hidden).toBe(false)
@@ -46,6 +46,9 @@ describe('Private review interactions (local DOM, no provider or deployment)', (
       await vi.waitFor(() => expect(doc.querySelector('#reading-ko .passage')?.textContent).toBe('상대방에게 조금 더 분명하게 설명해 달라고 요청해 보세요.'))
       expect(requests[1].body).toEqual({ digest: 'test-digest', blocks, consent: true })
       expect(doc.querySelector('#reading-en .passage')!.textContent).toBe(blocks[0].english)
+      expect(doc.querySelector('#reading-compare [lang=ko] .passage')!.textContent).toBe(doc.querySelector('#reading-ko .passage')!.textContent)
+      ;(doc.querySelector('[data-reading=compare]') as HTMLButtonElement).click()
+      expect(doc.getElementById('reading-compare')!.hidden).toBe(false)
       ;(doc.getElementById('clear') as HTMLButtonElement).click()
       expect(doc.getElementById('workspace')!.hidden).toBe(true)
       expect(doc.getElementById('documents')!.textContent).toBe('')
@@ -72,7 +75,7 @@ describe('Private review interactions (local DOM, no provider or deployment)', (
       await vi.waitFor(() => expect(doc.querySelectorAll('#reading-en .passage')).toHaveLength(2))
       const english = blocks.slice(0, 5).map(b => b.english).join('\n\n')
       expect(doc.querySelector('#reading-en .passage')!.textContent).toBe(english)
-      expect(doc.querySelectorAll('#documents .pair')).toHaveLength(0)
+      expect(doc.querySelectorAll('#reading-compare .pair')).toHaveLength(2)
       const consent = doc.getElementById('consent') as HTMLInputElement
       consent.checked = true; consent.dispatchEvent(new dom.window.Event('change'))
       const button = doc.getElementById('translate') as HTMLButtonElement

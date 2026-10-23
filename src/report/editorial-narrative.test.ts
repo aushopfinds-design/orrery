@@ -16,15 +16,15 @@ const a = calculateSaju(CATEGORY_SCENARIOS[0].first)
 const b = calculateSaju(CATEGORY_SCENARIOS[0].second)
 const kinds = ['career', 'business', 'compatibility', 'wellbeing', 'year'] as const
 
-describe('Everyday narrative before chart terminology', () => {
-  it('opens every subject chapter with an ordinary situation, not a chart label', () => {
+describe('Calculated interpretation before optional advice', () => {
+  it('opens every subject chapter with a distinct chart-based answer', () => {
     for (const kind of kinds) {
       const report = buildCategoryReading(kind, a, { second: b, year: 2027 })
       expect(new Set(report.chapters.map(x => x.lead)).size).toBe(report.chapters.length)
       expect(report.chapters.filter(x => x.lead.startsWith('Imagine ')).length).toBeLessThan(report.chapters.length / 2)
       for (const chapter of report.chapters) {
         expect(chapter.lead.length).toBeGreaterThan(35)
-        expect(chapter.paragraphs[0]).not.toMatch(/^Your (chart|birth|starting|working)|^The (chart|annual|birth)/)
+        expect(chapter.lead).not.toMatch(/^Imagine /)
         expect(chapter.evidence.length).toBeGreaterThan(0)
         const start = report.fullText.indexOf(plainReadingText(chapter.lead))
         const response = report.fullText.indexOf(plainReadingText(chapter.paragraphs[0]), start)
@@ -33,22 +33,23 @@ describe('Everyday narrative before chart terminology', () => {
       }
     }
   })
-  it('keeps the story together before the supplementary exercise in HTML and saved text', () => {
+  it('keeps interpretation prose in markup and copy without a fictional exercise', () => {
     const report = buildCompleteReading(a, 2026)
     const chapter = report.chapters[1]
     const html = renderToStaticMarkup(createElement(ReportChapterView, { chapter }))
-    expect(html.indexOf('fate-report-prose')).toBeLessThan(html.indexOf('fate-everyday-example'))
-    expect(html.indexOf(chapter.paragraphs[0])).toBeLessThan(html.indexOf('fate-everyday-example'))
+    expect(html).toContain('fate-report-prose')
+    expect(html).not.toContain('fate-everyday-example')
+    expect(html).toContain(chapter.paragraphs[0])
     expect(html.split(chapter.lead).length - 1).toBe(1)
     const saved = report.fullText.indexOf(plainReadingText(chapter.lead))
-    expect(report.fullText.indexOf(plainReadingText(chapter.paragraphs[0]), saved)).toBeLessThan(report.fullText.indexOf('An everyday example to try', saved))
+    expect(report.fullText.indexOf(plainReadingText(chapter.paragraphs[0]), saved)).toBeGreaterThan(saved)
   })
-  it('retains calculated monthly differences while giving the twelve openings different situations', () => {
+  it('retains calculated monthly differences and dated openings', () => {
     const report = buildCategoryReading('year', a, { year: 2027 })
     expect(new Set(report.months.map(x => x.lead)).size).toBe(12)
     for (const month of report.months) {
-      expect(month.lead).toMatch(/^Imagine /)
-      expect(month.paragraphs[0]).toContain('compared with your birth-day stem')
+      expect(month.lead).toContain(month.label)
+      expect(month.paragraphs.join(' ')).toContain('Work and activity:')
       expect(month.evidence.join(' ')).toContain(month.referenceDate)
       expect(month.evidence.join(' ')).toContain(month.pillar)
     }
@@ -57,7 +58,7 @@ describe('Everyday narrative before chart terminology', () => {
     const reports = [buildCompleteReading(a, 2026), ...kinds.map(kind => buildCategoryReading(kind, a, { second: b, year: 2027 }))]
     for (const report of reports) {
       expect(report.fullText).not.toMatch(/Your the way|Which the way|three the way|keep agains| in focus in focus|to \*\*[^*]+\*\* in focus/)
-      expect(report.fullText).not.toContain('decision rights')
+      expect(report.fullText).not.toContain('guaranteed income')
       expect(report.fullText).not.toContain('acceptance standard')
     }
   })
@@ -68,12 +69,12 @@ describe('Everyday narrative before chart terminology', () => {
       expect(report.fullText).not.toMatch(/1 visible markers|Earth and Metal points|This compares your birth-month symbol|editorial theme families|Lucky colors|Notice adding/)
       expect(report.fullText).toContain('Chart terms in plain English')
       expect(report.fullText).toContain('Chart terms in plain English')
-      expect(new Set(report.periods.map(period => period.paragraphs[1])).size).toBe(report.periods.length)
+      expect(new Set(report.periods.map(period => period.evidence[0])).size).toBe(report.periods.length)
       expect(report.periods.map(period => period.paragraphs[1]).join(' ')).not.toContain('It can be tempting to treat a new period')
     }
   })
   it('keeps an integrated bundle overview visible in the sample and complete export', () => {
-    expect(REPORT_EDITION).toBe('2026.10-r7')
+    expect(REPORT_EDITION).toBe('2026.10-r8')
     const bundle = buildBundleReading(a, b, 2027, 2026)
     expect(bundle.fullText.indexOf(bundle.overview.fullText)).toBeLessThan(bundle.fullText.indexOf(bundle.complete.fullText))
     expect(bundle.synthesis).not.toBe(buildBundleReading(a, b, 2028, 2026).synthesis)
@@ -88,18 +89,18 @@ describe('Everyday narrative before chart terminology', () => {
       expect(report.fullText).not.toMatch(/\[Evidence instruction|\[selected year\]/)
     }
   })
-  it('makes the first focus a situation and preserves unknown-time exclusions after the rewrite', () => {
+  it('makes the first focus a direct interpretation and preserves unknown-time exclusions', () => {
     const one = calculateSaju({ ...a.input, unknownTime: true, hour: 1 })
     const two = calculateSaju({ ...a.input, unknownTime: true, hour: 22 })
     for (const kind of kinds.filter(x => x !== 'compatibility')) {
       const x = buildCategoryReading(kind, one, { year: 2027 })
       const y = buildCategoryReading(kind, two, { year: 2027 })
-      expect(x.focus.synthesis).toMatch(/^Imagine /)
+      expect(x.focus.synthesis.length).toBeGreaterThan(20)
       expect(x.chapters).toEqual(y.chapters)
       expect(x.focus).toEqual(y.focus)
     }
     const full = buildCompleteReading(one, 2026)
-    expect(full.focus.synthesis).toMatch(/^Imagine /)
+    expect(full.focus.synthesis).toContain('career')
     expect(full.chapters[0].lead).toBeTruthy()
   })
 })

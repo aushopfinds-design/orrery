@@ -154,10 +154,8 @@ describe('Situation guides provide choices that a reader can actually review', (
       }
     }
     const bundle = buildPersonalPreview('bundle', { first: CATEGORY_SCENARIOS[0].first, second: CATEGORY_SCENARIOS[0].second, year: 2028 })
-    expect(bundle.applications.map(item => item.kind)).toEqual(['complete', 'compatibility', 'year'])
-    expect(bundle.applications[0].scope).toContain('Person A')
-    expect(bundle.applications[1].scope).toContain('Person B')
-    expect(bundle.applications[2].scope).toBe('Person A · 2028 Year Ahead')
+    expect(bundle.applications).toEqual([])
+    expect(bundle.excerpts).toHaveLength(3)
     expect(buildPersonalPreview('bundle', { first: CATEGORY_SCENARIOS[0].first }).applications).toEqual([])
   })
 })

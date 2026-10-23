@@ -76,12 +76,10 @@ describe('A continuous preview before checkout', () => {
 
   it('keeps both people in the relationship guide and updates the annual guide with its real chapter', () => {
     const pair = buildPersonalPreview('compatibility', { first, second })
-    for (const group of [pair.brief!.support, pair.brief!.watchFor]) {
-      expect(group.some(item => item.startsWith('Person A:'))).toBe(true)
-      expect(group.some(item => item.startsWith('Person B:'))).toBe(true)
-    }
+    expect(pair.headline).toContain('Person A')
+    expect(pair.headline).toContain('Person B')
     const changed = buildPersonalPreview('compatibility', { first, second: { ...second, day: second.day + 1 } })
-    expect(changed.brief!.support).not.toEqual(pair.brief!.support)
+    expect(changed.headline).not.toBe(pair.headline)
     for (const year of [2027, 2028]) {
       const preview = buildPersonalPreview('year', { first, year })
       const full = buildCategoryReading('year', calculateSaju(first), { year })
