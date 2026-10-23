@@ -1,3 +1,4 @@
+import { customerChapter, customerEnglish } from './customer-language.ts'
 import type { SajuResult, BirthInput, PillarDetail } from '@orrery/core/types'
 import { getRelation } from '@orrery/core/pillars'
 import { buildEnglishReading, BRANCH_ELEMENTS, STEM_ELEMENTS, STEMS, TEN_GODS } from './reading.ts'
@@ -365,7 +366,7 @@ export function buildCompleteReading(result: SajuResult, asOfYear = new Date().g
         watchFor: [clash ? 'Treating a different need as a personal attack.' : 'Assuming cooperation will happen without an agreement.', 'Using a chart symbol to predict a problem in real life.'],
       },
     },
-  ]
+  ].map(customerChapter)
   const periods: CompleteReadingPeriod[] = base.periods.map((period, index) => {
     const cycle = result.daewoon.find(item => item.ganzi === period.pillar && item.startDate.getUTCFullYear() === Number(period.period.split('–')[0]))!
     const cycleWork = WORK_PROFILES[cycle.stemSipsin]
@@ -385,7 +386,7 @@ export function buildCompleteReading(result: SajuResult, asOfYear = new Date().g
       index === 0 ? cycleWork.scene : index === 1
         ? `Before this period begins, try one small step: **${cycleWork.next}**`
         : `Keep the later years open to change. When your life changes, review what still fits. One possible step is: **${cycleWork.next}**`,
-    ]
+    ].map(customerEnglish)
     const evidence = [
       `Calculated start: ${startDate}. The year label ${period.period} is a short label for the ten-year cycle.`,
       `Cycle ${cycle.ganzi}: stem ${cycle.stemSipsin} (${TEN_GODS[cycle.stemSipsin]?.title}); branch ${cycle.branchSipsin} (${TEN_GODS[cycle.branchSipsin]?.title}).`,
@@ -397,7 +398,7 @@ export function buildCompleteReading(result: SajuResult, asOfYear = new Date().g
     const text = plainReadingText([...paragraphs, guidanceText(guidance), 'Try this: ' + cycleWork.next, 'From your chart: ' + evidence.join(' ')].join('\n\n'))
     return { ...period, headline: cycleWork.title, paragraphs, evidence, guidance, tryThis: cycleWork.next, text }
   })
-  const actionPlan: ReportChapter = {
+  const actionPlan: ReportChapter = customerChapter({
     id: 'next-moves', title: '09 · Three Small Steps to Try',
     lead: '**Choose one step for this week.** You do not need to change everything at once.',
     paragraphs: [
@@ -409,7 +410,7 @@ export function buildCompleteReading(result: SajuResult, asOfYear = new Date().g
     evidence: [`Day stem ${day.pillar.stem}; month stem ${month.pillar.stem} (${month.stemSipsin}); day branch ${day.pillar.branch}.`],
     tryThis: 'Choose one step above. Write down when you will try it.',
     guidance: { keepClose: ['One step with a date and a realistic place in your week.', 'A short note about the response you actually received.', 'Permission to keep only the part that helped.'], watchFor: ['Turning three possible steps into three new obligations.', 'Repeating an exercise after the situation it addressed has changed.', 'Using a missed day to dismiss an otherwise useful change.'] },
-  }
+  })
   const methodNotes = [
     ...explainCalculation(result.input).notes,
     ...base.caveats.filter(note => !note.startsWith('Each monthly chapter') && !note.startsWith('Monthly headlines')),

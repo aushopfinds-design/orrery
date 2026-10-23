@@ -1,3 +1,4 @@
+import { customerChapter, customerEnglish } from './customer-language.ts'
 import type { SajuResult, BirthInput } from '@orrery/core/types'
 import { getRelation, analyzePillarRelations } from '@orrery/core/pillars'
 import { buildFreeReading, REPORT_EDITION } from './complete-reading.ts'
@@ -67,7 +68,7 @@ export function pairFacts(first: string, second: string, label: string): string[
   return [`${label}: ${first} with ${second}. ${facts.length ? facts.join('; ') : 'No pair pattern in the checked tables'}.`]
 }
 export function chapter(id: string, title: string, lead: string, paragraphs: string[], evidence: string[], tryThis: string, guidance: ReadingGuidance, icon = 'personality', example?: EverydayExample): ReportChapter {
-  return { id, title, lead, paragraphs, evidence, tryThis, guidance, icon, ...(example ? { example } : {}) }
+  return customerChapter({ id, title, lead, paragraphs, evidence, tryThis, guidance, icon, ...(example ? { example } : {}) })
 }
 export function selectedCycles(result: SajuResult, year: number) {
   return buildEnglishReading(result, year).periods.map(period => result.daewoon.find(cycle => cycle.ganzi === period.pillar && cycle.startDate.getUTCFullYear() === Number(period.period.split('–')[0]))!).filter(Boolean)
@@ -96,7 +97,7 @@ export function finishReading(data: Omit<CategoryReading, 'fullText' | 'wordCoun
   const chapterText = (item: ReportChapter) => [item.title, item.lead, ...(item.example ? everydayExampleText(item.example) : []), ...item.paragraphs, 'Keep close:', ...item.guidance.keepClose, 'Watch out for:', ...item.guidance.watchFor, 'A small step to try: ' + item.tryThis, 'From the chart: ' + item.evidence.join(' ')]
   const fullText = plainReadingText([
     `THE FATE KEY · ${data.title}`, `Report edition ${REPORT_EDITION} · Reference year ${data.referenceYear}`,
-    ...data.subjects.flatMap(item => [item.label, item.birthSummary, item.pillarSummary.join(' · '), `Cycle setting: ${item.calculation.cycleSetting}; direction: ${item.calculation.cycleDirection}.`, ...(data.subjects.length > 1 ? item.calculation.notes : [])]), data.headline,
+    ...data.subjects.flatMap(item => [item.label, item.birthSummary, item.pillarSummary.join(' · '), `Cycle setting: ${item.calculation.cycleSetting}; direction: ${item.calculation.cycleDirection}.`, ...(data.subjects.length > 1 ? item.calculation.notes : [])]), customerEnglish(data.headline),
     readingBriefText(buildReadingBrief(chapters[0], undefined, data.focus)),
     ...data.summary.map(item => `${item.label}: ${item.text}`), ...chapters.flatMap(chapterText),
     ...(data.months.length ? ['Your Twelve Months', ...data.months.flatMap(chapterText)] : []),
@@ -104,6 +105,6 @@ export function finishReading(data: Omit<CategoryReading, 'fullText' | 'wordCoun
     reportExtrasText(data.extras),
     'How this reading is prepared', ...data.methodNotes,
   ].join('\n\n'))
-  return { ...data, chapters, fullText, wordCount: fullText.split(/\s+/).length }
+  return { ...data, headline: customerEnglish(data.headline), chapters, fullText, wordCount: fullText.split(/\s+/).length }
 }
 export const symbolName = (stem: string) => STEMS[stem]?.name ?? 'Unknown'
