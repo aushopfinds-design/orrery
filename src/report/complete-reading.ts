@@ -10,7 +10,7 @@ import type { ReportApplication } from './report-applications.ts'
 import type { CalculationExplanation } from './calculation-notes.ts'
 import type { DecisionFocus } from './decision-focus.ts'
 
-export const REPORT_EDITION = '2026.10-r15'
+export const REPORT_EDITION = '2026.10-r16'
 
 export interface ReadingConnection {
   id: string
@@ -31,6 +31,7 @@ export interface ReportChapter {
   evidence: string[]
   tryThis: string
   guidance: ReadingGuidance
+  showGuidance?: boolean
   example?: EverydayExample
 }
 export interface CompleteReadingPeriod extends ReadingPeriod {

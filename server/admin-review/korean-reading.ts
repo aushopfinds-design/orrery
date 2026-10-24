@@ -36,7 +36,7 @@ export function koreanReadingFromPlan(plan: InterpretationPlan) {
   const native = customerNarrative(plan)
   for (const [index, section] of plan.sections.entries()) {
     const c=native[section.id]
-    lines.push(`${String(index + 1).padStart(2,'0')} · ${TITLES[section.id]}`, ...c.lines.map(l=>l.ko), '실제로 살필 점: '+c.action.ko, '주의할 점: '+c.caution.ko)
+    lines.push(`${String(index + 1).padStart(2,'0')} · ${TITLES[section.id]}`, ...c.lines.map(l=>l.ko), ...(c.showGuidance?['실제로 살필 점: '+c.action.ko, '주의할 점: '+c.caution.ko]:[]))
   }
   if(plan.kind==='complete') {
     lines.push('앞으로 10년의 흐름', ...native['next-moves'].lines.map(l=>l.ko),'실제로 살필 점: '+native['next-moves'].action.ko,'주의할 점: '+native['next-moves'].caution.ko)

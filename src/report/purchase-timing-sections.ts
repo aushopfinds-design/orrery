@@ -17,9 +17,10 @@ function buildSections(plan:InterpretationPlan):Record<string,PurchaseTimingSect
  const dates=(rows:Row[])=>rows.map(r=>r.date.slice(0,4)).join(', ')
  const put=(id:string,en:string,ko:string,rows:Row[]=[],detail=false)=>{
   const lines:TimingSentence[]=[{id:id+'.intro',en,ko}]
+  const explained=new Set<string>()
   for(const row of rows){
    if(detail){
-    const selected=row.lines.filter(l=>/\.(verdict|opening|reason|area-context|change-day|change-month|background-pressure|caution)$/.test(l.id))
+    const selected=row.lines.filter(l=>/\.(verdict|opening|reason|area-context|change-day|change-month|background-pressure|caution)$/.test(l.id)).filter(l=>{if(l.id.endsWith('.verdict'))return true;if(explained.has(l.en))return false;explained.add(l.en);return true})
     lines.push({id:id+'.'+row.date,en:selected.map(l=>l.en).join(' '),ko:selected.map(l=>l.ko).join(' ')})
    }
   }

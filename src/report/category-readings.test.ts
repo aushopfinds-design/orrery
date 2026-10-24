@@ -44,7 +44,7 @@ describe('Distinct complete category readings across 60 international charts', (
         }
         for (const group of [chapter.guidance.keepClose, chapter.guidance.watchFor]) {
           expect(group.length).toBeGreaterThan(0)
-          for (const item of group) expect(report.fullText).toContain(plainReadingText(item))
+          if(chapter.showGuidance!==false)for (const item of group) expect(report.fullText).toContain(plainReadingText(item))
         }
       }
     }

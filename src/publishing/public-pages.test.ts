@@ -121,7 +121,7 @@ describe('r14 actual public reading layout',()=>{
   for(const chapter of [...report.chapters,...report.months]){
    const node=dom.window.document.getElementById(chapter.id)!
    const copies=[...node.querySelectorAll('p,li')].filter(p=>p.textContent===plainReadingText(chapter.tryThis))
-   expect(copies,chapter.id).toHaveLength(1)
+   expect(copies,chapter.id).toHaveLength(chapter.showGuidance===false?0:1)
   }
   dom.window.close()
  })

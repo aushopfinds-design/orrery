@@ -131,7 +131,7 @@ function withPurchaseTiming(chapters: ReportChapter[], plan: InterpretationPlan)
     const paragraphs = body.slice(1)
     if(!paragraphs.length) paragraphs.push(added.action.en)
     return { ...item, lead: body[0], paragraphs, evidence: [...new Set([...item.evidence, ...(timing[item.id]?.evidence ?? [])])],
-      tryThis: added.action.en, guidance:{keepClose:[added.action.en],watchFor:[added.caution.en]} }
+      showGuidance: added.showGuidance, tryThis: added.action.en, guidance:{keepClose:[added.action.en],watchFor:[added.caution.en]} }
   })
 }
 function withStructuralEvidence(chapters: ReportChapter[], plan: InterpretationPlan) {
@@ -282,7 +282,7 @@ export function buildTraditionalCategoryFromPlan(plan: InterpretationPlan): Cate
   })
 }
 function chapterText(item: ReportChapter) {
-  return [item.title, item.lead, ...item.paragraphs, 'Key practical point: ' + item.tryThis, 'Main caution: ' + item.guidance.watchFor.join(' '), ...item.evidence.map(fact=>'From the chart: ' + fact)].join('\n\n')
+  return [item.title, item.lead, ...item.paragraphs, ...(item.showGuidance===false?[]:['Key practical point: ' + item.tryThis, 'Main caution: ' + item.guidance.watchFor.join(' ')]), ...item.evidence.map(fact=>'From the chart: ' + fact)].join('\n\n')
 }
 export function buildTraditionalComplete(result: SajuResult, year: number): CompleteReading {
   return buildTraditionalCompleteFromPlan(buildInterpretationPlan('complete', result, year))

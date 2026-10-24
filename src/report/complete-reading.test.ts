@@ -123,7 +123,7 @@ describe('Complete reading quality across 60 international profiles', () => {
         expect(section.guidance.keepClose.every(item => item.trim().length > 0)).toBe(true)
         expect(section.guidance.watchFor.every(item => item.trim().length > 0)).toBe(true)
         for (const item of [...section.guidance.keepClose, ...section.guidance.watchFor]) {
-          expect(reading.fullText).toContain(plainReadingText(item))
+          if(!('showGuidance' in section)||section.showGuidance!==false)expect(reading.fullText).toContain(plainReadingText(item))
         }
       }
     }
