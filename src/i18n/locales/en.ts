@@ -1,4 +1,22 @@
+import { homepageCopy } from '../homepage.ts'
+
 const en: Record<string, string> = {
+  ...homepageCopy,
+  "letter.name.label": "Name on your letter (optional)",
+  "letter.name.note": "Use a first name or nickname, up to 40 characters. It is saved with your order and printed in your letter; it does not change the calculation.",
+  "city.country": "Country or territory",
+  "city.suggestions": "Suggested places",
+  "city.typeToSearch": "Type at least 2 characters to search places in this country.",
+  "city.searchHint": "Type a place name and select a result. Small towns and villages are searchable too.",
+  "city.loading": "Searching places…",
+  "city.searchError": "Search is unavailable. Try again or enter coordinates.",
+  "city.retry": "Retry",
+  "city.attribution": "Place data:",
+  "city.selectionRequired": "Select a city, town or village from the results, or enter coordinates.",
+  "form.invalidDate": "Please choose a valid calendar date.",
+  "city.popular": "Popular cities",
+  "city.results": "Search results",
+  "city.birthCity": "City, town or village",
   // App
   'app.subtitle1': 'A serverless, browser-based',
   'app.subtitle.tool': 'Saju · Ziwei Doushu · Natal Chart',
@@ -7,20 +25,21 @@ const en: Record<string, string> = {
   'app.profileManage': 'Manage Profiles',
   'app.tab.saju': 'Saju (四柱八字)',
   'app.tab.ziwei': 'Ziwei Doushu (紫微斗数)',
-  'app.tab.natal': 'Natal Chart',
+  'app.tab.natal': 'Natal Chart',  'app.tab.reading': 'English Reading',
+
   'app.copyAll': 'For AI Reading',
   'app.copyAllSub': 'Copy All',
   'app.intro': 'About',
 
   // BirthForm
-  'form.birthDate': 'Date of Birth (Solar)',
+  'form.birthDate': 'Date of Birth (YYYY / MM / DD)',
   'form.yearSuffix': '',
   'form.monthSuffix': '',
   'form.daySuffix': '',
   'form.kdt': 'This period falls under the 1988 Olympics summer time (KDT, UTC+10). All calculations are automatically adjusted.',
   'form.kstHistoricalOffset': 'This date falls under Korean historical timezone anomalies (1948-1951 KDT, 1954-1961 UTC+8:30/+9:30, 1987-1988 KDT). All calculations are automatically normalized to KST wall-clock.',
   'form.dstGapError': 'The entered time falls in a DST spring-forward gap and does not exist. Please verify the timezone of the birth record.',
-  'form.time': 'Time',
+  'form.time': 'Birth Time (24-hour)',
   'form.unknown': 'Unknown',
   'form.hourSuffix': '',
   'form.minuteSuffix': '',
@@ -43,8 +62,8 @@ const en: Record<string, string> = {
   'form.unifiedDesc': 'From 23:30, it is 子 hour, and the day pillar advances to the next day.',
   'form.splitDesc': '23:30–00:00 (night Ja-si) is 子 hour, but the day pillar remains on the current day.',
   'form.calculate': 'Calculate',
-  'form.privacy1': 'All calculations are processed in your browser.',
-  'form.privacy2': 'Your information is never sent to any server.',
+  "form.privacy1": "Birth date and time stay on this device.",
+  "form.privacy2": "Place search shares only the place name and country.",
 
   // CopyButton
   'copy.copy': 'Copy',
@@ -63,10 +82,10 @@ const en: Record<string, string> = {
   'date.monthDay': '{m}/{d}',
 
   // CityCombobox
-  'city.noResults': 'No results found',
+  "city.noResults": "No places found. Try another spelling or enter coordinates.",
   'city.korea': 'Korea',
   'city.world': 'World',
-  'city.placeholder': 'Enter a city name',
+  "city.placeholder": "Search a city, town or village",
 
   // Guide
   'guide.title': 'How to Use',
@@ -188,6 +207,45 @@ const en: Record<string, string> = {
   'zodiac.short.Aries': 'Ari', 'zodiac.short.Taurus': 'Tau', 'zodiac.short.Gemini': 'Gem', 'zodiac.short.Cancer': 'Can',
   'zodiac.short.Leo': 'Leo', 'zodiac.short.Virgo': 'Vir', 'zodiac.short.Libra': 'Lib', 'zodiac.short.Scorpio': 'Sco',
   'zodiac.short.Sagittarius': 'Sag', 'zodiac.short.Capricorn': 'Cap', 'zodiac.short.Aquarius': 'Aqu', 'zodiac.short.Pisces': 'Pis',
+  // Private Sandbox controls; report delivery is English-only.
+  "sandbox.title": "Private Sandbox checkout",
+  "sandbox.note": "Test payments only. No real money is charged. Reports are in English.",
+  "sandbox.access": "Tester access code",
+  "sandbox.buy": "Buy test report",
+  "sandbox.opening": "Opening test checkout…",
+  "sandbox.error": "Could not open checkout. Please try again.",
+  "sandbox.missingAccess": "This browser does not have the private key for this order. Return using the browser where you started the purchase.",
+  "sandbox.verifyError": "The report could not be verified. Retry to check the payment again.",
+  "sandbox.verifying": "Checking payment and preparing your report…",
+  "sandbox.buyer": "Your private Sandbox purchase",
+  "sandbox.cancelled": "Checkout was cancelled. Your report remains locked until payment is verified.",
+  "sandbox.retry": "Check payment again",
+  "sandbox.download": "Download full PDF",
+  "sandbox.issued": "Issued",
+  "sandbox.home": "Explore the 7 Sandbox report products →",
+
+  "sandbox.data": "Your test birth details are sent to our server and stored encrypted to issue the report. Stripe handles card details.",
+
+  "sandbox.paymentPending": "We have not confirmed a completed payment yet. Check again without starting another purchase.",
+  "sandbox.stillPreparing": "Your report is still being prepared. Please check again shortly.",
+  "sandbox.downloadError": "Your PDF could not be downloaded. Try again; your report is still available.",
+  "sandbox.downloading": "Preparing your PDF download…",
+  "sandbox.orderReference": "Order reference",
+
+  'card.export.png': "Save card image",
+  'card.export.mp4': "Save animated card (MP4)",
+  'card.export.note': "A six-second silent video, 1080 × 1350. Keep this page visible while saving. Files are created on your device.",
+  'card.export.progress': "Preparing your card… {percent}%",
+  'card.export.unsupported': "This browser cannot save MP4. Try a current Chrome or Safari browser, or save the image.",
+  'card.export.error': "Your card could not be saved. Keep this page open and try again.",
+  'card.export.done': "Your card file is ready to save.",
+  'purchase.buy': "Buy report",
+  'purchase.testBuy': "Test purchase",
+  'purchase.heading': "Your selected report",
+  'purchase.needDetails': "Enter the required birth details below to continue to checkout. Two-person reports also need the other person’s details.",
+  'purchase.testNote': "Private test checkout: enter your tester access code to enable the payment button. No real money is charged.",
+  'purchase.checkout': 'Checkout',
+  'purchase.continue': 'Continue to checkout',
 }
 
 export default en

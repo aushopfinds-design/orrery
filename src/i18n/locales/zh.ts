@@ -1,4 +1,22 @@
+import { homepageCopy } from '../homepage.ts'
+
 const zh: Record<string, string> = {
+  ...homepageCopy,
+  "letter.name.label": "信中的称呼（可选）",
+  "letter.name.note": "请输入40字以内的名字或昵称。它会随订单保存并印在信中，不影响命盘计算。",
+  "city.country": "国家或地区",
+  "city.suggestions": "推荐地点",
+  "city.typeToSearch": "输入至少两个字符，搜索所选国家的地点。",
+  "city.searchHint": "输入出生地名称并选择搜索结果。也可搜索小镇和村庄。",
+  "city.loading": "正在搜索地点…",
+  "city.searchError": "搜索暂不可用。请重试或输入坐标。",
+  "city.retry": "重试",
+  "city.attribution": "地点数据：",
+  "city.selectionRequired": "请从结果中选择城市、城镇或村庄，或输入坐标。",
+  "form.invalidDate": "请选择有效日期。",
+  "city.popular": "常用城市",
+  "city.results": "搜索结果",
+  "city.birthCity": "城市、城镇或村庄",
   // App
   'app.subtitle1': '无需服务器，在浏览器中运行的',
   'app.subtitle.tool': '四柱八字 · 紫微斗数 · 西洋占星术',
@@ -7,7 +25,8 @@ const zh: Record<string, string> = {
   'app.profileManage': '档案管理',
   'app.tab.saju': '四柱八字',
   'app.tab.ziwei': '紫微斗数',
-  'app.tab.natal': '出生星盘',
+  'app.tab.natal': '出生星盘',  'app.tab.reading': '英文命理报告',
+
   'app.copyAll': 'AI 解读用',
   'app.copyAllSub': '全部复制',
   'app.intro': '简介',
@@ -43,8 +62,8 @@ const zh: Record<string, string> = {
   'form.unifiedDesc': '23:30起为子时，日柱顺延至次日。',
   'form.splitDesc': '23:30~00:00（夜子时）为子时，但日柱仍为当日。',
   'form.calculate': '计算',
-  'form.privacy1': '所有计算均在浏览器中完成，',
-  'form.privacy2': '您输入的信息不会发送到任何服务器。',
+  "form.privacy1": "出生日期和时间仅保存在此设备。",
+  "form.privacy2": "地点搜索仅发送地名和国家。",
 
   // CopyButton
   'copy.copy': '复制',
@@ -63,10 +82,10 @@ const zh: Record<string, string> = {
   'date.monthDay': '{m}月 {d}日',
 
   // CityCombobox
-  'city.noResults': '无搜索结果',
+  "city.noResults": "未找到地点。请尝试其他拼写或输入坐标。",
   'city.korea': '韩国',
   'city.world': '世界',
-  'city.placeholder': '请输入城市名称',
+  "city.placeholder": "搜索城市、城镇或村庄",
 
   // Guide
   'guide.title': '使用方法',
@@ -188,6 +207,45 @@ const zh: Record<string, string> = {
   'zodiac.short.Aries': '白羊', 'zodiac.short.Taurus': '金牛', 'zodiac.short.Gemini': '双子', 'zodiac.short.Cancer': '巨蟹',
   'zodiac.short.Leo': '狮子', 'zodiac.short.Virgo': '处女', 'zodiac.short.Libra': '天秤', 'zodiac.short.Scorpio': '天蝎',
   'zodiac.short.Sagittarius': '射手', 'zodiac.short.Capricorn': '摩羯', 'zodiac.short.Aquarius': '水瓶', 'zodiac.short.Pisces': '双鱼',
+  // Private Sandbox controls; report delivery is English-only.
+  "sandbox.title": "Private Sandbox checkout",
+  "sandbox.note": "Test payments only. No real money is charged. Reports are in English.",
+  "sandbox.access": "Tester access code",
+  "sandbox.buy": "Buy test report",
+  "sandbox.opening": "Opening test checkout…",
+  "sandbox.error": "Could not open checkout. Please try again.",
+  "sandbox.missingAccess": "This browser does not have the private key for this order. Return using the browser where you started the purchase.",
+  "sandbox.verifyError": "The report could not be verified. Retry to check the payment again.",
+  "sandbox.verifying": "Checking payment and preparing your report…",
+  "sandbox.buyer": "Your private Sandbox purchase",
+  "sandbox.cancelled": "Checkout was cancelled. Your report remains locked until payment is verified.",
+  "sandbox.retry": "Check payment again",
+  "sandbox.download": "Download full PDF",
+  "sandbox.issued": "Issued",
+  "sandbox.home": "Explore the 7 Sandbox report products →",
+
+  "sandbox.data": "Your test birth details are sent to our server and stored encrypted to issue the report. Stripe handles card details.",
+
+  "sandbox.paymentPending": "尚未确认付款完成。请重新查询，无需再次购买。",
+  "sandbox.stillPreparing": "报告仍在准备中，请稍后重新查询。",
+  "sandbox.downloadError": "PDF 下载失败。您的报告仍然可用，请重试。",
+  "sandbox.downloading": "正在准备 PDF 下载…",
+  "sandbox.orderReference": "订单编号",
+
+  'card.export.png': "保存卡片图片",
+  'card.export.mp4': "保存动态卡片 (MP4)",
+  'card.export.note': "6秒无声视频，1080 × 1350。保存时请保持页面可见。文件在您的设备上生成。",
+  'card.export.progress': "正在准备卡片… {percent}%",
+  'card.export.unsupported': "此浏览器不支持保存MP4。请使用新版Chrome或Safari，或保存图片。",
+  'card.export.error': "无法保存卡片。请保持页面打开并重试。",
+  'card.export.done': "卡片文件已准备好保存。",
+  'purchase.buy': "购买报告",
+  'purchase.testBuy': "测试购买",
+  'purchase.heading': "您选择的报告",
+  'purchase.needDetails': "请在下方填写所需出生信息以继续结账。双人报告还需要另一人的信息。",
+  'purchase.testNote': "这是私人测试结账。输入测试访问码即可启用付款按钮。不会收取真实费用。",
+  'purchase.checkout': '结账',
+  'purchase.continue': '继续结账',
 }
 
 export default zh

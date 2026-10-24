@@ -2,10 +2,9 @@ import { useState, useEffect, useRef } from 'react'
 import type { SavedFormState } from './BirthForm.tsx'
 import { loadProfiles, addProfile, updateProfile, deleteProfile, exportProfiles, importProfiles } from '../utils/profiles.ts'
 import type { Profile } from '../utils/profiles.ts'
-import { toHangul } from '@orrery/core/pillars'
-import { calculateSaju } from '@orrery/core/saju'
 import { useLocale } from '../i18n/index.ts'
 import { inferTimeZoneFromCoordinates } from '../utils/timezones.ts'
+import { formatCityForLocale } from '../utils/city-search.ts'
 
 interface Props {
   open: boolean
@@ -14,65 +13,40 @@ interface Props {
   onSelect: (data: SavedFormState) => void
 }
 
-function formatSummary(data: SavedFormState, t: (key: string) => string): string {
+function formatSummary(data: SavedFormState, t: (key: string) => string, locale: string): string {
   const date = `${data.year}-${String(data.month).padStart(2, '0')}-${String(data.day).padStart(2, '0')}`
   const time = data.unknownTime
     ? t('profile.timeUnknown')
     : `${String(data.hour).padStart(2, '0')}:${String(data.minute).padStart(2, '0')}`
   const gender = data.gender === 'M' ? t('profile.male') : t('profile.female')
-  const city = data.city?.name ?? t('profile.manualInput')
+  const city = data.city ? formatCityForLocale(data.city, locale) : `${t('profile.manualInput')} (${data.latitude.toFixed(4)}, ${data.longitude.toFixed(4)})`
   const effectiveTimezone = inferTimeZoneFromCoordinates(data.latitude, data.longitude) ?? ''
   const timezone = effectiveTimezone
     ? ` ${effectiveTimezone}`
     : ''
-  try {
-    const saju = calculateSaju({
-      year: data.year,
-      month: data.month,
-      day: data.day,
-      hour: data.hour,
-      minute: data.minute,
-      gender: data.gender,
-      unknownTime: data.unknownTime,
-      jasiMethod: data.jasiMethod,
-      latitude: data.latitude,
-      longitude: data.longitude,
-      ...(effectiveTimezone ? { timezone: effectiveTimezone } : {}),
-    })
-    const dp = saju.pillars[1].pillar.ganzi
-    const ilju = toHangul(dp[0]) + toHangul(dp[1]) + t('profile.ilju')
-    return `${date} ${time} ${gender} ${city}${timezone} ${ilju}`
-  } catch {
-    return `${date} ${time} ${gender} ${city}${timezone}`
-  }
+  return `${date} ${time} ${gender} ${city}${timezone}`
 }
 
 export default function ProfileModal({ open, onClose, getCurrentFormState, onSelect }: Props) {
-  const { t } = useLocale()
-  const [profiles, setProfiles] = useState<Profile[]>([])
+  const { t, locale } = useLocale()
+  const [profiles, setProfiles] = useState<Profile[]>(loadProfiles)
   const [savingNew, setSavingNew] = useState(false)
   const [newName, setNewName] = useState('')
   const [editingId, setEditingId] = useState<string | null>(null)
   const [editName, setEditName] = useState('')
   const [confirmDeleteId, setConfirmDeleteId] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
+  const [importStatus, setImportStatus] = useState<string | null>(null)
   const dialogRef = useRef<HTMLDialogElement>(null)
   const newNameInputRef = useRef<HTMLInputElement>(null)
   const editNameInputRef = useRef<HTMLInputElement>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
-    if (open) {
-      setProfiles(loadProfiles())
-      setSavingNew(false)
-      setNewName('')
-      setEditingId(null)
-      setConfirmDeleteId(null)
-      setError(null)
-      dialogRef.current?.showModal()
-    } else {
-      dialogRef.current?.close()
-    }
+    const dialog = dialogRef.current
+    if (!dialog) return
+    if (open && !dialog.open) dialog.showModal()
+    if (!open && dialog.open) dialog.close()
   }, [open])
 
   useEffect(() => {
@@ -98,7 +72,7 @@ export default function ProfileModal({ open, onClose, getCurrentFormState, onSel
     const trimmed = newName.trim()
     if (!trimmed) return
     const state = getCurrentFormState()
-    if (!state) return
+    if (!state) { setError(t('site.saved.enter')); return }
     try {
       addProfile(trimmed, state)
       setSavingNew(false)
@@ -106,7 +80,7 @@ export default function ProfileModal({ open, onClose, getCurrentFormState, onSel
       setError(null)
       refresh()
     } catch {
-      setError(t('profile.storageError'))
+      setError(t('site.saved.storageError'))
     }
   }
 
@@ -116,16 +90,14 @@ export default function ProfileModal({ open, onClose, getCurrentFormState, onSel
       setEditingId(null)
       return
     }
-    updateProfile(id, { name: trimmed })
-    setEditingId(null)
-    refresh()
+    try { updateProfile(id, { name: trimmed }); setEditingId(null); setError(null); refresh() }
+    catch { setError(t('site.saved.storageError')) }
   }
 
   function handleDelete(id: string) {
     if (confirmDeleteId === id) {
-      deleteProfile(id)
-      setConfirmDeleteId(null)
-      refresh()
+      try { deleteProfile(id); setConfirmDeleteId(null); setError(null); refresh() }
+      catch { setError(t('site.saved.storageError')) }
     } else {
       setConfirmDeleteId(id)
     }
@@ -142,7 +114,7 @@ export default function ProfileModal({ open, onClose, getCurrentFormState, onSel
     const url = URL.createObjectURL(blob)
     const a = document.createElement('a')
     a.href = url
-    a.download = 'orrery-profiles.json'
+    a.download = 'fate-key-birth-details.json'
     a.click()
     URL.revokeObjectURL(url)
   }
@@ -150,11 +122,13 @@ export default function ProfileModal({ open, onClose, getCurrentFormState, onSel
   function handleImport(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0]
     if (!file) return
+    setImportStatus(null)
     const reader = new FileReader()
     reader.onload = () => {
       try {
         const added = importProfiles(reader.result as string)
         setError(null)
+        setImportStatus(added > 0 ? `${added} ${t('site.saved.imported')}` : t('site.saved.noImport'))
         if (added > 0) {
           refresh()
         }
@@ -162,6 +136,7 @@ export default function ProfileModal({ open, onClose, getCurrentFormState, onSel
         setError(t('profile.importError'))
       }
     }
+    reader.onerror = () => setError(t('profile.importError'))
     reader.readAsText(file)
     // 같은 파일 재선택 가능하도록 리셋
     e.target.value = ''
@@ -181,17 +156,19 @@ export default function ProfileModal({ open, onClose, getCurrentFormState, onSel
     'px-2.5 py-1 text-sm rounded-md border transition-colors border-gray-800 dark:border-gray-200 bg-gray-800 dark:bg-gray-200 text-white dark:text-gray-900 hover:bg-gray-700 dark:hover:bg-gray-300'
   const btnSecondary =
     'px-2.5 py-1 text-sm rounded-md border transition-colors border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'
+  const currentFormState = getCurrentFormState()
 
   return (
     <dialog
       ref={dialogRef}
       onClick={handleDialogClick}
       onCancel={onClose}
-      className="m-auto rounded-xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 p-5 shadow-xl dark:shadow-none w-[min(28rem,calc(100vw-2rem))] overflow-hidden"
+      className="fate-profile-dialog m-auto rounded-xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 p-5 shadow-xl dark:shadow-none w-[min(28rem,calc(100vw-2rem))] overflow-hidden"
+      aria-label={t('site.saved.title')}
     >
       {/* 헤더 */}
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-lg font-medium text-gray-800 dark:text-gray-100">{t('profile.title')}</h2>
+        <h2 className="text-lg font-medium text-gray-800 dark:text-gray-100">{t('site.saved.title')}</h2>
         <button
           type="button"
           onClick={onClose}
@@ -206,7 +183,7 @@ export default function ProfileModal({ open, onClose, getCurrentFormState, onSel
 
       {/* 설명 + 내보내기/가져오기 */}
       <p className="text-xs text-gray-400 dark:text-gray-500 leading-relaxed mb-4">
-        {t('profile.desc')}
+        {t('site.saved.text')} {' '}
         <button type="button" onClick={handleExport} disabled={profiles.length === 0} className="underline text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 disabled:opacity-40 disabled:no-underline transition-colors">{t('profile.export')}</button>
         /
         <button type="button" onClick={() => fileInputRef.current?.click()} className="underline text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-colors">{t('profile.import')}</button>
@@ -226,6 +203,8 @@ export default function ProfileModal({ open, onClose, getCurrentFormState, onSel
             value={newName}
             onChange={e => setNewName(e.target.value)}
             placeholder={t('profile.namePlaceholder')}
+            aria-label={t('profile.namePlaceholder')}
+            maxLength={120}
             className={inputClass + ' flex-1'}
           />
           <button type="submit" disabled={!newName.trim()} className={btnPrimary + ' disabled:opacity-40'}>
@@ -239,20 +218,23 @@ export default function ProfileModal({ open, onClose, getCurrentFormState, onSel
         <button
           type="button"
           onClick={() => setSavingNew(true)}
+          disabled={!currentFormState}
           className="w-full mb-4 py-2.5 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg text-sm text-gray-500 dark:text-gray-400 hover:border-gray-400 dark:hover:border-gray-500 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
         >
-          <span>{t('profile.addNew')}</span>
+          <span>{t('site.saved.add')}</span>
           <span className="block text-xs text-gray-400 dark:text-gray-500 mt-0.5">
-            {open && getCurrentFormState() && formatSummary(getCurrentFormState()!, t)}
+            {open && currentFormState && formatSummary(currentFormState, t, locale)}
           </span>
         </button>
       )}
+      {!currentFormState && <p className="fate-reading-small-note">{t('site.saved.enter')}</p>}
 
       {error && (
-        <div className="mb-3 px-3 py-2 bg-red-50 dark:bg-red-950 border border-red-200 dark:border-red-800 rounded-lg text-sm text-red-600 dark:text-red-400">
+        <div role="alert" className="mb-3 px-3 py-2 bg-red-50 dark:bg-red-950 border border-red-200 dark:border-red-800 rounded-lg text-sm text-red-600 dark:text-red-400">
           {error}
         </div>
       )}
+      {importStatus && <p role="status" className="fate-reading-small-note">{importStatus}</p>}
 
       {/* 프로필 목록 */}
       <div className="max-h-[60vh] overflow-y-auto">
@@ -265,8 +247,7 @@ export default function ProfileModal({ open, onClose, getCurrentFormState, onSel
             {profiles.map(profile => (
               <div
                 key={profile.id}
-                onClick={() => editingId !== profile.id && handleSelect(profile.data)}
-                className="py-3 first:pt-0 last:pb-0 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded-lg transition-colors"
+                className="py-3 first:pt-0 last:pb-0 rounded-lg"
               >
                 {/* 별칭 + 액션 */}
                 {editingId === profile.id ? (
@@ -279,6 +260,8 @@ export default function ProfileModal({ open, onClose, getCurrentFormState, onSel
                       ref={editNameInputRef}
                       type="text"
                       value={editName}
+                      maxLength={120}
+                      aria-label={t('profile.editName')}
                       onChange={e => setEditName(e.target.value)}
                       onBlur={() => handleRename(profile.id)}
                       onKeyDown={e => { if (e.key === 'Escape') { setEditingId(null) } }}
@@ -287,15 +270,16 @@ export default function ProfileModal({ open, onClose, getCurrentFormState, onSel
                   </form>
                 ) : (
                   <div className="flex items-center justify-between">
-                    <span className="text-sm font-medium text-gray-800 dark:text-gray-100">
-                      {profile.name}
-                    </span>
+                    <button type="button" className="fate-saved-open" onClick={() => handleSelect(profile.data)} aria-label={`${t('site.saved.open')}: ${profile.name}`}>
+                      {profile.name} <span aria-hidden="true">→</span>
+                    </button>
                     <div className="flex items-center gap-1" onClick={e => e.stopPropagation()}>
                       <button
                         type="button"
                         onClick={() => { setEditingId(profile.id); setEditName(profile.name) }}
                         className="p-1 text-gray-300 dark:text-gray-600 hover:text-gray-500 dark:hover:text-gray-400 transition-colors"
                         title={t('profile.editName')}
+                        aria-label={`${t('profile.editName')}: ${profile.name}`}
                       >
                         <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                           <path strokeLinecap="round" strokeLinejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487z" />
@@ -304,6 +288,7 @@ export default function ProfileModal({ open, onClose, getCurrentFormState, onSel
                       <button
                         type="button"
                         onClick={() => handleDelete(profile.id)}
+                        aria-label={`${confirmDeleteId === profile.id ? t('profile.confirmDelete') : t('site.saved.delete')}: ${profile.name}`}
                         className={confirmDeleteId === profile.id
                           ? 'px-1.5 py-0.5 text-xs rounded border border-red-400 dark:border-red-600 bg-red-50 dark:bg-red-950 text-red-600 dark:text-red-400 transition-colors'
                           : 'p-1 text-gray-300 dark:text-gray-600 hover:text-red-500 dark:hover:text-red-400 transition-colors'}
@@ -320,7 +305,7 @@ export default function ProfileModal({ open, onClose, getCurrentFormState, onSel
 
                 {/* 요약 */}
                 <p className="text-xs text-gray-400 dark:text-gray-500 mt-0.5">
-                  {formatSummary(profile.data, t)}
+                  {formatSummary(profile.data, t, locale)}
                 </p>
               </div>
             ))}

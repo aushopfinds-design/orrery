@@ -1,4 +1,22 @@
+import { homepageCopy } from '../homepage.ts'
+
 const ja: Record<string, string> = {
+  ...homepageCopy,
+  "letter.name.label": "手紙に載せる名前（任意）",
+  "letter.name.note": "40文字以内の名前やニックネーム。注文と共に保存され手紙に表示されますが、計算には使いません。",
+  "city.country": "国または地域",
+  "city.suggestions": "おすすめの場所",
+  "city.typeToSearch": "2文字以上入力して、選択した国の場所を検索してください。",
+  "city.searchHint": "出生地の名前を入力し、検索結果を選択してください。小さな町や村も検索できます。",
+  "city.loading": "場所を検索中…",
+  "city.searchError": "検索を利用できません。再試行するか、座標を入力してください。",
+  "city.retry": "再試行",
+  "city.attribution": "場所データ：",
+  "city.selectionRequired": "検索結果から市・町・村を選択するか、座標を入力してください。",
+  "form.invalidDate": "有効な日付を選択してください。",
+  "city.popular": "主な都市",
+  "city.results": "検索結果",
+  "city.birthCity": "市・町・村",
   // App
   'app.subtitle1': 'サーバー不要、ブラウザで動作する',
   'app.subtitle.tool': '四柱八字 · 紫微斗数 · 西洋占星術',
@@ -7,7 +25,8 @@ const ja: Record<string, string> = {
   'app.profileManage': 'プロフィール管理',
   'app.tab.saju': '四柱八字',
   'app.tab.ziwei': '紫微斗数',
-  'app.tab.natal': '出生チャート',
+  'app.tab.natal': '出生チャート',  'app.tab.reading': '英語の鑑定レポート',
+
   'app.copyAll': 'AI 鑑定用',
   'app.copyAllSub': 'すべてコピー',
   'app.intro': '紹介',
@@ -43,8 +62,8 @@ const ja: Record<string, string> = {
   'form.unifiedDesc': '23:30から子時とし、日柱を翌日に繰り越します。',
   'form.splitDesc': '23:30〜00:00（夜子時）は子時ですが、日柱は当日のまま維持します。',
   'form.calculate': '計算',
-  'form.privacy1': 'すべての計算はブラウザ内で処理され、',
-  'form.privacy2': '入力された情報はいかなるサーバーにも送信されません。',
+  "form.privacy1": "出生日時はこの端末にのみ保存されます。",
+  "form.privacy2": "場所の検索では地名と国のみを送信します。",
 
   // CopyButton
   'copy.copy': 'コピー',
@@ -63,10 +82,10 @@ const ja: Record<string, string> = {
   'date.monthDay': '{m}月 {d}日',
 
   // CityCombobox
-  'city.noResults': '検索結果なし',
+  "city.noResults": "場所が見つかりません。別の表記で検索するか、座標を入力してください。",
   'city.korea': '韓国',
   'city.world': '世界',
-  'city.placeholder': '都市名を入力してください',
+  "city.placeholder": "市・町・村の名前を検索",
 
   // Guide
   'guide.title': '使い方',
@@ -188,6 +207,45 @@ const ja: Record<string, string> = {
   'zodiac.short.Aries': '牡羊', 'zodiac.short.Taurus': '牡牛', 'zodiac.short.Gemini': '双子', 'zodiac.short.Cancer': '蟹',
   'zodiac.short.Leo': '獅子', 'zodiac.short.Virgo': '乙女', 'zodiac.short.Libra': '天秤', 'zodiac.short.Scorpio': '蠍',
   'zodiac.short.Sagittarius': '射手', 'zodiac.short.Capricorn': '山羊', 'zodiac.short.Aquarius': '水瓶', 'zodiac.short.Pisces': '魚',
+  // Private Sandbox controls; report delivery is English-only.
+  "sandbox.title": "Private Sandbox checkout",
+  "sandbox.note": "Test payments only. No real money is charged. Reports are in English.",
+  "sandbox.access": "Tester access code",
+  "sandbox.buy": "Buy test report",
+  "sandbox.opening": "Opening test checkout…",
+  "sandbox.error": "Could not open checkout. Please try again.",
+  "sandbox.missingAccess": "This browser does not have the private key for this order. Return using the browser where you started the purchase.",
+  "sandbox.verifyError": "The report could not be verified. Retry to check the payment again.",
+  "sandbox.verifying": "Checking payment and preparing your report…",
+  "sandbox.buyer": "Your private Sandbox purchase",
+  "sandbox.cancelled": "Checkout was cancelled. Your report remains locked until payment is verified.",
+  "sandbox.retry": "Check payment again",
+  "sandbox.download": "Download full PDF",
+  "sandbox.issued": "Issued",
+  "sandbox.home": "Explore the 7 Sandbox report products →",
+
+  "sandbox.data": "Your test birth details are sent to our server and stored encrypted to issue the report. Stripe handles card details.",
+
+  "sandbox.paymentPending": "お支払いの完了をまだ確認できていません。再購入せずに、もう一度確認できます。",
+  "sandbox.stillPreparing": "レポートを準備しています。しばらくしてから再度ご確認ください。",
+  "sandbox.downloadError": "PDFをダウンロードできませんでした。レポートは引き続きご覧いただけますので、再度お試しください。",
+  "sandbox.downloading": "PDFのダウンロードを準備しています…",
+  "sandbox.orderReference": "注文番号",
+
+  'card.export.png': "カード画像を保存",
+  'card.export.mp4': "動くカードを保存 (MP4)",
+  'card.export.note': "6秒の無音動画、1080 × 1350。保存中はこの画面を表示してください。ファイルは端末内で作成されます。",
+  'card.export.progress': "カードを準備中… {percent}%",
+  'card.export.unsupported': "このブラウザーではMP4を保存できません。最新のChromeやSafariを使うか、画像を保存してください。",
+  'card.export.error': "保存できませんでした。この画面を開いたまま、もう一度お試しください。",
+  'card.export.done': "カードファイルを保存できます。",
+  'purchase.buy': "レポートを購入",
+  'purchase.testBuy': "テスト購入",
+  'purchase.heading': "選択したレポート",
+  'purchase.needDetails': "下で必要な出生情報を入力すると決済に進めます。2人用レポートには相手の情報も必要です。",
+  'purchase.testNote': "非公開のテスト決済です。テスト用アクセスコードを入力すると決済ボタンが有効になります。実際の請求はありません。",
+  'purchase.checkout': '決済',
+  'purchase.continue': '決済へ進む',
 }
 
 export default ja

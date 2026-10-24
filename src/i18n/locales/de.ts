@@ -1,4 +1,22 @@
+import { homepageCopy } from '../homepage.ts'
+
 const de: Record<string, string> = {
+  ...homepageCopy,
+  "letter.name.label": "Name im Brief (optional)",
+  "letter.name.note": "Vorname oder Spitzname, bis zu 40 Zeichen. Er wird mit der Bestellung gespeichert und im Brief verwendet, ohne die Berechnung zu ändern.",
+  "city.country": "Land oder Gebiet",
+  "city.suggestions": "Vorgeschlagene Orte",
+  "city.typeToSearch": "Geben Sie mindestens 2 Zeichen ein, um Orte in diesem Land zu suchen.",
+  "city.searchHint": "Geben Sie den Geburtsort ein und wählen Sie ein Ergebnis. Auch kleine Orte und Dörfer sind durchsuchbar.",
+  "city.loading": "Orte werden gesucht…",
+  "city.searchError": "Suche nicht verfügbar. Erneut versuchen oder Koordinaten eingeben.",
+  "city.retry": "Erneut versuchen",
+  "city.attribution": "Ortsdaten:",
+  "city.selectionRequired": "Wählen Sie eine Stadt, einen Ort oder ein Dorf aus den Ergebnissen oder geben Sie Koordinaten ein.",
+  "form.invalidDate": "Bitte wählen Sie ein gültiges Datum.",
+  "city.popular": "Beliebte Städte",
+  "city.results": "Suchergebnisse",
+  "city.birthCity": "Stadt, Ort oder Dorf",
   // App
   'app.subtitle1': 'Ein serverloser, browserbasierter',
   'app.subtitle.tool': 'Saju · Zi Wei Dou Shu · Geburtshoroskop',
@@ -7,7 +25,8 @@ const de: Record<string, string> = {
   'app.profileManage': 'Profile verwalten',
   'app.tab.saju': 'Saju (四柱八字)',
   'app.tab.ziwei': 'Zi Wei Dou Shu (紫微斗数)',
-  'app.tab.natal': 'Geburtshoroskop',
+  'app.tab.natal': 'Geburtshoroskop',  'app.tab.reading': 'Englischer Bericht',
+
   'app.copyAll': 'Für KI-Deutung',
   'app.copyAllSub': 'Alles kopieren',
   'app.intro': 'Info',
@@ -43,8 +62,8 @@ const de: Record<string, string> = {
   'form.unifiedDesc': 'Ab 23:30 gilt die 子-Stunde, und die Tagessäule wechselt auf den nächsten Tag.',
   'form.splitDesc': '23:30–00:00 (Nacht-Ja-si) ist die 子-Stunde, die Tagessäule bleibt jedoch beim aktuellen Tag.',
   'form.calculate': 'Berechnen',
-  'form.privacy1': 'Alle Berechnungen erfolgen in Ihrem Browser.',
-  'form.privacy2': 'Ihre Daten werden an keinen Server gesendet.',
+  "form.privacy1": "Geburtsdatum und Uhrzeit bleiben auf diesem Gerät.",
+  "form.privacy2": "Die Ortssuche übermittelt nur Ortsname und Land.",
 
   // CopyButton
   'copy.copy': 'Kopieren',
@@ -63,10 +82,10 @@ const de: Record<string, string> = {
   'date.monthDay': '{d}.{m}.',
 
   // CityCombobox
-  'city.noResults': 'Keine Ergebnisse',
+  "city.noResults": "Keine Orte gefunden. Andere Schreibweise versuchen oder Koordinaten eingeben.",
   'city.korea': 'Korea',
   'city.world': 'Welt',
-  'city.placeholder': 'Stadtnamen eingeben',
+  "city.placeholder": "Stadt, Ort oder Dorf suchen",
 
   // Guide
   'guide.title': 'Anleitung',
@@ -188,6 +207,45 @@ const de: Record<string, string> = {
   'zodiac.short.Aries': 'Wid', 'zodiac.short.Taurus': 'Sti', 'zodiac.short.Gemini': 'Zwi', 'zodiac.short.Cancer': 'Kre',
   'zodiac.short.Leo': 'Löw', 'zodiac.short.Virgo': 'Jun', 'zodiac.short.Libra': 'Waa', 'zodiac.short.Scorpio': 'Sko',
   'zodiac.short.Sagittarius': 'Sch', 'zodiac.short.Capricorn': 'Ste', 'zodiac.short.Aquarius': 'Was', 'zodiac.short.Pisces': 'Fis',
+  // Private Sandbox controls; report delivery is English-only.
+  "sandbox.title": "Private Sandbox checkout",
+  "sandbox.note": "Test payments only. No real money is charged. Reports are in English.",
+  "sandbox.access": "Tester access code",
+  "sandbox.buy": "Buy test report",
+  "sandbox.opening": "Opening test checkout…",
+  "sandbox.error": "Could not open checkout. Please try again.",
+  "sandbox.missingAccess": "This browser does not have the private key for this order. Return using the browser where you started the purchase.",
+  "sandbox.verifyError": "The report could not be verified. Retry to check the payment again.",
+  "sandbox.verifying": "Checking payment and preparing your report…",
+  "sandbox.buyer": "Your private Sandbox purchase",
+  "sandbox.cancelled": "Checkout was cancelled. Your report remains locked until payment is verified.",
+  "sandbox.retry": "Check payment again",
+  "sandbox.download": "Download full PDF",
+  "sandbox.issued": "Issued",
+  "sandbox.home": "Explore the 7 Sandbox report products →",
+
+  "sandbox.data": "Your test birth details are sent to our server and stored encrypted to issue the report. Stripe handles card details.",
+
+  "sandbox.paymentPending": "Eine abgeschlossene Zahlung wurde noch nicht bestätigt. Prüfe erneut, ohne einen weiteren Kauf zu starten.",
+  "sandbox.stillPreparing": "Dein Bericht wird noch vorbereitet. Bitte prüfe in Kürze erneut.",
+  "sandbox.downloadError": "Deine PDF konnte nicht heruntergeladen werden. Dein Bericht ist weiterhin verfügbar. Bitte versuche es erneut.",
+  "sandbox.downloading": "Dein PDF-Download wird vorbereitet…",
+  "sandbox.orderReference": "Bestellnummer",
+
+  'card.export.png': "Kartenbild speichern",
+  'card.export.mp4': "Animierte Karte speichern (MP4)",
+  'card.export.note': "Sechs Sekunden ohne Ton, 1080 × 1350. Lassen Sie diese Seite beim Speichern sichtbar. Die Dateien entstehen auf Ihrem Gerät.",
+  'card.export.progress': "Karte wird vorbereitet… {percent}%",
+  'card.export.unsupported': "Dieser Browser kann kein MP4 speichern. Verwenden Sie aktuelles Chrome oder Safari oder speichern Sie das Bild.",
+  'card.export.error': "Die Karte konnte nicht gespeichert werden. Lassen Sie die Seite geöffnet und versuchen Sie es erneut.",
+  'card.export.done': "Ihre Kartendatei ist zum Speichern bereit.",
+  'purchase.buy': "Bericht kaufen",
+  'purchase.testBuy': "Testkauf",
+  'purchase.heading': "Ihr gewählter Bericht",
+  'purchase.needDetails': "Geben Sie unten die erforderlichen Geburtsdaten ein, um zur Kasse zu gelangen. Berichte für zwei Personen benötigen auch die Daten der anderen Person.",
+  'purchase.testNote': "Privater Test-Checkout: Geben Sie Ihren Testzugangscode ein, um die Zahlungsschaltfläche zu aktivieren. Es wird kein echtes Geld berechnet.",
+  'purchase.checkout': 'Kasse',
+  'purchase.continue': 'Weiter zur Kasse',
 }
 
 export default de

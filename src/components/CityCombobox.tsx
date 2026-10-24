@@ -1,35 +1,72 @@
-import { useState, useRef, useEffect, useCallback } from 'react'
+import { useState, useRef, useEffect, useCallback, useMemo, useId } from 'react'
 import type { City } from '@orrery/core/cities'
-import { KOREAN_CITIES, filterCities, formatCityName } from '@orrery/core/cities'
+import { formatCityForLocale, getCitySuggestions } from '../utils/city-search.ts'
+import { getCachedBirthplaces, MAX_PLACE_QUERY_LENGTH, MIN_PLACE_QUERY_LENGTH, normalizePlaceQuery, searchBirthplaces } from '../utils/world-birthplaces.ts'
 import { useLocale } from '../i18n/index.ts'
 
 interface Props {
+  compact?: boolean
+  countryCode: string
   selectedCity: City | null
   onSelect: (city: City) => void
+  onSelectionInvalidated: () => void
+}
+
+interface SearchResult {
+  key: string
+  status: 'success' | 'error'
+  cities: City[]
 }
 
 const inputClass =
-  'w-full h-10 px-3 border border-gray-200 dark:border-gray-700 rounded-lg text-base text-gray-800 dark:text-gray-100 bg-white dark:bg-gray-900 ' +
-  'focus:outline-none focus:ring-2 focus:ring-gray-800/20 dark:focus:ring-gray-200/20 focus:border-gray-400 dark:focus:border-gray-500 transition-all'
+  'w-full min-h-12 pl-3 pr-9 border border-[#ddcbb1] rounded-lg text-base text-[#203049] bg-[#fffdf9] ' +
+  'focus:outline-none focus:ring-2 focus:ring-[#c99b56]/35 focus:border-[#b78a47] transition-all'
 
-/** 포커스 시 보여줄 기본 도시 목록 (한국 주요 도시) */
-const DEFAULT_CITIES = KOREAN_CITIES.slice(0, 8) as City[]
-
-export default function CityCombobox({ selectedCity, onSelect }: Props) {
-  const { t } = useLocale()
+export default function CityCombobox({ countryCode, selectedCity, onSelect, onSelectionInvalidated, compact = false }: Props) {
+  const { t, locale } = useLocale()
   const [query, setQuery] = useState('')
   const [isOpen, setIsOpen] = useState(false)
   const [highlightIndex, setHighlightIndex] = useState(-1)
+  const [remote, setRemote] = useState<SearchResult | null>(null)
+  const [retry, setRetry] = useState(0)
   const inputRef = useRef<HTMLInputElement>(null)
   const listRef = useRef<HTMLUListElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
+  const id = useId()
+  const listboxId = `${id}-places`
+  const hintId = `${id}-hint`
+  const normalizedQuery = normalizePlaceQuery(query)
+  const searchKey = `${countryCode}:${normalizedQuery.toLowerCase()}:${retry}`
+  const shouldSearch = isOpen && normalizedQuery.length >= MIN_PLACE_QUERY_LENGTH
+  const localResults = useMemo(() => getCitySuggestions(query, locale, countryCode), [query, locale, countryCode])
+  const cached = shouldSearch ? getCachedBirthplaces(normalizedQuery, countryCode) : undefined
+  const activeRemote = remote?.key === searchKey ? remote : null
+  const isLoading = shouldSearch && cached === undefined && !activeRemote
+  const hasError = shouldSearch && activeRemote?.status === 'error'
+  const onlineResults = cached ?? (activeRemote?.status === 'success' ? activeRemote.cities : undefined)
+  const flatResults = onlineResults?.length ? onlineResults : localResults
 
-  const results = query ? filterCities(query) : DEFAULT_CITIES
-  const koreanResults = results.filter(c => !c.country)
-  const worldResults = results.filter(c => !!c.country)
-  const flatResults = results // 이미 한국 우선 정렬됨
+  useEffect(() => {
+    if (!shouldSearch || getCachedBirthplaces(normalizedQuery, countryCode)) return
+    const controller = new AbortController()
+    // Debounce and reuse cached results to keep the public search service modest.
+    const timer = window.setTimeout(async () => {
+      try {
+        const cities = await searchBirthplaces(normalizedQuery, countryCode, controller.signal)
+        if (!controller.signal.aborted) {
+          setHighlightIndex(-1)
+          setRemote({ key: searchKey, status: 'success', cities })
+        }
+      } catch {
+        if (!controller.signal.aborted) {
+          setHighlightIndex(-1)
+          setRemote({ key: searchKey, status: 'error', cities: [] })
+        }
+      }
+    }, 800)
+    return () => { window.clearTimeout(timer); controller.abort() }
+  }, [shouldSearch, normalizedQuery, countryCode, searchKey])
 
-  // 하이라이트된 항목이 보이도록 스크롤
   useEffect(() => {
     if (highlightIndex < 0 || !listRef.current) return
     const items = listRef.current.querySelectorAll('[role="option"]')
@@ -39,23 +76,18 @@ export default function CityCombobox({ selectedCity, onSelect }: Props) {
   const close = useCallback(() => {
     setIsOpen(false)
     setHighlightIndex(-1)
-    setQuery('')
   }, [])
-
-  function handleFocus() {
-    setIsOpen(true)
-    setQuery('')
-    setHighlightIndex(-1)
-  }
 
   function handleInput(value: string) {
     setQuery(value)
     setIsOpen(true)
     setHighlightIndex(-1)
+    onSelectionInvalidated()
   }
 
   function selectCity(city: City) {
     onSelect(city)
+    setQuery('')
     close()
     inputRef.current?.blur()
   }
@@ -68,22 +100,21 @@ export default function CityCombobox({ selectedCity, onSelect }: Props) {
       }
       return
     }
-
     switch (e.key) {
       case 'ArrowDown':
         e.preventDefault()
-        setHighlightIndex(i => (i + 1) % flatResults.length)
+        if (flatResults.length) setHighlightIndex(i => (i + 1) % flatResults.length)
         break
       case 'ArrowUp':
         e.preventDefault()
-        setHighlightIndex(i => (i - 1 + flatResults.length) % flatResults.length)
+        if (flatResults.length) setHighlightIndex(i => i <= 0 ? flatResults.length - 1 : i - 1)
         break
-      case 'Enter':
+      case 'Enter': {
         e.preventDefault()
-        if (highlightIndex >= 0 && highlightIndex < flatResults.length) {
-          selectCity(flatResults[highlightIndex])
-        }
+        const city = flatResults[highlightIndex >= 0 ? highlightIndex : 0]
+        if (city) selectCity(city)
         break
+      }
       case 'Escape':
         e.preventDefault()
         close()
@@ -92,127 +123,72 @@ export default function CityCombobox({ selectedCity, onSelect }: Props) {
     }
   }
 
-  // mousedown + preventDefault로 블러-클릭 경쟁 해결
-  function handleOptionMouseDown(e: React.MouseEvent, city: City) {
-    e.preventDefault()
-    selectCity(city)
-  }
-
   function handleBlur(e: React.FocusEvent) {
-    // 컨테이너 내부로 포커스가 이동하면 무시
     if (containerRef.current?.contains(e.relatedTarget as Node)) return
     close()
   }
 
-  const listboxId = 'city-listbox'
-
-  /** 구분선이 있는 섹션별 렌더링 */
-  function renderOptions() {
-    if (flatResults.length === 0) {
-      return (
-        <li className="px-3 py-2 text-base text-gray-400 dark:text-gray-500 text-center">
-          {t('city.noResults')}
-        </li>
-      )
-    }
-
-    const items: React.ReactNode[] = []
-    let optionIndex = 0
-
-    if (koreanResults.length > 0) {
-      items.push(
-        <li key="header-kr" className="px-3 pt-1.5 pb-1 text-sm font-medium text-gray-400 dark:text-gray-500" role="presentation">
-          {t('city.korea')}
-        </li>
-      )
-      for (const city of koreanResults) {
-        const idx = optionIndex++
-        items.push(renderOption(city, idx))
-      }
-    }
-
-    if (worldResults.length > 0) {
-      if (koreanResults.length > 0) {
-        items.push(
-          <li key="divider" className="border-t border-gray-100 dark:border-gray-800 my-1" role="presentation" />
-        )
-      }
-      items.push(
-        <li key="header-world" className="px-3 pt-1.5 pb-1 text-sm font-medium text-gray-400 dark:text-gray-500" role="presentation">
-          {t('city.world')}
-        </li>
-      )
-      for (const city of worldResults) {
-        const idx = optionIndex++
-        items.push(renderOption(city, idx))
-      }
-    }
-
-    return items
-  }
-
-  function renderOption(city: City, index: number) {
-    const isHighlighted = index === highlightIndex
-    const label = formatCityName(city)
-    return (
-      <li
-        key={`${city.name}-${city.country ?? 'kr'}`}
-        role="option"
-        aria-selected={isHighlighted}
-        className={`px-3 py-2 text-base cursor-pointer transition-colors ${
-          isHighlighted ? 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100' : 'text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800'
-        }`}
-        onMouseDown={e => handleOptionMouseDown(e, city)}
-        onMouseEnter={() => setHighlightIndex(index)}
-      >
-        {label}
-      </li>
-    )
-  }
-
-  const displayValue = isOpen ? query : (selectedCity ? formatCityName(selectedCity) : '')
+  const displayValue = isOpen ? query : (selectedCity ? formatCityForLocale(selectedCity, locale) : query)
+  const optionId = (index: number) => `${id}-place-${index}`
 
   return (
     <div ref={containerRef} className="relative">
-      <input
-        ref={inputRef}
-        type="text"
-        role="combobox"
-        aria-expanded={isOpen}
-        aria-controls={listboxId}
-        aria-activedescendant={highlightIndex >= 0 ? `city-option-${highlightIndex}` : undefined}
-        autoComplete="off"
-        className={inputClass}
-        placeholder={t('city.placeholder')}
-        value={displayValue}
-        onFocus={handleFocus}
-        onBlur={handleBlur}
-        onChange={e => handleInput(e.target.value)}
-        onKeyDown={handleKeyDown}
-      />
-      {/* 드롭다운 아이콘 */}
-      <svg
-        className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 dark:text-gray-500"
-        viewBox="0 0 20 20"
-        fill="currentColor"
-      >
-        <path
-          fillRule="evenodd"
-          d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
-          clipRule="evenodd"
+      <label htmlFor={`${id}-input`} className="block text-sm text-[#755632] mb-1">{t('city.birthCity')}</label>
+      <div className="relative">
+        <input
+          id={`${id}-input`}
+          ref={inputRef}
+          type="text"
+          role="combobox"
+          aria-expanded={isOpen}
+          aria-controls={isOpen ? listboxId : undefined}
+          aria-autocomplete="list"
+          aria-describedby={!compact || isOpen ? hintId : undefined}
+          aria-activedescendant={highlightIndex >= 0 && highlightIndex < flatResults.length ? optionId(highlightIndex) : undefined}
+          autoComplete="off"
+          spellCheck={false}
+          maxLength={MAX_PLACE_QUERY_LENGTH}
+          className={inputClass}
+          placeholder={t('city.placeholder')}
+          value={displayValue}
+          onFocus={() => { setIsOpen(true); if (selectedCity) setQuery(''); setHighlightIndex(-1) }}
+          onBlur={handleBlur}
+          onChange={e => handleInput(e.target.value)}
+          onKeyDown={handleKeyDown}
         />
-      </svg>
-
-      {isOpen && (
-        <ul
-          ref={listRef}
-          id={listboxId}
-          role="listbox"
-          className="absolute z-50 mt-1 w-full max-h-60 overflow-auto rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 shadow-lg py-1"
-        >
-          {renderOptions()}
-        </ul>
-      )}
+        <svg className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#8c7b64]" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+          <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clipRule="evenodd" />
+        </svg>
+        {isOpen && (
+          <ul ref={listRef} id={listboxId} role="listbox" aria-label={t('city.results')} className="absolute z-50 mt-1 w-full max-h-64 overflow-auto overscroll-contain rounded-lg border border-[#ddcbb1] bg-[#fffdf9] shadow-lg py-1 text-[#203049]">
+            {isLoading && <li role="presentation" className="px-3 py-2 text-sm text-[#755632]"><span role="status">{t('city.loading')}</span></li>}
+            {hasError && (
+              <li role="presentation" className="px-3 py-2 text-sm text-[#755632]">
+                <span role="alert">{t('city.searchError')}</span>{' '}
+                <button type="button" className="underline font-medium" onMouseDown={e => e.preventDefault()} onClick={() => setRetry(value => value + 1)}>{t('city.retry')}</button>
+              </li>
+            )}
+            {flatResults.length > 0 && <li role="presentation" className="px-3 pt-2 pb-1 text-xs font-medium text-[#8c7659]">{normalizedQuery ? t('city.results') : t('city.suggestions')}</li>}
+            {!isLoading && !hasError && flatResults.length === 0 && (
+              <li role="presentation" className="px-3 py-3 text-sm text-[#755632]"><span role="status">{normalizedQuery.length < MIN_PLACE_QUERY_LENGTH ? t('city.typeToSearch') : t('city.noResults')}</span></li>
+            )}
+            {flatResults.map((city, index) => (
+              <li key={city.placeId || `${city.name}-${city.lat}-${city.lon}`} id={optionId(index)} role="option" aria-selected={index === highlightIndex}
+                className={`px-3 py-2.5 text-base cursor-pointer transition-colors break-words ${index === highlightIndex ? 'bg-[#f0e5d6]' : 'hover:bg-[#f7eee3]'}`}
+                onMouseDown={e => { e.preventDefault(); selectCity(city) }} onMouseEnter={() => setHighlightIndex(index)}>
+                <span className="block font-medium">{formatCityForLocale(city, locale).split(', ')[0]}</span>
+                <span className="block text-xs text-[#755632] mt-0.5">{formatCityForLocale(city, locale).split(', ').slice(1).join(', ')}</span>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+      {(!compact || isOpen) && <p id={hintId} className="mt-1.5 text-xs text-[#755632] leading-relaxed">{t('city.searchHint')}</p>}
+      <p className="fate-city-attribution mt-1 text-[10px] text-[#85715a] leading-relaxed">
+        {t('city.attribution')}{' '}
+        <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer" className="underline">© OpenStreetMap contributors</a>
+        {' · '}<a href="https://photon.komoot.io/" target="_blank" rel="noreferrer" className="underline">Photon</a>
+      </p>
     </div>
   )
 }

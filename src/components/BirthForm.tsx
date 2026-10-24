@@ -2,8 +2,13 @@ import { useState, useMemo, useEffect, useImperativeHandle, forwardRef } from 'r
 import type { BirthInput, Gender, JasiMethod } from '@orrery/core/types'
 import { isKoreanDaylightTime, isKoreanHistoricalTimeAnomaly } from '@orrery/core/natal'
 import type { City } from '@orrery/core/cities'
-import { SEOUL, formatCityName } from '@orrery/core/cities'
+import { NEW_YORK } from '@orrery/core/cities'
+import { formatCityForLocale } from '../utils/city-search.ts'
 import CityCombobox from './CityCombobox.tsx'
+import { BIRTH_FORM_STORAGE_KEY, readBirthFormState, formStateFromBirth, matchesBirth } from '../utils/birth-form-state.ts'
+import type { SavedFormState } from '../utils/birth-form-state.ts'
+export type { SavedFormState } from '../utils/birth-form-state.ts'
+import { getCountries, getCityCountryCode, isCountryCode, isSelectedBirthplaceValid } from '../utils/countries.ts'
 import { useLocale } from '../i18n/index.ts'
 import {
   getTimeZoneDisplayLabelAtLocalTime,
@@ -17,65 +22,45 @@ import {
   parseCoordinateDraft,
   stepCoordinate,
 } from '../utils/coordinate-input.ts'
-import logo from '../assets/icon-512.png'
 
 export interface BirthFormHandle {
   getCurrentState(): SavedFormState
 }
 
 interface Props {
+  compact?: boolean
   onSubmit: (input: BirthInput) => void
+  submitLabel?: string
+  initialInput?: BirthInput
+  rememberInput?: boolean
   externalState?: SavedFormState | null
   onExternalStateConsumed?: () => void
 }
 
-const STORAGE_KEY = 'orrery-birth-input'
-
-export interface SavedFormState {
-  year: number
-  month: number
-  day: number
-  hour: number
-  minute: number
-  gender: Gender
-  unknownTime: boolean
-  jasiMethod: JasiMethod
-  city: City | null
-  manualCoords: boolean
-  latitude: number
-  longitude: number
-}
-
-function loadSaved(): SavedFormState | null {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY)
-    if (!raw) return null
-    return JSON.parse(raw) as SavedFormState
-  } catch {
-    return null
-  }
-}
-
 const now = new Date()
 const currentYear = now.getFullYear()
-const saved = loadSaved()
-const initialLatitude = saved?.latitude ?? SEOUL.lat
-const initialLongitude = saved?.longitude ?? SEOUL.lon
 
 const selectClass =
-  'w-full h-10 pl-3 pr-8 border border-gray-200 dark:border-gray-700 rounded-lg text-base text-gray-800 dark:text-gray-100 bg-white dark:bg-gray-900 ' +
+  'w-full min-w-0 min-h-12 pl-3 pr-8 border border-[#ddcbb1] rounded-lg text-base text-[#203049] bg-[#fffdf9] ' +
   'appearance-none bg-[length:16px_16px] bg-[position:right_8px_center] bg-no-repeat ' +
   "bg-[url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2020%2020%22%20fill%3D%22%239ca3af%22%3E%3Cpath%20fill-rule%3D%22evenodd%22%20d%3D%22M5.23%207.21a.75.75%200%20011.06.02L10%2011.168l3.71-3.938a.75.75%200%20111.08%201.04l-4.25%204.5a.75.75%200%2001-1.08%200l-4.25-4.5a.75.75%200%2001.02-1.06z%22%20clip-rule%3D%22evenodd%22%2F%3E%3C%2Fsvg%3E')] " +
-  'focus:outline-none focus:ring-2 focus:ring-gray-800/20 dark:focus:ring-gray-200/20 focus:border-gray-400 dark:focus:border-gray-500 ' +
-  'transition-all disabled:opacity-40 disabled:bg-gray-50 dark:disabled:bg-gray-800'
+  'focus:outline-none focus:ring-2 focus:ring-[#c99b56]/35 focus:border-[#b78a47] ' +
+  'transition-all disabled:opacity-50 disabled:bg-[#f1e9dd]'
 
 const inputClass =
-  'w-full h-10 px-3 border border-gray-200 dark:border-gray-700 rounded-lg text-base text-gray-800 dark:text-gray-100 bg-white dark:bg-gray-900 ' +
-  'focus:outline-none focus:ring-2 focus:ring-gray-800/20 dark:focus:ring-gray-200/20 focus:border-gray-400 dark:focus:border-gray-500 transition-all'
+  'w-full min-w-0 min-h-12 px-3 border border-[#ddcbb1] rounded-lg text-base text-[#203049] bg-[#fffdf9] ' +
+  'focus:outline-none focus:ring-2 focus:ring-[#c99b56]/35 focus:border-[#b78a47] transition-all'
 
 
-const BirthForm = forwardRef<BirthFormHandle, Props>(function BirthForm({ onSubmit, externalState, onExternalStateConsumed }, ref) {
-  const { t } = useLocale()
+const BirthForm = forwardRef<BirthFormHandle, Props>(function BirthForm({ onSubmit, externalState, onExternalStateConsumed, submitLabel, initialInput, rememberInput = true, compact = false }, ref) {
+  const { t, locale } = useLocale()
+  const [saved] = useState<SavedFormState | null>(() => {
+    const remembered = rememberInput ? readBirthFormState() : null
+    if (!initialInput) return remembered
+    return remembered && matchesBirth(remembered, initialInput) ? remembered : formStateFromBirth(initialInput)
+  })
+  const initialLatitude = saved?.latitude ?? NEW_YORK.lat
+  const initialLongitude = saved?.longitude ?? NEW_YORK.lon
   const [year, setYear] = useState(saved?.year ?? currentYear - 20)
   const [month, setMonth] = useState(saved?.month ?? now.getMonth() + 1)
   const [day, setDay] = useState(saved?.day ?? now.getDate())
@@ -85,7 +70,9 @@ const BirthForm = forwardRef<BirthFormHandle, Props>(function BirthForm({ onSubm
   const [unknownTime, setUnknownTime] = useState(saved?.unknownTime ?? false)
   const [jasiMethod, setJasiMethod] = useState<JasiMethod>(saved?.jasiMethod ?? 'unified')
   const [showAdvanced, setShowAdvanced] = useState(false)
-  const [selectedCity, setSelectedCity] = useState<City | null>(saved?.city ?? SEOUL)
+  const [selectedCity, setSelectedCity] = useState<City | null>(saved?.city ?? NEW_YORK)
+  const [countryCode, setCountryCode] = useState(() => saved?.countryCode && isCountryCode(saved.countryCode) ? saved.countryCode : getCityCountryCode(saved?.city ?? NEW_YORK))
+  const countries = useMemo(() => getCountries(locale), [locale])
   const [manualCoords, setManualCoords] = useState(saved?.manualCoords ?? false)
   const [latitude, setLatitude] = useState(initialLatitude)
   const [longitude, setLongitude] = useState(initialLongitude)
@@ -93,19 +80,22 @@ const BirthForm = forwardRef<BirthFormHandle, Props>(function BirthForm({ onSubm
   const [longitudeInput, setLongitudeInput] = useState(() => formatCoordinate(initialLongitude))
   const [timezoneError, setTimezoneError] = useState<string | null>(null)
 
+  const daysInSelectedMonth = new Date(year, month, 0).getDate()
+  if (day > daysInSelectedMonth) setDay(daysInSelectedMonth)
+
   const inferredTimezone = useMemo(
-    () => inferTimeZoneFromCoordinates(latitude, longitude),
-    [latitude, longitude],
+    () => manualCoords || isSelectedBirthplaceValid(selectedCity, countryCode) ? inferTimeZoneFromCoordinates(latitude, longitude) : null,
+    [latitude, longitude, manualCoords, selectedCity, countryCode],
   )
   const locationSummary = useMemo(() => {
     if (manualCoords) {
       return `${t('form.coordInput')} · ${t('form.latitude')} ${latitude.toFixed(4)} · ${t('form.longitude')} ${longitude.toFixed(4)}`
     }
     if (selectedCity) {
-      return `${formatCityName(selectedCity)} · ${t('form.latitude')} ${latitude.toFixed(4)} · ${t('form.longitude')} ${longitude.toFixed(4)}`
+      return `${formatCityForLocale(selectedCity, locale)} · ${t('form.latitude')} ${latitude.toFixed(4)} · ${t('form.longitude')} ${longitude.toFixed(4)}`
     }
-    return `${t('form.latitude')} ${latitude.toFixed(4)} · ${t('form.longitude')} ${longitude.toFixed(4)}`
-  }, [manualCoords, selectedCity, latitude, longitude, t])
+    return null
+  }, [manualCoords, selectedCity, latitude, longitude, t, locale])
   const timezoneDisplayLabel = useMemo(() => {
     if (!inferredTimezone) return null
     return getTimeZoneDisplayLabelAtLocalTime(
@@ -119,6 +109,7 @@ const BirthForm = forwardRef<BirthFormHandle, Props>(function BirthForm({ onSubm
   }, [inferredTimezone, year, month, day, hour, minute, unknownTime])
 
   function getTimezoneValidationError(state: SavedFormState): string | null {
+    if (!state.manualCoords && !isSelectedBirthplaceValid(state.city, state.countryCode ?? getCityCountryCode(state.city))) return t('city.selectionRequired')
     const effectiveHour = state.unknownTime ? 12 : state.hour
     const effectiveMinute = state.unknownTime ? 0 : state.minute
     const result = validateBirthLocalTime(
@@ -132,6 +123,8 @@ const BirthForm = forwardRef<BirthFormHandle, Props>(function BirthForm({ onSubm
   }
 
   function buildBirthInput(state: SavedFormState): BirthInput | null {
+    if (state.month < 1 || state.month > 12 || state.day < 1 ||
+        state.day > new Date(state.year, state.month, 0).getDate()) return null
     const effectiveStateTimezone = inferTimeZoneFromCoordinates(state.latitude, state.longitude)
     if (getTimezoneValidationError(state)) return null
     if (!effectiveStateTimezone) return null
@@ -153,28 +146,27 @@ const BirthForm = forwardRef<BirthFormHandle, Props>(function BirthForm({ onSubm
   useImperativeHandle(ref, () => ({
     getCurrentState: (): SavedFormState => ({
       year, month, day, hour, minute, gender, unknownTime, jasiMethod,
-      city: selectedCity, manualCoords, latitude, longitude,
+      city: selectedCity, countryCode, manualCoords, latitude, longitude,
     }),
   }))
-
-  useEffect(() => {
-    setTimezoneError(null)
-  }, [latitude, longitude])
 
   function syncCoordinates(nextLatitude: number, nextLongitude: number) {
     setLatitude(nextLatitude)
     setLongitude(nextLongitude)
+    setTimezoneError(null)
     setLatitudeInput(formatCoordinate(nextLatitude))
     setLongitudeInput(formatCoordinate(nextLongitude))
   }
 
   function applyLatitude(nextLatitude: number) {
     setLatitude(nextLatitude)
+    setTimezoneError(null)
     setLatitudeInput(formatCoordinate(nextLatitude))
   }
 
   function applyLongitude(nextLongitude: number) {
     setLongitude(nextLongitude)
+    setTimezoneError(null)
     setLongitudeInput(formatCoordinate(nextLongitude))
   }
 
@@ -204,23 +196,33 @@ const BirthForm = forwardRef<BirthFormHandle, Props>(function BirthForm({ onSubm
     apply(stepCoordinate(baseValue, e.key === 'ArrowUp' ? 1 : -1))
   }
 
+  // React permits guarded state adjustment during render when an incoming
+  // snapshot changes. Side effects remain in the effect below.
+  const [appliedExternalState, setAppliedExternalState] = useState<SavedFormState | null>(null)
+  if (externalState && externalState !== appliedExternalState) {
+    setAppliedExternalState(externalState)
+    setYear(externalState.year)
+    setMonth(externalState.month)
+    setDay(externalState.day)
+    setHour(externalState.hour)
+    setMinute(externalState.minute)
+    setGender(externalState.gender)
+    setUnknownTime(externalState.unknownTime)
+    setJasiMethod(externalState.jasiMethod)
+    setSelectedCity(externalState.city)
+    setCountryCode(externalState.countryCode && isCountryCode(externalState.countryCode) ? externalState.countryCode : getCityCountryCode(externalState.city))
+    setManualCoords(externalState.manualCoords)
+    setLatitude(externalState.latitude)
+    setLongitude(externalState.longitude)
+    setLatitudeInput(formatCoordinate(externalState.latitude))
+    setLongitudeInput(formatCoordinate(externalState.longitude))
+    setTimezoneError(null)
+  }
+
   useEffect(() => {
     if (!externalState) return
-    const s = externalState
-    setYear(s.year)
-    setMonth(s.month)
-    setDay(s.day)
-    setHour(s.hour)
-    setMinute(s.minute)
-    setGender(s.gender)
-    setUnknownTime(s.unknownTime)
-    setJasiMethod(s.jasiMethod)
-    setSelectedCity(s.city)
-    setManualCoords(s.manualCoords)
-    syncCoordinates(s.latitude, s.longitude)
-    setTimezoneError(null)
     onExternalStateConsumed?.()
-    const birthInput = buildBirthInput(s)
+    const birthInput = buildBirthInput(externalState)
     if (birthInput) onSubmit(birthInput)
   }, [externalState]) // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -251,6 +253,11 @@ const BirthForm = forwardRef<BirthFormHandle, Props>(function BirthForm({ onSubm
     setTimezoneError(null)
   }
 
+  function clearCitySelection() {
+    setSelectedCity(null)
+    setTimezoneError(null)
+  }
+
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
 
@@ -266,7 +273,11 @@ const BirthForm = forwardRef<BirthFormHandle, Props>(function BirthForm({ onSubm
 
     const state: SavedFormState = {
       year, month, day, hour, minute, gender, unknownTime, jasiMethod,
-      city: selectedCity, manualCoords, latitude: resolvedLatitude, longitude: resolvedLongitude,
+      city: selectedCity, countryCode, manualCoords, latitude: resolvedLatitude, longitude: resolvedLongitude,
+    }
+    if (state.day < 1 || state.day > new Date(state.year, state.month, 0).getDate()) {
+      setTimezoneError(t('form.invalidDate'))
+      return
     }
     const validationError = getTimezoneValidationError(state)
     if (validationError) {
@@ -274,32 +285,34 @@ const BirthForm = forwardRef<BirthFormHandle, Props>(function BirthForm({ onSubm
       return
     }
     setTimezoneError(null)
-    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)) } catch { /* quota exceeded — ignore */ }
+    if (rememberInput) {
+      try { localStorage.setItem(BIRTH_FORM_STORAGE_KEY, JSON.stringify(state)) } catch { /* quota exceeded — ignore */ }
+    }
     const birthInput = buildBirthInput(state)
     if (!birthInput) return
     onSubmit(birthInput)
   }
 
-  return (
-    <form onSubmit={handleSubmit} className="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-700 p-5 shadow-sm dark:shadow-none">
-      <div className="flex flex-col items-center md:flex-row md:items-start gap-5">
-        {/* 로고 */}
-        <div className="flex flex-col items-center shrink-0">
-          <img
-            src={logo}
-            alt="혼천의"
-            className="w-48 md:w-64"
-          />
-          <span className="text-base text-gray-400 dark:text-gray-500 font-hanja -mt-1">혼천의(渾天儀)</span>
-        </div>
+  const locationModeControls = <div className="fate-location-mode inline-flex h-10 rounded-lg bg-[#f0e5d6] p-1 mb-2">
+    <button type="button" aria-pressed={!manualCoords} onClick={() => { setManualCoords(false); setTimezoneError(null); if (selectedCity) syncCoordinates(selectedCity.lat, selectedCity.lon) }} className={`px-4 text-base rounded-md transition-all ${!manualCoords ? 'bg-[#e9bf81] text-[#10243b] shadow-sm font-medium' : 'text-[#786349] hover:text-[#273b52]'}`}>{t('form.citySearch')}</button>
+    <button type="button" aria-pressed={manualCoords} onClick={() => { setManualCoords(true); setTimezoneError(null) }} className={`px-4 text-base rounded-md transition-all ${manualCoords ? 'bg-[#e9bf81] text-[#10243b] shadow-sm font-medium' : 'text-[#786349] hover:text-[#273b52]'}`}>{t('form.coordInput')}</button>
+  </div>
+  const locationDiagnostics = <>
+    {locationSummary && <p className="mt-2 text-xs text-[#755632] leading-relaxed">{locationSummary}</p>}
+    {timezoneDisplayLabel && <p className="mt-1.5 text-sm text-[#755632] leading-relaxed">{t('form.timezoneDefault')} {timezoneDisplayLabel}{isDstActive && <span className="block text-xs mt-0.5">↳ {t('form.dstActive')}</span>}</p>}
+  </>
 
-        {/* 폼 필드 전체 */}
+  return (
+    <form onSubmit={handleSubmit} className={`fate-birth-form ${compact ? 'fate-birth-form-compact' : ''} w-full min-w-0 p-4 pt-3 sm:px-6 sm:pb-5`}>
+      <div className="w-full">
+        {/* Compact birth form for the English-first experience */}
         <div className="w-full min-w-0">
           {/* 생년월일 */}
           <fieldset>
-            <legend className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">{t('form.birthDate')}</legend>
-            <div className="grid grid-cols-3 gap-2">
+            <legend className="text-sm font-medium text-[#755632] mb-2">{t('form.birthDate')}</legend>
+            <div className="grid grid-cols-3 gap-1.5 sm:gap-2">
               <select
+                aria-label={t('home.form.year')}
                 value={year}
                 onChange={e => setYear(Number(e.target.value))}
                 className={selectClass}
@@ -310,6 +323,7 @@ const BirthForm = forwardRef<BirthFormHandle, Props>(function BirthForm({ onSubm
                 })}
               </select>
               <select
+                aria-label={t('home.form.month')}
                 value={month}
                 onChange={e => setMonth(Number(e.target.value))}
                 className={selectClass}
@@ -319,11 +333,12 @@ const BirthForm = forwardRef<BirthFormHandle, Props>(function BirthForm({ onSubm
                 ))}
               </select>
               <select
+                aria-label={t('home.form.day')}
                 value={day}
                 onChange={e => setDay(Number(e.target.value))}
                 className={selectClass}
               >
-                {Array.from({ length: 31 }, (_, i) => (
+                {Array.from({ length: daysInSelectedMonth }, (_, i) => (
                   <option key={i + 1} value={i + 1}>{`${i + 1}${t('form.daySuffix')}`}</option>
                 ))}
               </select>
@@ -344,20 +359,21 @@ const BirthForm = forwardRef<BirthFormHandle, Props>(function BirthForm({ onSubm
           {/* 시간 + 성별 */}
           <fieldset className="mt-4">
             <div className="flex items-center justify-between mb-2">
-              <legend className="text-sm font-medium text-gray-500 dark:text-gray-400">{t('form.time')}</legend>
+              <legend className="text-sm font-medium text-[#755632]">{t('form.time')}</legend>
               <label className="flex items-center gap-1.5 cursor-pointer">
                 <input
                   type="checkbox"
                   checked={unknownTime}
                   onChange={e => setUnknownTime(e.target.checked)}
-                  className="sr-only peer"
+                  className="sr-only peer focus-visible:ring-2"
                 />
-                <div className="w-8 h-[18px] bg-gray-200 dark:bg-gray-700 rounded-full peer-checked:bg-gray-800 dark:peer-checked:bg-gray-200 relative transition-colors after:content-[''] after:absolute after:top-[3px] after:left-[3px] after:w-3 after:h-3 after:bg-white after:rounded-full after:transition-transform peer-checked:after:translate-x-3.5" />
-                <span className="text-sm text-gray-500 dark:text-gray-400">{t('form.unknown')}</span>
+                <div className="w-8 h-[18px] bg-[#d7c8b5] rounded-full peer-checked:bg-[#b98b49] relative transition-colors after:content-[''] after:absolute after:top-[3px] after:left-[3px] after:w-3 after:h-3 after:bg-white after:rounded-full after:transition-transform peer-checked:after:translate-x-3.5" />
+                <span className="text-sm text-[#755632]">{t('form.unknown')}</span>
               </label>
             </div>
-            <div className="grid grid-cols-2 sm:grid-cols-[1fr_1fr_auto] gap-2 items-end">
+            <div className="fate-birth-time-row grid grid-cols-2 gap-2 items-end sm:grid-cols-[1fr_1fr_1.35fr]">
               <select
+                aria-label={t('home.form.hour')}
                 value={hour}
                 onChange={e => setHour(Number(e.target.value))}
                 disabled={unknownTime}
@@ -368,6 +384,7 @@ const BirthForm = forwardRef<BirthFormHandle, Props>(function BirthForm({ onSubm
                 ))}
               </select>
               <select
+                aria-label={t('home.form.minute')}
                 value={minute}
                 onChange={e => setMinute(Number(e.target.value))}
                 disabled={unknownTime}
@@ -379,20 +396,22 @@ const BirthForm = forwardRef<BirthFormHandle, Props>(function BirthForm({ onSubm
               </select>
 
               {/* 성별 — segmented control */}
-              <div>
-                <div className="inline-flex h-10 rounded-lg bg-gray-100 dark:bg-gray-800 p-1">
+              <div className="col-span-2 sm:col-span-1" role="group" aria-labelledby="birth-gender-label">
+                <p id="birth-gender-label" className="mb-1.5 text-sm font-medium text-[#755632]">{t('home.form.gender')}</p>
+                <div className="inline-flex min-h-12 w-full rounded-lg bg-[#f0e5d6] p-1">
                   {(['M', 'F'] as const).map(g => (
                     <button
                       key={g}
                       type="button"
                       onClick={() => setGender(g)}
-                      className={`px-4 text-base rounded-md transition-all ${
+                      aria-pressed={gender === g}
+                      className={`min-h-10 flex-1 px-3 text-base rounded-md transition-all ${
                         gender === g
-                          ? 'bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 shadow-sm font-medium'
-                          : 'text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200'
+                          ? 'bg-[#e9bf81] text-[#10243b] shadow-sm font-medium'
+                          : 'text-[#786349] hover:text-[#273b52]'
                       }`}
                     >
-                      {g === 'M' ? t('form.male') : t('form.female')}
+                      {g === 'M' ? t('home.form.male') : t('home.form.female')}
                     </button>
                   ))}
                 </div>
@@ -402,47 +421,16 @@ const BirthForm = forwardRef<BirthFormHandle, Props>(function BirthForm({ onSubm
 
           {/* 위치 */}
           <fieldset className="mt-4">
-            <legend className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">{t('form.birthPlace')}</legend>
-            <div className="inline-flex h-10 rounded-lg bg-gray-100 dark:bg-gray-800 p-1 mb-2">
-              <button
-                type="button"
-                onClick={() => {
-                  setManualCoords(false)
-                  setTimezoneError(null)
-                  if (selectedCity) {
-                    syncCoordinates(selectedCity.lat, selectedCity.lon)
-                  }
-                }}
-                className={`px-4 text-base rounded-md transition-all ${
-                  !manualCoords
-                    ? 'bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 shadow-sm font-medium'
-                    : 'text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200'
-                }`}
-              >
-                {t('form.citySearch')}
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  setManualCoords(true)
-                  setTimezoneError(null)
-                }}
-                className={`px-4 text-base rounded-md transition-all ${
-                  manualCoords
-                    ? 'bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 shadow-sm font-medium'
-                    : 'text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200'
-                }`}
-              >
-                {t('form.coordInput')}
-              </button>
-            </div>
+            <legend className="text-sm font-medium text-[#755632] mb-2">{t('form.birthPlace')}</legend>
+            {!compact && locationModeControls}
             {manualCoords ? (
               <div className="grid grid-cols-2 gap-2">
                 <div>
-                  <label className="block text-sm text-gray-400 dark:text-gray-500 mb-1">{t('form.latitude')}</label>
+                  <label htmlFor="birth-latitude" className="block text-sm text-[#755632] mb-1">{t('form.latitude')}</label>
                   <input
                     type="text"
                     inputMode="decimal"
+                    id="birth-latitude"
                     value={latitudeInput}
                     onChange={e => handleCoordinateChange(e.target.value, setLatitudeInput, setLatitude)}
                     onBlur={() => setLatitudeInput(formatCoordinate(latitude))}
@@ -453,10 +441,11 @@ const BirthForm = forwardRef<BirthFormHandle, Props>(function BirthForm({ onSubm
                   />
                 </div>
                 <div>
-                  <label className="block text-sm text-gray-400 dark:text-gray-500 mb-1">{t('form.longitude')}</label>
+                  <label htmlFor="birth-longitude" className="block text-sm text-[#755632] mb-1">{t('form.longitude')}</label>
                   <input
                     type="text"
                     inputMode="decimal"
+                    id="birth-longitude"
                     value={longitudeInput}
                     onChange={e => handleCoordinateChange(e.target.value, setLongitudeInput, setLongitude)}
                     onBlur={() => setLongitudeInput(formatCoordinate(longitude))}
@@ -468,30 +457,17 @@ const BirthForm = forwardRef<BirthFormHandle, Props>(function BirthForm({ onSubm
                 </div>
               </div>
             ) : (
-              <>
-                <CityCombobox selectedCity={selectedCity} onSelect={handleCitySelect} />
-                <p className="mt-1.5 text-sm text-gray-400 dark:text-gray-500 leading-relaxed">
-                  {locationSummary}
-                </p>
-              </>
+              <div className={compact ? 'fate-birth-place-fields' : undefined}>
+                <div><label htmlFor="birth-country" className="block text-sm text-[#755632] mb-1">{t('city.country')}</label>
+                <select id="birth-country" value={countryCode} className={`${selectClass} mb-3`} onChange={e => { setCountryCode(e.target.value); clearCitySelection() }}>
+                  {countries.map(country => <option key={country.code} value={country.code}>{country.name}</option>)}
+                </select></div>
+                <CityCombobox key={countryCode} compact={compact} countryCode={countryCode} selectedCity={selectedCity} onSelect={handleCitySelect} onSelectionInvalidated={clearCitySelection} />
+              </div>
             )}
-            {manualCoords && (
-              <p className="mt-1.5 text-sm text-gray-400 dark:text-gray-500 leading-relaxed">
-                {locationSummary}
-              </p>
-            )}
-            {timezoneDisplayLabel && (
-              <p className="mt-1.5 text-sm text-gray-400 dark:text-gray-500 leading-relaxed">
-                {t('form.timezoneDefault')} {timezoneDisplayLabel}
-                {isDstActive && (
-                  <span className="block text-xs mt-0.5">
-                    ↳ {t('form.dstActive')}
-                  </span>
-                )}
-              </p>
-            )}
+            {compact ? <details className="fate-birth-location-details"><summary>{t('entry.form.locationDetails')}</summary><div>{locationModeControls}{locationDiagnostics}</div></details> : locationDiagnostics}
             {timezoneError && (
-              <div className="mt-2 px-3 py-2 bg-red-50 dark:bg-red-950 border border-red-200 dark:border-red-800 rounded-lg text-sm text-red-700 dark:text-red-400 leading-relaxed">
+              <div role="alert" className="mt-2 px-3 py-2 bg-red-50 dark:bg-red-950 border border-red-200 dark:border-red-800 rounded-lg text-sm text-red-700 dark:text-red-400 leading-relaxed">
                 {timezoneError}
               </div>
             )}
@@ -503,7 +479,8 @@ const BirthForm = forwardRef<BirthFormHandle, Props>(function BirthForm({ onSubm
               <button
                 type="button"
                 onClick={() => setShowAdvanced(v => !v)}
-                className="flex items-center gap-1 text-sm text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
+                aria-expanded={showAdvanced}
+                className="flex items-center gap-1 text-sm text-[#755632] hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
               >
                 <svg
                   className={`w-3 h-3 transition-transform ${showAdvanced ? 'rotate-90' : ''}`}
@@ -518,8 +495,8 @@ const BirthForm = forwardRef<BirthFormHandle, Props>(function BirthForm({ onSubm
               </button>
               {showAdvanced && (
                 <fieldset className="mt-2">
-                  <legend className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">{t('form.jasiMethod')}</legend>
-                  <div className="inline-flex h-10 rounded-lg bg-gray-100 dark:bg-gray-800 p-1">
+                  <legend className="text-sm font-medium text-[#755632] mb-2">{t('form.jasiMethod')}</legend>
+                  <div className="inline-flex h-10 rounded-lg bg-[#f0e5d6] p-1">
                     {([
                       { value: 'unified' as const, label: t('form.unified') },
                       { value: 'split' as const, label: t('form.split') },
@@ -530,15 +507,15 @@ const BirthForm = forwardRef<BirthFormHandle, Props>(function BirthForm({ onSubm
                         onClick={() => setJasiMethod(opt.value)}
                         className={`px-4 text-base rounded-md transition-all ${
                           jasiMethod === opt.value
-                            ? 'bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 shadow-sm font-medium'
-                            : 'text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200'
+                            ? 'bg-[#e9bf81] text-[#10243b] shadow-sm font-medium'
+                            : 'text-[#786349] hover:text-[#273b52]'
                         }`}
                       >
                         {opt.label}
                       </button>
                     ))}
                   </div>
-                  <p className="mt-1.5 text-sm text-gray-400 dark:text-gray-500 leading-relaxed">
+                  <p className="mt-1.5 text-sm text-[#755632] leading-relaxed">
                     {jasiMethod === 'unified'
                       ? t('form.unifiedDesc')
                       : t('form.splitDesc')}
@@ -551,12 +528,12 @@ const BirthForm = forwardRef<BirthFormHandle, Props>(function BirthForm({ onSubm
           {/* 계산 버튼 */}
           <button
             type="submit"
-            className="mt-5 w-full h-11 bg-gray-800 dark:bg-gray-200 text-white dark:text-gray-900 text-base font-medium rounded-lg hover:bg-gray-700 dark:hover:bg-gray-300 active:scale-[0.98] transition-all"
+            className="mt-5 w-full min-h-12 bg-gradient-to-r from-[#e9c384] to-[#bd873d] text-[#13243a] text-base font-semibold rounded-full active:scale-[0.98] transition-all shadow-md shadow-[#c49a57]/15 hover:brightness-105 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#996626]"
           >
-            {t('form.calculate')}
+            {submitLabel ?? t('home.form.submit')} <span aria-hidden="true">→</span>
           </button>
 
-          <p className="mt-3 text-center text-sm text-gray-400 dark:text-gray-500 leading-relaxed">
+          <p className="mt-3 text-center text-[11px] text-[#755632] leading-relaxed">
             🔒 {t('form.privacy1')}<br />
             {t('form.privacy2')}
           </p>

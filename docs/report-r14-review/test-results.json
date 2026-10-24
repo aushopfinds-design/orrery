@@ -1,0 +1,17 @@
+{
+  "numTotalTests": 754,
+  "numPassedTests": 754,
+  "numFailedTests": 0,
+  "success": true,
+  "edition": "2026.10-r14",
+  "typeCheck": "passed",
+  "build": "passed",
+  "lint": "passed",
+  "publicContentPathsBuilt": 21,
+  "buyers": 24,
+  "outputs": 168,
+  "realPaymentRun": false,
+  "productionReportEngineChanged": false,
+  "pricingChanged": false,
+  "assessment": "Implementation verified; final customer-content approval withheld pending review of revised manuscript."
+}

@@ -1,4 +1,14 @@
 {
+  "compilerOptions": {
+    "target": "ES2023",
+    "jsx": "react-jsx",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "rewriteRelativeImportExtensions": true,
+    "skipLibCheck": true,
+    "baseUrl": ".",
+    "paths": { "@orrery/core/*": ["./packages/core/src/*"] }
+  },
   "files": [],
   "references": [
     { "path": "./tsconfig.app.json" },

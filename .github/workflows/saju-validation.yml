@@ -1,0 +1,24 @@
+name: Saju calculation and reading validation
+on:
+  push:
+    branches:
+      - feature/english-saju-report-20261013
+  pull_request:
+  workflow_dispatch:
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - name: Install locked dependencies
+        run: bun install --frozen-lockfile
+      - name: Run complete test suite
+        run: bunx vitest run
+      - name: Typecheck and production build
+        run: bun run build
+      - name: Lint
+        run: bun run lint

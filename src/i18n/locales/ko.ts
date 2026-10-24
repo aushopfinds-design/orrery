@@ -1,4 +1,22 @@
+import { homepageCopy } from '../homepage.ts'
+
 const ko: Record<string, string> = {
+  ...homepageCopy,
+  "letter.name.label": "편지에 쓸 이름 (선택)",
+  "letter.name.note": "40자 이내의 이름이나 별명을 입력하세요. 주문과 함께 저장되어 편지에 표시되며 사주 계산에는 쓰이지 않습니다.",
+  "city.country": "국가 또는 지역",
+  "city.suggestions": "추천 출생지",
+  "city.typeToSearch": "두 글자 이상 입력하면 선택한 국가의 출생지를 검색합니다.",
+  "city.searchHint": "출생지 이름을 입력하고 검색 결과를 선택하세요. 작은 읍·마을도 검색할 수 있습니다.",
+  "city.loading": "출생지를 검색하고 있습니다…",
+  "city.searchError": "검색을 사용할 수 없습니다. 다시 시도하거나 좌표를 입력하세요.",
+  "city.retry": "다시 시도",
+  "city.attribution": "출생지 데이터:",
+  "city.selectionRequired": "검색 결과에서 도시·읍·마을을 선택하거나 좌표를 입력하세요.",
+  "form.invalidDate": "올바른 날짜를 선택하세요.",
+  "city.popular": "추천 도시",
+  "city.results": "검색 결과",
+  "city.birthCity": "도시·읍·마을",
   // App
   'app.subtitle1': '서버 없이 브라우저에서 동작하는',
   'app.subtitle.tool': '사주팔자 · 자미두수 · 서양 점성술',
@@ -7,7 +25,8 @@ const ko: Record<string, string> = {
   'app.profileManage': '프로필 관리',
   'app.tab.saju': '사주팔자',
   'app.tab.ziwei': '자미두수',
-  'app.tab.natal': '출생차트',
+  'app.tab.natal': '출생차트',  'app.tab.reading': '영어 사주 리포트',
+
   'app.copyAll': 'AI 해석용',
   'app.copyAllSub': '전부 복사',
   'app.intro': '소개글',
@@ -43,8 +62,8 @@ const ko: Record<string, string> = {
   'form.unifiedDesc': '23:30부터 子시, 일주를 다음날로 넘깁니다.',
   'form.splitDesc': '23:30~00:00(야자시)은 子시이나, 일주는 당일 유지합니다.',
   'form.calculate': '계산',
-  'form.privacy1': '모든 계산은 브라우저에서 처리되며,',
-  'form.privacy2': '입력하신 정보는 어떤 서버에도 전송되지 않습니다.',
+  "form.privacy1": "출생 날짜와 시간은 이 기기에만 보관됩니다.",
+  "form.privacy2": "출생지 검색에는 지명과 국가만 전송됩니다.",
 
   // CopyButton
   'copy.copy': '복사',
@@ -63,10 +82,10 @@ const ko: Record<string, string> = {
   'date.monthDay': '{m}월 {d}일',
 
   // CityCombobox
-  'city.noResults': '검색 결과 없음',
+  "city.noResults": "출생지를 찾지 못했습니다. 다른 표기로 검색하거나 좌표를 입력하세요.",
   'city.korea': '한국',
   'city.world': '세계',
-  'city.placeholder': '도시 이름을 입력하세요',
+  "city.placeholder": "도시 또는 마을 이름 검색",
 
   // Guide
   'guide.title': '사용 방법',
@@ -188,6 +207,45 @@ const ko: Record<string, string> = {
   'zodiac.short.Aries': '양', 'zodiac.short.Taurus': '황소', 'zodiac.short.Gemini': '쌍둥이', 'zodiac.short.Cancer': '게',
   'zodiac.short.Leo': '사자', 'zodiac.short.Virgo': '처녀', 'zodiac.short.Libra': '천칭', 'zodiac.short.Scorpio': '전갈',
   'zodiac.short.Sagittarius': '궁수', 'zodiac.short.Capricorn': '염소', 'zodiac.short.Aquarius': '물병', 'zodiac.short.Pisces': '물고기',
+  // Private Sandbox controls; report delivery is English-only.
+  "sandbox.title": "Private Sandbox checkout",
+  "sandbox.note": "Test payments only. No real money is charged. Reports are in English.",
+  "sandbox.access": "Tester access code",
+  "sandbox.buy": "Buy test report",
+  "sandbox.opening": "Opening test checkout…",
+  "sandbox.error": "Could not open checkout. Please try again.",
+  "sandbox.missingAccess": "This browser does not have the private key for this order. Return using the browser where you started the purchase.",
+  "sandbox.verifyError": "The report could not be verified. Retry to check the payment again.",
+  "sandbox.verifying": "Checking payment and preparing your report…",
+  "sandbox.buyer": "Your private Sandbox purchase",
+  "sandbox.cancelled": "Checkout was cancelled. Your report remains locked until payment is verified.",
+  "sandbox.retry": "Check payment again",
+  "sandbox.download": "Download full PDF",
+  "sandbox.issued": "Issued",
+  "sandbox.home": "Explore the 7 Sandbox report products →",
+
+  "sandbox.data": "Your test birth details are sent to our server and stored encrypted to issue the report. Stripe handles card details.",
+
+  "sandbox.paymentPending": "아직 결제 완료가 확인되지 않았어요. 새로 구매하지 않고 다시 확인할 수 있어요.",
+  "sandbox.stillPreparing": "리포트를 준비하고 있어요. 잠시 후 다시 확인해 주세요.",
+  "sandbox.downloadError": "PDF를 다운로드하지 못했어요. 리포트는 그대로 있으니 다시 시도해 주세요.",
+  "sandbox.downloading": "PDF 다운로드를 준비하고 있어요…",
+  "sandbox.orderReference": "주문 번호",
+
+  'card.export.png': "카드 이미지 저장",
+  'card.export.mp4': "움직이는 카드 저장 (MP4)",
+  'card.export.note': "6초 무음 영상, 1080 × 1350. 저장하는 동안 이 화면을 열어 두세요. 파일은 내 기기에서 만들어집니다.",
+  'card.export.progress': "카드 준비 중… {percent}%",
+  'card.export.unsupported': "이 브라우저는 MP4 저장을 지원하지 않습니다. 최신 Chrome 또는 Safari를 사용하거나 이미지를 저장해 주세요.",
+  'card.export.error': "카드를 저장하지 못했습니다. 이 화면을 열어 둔 채 다시 시도해 주세요.",
+  'card.export.done': "카드 파일을 저장할 수 있어요.",
+  'purchase.buy': "리포트 구매",
+  'purchase.testBuy': "테스트 구매",
+  'purchase.heading': "선택한 리포트",
+  'purchase.needDetails': "아래에서 필요한 출생 정보를 입력하면 결제로 이어집니다. 2인 리포트는 상대방의 정보도 필요합니다.",
+  'purchase.testNote': "비공개 테스트 결제입니다. 테스트 접근 코드를 입력하면 결제 버튼이 활성화됩니다. 실제 돈은 청구되지 않습니다.",
+  'purchase.checkout': '결제',
+  'purchase.continue': '결제로 계속하기',
 }
 
 export default ko

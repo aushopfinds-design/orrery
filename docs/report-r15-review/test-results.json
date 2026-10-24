@@ -1,0 +1,17 @@
+{
+  "numTotalTests": 757,
+  "numPassedTests": 757,
+  "numFailedTests": 0,
+  "success": true,
+  "edition": "2026.10-r15",
+  "typeCheck": "passed",
+  "lint": "passed",
+  "build": "passed",
+  "publicContentPathsBuilt": 21,
+  "distinctBirthInputs": 24,
+  "productOutputs": 168,
+  "realPaymentRun": false,
+  "productionChanged": false,
+  "pricingChanged": false,
+  "scope": "Customer text, period classification preservation, bilingual delivery coverage, chapter difference, fixed table output and current preview. Not an independent expert review or reader satisfaction result."
+}

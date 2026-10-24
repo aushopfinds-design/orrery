@@ -1,4 +1,22 @@
+import { homepageCopy } from '../homepage.ts'
+
 const es: Record<string, string> = {
+  ...homepageCopy,
+  "letter.name.label": "Nombre en tu carta (opcional)",
+  "letter.name.note": "Usa tu nombre o apodo, hasta 40 caracteres. Se guarda con el pedido y aparece en tu carta; no cambia el cálculo.",
+  "city.country": "País o territorio",
+  "city.suggestions": "Lugares sugeridos",
+  "city.typeToSearch": "Escriba al menos 2 caracteres para buscar lugares en este país.",
+  "city.searchHint": "Escriba el lugar de nacimiento y seleccione un resultado. También puede buscar pueblos y aldeas.",
+  "city.loading": "Buscando lugares…",
+  "city.searchError": "La búsqueda no está disponible. Reintente o introduzca coordenadas.",
+  "city.retry": "Reintentar",
+  "city.attribution": "Datos de lugares:",
+  "city.selectionRequired": "Seleccione una ciudad, pueblo o aldea de los resultados, o introduzca coordenadas.",
+  "form.invalidDate": "Seleccione una fecha válida.",
+  "city.popular": "Ciudades populares",
+  "city.results": "Resultados",
+  "city.birthCity": "Ciudad, pueblo o aldea",
   // App
   'app.subtitle1': 'Calculadora de',
   'app.subtitle.tool': 'Saju · Zi Wei Dou Shu · Carta natal',
@@ -7,7 +25,8 @@ const es: Record<string, string> = {
   'app.profileManage': 'Gestionar perfiles',
   'app.tab.saju': 'Saju (四柱八字)',
   'app.tab.ziwei': 'Zi Wei Dou Shu (紫微斗数)',
-  'app.tab.natal': 'Carta natal',
+  'app.tab.natal': 'Carta natal',  'app.tab.reading': 'Informe en inglés',
+
   'app.copyAll': 'Para lectura con IA',
   'app.copyAllSub': 'Copiar todo',
   'app.intro': 'Acerca de',
@@ -43,8 +62,8 @@ const es: Record<string, string> = {
   'form.unifiedDesc': 'A partir de las 23:30 rige la hora 子 y el pilar del día avanza al día siguiente.',
   'form.splitDesc': 'De 23:30 a 00:00 (Ja-si nocturno) rige la hora 子, pero el pilar del día se mantiene en el día actual.',
   'form.calculate': 'Calcular',
-  'form.privacy1': 'Todos los cálculos se realizan en su navegador.',
-  'form.privacy2': 'Sus datos nunca se envían a ningún servidor.',
+  "form.privacy1": "La fecha y hora de nacimiento permanecen en este dispositivo.",
+  "form.privacy2": "La búsqueda solo comparte el nombre del lugar y el país.",
 
   // CopyButton
   'copy.copy': 'Copiar',
@@ -63,10 +82,10 @@ const es: Record<string, string> = {
   'date.monthDay': '{d}/{m}',
 
   // CityCombobox
-  'city.noResults': 'Sin resultados',
+  "city.noResults": "No se encontraron lugares. Pruebe otra escritura o introduzca coordenadas.",
   'city.korea': 'Corea',
   'city.world': 'Mundo',
-  'city.placeholder': 'Introduzca el nombre de la ciudad',
+  "city.placeholder": "Buscar ciudad, pueblo o aldea",
 
   // Guide
   'guide.title': 'Cómo usar',
@@ -188,6 +207,45 @@ const es: Record<string, string> = {
   'zodiac.short.Aries': 'Ari', 'zodiac.short.Taurus': 'Tau', 'zodiac.short.Gemini': 'Gém', 'zodiac.short.Cancer': 'Cán',
   'zodiac.short.Leo': 'Leo', 'zodiac.short.Virgo': 'Vir', 'zodiac.short.Libra': 'Lib', 'zodiac.short.Scorpio': 'Esc',
   'zodiac.short.Sagittarius': 'Sag', 'zodiac.short.Capricorn': 'Cap', 'zodiac.short.Aquarius': 'Acu', 'zodiac.short.Pisces': 'Pis',
+  // Private Sandbox controls; report delivery is English-only.
+  "sandbox.title": "Private Sandbox checkout",
+  "sandbox.note": "Test payments only. No real money is charged. Reports are in English.",
+  "sandbox.access": "Tester access code",
+  "sandbox.buy": "Buy test report",
+  "sandbox.opening": "Opening test checkout…",
+  "sandbox.error": "Could not open checkout. Please try again.",
+  "sandbox.missingAccess": "This browser does not have the private key for this order. Return using the browser where you started the purchase.",
+  "sandbox.verifyError": "The report could not be verified. Retry to check the payment again.",
+  "sandbox.verifying": "Checking payment and preparing your report…",
+  "sandbox.buyer": "Your private Sandbox purchase",
+  "sandbox.cancelled": "Checkout was cancelled. Your report remains locked until payment is verified.",
+  "sandbox.retry": "Check payment again",
+  "sandbox.download": "Download full PDF",
+  "sandbox.issued": "Issued",
+  "sandbox.home": "Explore the 7 Sandbox report products →",
+
+  "sandbox.data": "Your test birth details are sent to our server and stored encrypted to issue the report. Stripe handles card details.",
+
+  "sandbox.paymentPending": "Todavía no hemos confirmado el pago completado. Vuelve a comprobarlo sin hacer otra compra.",
+  "sandbox.stillPreparing": "Tu informe aún se está preparando. Vuelve a comprobarlo en unos momentos.",
+  "sandbox.downloadError": "No se pudo descargar el PDF. Tu informe sigue disponible; inténtalo de nuevo.",
+  "sandbox.downloading": "Preparando la descarga del PDF…",
+  "sandbox.orderReference": "Referencia del pedido",
+
+  'card.export.png': "Guardar imagen de la tarjeta",
+  'card.export.mp4': "Guardar tarjeta animada (MP4)",
+  'card.export.note': "Vídeo de seis segundos sin sonido, 1080 × 1350. Mantén esta página visible mientras se guarda. Los archivos se crean en tu dispositivo.",
+  'card.export.progress': "Preparando tu tarjeta… {percent}%",
+  'card.export.unsupported': "Este navegador no puede guardar MP4. Usa Chrome o Safari actualizado, o guarda la imagen.",
+  'card.export.error': "No se pudo guardar la tarjeta. Mantén esta página abierta e inténtalo de nuevo.",
+  'card.export.done': "El archivo de tu tarjeta está listo para guardar.",
+  'purchase.buy': "Comprar informe",
+  'purchase.testBuy': "Compra de prueba",
+  'purchase.heading': "Tu informe seleccionado",
+  'purchase.needDetails': "Introduce los datos de nacimiento necesarios abajo para continuar al pago. Los informes de dos personas también necesitan los datos de la otra persona.",
+  'purchase.testNote': "Pago de prueba privado: introduce tu código de acceso de pruebas para activar el botón de pago. No se cobra dinero real.",
+  'purchase.checkout': 'Pago',
+  'purchase.continue': 'Continuar al pago',
 }
 
 export default es

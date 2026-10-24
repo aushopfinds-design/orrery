@@ -1,0 +1,324 @@
+/* The Fate Key: warm ivory, sculpted gold and navy, lit from the upper left.
+   Screen-only surface treatment keeps report pagination and PDF colours intact. */
+@media screen {
+  .fate-site {
+    --fate-depth-paper: linear-gradient(145deg, #fffefa 0%, #fff9ef 55%, #f1e3ce 100%);
+    --fate-depth-gold: linear-gradient(165deg, #fff0bd 0%, #edca88 36%, #d6ab66 68%, #bd8b43 100%);
+    --fate-depth-night: linear-gradient(150deg, #25465b 0%, #122c42 46%, #071929 100%);
+    --fate-depth-panel: inset 0 2px 1px #ffffffeb, inset 1px 0 0 #ffffff80, 0 3px 0 #c6b18f, 0 7px 0 -3px #e0cfb4, 0 20px 36px -16px #59412952;
+    --fate-depth-tile: inset 0 2px 1px #fffef5, inset 0 -1px 1px #b5986d33, 0 4px 0 #c8af8b, 0 9px 16px -5px #6b503b38;
+    --fate-depth-inset: inset 0 2px 5px #75532a20, inset 0 -1px 0 #fff, 0 1px 0 #fffdf5;
+    --fate-depth-button: inset 0 2px 1px #fff4cecc, inset 0 -2px 1px #8a5c214d, 0 4px 0 #8c652f, 0 9px 17px -5px #6d462d55;
+    --fate-depth-dark-panel: inset 0 1px 0 #b9d6e62e, inset 1px 0 0 #d6e6e812, 0 4px 0 #020d17, 0 16px 32px -13px #020b18a3;
+    background: radial-gradient(ellipse at 5% 850px, #fffdf6 0, transparent 48%), linear-gradient(110deg, #eee1cf 0%, #fbf5ec 19%, #f8f0e4 78%, #eadbc4 100%);
+  }
+
+  /* A solid metal edge and a shaded underside ground the illustrated hero. */
+  .fate-site .fate-hero {
+    border-bottom: 2px solid #9f7c46;
+    box-shadow: inset 0 -1px 0 #ffe0a366, 0 6px 0 #d9c4a1, 0 16px 30px -15px #46321f80;
+  }
+  .fate-site .fate-nav {
+    background: linear-gradient(180deg, #1a35453b, #04132208);
+    border-bottom: 1px solid #d6b77c24;
+    box-shadow: 0 1px 0 #0000004d;
+  }
+  .fate-site .fate-brand-emblem {
+    box-shadow: inset 0 1px 1px #fff3c180, 0 2px 0 #8a6834, 0 6px 12px #0009;
+    outline: 1px solid #d6b67e55;
+    outline-offset: 2px;
+  }
+  .fate-site .fate-brand strong { text-shadow: 0 1px 0 #fff0be33, 0 3px 4px #0009; }
+  .fate-site .fate-hero-intro h1 { text-shadow: 0 2px 0 #010b16, 0 5px 18px #0005; }
+  .fate-site .fate-hero-intro h1 em { text-shadow: 0 1px 0 #ffe8b533, 0 3px 0 #2b210c, 0 5px 18px #0005; }
+  .fate-site :is(.fate-menu-button,.fate-saved-button,.fate-hero-motion-button) {
+    background: var(--fate-depth-night);
+    border-color: #b59a686b;
+    box-shadow: inset 0 1px 0 #e6ce9c45, inset 0 -1px 0 #0007, 0 3px 0 #020d17, 0 7px 13px #0004;
+  }
+  .fate-site .fate-mobile-menu {
+    background: linear-gradient(145deg,#213c50,#071d30);
+    border-color: #ad8a55;
+    box-shadow: inset 0 1px 0 #e4ca9666, 0 4px 0 #020e1b, 0 24px 45px #0008;
+  }
+
+  /* Raised paper panels have a visible edge even without hover. */
+  .fate-site :is(.fate-birth-panel,.fate-personal-birth-form,.fate-buyer-feature,.fate-buyer-comparison,.fate-sample-card,.fate-about-card,.fate-bundle-offer,.fate-personal-subjects,.fate-personal-order-summary,.fate-personal-next,.fate-category-picker,.fate-personal-preview-controls,.fate-info-status,.fate-clear-data,.fate-load-error) {
+    background: var(--fate-depth-paper);
+    border-color: #ceb78f #c8ad83 #b2966b #ddc9a9;
+    box-shadow: var(--fate-depth-panel);
+  }
+  .fate-site .fate-birth-panel {
+    box-shadow: inset 0 2px 1px #fff, inset 1px 0 0 #fff8, 0 5px 0 #bba27b, 0 10px 0 -4px #e1cfb0, 0 25px 55px #0007;
+    border-radius: 20px;
+  }
+  .fate-site .fate-birth-heading {
+    background: var(--fate-depth-gold);
+    border: 1px solid #c49c5f;
+    box-shadow: var(--fate-depth-button);
+    color: #263344;
+    text-shadow: 0 1px 0 #fff1c480;
+  }
+  .fate-site .fate-birth-description { margin-top: 17px; }
+  .fate-site .fate-buyer-feature { background: linear-gradient(135deg,#e9d5b2,#fff9ed 60%,#f0e0c3); }
+  .fate-site .fate-sample-card { background: linear-gradient(135deg,#f9f0df,#e9d8bf); }
+  .fate-site .fate-bundle-offer { background: linear-gradient(125deg,#f5e8d2,#fff9ed 68%,#e6d2af); }
+  .fate-site .fate-personal-order-summary { background: linear-gradient(150deg,#fff2d8,#e8d1aa); }
+  .fate-site .fate-benefits { gap: 12px; padding-top: 34px; padding-bottom: 30px; }
+  .fate-site .fate-benefits > div {
+    padding: 20px 16px;
+    border: 1px solid #decaab;
+    border-radius: 14px;
+    background: linear-gradient(145deg,#fffaf0,#f3e7d5);
+    box-shadow: inset 0 1px 0 #fff, 0 3px 0 #dac6a5, 0 9px 18px -9px #6f543e40;
+  }
+  .fate-site .fate-benefit-icon { text-shadow: 0 1px 0 #fff, 0 3px 3px #78592d33; }
+
+  /* The catalog tray is recessed; each choice stands above it like a tile. */
+  .fate-site .fate-catalog-shortcuts {
+    background: linear-gradient(150deg,#e8d8bd,#f9f0df 55%,#ecdfc9);
+    border-color: #c4aa80;
+    box-shadow: inset 0 2px 7px #70502929, inset 0 -1px 0 #fff9, 0 2px 0 #fffcf5, 0 12px 24px -16px #60452c52;
+  }
+  .fate-site .fate-catalog-shortcuts > div { gap: 15px 12px; }
+  .fate-site .fate-catalog-shortcuts a {
+    min-height: 58px;
+    gap: 11px;
+    padding: 11px 13px;
+    background: var(--fate-depth-paper);
+    border-color: #e4d0ad #cbb087 #b69a71 #e8d7bb;
+    box-shadow: var(--fate-depth-tile);
+    transform: translateY(0);
+    transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+  }
+  .fate-site .fate-catalog-shortcuts a > svg {
+    flex: 0 0 32px;
+    width: 32px;
+    height: 32px;
+    padding: 6px;
+    border: 1px solid #d8b985;
+    border-radius: 10px;
+    background: linear-gradient(145deg,#fff2cc,#e5c994);
+    color: #856132;
+    box-shadow: inset 0 1px 0 #fff9, 0 2px 0 #c6a679, 0 4px 7px #8b66351f;
+  }
+  .fate-site .fate-catalog-shortcuts a > strong {
+    padding: 5px 7px;
+    max-width: 108px;
+    text-align: right;
+    white-space: normal;
+    border-radius: 7px;
+    background: linear-gradient(150deg,#f4e8d3,#fffbf2);
+    box-shadow: inset 0 1px 3px #73502221, 0 1px 0 #fff;
+    color: #71502a;
+  }
+  .fate-site :is(.fate-catalog-count,.fate-catalog-entry) {
+    background: var(--fate-depth-gold);
+    border-color: #c29c63;
+    box-shadow: inset 0 1px 0 #fff6d8, 0 2px 0 #b38c55, 0 5px 10px #9a723326;
+    color: #5c4223;
+    text-shadow: 0 1px 0 #fff6d866;
+  }
+
+  /* The illustrated cards sit on a thick frame with a softly lit paper body. */
+  .fate-site :is(.fate-product-card,.fate-discovery-card) {
+    border-color: #ddc59e #c5a87d #af9065 #e2cfaf;
+    background: var(--fate-depth-paper);
+    box-shadow: inset 0 1px 0 #fff, 0 5px 0 #c5ac85, 0 9px 0 -3px #e0cfb0, 0 20px 32px -13px #644a3257;
+    transition: transform .22s ease, box-shadow .22s ease;
+  }
+  .fate-site .fate-product-content { background: linear-gradient(145deg,#fffdf7,#fff8ed 65%,#eee0ca); }
+  .fate-site .fate-report-artwork {
+    border-bottom: 1px solid #c2a272;
+    box-shadow: inset 0 0 0 1px #e8c78f40;
+  }
+  .fate-site .fate-report-artwork::after {
+    content: '';
+    position: absolute;
+    z-index: 2;
+    inset: 0;
+    border-radius: inherit;
+    box-shadow: inset 0 2px 0 #fff3ce4d, inset 1px 0 0 #ffe3ab26, inset 0 -6px 12px #020a1459;
+    background: linear-gradient(125deg,#fff3cf1a 0,transparent 27%,transparent 75%,#00000017 100%);
+    pointer-events: none;
+  }
+  .fate-site .fate-report-artwork > svg { filter: drop-shadow(0 1px 0 #fff0ba66) drop-shadow(0 3px 3px #000c); }
+  .fate-site .fate-report-artwork-title { text-shadow: 0 1px 0 #ffebc533, 0 2px 1px #2a1c0b, 0 4px 12px #000c; }
+  .fate-site .fate-product-price { text-shadow: 0 1px 0 #fffdf8; }
+  .fate-site :is(.fate-preview-page,.fate-buyer-book,.fate-complete-book) {
+    box-shadow: inset 3px 0 7px #010a1473, inset -1px 1px 0 #ffdf9b80, -4px 0 0 #a5814d, -7px 0 0 #fff6df, -10px 0 0 #c8b38c, 13px 21px 24px -9px #3f2d2359, 28px 28px 42px -15px #6b4d3b40;
+  }
+
+  /* Controls: bright top bevel, shaded sidewall, then a shorter press state. */
+  .fate-site :is(.fate-complete-primary,.fate-birth-form button[type=submit],.fate-profile-dialog form button[type=submit]) {
+    background: var(--fate-depth-gold);
+    color: #223347;
+    border: 1px solid #b98f50;
+    text-shadow: 0 1px 0 #fff6d380;
+    box-shadow: var(--fate-depth-button);
+    transform: translateY(0);
+    transition: transform .15s ease, box-shadow .15s ease, filter .15s ease;
+  }
+  .fate-site .fate-product-action:not(.fate-product-action-soon) {
+    background: var(--fate-depth-night);
+    border: 1px solid #466072;
+    color: #ffe9bc;
+    box-shadow: inset 0 1px 0 #d8ecf23b, inset 0 -1px 0 #0009, 0 4px 0 #030e1c, 0 9px 17px -5px #1e293b66;
+    text-shadow: 0 1px 2px #000;
+    transform: translateY(0);
+    transition: transform .15s ease, box-shadow .15s ease;
+  }
+  .fate-site :is(.fate-outline-button,.fate-catalog-motion,.fate-info-nav a) {
+    background: linear-gradient(160deg,#fffdf8,#f0e1c8);
+    border-color: #bba078;
+    box-shadow: inset 0 1px 0 #fff, 0 3px 0 #c1a47b, 0 7px 12px -5px #7b5d3d40;
+    color: #71532d;
+    transform: translateY(0);
+    transition: transform .15s ease, box-shadow .15s ease;
+  }
+  .fate-site .fate-info-nav a[aria-current] { background: var(--fate-depth-gold); color: #293d4e; }
+  .fate-site :is(.fate-catalog-motion,.fate-outline-button) { min-height: 44px; }
+  .fate-site :is(.fate-birth-form select,.fate-birth-form input:not([type=checkbox]),.fate-birth-form [role=combobox],.fate-personal-preview-controls select,.fate-category-picker select,.fate-profile-dialog input) {
+    background-color: #fffaf1;
+    border-color: #baa586 #d9c5a5 #e8d8bd #c9b18d;
+    box-shadow: var(--fate-depth-inset);
+  }
+  .fate-site :is(.fate-birth-form select,.fate-birth-form input:not([type=checkbox]),.fate-birth-form [role=combobox],.fate-personal-preview-controls select,.fate-category-picker select,.fate-profile-dialog input):focus-visible {
+    outline: 2px solid #af843f;
+    outline-offset: 2px;
+    box-shadow: inset 0 1px 3px #75532a1a, 0 0 0 4px #dbbb803b;
+  }
+  .fate-site .fate-birth-form .inline-flex:has(> button[aria-pressed]),
+  .fate-site .fate-birth-form .inline-flex:has(> button.shadow-sm) {
+    background: linear-gradient(180deg,#dfcdb0,#f2e5d0);
+    box-shadow: inset 0 2px 4px #76573330, 0 1px 0 #fff;
+  }
+  .fate-site .fate-birth-form :is(button[aria-pressed=true],button.shadow-sm) {
+    background: var(--fate-depth-gold);
+    box-shadow: inset 0 1px 0 #fff2ca, 0 2px 0 #b68b50, 0 4px 7px #80603933;
+    color: #243447;
+  }
+  .fate-site .fate-birth-form [role=listbox] {
+    background: linear-gradient(145deg,#fffdf9,#fbf1e1);
+    border-color: #c5a77b;
+    box-shadow: inset 0 1px 0 #fff, 0 3px 0 #c5ad87, 0 17px 30px #3d2c2540;
+  }
+  .fate-site .fate-birth-form [role=option][aria-selected=true] { background: linear-gradient(130deg,#f3dfbb,#ebd0a0); }
+
+  /* Secondary surfaces keep the same lighting without competing with actions. */
+  .fate-site :is(.fate-complete-chapter-list li,.fate-personal-theme-grid > div,.fate-personal-excerpt,.fate-personal-months li,.fate-guide-reports > section,.fate-guide-reading-tips > div,.fate-help-options > a,.fate-data-summary > div,.fate-more-report-grid > article) {
+    background: var(--fate-depth-paper);
+    border-color: #d8bf98 #cfb28a #bfa178 #e0cdaf;
+    box-shadow: inset 0 1px 0 #fff, 0 3px 0 #d3bd9c, 0 10px 18px -11px #634b3659;
+  }
+  .fate-site .fate-faq details {
+    background: linear-gradient(145deg,#fffcf5,#f4e8d5);
+    border: 1px solid #d4bb95;
+    border-radius: 12px;
+    padding: 19px 21px;
+    margin: 13px 0;
+    box-shadow: inset 0 1px 0 #fff, 0 3px 0 #d2bb97, 0 8px 15px -10px #765b3c59;
+  }
+  .fate-site .fate-faq details[open] { box-shadow: inset 0 2px 5px #91704417, 0 1px 0 #fff; }
+  .fate-site :is(.fate-how-steps li > span,.fate-guide-steps li > span,.fate-report-chapter-icon,.fate-report-period-dot) {
+    box-shadow: inset 0 2px 1px #ffffffb3, inset 0 -2px 2px #8260301f, 0 3px 0 #c4aa81, 0 6px 10px -4px #684e3b40;
+  }
+  .fate-site .fate-complete-table-wrap { box-shadow: inset 0 1px 0 #fff, 0 3px 0 #d2bd9b, 0 9px 18px -9px #77553733; }
+  .fate-site .fate-complete-comparison thead th { background: var(--fate-depth-night); box-shadow: inset 0 1px 0 #b9d4df33, inset 0 -2px 0 #020d174d; }
+  .fate-site .fate-complete-comparison tbody tr { background: #fffaf180; }
+  .fate-site .fate-complete-comparison tbody tr:nth-child(even) { background: #efdfc63b; }
+  .fate-site .fate-complete-comparison tbody td:last-child { background: #ddc39726; }
+  .fate-site .fate-info-heading { box-shadow: var(--fate-depth-dark-panel); border-color: #af8d58; }
+  .fate-site .fate-profile-dialog {
+    background: var(--fate-depth-paper);
+    border: 1px solid #bd9d6b;
+    box-shadow: inset 0 2px 1px #fff, 0 5px 0 #ad926c, 0 30px 85px #020c19a3;
+  }
+
+  /* Reports: a bound navy cover, layered paper pages and recessed annotations. */
+  .fate-site:has(.fate-main-reading) { background: radial-gradient(ellipse at 50% 0,#244052,#0c2234 40%,#061522 100%); }
+  .fate-site .fate-reading-cover {
+    border-color: #c2a06b #987443 #8c6837 #d9bb87;
+    box-shadow: inset 4px 0 8px #020b1680, inset 0 2px 0 #ffe1aa59, 0 5px 0 #030f1c, 0 9px 0 -3px #aa8b5c, 0 23px 40px -12px #010914b3;
+  }
+  .fate-site :is(.fate-reading-cover-emblem,.fate-report-publisher-mark) {
+    box-shadow: inset 0 2px 2px #fff0bf80, inset 0 -2px 4px #7656324d, 0 3px 0 #9c7b47, 0 7px 13px #0003;
+  }
+  .fate-site :is(.fate-report-overview,.fate-complete-reading .fate-reading-chapter) {
+    background: linear-gradient(120deg,#f4e6ce 0,#fffaf0 4%,#fffdf7 55%,#f6ead5 100%);
+    border-color: #e0cda9 #c4a776 #b49360 #e5d5b9;
+    box-shadow: inset 2px 0 5px #8a6a3526, inset 0 1px 0 #fffdf5, 0 3px 0 #d3c09d, 0 6px 0 -1px #f4e9d4, 0 8px 0 -1px #bfa981, 0 20px 32px -10px #020b1780;
+  }
+  .fate-site :is(.fate-sample-notice,.fate-chart-options) {
+    box-shadow: var(--fate-depth-dark-panel);
+  }
+  .fate-site .fate-free-reading :is(.fate-reading-chapter,.fate-reading-summary > div) {
+    background: var(--fate-depth-night);
+    box-shadow: var(--fate-depth-dark-panel);
+  }
+  .fate-site .fate-report-pillars > div {
+    background: linear-gradient(145deg,#fffaf0,#ebd8b7);
+    box-shadow: inset 0 1px 0 #fff, 0 3px 0 #c8ad83, 0 7px 12px -5px #8b6d3a40;
+  }
+  .fate-site .fate-report-pillars > .fate-report-pillar-day { background: linear-gradient(145deg,#ffedbf,#dcb878); }
+  .fate-site .fate-report-overview .fate-reading-summary > div {
+    background: linear-gradient(145deg,#fffaf0,#f1e4cf);
+    box-shadow: inset 0 1px 0 #fff, 0 2px 0 #d5bf9c, 0 7px 12px -7px #71573b40;
+  }
+  .fate-site .fate-complete-reading :is(.fate-reading-lead,.fate-reading-practice) {
+    background: linear-gradient(140deg,#f0e0c0,#faf1df);
+    box-shadow: inset 0 2px 4px #8a653b1a, inset 0 -1px 0 #fff, 0 1px 0 #fff;
+  }
+  .fate-site :is(.fate-reading-guidance > section,.fate-report-connection-cards > section) {
+    box-shadow: inset 0 1px 0 #ffffff80, 0 3px 0 #9f997f33, 0 8px 14px -9px #3c291d40;
+  }
+  .fate-site .fate-free-upgrade { background: var(--fate-depth-paper); box-shadow: var(--fate-depth-panel); }
+  .fate-site .fate-reading-controls button:not(.fate-complete-primary),
+  .fate-site .fate-complete-reading > footer .fate-outline-button,
+  .fate-site .fate-free-reading > footer .fate-outline-button {
+    background: var(--fate-depth-night);
+    color: #f7dba9;
+    border-color: #9b8059;
+    box-shadow: inset 0 1px 0 #b9d4df33, 0 3px 0 #020e1b, 0 7px 13px #0003;
+  }
+  .fate-site .fate-reading-journey li[data-current] > span {
+    background: var(--fate-depth-gold);
+    box-shadow: inset 0 1px 0 #fff2ce, 0 3px 0 #a17b46, 0 6px 10px -4px #785a3840;
+  }
+  .fate-site .fate-footer { background: linear-gradient(155deg,#183246,#071929 65%,#030e1b); border-top: 1px solid #b2915d; box-shadow: inset 0 2px 0 #d9b87933, 0 -9px 25px -15px #5b412a66; }
+
+  /* Feedback uses a short press; no constant tilt or motion is needed to see depth. */
+  @media (hover: hover) and (pointer: fine) {
+    .fate-site :is(.fate-product-card,.fate-discovery-card):hover {
+      transform: translateY(-5px);
+      box-shadow: inset 0 1px 0 #fff, 0 6px 0 #bda079, 0 11px 0 -3px #dfc9a6, 0 27px 38px -14px #59402b66;
+    }
+    .fate-site .fate-catalog-shortcuts a:hover { transform: translateY(-2px); border-color: #bf975d; box-shadow: inset 0 2px 1px #fff, 0 6px 0 #bba079, 0 12px 20px -5px #6b503b40; }
+    .fate-site :is(.fate-complete-primary,.fate-birth-form button[type=submit],.fate-product-action,.fate-outline-button,.fate-catalog-motion):hover { transform: translateY(-2px); }
+  }
+  .fate-site .fate-catalog-shortcuts a:active { transform: translateY(3px); box-shadow: inset 0 1px 3px #80603b26, 0 1px 0 #bba079, 0 3px 7px #80603b26; }
+  .fate-site :is(.fate-complete-primary,.fate-birth-form button[type=submit],.fate-profile-dialog form button[type=submit]):active {
+    transform: translateY(3px);
+    box-shadow: inset 0 2px 4px #8e612833, 0 1px 0 #8c652f, 0 3px 7px #6d462d26;
+  }
+  .fate-site .fate-product-action:not(.fate-product-action-soon):active { transform: translateY(3px); box-shadow: inset 0 2px 4px #0006, 0 1px 0 #030e1c, 0 3px 7px #0003; }
+  .fate-site :is(.fate-outline-button,.fate-catalog-motion,.fate-info-nav a):active { transform: translateY(2px); box-shadow: inset 0 1px 3px #80603b26, 0 1px 0 #bba079; }
+
+  @media (max-width: 600px) {
+    .fate-site .fate-benefits { gap: 10px; padding-left: 16px; padding-right: 16px; }
+    .fate-site .fate-benefits > div { padding: 17px 10px; }
+    .fate-site .fate-benefits h2 { font-size: 17px; }
+    .fate-site .fate-catalog-shortcuts { padding: 22px 18px 25px; }
+    .fate-site .fate-catalog-shortcuts > div { gap: 15px; }
+    .fate-site .fate-catalog-shortcuts a { padding: 11px 10px; gap: 9px; }
+    .fate-site .fate-catalog-shortcuts a > strong { max-width: 98px; padding: 5px 6px; }
+    .fate-site .fate-faq details { padding: 17px 18px; }
+    .fate-site .fate-focused-product-grid { gap: 28px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .fate-site :is(.fate-product-card,.fate-discovery-card,.fate-catalog-shortcuts a,.fate-complete-primary,.fate-birth-form button[type=submit],.fate-profile-dialog form button[type=submit],.fate-product-action,.fate-outline-button,.fate-catalog-motion,.fate-info-nav a) { transition: none !important; transform: none !important; }
+  }
+  @media (forced-colors: active) {
+    .fate-site :is(.fate-product-card,.fate-birth-panel,.fate-catalog-shortcuts a,.fate-complete-primary,.fate-product-action,.fate-report-overview,.fate-reading-chapter) { box-shadow: none; border: 1px solid CanvasText; }
+  }
+}
