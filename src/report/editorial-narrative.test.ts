@@ -79,7 +79,7 @@ describe('Calculated interpretation before optional advice', () => {
     }
   })
   it('keeps an integrated bundle overview visible in the sample and complete export', () => {
-    expect(REPORT_EDITION).toBe('2026.10-r14')
+    expect(REPORT_EDITION).toBe('2026.10-r15')
     const bundle = buildBundleReading(a, b, 2027, 2026)
     expect(bundle.fullText.indexOf(bundle.overview.fullText)).toBeLessThan(bundle.fullText.indexOf(bundle.complete.fullText))
     expect(bundle.synthesis).not.toBe(buildBundleReading(a, b, 2028, 2026).synthesis)

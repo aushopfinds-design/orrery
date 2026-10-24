@@ -1,3 +1,5 @@
+import { businessVerdict } from './chart-verdicts.ts'
+import { buildInterpretationPlan } from './interpretation-plan.ts'
 import { BUYER_ANSWERS } from './buyer-answers.ts'
 import { WORKING_LANGUAGE } from './purchase-language.ts'
 import { describe, expect, it } from 'vitest'
@@ -30,7 +32,7 @@ describe('Direct subject-specific traditional interpretation', () => {
       const career = buildCategoryReading('career', chart, { year: 2026 })
       const business = buildCategoryReading('business', chart, { year: 2026 })
       expect(career.chapters[0].lead).toBe(BUYER_ANSWERS[chart.pillars[2].stemSipsin].career.en)
-      expect(business.chapters[0].lead).toBe(BUYER_ANSWERS[chart.pillars[2].stemSipsin].founder.en)
+      expect(business.chapters[0].lead).toBe(businessVerdict(buildInterpretationPlan('business',chart,2026).primary).en)
       const money = career.chapters.find(x => x.id === 'money-commitments')!
       expect(money.paragraphs.join(' ')).toContain('confirmed pay')
       expect(money.paragraphs.join(' ')).toContain('expected hours')

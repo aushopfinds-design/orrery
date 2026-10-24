@@ -76,8 +76,8 @@ describe('A continuous preview before checkout', () => {
 
   it('keeps both people in the relationship guide and updates the annual guide with its real chapter', () => {
     const pair = buildPersonalPreview('compatibility', { first, second })
-    expect(pair.headline).toContain('Your chart')
-    expect(pair.headline).toContain('your partner')
+    expect(pair.headline).toContain('match')
+    expect(pair.headline).toMatch(/care|needs/)
     const changed = buildPersonalPreview('compatibility', { first, second: { ...second, day: second.day + 1 } })
     expect(changed.headline).not.toBe(pair.headline)
     for (const year of [2027, 2028]) {

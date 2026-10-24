@@ -19,7 +19,7 @@ function buildSections(plan:InterpretationPlan):Record<string,PurchaseTimingSect
   const lines:TimingSentence[]=[{id:id+'.intro',en,ko}]
   for(const row of rows){
    if(detail){
-    const selected=row.lines.filter(l=>/\.(verdict|reason|area-context|change-day|change-month|background-pressure|caution)$/.test(l.id))
+    const selected=row.lines.filter(l=>/\.(verdict|opening|reason|area-context|change-day|change-month|background-pressure|caution)$/.test(l.id))
     lines.push({id:id+'.'+row.date,en:selected.map(l=>l.en).join(' '),ko:selected.map(l=>l.ko).join(' ')})
    }
   }
@@ -54,8 +54,9 @@ function buildSections(plan:InterpretationPlan):Record<string,PurchaseTimingSect
   const months=purchaseMonths(plan.first,plan.referenceYear),good=months.filter(opens),careful=months.filter(r=>['extra-care','opening-with-caution'].includes(r.status)),key=priority(careful)
   const labels=(rows:Row[])=>rows.map(r=>new Date(r.date+'T12:00:00Z').toLocaleDateString('en-GB',{month:'long',timeZone:'UTC'})).join(', ')
   const koLabels=(rows:Row[])=>rows.map(r=>Number(r.date.slice(5,7))+'월').join('·')
-  put('annual-cycle-context',good.length?`Useful openings appear in ${labels(good)}. The monthly readings explain what each opening is for and whether it comes with extra pressure.`:`The monthly comparison does not identify a clearly supported opening. Use the changing monthly themes below without treating any month as a promised breakthrough.`,good.length?`${koLabels(good)}에 도움이 될 기회를 살펴봅니다. 각 기회가 어떤 활동과 관련되며 부담도 따르는지는 월별 풀이에서 설명합니다.`:'월별 비교에서 유리한 기회를 분명히 고를 근거는 부족합니다. 특정 달의 성과를 약속하지 않고 매달 달라지는 주제를 읽습니다.')
-  put('annual-plan',key.length?`Put ${labels(key)} first on your review list. They carry more overlapping pressures in this reading. This is a priority list, not a claim that the other months are trouble-free.`:`No month stands out under these extra-care checks. The twelve-month overview still shows the commitments and changing focus of each month.`,key.length?`${koLabels(key)}을 먼저 확인할 달로 꼽습니다. 이번 풀이에서 부담이 더 겹치는 달입니다. 다른 달에 문제가 없다는 뜻은 아니며 월별 설명도 함께 봅니다.`:'사용한 주의 기준에서 특별히 두드러지는 달이 없습니다. 매달의 약속과 달라지는 중심 주제는 12개월 흐름에서 설명합니다.')
+  const mixed=good.filter(r=>r.status==='opening-with-caution'),supportOnly=good.filter(r=>r.status!=='opening-with-caution')
+  put('annual-cycle-context',good.length?`${supportOnly.length?`Openings with no flagged timing conflict: ${labels(supportOnly)}. `:''}${mixed.length?`Opportunity with pressure: ${labels(mixed)}. These months offer a useful activity while other demands still need managing. `:''}The monthly chapters explain the difference.`:`The monthly comparison does not identify a clearly supported opening. Use the changing monthly themes below without treating any month as a promised breakthrough.`,good.length?`${supportOnly.length?`시기 비교의 충돌 없이 기회를 읽는 달: ${koLabels(supportOnly)}. `:''}${mixed.length?`기회와 부담이 함께 있는 달: ${koLabels(mixed)}. 도움이 될 활동과 함께 감당해야 할 요구가 남습니다. `:''}차이는 월별 풀이에서 설명합니다.`:'월별 비교에서 유리한 기회를 분명히 고를 근거는 부족합니다. 특정 달의 성과를 약속하지 않고 매달 달라지는 주제를 읽습니다.')
+  put('annual-plan',key.length?`Put ${labels(key)} first on your review list. They carry more overlapping demands in this reading. Start with these, then use the full monthly table to keep the remaining adjustments in view.`:`No month stands out under these extra-care checks. The twelve-month overview still shows the commitments and changing focus of each month.`,key.length?`${koLabels(key)}을 먼저 확인할 달로 꼽습니다. 이번 풀이에서 부담이 더 겹치는 달입니다. 이 달부터 살피고 전체 표에서 나머지 달의 조정할 부분도 함께 봅니다.`:'사용한 주의 기준에서 특별히 두드러지는 달이 없습니다. 매달의 약속과 달라지는 중심 주제는 12개월 흐름에서 설명합니다.')
   months.forEach((r,i)=>out['month-'+(i+1)]={lines:r.lines,evidence:r.evidence})
  }
  return out

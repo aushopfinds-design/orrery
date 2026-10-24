@@ -36,7 +36,7 @@ export function buildInterpretationPlan(kind: BuyerOutlineKind, first: SajuResul
   if (second && year < second.input.year) throw new Error('Invalid partner reference year')
   const primary = subjectPlan(first), partner = second ? subjectPlan(second) : null
   const annual = fiveYearPoints(first, year).map(p => timingPlan(first, p))
-  return { schema: 'FATE-interpretation-plan-v1', kind, referenceYear: year,
+  return { schema: 'FATE-interpretation-plan-v1', kind, referenceYear: year, includeReadingNotice: true,
     // Original calculated charts are language-neutral source data; neither writer recalculates birth pillars.
     first, second,
     primary, partner,
@@ -51,5 +51,5 @@ export function buildInterpretationPlan(kind: BuyerOutlineKind, first: SajuResul
 }
 export type InterpretationPlan = ReturnType<typeof buildInterpretationPlan>
 export function bundleInterpretationPlans(first: SajuResult, second: SajuResult, annualYear: number, referenceYear: number) {
-  return { complete: buildInterpretationPlan('complete', first, referenceYear), compatibility: buildInterpretationPlan('compatibility', first, referenceYear, second), annual: buildInterpretationPlan('year', first, annualYear) }
+  return { complete: buildInterpretationPlan('complete', first, referenceYear), compatibility: { ...buildInterpretationPlan('compatibility', first, referenceYear, second), includeReadingNotice: false }, annual: { ...buildInterpretationPlan('year', first, annualYear), includeReadingNotice: false } }
 }

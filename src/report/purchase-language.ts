@@ -43,7 +43,7 @@ export const WORKING_LANGUAGE:Record<string,{name:Passage;work:Passage;money:Pas
   pressure:pair('The blind spot is taking on a cost or duty simply because you are able to organise it.','정리할 수 있다는 이유만으로 비용이나 의무를 떠맡는 점이 약점으로 나타날 수 있습니다.'),
   balance:pair('Being dependable can turn into feeling responsible for every unfinished practical detail.','믿음직함이 끝나지 않은 모든 실무 세부 사항을 책임져야 한다는 느낌으로 바뀔 수 있습니다.')},
  偏財:{
-  name:pair('new customers and commercial opportunities','새 고객과 거래 기회'),
+  name:pair('finding new customers','새 고객과 거래 기회'),
   work:pair('Sales, account development, sourcing, brokerage and commercial projects fit this pattern. Recognising an opening and connecting people matter more here than repeating one narrow task.','영업과 고객 개발, 소싱, 중개, 거래 프로젝트에 맞는 흐름입니다. 한 가지 업무의 반복보다 기회를 알아보고 사람을 연결하는 일이 중요합니다.'),
   money:pair('Deals, changing fees and customers beyond a fixed routine stand out. More openings can also mean more customers to follow up and more work to finish.','거래와 변동 수수료, 정해진 일상 밖의 고객이 두드러집니다. 기회가 많아지면 후속 대응할 고객과 마칠 업무도 늘 수 있습니다.'),
   love:pair('Interest may show through shared experiences, generosity and a wide social world. Early enthusiasm needs steady attention if the relationship is to feel dependable.','함께하는 경험과 너그러움, 넓은 사회생활로 관심을 표현할 수 있습니다. 관계가 믿음직하게 느껴지려면 처음의 열정 뒤에도 꾸준한 관심이 필요합니다.'),

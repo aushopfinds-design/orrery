@@ -71,7 +71,7 @@ describe('Buyer review r14: direct answers without repeated warnings or lost dat
   const sections=['founder-style','offer-test','team-decisions','customer-communication'].map(id=>s[id].lines.map(x=>x.en).join(' '))
   expect(new Set(sections).size).toBe(4)
   expect(sections[1]).toContain('small offer')
-  expect(sections[2]).toContain('wider-social part')
+  expect(sections[2]).toContain('wider contacts')
   expect(sections[3]).toContain('payment collection')
  })
  it('synthesises simultaneous work and private pressure from the actual monthly comparisons',()=>{
@@ -83,5 +83,31 @@ describe('Buyer review r14: direct answers without repeated warnings or lost dat
    for(const p of joint)expect(overview).toContain(new Date(p.date+'T12:00:00Z').toLocaleDateString('en-GB',{month:'long',timeZone:'UTC'}))
   }else expect(overview).not.toContain('clearest overlap')
   expect(overview).not.toContain('The money pattern:')
+ })
+})
+
+describe('r15 paid-content review fixes',()=>{
+ it('removes duplicated timing scaffolding and uses readable monthly practical dates',()=>{
+  const p=buildInterpretationPlan('year',a,2027),s=customerNarrative(p)
+  const text=Object.values(s).flatMap(x=>[...x.lines.map(l=>l.en),x.action.en,x.caution.en]).join(' ')
+  expect(text).not.toMatch(/personal context|The period brings|The focus is|day-of-birth temperament|In 2027-\d\d/)
+  expect(s['month-1'].action.en).toContain('In January 2027')
+  expect(s['annual-cycle-context'].lines[0].en).toContain('Opportunity with pressure: May, June, July')
+  for(const id of ['month-5','month-6','month-7'])expect(s[id].lines[0].en).toContain('Opening + pressure')
+ })
+ it('keeps the common note once in the actual bundle, with no month-method note in personality or compatibility',()=>{
+  const bundle=buildBundleFromPlans(bundleInterpretationPlans(a,b,2027,2026))
+  expect(bundle.fullText.match(/About this reading:/g)).toHaveLength(1)
+  for(const kind of ['wellbeing','compatibility'] as const){
+   const p=buildInterpretationPlan(kind,a,2026,kind==='compatibility'?b:undefined)
+   const note=customerNarrative(p)[p.sections[0].id].lines.find(l=>l.en.startsWith('About this reading:'))!
+   expect(note.en).not.toMatch(/15 July|15th|mid-July/)
+  }
+ })
+ it('does not silently relabel a cautious period as calm or guaranteed favourable',()=>{
+  const s=customerNarrative(buildInterpretationPlan('year',a,2027))
+  expect(s['month-4'].lines[0].en).toContain('Adjustment')
+  const text=Object.values(s).flatMap(s=>s.lines.map(l=>l.en)).join(' ')
+  expect(text).not.toMatch(/\bCalm\b|\bSteady\b|guaranteed income|Expect a bigger change/)
  })
 })
