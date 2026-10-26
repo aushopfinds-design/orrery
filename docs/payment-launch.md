@@ -44,3 +44,11 @@ localStorage에도 보관한다. 다른 기기에서는 `/#purchase`에 저장�
 참고: https://docs.stripe.com/api/events/types
 https://docs.stripe.com/api/accounts/object
 https://www.accc.gov.au/consumers/problem-with-a-product-or-service-you-bought/repair-replace-refund-cancel
+
+## 2026-10-26 검증 기록
+
+- 전체 자동 검사: 54개 파일, 779개 통과.
+- 복구·결제 폼의 마지막 배치 수정 후 관련 27개 검사와 빌드 재통과.
+- 배포된 Preview에서 Stripe 가상 카드 결제 → 별도 요청의 주문 접근키 확인 → r18 리포트 → PDF 다운로드 HTTP 200 확인.
+- 실제 운영 키·운영 데이터베이스·판매 시작 설정은 등록하지 않음. 실제 청구나 운영 Stripe 결제 검증은 수행하지 않음.
+- 자동 이메일 발송은 제공하지 않음. 운영자 공개 정보와 판매 문구 확정은 실제 판매 활성화 전에 필요함.

@@ -24,13 +24,13 @@ export default function PurchaseRecovery({ onRestore }: { onRestore: (id: string
     } catch (e) { if (!controller.signal.aborted) setError(e instanceof PurchaseRequestError ? e.messageKey : 'sandbox.verifyError') }
     finally { clearTimeout(timeout); if (request.current === controller) { request.current = null; setBusy(false) } }
   }
-  return <section className="fate-personal-delivery" aria-labelledby="purchase-recovery-title">
+  return <section className="fate-personal-delivery fate-purchase-recovery" aria-labelledby="purchase-recovery-title">
     <h2 id="purchase-recovery-title">{t('purchase.recovery.title')}</h2><p>{t('purchase.recovery.intro')}</p>
     <form onSubmit={restore}>
       <label>{t('purchase.recovery.code')}<input type="password" autoComplete="off" value={code} onChange={e => setCode(e.target.value)} disabled={busy} /></label>
       <label><input type="checkbox" checked={remember} onChange={e => setRemember(e.target.checked)} disabled={busy} />{t('purchase.recovery.remember')}</label>
       <p>{t('purchase.recovery.private')}</p>
-      <button type="submit" disabled={busy || !code.trim()}>{t(busy ? 'sandbox.verifying' : 'purchase.recovery.open')}</button>
+      <button className="fate-complete-primary" type="submit" disabled={busy || !code.trim()}>{t(busy ? 'sandbox.verifying' : 'purchase.recovery.open')}</button>
       {error && <p role="alert">{t(error)}</p>}
     </form>
     <p>{t('purchase.recovery.lost')} <a href="/contact/">{t('purchase.recovery.contact')}</a></p>

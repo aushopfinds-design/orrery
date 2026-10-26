@@ -52,7 +52,7 @@ export default function SandboxCheckout({ order }: { order: OrderInput }) {
     } finally { clearTimeout(timeout); if (activeRequest.current === controller) { activeRequest.current = null; setBusy(false) } }
   }
   if (mode === 'closed') return <p role="status">{t('buyer.checkout.pending')}</p>
-  return <section className="fate-personal-delivery" aria-label={t(mode === 'test' ? 'sandbox.title' : 'purchase.live.title')}>
+  return <section className="fate-personal-delivery fate-checkout-form" aria-label={t(mode === 'test' ? 'sandbox.title' : 'purchase.live.title')}>
     <h3>{t(mode === 'test' ? 'sandbox.title' : 'purchase.live.title')} · {reportPrice(order.kind)}</h3>
     <p>{t(mode === 'test' ? 'sandbox.note' : 'purchase.live.note')}</p><p>{t(mode === 'test' ? 'sandbox.data' : 'purchase.live.data')}</p>
     <label>{t('letter.name.label')}<input type="text" autoComplete="given-name" maxLength={40} value={recipientName} disabled={busy || Boolean(prepared)} onChange={event => setRecipientName(event.target.value)} aria-describedby="letter-name-note" /></label>
@@ -66,7 +66,7 @@ export default function SandboxCheckout({ order }: { order: OrderInput }) {
     </> : <div className="fate-recovery-backup">
       <h4>{t('purchase.key.title')}</h4><p>{t('purchase.key.before')}</p>
       <label>{t('purchase.recovery.code')}<input type="password" readOnly autoComplete="off" value={recoveryCode(prepared.orderId, prepared.accessToken)} /></label>
-      <button type="button" onClick={() => downloadRecovery(prepared.orderId, prepared.accessToken)}>{t('purchase.key.save')}</button>
+      <button type="button" className="fate-outline-button" onClick={() => downloadRecovery(prepared.orderId, prepared.accessToken)}>{t('purchase.key.save')}</button>
       <label><input type="checkbox" checked={saved} onChange={e => setSaved(e.target.checked)} />{t('purchase.key.saved')}</label>
       <button type="button" className="fate-complete-primary" disabled={!saved} onClick={() => { recordJourney('checkout_started', order.kind); window.location.assign(prepared.checkoutUrl) }}>{t('purchase.live.continue')}</button>
       <p>{t('purchase.key.private')}</p>

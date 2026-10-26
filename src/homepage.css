@@ -1071,3 +1071,18 @@
 .fate-checkout-summary > .fate-buy-report { display:inline-flex; margin-top:16px; }
 .fate-checkout-access-note { font-weight:600; }
 @media (max-width:760px) { .fate-checkout-summary { padding:18px; } .fate-buy-report { width:100%; justify-content:center; } }
+
+/* Purchase forms need a reading-width column; the icon-and-caption delivery row stays compact. */
+.fate-personal-delivery.fate-purchase-recovery,
+.fate-personal-delivery.fate-checkout-form { display: block; }
+.fate-personal-delivery.fate-purchase-recovery { max-width: 720px; margin: 36px auto; padding: clamp(20px, 4vw, 38px); border: 1px solid #c6ab7e; border-radius: 16px; background: #fffaf0; color: #243b39; }
+.fate-purchase-recovery h2 { margin: 0 0 14px; font: 400 clamp(24px, 4vw, 32px)/1.25 Georgia, serif; color: #243b39; }
+.fate-purchase-recovery p, .fate-checkout-form p { margin: 12px 0; }
+.fate-purchase-recovery label, .fate-checkout-form label { display: block; margin: 14px 0; line-height: 1.6; }
+.fate-purchase-recovery label:has(input[type=checkbox]), .fate-checkout-form label:has(input[type=checkbox]) { display: flex; align-items: flex-start; gap: 9px; }
+.fate-purchase-recovery input[type=checkbox], .fate-checkout-form input[type=checkbox] { flex: 0 0 auto; margin-top: 5px; }
+.fate-personal-delivery.fate-purchase-recovery input[type=password], .fate-checkout-form input[type=password] { width: 100%; }
+.fate-purchase-recovery .fate-complete-primary { margin: 8px 0 16px; }
+.fate-purchase-recovery button:disabled, .fate-checkout-form button:disabled { opacity: .55; cursor: not-allowed; }
+.fate-recovery-backup { margin-top: 20px; padding: 20px; border: 1px solid #c6ab7e; border-radius: 12px; background: #fffaf0; }
+.fate-recovery-backup h4 { margin: 0 0 12px; font: 400 23px/1.3 Georgia, serif; }
