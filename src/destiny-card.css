@@ -121,8 +121,10 @@
 @media print { .fate-personal-card-motion .fate-destiny-motion,.fate-card-celestial-effects { display:none; } }
 
 .fate-destiny-personal-card { height:auto; }
-.fate-card-is-animated .fate-card-turning-key { animation:fate-card-key-turn 6s ease-in-out infinite; transform-origin:0 0; }
-@keyframes fate-card-key-turn { 0%,100% { transform:scaleX(1); } 25%,75% { transform:scaleX(.025); } 50% { transform:scaleX(-1); } }
+/* The golden key turns slowly while the card, name and symbols stay still. */
+.fate-card-is-animated .fate-card-turning-key { animation:fate-card-key-turn 8s linear infinite; transform-origin:0 0; backface-visibility:visible; }
+.fate-card-is-animated .fate-card-turning-key image { filter:drop-shadow(0 0 10px #f6c56c88); }
+@keyframes fate-card-key-turn { 0% { transform:scaleX(1); } 25% { transform:scaleX(.035); } 50% { transform:scaleX(-1); } 75% { transform:scaleX(.035); } 100% { transform:scaleX(1); } }
 @media (prefers-reduced-motion:reduce) { .fate-card-is-animated .fate-card-turning-key { animation:none; } }
 .fate-buyer-card .fate-personal-card-motion { max-width:420px; margin:18px auto; }
 .fate-card-export-actions { display:flex; flex-wrap:wrap; gap:12px; margin:16px 0; }
