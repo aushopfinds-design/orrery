@@ -1,6 +1,6 @@
 import { randomUUID } from 'node:crypto'
 import { PaymentError } from './config.ts'
-import { orderAccessToken, secretMatches } from './crypto.ts'
+import { fingerprint, orderAccessToken, secretMatches } from './crypto.ts'
 import { uuid } from './input.ts'
 import type { PaymentService } from './service.ts'
 
@@ -27,22 +27,35 @@ export function paymentHandler(getService: () => PaymentService) {
   return async (request: Request): Promise<Response> => {
     const requestId = randomUUID()
     try {
-      if (request.method !== 'POST') return json({ error: 'method_not_allowed' }, 405)
       const action = new URL(request.url).searchParams.get('action')
+      if (request.method === 'GET' && action === 'availability') {
+        try { const service = getService(); const available = await service.available(); return json({ available, mode: available ? service.mode : 'closed' }) }
+        catch { return json({ available: false, mode: 'closed' }) }
+      }
+      if (request.method !== 'POST') return json({ error: 'method_not_allowed' }, 405)
       if (!['checkout', 'webhook', 'status', 'report', 'pdf', 'webhook-setup', 'sandbox-test'].includes(action ?? '')) return json({ error: 'not_found' }, 404)
       const service = getService()
       if (action === 'webhook') return json(await service.receiveWebhook(await bodyText(request, 256_000), request.headers.get('stripe-signature')))
-      // Private tester access. This secret is never bundled into the public website.
-      if (['checkout', 'webhook-setup', 'sandbox-test'].includes(action!) && !secretMatches(request.headers.get('x-fate-test-token') ?? '', service.config.testToken)) throw new PaymentError('unauthorized', 401)
+      if (service.mode === 'live' && ['webhook-setup', 'sandbox-test'].includes(action!)) throw new PaymentError('not_found', 404)
+      // Sandbox controls cannot authorize a live payment.
+      if (service.mode === 'test' && ['checkout', 'webhook-setup', 'sandbox-test'].includes(action!) && !secretMatches(request.headers.get('x-fate-test-token') ?? '', service.config.testToken)) throw new PaymentError('unauthorized', 401)
       const origin = request.headers.get('origin')
-      if (origin && origin !== service.config.origin) throw new PaymentError('origin_not_allowed', 403)
+      if ((service.mode === 'live' || origin) && origin !== service.config.origin) throw new PaymentError('origin_not_allowed', 403)
       if (!request.headers.get('content-type')?.toLowerCase().startsWith('application/json')) throw new PaymentError('json_required', 415)
       let input: unknown
       try { input = JSON.parse(await bodyText(request, 8000)) } catch (error) {
         if (error instanceof PaymentError) throw error
         throw new PaymentError('invalid_json')
       }
-      if (action === 'checkout') return json(await service.createCheckout(input, request.headers.get('idempotency-key')))
+      if (action === 'checkout') {
+        if (service.mode === 'live') {
+          const ip = request.headers.get('x-vercel-forwarded-for')?.split(',')[0]?.trim()
+          if (!ip) throw new PaymentError('payment_service_unavailable', 503)
+          const bucket = fingerprint(service.config.accessKey, ip + ':' + Math.floor(Date.now() / 3600000))
+          if (!await service.store.checkoutQuota(bucket)) throw new PaymentError('checkout_rate_limited', 429)
+        }
+        return json(await service.createCheckout(input, request.headers.get('idempotency-key')))
+      }
       if (action === 'webhook-setup') {
         const branchHost = process.env.VERCEL_BRANCH_URL
         const url = branchHost && /^saju-english-report-preview(?:-[a-z0-9-]+)?\.vercel\.app$/.test(branchHost)
@@ -61,11 +74,11 @@ export function paymentHandler(getService: () => PaymentService) {
         } })
         return json({ title: report.title, kind: report.kind, edition: report.edition, issuedAt: report.issuedAt,
           ...(report.recipientName ? { recipientName: report.recipientName } : {}),
-          text: report.text, documents: report.documents, cards: report.cards, orderId: id, mode: 'test' })
+          text: report.text, emphasis: report.emphasis, documents: report.documents, cards: report.cards, orderId: id, mode: service.mode })
       }
       const status = await service.reconcile(id)
       if (!status) throw new PaymentError('order_not_found', 404)
-      return json({ ...status, mode: 'test' })
+      return json({ ...status, mode: service.mode })
     } catch (error) {
       const status = error instanceof PaymentError ? error.status : 503
       const code = error instanceof PaymentError ? error.code : 'payment_service_unavailable'

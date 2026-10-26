@@ -10,7 +10,7 @@ import type { ReportApplication } from './report-applications.ts'
 import type { CalculationExplanation } from './calculation-notes.ts'
 import type { DecisionFocus } from './decision-focus.ts'
 
-export const REPORT_EDITION = '2026.10-r17'
+export const REPORT_EDITION = '2026.10-r18'
 
 export interface ReadingConnection {
   id: string

@@ -148,7 +148,7 @@ describe('verified payment and atomic issuance queue', () => {
     expect(await service.receiveWebhook(unrelated.body, unrelated.signature)).toMatchObject({ ignored: true })
     session.livemode = true
     const live = signed(session)
-    await expect(service.receiveWebhook(live.body, live.signature)).rejects.toMatchObject({ code: 'live_events_not_allowed' })
+    await expect(service.receiveWebhook(live.body, live.signature)).rejects.toMatchObject({ code: 'payment_mode_mismatch' })
     session.livemode = false; session.status = 'complete'; session.payment_status = 'paid'; session.payment_intent = 'pi_test_fixture'; session.amount_total = 1
     const wrong = signed(session)
     await expect(service.receiveWebhook(wrong.body, wrong.signature)).rejects.toMatchObject({ code: 'payment_order_mismatch' })
@@ -336,4 +336,81 @@ describe('seven products: paid reports, PDFs and access isolation', () => {
     expect(await count('fate_order_artifacts')).toBe(1)
     expect(await count('fate_payment_orders')).toBe(1)
   }, 120000)
+})
+
+describe('launch gates and verified full refunds', () => {
+  it('keeps public checkout closed independently of existing live purchase access', () => {
+    const env = { FATE_PAYMENTS_MODE: 'live', VERCEL_ENV: 'production', STRIPE_LIVE_SECRET_KEY: 'sk_live_fixture',
+      STRIPE_LIVE_WEBHOOK_SECRET: 'whsec_fixture', FATE_PAYMENTS_LIVE_DATABASE_URL: 'postgres://live:live@localhost/fate_live?sslmode=verify-full',
+      FATE_LIVE_ORDER_DATA_KEY: '33'.repeat(32), FATE_LIVE_ORDER_ACCESS_KEY: '44'.repeat(32), FATE_PUBLIC_OPERATOR_NAME: 'Example Operator' }
+    expect(paymentConfig(env)).toMatchObject({ mode: 'live', checkoutOpen: false, origin: 'https://thefatekey.com', testToken: '' })
+    expect(paymentConfig({ ...env, FATE_CHECKOUT_OPEN: 'true', FATE_SALES_POLICIES_READY: 'true' }).checkoutOpen).toBe(true)
+    for (const patch of [{ VERCEL_ENV: 'preview' }, { STRIPE_LIVE_SECRET_KEY: 'sk_test_fixture' }, { FATE_PUBLIC_OPERATOR_NAME: '' },
+      { FATE_PAYMENTS_DATABASE_URL: env.FATE_PAYMENTS_LIVE_DATABASE_URL }]) expect(() => paymentConfig({ ...env, ...patch })).toThrow(PaymentError)
+  })
+  it('reports unavailable checkout without revealing missing secrets', async () => {
+    const handler = paymentHandler(() => { throw new Error('private-secret-value') })
+    const response = await handler(new Request(config.origin + '/api/payments?action=availability'))
+    expect(await response.json()).toEqual({ available: false, mode: 'closed' })
+  })
+  it('blocks refunded content even when an old paid notification arrives afterward', async () => {
+    const provider = gateway()
+    const charge = { id: 'ch_fixture', livemode: false, amount: 1699, currency: 'usd', amount_refunded: 1699, payment_intent: 'pi_fixture' } as Stripe.Charge
+    const intent = { id: 'pi_fixture', livemode: false, amount: 1699, currency: 'usd', latest_charge: charge.id, metadata: {} } as Stripe.PaymentIntent
+    const service = new PaymentService(config, store, { ...provider, retrieveCharge: async () => charge, retrievePaymentIntent: async () => intent })
+    const checkout = await service.createCheckout({ kind: 'complete', first: birth }, randomUUID())
+    intent.metadata = { fate_order_id: checkout.orderId, fate_kind: 'complete', integration: 'fate-key-test-v1' }
+    const session = provider.sessions.get((await store.get(checkout.orderId))!.checkout_session_id!)!
+    session.payment_status = 'paid'; session.status = 'complete'; session.payment_intent = intent.id
+    const body = JSON.stringify({ id: 'evt_refund_fixture', type: 'charge.refunded', livemode: false, data: { object: charge } })
+    const signature = verifier.webhooks.generateTestHeaderString({ payload: body, secret: config.webhookSecret })
+    await expect(service.receiveWebhook(body, signature)).resolves.toMatchObject({ received: true, refunded: true })
+    const late = signed(session)
+    await service.receiveWebhook(late.body, late.signature)
+    await expect(service.report(checkout.orderId)).rejects.toMatchObject({ code: 'purchase_refunded', status: 403 })
+    expect(await store.artifact(checkout.orderId)).toBeUndefined()
+    charge.amount_refunded = 1
+    await service.receiveWebhook(body, signature)
+    await expect(service.report(checkout.orderId)).rejects.toMatchObject({ code: 'purchase_refunded' })
+  })
+  it('uses an isolated live schema and refuses Sandbox controls on live checkout', async () => {
+    const liveDb = await PGlite.create()
+    try {
+      await liveDb.exec(readFileSync(new URL('./live-schema.sql', import.meta.url), 'utf8'))
+      const provider = gateway(), create = provider.createSession
+      provider.createSession = vi.fn(async (params, key) => {
+        const session = await create(params, key)
+        provider.sessions.delete(session.id); session.id = session.id.replace('cs_test_', 'cs_live_'); session.livemode = true
+        provider.sessions.set(session.id, session); return session
+      })
+      const liveConfig = { ...config, mode: 'live' as const, checkoutOpen: true }
+      const liveService = new PaymentService(liveConfig, new OrderStore(liveDb as unknown as Database), { ...provider, accountReady: async () => true })
+      const handler = paymentHandler(() => liveService)
+      const request = (action: string, origin = config.origin) => new Request(config.origin + '/api/payments?action=' + action, {
+        method: 'POST', headers: { Origin: origin, 'Content-Type': 'application/json', 'Idempotency-Key': randomUUID(), 'x-vercel-forwarded-for': '203.0.113.2' },
+        body: JSON.stringify({ kind: 'career', first: birth }),
+      })
+      expect((await handler(request('checkout', 'https://wrong.example'))).status).toBe(403)
+      expect((await handler(request('sandbox-test'))).status).toBe(404)
+      const response = await handler(request('checkout'))
+      expect(response.status).toBe(200)
+      const checkout = await response.json()
+      expect(checkout.mode).toBe('live')
+      expect((await liveService.store.get(checkout.orderId))?.livemode).toBe(true)
+      await expect(liveService.exerciseSandbox(checkout.orderId, 'success')).rejects.toMatchObject({ code: 'not_found' })
+      for (let i = 0; i < 11; i++) expect((await handler(request('checkout'))).status).toBe(200)
+      expect((await handler(request('checkout'))).status).toBe(429)
+      expect(provider.createSession).toHaveBeenCalledTimes(12)
+      const closed = new PaymentService({ ...liveConfig, checkoutOpen: false }, liveService.store, provider)
+      await expect(closed.createCheckout({ kind: 'career', first: birth }, randomUUID())).rejects.toMatchObject({ code: 'merchant_not_ready' })
+      const closedHandler = paymentHandler(() => closed)
+      const status = await closedHandler(new Request(config.origin + '/api/payments?action=status', {
+        method: 'POST', headers: { Origin: config.origin, 'Content-Type': 'application/json', Authorization: 'Bearer ' + checkout.accessToken },
+        body: JSON.stringify({ orderId: checkout.orderId }),
+      }))
+      expect(status.status).toBe(200)
+      expect(await status.json()).toMatchObject({ mode: 'live', payment_state: 'pending' })
+
+    } finally { await liveDb.close() }
+  }, 30000)
 })

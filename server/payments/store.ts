@@ -16,6 +16,12 @@ export interface PaymentUpdate {
 export class OrderStore {
   private readonly db: Database
   constructor(db: Database) { this.db = db }
+  async checkoutQuota(key: string) {
+    const r = await this.db.query(`INSERT INTO fate_checkout_quota (key, attempts) VALUES ($1,1)
+      ON CONFLICT (key) DO UPDATE SET attempts=fate_checkout_quota.attempts+1
+      WHERE fate_checkout_quota.attempts<12 RETURNING key`, [key])
+    return r.rows.length === 1
+  }
   async setting(key: string) {
     return (await this.db.query<{ value_encrypted: string }>('SELECT value_encrypted FROM fate_payment_settings WHERE key=$1', [key])).rows[0]?.value_encrypted
   }

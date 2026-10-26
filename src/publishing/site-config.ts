@@ -26,7 +26,7 @@ export const PUBLIC_SAMPLES = [
   { kind: 'wellbeing', slug: 'everyday-balance', title: 'The Real You: Strengths & Weaknesses', description: 'Daily habits, boundaries, support and a routine that fits your actual day.' },
 ] as const
 
-export const INFO_PATHS = ['/', '/about/', '/reading-guide/', '/privacy/', '/use-and-limitations/', '/samples/', '/learn/', '/editorial-policy/', '/help/']
+export const INFO_PATHS = ['/', '/about/', '/reading-guide/', '/privacy/', '/use-and-limitations/', '/purchases/', '/samples/', '/learn/', '/editorial-policy/', '/help/']
 export function publicPaths(contactEmail: string | null) {
   return [...INFO_PATHS, ...LEARNING_GUIDES.map(item => learningPath(item.slug)), ...PUBLIC_SAMPLES.map(item => `/samples/${item.slug}/`), ...(contactEmail ? ['/contact/'] : [])]
 }

@@ -4,7 +4,8 @@ import { useLocale } from '../../i18n/index.ts'
 import { recordJourney } from '../../utils/journey-events.ts'
 import { reportPrice } from '../../report/pricing.ts'
 
-import { isSandboxHost, PURCHASES_KEY } from '../../utils/purchase-client.ts'
+import { isSandboxHost, isPurchaseHost } from '../../utils/purchase-client.ts'
+import { downloadRecovery, recoveryCode, rememberOrder, validOrderId } from '../../utils/order-access.ts'
 export { PURCHASES_KEY } from '../../utils/purchase-client.ts'
 export const TEST_ACCESS_KEY = 'fate-sandbox-access-v1'
 export default function SandboxCheckout({ order }: { order: OrderInput }) {
@@ -12,7 +13,18 @@ export default function SandboxCheckout({ order }: { order: OrderInput }) {
   const [recipientName, setRecipientName] = useState('')
   const [busy, setBusy] = useState(false), [message, setMessage] = useState('')
   const [access, setAccess] = useState(() => { try { return sessionStorage.getItem(TEST_ACCESS_KEY) ?? '' } catch { return '' } })
+  const [mode, setMode] = useState<'test' | 'live' | 'closed'>(() => isSandboxHost(window.location.hostname) ? 'test' : 'closed')
+  const [remember, setRemember] = useState(false), [saved, setSaved] = useState(false)
+  const [prepared, setPrepared] = useState<{ orderId: string; accessToken: string; checkoutUrl: string } | null>(null)
   const activeRequest = useRef<AbortController | null>(null)
+  useEffect(() => {
+    if (isSandboxHost(window.location.hostname) || !isPurchaseHost(window.location.hostname)) return
+    const controller = new AbortController()
+    void fetch('/api/payments?action=availability', { signal: controller.signal, cache: 'no-store' }).then(r => r.json()).then(value => {
+      if (!controller.signal.aborted && value.available === true && value.mode === 'live') setMode('live')
+    }).catch(() => { /* Closed until the server confirms live readiness. */ })
+    return () => controller.abort()
+  }, [])
   useEffect(() => () => { activeRequest.current?.abort(); activeRequest.current = null }, [])
   async function checkout() {
     if (activeRequest.current) return
@@ -20,36 +32,45 @@ export default function SandboxCheckout({ order }: { order: OrderInput }) {
     const timeout = setTimeout(() => controller.abort(), 45000)
     setBusy(true); setMessage('')
     try {
-      sessionStorage.setItem(TEST_ACCESS_KEY, access)
+      if (mode === 'test') sessionStorage.setItem(TEST_ACCESS_KEY, access)
       // A retry of the same input reuses its order/session, including after a network error.
       const draft = JSON.stringify({ ...order, ...(recipientName.trim() ? { recipientName: recipientName.trim() } : {}) }), previous = JSON.parse(sessionStorage.getItem('fate-sandbox-attempt') ?? 'null')
       const key = previous?.draft === draft ? previous.key : crypto.randomUUID()
       sessionStorage.setItem('fate-sandbox-attempt', JSON.stringify({ draft, key }))
       const response = await fetch('/api/payments?action=checkout', {
-        method: 'POST', headers: { 'Content-Type': 'application/json', 'X-Fate-Test-Token': access, 'Idempotency-Key': key },
+        method: 'POST', headers: { 'Content-Type': 'application/json', ...(mode === 'test' ? { 'X-Fate-Test-Token': access } : {}), 'Idempotency-Key': key },
         body: draft, signal: controller.signal,
       })
       const result = await response.json()
       if (controller.signal.aborted) return
-      if (!response.ok || !/^https:\/\/checkout\.stripe\.com\//.test(result.checkoutUrl ?? '')) throw new Error('Checkout unavailable')
-      const saved = JSON.parse(sessionStorage.getItem(PURCHASES_KEY) ?? '{}')
-      saved[result.orderId] = { accessToken: result.accessToken, kind: order.kind }
-      sessionStorage.setItem(PURCHASES_KEY, JSON.stringify(saved))
-      recordJourney('checkout_started', order.kind)
-      window.location.assign(result.checkoutUrl)
+      if (!response.ok || result.mode !== mode || !validOrderId(result.orderId ?? '') || !/^[A-Za-z0-9_-]{43}$/.test(result.accessToken ?? '') || !/^https:\/\/checkout\.stripe\.com\//.test(result.checkoutUrl ?? '')) throw new Error('Checkout unavailable')
+      rememberOrder(result.orderId, { accessToken: result.accessToken, kind: order.kind }, remember)
+      setPrepared({ orderId: result.orderId, accessToken: result.accessToken, checkoutUrl: result.checkoutUrl })
+
     } catch {
       if (activeRequest.current === controller) { setMessage(t('sandbox.error')); setBusy(false) }
-    } finally { clearTimeout(timeout); if (activeRequest.current === controller) activeRequest.current = null }
+    } finally { clearTimeout(timeout); if (activeRequest.current === controller) { activeRequest.current = null; setBusy(false) } }
   }
-  if (!isSandboxHost(window.location.hostname)) return <p role="status">{t('buyer.checkout.pending')}</p>
-  return <section className="fate-personal-delivery" aria-label={t('sandbox.title')}>
-    <h3>{t('sandbox.title')} · {reportPrice(order.kind)}</h3>
-    <p>{t('sandbox.note')}</p><p>{t('sandbox.data')}</p>
-    <label>{t('letter.name.label')}<input type="text" autoComplete="given-name" maxLength={40} value={recipientName} disabled={busy} onChange={event => setRecipientName(event.target.value)} aria-describedby="letter-name-note" /></label>
+  if (mode === 'closed') return <p role="status">{t('buyer.checkout.pending')}</p>
+  return <section className="fate-personal-delivery" aria-label={t(mode === 'test' ? 'sandbox.title' : 'purchase.live.title')}>
+    <h3>{t(mode === 'test' ? 'sandbox.title' : 'purchase.live.title')} · {reportPrice(order.kind)}</h3>
+    <p>{t(mode === 'test' ? 'sandbox.note' : 'purchase.live.note')}</p><p>{t(mode === 'test' ? 'sandbox.data' : 'purchase.live.data')}</p>
+    <label>{t('letter.name.label')}<input type="text" autoComplete="given-name" maxLength={40} value={recipientName} disabled={busy || Boolean(prepared)} onChange={event => setRecipientName(event.target.value)} aria-describedby="letter-name-note" /></label>
     <p id="letter-name-note">{t('letter.name.note')}</p>
-    <p id="checkout-access-help" className="fate-checkout-access-note">{t('purchase.testNote')}</p>
-    <label>{t('sandbox.access')}<input type="password" autoComplete="off" value={access} onChange={event => setAccess(event.target.value)} /></label>
-    <button type="button" className="fate-complete-primary" onClick={checkout} disabled={busy || access.length < 32} aria-describedby="checkout-access-help">{t(busy ? 'sandbox.opening' : 'sandbox.buy')}</button>
+    {!prepared ? <>
+      {mode === 'test' && <><p id="checkout-access-help" className="fate-checkout-access-note">{t('purchase.testNote')}</p>
+        <label>{t('sandbox.access')}<input type="password" autoComplete="off" value={access} onChange={event => setAccess(event.target.value)} /></label></>}
+      <label><input type="checkbox" checked={remember} onChange={e => setRemember(e.target.checked)} disabled={busy} />{t('purchase.recovery.remember')}</label>
+      <p>{t('purchase.recovery.private')}</p><p><a href="/purchases/">{t('purchase.live.terms')}</a></p>
+      <button type="button" className="fate-complete-primary" onClick={checkout} disabled={busy || (mode === 'test' && access.length < 32)} aria-describedby={mode === 'test' ? 'checkout-access-help' : undefined}>{t(busy ? 'sandbox.opening' : mode === 'test' ? 'sandbox.buy' : 'purchase.live.prepare')}</button>
+    </> : <div className="fate-recovery-backup">
+      <h4>{t('purchase.key.title')}</h4><p>{t('purchase.key.before')}</p>
+      <label>{t('purchase.recovery.code')}<input type="password" readOnly autoComplete="off" value={recoveryCode(prepared.orderId, prepared.accessToken)} /></label>
+      <button type="button" onClick={() => downloadRecovery(prepared.orderId, prepared.accessToken)}>{t('purchase.key.save')}</button>
+      <label><input type="checkbox" checked={saved} onChange={e => setSaved(e.target.checked)} />{t('purchase.key.saved')}</label>
+      <button type="button" className="fate-complete-primary" disabled={!saved} onClick={() => { recordJourney('checkout_started', order.kind); window.location.assign(prepared.checkoutUrl) }}>{t('purchase.live.continue')}</button>
+      <p>{t('purchase.key.private')}</p>
+    </div>}
     {message && <p role="alert">{message}</p>}
   </section>
 }

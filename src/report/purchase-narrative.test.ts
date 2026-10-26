@@ -92,8 +92,9 @@ describe('r15 paid-content review fixes',()=>{
   const text=Object.values(s).flatMap(x=>[...x.lines.map(l=>l.en),x.action.en,x.caution.en]).join(' ')
   expect(text).not.toMatch(/personal context|The period brings|The focus is|day-of-birth temperament|In 2027-\d\d/)
   expect(s['month-1'].action.en).toContain('In January 2027')
-  expect(s['annual-cycle-context'].lines[0].en).toContain('Opportunity with pressure: May, June, July')
-  for(const id of ['month-5','month-6','month-7'])expect(s[id].lines[0].en).toContain('Opening + pressure')
+  expect(s['annual-cycle-context'].lines[0].en).toContain('Opportunity with pressure: May, June')
+  expect(s['month-7'].lines[0].en).toContain('Opening —')
+  for(const id of ['month-5','month-6'])expect(s[id].lines[0].en).toContain('Opening + pressure')
  })
  it('keeps the common note once in the actual bundle, with no month-method note in personality or compatibility',()=>{
   const bundle=buildBundleFromPlans(bundleInterpretationPlans(a,b,2027,2026))
@@ -106,7 +107,7 @@ describe('r15 paid-content review fixes',()=>{
  })
  it('does not silently relabel a cautious period as calm or guaranteed favourable',()=>{
   const s=customerNarrative(buildInterpretationPlan('year',a,2027))
-  expect(s['month-4'].lines[0].en).toContain('Adjustment')
+  expect(s['month-4'].lines[0].en).toContain('Opening + pressure')
   const text=Object.values(s).flatMap(s=>s.lines.map(l=>l.en)).join(' ')
   expect(text).not.toMatch(/\bCalm\b|\bSteady\b|guaranteed income|Expect a bigger change/)
  })

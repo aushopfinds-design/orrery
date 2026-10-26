@@ -28,7 +28,7 @@ beforeEach(() => {
   vi.useFakeTimers()
   Object.assign(globalThis, { IS_REACT_ACT_ENVIRONMENT: true })
   window.history.replaceState(null, '', '/?checkout=success&order_id=' + orderId + '#purchase')
-  sessionStorage.clear()
+  localStorage.clear(); sessionStorage.clear()
   sessionStorage.setItem(PURCHASES_KEY, JSON.stringify({ [orderId]: { accessToken: 'private-test-order-capability' } }))
   container = document.createElement('div'); document.body.appendChild(container); root = createRoot(container)
   fetchMock = vi.fn(); vi.stubGlobal('fetch', fetchMock)
@@ -104,7 +104,7 @@ describe('Buyer report screen: API response to customer actions', () => {
     expect(container.textContent).not.toContain('A private full report paragraph.')
   })
   it('shows recovery guidance when this browser has no order key', async () => {
-    sessionStorage.clear(); await mount()
+    localStorage.clear(); sessionStorage.clear(); await mount()
     expect(fetchMock).not.toHaveBeenCalled()
     expect(container.querySelector('[role=alert]')?.textContent).toContain('browser where you started')
     expect(button('Download full PDF')).toBeUndefined()
@@ -192,5 +192,46 @@ describe('Sandbox checkout screen', () => {
     await act(async () => { root!.unmount(); root = null })
     expect(signal.aborted).toBe(true)
     expect(fetchMock).toHaveBeenCalledTimes(1)
+  })
+})
+
+describe('purchase key backup and cross-device recovery', () => {
+  it('shows the recovery entry without requiring the original tab or return URL', async () => {
+    window.history.replaceState(null, '', '/#purchase')
+    sessionStorage.clear()
+    await mount()
+    expect(container.textContent).toContain('Open a purchased report')
+    expect(fetchMock).not.toHaveBeenCalled()
+    const input = container.querySelector('input[type=password]')!
+    const setter = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value')!.set!
+    await act(async () => { setter.call(input, `FK1.${orderId}.${'x'.repeat(43)}`); input.dispatchEvent(new Event('input', { bubbles:true })) })
+    fetchMock.mockResolvedValueOnce(ok())
+    await act(async () => { container.querySelector('form')!.dispatchEvent(new Event('submit', { bubbles:true, cancelable:true })) })
+    expect(container.textContent).toContain('A private full report paragraph.')
+    expect(fetchMock.mock.calls[0][1].headers.Authorization).toBe('Bearer ' + 'x'.repeat(43))
+    expect(localStorage.getItem(PURCHASES_KEY)).toBeNull()
+    expect(sessionStorage.getItem(PURCHASES_KEY)).toContain('x'.repeat(43))
+    expect(window.location.href).not.toContain('x'.repeat(43))
+  })
+  it('does not remember an unverified recovery key', async () => {
+    window.history.replaceState(null, '', '/#purchase'); sessionStorage.clear()
+    await mount()
+    const input = container.querySelector('input[type=password]')!
+    const setter = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value')!.set!
+    await act(async () => { setter.call(input, `FK1.${orderId}.${'y'.repeat(43)}`); input.dispatchEvent(new Event('input', { bubbles:true })) })
+    fetchMock.mockResolvedValueOnce(failure(404, 'order_not_found'))
+    await act(async () => { container.querySelector('form')!.dispatchEvent(new Event('submit', { bubbles:true, cancelable:true })) })
+    expect(sessionStorage.getItem(PURCHASES_KEY)).toBeNull()
+    expect(container.textContent).not.toContain('A private full report paragraph.')
+  })
+  it('makes the buyer keep a recovery code before leaving for Stripe', async () => {
+    fetchMock.mockResolvedValueOnce(Response.json({ orderId, accessToken:'z'.repeat(43), mode:'test', checkoutUrl:'https://checkout.stripe.com/c/pay/cs_test_fixture' }))
+    await mountCheckout()
+    await act(async () => { button('Buy test report').click() })
+    expect(container.textContent).toContain('Keep your report access safe')
+    expect(button('Continue to Stripe').disabled).toBe(true)
+    expect(sessionStorage.getItem(PURCHASES_KEY)).toContain('z'.repeat(43))
+    expect(localStorage.getItem(PURCHASES_KEY)).toBeNull()
+    expect(window.location.hostname).toBe('saju-english-report-preview-qa.vercel.app')
   })
 })

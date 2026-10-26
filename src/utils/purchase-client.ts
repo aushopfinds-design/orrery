@@ -1,7 +1,8 @@
 import type { BuyerReport } from '../../server/payments/report.ts'
 import { isPreviewKind } from '../report/personal-products.ts'
+import { readOrderAccess } from './order-access.ts'
+export { PURCHASES_KEY } from './order-access.ts'
 
-export const PURCHASES_KEY = 'fate-sandbox-orders-v1'
 export type PurchasedReport = Omit<BuyerReport, 'pdf'>
 export class PurchaseRequestError extends Error {
   readonly messageKey: string
@@ -10,9 +11,9 @@ export class PurchaseRequestError extends Error {
 export function isSandboxHost(host: string) {
   return /^saju-english-report-preview(?:-[a-z0-9-]+)?\.vercel\.app$/.test(host)
 }
-async function request(action: 'report' | 'pdf', orderId: string, signal: AbortSignal) {
-  let accessToken: unknown
-  try { accessToken = JSON.parse(sessionStorage.getItem(PURCHASES_KEY) ?? '{}')?.[orderId]?.accessToken } catch { /* missing capability */ }
+export function isPurchaseHost(host: string) { return host === 'thefatekey.com' || isSandboxHost(host) }
+async function request(action: 'report' | 'pdf', orderId: string, signal: AbortSignal, suppliedToken?: string) {
+  const accessToken = suppliedToken ?? readOrderAccess(orderId)?.accessToken
   if (typeof accessToken !== 'string' || !accessToken || accessToken.length > 1000) throw new PurchaseRequestError('sandbox.missingAccess')
   return fetch('/api/payments?action=' + action, {
     method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + accessToken },
@@ -34,14 +35,15 @@ function validReport(value: unknown): value is PurchasedReport {
     typeof v.title === 'string' && typeof v.kind === 'string' && isPreviewKind(v.kind) &&
     typeof v.text === 'string' && typeof v.edition === 'string' && typeof v.issuedAt === 'string' &&
     Number.isFinite(Date.parse(v.issuedAt)) && Array.isArray(v.documents) && v.documents.every(x => typeof x === 'string') &&
+    (v.emphasis === undefined || (Array.isArray(v.emphasis) && v.emphasis.length <= 1000 && v.emphasis.every(x => typeof x === 'string' && x.length <= 240))) &&
     Array.isArray(v.cards) && v.cards.every(x => x && typeof x.title === 'string' && typeof x.sentence === 'string' && typeof x.daySymbol === 'string')
 }
 /** Poll only processing/unpaid/transient states. A return URL never grants access. */
-export async function waitForPurchasedReport(orderId: string, signal: AbortSignal): Promise<PurchasedReport> {
+export async function waitForPurchasedReport(orderId: string, signal: AbortSignal, accessToken?: string): Promise<PurchasedReport> {
   for (let attempt = 0; attempt < 6; attempt++) {
     signal.throwIfAborted()
     let response: Response
-    try { response = await request('report', orderId, signal) }
+    try { response = await request('report', orderId, signal, accessToken) }
     catch (error) {
       if (signal.aborted || error instanceof PurchaseRequestError || attempt === 5) throw error
       await wait(1000 * (attempt + 1), signal); continue
@@ -53,6 +55,8 @@ export async function waitForPurchasedReport(orderId: string, signal: AbortSigna
       return data
     }
     const code = (data as { error?: unknown } | null)?.error
+    if (code === 'purchase_refunded') throw new PurchaseRequestError('purchase.refunded')
+    if (code === 'payments_closed') throw new PurchaseRequestError('buyer.checkout.pending')
     const preparing = response.status === 409 && code === 'report_being_prepared'
     const unpaid = response.status === 402 && code === 'payment_not_complete'
     const temporary = response.status === 503 && code === 'payment_service_unavailable'

@@ -33,12 +33,11 @@ function SymbolCards({ symbols }: { symbols: SymbolCard[] }) {
   </>
 }
 
-export function ReportExtrasPreview({ question, symbols }: { question: InsightQuestion; symbols: SymbolCard[] }) {
+export function ReportExtrasPreview({ question, symbols, excludeAnswers = [] }: { question: InsightQuestion; symbols: SymbolCard[]; excludeAnswers?: string[] }) {
   const { t } = useLocale()
   return <section className="fate-compass fate-compass-preview" aria-labelledby="personal-compass-title">
     <header><p className="fate-eyebrow">{t('reading.extras.previewEyebrow')}</p><h2 id="personal-compass-title">{t('reading.extras.title')}</h2><p>{t('reading.extras.previewText')}</p></header>
-    <h3 className="fate-compass-subtitle">{t('reading.extras.questions')}</h3>
-    <QuestionCard item={question} />
+    {!excludeAnswers.includes(question.answer) && <><h3 className="fate-compass-subtitle">{t('reading.extras.questions')}</h3><QuestionCard item={question} /></>}
     <h3 className="fate-compass-subtitle">{t('reading.extras.symbols')}</h3>
     <SymbolCards symbols={symbols} />
     <p className="fate-compass-preview-includes">{t('reading.extras.includes')}</p>

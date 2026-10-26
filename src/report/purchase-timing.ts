@@ -32,9 +32,11 @@ export function purchaseTiming(result: SajuResult, point: ReturnType<typeof mont
  // A matched activity is never promoted to an overall favourable period when capacity is unresolved.
  const opening = relevantRoute && !capacityLimited ? relevantRoute : null
  const openingHasCaution = !!tension.length || cycleTension || yearTension || !!widerTension.length
- const activityFits = area === 'money' || area === 'business' ? !!relevantRoute : area === 'love' ? combination.length > 0 : true
- const support = activityFits && facts.tendency !== 'deferred' && !assessment.tension && ['potential-support', 'potential-outlet'].includes(assessment.direction)
- const status = opening ? openingHasCaution ? 'opening-with-caution' : 'conditional-opening' : support ? 'conditional-support' : tension.length || widerTension.length || cycleTension || yearTension || assessment.direction === 'added-demand' ? 'extra-care' : 'topic-only'
+ // Customer labels describe the visible annual/monthly theme. Missing hour data
+ // affects capacity assessment, never the availability of a theme label.
+ const labelPressure = point.comparisons.some(c => [1, 2].includes(c.index) && c.found.some(p => FRIC.includes(p.type)))
+ const opportunityTheme = has(now, [...MONEY, ...RESOURCE, ...AUTHORITY])
+ const status = opportunityTheme ? labelPressure ? 'opening-with-caution' : 'conditional-opening' : labelPressure ? 'extra-care' : 'topic-only'
  const lines: TimingSentence[] = []
  const add = (id: string, en: string, ko: string) => lines.push({id: `${area}.${point.date}.${id}`, en, ko})
  const labelEn = /^\d{4}-\d{2}$/.test(label) ? new Date(label+'-15T12:00:00Z').toLocaleDateString('en-GB',{month:'long',year:'numeric',timeZone:'UTC'}) : label

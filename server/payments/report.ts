@@ -20,6 +20,7 @@ export interface BuyerReport {
   edition: string
   issuedAt: string
   text: string
+  emphasis?: string[]
   documents: string[]
   cards: ReturnType<typeof buildDestinyCard>[]
   pdf: string
@@ -44,7 +45,7 @@ export function reportEmphasis(source: unknown): string[] {
   return [...phrases].filter(x => x.length >= 6 && x.length <= 240)
 }
 /** All report content is calculated from the encrypted order, never from the return URL. */
-export async function issueReport(input: OrderInput, orderId: string, referenceYear: number): Promise<BuyerReport> {
+export async function issueReport(input: OrderInput, orderId: string, referenceYear: number, mode: 'test' | 'live' = 'test'): Promise<BuyerReport> {
   const a = calculateSaju(input.first), b = input.second ? calculateSaju(input.second) : undefined
   let text: string, documents: string[], source: unknown
   if (input.kind === 'complete') {
@@ -61,15 +62,15 @@ export async function issueReport(input: OrderInput, orderId: string, referenceY
   const report: BuyerReport = {
     title: previewProduct(input.kind).title, kind: input.kind, edition: REPORT_EDITION,
     ...(input.recipientName ? { recipientName: input.recipientName } : {}),
-    issuedAt: new Date().toISOString(), text: plainReadingText(text), documents,
+    issuedAt: new Date().toISOString(), text: plainReadingText(text), emphasis: reportEmphasis(source), documents,
     cards: [buildDestinyCard(input.first, input.recipientName ?? ''), ...(input.second ? [buildDestinyCard(input.second, 'Person B')] : [])], pdf: '',
   }
-  const pdf = await reportPdf(report, orderId, reportEmphasis(source))
+  const pdf = await reportPdf(report, orderId, reportEmphasis(source), mode)
   report.pdf = Buffer.from(pdf).toString('base64')
   return report
 }
 
-async function reportPdf(report: BuyerReport, orderId: string, emphasis: string[]) {
+async function reportPdf(report: BuyerReport, orderId: string, emphasis: string[], mode: 'test' | 'live') {
   const pdf = await PDFDocument.create()
   pdf.registerFontkit(fontkit)
   fontBytes ??= readFile(new URL('./assets/NotoSansSC-Report.ttf', import.meta.url))
@@ -82,7 +83,7 @@ async function reportPdf(report: BuyerReport, orderId: string, emphasis: string[
   const italic = await pdf.embedFont(StandardFonts.TimesRomanItalic)
   pdf.setTitle(report.title + ' | THE FATE KEY')
   pdf.setAuthor('THE FATE KEY')
-  pdf.setSubject('Private Sandbox purchase report - ' + report.edition)
+  pdf.setSubject((mode === 'test' ? 'Private Sandbox purchase report - ' : 'Purchased report - ') + report.edition)
   const supported = new Set(font.getCharacterSet())
   const clean = (text: string) => Array.from(text.replace(/\*\*/g, '').replace(/[\u2010-\u2015]/g, '-'))
     .map(c => supported.has(c.codePointAt(0)!) ? c : c === '\t' ? ' ' : '?').join('')

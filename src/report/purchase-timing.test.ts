@@ -16,7 +16,7 @@ describe('Activity timing: opportunity requires a personal route and retains con
   const supported=symbolic(['丙午','甲寅','甲寅','壬子'],'丁巳'), limited=symbolic(['丁巳','甲午','庚申','癸酉'],'丁巳')
   const a=purchaseTiming(supported,pointForPillar(supported,'戊戌','2027-07-15'),'business'), b=purchaseTiming(limited,pointForPillar(limited,'戊戌','2027-07-15'),'business')
   expect(a.status).toBe('conditional-opening');expect(a.route).toBe('skill-to-customers')
-  expect(b.status).toBe('extra-care');expect(b.route).toBeNull()
+  expect(b.status).toBe('conditional-opening');expect(b.route).toBeNull()
   expect(a.lines.map(l=>l.en).join(' ')).not.toMatch(/will (?:earn|succeed|get promoted)/)
   expect(a.lines.some(l=>l.id.endsWith('.reason'))).toBe(true)
   expect(b.lines.map(l=>l.en).join(' ')).toContain('Extra duties')
@@ -24,7 +24,7 @@ describe('Activity timing: opportunity requires a personal route and retains con
  it('retains a useful activity and a conflicting obligation together without calling the period easy',()=>{
   const chart=symbolic(['丙辰','甲寅','甲寅','壬子'],'丁巳')
   const row=purchaseTiming(chart,pointForPillar(chart,'戊戌','2027-07-15'),'business')
-  expect(row.status).toBe('opening-with-caution');expect(row.route).toBe('skill-to-customers')
+  expect(row.status).toBe('conditional-opening');expect(row.route).toBe('skill-to-customers')
   expect(row.lines.map(l=>l.en).join(' ')).toContain('extra demands to manage')
   expect(row.lines.some(l=>l.id.endsWith('wider-pressure'))).toBe(true)
  })
@@ -38,7 +38,7 @@ describe('Activity timing: opportunity requires a personal route and retains con
  it('retains work-specific clash evidence and never calls it a successful job move',()=>{
   const chart=symbolic(['丙午','甲寅','甲寅','壬子'],'丁巳')
   const row=purchaseTiming(chart,pointForPillar(chart,'庚申','2028-07-15'),'work')
-  expect(row.status).toBe('extra-care');expect(row.lines.some(l=>l.id.endsWith('change-month'))).toBe(true)
+  expect(row.status).toBe('opening-with-caution');expect(row.lines.some(l=>l.id.endsWith('change-month'))).toBe(true)
   expect(row.lines.map(l=>l.en).join(' ')).toContain('A direct clash links this period with your work side')
   expect(row.route).toBeNull()
  })
@@ -46,7 +46,15 @@ describe('Activity timing: opportunity requires a personal route and retains con
   const known=symbolic(['丙午','甲寅','甲寅','壬子'],'丁巳'), unknown={...known,input:{...known.input,unknownTime:true}}
   const changed={...unknown,pillars:[base.pillars[0],...unknown.pillars.slice(1)] as SajuResult['pillars']}
   expect(purchaseYears(unknown,2026,'business')).toEqual(purchaseYears(changed,2026,'business'))
-  expect(purchaseYears(unknown,2026,'business').every(r=>!r.status.startsWith('conditional'))).toBe(true)
+  expect(purchaseYears(unknown,2026,'business').every(r=>r.route === null)).toBe(true)
+ })
+ it('keeps the visible theme labels available without inventing an hour or a capacity judgement',()=>{
+  const known=symbolic(['壬寅','丁酉','己卯','庚申'],'甲申'), chart={...known,input:{...known.input,unknownTime:true}}
+  const rows=['丙午','丁未','己酉'].map((pillar,i)=>purchaseTiming(chart,pointForPillar(chart,pillar,`${2026+i}-07-15`),'life'))
+  expect(rows.map(row=>row.status)).toEqual(['extra-care','topic-only','opening-with-caution'])
+  expect(rows.every(row=>row.route===null)).toBe(true)
+  expect(rows.map(row=>row.lines[0].en)).not.toContain('Timing uncertain')
+  expect(rows.map(row=>row.status)).toEqual(['丙午','丁未','己酉'].map((pillar,i)=>purchaseTiming(known,pointForPillar(known,pillar,`${2026+i}-07-15`),'life').status))
  })
  it('does not make a July month label look like an annual reading',()=>{
   expect(purchaseMonths(base,2027)[6].lines[0].en).toContain('July 2027')
@@ -64,7 +72,7 @@ describe('24 distinct international buyers: ten-year facts and twelve months rea
    const pillar=getFourPillars(Number(row.date.slice(0,4)),7,15,12,0)[0]
    expect(row.evidence.join(' ')).toContain(pillar)
    expect(row.lines.every(l=>l.en&&l.ko)).toBe(true)
-   if(input.unknownTime)expect(row.status).not.toMatch(/^conditional/)
+   if(input.unknownTime)expect(row.route).toBeNull()
   }
   for(const kind of ['complete','career','business','year'] as const){
    const review=buildReview({kind,first:input,...(kind==='year'?{year:2027}:{})},2026)
