@@ -14,14 +14,19 @@ export default function SandboxCheckout({ order }: { order: OrderInput }) {
   const [busy, setBusy] = useState(false), [message, setMessage] = useState('')
   const [access, setAccess] = useState(() => { try { return sessionStorage.getItem(TEST_ACCESS_KEY) ?? '' } catch { return '' } })
   const [mode, setMode] = useState<'test' | 'live' | 'closed'>(() => isSandboxHost(window.location.hostname) ? 'test' : 'closed')
+  const [contactRecordsReady, setContactRecordsReady] = useState(false)
+  const [marketingConsent, setMarketingConsent] = useState(false)
   const [remember, setRemember] = useState(false), [saved, setSaved] = useState(false)
   const [prepared, setPrepared] = useState<{ orderId: string; accessToken: string; checkoutUrl: string } | null>(null)
   const activeRequest = useRef<AbortController | null>(null)
   useEffect(() => {
-    if (isSandboxHost(window.location.hostname) || !isPurchaseHost(window.location.hostname)) return
+    if (!isPurchaseHost(window.location.hostname)) return
     const controller = new AbortController()
     void fetch('/api/payments?action=availability', { signal: controller.signal, cache: 'no-store' }).then(r => r.json()).then(value => {
-      if (!controller.signal.aborted && value.available === true && value.mode === 'live') setMode('live')
+      if (!controller.signal.aborted) {
+        if (value.available === true && value.mode === 'live') setMode('live')
+        setContactRecordsReady(value.customerRecordsReady === true)
+      }
     }).catch(() => { /* Closed until the server confirms live readiness. */ })
     return () => controller.abort()
   }, [])
@@ -34,7 +39,7 @@ export default function SandboxCheckout({ order }: { order: OrderInput }) {
     try {
       if (mode === 'test') sessionStorage.setItem(TEST_ACCESS_KEY, access)
       // A retry of the same input reuses its order/session, including after a network error.
-      const draft = JSON.stringify({ ...order, ...(recipientName.trim() ? { recipientName: recipientName.trim() } : {}) }), previous = JSON.parse(sessionStorage.getItem('fate-sandbox-attempt') ?? 'null')
+      const draft = JSON.stringify({ ...order, ...(contactRecordsReady ? { marketingConsent } : {}), ...(recipientName.trim() ? { recipientName: recipientName.trim() } : {}) }), previous = JSON.parse(sessionStorage.getItem('fate-sandbox-attempt') ?? 'null')
       const key = previous?.draft === draft ? previous.key : crypto.randomUUID()
       sessionStorage.setItem('fate-sandbox-attempt', JSON.stringify({ draft, key }))
       const response = await fetch('/api/payments?action=checkout', {
@@ -60,8 +65,9 @@ export default function SandboxCheckout({ order }: { order: OrderInput }) {
     {!prepared ? <>
       {mode === 'test' && <><p id="checkout-access-help" className="fate-checkout-access-note">{t('purchase.testNote')}</p>
         <label>{t('sandbox.access')}<input type="password" autoComplete="off" value={access} onChange={event => setAccess(event.target.value)} /></label></>}
+      {contactRecordsReady && <label lang="en"><input type="checkbox" checked={marketingConsent} onChange={e => setMarketingConsent(e.target.checked)} disabled={busy} />{t('purchase.marketingConsent')}</label>}
       <label><input type="checkbox" checked={remember} onChange={e => setRemember(e.target.checked)} disabled={busy} />{t('purchase.recovery.remember')}</label>
-      <p>{t('purchase.recovery.private')}</p><p><a href="/purchases/">{t('purchase.live.terms')}</a></p>
+      <p>{t('purchase.recovery.private')}</p>{contactRecordsReady && <p>{t('purchase.contactData')}</p>}<p><a href="/purchases/">{t('purchase.live.terms')}</a></p>
       <button type="button" className="fate-complete-primary" onClick={checkout} disabled={busy || (mode === 'test' && access.length < 32)} aria-describedby={mode === 'test' ? 'checkout-access-help' : undefined}>{t(busy ? 'sandbox.opening' : mode === 'test' ? 'sandbox.buy' : 'purchase.live.prepare')}</button>
     </> : <div className="fate-recovery-backup">
       <h4>{t('purchase.key.title')}</h4><p>{t('purchase.key.before')}</p>

@@ -31,7 +31,7 @@ beforeEach(() => {
   localStorage.clear(); sessionStorage.clear()
   sessionStorage.setItem(PURCHASES_KEY, JSON.stringify({ [orderId]: { accessToken: 'private-test-order-capability' } }))
   container = document.createElement('div'); document.body.appendChild(container); root = createRoot(container)
-  fetchMock = vi.fn(); vi.stubGlobal('fetch', fetchMock)
+  fetchMock = vi.fn(); vi.stubGlobal('fetch', (url: string, init?: RequestInit) => url === '/api/payments?action=availability' ? Promise.resolve(Response.json({available:true,mode:'test',customerRecordsReady:false})) : (fetchMock as unknown as (url:string,init?:RequestInit)=>Promise<Response>)(url,init))
   Object.defineProperty(URL, 'createObjectURL', { value: vi.fn(() => 'blob:test-pdf'), configurable: true })
   Object.defineProperty(URL, 'revokeObjectURL', { value: vi.fn(), configurable: true })
 })
@@ -195,6 +195,16 @@ describe('Sandbox checkout screen', () => {
     expect(container.querySelector('[role=alert]')).not.toBeNull()
     expect(sessionStorage.getItem(PURCHASES_KEY)).not.toContain('should-not-be-stored')
     expect(window.location.hostname).toBe('saju-english-report-preview-qa.vercel.app')
+  })
+  it('shows an unchecked marketing option only when the server confirms that contact storage is ready',async()=>{
+    vi.stubGlobal('fetch',(url:string,init?:RequestInit)=>url==='/api/payments?action=availability'?Promise.resolve(Response.json({available:true,mode:'test',customerRecordsReady:true})):(fetchMock as unknown as (url:string,init?:RequestInit)=>Promise<Response>)(url,init))
+    fetchMock.mockResolvedValueOnce(Response.json({orderId,accessToken:'z'.repeat(43),mode:'test',checkoutUrl:'https://checkout.stripe.com/c/pay/cs_test_fixture'}))
+    await mountCheckout()
+    const checkbox=[...container.querySelectorAll('label')].find(label=>label.textContent?.includes('occasional new reports'))?.querySelector('input') as HTMLInputElement
+    expect(checkbox.checked).toBe(false)
+    await act(async()=>checkbox.click())
+    await act(async()=>button('Buy test report').click())
+    expect(JSON.parse(fetchMock.mock.calls[0][1].body).marketingConsent).toBe(true)
   })
   it('cancels an outstanding checkout request when the buyer leaves', async () => {
     fetchMock.mockImplementation((_url, init: RequestInit) => new Promise((_resolve, reject) => {

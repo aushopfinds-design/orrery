@@ -205,3 +205,17 @@ describe('Isolated administrator UI', () => {
     }
   })
 })
+
+
+describe('Customer exports stay behind the existing administrator session',()=>{
+ it('does not invoke customer export for an unauthenticated request',async()=>{
+  const read=vi.fn(async()=>({mode:'test',records:[]})),handler=reviewHandler({config:()=>config,google:verifyGoogle,translate:async()=>[],customerRecords:read})
+  expect((await handler(request('customers',{onlySubscribed:true}))).status).toBe(401);expect(read).not.toHaveBeenCalled()
+ })
+ it('exports confirmed subscribers only when explicitly requested by the authenticated administrator',async()=>{
+  const read=vi.fn(async(only:boolean)=>({mode:'test',onlySubscribed:only,records:[]})),handler=reviewHandler({config:()=>config,google:verifyGoogle,translate:async()=>[],customerRecords:read})
+  const response=await handler(request('customers',{onlySubscribed:true},await session()))
+  expect(response.status).toBe(200);expect(read).toHaveBeenCalledWith(true);expect(response.headers.get('cache-control')).toContain('private')
+  expect((await handler(request('customers',{onlySubscribed:true},await session(),'https://other.example.com'))).status).toBe(403)
+ })
+})

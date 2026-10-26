@@ -81,7 +81,7 @@ export default function BuyerReportPanel() {
       {report && <button type="button" onClick={download} disabled={Boolean(busy)}>{t('sandbox.download')}</button>}
       {report && <button type="button" onClick={() => { const access = readOrderAccess(orderId); if (access) downloadRecovery(orderId, access.accessToken) }}>{t('purchase.key.save')}</button>}</div>
     {!report && error && <PurchaseRecovery onRestore={restored} />}
-    {report && <><p>{t('sandbox.issued')} {report.issuedAt.slice(0, 10)} · {report.edition}</p>
+    {report && <>{report.reference && <p className="fate-buyer-order-reference">{t('purchase.reportId')} <code>{report.reference}</code></p>}<p>{t('sandbox.issued')} {report.issuedAt.slice(0, 10)} · {report.edition}</p>
       <p>{report.documents.join(' · ')}</p>
       {report.recipientName && <p>{`Dear ${report.recipientName},`}</p>}
       <div className="fate-buyer-report-text">{renderLines(delivered.body)}</div>

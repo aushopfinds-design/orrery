@@ -1,3 +1,4 @@
+import { CustomerRecords } from './customers.ts'
 import { randomUUID } from 'node:crypto'
 import type Stripe from 'stripe'
 import { REPORT_PRICE_CENTS } from '../../src/report/pricing.ts'
@@ -33,6 +34,8 @@ export class PaymentService {
   private matchesMode(live: boolean) { return live === (this.mode === 'live') }
   private sessionId(id: string) { return id.startsWith(this.mode === 'live' ? 'cs_live_' : 'cs_test_') }
   async available() { return this.mode === 'test' || (this.config.checkoutOpen === true && await this.store.setting('live-schema-version') === '1' && Boolean(await this.stripe.accountReady?.())) }
+
+  async customerRecordsReady() { return this.config.customerRecordsEnabled === true && await this.store.setting('customer-records-schema-version') === '1' }
 
   async createCheckout(value: unknown, requestKey: string | null) {
     if (!uuid(requestKey)) throw new PaymentError('valid_idempotency_key_required')
@@ -113,8 +116,11 @@ export class PaymentService {
     const paymentIntent = typeof session.payment_intent === 'string' ? session.payment_intent : session.payment_intent?.id ?? null
     if (paid && !paymentIntent?.startsWith('pi_')) throw new PaymentError('invalid_payment_event')
     const state = paid ? 'paid' : session.status === 'expired' ? 'expired' : eventType === 'checkout.session.async_payment_failed' ? 'failed' : 'pending'
-    return await this.store.recordPayment({ eventId, eventType, orderId, sessionId: session.id,
+    const duplicate = await this.store.recordPayment({ eventId, eventType, orderId, sessionId: session.id,
       paymentIntent, state, amount: session.amount_total!, currency: session.currency! }) === 'duplicate'
+    if (paid && await this.customerRecordsReady()) await new CustomerRecords(this.config,this.store).record(orderId, session.customer_details?.email ?? session.customer_email,
+      orderInput(openOrder(this.config.dataKey,orderId,order.input_encrypted)),new Date(String(order.created_at)).toISOString())
+    return duplicate
   }
 
   async reconcile(id: string): Promise<Record<string, unknown>> {

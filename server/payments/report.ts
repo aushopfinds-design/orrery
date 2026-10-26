@@ -1,3 +1,5 @@
+import { reportReference } from '../../src/report/report-reference.ts'
+import type { ReportCertificate } from '../../src/report/report-reference.ts'
 import sharp from 'sharp'
 import { createElement } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
@@ -15,6 +17,8 @@ import type { OrderInput } from './input.ts'
 
 export interface BuyerReport {
   title: string
+  reference?: string
+  certificates?: ReportCertificate[]
   recipientName?: string
   kind: OrderInput['kind']
   edition: string
@@ -59,8 +63,15 @@ export async function issueReport(input: OrderInput, orderId: string, referenceY
     const reading = buildCategoryReading(input.kind, a, { second: b, year: input.year ?? referenceYear })
     source = reading; text = reading.fullText; documents = [reading.title]
   }
+  const certificates = documents.map((title,index) => ({ title, number: reportReference(orderId, referenceYear, index + 1) }))
+  const reference = input.kind === 'bundle' ? reportReference(orderId, referenceYear, 0) : certificates[0].number
+  for (const certificate of certificates) {
+    const heading = 'THE FATE KEY · ' + certificate.title
+    text = text.replace(heading + '\n\n', heading + '\n\nReport ID: ' + certificate.number + '\n\n')
+  }
+  if (input.kind === 'bundle') text = text.replace('THE FATE KEY · Your Destiny Collection\n\n', 'THE FATE KEY · Your Destiny Collection\n\nCollection ID: ' + reference + '\n\n')
   const report: BuyerReport = {
-    title: previewProduct(input.kind).title, kind: input.kind, edition: REPORT_EDITION,
+    title: previewProduct(input.kind).title, kind: input.kind, edition: REPORT_EDITION, reference, certificates,
     ...(input.recipientName ? { recipientName: input.recipientName } : {}),
     issuedAt: new Date().toISOString(), text: plainReadingText(text), emphasis: reportEmphasis(source), documents,
     cards: [buildDestinyCard(input.first, input.recipientName ?? ''), ...(input.second ? [buildDestinyCard(input.second, 'Person B')] : [])], pdf: '',
@@ -83,7 +94,7 @@ async function reportPdf(report: BuyerReport, orderId: string, emphasis: string[
   const italic = await pdf.embedFont(StandardFonts.TimesRomanItalic)
   pdf.setTitle(report.title + ' | THE FATE KEY')
   pdf.setAuthor('THE FATE KEY')
-  pdf.setSubject((mode === 'test' ? 'Private Sandbox purchase report - ' : 'Purchased report - ') + report.edition)
+  pdf.setSubject((mode === 'test' ? 'Private Sandbox purchase report - ' : 'Purchased report - ') + report.edition + (report.reference ? ' | ' + report.reference : ''))
   const supported = new Set(font.getCharacterSet())
   const clean = (text: string) => Array.from(text.replace(/\*\*/g, '').replace(/[\u2010-\u2015]/g, '-'))
     .map(c => supported.has(c.codePointAt(0)!) ? c : c === '\t' ? ' ' : '?').join('')
@@ -202,6 +213,7 @@ async function reportPdf(report: BuyerReport, orderId: string, emphasis: string[
   centre('A little clarity for the road ahead.', 245, 16, paper, italic)
   centre('Prepared from the birth details inside', 194, 10, paper, display)
   centre('Edition ' + report.edition + ' / ' + report.issuedAt.slice(0, 10), 163, 9)
+  if (report.reference) centre(report.reference, 135, 8, gold, font)
   centre(mode === 'test' ? 'SANDBOX TEST / No real payment charged' : 'YOUR PRIVATE READING', 83, 9, paper, display)
   addPage()
   const greeting = report.recipientName ? clean(`Dear ${report.recipientName},`) : 'Dear reader,'
@@ -284,7 +296,7 @@ async function reportPdf(report: BuyerReport, orderId: string, emphasis: string[
   centre('PRIVATE EDITION', sealY - 44, 9, paper)
   centre('Issued by THE FATE KEY', 248, 12, ink)
   y = 207
-  paragraph('Report reference: ' + orderId, 9, muted)
+  paragraph('Report reference: ' + (report.reference ?? orderId), 9, muted)
   paragraph('Edition ' + report.edition + ' | Issued ' + report.issuedAt.slice(0, 10), 9, muted)
   paragraph('The seal identifies the publisher; it is not an external certification.', 9, muted)
   paragraph(mode === 'test' ? 'SANDBOX PURCHASE - Test payment only. No real money charged.' : 'Your private purchase. Keep this report and recovery code safe.', 9, muted)
@@ -292,6 +304,7 @@ async function reportPdf(report: BuyerReport, orderId: string, emphasis: string[
   pages.forEach((p, i) => {
     if (i === 0) return
     p.drawLine({ start: { x: 54, y: 63 }, end: { x: W - 54, y: 63 }, color: gold, thickness: .4 })
+    if (report.reference) p.drawText(report.reference, { x: 54, y: 62, size: 7, font, color: muted })
     p.drawText(`THE FATE KEY | PRIVATE LETTER | ${i + 1} / ${pages.length}`, { x: 54, y: 47, size: 8, font, color: muted })
   })
   return pdf.save()

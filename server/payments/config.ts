@@ -5,6 +5,7 @@ export class PaymentError extends Error {
 }
 
 export interface PaymentConfig {
+  customerRecordsEnabled?: boolean
   mode?: 'test' | 'live'
   checkoutOpen?: boolean
   stripeKey: string
@@ -41,5 +42,5 @@ export function paymentConfig(env: NodeJS.ProcessEnv): PaymentConfig {
     if (site.origin !== origin || site.username || site.password || site.protocol !== 'https:' ||
         !['postgres:', 'postgresql:'].includes(database.protocol) || database.searchParams.get('sslmode') !== 'verify-full') throw new Error()
   } catch { throw new PaymentError('payment_configuration_incomplete', 503) }
-  return { mode: live ? 'live' : 'test', checkoutOpen: !live || (env.FATE_CHECKOUT_OPEN === 'true' && env.FATE_SALES_POLICIES_READY === 'true'), stripeKey, webhookSecret, databaseUrl, origin, dataKey, accessKey, testToken: live ? '' : testToken }
+  return { customerRecordsEnabled: env.FATE_CUSTOMER_RECORDS_ENABLED === 'true', mode: live ? 'live' : 'test', checkoutOpen: !live || (env.FATE_CHECKOUT_OPEN === 'true' && env.FATE_SALES_POLICIES_READY === 'true'), stripeKey, webhookSecret, databaseUrl, origin, dataKey, accessKey, testToken: live ? '' : testToken }
 }

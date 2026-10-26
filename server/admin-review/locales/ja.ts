@@ -1,4 +1,8 @@
 const copy: Record<string, string> = {
+  'admin.review.customerExport': 'Export customer purchase records',
+  'admin.review.marketingExport': 'Export confirmed subscribers',
+  'admin.review.customerExportDone': 'Contains personal information. Store securely. Records:',
+
   "admin.review.sentenceReview": "主な解釈と時期の判断文を対照",
   "admin.review.sourceKoreanNote": "韓国語と英語の鑑定文は同じ分析結果から個別に作成します。段落数は異なる場合があり、どちらも確認用の草稿です。",
   "admin.review.readCompare": "英語と韓国語を並べて読む",

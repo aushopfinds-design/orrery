@@ -31,7 +31,8 @@ function wait(ms: number, signal: AbortSignal) {
 function validReport(value: unknown): value is PurchasedReport {
   if (!value || typeof value !== 'object') return false
   const v = value as Record<string, unknown>
-  return (v.mode === undefined || v.mode === 'test' || v.mode === 'live') && (v.recipientName === undefined || (typeof v.recipientName === 'string' && v.recipientName.length <= 40)) &&
+  return (v.reference === undefined || (typeof v.reference === 'string' && /^FK-20\d{2}-[0-9A-HJKMNP-TV-Z]{26}-0[0-3]$/.test(v.reference))) &&
+    (v.certificates === undefined || (Array.isArray(v.certificates) && v.certificates.length <= 3 && v.certificates.every(c => c && typeof c.title === 'string' && typeof c.number === 'string' && /^FK-20\d{2}-[0-9A-HJKMNP-TV-Z]{26}-0[1-3]$/.test(c.number)))) && (v.mode === undefined || v.mode === 'test' || v.mode === 'live') && (v.recipientName === undefined || (typeof v.recipientName === 'string' && v.recipientName.length <= 40)) &&
     typeof v.title === 'string' && typeof v.kind === 'string' && isPreviewKind(v.kind) &&
     typeof v.text === 'string' && typeof v.edition === 'string' && typeof v.issuedAt === 'string' &&
     Number.isFinite(Date.parse(v.issuedAt)) && Array.isArray(v.documents) && v.documents.every(x => typeof x === 'string') &&

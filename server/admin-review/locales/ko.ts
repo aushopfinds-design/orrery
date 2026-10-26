@@ -1,4 +1,8 @@
 const copy: Record<string, string> = {
+  'admin.review.customerExport': '고객 구매 기록 내보내기',
+  'admin.review.marketingExport': '수신 동의 완료 목록 내보내기',
+  'admin.review.customerExportDone': '개인정보가 포함된 파일입니다. 안전하게 보관하세요. 기록 수:',
+
   "admin.review.sentenceReview": "격국·용신·성향·시기 핵심 문장 대조",
   "admin.review.sourceKoreanNote": "한국어 원본 풀이와 영어 고객용 풀이는 같은 사주 분석 결과에서 각각 작성됩니다. 문장별 번역이 아니므로 문단 수는 다를 수 있습니다. 두 언어 모두 검수 초안입니다.",
   "admin.review.readCompare": "영어·한국어 나란히",

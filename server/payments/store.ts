@@ -16,6 +16,29 @@ export interface PaymentUpdate {
 export class OrderStore {
   private readonly db: Database
   constructor(db: Database) { this.db = db }
+  async saveCustomer(data: { id:string; orderId:string; encrypted:string; consent:boolean; version:string; text:string; capturedAt:string }) {
+    await this.db.transaction(async client => {
+      await client.query(`INSERT INTO fate_customer_contacts(id,email_encrypted) VALUES ($1,$2) ON CONFLICT(id) DO NOTHING`,[data.id,data.encrypted])
+      const saved = await client.query(`INSERT INTO fate_customer_purchases(order_id,contact_id,consent_requested,consent_version,consent_text,consent_captured_at)
+        VALUES($1,$2,$3,$4,$5,$6) ON CONFLICT(order_id) DO NOTHING RETURNING order_id`,[data.orderId,data.id,data.consent,data.version,data.text,data.capturedAt])
+      if (saved.rows.length && data.consent) await client.query(`UPDATE fate_customer_contacts SET marketing_status=CASE WHEN marketing_status='subscribed' THEN 'subscribed' ELSE 'pending' END,updated_at=now() WHERE id=$1`,[data.id])
+    })
+  }
+  async changeCustomerConsent(id:string,purpose:'confirm'|'unsubscribe') {
+    return this.db.transaction(async client => {
+      const changed=await client.query(`UPDATE fate_customer_contacts SET marketing_status=$2,verified_at=CASE WHEN $2='subscribed' THEN now() ELSE verified_at END,updated_at=now()
+        WHERE id=$1 AND ${purpose==='confirm'?"marketing_status='pending'":"marketing_status<>'unsubscribed'"} RETURNING id`,[id,purpose==='confirm'?'subscribed':'unsubscribed'])
+      if(changed.rows.length)await client.query(`INSERT INTO fate_customer_consent_events(contact_id,event) VALUES($1,$2)`,[id,purpose==='confirm'?'confirmed':'unsubscribed'])
+      return changed.rows.length>0
+    })
+  }
+  async customers(onlySubscribed=false) {
+    return (await this.db.query<{id:string;email_encrypted:string;marketing_status:string;verified_at:string|null;created_at:string;purchases:unknown}>(`SELECT c.id,c.email_encrypted,c.marketing_status,c.verified_at,c.created_at,
+      COALESCE(jsonb_agg(jsonb_build_object('orderId',p.order_id,'kind',o.kind,'createdAt',o.created_at,'consentRequested',p.consent_requested,'consentVersion',p.consent_version,'consentText',p.consent_text,'consentCapturedAt',p.consent_captured_at)) FILTER (WHERE p.order_id IS NOT NULL),'[]'::jsonb) AS purchases
+      FROM fate_customer_contacts c LEFT JOIN fate_customer_purchases p ON p.contact_id=c.id LEFT JOIN fate_payment_orders o ON o.id=p.order_id
+      ${onlySubscribed?"WHERE c.marketing_status='subscribed' AND c.verified_at IS NOT NULL":''}
+      GROUP BY c.id ORDER BY c.created_at DESC LIMIT 1000`)).rows
+  }
   async checkoutQuota(key: string) {
     const r = await this.db.query(`INSERT INTO fate_checkout_quota (key, attempts) VALUES ($1,1)
       ON CONFLICT (key) DO UPDATE SET attempts=fate_checkout_quota.attempts+1

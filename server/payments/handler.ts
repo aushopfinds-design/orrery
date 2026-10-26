@@ -1,3 +1,4 @@
+import { CustomerRecords, customerConsentToken } from './customers.ts'
 import { randomUUID } from 'node:crypto'
 import { PaymentError } from './config.ts'
 import { fingerprint, orderAccessToken, secretMatches } from './crypto.ts'
@@ -28,8 +29,22 @@ export function paymentHandler(getService: () => PaymentService) {
     const requestId = randomUUID()
     try {
       const action = new URL(request.url).searchParams.get('action')
+      if (action === 'subscription' && ['GET','POST'].includes(request.method)) {
+        const service=getService(), url=new URL(request.url), purpose=url.searchParams.get('preference')
+        if(!await service.customerRecordsReady())throw new PaymentError('customer_records_not_ready',503)
+        if(purpose!=='confirm'&&purpose!=='unsubscribe')throw new PaymentError('not_found',404)
+        const id=url.searchParams.get('contact')??'', token=url.searchParams.get('token')??''
+        const headers={ 'Content-Type':'text/html; charset=utf-8','Cache-Control':'no-store, private','Referrer-Policy':'no-referrer','X-Robots-Tag':'noindex, nofollow', 'X-Frame-Options':'DENY', 'Content-Security-Policy':"default-src 'none'; style-src 'unsafe-inline'; form-action 'self'; frame-ancestors 'none'" }
+        if(!/^[a-f0-9]{64}$/.test(id)||!/^[a-f0-9]{64}$/.test(token)||!secretMatches(token,customerConsentToken(service.config,id,purpose)))return json({error:'invalid_preference_link'},400)
+        if(request.method==='POST') {
+          const changed=await new CustomerRecords(service.config,service.store).change(id,token,purpose)
+          const text=purpose==='unsubscribe'?'You will not receive product updates. Your purchased reports remain available.':changed?'Your product-update subscription is confirmed. You can unsubscribe at any time.':'This confirmation link is no longer active. Your current preference has not changed.'
+          return new Response('<!doctype html><html lang="en"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Email preference | THE FATE KEY</title><body><main><h1>THE FATE KEY</h1><p>'+text+'</p><a href="/">Return to The Fate Key</a></main></body></html>',{headers})
+        }
+        return new Response('<!doctype html><html lang="en"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Email preference | THE FATE KEY</title><body><main><h1>THE FATE KEY</h1><p>'+(purpose==='confirm'?'Confirm that you want occasional new-report and product updates.':'Stop product updates. This does not affect access to your purchased reports.')+'</p><form method="post"><button type="submit">'+(purpose==='confirm'?'Confirm product updates':'Unsubscribe')+'</button></form></main></body></html>',{headers})
+      }
       if (request.method === 'GET' && action === 'availability') {
-        try { const service = getService(); const available = await service.available(); return json({ available, mode: available ? service.mode : 'closed' }) }
+        try { const service = getService(); const available = await service.available(); return json({ available, mode: available ? service.mode : 'closed', customerRecordsReady: await service.customerRecordsReady() }) }
         catch { return json({ available: false, mode: 'closed' }) }
       }
       if (request.method !== 'POST') return json({ error: 'method_not_allowed' }, 405)
@@ -74,7 +89,7 @@ export function paymentHandler(getService: () => PaymentService) {
         } })
         return json({ title: report.title, kind: report.kind, edition: report.edition, issuedAt: report.issuedAt,
           ...(report.recipientName ? { recipientName: report.recipientName } : {}),
-          text: report.text, emphasis: report.emphasis, documents: report.documents, cards: report.cards, orderId: id, mode: service.mode })
+          reference: report.reference, certificates: report.certificates, text: report.text, emphasis: report.emphasis, documents: report.documents, cards: report.cards, orderId: id, mode: service.mode })
       }
       const status = await service.reconcile(id)
       if (!status) throw new PaymentError('order_not_found', 404)

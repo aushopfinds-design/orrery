@@ -1,3 +1,4 @@
+import { readReportReference } from '../../src/report/report-reference.ts'
 import { afterAll, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
 import { PGlite } from '@electric-sql/pglite'
 import { randomUUID } from 'node:crypto'
@@ -18,7 +19,7 @@ const config: PaymentConfig = {
   origin: 'https://test.example.com', dataKey: '11'.repeat(32), accessKey: '22'.repeat(32), testToken: 'test-only-fixture-token-'.repeat(3),
 }
 const verifier = new Stripe(config.stripeKey)
-const migration = readFileSync(new URL('./migrations/001_test_orders.sql', import.meta.url), 'utf8') + readFileSync(new URL('./migrations/002_report_artifacts.sql', import.meta.url), 'utf8')
+const migration = readFileSync(new URL('./migrations/001_test_orders.sql', import.meta.url), 'utf8') + readFileSync(new URL('./migrations/002_report_artifacts.sql', import.meta.url), 'utf8') + readFileSync(new URL('./migrations/003_customer_records.sql', import.meta.url), 'utf8')
 let db: PGlite
 let store: OrderStore
 
@@ -54,7 +55,7 @@ async function count(table: string) { return Number((await db.query<{ count: str
 beforeAll(async () => { db = await PGlite.create(); await db.exec(migration) }, 120000)
 beforeEach(async () => {
   // This is a fresh, ephemeral local test database; never a customer database.
-  await db.exec('TRUNCATE fate_order_artifacts, fate_payment_settings, fate_fulfillment_jobs, fate_payment_events, fate_payment_orders')
+  await db.exec('TRUNCATE fate_customer_consent_events, fate_customer_purchases, fate_customer_contacts, fate_order_artifacts, fate_payment_settings, fate_fulfillment_jobs, fate_payment_events, fate_payment_orders')
   store = new OrderStore(db as unknown as Database)
 })
 afterAll(async () => { await db.close() })
@@ -83,6 +84,28 @@ describe('sandbox configuration and private input', () => {
     expect(openOrder(config.dataKey, id, encrypted)).toEqual(birth)
     expect(() => openOrder(config.dataKey, randomUUID(), encrypted)).toThrow()
     expect(() => openOrder(config.accessKey, id, encrypted)).toThrow()
+  })
+})
+
+describe('Verified payment owns customer-record creation',()=>{
+  it('records email and optional consent only after a matching paid session, without changing delivery access',async()=>{
+    await store.saveSetting('customer-records-schema-version','1')
+    const provider=gateway(),service=new PaymentService({...config,customerRecordsEnabled:true},store,provider)
+    const checkout=await service.createCheckout({kind:'career',first:birth,marketingConsent:true},randomUUID())
+    const order=(await store.get(checkout.orderId))!,session=provider.sessions.get(order.checkout_session_id!)!
+    session.customer_details={email:'buyer@example.com'} as Stripe.Checkout.Session.CustomerDetails
+    expect(await count('fate_customer_contacts')).toBe(0)
+    await service.reconcile(order.id);expect(await count('fate_customer_contacts')).toBe(0)
+    session.status='complete';session.payment_status='paid';session.payment_intent='pi_customer_fixture'
+    const event=signed(session);await service.receiveWebhook(event.body,event.signature)
+    expect(await count('fate_customer_contacts')).toBe(1)
+    await service.receiveWebhook(event.body,event.signature);expect(await count('fate_customer_purchases')).toBe(1)
+    expect((await db.query<{marketing_status:string}>('SELECT marketing_status FROM fate_customer_contacts')).rows[0].marketing_status).toBe('pending')
+    expect((await service.report(order.id)).reference).toMatch(/^FK-/)
+  },120000)
+  it('keeps collection off unless both the deployment switch and migration marker are ready',async()=>{
+    expect(await new PaymentService(config,store,gateway()).customerRecordsReady()).toBe(false)
+    expect(await new PaymentService({...config,customerRecordsEnabled:true},store,gateway()).customerRecordsReady()).toBe(false)
   })
 })
 
@@ -274,6 +297,9 @@ describe('seven products: paid reports, PDFs and access isolation', () => {
     expect(report.text.length).toBeGreaterThan(5000)
     expect(report).not.toHaveProperty('pdf')
     expect(report.documents).toHaveLength(kind === 'bundle' ? 3 : 1)
+    expect(readReportReference(report.reference)?.orderId).toBe(order.id)
+    expect(report.certificates).toHaveLength(kind === 'bundle' ? 3 : 1)
+    for(const certificate of report.certificates){ expect(report.text).toContain(certificate.number); expect(readReportReference(certificate.number)?.orderId).toBe(order.id) }
     expect(report.cards).toHaveLength(['compatibility', 'bundle'].includes(kind) ? 2 : 1)
     expect(report.text).toContain('17 August 1992')
     if (['compatibility', 'bundle'].includes(kind)) expect(report.text).toContain('17 August 1988')
@@ -289,6 +315,7 @@ describe('seven products: paid reports, PDFs and access isolation', () => {
     expect(rendered.getPageCount()).toBeGreaterThan(3)
     expect(rendered.getAuthor()).toBe('THE FATE KEY')
     expect(rendered.getSubject()).toContain(report.edition)
+    expect(rendered.getSubject()).toContain(report.reference)
     expect(rendered.getTitle()).toContain(report.title)
     const { mkdir, writeFile } = await import('node:fs/promises')
     const dir = '/workspace/scratch/0102d8f465a1/qa-pdfs'

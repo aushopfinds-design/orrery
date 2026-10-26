@@ -36,6 +36,7 @@ interface Dependencies {
   config: () => ReviewConfig
   google: typeof verifyGoogle
   translate: typeof translateReview
+  customerRecords?: (onlySubscribed:boolean) => Promise<unknown>
 }
 export function reviewHandler(deps: Dependencies = { config: () => reviewConfig(process.env), google: verifyGoogle, translate: translateReview }) {
   return async (request: Request): Promise<Response> => {
@@ -74,6 +75,15 @@ export function reviewHandler(deps: Dependencies = { config: () => reviewConfig(
         const response = json({ authenticated: false })
         response.headers.append('Set-Cookie', cookie(SESSION_COOKIE, '', 0))
         return response
+      }
+      if (action === 'customers') {
+        const data=await body(request)
+        if(Object.keys(data).some(key=>key!=='onlySubscribed')||typeof data.onlySubscribed!=='boolean')throw new ReviewError('invalid_customer_request')
+        if(deps.customerRecords)return json(await deps.customerRecords(data.onlySubscribed))
+        const {paymentService}=await import('../payments/runtime.ts'),{CustomerRecords}=await import('../payments/customers.ts')
+        const service=paymentService()
+        if(!await service.customerRecordsReady())throw new ReviewError('customer_records_not_ready',503)
+        return json({mode:service.mode,records:await new CustomerRecords(service.config,service.store).list(data.onlySubscribed)})
       }
       if (action === 'report') {
         const result = buildReview(await body(request))
