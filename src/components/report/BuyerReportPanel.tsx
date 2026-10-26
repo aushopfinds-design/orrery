@@ -21,7 +21,7 @@ export default function BuyerReportPanel() {
   const test = isSandboxHost(window.location.hostname)
   const emphasis = useMemo(() => report?.emphasis?.length ? new RegExp('(' + [...report.emphasis].sort((a,b) => b.length-a.length).map(x => x.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|') + ')', 'g') : null, [report])
   const delivered = useMemo(() => splitDeliveredReading(report?.text ?? ''), [report])
-  const renderLines = (text: string) => text.split(/\n+/).filter(Boolean).map((line, i) => /^\d{2} · |^THE FATE KEY · |^Your Twelve Months/.test(line) ? <h3 key={i}>{line}</h3> : <p key={i}>{emphasis ? line.split(emphasis).map((part, j) => report?.emphasis?.includes(part) ? <strong key={j}>{part}</strong> : part) : line}</p>)
+  const renderLines = (text: string) => text.split(/\n+/).filter(Boolean).map((line, i) => /^\d{2} · |^THE FATE KEY · |^Your Twelve Months|^Your reading at a glance$/.test(line) ? <h3 key={i}>{line}</h3> : <p key={i}>{emphasis ? line.split(emphasis).map((part, j) => report?.emphasis?.includes(part) ? <strong key={j}>{part}</strong> : part) : line}</p>)
   const restored = (id: string, data: PurchasedReport) => { setError(''); setReport(data); setRecoveredId(id) }
   useEffect(() => { if (report) document.title = report.title + ' | The Fate Key' }, [report])
 

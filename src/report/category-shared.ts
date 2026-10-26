@@ -39,7 +39,7 @@ export function chartContext(result: SajuResult) {
   const available = result.pillars.map((pillar, index) => ({ pillar, index })).filter(item => !(result.input.unknownTime && item.index === 0))
   return { result, hour, day, month, year, personal, work, inner, group, relationship, family: FAMILY[month.stemSipsin], available, snapshot: buildFreeReading(result) }
 }
-export function subject(result: SajuResult, label = 'Example birth details'): ReportSubject {
+export function subject(result: SajuResult, label = 'Birth details'): ReportSubject {
   const snapshot = buildFreeReading(result)
   return { label, input: result.input, birthSummary: snapshot.birthSummary, pillarSummary: snapshot.pillarSummary, dayMaster: snapshot.dayMaster, elements: snapshot.elements, visibleMarkers: snapshot.visibleMarkers, calculation: explainCalculation(result.input) }
 }

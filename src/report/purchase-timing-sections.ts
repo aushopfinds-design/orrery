@@ -62,7 +62,7 @@ function buildSections(plan:InterpretationPlan):Record<string,PurchaseTimingSect
   const koLabels=(rows:Row[])=>rows.map(r=>Number(r.date.slice(5,7))+'월').join('·')
   const openingThemes=months.filter(row=>row.status==='conditional-opening')
   const selected=(good.length?good:openingThemes).slice(0,3)
-  const why=(r:Row)=>r.lines.find(l=>l.id.endsWith('.opening'))??r.lines[0]
+  const why=(r:Row)=>r.lines[0]
   const picks=selected.map(r=>({en:`${labels([r])}: ${why(r).en.replace(/^.*? — /,'')}`,ko:`${koLabels([r])}월: ${why(r).ko}`}))
   put('annual-cycle-context',selected.length?`Start with ${labels(selected)} for the specific activities below. These are selected reading highlights, not a ranking of lucky months. ${good.length?'They connect your existing chart with an activity and its longer-period setting.':'No month passes the separate activity-opening check; these are quieter work-and-relationship comparisons only.'}`:`No clear activity opening or quieter comparison stands out. Use the full monthly reading to identify the specific commitments needing adjustment.`,selected.length?`${koLabels(selected)}월의 활동부터 살펴봅니다. 행운 순위가 아니라 선택한 핵심 주제입니다. ${good.length?'타고난 특징과 활동, 긴 흐름이 연결되는 부분입니다.':'별도의 활동 기회 기준을 통과한 달이 없어 일과 관계의 비교에서 상대적으로 조용한 달만 꼽았습니다.'}`:'뚜렷한 활동 기회나 상대적으로 조용한 달을 꼽기 어렵습니다. 전체 월별 풀이에서 조정할 약속을 확인합니다.')
   for(const [i,pick] of picks.entries())out['annual-cycle-context'].lines.push({id:'annual-cycle-context.pick-'+i,...pick})

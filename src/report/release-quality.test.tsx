@@ -40,6 +40,7 @@ describe('r23 customer review regressions',()=>{
   for(const kind of ['complete','career','business','year','compatibility','wellbeing'] as const){
    const report=kind==='complete'?buildCompleteReading(a,2026):buildCategoryReading(kind,a,{second:b,year:2027})
    expect(reportOverview(report.chapters)).toHaveLength(5)
+   expect(report.fullText).not.toContain('Example birth details')
    expect(report.fullText).toContain('Your reading at a glance')
    const html=renderToStaticMarkup(createElement(StaticReading,{report}))
    expect(html).not.toContain('what is the direct answer?')
@@ -52,6 +53,7 @@ describe('r23 customer review regressions',()=>{
   const highlights=sections['annual-cycle-context'].lines
   expect(highlights.length).toBeGreaterThan(1);expect(highlights.length).toBeLessThanOrEqual(4)
   expect(highlights[0].en).toContain('not a ranking of lucky months')
+  expect(new Set(highlights.slice(1).map(x=>x.en.split(': ').slice(1).join(': '))).size).toBe(highlights.length-1)
   for(let i=1;i<=12;i++)expect(sections['month-'+i].lines[0].en).toMatch(/Opening|Adjustment|Focus/)
  })
 })

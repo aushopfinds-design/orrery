@@ -230,9 +230,9 @@ async function reportPdf(report: BuyerReport, orderId: string, emphasis: string[
     const value = block.trim()
     if (!value) continue
     if (value === 'Calculation notes') inAppendix = true
-    const heading = /^(\d{2} [·-]|THE FATE KEY|Your Ten-Year|Your Everyday Compass|Calculation notes|Symbolic colours & numbers|Chart terms in plain English|How this reading is prepared)/.test(value)
+    const heading = /^(\d{2} [·-]|THE FATE KEY|Your Ten-Year|Your reading at a glance|Your Everyday Compass|Calculation notes|Symbolic colours & numbers|Chart terms in plain English|How this reading is prepared)/.test(value)
     const note = inAppendix || /^(From (your|the) chart:|Why this focus:|Report edition|Sources|Method|Calculated start:)/.test(value)
-    if (heading && y < 650) addPage()
+    if (heading && value !== 'Your reading at a glance' && y < 650) addPage()
     if (heading) { y -= 10; paragraph(value, 16, gold); y -= 5 }
     else paragraph(value, note ? 9.2 : 10.4, note ? muted : ink, !note)
   }
