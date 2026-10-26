@@ -1,3 +1,4 @@
+import { splitDeliveredReading } from './report-delivery.ts'
 import { structuralAssessment } from './structural-assessment.ts'
 import { shortParagraphs } from './traditional-reading.ts'
 import { describe, expect, it } from 'vitest'
@@ -192,7 +193,11 @@ describe('Bundle and public report navigation', () => {
     expect(bundle.compatibility.subjects).toHaveLength(2)
     expect(bundle.annual.subjects).toHaveLength(1)
     expect(bundle.annual.subjects[0].input).toEqual(baseA.input)
-    for (const report of [bundle.complete, bundle.compatibility, bundle.annual]) expect(bundle.fullText).toContain(report.fullText)
+    for (const report of [bundle.complete, bundle.compatibility, bundle.annual]) {
+      const parts = splitDeliveredReading(report.fullText)
+      expect(bundle.fullText).toContain(parts.body)
+      expect(bundle.fullText).toContain(parts.appendix)
+    }
     expect(bundle.wordCount).toBeGreaterThan(7500)
   })
   it('routes every category, chapter and bundle without leaking into a personal free result', () => {

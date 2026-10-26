@@ -1,3 +1,4 @@
+import { deliveredChapter, calculationAppendix, withoutFocusEvidence } from './report-delivery.ts'
 import { chartGlossaryFor } from './calculation-notes.ts'
 import type { SajuResult, BirthInput } from '@orrery/core/types'
 import { getRelation, analyzePillarRelations } from '@orrery/core/pillars'
@@ -97,15 +98,16 @@ export function commonMethod(result: SajuResult, year: number): string[] {
 }
 export function finishReading(data: Omit<CategoryReading, 'fullText' | 'wordCount'>): CategoryReading {
   const chapters = data.chapters.map((item, index) => ({ ...item, title: `${String(index + 1).padStart(2, '0')} · ${item.title}` }))
-  const chapterText = (item: ReportChapter) => [item.title, item.lead, ...item.paragraphs, ...(item.example ? everydayExampleText(item.example, item.lead !== item.example.scene) : []), ...(item.showGuidance===false?[]:['Keep close:', ...item.guidance.keepClose, 'Watch out for:', ...item.guidance.watchFor, 'Key practical point: ' + item.tryThis]), ...item.evidence.map(fact=>'From the chart: ' + fact)]
+  const chapterText = (item: ReportChapter) => [...deliveredChapter(item), ...(item.example ? everydayExampleText(item.example, item.lead !== item.example.scene) : [])]
   const fullText = plainReadingText([
     `THE FATE KEY · ${data.title}`, `Report edition ${REPORT_EDITION} · Reference year ${data.referenceYear}`,
-    ...data.subjects.flatMap(item => [item.label, item.birthSummary, item.pillarSummary.join(' · '), `Cycle setting: ${item.calculation.cycleSetting}; direction: ${item.calculation.cycleDirection}.`, ...(data.subjects.length > 1 ? item.calculation.notes : [])]), data.headline,
-    readingBriefText(buildReadingBrief(chapters[0], undefined, data.focus)),
-    ...data.summary.map(item => `${item.label}: ${item.text}`), ...chapters.flatMap(chapterText),
+    ...data.subjects.flatMap(item => [item.label, item.birthSummary, item.pillarSummary.join(' · '), `Cycle setting: ${item.calculation.cycleSetting}; direction: ${item.calculation.cycleDirection}.`, ...(data.subjects.length > 1 ? item.calculation.notes : [])]),
+    withoutFocusEvidence(readingBriefText(buildReadingBrief(chapters[0], undefined, data.focus))),
+    ...data.summary.filter(item => !chapters.some(chapter => chapter.lead === item.text)).map(item => `${item.label}: ${item.text}`), ...chapters.flatMap(chapterText),
     ...(data.months.length ? ['Your Twelve Months', ...data.months.flatMap(chapterText)] : []),
     ...(data.applications.length ? ['Situations you can work through', ...data.applications.map(applicationText)] : []),
-    reportExtrasText(data.extras),
+    reportExtrasText(data.extras, true),
+    calculationAppendix([{ title: 'Reading focus', evidence: data.focus.evidence }, { title: 'Symbol guide evidence', evidence: data.extras.evidence }, ...[...chapters, ...data.months].map(item => ({ title: item.title, evidence: item.evidence }))]),
     'Chart terms in plain English', ...chartGlossaryFor([...chapters.flatMap(chapter => chapter.evidence), ...data.months.flatMap(month => month.evidence), ...data.focus.evidence]).map(item => `${item.term}: ${item.meaning}`),
     'How this reading is prepared', ...data.methodNotes,
   ].join('\n\n'))

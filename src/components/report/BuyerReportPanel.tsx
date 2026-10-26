@@ -1,3 +1,5 @@
+import './buyer-reading.css'
+import { splitDeliveredReading } from '../../report/report-delivery.ts'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { recordJourney } from '../../utils/journey-events.ts'
 import PurchaseRecovery from './PurchaseRecovery.tsx'
@@ -17,6 +19,8 @@ export default function BuyerReportPanel() {
   const success = Boolean(recoveredId) || params.get('checkout') === 'success', allowed = isPurchaseHost(window.location.hostname)
   const test = isSandboxHost(window.location.hostname)
   const emphasis = useMemo(() => report?.emphasis?.length ? new RegExp('(' + [...report.emphasis].sort((a,b) => b.length-a.length).map(x => x.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|') + ')', 'g') : null, [report])
+  const delivered = useMemo(() => splitDeliveredReading(report?.text ?? ''), [report])
+  const renderLines = (text: string) => text.split(/\n+/).filter(Boolean).map((line, i) => /^\d{2} · |^THE FATE KEY · |^Your Twelve Months/.test(line) ? <h3 key={i}>{line}</h3> : <p key={i}>{emphasis ? line.split(emphasis).map((part, j) => report?.emphasis?.includes(part) ? <strong key={j}>{part}</strong> : part) : line}</p>)
   const restored = (id: string, data: PurchasedReport) => { setError(''); setReport(data); setRecoveredId(id) }
   useEffect(() => { if (report) document.title = report.title + ' | The Fate Key' }, [report])
 
@@ -80,8 +84,9 @@ export default function BuyerReportPanel() {
     {report && <><p>{t('sandbox.issued')} {report.issuedAt.slice(0, 10)} · {report.edition}</p>
       <p>{report.documents.join(' · ')}</p>
       {report.recipientName && <p>{`Dear ${report.recipientName},`}</p>}
-      <div className="fate-buyer-report-text">{report.text.split(/\n+/).filter(Boolean).map((line, i) => /^\d{2} · |^THE FATE KEY · /.test(line) ? <h3 key={i}>{line}</h3> : <p key={i}>{emphasis ? line.split(emphasis).map((part, j) => report.emphasis?.includes(part) ? <strong key={j}>{part}</strong> : part) : line}</p>)}</div>
-      <div className="fate-buyer-card-grid">{report.cards.map((card, index) => <PurchasedCard key={index} card={card} orderId={orderId} index={index} />)}</div>
+      <div className="fate-buyer-report-text">{renderLines(delivered.body)}</div>
+      {delivered.appendix && <details className="fate-buyer-calculation-notes"><summary>{t('purchase.calculationNotes')}</summary><div className="fate-buyer-report-text">{renderLines(delivered.appendix)}</div></details>}
+      <div className="fate-buyer-card-grid">{report.cards.map((card, index) => <PurchasedCard key={index} card={card} orderId={orderId} index={index} mode={report.mode ?? (test ? 'test' : 'live')} />)}</div>
     </>}
   </section>
 }

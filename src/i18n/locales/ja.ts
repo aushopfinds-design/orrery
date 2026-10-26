@@ -42,6 +42,7 @@ const ja: Record<string, string> = {
   'form.time': '時間',
   'form.knowTime': '出生時刻がわかる',
   'form.hourOnlyNote': '時のみ入力し、00分で計算します。時刻の境界付近では分によって解釈が変わる場合があります。',
+  'purchase.calculationNotes': '計算資料 — 解釈の根拠を見る',
   'form.unknown': '不明',
   'form.hourSuffix': '時',
   'form.minuteSuffix': '分',

@@ -42,6 +42,7 @@ const zh: Record<string, string> = {
   'form.time': '时间',
   'form.knowTime': '我知道出生时间',
   'form.hourOnlyNote': '仅输入小时，按整点计算。接近时辰边界时，分钟可能影响解读。',
+  'purchase.calculationNotes': '计算资料 — 查看解读依据',
   'form.unknown': '不详',
   'form.hourSuffix': '时',
   'form.minuteSuffix': '分',

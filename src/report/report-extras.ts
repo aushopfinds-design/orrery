@@ -279,17 +279,17 @@ export function buildReportExtras(kind: ExtrasKind, result: SajuResult, options:
   return { questions, keepClose, stepBack, symbols, reminder, experiment, evidence }
 }
 
-export function reportExtrasText(extras: ReportExtras): string {
+export function reportExtrasText(extras: ReportExtras, compact = false): string {
   return plainReadingText([
-    'Your Everyday Compass', 'Questions you may be asking',
+    'Your Everyday Compass', ...(compact ? [] : ['Questions you may be asking',
     ...extras.questions.flatMap((item, index) => [item.question, item.answer, ...(extras.questions.findIndex(other => other.basis === item.basis) === index ? ['Why this appears: ' + item.basis] : [])]),
     'Bring closer', ...extras.keepClose.map(item => `${item.title}: ${item.text}`),
     'Give less space to', ...extras.stepBack.map(item => `${item.title}: ${item.text}`),
-    'Symbolic colours & numbers',
+    ]), 'Symbolic colours & numbers',
     ...extras.symbols.flatMap(item => [item.person + ' · ' + item.element, 'Colours: ' + item.colors.map(color => color.name).join(' / '), 'Numbers: ' + item.numbers.join(' / '), item.basis, item.use]),
     SYMBOL_NOTE, 'A reminder to keep: ' + extras.reminder,
-    extras.experiment.title, ...extras.experiment.steps.map((step, index) => `${index + 1}. ${step}`),
-    'From the chart: ' + extras.evidence.join(' '),
+    ...(compact ? [] : [extras.experiment.title, ...extras.experiment.steps.map((step, index) => `${index + 1}. ${step}`),
+    'From the chart: ' + extras.evidence.join(' ')]),
     'Cultural references', ...SYMBOL_SOURCES.map(source => `${source.label}: ${source.url}`),
   ].join('\n\n'))
 }

@@ -42,6 +42,7 @@ const en: Record<string, string> = {
   'form.time': 'Birth Time (24-hour)',
   'form.knowTime': 'I know my birth time',
   'form.hourOnlyNote': 'Hour only; calculated at :00. Minutes can affect readings near a time boundary.',
+  'purchase.calculationNotes': 'Calculation notes — view the chart evidence',
   'form.unknown': 'Unknown',
   'form.hourSuffix': '',
   'form.minuteSuffix': '',

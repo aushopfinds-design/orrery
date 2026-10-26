@@ -24,8 +24,8 @@ export function customerNarrative(plan:InterpretationPlan):Record<string,Custome
  const timing=purchaseTimingSections(plan),out:Record<string,CustomerSection>={}
  const strength=pair(personal.strength,pk.strength),pressure=pair(personal.pressure,pk.pressure)
  const ownNeed=pair(`You tend to need ${personal.need}.`,`개인적으로 필요한 것은 ${pk.need}입니다.`)
- const publicRole=pair(`The work-related part of your birth chart emphasises ${m.name.en}. This is why the reading puts this way of working first.`,`타고난 사주에서 일과 연결해 읽는 부분에 ${m.name.ko}이 나타나므로 이 업무 방식을 먼저 풀이합니다.`)
- const underneath=p.monthStemGod===p.monthBranchGod?pair('The same work theme appears in both parts of your birth-month reading. That can make it a persistent way of handling work, rather than a temporary mood.','태어난 달의 두 부분에 같은 업무 주제가 반복됩니다. 일시적인 기분보다 일하는 방식에서 계속 나타날 수 있는 특징으로 읽습니다.'):pair(`Your everyday duties add ${inner.name.en}. Your public role and the tasks you actually do may therefore pull in different directions.`,`매일 맡는 일에는 ${inner.name.ko}이 더해집니다. 남에게 보이는 역할과 실제로 하는 일이 서로 다른 방향을 요구할 수 있습니다.`)
+ const publicRole=pair(`Your work side centres on ${m.name.en}. Start with a role that makes use of this strength.`,`일에서는 ${m.name.ko}이 중심입니다. 이 강점을 쓰는 역할부터 살핍니다.`)
+ const underneath=p.monthStemGod===p.monthBranchGod?pair('The same work theme appears in both parts of your birth-month reading. That can make it a persistent way of handling work, rather than a temporary mood.','태어난 달의 두 부분에 같은 업무 주제가 반복됩니다. 일시적인 기분보다 일하는 방식에서 계속 나타날 수 있는 특징으로 읽습니다.'):pair(`Your everyday duties add ${inner.name.en}. Check that the job gives you time for both the visible result and the work behind it.`,`매일 맡는 일에는 ${inner.name.ko}이 더해집니다. 겉으로 보이는 결과와 그 뒤의 업무를 함께 해낼 시간이 있는지 확인합니다.`)
  const closeNeed=pair(`In close relationships, your chart points to a need for ${RELATIONSHIP_PROFILES[p.dayBranch].need}.`,`가까운 관계에서 원하는 것은 ${NEED[p.dayBranch]}입니다.`)
  const closeFriction=pair(`A recurring difficulty may be ${RELATIONSHIP_PROFILES[p.dayBranch].friction}.`,`가까운 관계에서 반복될 수 있는 어려움은 ${PRIVATE_FRICTION_KO[p.dayBranch]}입니다.`)
  const capacity=capacityPassage(plan.primary)
@@ -40,10 +40,10 @@ export function customerNarrative(plan:InterpretationPlan):Record<string,Custome
  const work=[answer.career,publicRole,m.work,underneath]
  const earning=[money,moneyDepth(p,'life'),moneyBasis(plan.primary),capacityBasis(p)]
  const business=[businessVerdict(p),pair(`This comes from ${m.name.en} in the work-related part of your chart${p.monthStemGod===p.monthBranchGod?', repeated in both layers of the birth month':''}.`,`사주에서 일과 연결해 읽는 부분의 ${m.name.ko}에서 나온 풀이입니다.${p.monthStemGod===p.monthBranchGod?' 태어난 달의 두 부분에 같은 주제가 반복됩니다.':''}`)]
- const keepWork=pair('Before a move, compare the actual tasks, authority, pay and daily routine of the two roles.','직장을 바꾸기 전에는 실제 업무와 권한, 급여, 매일의 일하는 방식을 두 자리 사이에서 비교합니다.')
+ const keepWork=pair('Before changing jobs, ask what you will do each week, which decisions you control and what you will be paid. Move when those terms improve the part of work that is causing pressure.','이직 전에 매주 할 일과 직접 정할 수 있는 결정, 급여를 묻습니다. 부담을 만드는 업무 조건이 나아지는 자리를 고릅니다.')
  const moneyWatch=p.strength.tendency==='support-needed'?pair('More paid work can still leave you short of time or cash if you must carry the costs first.','유료 업무가 늘어도 비용을 먼저 감당하면 시간이나 현금이 부족해질 수 있습니다.'):pair('A new source of income can bring continuing costs and responsibilities with it.','새 수입 통로에는 계속 내야 할 비용과 책임도 따를 수 있습니다.')
  const relationshipWatch=pair('Being useful to each other can hide a difference in what each person wants emotionally.','서로에게 도움이 되어도 감정적으로 원하는 것이 다르다는 점은 가려질 수 있습니다.')
- const practicalMoney=pair('Separate confirmed pay, variable fees, shared costs and obligations before treating more activity as more money.','활동이 늘어난 것을 돈이 늘어난 것으로 보기 전에 확정 수입과 변동 수수료, 공동 비용과 의무를 나누어 봅니다.')
+ const practicalMoney=pair('Write down the guaranteed pay, likely fees and costs you must cover. Judge the offer by what remains after those costs.','확정 급여와 예상 수수료, 직접 내야 할 비용을 적습니다. 그 비용을 빼고 남는 금액으로 제안을 판단합니다.')
  const noHealth=pair('A habit that helps on a quiet day can become tiring when every part of the day demands it.','조용한 날 도움이 되는 습관도 하루 종일 요구받으면 부담이 될 수 있습니다.')
  if(plan.kind==='complete'||plan.kind==='wellbeing'){
   put(plan.kind==='complete'?'personality':'everyday-pace',plan.kind==='complete'?[strength,personalContrast(p,'life'),pair(`Your personal style meets a practical demand for ${m.name.en}. That contrast is an important thread in this life reading.`,`개인의 성향 위에 ${m.name.ko}이라는 현실적 요구가 더해집니다. 그 만남을 인생 풀이의 중요한 줄기로 읽습니다.`),ownNeed,capacity,noOutcome]:[strength,personalContrast(p),pair(personal.example,PERSONAL_SCENE_KO[p.dayStem].example),pair(personal.balance,PERSONAL_SCENE_KO[p.dayStem].balance),noOutcome],undefined,pressure)
@@ -54,10 +54,10 @@ export function customerNarrative(plan:InterpretationPlan):Record<string,Custome
   put('love',[closeNeed,day.love,closeFriction,pair('Your work habits and private needs are different parts of the reading. Being effective at work does not mean the same response will feel caring at home.','업무 습관과 사적인 필요는 다른 부분으로 읽습니다. 직장에서 효과적인 대응이 집에서도 배려로 느껴진다는 뜻은 아닙니다.')],pair('Say what form of care you want, and ask what the other person wants rather than assuming it is the same.','원하는 배려를 말하고 상대에게도 물어봅니다. 서로 같은 배려를 원한다고 가정하지 않습니다.'),relationshipWatch)
   put('social',[pair(`The strength that helps you can also become your pressure point: ${m.balance.en}`,`도움이 되는 강점이 부담의 출발점이 될 수도 있습니다. ${m.balance.ko}`),pair(`Your birth day describes your personal style; the birth month shows how that style meets everyday demands. ${p.monthStemGod===p.monthBranchGod?'The same demand appears in both parts of the month, making it a recurring theme.':'The two parts of the month show different demands, so one role may not meet all your needs.'}`,`태어난 날에서는 개인 성향을, 태어난 달에서는 그 성향이 일상의 요구와 만나는 방식을 읽습니다. ${p.monthStemGod===p.monthBranchGod?'달의 두 부분에 같은 요구가 있어 반복되는 주제로 봅니다.':'달의 두 부분에 다른 요구가 있어 역할 하나가 필요한 것을 모두 채우지 못할 수 있습니다.'}`)],undefined,pressure)
   put('patterns',[],pair('Separate a possible work change from a private-life change before treating either as a verdict on your whole life.','일에서의 변화와 사적인 관계의 변화를 나누어 본 뒤 인생 전체에 대한 판단과 구분합니다.'),pair('A change signal identifies an area to examine, rather than an event that must happen.','변화 신호는 살펴볼 영역을 가리키며 반드시 일어날 사건을 정하지 않습니다.'))
-  put('next-moves',[],keepWork,moneyWatch)
+  put('next-moves',[],pair('Choose one change from the yearly timeline, then check its work, money and home demands against the longer period.','연간 흐름에서 변화 하나를 고르고 그때의 일·돈·가정의 요구를 긴 흐름과 함께 확인합니다.'),moneyWatch)
  }
  if(plan.kind==='career'){
-  put('working-style',[...work,capacityBasis(p)],pair('Choose the actual type of work that lets you use the contribution described in your birth-month reading.','태어난 달의 풀이에서 설명한 기여를 발휘할 수 있는 실제 업무 종류를 살핍니다.'),m.pressure)
+  put('working-style',[...work,capacityBasis(p)],pair('Ask to see a normal week of tasks before accepting a role. Choose work that pays for the strength described above.','직장을 정하기 전에 평소 한 주의 업무를 확인합니다. 위에서 설명한 강점으로 보상받는 일을 고릅니다.'),m.pressure)
   put('two-work-layers',[answer.workplace,p.monthStemGod===p.monthBranchGod?pair('The outward role and the everyday work repeat the same theme. A title that promises one kind of work but delivers another is therefore an important mismatch to notice.','겉으로 보이는 역할과 매일 하는 일이 같은 주제를 반복합니다. 직함이 약속한 일과 실제 업무가 다르면 특히 맞지 않는 부분이 될 수 있습니다.'):pair(`Your public role points to ${m.name.en}, but daily tasks add ${inner.name.en}. A suitable job needs room for both.`,`겉으로 보이는 역할은 ${m.name.ko}이고 매일의 업무에는 ${inner.name.ko}이 더해집니다. 맞는 직장은 두 요구를 함께 담을 수 있어야 합니다.`),...(p.monthStemGod!==p.monthBranchGod?[dailyAnswer.workplace]:[])],pair('Compare the advertised role with the tasks you would actually do each week.','채용 공고의 역할과 매주 실제로 할 일을 비교합니다.'),inner.pressure)
   put('feedback-and-boundaries',[pair(`The work pressure you may carry into a new role is ${m.name.en}.`, `새 직장에서도 반복될 수 있는 업무 주제는 ${m.name.ko}입니다.`),m.pressure],keepWork,m.pressure)
   put('proof-of-skill',[answer.recognition],pair('For a larger role, compare the real authority, workload and pay before accepting the title.','더 큰 역할에서는 직함을 받기 전에 실제 권한과 업무량, 보상을 비교합니다.'),m.pressure)
@@ -94,7 +94,7 @@ export function customerNarrative(plan:InterpretationPlan):Record<string,Custome
   put('annual-money',[pair(`${plan.referenceYear}: ${yg.money.en}`,`${plan.referenceYear}년: ${yg.money.ko}`),yi.money,moneyBasis(p),pair(moneyMonths.length?`The monthly comparisons with a direct earning-and-money theme are ${moneyMonths.map(x=>humanMonth(x.date)).join(', ')}. They identify financial activity, rather than profitable months.`:'None of the twelve monthly comparisons has a direct money theme. That does not predict no income or financial difficulty.',moneyMonths.length?`직접적인 재물 주제가 나타나는 월별 비교는 ${moneyMonths.map(x=>humanMonth(x.date)).join(', ')}입니다. 재정적인 활동을 가리키며 이익이 나는 달이라는 뜻은 아닙니다.`:'12개 월별 비교에 직접적인 재물 주제가 없습니다. 수입이 없거나 경제적으로 어렵다는 예측은 아닙니다.')],practicalMoney,moneyWatch)
   put('annual-connections',[pair(`${plan.referenceYear}: ${yg.love.en}`,`${plan.referenceYear}년: ${yg.love.ko}`),yi.love,closeNeed,closeFriction],undefined,relationshipWatch)
   put('annual-cycle-context',[],undefined,moneyWatch);put('annual-plan',[],undefined,yg.pressure)
-  plan.months.forEach((month,i)=>{const g=LANGUAGE[month.god],inr=LANGUAGE[month.innerGod],action=PERIOD_VOICE[month.god].action;put('month-'+(i+1),[pair('Money: '+g.money.en,'재물: '+g.money.ko),pair('At home: '+inr.love.en,'사적인 관계: '+inr.love.ko)],pair(`In ${humanMonth(month.date)}, ${action.en[0].toLowerCase()+action.en.slice(1)}`,`${Number(month.date.slice(5,7))}월에는 ${action.ko}`),g.pressure)})
+  plan.months.forEach((month,i)=>{const g=LANGUAGE[month.god],inr=LANGUAGE[month.innerGod],action=PERIOD_VOICE[month.god].action;put('month-'+(i+1),[pair('Money: '+g.money.en.split(/(?<=[.!?])\s/)[0]+(month.god!==month.innerGod?` The accompanying theme is ${inr.name.en}; include that demand in the same decision.`:''),'재물: '+g.money.ko+(month.god!==month.innerGod?` 함께 나타나는 ${inr.name.ko}의 요구도 같은 판단에 포함합니다.`:'')),pair('At home: '+inr.love.en.split(/(?<=[.!?])\s/)[0]+(month.god!==month.innerGod?` Make room for this while dealing with ${g.name.en}.`:''),'사적인 관계: '+inr.love.ko+(month.god!==month.innerGod?` ${g.name.ko}을 다루는 동안 이 필요도 지킵니다.`:''))],pair(`In ${humanMonth(month.date)}, ${action.en[0].toLowerCase()+action.en.slice(1)}`,`${Number(month.date.slice(5,7))}월에는 ${action.ko}`),g.pressure)})
 
  }
  if(plan.kind==='compatibility'){
@@ -163,9 +163,10 @@ export function customerNarrative(plan:InterpretationPlan):Record<string,Custome
  if(out['career-plan'])out['career-plan'].caution=clone(pressure)
  if(plan.first.input.unknownTime){
   const basis=clone(capacityPassage(plan.primary))
-  for(const section of Object.values(out))section.lines=section.lines.filter(l=>l.en!==basis.en)
+  const missingCapacity=clone(capacityBasis(p))
+  for(const section of Object.values(out))section.lines=section.lines.filter(l=>l.en!==basis.en&&l.en!==missingCapacity.en)
   const first=out[plan.sections[0].id]
-  first.lines.splice(1,0,pair('Reading basis: '+basis.en,'풀이 기준: '+basis.ko))
+  if(plan.includeReadingNotice)first.lines.splice(1,0,pair('Reading basis: '+basis.en,'풀이 기준: '+basis.ko))
  }
  const bodySeen=new Set<string>()
  for(const id of [...plan.sections.map(x=>x.id),...(plan.kind==='complete'?['next-moves']:[]),...plan.months.map((_,i)=>'month-'+(i+1))]){
@@ -180,17 +181,17 @@ export function customerNarrative(plan:InterpretationPlan):Record<string,Custome
 function capacityPassage(p:InterpretationPlan['primary']):Passage{
  if(p.strength.tendency==='supported')return pair('Your chart shows support for putting effort into work and managing resources. This gives you something to use, rather than guaranteeing that every extra commitment is worthwhile.','일과 자원 관리에 힘을 쓸 기반이 있는 쪽으로 읽습니다. 활용할 바탕이 있다는 뜻이며 추가로 맡는 모든 일이 가치 있다는 보장은 아닙니다.')
  if(p.strength.tendency==='support-needed')return pair('Extra work or financial activity can weigh more heavily unless support is in place. An opportunity to earn and the capacity to keep the money are separate parts of this reading.','도움이 갖춰지지 않으면 추가 업무나 재정적인 활동이 더 부담될 수 있습니다. 돈을 벌 기회와 그 돈을 남길 여력은 나누어 읽습니다.')
- if(p.strength.signals.unknownTime)return pair('Your birth time is unknown, so this reading uses your year, month and day without guessing an hour. Period labels describe themes and adjustments; they do not establish favourable timing. Ten-year starting dates are approximate. An hour pillar could add detail.','출생시간을 추측하지 않고 연·월·일을 사용합니다. 기간 표시는 주제와 조정할 부분을 설명하며 유리한 시기를 확정하지 않습니다. 대운 시작일은 근사치이고 출생시간을 알면 세부 내용이 더해질 수 있습니다.')
+ if(p.strength.signals.unknownTime)return pair('Your birth time is unknown, so this reading uses your year, month and day without guessing an hour. Opening marks a money, responsibility or learning theme; Adjustment marks competing work or home demands. Neither is a prediction of success or failure. Ten-year starting dates are approximate.','출생시간을 추측하지 않고 연·월·일을 사용합니다. 기회는 재물·책임·배움의 주제를, 조정은 일·사생활에서 겹치는 요구를 표시합니다. 성공과 실패의 예측이 아니며 대운 시작일은 근사치입니다.')
  return pair('Finding an opening and carrying the extra work are different strengths in your chart. More customers or responsibility can be useful, but they can also stretch the time and support available.','기회를 찾는 힘과 늘어난 일을 감당하는 힘은 나누어 읽습니다. 고객이나 책임이 늘면 도움이 될 수 있지만 시간과 지원의 부담도 커질 수 있습니다.')
 }
 function moneyPassage(p:InterpretationPlan['primary'],area:'life'|'career'|'business'='life'):Passage{
  const steady=p.visibleMoney.some(x=>x.god==='正財'),variable=p.visibleMoney.some(x=>x.god==='偏財')
- if(area==='business')return steady&&variable?pair('Your business money pattern combines repeat customers with new deals. A regular core can sit alongside a smaller stream of changing offers.','사업의 재물은 반복 고객과 새 거래가 함께 나타납니다. 꾸준한 기반 위에 규모가 작은 변동 상품을 더하는 방식으로 읽습니다.')
+ if(area==='business')return steady&&variable?pair('Build around repeat customers, then test new deals on a smaller scale. Your chart contains both money patterns, so keep new sales from disrupting dependable delivery.','반복 고객을 기반으로 만들고 새 거래는 작게 시험합니다. 두 재물 방식이 함께 있어 새 판매 때문에 꾸준한 납품이 흔들리지 않게 합니다.')
  :steady?pair('Repeat sales and clearly priced ongoing work are the stronger business money theme. The pressure is how much continuing service each sale requires.','반복 판매와 가격이 분명한 지속 업무가 사업 재물의 더 강한 주제입니다. 판매 뒤 계속 제공해야 할 서비스가 부담이 될 수 있습니다.')
  :variable?pair('The business money theme favours finding buyers and making deals over simply maintaining a fixed book of work. Cash can arrive unevenly when the fees depend on new sales.','정해진 업무를 유지하기보다 구매자를 찾고 거래하는 일이 사업 재물의 중심입니다. 새 판매에 수입이 달리면 수금의 간격도 달라질 수 있습니다.')
  :p.hiddenMoney.length?pair('The business money signs sit behind the main role rather than at the front. Delivery skills and less visible work need attention before treating sales as your main strength.','사업의 재물 글자는 겉에 앞서기보다 역할 뒤에 있습니다. 영업을 주된 강점으로 정하기 전에 납품 기술과 드러나지 않는 업무를 함께 살핍니다.')
  :pair('The checked chart does not give a clear direct business money route. Business suitability and earning power should therefore stay separate in this reading.','확인한 사주에서 직접적인 사업 재물 통로가 분명하지 않습니다. 사업 방식의 적성과 돈 버는 힘은 나누어 풀이합니다.')
- if(area==='career')return steady&&variable?pair('A steady base with some project or customer income is a clearer fit than depending entirely on either one. Both earning patterns appear in your chart.','고정 기반에 일부 프로젝트나 고객 수입을 더하는 방식이 어느 한쪽에만 기대는 것보다 더 맞는 쪽으로 읽습니다. 두 재물 방식이 함께 나타납니다.')
+ if(area==='career')return steady&&variable?pair('Keep a steady income base and develop selected project or customer work alongside it. Both routes appear in your chart; neither needs to carry all your income.','꾸준한 수입 기반을 두고 선택한 프로젝트나 고객 업무를 더하는 방식입니다. 두 통로가 함께 나타나 한쪽에 수입 전부를 걸 필요는 없습니다.')
  :steady?pair('Regular pay and dependable repeat work are your clearer income pattern. A role with defined hours and duties makes that pattern easier to evaluate.','정기 급여와 꾸준한 반복 업무가 더 분명한 수입 방식입니다. 시간과 담당이 정해진 자리에서 그 방식을 판단하기 쉽습니다.')
  :variable?pair('Customer-facing or project-based income stands out more than a purely fixed routine. Your income question is closely tied to access to buyers and control over the terms of the work.','고정된 일상만으로 버는 방식보다 고객이나 프로젝트를 통한 수입이 더 두드러집니다. 구매자를 만날 기회와 업무 조건을 정할 권한이 수입 질문에 중요합니다.')
  :p.hiddenMoney.length?pair('Your income pattern is less direct: the money signs are inside the chart rather than in its main outward roles. Specialist delivery or work behind the public role deserves a closer look.','수입 방식이 직접 드러나는 쪽은 아닙니다. 재물 글자가 겉의 주된 역할보다 안쪽에 있어 전문적인 수행과 겉 역할 뒤의 업무를 더 살핍니다.')
@@ -205,7 +206,7 @@ function moneyPassage(p:InterpretationPlan['primary'],area:'life'|'career'|'busi
 function moneyBasis(p:InterpretationPlan['primary']):Passage{
  const positions=[...new Set(p.visibleMoney.map(x=>x.position))]
  const name:Record<string,[string,string]>={month:['work and everyday responsibilities','일과 일상 책임'],day:['private commitments','개인적인 약속'],year:['wider contacts','주변 인맥'],hour:['future plans','앞으로의 계획']}
- if(positions.length)return pair(`The money-related signs sit in the parts read for ${positions.map(x=>name[x][0]).join(' and ')}. That is why the earning interpretation is tied to those areas.`,`재물과 관련된 글자가 ${positions.map(x=>name[x][1]).join('·')}로 읽는 부분에 있습니다. 그래서 그 영역과 연결해 수입 방식을 풀이합니다.`)
+ if(positions.length)return pair(`Your money themes connect with ${positions.map(x=>name[x][0]).join(' and ')}. Look at the people, promises and costs involved there when judging a new source of income.`,`재물 주제는 ${positions.map(x=>name[x][1]).join('·')}과 연결됩니다. 새 수입을 판단할 때 그 영역의 사람과 약속, 비용을 함께 봅니다.`)
  return p.hiddenMoney.length?pair('The money signs appear among the inner signs rather than the main outward ones, so the reading treats the earning route as less immediately visible.','재물 글자가 겉의 주된 글자보다 안쪽에 나타나 돈 버는 통로가 바로 드러나는 쪽으로 읽지 않습니다.'):pair('No direct money sign is present in the parts checked here; the work interpretation carries more of the answer.','확인한 부분에 직접적인 재물 글자가 없어 업무 방식의 풀이에서 답을 더 찾습니다.')
 }
 
@@ -217,7 +218,7 @@ export function customerPeriod(plan:InterpretationPlan,index:number):Passage[]{
 
  for(const {pillar,index:position} of availablePillars(plan.first).filter(c=>c.index===1||c.index===2)){
   const observed=pairObservation(cycle.ganzi,pillar.pillar.ganzi,'Cycle / birth '+POSITION[position])
-  if(observed.found.some(p=>['沖','刑','害','破'].includes(p.type)))lines.push(pair(`This longer period also brings friction to ${position===1?'private choices and close relationships':'work and daily responsibilities'}. Existing arrangements may need to change as responsibilities shift.`,`긴 흐름은 ${position===1?'개인적인 선택과 가까운 관계':'직장과 매일 맡는 일'}에 마찰도 더합니다. 책임이 달라지면서 기존 약속도 조정할 수 있습니다.`))
+  if(observed.found.some(p=>['沖','刑','害','破'].includes(p.type)))lines.push(pair(`This longer period puts ${g.name.en} into tension with your ${position===1?'home and relationship side':'work side'}. Review which existing ${position===1?'private promises':'duties'} can fit alongside this demand.`,`긴 흐름의 ${g.name.ko}이 ${position===1?'가정과 관계':'업무'}의 방식과 부딪힙니다. 기존 ${position===1?'사적인 약속':'업무'} 중 이 요구와 함께 감당할 수 있는 것을 확인합니다.`))
  }
  lines.push(g.pressure)
  return lines.map(clone)

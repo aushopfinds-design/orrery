@@ -27,12 +27,12 @@ async function image(src: string) {
   const img = new Image(); img.src = src; await img.decode(); return img
 }
 /** Local rendering only: no name, birth details, or order keys go to a video service. */
-export async function exportCard(card: DestinyCardData, format: 'png' | 'mp4', signal: AbortSignal, progress: (value: number) => void, preview = false): Promise<Blob> {
+export async function exportCard(card: DestinyCardData, format: 'png' | 'mp4', signal: AbortSignal, progress: (value: number) => void, preview = false, mode: 'test' | 'live' = 'test'): Promise<Blob> {
   const mime = format === 'mp4' ? cardVideoMime() : null
   if (format === 'mp4' && !mime) throw new Error('card_video_unsupported')
   signal.throwIfAborted()
   const [background, key] = await Promise.all([dataUrl(CARD_BACKGROUND, signal), dataUrl(CARD_KEY, signal)])
-  const svg = renderToStaticMarkup(createElement(DestinyCardArtwork, { card, id: 'export', preview, artworkHref: background, keyHref: '', labels: { personal: 'MY PERSONAL KEY', element: 'ELEMENT', numbers: 'MY NUMBERS', colour: 'MY COLOUR', watermark: preview ? 'DESIGN SAMPLE' : 'SANDBOX EDITION' } }))
+  const svg = renderToStaticMarkup(createElement(DestinyCardArtwork, { card, id: 'export', preview, artworkHref: background, keyHref: '', labels: { personal: 'MY PERSONAL KEY', element: 'ELEMENT', numbers: 'MY NUMBERS', colour: 'MY COLOUR', watermark: preview ? 'DESIGN SAMPLE' : mode === 'test' ? 'SANDBOX EDITION' : 'PERSONAL EDITION' } }))
   const baseUrl = URL.createObjectURL(new Blob([svg], { type: 'image/svg+xml' }))
   try {
     const [base, keyImage] = await Promise.all([image(baseUrl), image(key)])

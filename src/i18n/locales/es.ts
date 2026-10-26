@@ -42,6 +42,7 @@ const es: Record<string, string> = {
   'form.time': 'Hora',
   'form.knowTime': 'Conozco mi hora de nacimiento',
   'form.hourOnlyNote': 'Solo la hora; se calcula con minutos :00. Los minutos pueden cambiar la lectura cerca de un límite horario.',
+  'purchase.calculationNotes': 'Notas de cálculo — ver las bases de la lectura',
   'form.unknown': 'Desconocida',
   'form.hourSuffix': '',
   'form.minuteSuffix': '',

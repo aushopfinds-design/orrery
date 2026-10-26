@@ -202,7 +202,7 @@ async function reportPdf(report: BuyerReport, orderId: string, emphasis: string[
   centre('A little clarity for the road ahead.', 245, 16, paper, italic)
   centre('Prepared from the birth details inside', 194, 10, paper, display)
   centre('Edition ' + report.edition + ' / ' + report.issuedAt.slice(0, 10), 163, 9)
-  centre('SANDBOX TEST / No real payment charged', 83, 9, paper, display)
+  centre(mode === 'test' ? 'SANDBOX TEST / No real payment charged' : 'YOUR PRIVATE READING', 83, 9, paper, display)
   addPage()
   const greeting = report.recipientName ? clean(`Dear ${report.recipientName},`) : 'Dear reader,'
   const greetingSize = Math.min(27, (W - 108) / font.widthOfTextAtSize(greeting, 1))
@@ -213,11 +213,13 @@ async function reportPdf(report: BuyerReport, orderId: string, emphasis: string[
   y -= 25; paragraph('With care,', 13); paragraph('THE FATE KEY', 16, gold)
   y -= 25; paragraph('Your reading follows on the next page.', 10, muted)
   addPage()
+  let inAppendix = false
   for (const block of report.text.split(/\n+/)) {
     const value = block.trim()
     if (!value) continue
-    const heading = /^(\d{2} [·-]|THE FATE KEY|Your Ten-Year|Your Everyday Compass|Symbolic colours & numbers|Chart terms in plain English|How this reading is prepared)/.test(value)
-    const note = /^(From (your|the) chart:|Why this focus:|Report edition|Sources|Method|Calculated start:)/.test(value)
+    if (value === 'Calculation notes') inAppendix = true
+    const heading = /^(\d{2} [·-]|THE FATE KEY|Your Ten-Year|Your Everyday Compass|Calculation notes|Symbolic colours & numbers|Chart terms in plain English|How this reading is prepared)/.test(value)
+    const note = inAppendix || /^(From (your|the) chart:|Why this focus:|Report edition|Sources|Method|Calculated start:)/.test(value)
     if (heading && y < 650) addPage()
     if (heading) { y -= 10; paragraph(value, 16, gold); y -= 5 }
     else paragraph(value, note ? 9.2 : 10.4, note ? muted : ink, !note)
@@ -231,7 +233,7 @@ async function reportPdf(report: BuyerReport, orderId: string, emphasis: string[
     centre('YOUR PERSONAL DESTINY CARD', 721, 12)
     const svg = renderToStaticMarkup(createElement(DestinyCardArtwork, {
       card, id: `issued-card-${index}`, artworkHref: await cardArtData, keyHref: await cardKeyData, preview: false, showStem: false,
-      labels: { personal: 'MY PERSONAL KEY', element: 'ELEMENT', numbers: 'MY NUMBERS', colour: 'MY COLOUR', watermark: 'SANDBOX EDITION' },
+      labels: { personal: 'MY PERSONAL KEY', element: 'ELEMENT', numbers: 'MY NUMBERS', colour: 'MY COLOUR', watermark: mode === 'test' ? 'SANDBOX EDITION' : 'PERSONAL EDITION' },
     }))
     const raster = await sharp(Buffer.from(svg)).resize(1080, 1350)
       .flatten({ background: { r: 250, g: 245, b: 232 } }).jpeg({ quality: 94, chromaSubsampling: '4:4:4' }).toBuffer()
@@ -285,7 +287,7 @@ async function reportPdf(report: BuyerReport, orderId: string, emphasis: string[
   paragraph('Report reference: ' + orderId, 9, muted)
   paragraph('Edition ' + report.edition + ' | Issued ' + report.issuedAt.slice(0, 10), 9, muted)
   paragraph('The seal identifies the publisher; it is not an external certification.', 9, muted)
-  paragraph('SANDBOX PURCHASE - Test payment only. No real money charged.', 9, muted)
+  paragraph(mode === 'test' ? 'SANDBOX PURCHASE - Test payment only. No real money charged.' : 'Your private purchase. Keep this report and recovery code safe.', 9, muted)
   const pages = pdf.getPages()
   pages.forEach((p, i) => {
     if (i === 0) return

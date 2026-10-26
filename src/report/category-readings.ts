@@ -1,3 +1,4 @@
+import { splitDeliveredReading, CALCULATION_NOTES } from './report-delivery.ts'
 import { bundleNarrative } from './purchase-narrative.ts'
 import { bundleInterpretationPlans } from './interpretation-plan.ts'
 import { buildTraditionalCompleteFromPlan, buildTraditionalCategoryFromPlan } from './traditional-reading.ts'
@@ -34,14 +35,16 @@ export function buildBundleFromPlans(plans: ReturnType<typeof bundleInterpretati
   // The relationship and annual sections retain their own calculated evidence.
   for (const report of [compatibility, annual]) {
     report.sharedAppendixInLifeReport = true
-    report.fullText = report.fullText.split('\n\nYour Everyday Compass')[0]
+    const parts = splitDeliveredReading(report.fullText)
+    report.fullText = parts.body.split('\n\nYour Everyday Compass')[0] + '\n\n' + CALCULATION_NOTES + '\n\n' + parts.appendix.split('\n\nChart terms in plain English')[0]
     report.wordCount = report.fullText.split(/\s+/).length
   }
   const overviewTitle = 'How Do Your Life, Love and Year Connect?'
   const overviewParagraphs = bundleNarrative(plans).map(line=>line.en)
   const synthesis = plainReadingText(overviewParagraphs.join('\n\n'))
   const overview = { title: overviewTitle, fullText: [overviewTitle, synthesis].join('\n\n'), paragraphs: overviewParagraphs }
-  const fullText = ['THE FATE KEY · Your Destiny Collection', overview.fullText, complete.fullText, compatibility.fullText, annual.fullText].join('\n\n')
+  const reports = [complete, compatibility, annual].map(report => ({ title: report.title, ...splitDeliveredReading(report.fullText) }))
+  const fullText = ['THE FATE KEY · Your Destiny Collection', overview.fullText, ...reports.map(report => report.body), CALCULATION_NOTES, ...reports.flatMap(report => [report.title, report.appendix])].join('\n\n')
   const summary = [{ label: 'The life pattern', text: complete.summary[0].text }, { label: 'The connection', text: compatibility.summary[0].text }, { label: `${annualYear} adds`, text: annual.summary[0].text }]
   return { complete, compatibility, annual, overview, summary, synthesis, fullText, wordCount: fullText.split(/\s+/).length }
 }

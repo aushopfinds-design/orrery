@@ -154,7 +154,8 @@ describe('Complete reading quality across 60 international profiles', () => {
       for (const period of reading.periods) {
         const cycle = result.daewoon.find(cycle => cycle.startDate.getUTCFullYear() === Number(period.period.split('–')[0]))!
         expect(period.text).toContain(cycle.startDate.toISOString().slice(0, 10))
-        expect(period.text).toContain(cycle.stemSipsin)
+        expect(period.evidence.join(' ')).toContain(cycle.stemSipsin)
+        expect(reading.fullText).toContain(cycle.stemSipsin)
       }
       expect(new Set(reading.periods.map(period => period.text)).size).toBe(reading.periods.length)
     }

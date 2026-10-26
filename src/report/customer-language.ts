@@ -71,5 +71,5 @@ const PHRASES: readonly [string, string][] = [
 const replacements = new Map(PHRASES)
 const expression = new RegExp([...replacements.keys()].sort((a, b) => b.length - a.length).map(text => text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|'), 'g')
 export function customerEnglish(text: string) {
-  return text.replace(expression, phrase => replacements.get(phrase)!)
+  return text.replace(expression, phrase => replacements.get(phrase)!).replace(/\ban current\b/g, 'a current')
 }

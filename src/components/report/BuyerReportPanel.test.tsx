@@ -60,8 +60,22 @@ describe('Buyer report screen: API response to customer actions', () => {
     await mount()
     await act(async () => { button('Save card image').click() })
     expect(fetchMock).toHaveBeenCalledTimes(2)
-    expect(exportCard).toHaveBeenCalledWith(report.cards[0], 'png', expect.any(AbortSignal), expect.any(Function))
+    expect(exportCard).toHaveBeenCalledWith(report.cards[0], 'png', expect.any(AbortSignal), expect.any(Function), false, 'test')
     expect(saveCardBlob).toHaveBeenCalledWith(expect.any(Blob), 'the-fate-key-card-1.png')
+  })
+  it('keeps calculation notes collapsed and exports a live card without a test label', async () => {
+    const live = { ...report, mode: 'live', text: report.text + '\n\nCalculation notes\n\nFrom the chart: private evidence.' }
+    fetchMock.mockResolvedValueOnce(Response.json(live)).mockResolvedValueOnce(Response.json(live))
+    vi.mocked(exportCard).mockResolvedValueOnce(new Blob(['PNG'], { type:'image/png' }))
+    await mount()
+    const notes = container.querySelector('.fate-buyer-calculation-notes') as HTMLDetailsElement
+    expect(notes.open).toBe(false)
+    expect(notes.textContent).toContain('private evidence')
+    expect(container.querySelector('.fate-buyer-report-text')?.textContent).not.toContain('private evidence')
+    expect(container.querySelector('.fate-personal-card-motion')?.textContent).toContain('PERSONAL EDITION')
+    expect(container.querySelector('.fate-personal-card-motion')?.textContent).not.toContain('SANDBOX EDITION')
+    await act(async () => { button('Save card image').click() })
+    expect(exportCard).toHaveBeenCalledWith(report.cards[0], 'png', expect.any(AbortSignal), expect.any(Function), false, 'live')
   })
   it('does not export if the server rejects access after the report was loaded', async () => {
     fetchMock.mockResolvedValueOnce(ok()).mockResolvedValueOnce(failure(404, 'order_not_found'))

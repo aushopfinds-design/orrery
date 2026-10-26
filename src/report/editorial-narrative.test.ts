@@ -1,3 +1,4 @@
+import { splitDeliveredReading } from './report-delivery.ts'
 import { JSDOM } from 'jsdom'
 import { describe, expect, it, vi } from 'vitest'
 import { renderToStaticMarkup } from 'react-dom/server'
@@ -79,9 +80,9 @@ describe('Calculated interpretation before optional advice', () => {
     }
   })
   it('keeps an integrated bundle overview visible in the sample and complete export', () => {
-    expect(REPORT_EDITION).toBe('2026.10-r18')
+    expect(REPORT_EDITION).toBe('2026.10-r19')
     const bundle = buildBundleReading(a, b, 2027, 2026)
-    expect(bundle.fullText.indexOf(bundle.overview.fullText)).toBeLessThan(bundle.fullText.indexOf(bundle.complete.fullText))
+    expect(bundle.fullText.indexOf(bundle.overview.fullText)).toBeLessThan(bundle.fullText.indexOf(splitDeliveredReading(bundle.complete.fullText).body))
     expect(bundle.synthesis).not.toBe(buildBundleReading(a, b, 2028, 2026).synthesis)
     expect(bundle.synthesis).not.toBe(buildBundleReading(a, a, 2027, 2026).synthesis)
     expect(bundle.fullText).not.toContain('**')
@@ -90,7 +91,8 @@ describe('Calculated interpretation before optional advice', () => {
     expect(html.indexOf(bundle.overview.title)).toBeLessThan(html.indexOf('fate-bundle-tabs'))
     for (const report of [bundle.complete, bundle.compatibility, bundle.annual]) {
       expect(report.fullText).toContain('Report edition ' + REPORT_EDITION)
-      expect(bundle.fullText).toContain(report.fullText)
+      expect(bundle.fullText).toContain(splitDeliveredReading(report.fullText).body)
+      expect(bundle.fullText).toContain(splitDeliveredReading(report.fullText).appendix)
       expect(report.fullText).not.toMatch(/\[Evidence instruction|\[selected year\]/)
     }
   })

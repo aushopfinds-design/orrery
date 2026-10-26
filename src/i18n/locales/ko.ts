@@ -42,6 +42,7 @@ const ko: Record<string, string> = {
   'form.time': '시간',
   'form.knowTime': '출생 시간을 알아요',
   'form.hourOnlyNote': '시만 입력하며 정각 기준으로 계산해요. 시간 경계 근처에서는 분에 따라 풀이가 달라질 수 있어요.',
+  'purchase.calculationNotes': '계산 자료 — 풀이 근거 보기',
   'form.unknown': '모름',
   'form.hourSuffix': '시',
   'form.minuteSuffix': '분',

@@ -42,6 +42,7 @@ const de: Record<string, string> = {
   'form.time': 'Uhrzeit',
   'form.knowTime': 'Ich kenne meine Geburtszeit',
   'form.hourOnlyNote': 'Nur die Stunde; Berechnung zur vollen Stunde. Minuten können die Deutung nahe einer Zeitgrenze verändern.',
+  'purchase.calculationNotes': 'Berechnungsnotizen — Grundlagen ansehen',
   'form.unknown': 'Unbekannt',
   'form.hourSuffix': '',
   'form.minuteSuffix': '',
