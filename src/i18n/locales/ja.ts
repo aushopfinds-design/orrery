@@ -246,6 +246,11 @@ const ja: Record<string, string> = {
   'purchase.testNote': "非公開のテスト決済です。テスト用アクセスコードを入力すると決済ボタンが有効になります。実際の請求はありません。",
   'purchase.checkout': '決済',
   'purchase.continue': '決済へ進む',
+  "buyer.next.question": "次に何を知りたいですか？",
+  "buyer.next.intro": "気になる質問を選んでください。出生情報は引き継がれます。相性の比較には相手の情報も必要です。",
+  "buyer.next.career": "仕事とお金",
+  "buyer.next.compatibility": "恋愛と人間関係",
+  "buyer.next.year": "これからの1年",
 }
 
 export default ja

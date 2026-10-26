@@ -246,6 +246,11 @@ const de: Record<string, string> = {
   'purchase.testNote': "Privater Test-Checkout: Geben Sie Ihren Testzugangscode ein, um die Zahlungsschaltfläche zu aktivieren. Es wird kein echtes Geld berechnet.",
   'purchase.checkout': 'Kasse',
   'purchase.continue': 'Weiter zur Kasse',
+  "buyer.next.question": "Was möchtest du als Nächstes erkunden?",
+  "buyer.next.intro": "Wähle deine Frage. Deine Geburtsdaten werden übernommen; ein Beziehungsvergleich benötigt auch die Daten der anderen Person.",
+  "buyer.next.career": "Arbeit und Geld",
+  "buyer.next.compatibility": "Liebe und Beziehungen",
+  "buyer.next.year": "Das kommende Jahr",
 }
 
 export default de

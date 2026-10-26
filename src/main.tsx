@@ -14,6 +14,8 @@ import './destiny-card.css'
 import './entry-polish.css'
 import './learning.css'
 import App from './components/App.tsx'
+import { recordJourney } from './utils/journey-events.ts'
+recordJourney('visit')
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

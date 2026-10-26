@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
+import { recordJourney } from '../../utils/journey-events.ts'
 import PurchasedCard from './PurchasedCard.tsx'
 import { useLocale } from '../../i18n/index.ts'
 import { isSandboxHost, purchasedPdf, PurchaseRequestError, waitForPurchasedReport } from '../../utils/purchase-client.ts'
@@ -23,6 +24,7 @@ export default function BuyerReportPanel() {
       const data = await waitForPurchasedReport(orderId, controller.signal)
       if (controller.signal.aborted) return
       setReport(data)
+      recordJourney('report_opened', data.kind)
       try { sessionStorage.removeItem('fate-sandbox-attempt') } catch { /* reading still works */ }
     } catch (e) {
       if (activeRequest.current === controller) setError(e instanceof PurchaseRequestError ? e.messageKey : 'sandbox.verifyError')

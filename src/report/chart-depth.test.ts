@@ -28,13 +28,13 @@ describe('r16 interpretation depth without new fortune claims',()=>{
    else expect(text.en).toContain(p.strength.signals.seasonalSupport?'season supports it':'season does not directly support it')
   }
  })
- it('publishes advice only at selected decision points and pairs every delivered claim',()=>{
+ it('publishes consistent advice at every decision point and pairs every delivered claim',()=>{
   const input={...base,unknownTime:false},chart=calculateSaju(input),plan=buildInterpretationPlan('business',chart,2026),sections=customerNarrative(plan)
-  expect(sections['founder-style'].showGuidance).toBe(false)
+  expect(sections['founder-style'].showGuidance).toBe(true)
   expect(sections['team-decisions'].showGuidance).toBe(true)
   const doc=buildReview({kind:'business',first:input},2026).documents[0]
   const ids=doc.reviewedClaims.map(c=>c.id)
-  expect(ids).not.toContain('customer.founder-style.action')
+  expect(ids).toContain('customer.founder-style.action')
   expect(ids).toContain('customer.team-decisions.action')
   expect(doc.english).not.toContain('Turnover, profit and money available to pay bills are different')
   for(const c of doc.reviewedClaims){expect(doc.english.replace(/\s+/g,' ')).toContain(c.english.replace(/\s+/g,' '));expect(doc.koreanOriginal.replace(/\s+/g,' ')).toContain(c.korean.replace(/\s+/g,' '))}

@@ -15,7 +15,6 @@ import { plainReadingText } from './reading-text.ts'
 export interface CustomerSection { lines:Passage[]; action:Passage; caution:Passage; showGuidance:boolean }
 const NEED:Record<string,string>={子:'어려운 대화 전에 생각할 시간',丑:'작더라도 지켜지는 약속',寅:'두 사람 모두 선택할 수 있는 기회',卯:'친절한 말과 솔직한 답',辰:'분명한 결정과 함께 나누는 책임',巳:'사생활과 신뢰, 서로를 이해할 만큼의 정보',午:'따뜻한 관심과 자신의 관심사를 위한 시간',未:'해결책을 듣기 전에 내 이야기를 들어 주는 것',申:'실질적인 도움과 함께 이야기를 들어 주는 것',酉:'각자의 취향에 대한 존중',戌:'꾸준한 일상 행동으로 쌓는 신뢰',亥:'재촉받지 않고 감정을 말할 시간'}
 const ELEMENT:Record<string,string>={Wood:'나무',Fire:'불',Earth:'흙',Metal:'금속',Water:'물'}
-const GUIDANCE_SECTIONS=new Set(['money','love','next-moves','money-commitments','career-plan','offer-test','team-decisions','business-plan','shared-money','shared-week','annual-cycle-context','annual-plan','balance-week'])
 const CACHE=new WeakMap<InterpretationPlan,Record<string,CustomerSection>>()
 const clone=(p:Passage)=>pair(plainReadingText(customerEnglish(p.en)),p.ko)
 export function customerNarrative(plan:InterpretationPlan):Record<string,CustomerSection>{
@@ -36,7 +35,7 @@ export function customerNarrative(plan:InterpretationPlan):Record<string,Custome
   action ??= QUESTION_ACTIONS[id] ?? pair('Compare the stated pattern with the actual situation before making a major commitment.','큰 약속을 하기 전에 설명한 특징을 실제 상황과 비교합니다.')
   const added=timing[id]?.lines.filter(l=>!id.startsWith('month-')||!l.id.endsWith('.caution')&&!l.id.endsWith('.capacity')).map(l=>pair(l.en,l.ko))??[]
   const seen=new Set<string>();const all=(['money-commitments','offer-test','proof-of-skill','customer-communication'].includes(id)?[...lines,...added]:[...added,...lines]).map(clone).filter(l=>{if(seen.has(l.en))return false;seen.add(l.en);return true})
-  out[id]={lines:all,action:clone(action),caution:clone(caution),showGuidance:GUIDANCE_SECTIONS.has(id)||id.startsWith('month-')}
+  out[id]={lines:all,action:clone(action),caution:clone(caution),showGuidance:true}
  }
  const work=[answer.career,publicRole,m.work,underneath]
  const earning=[money,moneyDepth(p,'life'),moneyBasis(plan.primary),capacityBasis(p)]
@@ -162,10 +161,16 @@ export function customerNarrative(plan:InterpretationPlan):Record<string,Custome
  for(const [id,caution]of Object.entries(cautions))if(out[id])out[id].caution=clone(caution)
  if(out.love)out.love.caution=clone(closeFriction)
  if(out['career-plan'])out['career-plan'].caution=clone(pressure)
+ if(plan.first.input.unknownTime){
+  const basis=clone(capacityPassage(plan.primary))
+  for(const section of Object.values(out))section.lines=section.lines.filter(l=>l.en!==basis.en)
+  const first=out[plan.sections[0].id]
+  first.lines.splice(1,0,pair('Reading basis: '+basis.en,'풀이 기준: '+basis.ko))
+ }
  const bodySeen=new Set<string>()
  for(const id of [...plan.sections.map(x=>x.id),...(plan.kind==='complete'?['next-moves']:[]),...plan.months.map((_,i)=>'month-'+(i+1))]){
   const section=out[id];if(!section)continue
-  section.lines=section.lines.filter((line,index)=>{const key=line.en;if(index===0||id.startsWith('month-')){bodySeen.add(key);return true}if(bodySeen.has(key))return false;bodySeen.add(key);return true})
+  section.lines=section.lines.filter((line,index)=>{const key=line.en;if(index===0||id.startsWith('month-')&&/^(Money:|At home:)/.test(key)){bodySeen.add(key);return true}if(bodySeen.has(key))return false;bodySeen.add(key);return true})
   // A caution belongs below the explanation, not twice in the same section.
   if(section.showGuidance)section.lines=section.lines.filter((line,index)=>index===0||line.en!==section.caution.en&&line.en!==section.action.en)
  }
@@ -175,7 +180,7 @@ export function customerNarrative(plan:InterpretationPlan):Record<string,Custome
 function capacityPassage(p:InterpretationPlan['primary']):Passage{
  if(p.strength.tendency==='supported')return pair('Your chart shows support for putting effort into work and managing resources. This gives you something to use, rather than guaranteeing that every extra commitment is worthwhile.','일과 자원 관리에 힘을 쓸 기반이 있는 쪽으로 읽습니다. 활용할 바탕이 있다는 뜻이며 추가로 맡는 모든 일이 가치 있다는 보장은 아닙니다.')
  if(p.strength.tendency==='support-needed')return pair('Extra work or financial activity can weigh more heavily unless support is in place. An opportunity to earn and the capacity to keep the money are separate parts of this reading.','도움이 갖춰지지 않으면 추가 업무나 재정적인 활동이 더 부담될 수 있습니다. 돈을 벌 기회와 그 돈을 남길 여력은 나누어 읽습니다.')
- if(p.strength.signals.unknownTime)return pair('Your birth time is unknown. The reading leaves out that part and does not use a guessed time to recommend a favourable period.','출생시간을 몰라 그 부분은 제외합니다. 시간을 추측해서 유리한 시기를 추천하지 않습니다.')
+ if(p.strength.signals.unknownTime)return pair('Your birth time is unknown, so this reading uses your year, month and day without guessing an hour. Period labels describe themes and adjustments; they do not establish favourable timing. Ten-year starting dates are approximate. An hour pillar could add detail.','출생시간을 추측하지 않고 연·월·일을 사용합니다. 기간 표시는 주제와 조정할 부분을 설명하며 유리한 시기를 확정하지 않습니다. 대운 시작일은 근사치이고 출생시간을 알면 세부 내용이 더해질 수 있습니다.')
  return pair('Finding an opening and carrying the extra work are different strengths in your chart. More customers or responsibility can be useful, but they can also stretch the time and support available.','기회를 찾는 힘과 늘어난 일을 감당하는 힘은 나누어 읽습니다. 고객이나 책임이 늘면 도움이 될 수 있지만 시간과 지원의 부담도 커질 수 있습니다.')
 }
 function moneyPassage(p:InterpretationPlan['primary'],area:'life'|'career'|'business'='life'):Passage{

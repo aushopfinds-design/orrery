@@ -246,6 +246,11 @@ const ko: Record<string, string> = {
   'purchase.testNote': "비공개 테스트 결제입니다. 테스트 접근 코드를 입력하면 결제 버튼이 활성화됩니다. 실제 돈은 청구되지 않습니다.",
   'purchase.checkout': '결제',
   'purchase.continue': '결제로 계속하기',
+  "buyer.next.question": "다음으로 무엇이 궁금하세요?",
+  "buyer.next.intro": "궁금한 질문을 골라 보세요. 입력한 출생정보가 이어집니다. 궁합은 상대방의 정보도 필요합니다.",
+  "buyer.next.career": "직업과 돈",
+  "buyer.next.compatibility": "연애와 관계",
+  "buyer.next.year": "앞으로 1년",
 }
 
 export default ko

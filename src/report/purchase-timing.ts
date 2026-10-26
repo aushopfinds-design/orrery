@@ -34,7 +34,7 @@ export function purchaseTiming(result: SajuResult, point: ReturnType<typeof mont
  const openingHasCaution = !!tension.length || cycleTension || yearTension || !!widerTension.length
  const activityFits = area === 'money' || area === 'business' ? !!relevantRoute : area === 'love' ? combination.length > 0 : true
  const support = activityFits && facts.tendency !== 'deferred' && !assessment.tension && ['potential-support', 'potential-outlet'].includes(assessment.direction)
- const status = opening ? openingHasCaution ? 'opening-with-caution' : 'conditional-opening' : support ? 'conditional-support' : tension.length || cycleTension || yearTension || assessment.direction === 'added-demand' ? 'extra-care' : 'topic-only'
+ const status = opening ? openingHasCaution ? 'opening-with-caution' : 'conditional-opening' : support ? 'conditional-support' : tension.length || widerTension.length || cycleTension || yearTension || assessment.direction === 'added-demand' ? 'extra-care' : 'topic-only'
  const lines: TimingSentence[] = []
  const add = (id: string, en: string, ko: string) => lines.push({id: `${area}.${point.date}.${id}`, en, ko})
  const labelEn = /^\d{4}-\d{2}$/.test(label) ? new Date(label+'-15T12:00:00Z').toLocaleDateString('en-GB',{month:'long',year:'numeric',timeZone:'UTC'}) : label
@@ -47,7 +47,7 @@ export function purchaseTiming(result: SajuResult, point: ReturnType<typeof mont
   'shared-arrangement':['agreeing on a shared plan','함께할 계획을 정하는 일'],
  }
  const labels:Record<string,[string,string]>={'conditional-opening':['Opening','기회'],'opening-with-caution':['Opening + pressure','기회와 부담'],'conditional-support':['Support','도움'],'extra-care':['Adjustment','조정'],'topic-only':['Focus','중심 주제']}
- const badge=facts.tendency==='deferred'?['Timing uncertain','시기 판단 제한']:labels[status]
+ const badge=labels[status]
  add('verdict',`${labelEn}: ${badge[0]} — ${focus.en}`,`${label}: ${badge[1]} — ${focus.ko}`)
  if(opening)add('opening',`There is an opening for ${activity[opening][0]}${openingHasCaution?', with extra demands to manage':''}.`,`${activity[opening][1]}을 살펴볼 기회입니다.${openingHasCaution?' 함께 늘어나는 부담도 관리해야 합니다.':''}`)
  // Explain the observed relationship, without treating a symbol as a guaranteed event.
@@ -62,15 +62,26 @@ export function purchaseTiming(result: SajuResult, point: ReturnType<typeof mont
  }
  if(area==='work'||area==='business'){const context=area==='business'?BUYER_ANSWERS[point.god].grow:BUYER_ANSWERS[point.god].recognition;add('area-context',context.en,context.ko)}
  if(facts.tendency==='support-needed')add('capacity','Extra duties can use up time or money faster than the work pays back. Help with delivery matters more than taking every opportunity.','일이 늘면 보상을 받기 전에 시간이나 돈의 부담이 커질 수 있습니다. 모든 기회를 받기보다 업무를 함께 감당할 도움이 중요합니다.')
- if(facts.tendency==='deferred')add('capacity',result.input.unknownTime?'Your birth time is missing, so the timing stays descriptive; it is not ranked as favourable.':'The overall balance is unresolved, so this period is described without a favourable ranking.',result.input.unknownTime?'출생시간이 없어 시기의 특징만 설명하고 유리한 시기로 고르지 않습니다.':'전체 균형 판단이 미정이므로 시기의 특징만 설명하고 유리한 시기로 고르지 않습니다.')
+ // Unresolved capacity is explained once in the report's reading basis, not in every period.
  for(const c of tension){
   const clash=c.found.some(p=>p.type==='沖')
   const role=WORKING_LANGUAGE[point.god].name, natal=WORKING_LANGUAGE[result.pillars[c.index].branchSipsin].name
-  add('change-'+POSITION[c.index],c.index===2?`${clash?'A direct clash':'A friction pattern'} links this period with the part of your chart read for work. The demand for ${role.en} meets your established daily pattern of ${natal.en}; ${clash?'a change in duties or schedule is a stronger theme here':'the way tasks are shared may need adjustment'}.`:`The ${clash?'clash':'friction pattern'} touches the part of your chart read for private life. ${role.en[0].toUpperCase()+role.en.slice(1)} may compete with time together or the freedom to make a personal choice.`,c.index===2?`이번 시기와 태어난 달의 지지가 ${clash?'충으로 직접 부딪힙니다':'마찰을 이룹니다'}. ${role.ko}의 요구가 평소 ${natal.ko}의 업무 방식과 만납니다. ${clash?'담당이나 일정의 변화를 더 강하게 읽습니다':'업무를 나누는 방식을 조정할 수 있습니다'}.`:`사적인 생활을 읽는 태어난 날의 지지에 ${clash?'충':'마찰'}이 닿습니다. ${role.ko}의 요구가 함께하는 시간이나 개인적으로 선택할 여유와 겹칠 수 있습니다.`)
+  add('change-'+POSITION[c.index],c.index===2?`${clash?'A direct clash':'An adjustment pattern'} links this period with your work side. The demand for ${role.en} meets your established daily pattern of ${natal.en}; ${clash?'a change in duties or schedule is a stronger theme here':'the way tasks are shared may need adjustment'}.`:`The ${clash?'clash':'adjustment pattern'} affects your home and relationship side. ${role.en[0].toUpperCase()+role.en.slice(1)} may compete with time together or the freedom to make a personal choice.`,c.index===2?`이번 시기와 태어난 달의 지지가 ${clash?'충으로 직접 부딪힙니다':'마찰을 이룹니다'}. ${role.ko}의 요구가 평소 ${natal.ko}의 업무 방식과 만납니다. ${clash?'담당이나 일정의 변화를 더 강하게 읽습니다':'업무를 나누는 방식을 조정할 수 있습니다'}.`:`사적인 생활을 읽는 태어난 날의 지지에 ${clash?'충':'마찰'}이 닿습니다. ${role.ko}의 요구가 함께하는 시간이나 개인적으로 선택할 여유와 겹칠 수 있습니다.`)
  }
  if(!tension.length&&combination.length)add('connection','Making plans together is a clearer theme here. Agreeing on what each person will actually do can matter as much as the promise itself.','함께 계획을 정하는 주제가 두드러집니다. 약속뿐 아니라 각자 실제로 무엇을 맡을지 정하는 일도 중요합니다.')
- if(cycleTension||yearTension)add('background-pressure',`The ${cycleTension?'ten-year cycle':'year'} also forms a friction pattern with this reference. ${WORKING_LANGUAGE[point.god].name.en[0].toUpperCase()+WORKING_LANGUAGE[point.god].name.en.slice(1)} must fit around ${WORKING_LANGUAGE[cycleTension?assessment.cycle!.stemSipsin:pointForPillar(result,point.yearPillar,point.date).god].name.en}, rather than replacing the longer-running demand.`,`${cycleTension?'대운':'해당 연도'}도 이번 기준 시기와 마찰을 이룹니다. ${WORKING_LANGUAGE[point.god].name.ko}은 ${WORKING_LANGUAGE[cycleTension?assessment.cycle!.stemSipsin:pointForPillar(result,point.yearPillar,point.date).god].name.ko}의 기존 요구를 없애기보다 함께 감당할 주제입니다.`)
- if(widerTension.length)add('wider-pressure',`There is also pressure around ${widerTension.map(c=>location[POSITION[c.index]][0]).join(' and ')}. Leave room for those obligations when considering the opportunity.`,`${widerTension.map(c=>location[POSITION[c.index]][1]).join('·')}에도 부담이 나타납니다. 기회를 살필 때 그 책임을 감당할 여유도 함께 봅니다.`)
+ if(cycleTension||yearTension){
+  const backgroundGod=cycleTension?assessment.cycle!.stemSipsin:pointForPillar(result,point.yearPillar,point.date).god
+  const current=WORKING_LANGUAGE[point.god].name, background=WORKING_LANGUAGE[backgroundGod].name
+  const span=cycleTension?'ten-year':'annual', spanKo=cycleTension?'10년':'연간'
+  add('background-pressure',point.god===backgroundGod
+   ? `This period repeats your ${span} theme of ${current.en}, so that theme may feel stronger. The timing comparison also shows competing demands; a repeated theme does not remove them.`
+   : `This period brings ${current.en} alongside the ${span} theme of ${background.en}. These demands may compete for the same time or attention.`,
+   point.god===backgroundGod
+   ? `이번 시기는 ${spanKo} 흐름의 ${current.ko} 주제를 다시 강조합니다. 시기 비교에 함께 나타나는 부담이 사라진다는 뜻은 아닙니다.`
+   : `이번 시기의 ${current.ko}이 ${spanKo} 흐름의 ${background.ko}과 함께 나타납니다. 같은 시간이나 관심을 두고 두 요구가 겹칠 수 있습니다.`)
+ }
+
+ if(widerTension.length)add('wider-pressure',`Other demands concern ${widerTension.map(c=>location[POSITION[c.index]][0]).join(' and ')}. Include these obligations when deciding how much to take on.`,`${widerTension.map(c=>location[POSITION[c.index]][1]).join('·')}에도 부담이 나타납니다. 기회를 살필 때 그 책임을 감당할 여유도 함께 봅니다.`)
  add('caution',PERIOD_VOICE[point.god].action.en,PERIOD_VOICE[point.god].action.ko)
  const evidence = [...point.facts, ...assessment.evidence, `Activity policy FATE-activity-r1: area ${area}; route ${relevantRoute ?? 'none'}; status ${status}; capacity ${facts.tendency}; natal roles ${present.join('/')}; reference roles ${now.join('/')}; longer roles ${longer.join('/')}; no overall luck judgement from a matched activity.`]
  return { date: point.date, area, status, route: opening, capacity: facts.tendency, lines, evidence, assessment }

@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import type { OrderInput } from '../../../server/payments/input.ts'
 import { useLocale } from '../../i18n/index.ts'
+import { recordJourney } from '../../utils/journey-events.ts'
 import { reportPrice } from '../../report/pricing.ts'
 
 import { isSandboxHost, PURCHASES_KEY } from '../../utils/purchase-client.ts'
@@ -34,6 +35,7 @@ export default function SandboxCheckout({ order }: { order: OrderInput }) {
       const saved = JSON.parse(sessionStorage.getItem(PURCHASES_KEY) ?? '{}')
       saved[result.orderId] = { accessToken: result.accessToken, kind: order.kind }
       sessionStorage.setItem(PURCHASES_KEY, JSON.stringify(saved))
+      recordJourney('checkout_started', order.kind)
       window.location.assign(result.checkoutUrl)
     } catch {
       if (activeRequest.current === controller) { setMessage(t('sandbox.error')); setBusy(false) }

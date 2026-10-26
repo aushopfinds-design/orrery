@@ -246,6 +246,11 @@ const es: Record<string, string> = {
   'purchase.testNote': "Pago de prueba privado: introduce tu código de acceso de pruebas para activar el botón de pago. No se cobra dinero real.",
   'purchase.checkout': 'Pago',
   'purchase.continue': 'Continuar al pago',
+  "buyer.next.question": "¿Qué te gustaría explorar ahora?",
+  "buyer.next.intro": "Elige tu pregunta. Se conservan tus datos de nacimiento; la comparación de pareja también necesita los datos de la otra persona.",
+  "buyer.next.career": "Trabajo y dinero",
+  "buyer.next.compatibility": "Amor y relaciones",
+  "buyer.next.year": "El próximo año",
 }
 
 export default es

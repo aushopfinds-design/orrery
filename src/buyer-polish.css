@@ -90,3 +90,7 @@
   .fate-personal-preview-heading, .fate-preview-person { break-inside: avoid; }
   .fate-personal-preview [tabindex='-1']:focus { outline: none; }
 }
+
+.fate-free-question-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
+.fate-free-question-grid > a { display: flex; flex-direction: column; align-items: flex-start; gap: .75rem; text-align: left; }
+@media (max-width: 700px) { .fate-free-question-grid { grid-template-columns: 1fr; } }

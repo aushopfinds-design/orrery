@@ -246,6 +246,11 @@ const en: Record<string, string> = {
   'purchase.testNote': "Private test checkout: enter your tester access code to enable the payment button. No real money is charged.",
   'purchase.checkout': 'Checkout',
   'purchase.continue': 'Continue to checkout',
+  "buyer.next.question": "What would you like to explore next?",
+  "buyer.next.intro": "Choose the question that matters to you. Your birth details carry over; a relationship comparison also needs the other person’s details.",
+  "buyer.next.career": "Work & money",
+  "buyer.next.compatibility": "Love & relationships",
+  "buyer.next.year": "The year ahead",
 }
 
 export default en

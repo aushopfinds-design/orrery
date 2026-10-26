@@ -39,7 +39,7 @@ describe('Activity timing: opportunity requires a personal route and retains con
   const chart=symbolic(['丙午','甲寅','甲寅','壬子'],'丁巳')
   const row=purchaseTiming(chart,pointForPillar(chart,'庚申','2028-07-15'),'work')
   expect(row.status).toBe('extra-care');expect(row.lines.some(l=>l.id.endsWith('change-month'))).toBe(true)
-  expect(row.lines.map(l=>l.en).join(' ')).toContain('A direct clash links this period with the part of your chart read for work')
+  expect(row.lines.map(l=>l.en).join(' ')).toContain('A direct clash links this period with your work side')
   expect(row.route).toBeNull()
  })
  it('excludes a guessed birth hour from both timing conclusions and evidence',()=>{

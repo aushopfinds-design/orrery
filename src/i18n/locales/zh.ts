@@ -246,6 +246,11 @@ const zh: Record<string, string> = {
   'purchase.testNote': "这是私人测试结账。输入测试访问码即可启用付款按钮。不会收取真实费用。",
   'purchase.checkout': '结账',
   'purchase.continue': '继续结账',
+  "buyer.next.question": "接下来想了解什么？",
+  "buyer.next.intro": "选择你关心的问题。出生信息会保留；合盘比较还需要另一人的出生信息。",
+  "buyer.next.career": "事业与金钱",
+  "buyer.next.compatibility": "爱情与关系",
+  "buyer.next.year": "未来一年",
 }
 
 export default zh

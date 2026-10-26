@@ -7,6 +7,9 @@ import ElementBalance from './ElementBalance.tsx'
 import ReadingText from './ReadingText.tsx'
 import ReadingGuidance from './ReadingGuidance.tsx'
 import ReadingJourney from './ReadingJourney.tsx'
+import { recordJourney } from '../../utils/journey-events.ts'
+import { previewHash } from '../../report/personal-products.ts'
+import ReportPrice from './ReportPrice.tsx'
 
 export default function FreeReadingView({ input }: { input: BirthInput }) {
   const { t } = useLocale()
@@ -14,7 +17,7 @@ export default function FreeReadingView({ input }: { input: BirthInput }) {
     const chart = calculateSaju(input)
     return { report: buildFreeReading(chart), relationship: buildCompleteReading(chart).chapters.find(chapter => chapter.id === 'love')! }
   }, [input])
-  useEffect(() => { document.getElementById('free-reading')?.scrollIntoView({ block: 'start' }) }, [])
+  useEffect(() => { document.getElementById('free-reading')?.scrollIntoView({ block: 'start' }); recordJourney('free_reading_complete') }, [])
   return (
     <article id="free-reading" lang="en" aria-label={t('reading.free.title')} className="fate-free-reading printable-reading">
       <ReadingJourney step={2} />
@@ -49,6 +52,10 @@ export default function FreeReadingView({ input }: { input: BirthInput }) {
         <ul>{['work', 'love', 'money', 'timeline'].map(key => <li key={key}>{t(`reading.upgrade.${key}`)}</li>)}</ul>
         <div className="fate-free-upgrade-actions"><a className="fate-product-action" href="#my-report">{t('buyer.preview.cta')} <span aria-hidden="true">→</span></a><a href="#sample-report" className="fate-outline-button">{t('buyer.guide.sample')}</a></div>
         <p className="fate-reading-small-note">{t('reading.upgrade.status')}</p>
+      </section>
+      <section className="fate-reading-chapter print:hidden" aria-labelledby="free-next-title">
+        <h2 id="free-next-title">{t('buyer.next.question')}</h2><p>{t('buyer.next.intro')}</p>
+        <div className="fate-free-question-grid">{(['career', 'compatibility', 'year'] as const).map(kind => <a key={kind} className="fate-outline-button" href={previewHash(kind)} onClick={() => recordJourney('report_selected', kind)}><strong>{t(`buyer.next.${kind}`)}</strong><span>{t(`buyer.choice.${kind}.question`)}</span><ReportPrice kind={kind} /></a>)}</div>
       </section>
       <details className="fate-free-elements"><summary>{t('reading.free.elements')}</summary><section className="fate-reading-chapter"><h2>{t('reading.free.elements')}</h2><ElementBalance elements={report.elements} visibleMarkers={report.visibleMarkers} /></section></details>
       <footer className="fate-reading-small-note"><p>{t('reading.footer.note')}</p><button type="button" className="fate-outline-button print:hidden" onClick={() => window.print()}>{t('reading.free.print')}</button></footer>
