@@ -259,3 +259,15 @@ describe('purchase key backup and cross-device recovery', () => {
     expect(window.location.hostname).toBe('saju-english-report-preview-qa.vercel.app')
   })
 })
+
+it('lets a paid reader find and focus card downloads before reading the full report',async()=>{
+ fetchMock.mockResolvedValueOnce(ok())
+ await mount()
+ const jump=button('Go to card downloads'),region=container.querySelector('[aria-label="Your card downloads"]') as HTMLDivElement
+ const scroll=vi.fn();region.scrollIntoView=scroll
+ expect(jump.compareDocumentPosition(container.querySelector('.fate-buyer-report-text')!) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
+ await act(async()=>jump.click())
+ expect(scroll).toHaveBeenCalled()
+ expect(document.activeElement).toBe(region)
+ expect(fetchMock).toHaveBeenCalledTimes(1)
+})

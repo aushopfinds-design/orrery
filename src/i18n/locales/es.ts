@@ -1,6 +1,9 @@
 import { homepageCopy } from '../homepage.ts'
 
 const es: Record<string, string> = {
+  "purchase.files.ready": "Tus archivos están listos. Descarga aquí el PDF o ve a tu tarjeta para guardarla como imagen o vídeo. No necesitas esperar al correo.",
+  "purchase.cards.open": "Ir a las descargas de tarjetas",
+  "purchase.cards.title": "Descargas de tus tarjetas",
   ...homepageCopy,
   "letter.name.label": "Nombre en tu carta (opcional)",
   "letter.name.note": "Usa tu nombre o apodo, hasta 40 caracteres. Se guarda con el pedido y aparece en tu carta; no cambia el cálculo.",

@@ -1,6 +1,9 @@
 import { homepageCopy } from '../homepage.ts'
 
 const zh: Record<string, string> = {
+  "purchase.files.ready": "文件已准备好。可在此下载PDF，或前往卡片保存图片和视频，无需等待邮件。",
+  "purchase.cards.open": "前往卡片下载",
+  "purchase.cards.title": "卡片图片和视频下载",
   ...homepageCopy,
   "letter.name.label": "信中的称呼（可选）",
   "letter.name.note": "请输入40字以内的名字或昵称。它会随订单保存并印在信中，不影响命盘计算。",

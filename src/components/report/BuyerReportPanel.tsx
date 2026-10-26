@@ -14,6 +14,7 @@ export default function BuyerReportPanel() {
   const [report, setReport] = useState<PurchasedReport | null>(null)
   const [error, setError] = useState(''), [busy, setBusy] = useState<'report' | 'pdf' | null>(null)
   const activeRequest = useRef<AbortController | null>(null)
+  const cardSection = useRef<HTMLDivElement | null>(null)
   const [recoveredId, setRecoveredId] = useState<string | null>(null)
   const params = new URLSearchParams(window.location.search), orderId = recoveredId ?? params.get('order_id')
   const success = Boolean(recoveredId) || params.get('checkout') === 'success', allowed = isPurchaseHost(window.location.hostname)
@@ -77,8 +78,10 @@ export default function BuyerReportPanel() {
     <p>{t(test ? 'sandbox.note' : 'purchase.live.delivered')}</p><p className="fate-buyer-order-reference">{t('sandbox.orderReference')} <code>{orderId}</code></p>
     {busy && <p role="status" aria-live="polite">{t(busy === 'pdf' ? 'sandbox.downloading' : 'sandbox.verifying')}</p>}
     {error && <p role="alert">{t(error)}</p>}
+    {report && <p>{t('purchase.files.ready')}</p>}
     <div className="fate-preview-tools"><button type="button" onClick={loadReport} disabled={Boolean(busy)}>{t('sandbox.retry')}</button>
       {report && <button type="button" onClick={download} disabled={Boolean(busy)}>{t('sandbox.download')}</button>}
+      {report && <button type="button" onClick={() => { cardSection.current?.scrollIntoView({ block:'start', behavior:'smooth' }); cardSection.current?.focus({ preventScroll:true }) }}>{t('purchase.cards.open')}</button>}
       {report && <button type="button" onClick={() => { const access = readOrderAccess(orderId); if (access) downloadRecovery(orderId, access.accessToken) }}>{t('purchase.key.save')}</button>}</div>
     {!report && error && <PurchaseRecovery onRestore={restored} />}
     {report && <>{report.reference && <p className="fate-buyer-order-reference">{t('purchase.reportId')} <code>{report.reference}</code></p>}<p>{t('sandbox.issued')} {report.issuedAt.slice(0, 10)} · {report.edition}</p>
@@ -86,7 +89,7 @@ export default function BuyerReportPanel() {
       {report.recipientName && <p>{`Dear ${report.recipientName},`}</p>}
       <div className="fate-buyer-report-text">{renderLines(delivered.body)}</div>
       {delivered.appendix && <details className="fate-buyer-calculation-notes"><summary>{t('purchase.calculationNotes')}</summary><div className="fate-buyer-report-text">{renderLines(delivered.appendix)}</div></details>}
-      <div className="fate-buyer-card-grid">{report.cards.map((card, index) => <PurchasedCard key={index} card={card} orderId={orderId} index={index} mode={report.mode ?? (test ? 'test' : 'live')} />)}</div>
+      <div ref={cardSection} tabIndex={-1} role="region" aria-label={t('purchase.cards.title')} className="fate-buyer-card-grid">{report.cards.map((card, index) => <PurchasedCard key={index} card={card} orderId={orderId} index={index} mode={report.mode ?? (test ? 'test' : 'live')} />)}</div>
     </>}
   </section>
 }

@@ -1,6 +1,9 @@
 import { homepageCopy } from '../homepage.ts'
 
 const en: Record<string, string> = {
+  "purchase.files.ready": "Your files are ready. Download the PDF here, or go to your card to save an image or video. You do not need to wait for email.",
+  "purchase.cards.open": "Go to card downloads",
+  "purchase.cards.title": "Your card downloads",
   ...homepageCopy,
   "letter.name.label": "Name on your letter (optional)",
   "letter.name.note": "Use a first name or nickname, up to 40 characters. It is saved with your order and printed in your letter; it does not change the calculation.",

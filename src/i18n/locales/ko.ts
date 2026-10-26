@@ -1,6 +1,9 @@
 import { homepageCopy } from '../homepage.ts'
 
 const ko: Record<string, string> = {
+  "purchase.files.ready": "파일이 준비됐어요. 여기서 PDF를 받거나 카드로 이동해 이미지와 영상을 저장하세요. 이메일을 기다릴 필요 없어요.",
+  "purchase.cards.open": "카드 저장으로 이동",
+  "purchase.cards.title": "카드 이미지와 영상 저장",
   ...homepageCopy,
   "letter.name.label": "편지에 쓸 이름 (선택)",
   "letter.name.note": "40자 이내의 이름이나 별명을 입력하세요. 주문과 함께 저장되어 편지에 표시되며 사주 계산에는 쓰이지 않습니다.",

@@ -71,7 +71,7 @@ describe('Buyer review r14: direct answers without repeated warnings or lost dat
   const sections=['founder-style','offer-test','team-decisions','customer-communication'].map(id=>s[id].lines.map(x=>x.en).join(' '))
   expect(new Set(sections).size).toBe(4)
   expect(sections[1]).toContain('small offer')
-  expect(sections[2]).toContain('wider contacts')
+  expect(sections[2]).toContain('wider social connections')
   expect(sections[3]).toContain('payment collection')
  })
  it('synthesises simultaneous work and private pressure from the actual monthly comparisons',()=>{
@@ -111,5 +111,22 @@ describe('r15 paid-content review fixes',()=>{
   expect(s['month-4'].lines[0].en).toContain('Opening + pressure')
   const text=Object.values(s).flatMap(s=>s.lines.map(l=>l.en)).join(' ')
   expect(text).not.toMatch(/\bCalm\b|\bSteady\b|guaranteed income|Expect a bigger change/)
+ })
+})
+
+describe('Customer conclusions before planning advice',()=>{
+ it('keeps a readable business conclusion when the hour is unknown, with the limit afterwards',()=>{
+  const chart=calculateSaju({...CATEGORY_SCENARIOS[0].first,unknownTime:true})
+  const plan=buildInterpretationPlan('business',chart,2026)
+  const opening=customerNarrative(plan)['founder-style'].lines[0].en
+  expect(opening).not.toMatch(/^.*because the birth time is missing/)
+  expect(opening.split('. ')[0]).not.toMatch(/birth time|unknown|missing/)
+  expect(opening).toContain('without a birth time')
+ })
+ it('answers recognition and income questions before listing timing windows',()=>{
+  const plan=buildInterpretationPlan('career',a,2026),sections=customerNarrative(plan)
+  expect(sections['proof-of-skill'].lines[0].en).not.toMatch(/^No promotion year|^Your knowledge and work responsibilities connect more clearly in/)
+  expect(sections['money-commitments'].lines[0].en).not.toMatch(/^For paid projects|^Keep a steady income/)
+  expect(sections['work-chapters'].lines.map(x=>x.en).join(' ')).toContain('2035')
  })
 })

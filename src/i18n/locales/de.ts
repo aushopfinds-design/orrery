@@ -1,6 +1,9 @@
 import { homepageCopy } from '../homepage.ts'
 
 const de: Record<string, string> = {
+  "purchase.files.ready": "Ihre Dateien sind bereit. Laden Sie hier die PDF herunter oder speichern Sie Ihre Karte als Bild oder Video. Sie müssen nicht auf die E-Mail warten.",
+  "purchase.cards.open": "Zu den Karten-Downloads",
+  "purchase.cards.title": "Ihre Karten-Downloads",
   ...homepageCopy,
   "letter.name.label": "Name im Brief (optional)",
   "letter.name.note": "Vorname oder Spitzname, bis zu 40 Zeichen. Er wird mit der Bestellung gespeichert und im Brief verwendet, ohne die Berechnung zu ändern.",
