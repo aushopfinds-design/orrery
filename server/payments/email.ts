@@ -30,13 +30,14 @@ export function purchaseMail(config:PaymentConfig,id:string,email:string,report:
   const test=(config.mode??'test')==='test'
   // Sandbox can never email an arbitrary checkout address.
   const to=test?'delivered@resend.dev':email
+  const title=/^your\s/i.test(report.title)?report.title:'Your '+report.title
   const recovery=`FK1.${id}.${orderAccessToken(config.accessKey,id)}`
   const url=config.origin+'/#purchase'
   const lines=[test?'SANDBOX TEST — no real payment charged.':'Thank you for your purchase.',
-    'Your '+report.title+' is attached as a PDF.', 'Report ID: '+(report.reference??id),
+    title+' is attached as a PDF.', 'Report ID: '+(report.reference??id),
     'To open your report and included cards again, visit '+url+' and enter this private recovery code:',recovery,
     'Keep this email private. Anyone with the recovery code can open the report. Online access is checked against payment and refund status.',
-    'If the attachment is missing, use the recovery code to download it from the site.']
+    'You can download the PDF, card image and animated card directly from your purchased-report page. Email is a backup; you do not have to wait for it to save your files.']
   if(consent){
     const contact=fingerprint(config.dataKey,'customer-email:v1:'+email)
     const link=(purpose:'confirm'|'unsubscribe')=>config.origin+'/api/payments?action=subscription&preference='+purpose+'&contact='+contact+'&token='+customerConsentToken(config,contact,purpose)
@@ -45,7 +46,7 @@ export function purchaseMail(config:PaymentConfig,id:string,email:string,report:
   }
   lines.push('Questions? Reply to this email. Please include your Report ID and never send card details.','THE FATE KEY · Traditional chart interpretation for personal reflection.')
   const text=lines.join('\n\n')
-  return {from:'THE FATE KEY <reports@thefatekey.com>',reply_to:['thefatekey@gmail.com'],to:[to],subject:(test?'[Sandbox] ':'')+'Your '+report.title+' | THE FATE KEY',text,
+  return {from:'THE FATE KEY <reports@thefatekey.com>',reply_to:['thefatekey@gmail.com'],to:[to],subject:(test?'[Sandbox] ':'')+title+' | THE FATE KEY',text,
     html:'<!doctype html><html lang="en"><body style="font-family:Arial,sans-serif;line-height:1.6;color:#182332"><h1>THE FATE KEY</h1>'+lines.map(s=>'<p style="overflow-wrap:anywhere">'+escape(s)+'</p>').join('')+'</body></html>',
     attachments:[{filename:'the-fate-key-'+report.kind+'.pdf',content:report.pdf}]}
 }

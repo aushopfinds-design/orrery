@@ -65,3 +65,10 @@ it('does not automatically resend an uncertain email outside the provider dedupl
  await store.saveSetting('report-email-state:'+id,JSON.stringify({state:'sending',attempts:1,firstAttempt:Date.now()-24*3600000,leaseUntil:0}))
  expect(await store.claimReportEmail(id)).toEqual({state:'needs_review'})
 })
+
+it('does not repeat Your in collection titles and explains direct downloads',()=>{
+ const mail=purchaseMail(config,randomUUID(),'buyer@example.org',{...report,title:'Your Destiny Collection'})
+ expect(mail.subject).toBe('Your Destiny Collection | THE FATE KEY')
+ expect(mail.text).not.toContain('Your Your')
+ expect(mail.text).toContain('card image and animated card directly')
+})
