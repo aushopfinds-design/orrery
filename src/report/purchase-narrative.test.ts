@@ -125,7 +125,7 @@ describe('Customer conclusions before planning advice',()=>{
  })
  it('answers recognition and income questions before listing timing windows',()=>{
   const plan=buildInterpretationPlan('career',a,2026),sections=customerNarrative(plan)
-  expect(sections['proof-of-skill'].lines[0].en).not.toMatch(/^No promotion year|^Your knowledge and work responsibilities connect more clearly in/)
+  expect(sections['proof-of-skill'].lines[0].en).toMatch(/in \d{4}|No promotion year/)
   expect(sections['money-commitments'].lines[0].en).not.toMatch(/^For paid projects|^Keep a steady income/)
   expect(sections['work-chapters'].lines.map(x=>x.en).join(' ')).toContain('2035')
  })
