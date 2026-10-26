@@ -14,7 +14,11 @@ import './destiny-card.css'
 import './entry-polish.css'
 import './learning.css'
 import App from './components/App.tsx'
+import { recoverMissingChunk } from './utils/chunk-recovery.ts'
 import { recordJourney } from './utils/journey-events.ts'
+window.addEventListener('vite:preloadError', event => {
+  try { recoverMissingChunk(event, window.sessionStorage, () => window.location.reload()) } catch { /* retain the existing retry screen */ }
+})
 recordJourney('visit')
 
 createRoot(document.getElementById('root')!).render(
