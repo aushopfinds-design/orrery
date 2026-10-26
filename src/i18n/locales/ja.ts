@@ -40,6 +40,8 @@ const ja: Record<string, string> = {
   'form.kstHistoricalOffset': 'この日付は韓国標準時の歴史的な時差変動期間（1948-1951 KDT、1954-1961 UTC+8:30/+9:30、1987-1988 KDT）に該当し、KSTの壁時計基準で自動的に正規化されます。',
   'form.dstGapError': '入力された時刻はサマータイム(DST)切替により存在しない時間帯です。出生記録のタイムゾーンを再確認してください。',
   'form.time': '時間',
+  'form.knowTime': '出生時刻がわかる',
+  'form.hourOnlyNote': '時のみ入力し、00分で計算します。時刻の境界付近では分によって解釈が変わる場合があります。',
   'form.unknown': '不明',
   'form.hourSuffix': '時',
   'form.minuteSuffix': '分',

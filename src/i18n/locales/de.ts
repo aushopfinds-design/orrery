@@ -40,6 +40,8 @@ const de: Record<string, string> = {
   'form.kstHistoricalOffset': 'Dieses Datum fällt in eine historische Zeitzonenabweichung Koreas (1948–1951 KDT, 1954–1961 UTC+8:30/+9:30, 1987–1988 KDT). Alle Berechnungen werden automatisch auf die KST-Uhrzeit normalisiert.',
   'form.dstGapError': 'Die eingegebene Zeit liegt in der Lücke der Sommerzeitumstellung und existiert nicht. Bitte prüfen Sie die Zeitzone des Geburtseintrags.',
   'form.time': 'Uhrzeit',
+  'form.knowTime': 'Ich kenne meine Geburtszeit',
+  'form.hourOnlyNote': 'Nur die Stunde; Berechnung zur vollen Stunde. Minuten können die Deutung nahe einer Zeitgrenze verändern.',
   'form.unknown': 'Unbekannt',
   'form.hourSuffix': '',
   'form.minuteSuffix': '',

@@ -40,6 +40,8 @@ const es: Record<string, string> = {
   'form.kstHistoricalOffset': 'Esta fecha corresponde a una anomalía histórica de la zona horaria coreana (1948–1951 KDT, 1954–1961 UTC+8:30/+9:30, 1987–1988 KDT). Todos los cálculos se normalizan automáticamente a la hora oficial KST.',
   'form.dstGapError': 'La hora introducida cae en el salto del horario de verano y no existe. Compruebe la zona horaria del registro de nacimiento.',
   'form.time': 'Hora',
+  'form.knowTime': 'Conozco mi hora de nacimiento',
+  'form.hourOnlyNote': 'Solo la hora; se calcula con minutos :00. Los minutos pueden cambiar la lectura cerca de un límite horario.',
   'form.unknown': 'Desconocida',
   'form.hourSuffix': '',
   'form.minuteSuffix': '',

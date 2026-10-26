@@ -40,6 +40,8 @@ const en: Record<string, string> = {
   'form.kstHistoricalOffset': 'This date falls under Korean historical timezone anomalies (1948-1951 KDT, 1954-1961 UTC+8:30/+9:30, 1987-1988 KDT). All calculations are automatically normalized to KST wall-clock.',
   'form.dstGapError': 'The entered time falls in a DST spring-forward gap and does not exist. Please verify the timezone of the birth record.',
   'form.time': 'Birth Time (24-hour)',
+  'form.knowTime': 'I know my birth time',
+  'form.hourOnlyNote': 'Hour only; calculated at :00. Minutes can affect readings near a time boundary.',
   'form.unknown': 'Unknown',
   'form.hourSuffix': '',
   'form.minuteSuffix': '',

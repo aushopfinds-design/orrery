@@ -64,10 +64,10 @@ const BirthForm = forwardRef<BirthFormHandle, Props>(function BirthForm({ onSubm
   const [year, setYear] = useState(saved?.year ?? currentYear - 20)
   const [month, setMonth] = useState(saved?.month ?? now.getMonth() + 1)
   const [day, setDay] = useState(saved?.day ?? now.getDate())
-  const [hour, setHour] = useState(saved?.hour ?? now.getHours())
-  const [minute, setMinute] = useState(saved?.minute ?? now.getMinutes())
+  const [hour, setHour] = useState(saved?.hour ?? 12)
+  const minute = 0
   const [gender, setGender] = useState<Gender>(saved?.gender ?? 'M')
-  const [unknownTime, setUnknownTime] = useState(saved?.unknownTime ?? false)
+  const [unknownTime, setUnknownTime] = useState(saved?.unknownTime ?? true)
   const [jasiMethod, setJasiMethod] = useState<JasiMethod>(saved?.jasiMethod ?? 'unified')
   const [showAdvanced, setShowAdvanced] = useState(false)
   const [selectedCity, setSelectedCity] = useState<City | null>(saved?.city ?? NEW_YORK)
@@ -205,7 +205,6 @@ const BirthForm = forwardRef<BirthFormHandle, Props>(function BirthForm({ onSubm
     setMonth(externalState.month)
     setDay(externalState.day)
     setHour(externalState.hour)
-    setMinute(externalState.minute)
     setGender(externalState.gender)
     setUnknownTime(externalState.unknownTime)
     setJasiMethod(externalState.jasiMethod)
@@ -363,40 +362,32 @@ const BirthForm = forwardRef<BirthFormHandle, Props>(function BirthForm({ onSubm
               <label className="flex items-center gap-1.5 cursor-pointer">
                 <input
                   type="checkbox"
-                  checked={unknownTime}
-                  onChange={e => setUnknownTime(e.target.checked)}
+                  checked={!unknownTime}
+                  onChange={e => setUnknownTime(!e.target.checked)}
                   className="sr-only peer focus-visible:ring-2"
                 />
                 <div className="w-8 h-[18px] bg-[#d7c8b5] rounded-full peer-checked:bg-[#b98b49] relative transition-colors after:content-[''] after:absolute after:top-[3px] after:left-[3px] after:w-3 after:h-3 after:bg-white after:rounded-full after:transition-transform peer-checked:after:translate-x-3.5" />
-                <span className="text-sm text-[#755632]">{t('form.unknown')}</span>
+                <span className="text-sm text-[#755632]">{t('form.knowTime')}</span>
               </label>
             </div>
-            <div className="fate-birth-time-row grid grid-cols-2 gap-2 items-end sm:grid-cols-[1fr_1fr_1.35fr]">
-              <select
-                aria-label={t('home.form.hour')}
-                value={hour}
-                onChange={e => setHour(Number(e.target.value))}
-                disabled={unknownTime}
-                className={selectClass}
-              >
-                {Array.from({ length: 24 }, (_, i) => (
-                  <option key={i} value={i}>{`${String(i).padStart(2, '0')}${t('form.hourSuffix')}`}</option>
-                ))}
-              </select>
-              <select
-                aria-label={t('home.form.minute')}
-                value={minute}
-                onChange={e => setMinute(Number(e.target.value))}
-                disabled={unknownTime}
-                className={selectClass}
-              >
-                {Array.from({ length: 60 }, (_, i) => (
-                  <option key={i} value={i}>{`${String(i).padStart(2, '0')}${t('form.minuteSuffix')}`}</option>
-                ))}
-              </select>
+            <div className="fate-birth-time-row grid grid-cols-1 gap-2 items-end sm:grid-cols-2">
+              {!unknownTime && <div>
+                <select
+                  aria-label={t('home.form.hour')}
+                  value={hour}
+                  onChange={e => setHour(Number(e.target.value))}
+                  className={selectClass}
+                  aria-describedby="birth-hour-note"
+                >
+                  {Array.from({ length: 24 }, (_, i) => (
+                    <option key={i} value={i}>{`${String(i).padStart(2, '0')}${t('form.hourSuffix')}`}</option>
+                  ))}
+                </select>
+                <p id="birth-hour-note" className="mt-1.5 text-xs text-[#755632]">{t('form.hourOnlyNote')}</p>
+              </div>}
 
               {/* 성별 — segmented control */}
-              <div className="col-span-2 sm:col-span-1" role="group" aria-labelledby="birth-gender-label">
+              <div className={unknownTime ? "sm:col-span-2" : undefined} role="group" aria-labelledby="birth-gender-label">
                 <p id="birth-gender-label" className="mb-1.5 text-sm font-medium text-[#755632]">{t('home.form.gender')}</p>
                 <div className="inline-flex min-h-12 w-full rounded-lg bg-[#f0e5d6] p-1">
                   {(['M', 'F'] as const).map(g => (

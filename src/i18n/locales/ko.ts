@@ -40,6 +40,8 @@ const ko: Record<string, string> = {
   'form.kstHistoricalOffset': '한국 표준시의 역사적 편차 구간(1948-1951 KDT, 1954-1961 UTC+8:30/+9:30, 1987-1988 KDT)에 해당하여, KST 벽시계 기준으로 자동 정규화합니다.',
   'form.dstGapError': '입력하신 시각은 서머타임(DST) 전환 직후 건너뛴 구간에 해당하여 실제로 존재하지 않습니다. 출생 기록의 시간대를 다시 확인해 주세요.',
   'form.time': '시간',
+  'form.knowTime': '출생 시간을 알아요',
+  'form.hourOnlyNote': '시만 입력하며 정각 기준으로 계산해요. 시간 경계 근처에서는 분에 따라 풀이가 달라질 수 있어요.',
   'form.unknown': '모름',
   'form.hourSuffix': '시',
   'form.minuteSuffix': '분',
