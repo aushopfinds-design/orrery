@@ -1,4 +1,5 @@
 import Stripe from 'stripe'
+import { resendTransport } from './email.ts'
 import { paymentConfig } from './config.ts'
 import { postgresDatabase } from './postgres.ts'
 import { OrderStore } from './store.ts'
@@ -26,7 +27,7 @@ export function paymentService() {
     testPayment: async (id, amount, scenario) => {
       if (scenario === 'expire') { await stripe.checkout.sessions.expire(id); return { outcome: 'expired' } }
       const method = await stripe.paymentMethods.create({ type: 'card', card: { token: scenario === 'success' ? 'tok_visa' : 'tok_chargeDeclined' },
-        billing_details: { name: 'Sandbox Test Buyer', email: 'fate-sandbox-qa@example.com', address: { country: 'AU', postal_code: '2000' } } })
+        billing_details: { name: 'Sandbox Test Buyer', email: 'delivered@resend.dev', address: { country: 'AU', postal_code: '2000' } } })
       await stripe.rawRequest('GET', `/v1/payment_pages/${id}`)
       try {
         await stripe.rawRequest('POST', `/v1/payment_pages/${id}/confirm`, { payment_method: method.id, expected_amount: amount })
@@ -36,6 +37,6 @@ export function paymentService() {
         throw error
       }
     },
-  })
+  },resendTransport(process.env))
   return service
 }

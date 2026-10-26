@@ -44,7 +44,7 @@ export function paymentHandler(getService: () => PaymentService) {
         return new Response('<!doctype html><html lang="en"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Email preference | THE FATE KEY</title><body><main><h1>THE FATE KEY</h1><p>'+(purpose==='confirm'?'Confirm that you want occasional new-report and product updates.':'Stop product updates. This does not affect access to your purchased reports.')+'</p><form method="post"><button type="submit">'+(purpose==='confirm'?'Confirm product updates':'Unsubscribe')+'</button></form></main></body></html>',{headers})
       }
       if (request.method === 'GET' && action === 'availability') {
-        try { const service = getService(); const available = await service.available(); return json({ available, mode: available ? service.mode : 'closed', customerRecordsReady: await service.customerRecordsReady() }) }
+        try { const service = getService(); const available = await service.available(); return json({ available, mode: available ? service.mode : 'closed', customerRecordsReady: await service.customerRecordsReady(),emailDeliveryReady:service.emailDeliveryReady }) }
         catch { return json({ available: false, mode: 'closed' }) }
       }
       if (request.method !== 'POST') return json({ error: 'method_not_allowed' }, 405)

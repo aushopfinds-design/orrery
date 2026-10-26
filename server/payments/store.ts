@@ -1,4 +1,5 @@
 import { PaymentError } from './config.ts'
+import { randomUUID } from 'node:crypto'
 import type { PreviewKind } from '../../src/report/personal-products.ts'
 
 export interface SqlClient { query<T extends Record<string, unknown>>(sql: string, values?: unknown[]): Promise<{ rows: T[] }> }
@@ -16,6 +17,36 @@ export interface PaymentUpdate {
 export class OrderStore {
   private readonly db: Database
   constructor(db: Database) { this.db = db }
+  async claimReportEmail(id:string):Promise<{state:string;lease?:string}> {
+    return this.db.transaction(async client=>{
+      const key='report-email-state:'+id
+      await client.query('INSERT INTO fate_payment_settings(key,value_encrypted) VALUES($1,$2) ON CONFLICT DO NOTHING',[key,JSON.stringify({state:'pending',attempts:0})])
+      const row=(await client.query<{value_encrypted:string}>('SELECT value_encrypted FROM fate_payment_settings WHERE key=$1 FOR UPDATE',[key])).rows[0]
+      const state=JSON.parse(row.value_encrypted) as {state:string;attempts:number;firstAttempt?:number;retryAt?:number;leaseUntil?:number;lease?:string}
+      const now=Date.now()
+      if(['sent','failed','needs_review'].includes(state.state))return {state:state.state}
+      if((state.leaseUntil??0)>now||(state.retryAt??0)>now)return {state:'pending'}
+      // Resend retains idempotency keys for 24 hours. Never automatically resend
+      // an uncertain request after that window, even after a process crash.
+      if(state.attempts>=5||(state.firstAttempt&&now-state.firstAttempt>=23*3600000)){
+        await client.query('UPDATE fate_payment_settings SET value_encrypted=$2 WHERE key=$1',[key,JSON.stringify({...state,state:'needs_review'})])
+        return {state:'needs_review'}
+      }
+      const lease=randomUUID()
+      await client.query('UPDATE fate_payment_settings SET value_encrypted=$2 WHERE key=$1',[key,JSON.stringify({state:'sending',attempts:state.attempts+1,firstAttempt:state.firstAttempt??now,lease,leaseUntil:now+60000})])
+      return {state:'sending',lease}
+    })
+  }
+  async finishReportEmail(id:string,lease:string,result:{state:'sent'|'pending'|'failed';providerId?:string}) {
+    return this.db.transaction(async client=>{
+      const key='report-email-state:'+id
+      const row=(await client.query<{value_encrypted:string}>('SELECT value_encrypted FROM fate_payment_settings WHERE key=$1 FOR UPDATE',[key])).rows[0]
+      if(!row)return
+      const state=JSON.parse(row.value_encrypted) as {lease?:string;attempts:number}
+      if(state.lease!==lease)return
+      await client.query('UPDATE fate_payment_settings SET value_encrypted=$2 WHERE key=$1',[key,JSON.stringify({...state,...result,lease:null,leaseUntil:0,retryAt:Date.now()+60000*2**state.attempts})])
+    })
+  }
   async saveCustomer(data: { id:string; orderId:string; encrypted:string; consent:boolean; version:string; text:string; capturedAt:string }) {
     await this.db.transaction(async client => {
       await client.query(`INSERT INTO fate_customer_contacts(id,email_encrypted) VALUES ($1,$2) ON CONFLICT(id) DO NOTHING`,[data.id,data.encrypted])

@@ -1,4 +1,6 @@
 import { CustomerRecords } from './customers.ts'
+import { ReportEmailDelivery } from './email.ts'
+import type { MailTransport } from './email.ts'
 import { randomUUID } from 'node:crypto'
 import type Stripe from 'stripe'
 import { REPORT_PRICE_CENTS } from '../../src/report/pricing.ts'
@@ -27,7 +29,19 @@ export class PaymentService {
   readonly config: PaymentConfig
   readonly store: OrderStore
   private readonly stripe: StripeGateway
-  constructor(config: PaymentConfig, store: OrderStore, stripe: StripeGateway) { this.config = config; this.store = store; this.stripe = stripe }
+  private mail?:MailTransport
+  constructor(config: PaymentConfig, store: OrderStore, stripe: StripeGateway, mail?:MailTransport) { this.config = config; this.store = store; this.stripe = stripe; this.mail=mail }
+  get emailDeliveryReady(){return Boolean(this.mail)}
+  private async deliverEmail(id:string,session:Stripe.Checkout.Session){
+    if(!this.mail)return 'disabled'
+    try{
+      const saved=await this.store.artifact(id),order=await this.store.get(id)
+      if(!saved||!order||order.payment_state!=='paid'||await this.store.setting('full-refund:'+id))return 'not_ready'
+      const report=openOrder(this.config.dataKey,id+':report',saved.payload_encrypted) as BuyerReport
+      if(hash(JSON.stringify(report))!==saved.content_hash)throw new Error('report_integrity_error')
+      return await new ReportEmailDelivery(this.config,this.store,this.mail).deliver(id,session.customer_details?.email??session.customer_email,report,orderInput(openOrder(this.config.dataKey,id,order.input_encrypted)),await this.customerRecordsReady())
+    }catch{console.warn('Report email will require retry');return 'pending'}
+  }
 
   get mode() { return this.config.mode ?? 'test' }
   private get integration() { return this.mode === 'live' ? 'fate-key-live-v1' : 'fate-key-test-v1' }
@@ -94,7 +108,10 @@ export class PaymentService {
     // Fetch the current server-side object: event delivery can be late or out of order.
     const session = await this.stripe.retrieveSession(notification.id)
     const duplicate = await this.recordSession(session, event.id, event.type, notification.metadata.fate_order_id)
-    if (session.payment_status === 'paid' && session.status === 'complete') await this.fulfill(notification.metadata.fate_order_id)
+    if (session.payment_status === 'paid' && session.status === 'complete') {
+      await this.fulfill(notification.metadata.fate_order_id)
+      if(await this.deliverEmail(notification.metadata.fate_order_id,session)==='pending')throw new PaymentError('email_delivery_pending',503)
+    }
     return { received: true, duplicate }
   }
 
@@ -137,7 +154,7 @@ export class PaymentService {
       if (chargeId) await this.recordRefund(await this.stripe.retrieveCharge(chargeId), intent)
       refunded = Boolean(await this.store.setting('full-refund:' + id))
     }
-    if (session.status === 'complete' && session.payment_status === 'paid' && !refunded) await this.fulfill(id)
+    if (session.status === 'complete' && session.payment_status === 'paid' && !refunded) { await this.fulfill(id); await this.deliverEmail(id,session) }
     return { ...await this.store.status(id), refund_state: refunded ? 'full' : 'none' }
   }
 

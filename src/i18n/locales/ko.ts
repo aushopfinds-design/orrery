@@ -274,7 +274,7 @@ const ko: Record<string, string> = {
   "purchase.live.continue": "Stripe 결제로 이동",
   "purchase.live.delivered": "확인된 구매의 온라인 리포트와 PDF를 제공합니다.",
   "purchase.key.title": "리포트를 다시 열 수 있도록 저장하세요",
-  "purchase.key.before": "복구 코드를 지금 다운로드하세요. 탭을 닫거나 다른 기기에서도 다시 열 수 있습니다. 이메일 자동 발송은 제공하지 않습니다.",
+  "purchase.key.before": "복구 코드를 지금 다운로드하세요. 탭을 닫거나 다른 기기에서도 다시 열 수 있습니다. 이메일로 리포트를 받더라도 예비용으로 보관하세요.",
   "purchase.key.save": "복구 코드 다운로드",
   "purchase.key.saved": "비공개 복구 코드를 저장했습니다",
   "purchase.key.private": "이 코드를 가진 사람은 구매한 리포트를 볼 수 있습니다. 안전하게 보관하세요. 코드 저장만으로 결제되지 않습니다.",

@@ -441,3 +441,27 @@ describe('launch gates and verified full refunds', () => {
     } finally { await liveDb.close() }
   }, 30000)
 })
+
+
+describe('paid report email integration',()=>{
+  it('emails only after verified payment and does not resend on report recovery',async()=>{
+    const provider=gateway(), send=vi.fn(async()=> 'resend-test-id')
+    const service=new PaymentService(config,store,provider,{send})
+    const checkout=await service.createCheckout({kind:'career',first:birth},randomUUID())
+    const order=(await store.get(checkout.orderId))!, session=provider.sessions.get(order.checkout_session_id!)!
+    session.customer_email='delivered@resend.dev'
+    let event=signed(session)
+    await service.receiveWebhook(event.body,event.signature)
+    expect(send).not.toHaveBeenCalled()
+    session.status='complete';session.payment_status='paid';session.payment_intent='pi_mail_fixture'
+    event=signed(session)
+    await service.receiveWebhook(event.body,event.signature)
+    await service.receiveWebhook(event.body,event.signature)
+    await service.reconcile(order.id)
+    expect(send).toHaveBeenCalledTimes(1)
+    const mail=(send.mock.calls as unknown as [[{attachments:{content:string}[];text:string}]])[0][0]
+    expect(Buffer.from(mail.attachments[0].content,'base64').subarray(0,4).toString()).toBe('%PDF')
+    expect(mail.text).toContain('Report ID: FK-')
+    expect((await store.status(order.id))?.fulfillment_state).toBe('complete')
+  })
+})
