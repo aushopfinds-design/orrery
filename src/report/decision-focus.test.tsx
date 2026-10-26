@@ -1,4 +1,3 @@
-import { withoutFocusEvidence } from './report-delivery.ts'
 import { describe, expect, it } from 'vitest'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { calculateSaju } from '@orrery/core/saju'
@@ -109,7 +108,9 @@ describe('A personal decision focus uses two themes and an observable next step'
       const preview = buildPersonalPreview(kind, { first: a.input, second: b.input, year: 2027 })
       expect(preview.brief!.focus).toEqual(report.focus)
       const expected = plainReadingText(decisionFocusText(report.focus))
-      expect(report.fullText).toContain(withoutFocusEvidence(expected))
+      expect(report.fullText).toContain('Your reading at a glance')
+      expect(report.fullText).toContain(plainReadingText(report.focus.headline))
+      expect(report.fullText).toContain(plainReadingText(report.focus.synthesis))
       for(const fact of report.focus.evidence)expect(report.fullText).toContain(fact)
       expect(personalPreviewText(preview)).toContain(expected)
       const html = renderToStaticMarkup(<DecisionFocusView focus={report.focus} />)

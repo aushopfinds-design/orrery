@@ -20,6 +20,7 @@ export interface SymbolCard {
   basis: string
 }
 export interface ReportExtras {
+  compact?: boolean
   questions: InsightQuestion[]
   keepClose: EverydayChoice[]
   stepBack: EverydayChoice[]
@@ -158,6 +159,8 @@ function symbolCard(result: SajuResult, kind: ExtrasKind, person = 'Your birth-d
 }
 
 /** Added questions combine day, month and relationship themes; no invented events. */
+export const temperamentDetail = (stem: string) => LIFE_DETAILS[stem]
+
 export function buildReportExtras(kind: ExtrasKind, result: SajuResult, options: { second?: SajuResult; year?: number; annual?: { theme: string; god: string; pillar: string } } = {}): ReportExtras {
   const [, day, month] = result.pillars
   const personal = PERSONAL_PROFILES[day.pillar.stem]

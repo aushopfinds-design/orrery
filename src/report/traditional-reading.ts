@@ -1,4 +1,6 @@
-import { deliveredChapter, calculationAppendix, withoutFocusEvidence } from './report-delivery.ts'
+import { reportOverviewText, reportOverview } from './report-overview.ts'
+import { humanMonth } from './period-voice.ts'
+import { deliveredChapter, calculationAppendix } from './report-delivery.ts'
 import { customerNarrative, customerPeriod } from './purchase-narrative.ts'
 import { purchaseTimingSections } from './purchase-timing-sections.ts'
 import { customerEnglish } from './customer-language.ts'
@@ -15,7 +17,6 @@ import type { CategoryReading, ReportMonth } from './category-shared.ts'
 import type { FocusCategory } from './category-catalog.ts'
 import { buildReportExtras, reportExtrasText } from './report-extras.ts'
 import { explainCalculation, PAIR_METHOD_NOTE, REFERENCE_CLOCK_NOTE, chartGlossaryFor } from './calculation-notes.ts'
-import { buildReadingBrief, readingBriefText } from './reading-brief.ts'
 import { plainReadingText } from './reading-text.ts'
 import { STEMS } from './reading.ts'
 import { PERSONAL_PROFILES, RELATIONSHIP_PROFILES } from './reading-profiles.ts'
@@ -114,8 +115,8 @@ function extras(kind: 'complete' | FocusCategory, result: SajuResult, chapters: 
   const annual = kind === 'year' ? timingPoint(result, year) : undefined
   const original = buildReportExtras(kind, result, { year, second, ...(annual ? { annual: { god: annual.god, pillar: annual.pillar, theme: godText(annual.god).name } } : {}) })
   const chosen = chapters.slice(0, 3)
-  return { ...original,
-    questions: chosen.map(item => ({ question: item.title.replace(/^\d+ · /, '') + ': what is the direct answer?', answer: item.lead, basis: item.evidence[0] ?? '' })),
+  return { ...original, compact: true,
+    questions: chosen.map(item => ({ question: item.title.replace(/^\d+ · /, ''), answer: item.lead, basis: item.evidence[0] ?? '' })),
     keepClose: chosen.map(item => ({ title: item.title, text: item.guidance.keepClose[0] })),
     stepBack: chosen.map(item => ({ title: item.title, text: item.guidance.watchFor[0] })),
     reminder: 'Use the reading to name a traditional pattern. Actual choices, consent and circumstances determine what happens.',
@@ -302,15 +303,15 @@ export function buildTraditionalCompleteFromPlan(plan: InterpretationPlan): Comp
     const start = cycle.startDate.toISOString().slice(0, 10), end = next?.startDate.toISOString().slice(0, 10)
     const ps = customerPeriod(plan,index).map(line=>line.en).flatMap(shortParagraphs)
     const evidence = [`Calculated cycle start ${start}${end ? `; next cycle starts ${end}` : ''}. Cycle ${cycle.ganzi}: stem ${cycle.stemSipsin}; principal branch relationship ${cycle.branchSipsin}.`, ...availablePillars(result).map(({ pillar, index }) => pairObservation(cycle.ganzi, pillar.pillar.ganzi, `Cycle / birth ${POSITION[index]}`).facts)]
-    return { period: `${cycle.startDate.getUTCFullYear()}–${(next?.startDate.getUTCFullYear() ?? cycle.startDate.getUTCFullYear() + 10) - 1}`, pillar: cycle.ganzi, headline: `${g.name} with ${inner.name}`, paragraphs: ps, evidence, guidance: { keepClose: [`Read the calculated start ${start} alongside actual changes in responsibility.`], watchFor: [g.pressure] }, tryThis: 'Compare work, money and private-life demands separately within this timing layer.', text: plainReadingText([...ps.filter(line => line !== g.pressure), `Practical point: Read the calculated start ${start} alongside actual changes in responsibility.`, 'Main caution: ' + g.pressure].join('\n\n')) }
+    return { period: `${result.input.unknownTime ? 'Around ' : ''}${humanMonth(start)}${end ? ' – ' + humanMonth(end) : ' onward'}`, pillar: cycle.ganzi, headline: cycle.stemSipsin === cycle.branchSipsin ? `${g.name} — repeated emphasis` : `${g.name} with ${inner.name}`, paragraphs: ps, evidence, guidance: { keepClose: [`Read the calculated start ${start} alongside actual changes in responsibility.`], watchFor: [g.pressure] }, tryThis: 'Compare work, money and private-life demands separately within this timing layer.', text: plainReadingText([...ps.filter(line => line !== g.pressure), `Practical point: Read the calculated start ${start} alongside actual changes in responsibility.`, 'Main caution: ' + g.pressure].join('\n\n')) }
   })
   const actionPlan = withPurchaseTiming([section('next-moves', '09 · What Might the Next Ten Years Bring?', yearFlow(result, year, 'work'), timelineFacts(result, year), 'Annual themes are not guaranteed events or deadlines for major life changes.', 'Compare a real change with its annual and longer-cycle evidence.', 'timeline')], plan)[0]
-  const summary = [{ label: 'Overall pattern', text: `${STEMS[a.day.pillar.stem].name}; birth-month ${godText(a.month.stemSipsin).name}, with ${godText(a.month.branchSipsin).name} underneath.` }, { label: 'Money pattern', text: wealth(result)[0] }, { label: 'Longer cycles', text: periods.length ? periods.map(item => `${item.period}: ${item.headline}`).join('; ') : 'No current or upcoming cycle is available in the calculated range.' }]
+  const summary = reportOverview(chapters)
   const connections = [
     { id: 'work-fit', chapterId: 'career', title: 'Personal Style and Career', basis: `${STEMS[a.day.pillar.stem].name} / ${godText(a.month.stemSipsin).name}`, text: `The personal starting point is ${PERSONAL_PROFILES[a.day.pillar.stem].focus}; the public work relationship is ${godText(a.month.stemSipsin).name}. ${godText(a.month.stemSipsin).work}`, question: 'Does the role allow this contribution with enough authority and resources?', evidence: chartFacts(result) },
     { id: 'close-conversations', chapterId: 'love', title: 'Personal Needs and Close Relationships', basis: `Day stem ${a.day.pillar.stem}; day branch ${a.day.pillar.branch}`, text: `The day-stem need is ${PERSONAL_PROFILES[a.day.pillar.stem].need}; the day-branch theme is ${RELATIONSHIP_PROFILES[a.day.pillar.branch].need}. These are separate layers of the same chart.`, question: 'Does the actual relationship make room for both needs?', evidence: chartFacts(result, [1]) },
   ]
   const focus = focusFrom(chapters), extra = extras('complete', result, chapters, year), notes = methods(result)
-  const fullText = plainReadingText([`THE FATE KEY · Your Life, Your Destiny`, `Report edition ${REPORT_EDITION} · Reference year ${year}`, snap.birthSummary, snap.pillarSummary.join(' · '), withoutFocusEvidence(readingBriefText(buildReadingBrief(chapters[0], undefined, focus))), ...summary.map(item => `${item.label}: ${item.text}`), ...connections.map(item => `${item.title}\n\n${item.text}\n\n${item.question}`), ...chapters.map(chapterText), '08 · What Do Your Ten-Year Life Cycles Reveal?', ...periods.map(item => `${item.period} · ${item.pillar}\n\n${item.text}`), chapterText(actionPlan), reportExtrasText(extra, true), calculationAppendix([{ title: 'Reading focus', evidence: focus.evidence }, { title: 'Symbol guide evidence', evidence: extra.evidence }, ...chapters.map(item => ({ title: item.title, evidence: item.evidence })), ...periods.map(item => ({ title: item.period, evidence: item.evidence })), { title: actionPlan.title, evidence: actionPlan.evidence }]), 'Chart terms in plain English', ...chartGlossaryFor([...chapters.flatMap(item => item.evidence), ...actionPlan.evidence, '大運']).map(item => `${item.term}: ${item.meaning}`), 'How this reading is prepared', ...notes].join('\n\n'))
+  const fullText = plainReadingText([`THE FATE KEY · Your Life, Your Destiny`, `Report edition ${REPORT_EDITION} · Reference year ${year}`, snap.birthSummary, snap.pillarSummary.join(' · '), reportOverviewText(chapters), ...chapters.map(chapterText), '08 · What Do Your Ten-Year Life Cycles Reveal?', ...periods.map(item => `${item.period} · ${item.pillar}\n\n${item.text}`), chapterText(actionPlan), reportExtrasText(extra, true), calculationAppendix([...connections.map(item=>({title:item.title,evidence:[item.basis,item.text,item.question,...item.evidence]})), { title: 'Reading focus', evidence: focus.evidence }, { title: 'Symbol guide evidence', evidence: extra.evidence }, ...chapters.map(item => ({ title: item.title, evidence: item.evidence })), ...periods.map(item => ({ title: item.period, evidence: item.evidence })), { title: actionPlan.title, evidence: actionPlan.evidence }]), 'Chart terms in plain English', ...chartGlossaryFor([...chapters.flatMap(item => item.evidence), ...actionPlan.evidence, '大運']).map(item => `${item.term}: ${item.meaning}`), 'How this reading is prepared', ...notes].join('\n\n'))
   return { focus, calculation: explainCalculation(result.input), title: 'Your Life, Your Destiny', birthSummary: snap.birthSummary, pillarSummary: snap.pillarSummary, dayMaster: snap.dayMaster, headline: chapters[0].lead, summary, connections, referenceYear: year, chapters, periods, actionPlan, applications: [], extras: extra, elements: snap.elements, visibleMarkers: snap.visibleMarkers, methodNotes: notes, fullText, wordCount: fullText.split(/\s+/).length }
 }

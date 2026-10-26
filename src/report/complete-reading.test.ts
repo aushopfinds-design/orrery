@@ -152,7 +152,7 @@ describe('Complete reading quality across 60 international profiles', () => {
   it('shows each chapter with its own calculated cycle data and starting date', () => {
     for (const { result, reading } of readings) {
       for (const period of reading.periods) {
-        const cycle = result.daewoon.find(cycle => cycle.startDate.getUTCFullYear() === Number(period.period.split('–')[0]))!
+        const cycle = result.daewoon.find(cycle => cycle.ganzi === period.pillar && period.evidence[0].includes(cycle.startDate.toISOString().slice(0,10)))!
         expect(period.text).toContain(cycle.startDate.toISOString().slice(0, 10))
         expect(period.evidence.join(' ')).toContain(cycle.stemSipsin)
         expect(reading.fullText).toContain(cycle.stemSipsin)

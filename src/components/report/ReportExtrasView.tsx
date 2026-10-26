@@ -49,6 +49,7 @@ export default function ReportExtrasView({ extras, prefix }: { extras: ReportExt
   const sectionId = `${prefix}-everyday-compass`
   return <section id={sectionId} className="fate-reading-chapter fate-compass" aria-label={t('reading.extras.title')}>
     <ChapterHeading title={t('reading.extras.title')} kind="balance" />
+    {!extras.compact && <>
     <p className="fate-compass-intro">{t('reading.extras.intro')}</p>
     <h3 className="fate-compass-subtitle">{t('reading.extras.questions')}</h3>
     <div className="fate-compass-questions">{extras.questions.map((item, index) => <QuestionCard key={item.question} item={item} showBasis={extras.questions.findIndex(other => other.basis === item.basis) === index} />)}</div>
@@ -60,10 +61,11 @@ export default function ReportExtrasView({ extras, prefix }: { extras: ReportExt
       <p className="fate-compass-group-note">{t(`reading.extras.${group.key}Note`)}</p>
       <ul>{group.items.map(item => <li key={item.title}><h4>{item.title}</h4><p><ReadingText text={item.text} /></p></li>)}</ul>
     </section>)}</div>
+    </>}
     <h3 className="fate-compass-subtitle">{t('reading.extras.symbols')}</h3>
     <SymbolCards symbols={extras.symbols} />
     <div className="fate-compass-reminder"><FateKeyMark /><blockquote><span>{t('reading.extras.reminder')}</span><p>{extras.reminder}</p></blockquote></div>
-    <section className="fate-compass-experiment"><h3>{extras.experiment.title}</h3><ol>{extras.experiment.steps.map(step => <li key={step}><ReadingText text={step} /></li>)}</ol></section>
+    {!extras.compact && <section className="fate-compass-experiment"><h3>{extras.experiment.title}</h3><ol>{extras.experiment.steps.map(step => <li key={step}><ReadingText text={step} /></li>)}</ol></section>}
     <ChartEvidence facts={extras.evidence} />
     <details className="fate-compass-sources print:hidden"><summary>{t('reading.extras.sources')}</summary><p>{t('reading.extras.sourceNote')}</p><ul>{SYMBOL_SOURCES.map(source => <li key={source.url}><a href={source.url} target="_blank" rel="noopener noreferrer">{source.label} ↗</a></li>)}</ul></details>
     <p className="hidden print:block fate-compass-print-sources">{t('reading.extras.sources')}: {SYMBOL_SOURCES.map(source => `${source.label} — ${source.url}`).join(' · ')}</p>

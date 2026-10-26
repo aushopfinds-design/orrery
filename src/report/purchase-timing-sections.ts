@@ -60,13 +60,13 @@ function buildSections(plan:InterpretationPlan):Record<string,PurchaseTimingSect
   const months=purchaseMonths(plan.first,plan.referenceYear),good=months.filter(opens),careful=months.filter(r=>['extra-care','opening-with-caution'].includes(r.status)),key=priority(careful)
   const labels=(rows:Row[])=>rows.map(r=>new Date(r.date+'T12:00:00Z').toLocaleDateString('en-GB',{month:'long',timeZone:'UTC'})).join(', ')
   const koLabels=(rows:Row[])=>rows.map(r=>Number(r.date.slice(5,7))+'월').join('·')
-  const focusMonths=months.filter(r=>r.status==='topic-only')
-  const fallbackEn=focusMonths.length?` Months labelled Focus: ${labels(focusMonths)}. This means no extra-care flag under these checks, not a promise of an easier month.`:''
-  const fallbackKo=focusMonths.length?` 중심 주제로 표시된 달은 ${koLabels(focusMonths)}입니다. 사용한 기준에서 추가 주의 표시가 없다는 뜻이며 편안한 달을 보장하지 않습니다.`:''
-  const openingThemes=months.filter(row=>row.status==='conditional-opening'),mixedThemes=months.filter(row=>row.status==='opening-with-caution')
-  const themeListEn=[openingThemes.length?`Opening themes: ${labels(openingThemes)}.`:'',mixedThemes.length?`Opening + pressure: ${labels(mixedThemes)}.`:'',fallbackEn.trim()].filter(Boolean).join(' ')
-  const themeListKo=[openingThemes.length?`기회 주제: ${koLabels(openingThemes)}.`:'',mixedThemes.length?`기회와 부담: ${koLabels(mixedThemes)}.`:'',fallbackKo.trim()].filter(Boolean).join(' ')
-  put('annual-cycle-context',`${themeListEn} Opening names a theme involving money, responsibility or learning. It does not rank a month as lucky. ${good.length?`The fuller activity check also identifies ${labels(good)} for the activities described below.`:'No month passes the separate check for recommending extra commitments. Use the monthly themes to choose what to review, while keeping workload and costs within what you can manage.'}`,`${themeListKo} 기회는 재물·책임·배움의 주제를 뜻하며 행운의 순위를 매기지 않습니다. ${good.length?`추가 활동 점검에서는 ${koLabels(good)}을 아래에 설명한 활동에 맞춰 살펴봅니다.`:'추가로 일을 맡도록 권할 별도 기준을 통과한 달은 없습니다. 매달 무엇을 검토할지 정하되 감당할 수 있는 업무량과 비용을 지킵니다.'}`)
+  const openingThemes=months.filter(row=>row.status==='conditional-opening')
+  const selected=(good.length?good:openingThemes).slice(0,3)
+  const why=(r:Row)=>r.lines.find(l=>l.id.endsWith('.opening'))??r.lines[0]
+  const picks=selected.map(r=>({en:`${labels([r])}: ${why(r).en.replace(/^.*? — /,'')}`,ko:`${koLabels([r])}월: ${why(r).ko}`}))
+  put('annual-cycle-context',selected.length?`Start with ${labels(selected)} for the specific activities below. These are selected reading highlights, not a ranking of lucky months. ${good.length?'They connect your existing chart with an activity and its longer-period setting.':'No month passes the separate activity-opening check; these are quieter work-and-relationship comparisons only.'}`:`No clear activity opening or quieter comparison stands out. Use the full monthly reading to identify the specific commitments needing adjustment.`,selected.length?`${koLabels(selected)}월의 활동부터 살펴봅니다. 행운 순위가 아니라 선택한 핵심 주제입니다. ${good.length?'타고난 특징과 활동, 긴 흐름이 연결되는 부분입니다.':'별도의 활동 기회 기준을 통과한 달이 없어 일과 관계의 비교에서 상대적으로 조용한 달만 꼽았습니다.'}`:'뚜렷한 활동 기회나 상대적으로 조용한 달을 꼽기 어렵습니다. 전체 월별 풀이에서 조정할 약속을 확인합니다.')
+  for(const [i,pick] of picks.entries())out['annual-cycle-context'].lines.push({id:'annual-cycle-context.pick-'+i,...pick})
+
   put('annual-plan',key.length?`Put ${labels(key)} first on your review list. They carry more overlapping demands in this reading. Start with these, then use the full monthly table to keep the remaining adjustments in view.`:`No month stands out under these extra-care checks. The twelve-month overview still shows the commitments and changing focus of each month.`,key.length?`${koLabels(key)}을 먼저 확인할 달로 꼽습니다. 이번 풀이에서 부담이 더 겹치는 달입니다. 이 달부터 살피고 전체 표에서 나머지 달의 조정할 부분도 함께 봅니다.`:'사용한 주의 기준에서 특별히 두드러지는 달이 없습니다. 매달의 약속과 달라지는 중심 주제는 12개월 흐름에서 설명합니다.')
   months.forEach((r,i)=>out['month-'+(i+1)]={lines:r.lines,evidence:r.evidence})
  }

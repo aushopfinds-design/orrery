@@ -24,11 +24,14 @@ const PHRASES: readonly [string, string][] = [
   ['day-stem image', 'birth-day image'],
   ['day-branch theme', 'close-relationship theme'],
   ['day-branch layer', 'close-relationship part of your chart'],
+  ['day branches', 'close-relationship signs'],
+  ['day stems', 'birth-day signs'],
   ['day branch', 'close-relationship sign'],
   ['day stem', 'birth-day sign'],
   ['natal relationship layer', 'lasting relationship pattern'],
   ['natal work pattern', 'work pattern you were born with'],
   ['natal pattern', 'pattern in your birth chart'],
+  ['natal charts', 'birth charts'],
   ['natal chart', 'birth chart'],
   ['natal business caution', 'business pressure shown in your birth chart'],
   ['natal balance', 'balance of support and demands in your birth chart'],
@@ -69,7 +72,7 @@ const PHRASES: readonly [string, string][] = [
   ['natal', 'birth-chart'],
 ]
 const replacements = new Map(PHRASES)
-const expression = new RegExp([...replacements.keys()].sort((a, b) => b.length - a.length).map(text => text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|'), 'g')
+const expression = new RegExp('\\b(?:' + [...replacements.keys()].sort((a, b) => b.length - a.length).map(text => text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|') + ')\\b', 'g')
 export function customerEnglish(text: string) {
   return text.replace(expression, phrase => replacements.get(phrase)!).replace(/\ban current\b/g, 'a current')
 }

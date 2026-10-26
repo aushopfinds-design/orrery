@@ -1,4 +1,5 @@
-import { deliveredChapter, calculationAppendix, withoutFocusEvidence } from './report-delivery.ts'
+import { reportOverviewText } from './report-overview.ts'
+import { deliveredChapter, calculationAppendix } from './report-delivery.ts'
 import { chartGlossaryFor } from './calculation-notes.ts'
 import type { SajuResult, BirthInput } from '@orrery/core/types'
 import { getRelation, analyzePillarRelations } from '@orrery/core/pillars'
@@ -13,7 +14,6 @@ import { reportExtrasText, SYMBOL_NOTE } from './report-extras.ts'
 import type { ReportExtras } from './report-extras.ts'
 import { everydayExampleText } from './personal-examples.ts'
 import type { EverydayExample } from './personal-examples.ts'
-import { buildReadingBrief, readingBriefText } from './reading-brief.ts'
 import { THEME_FAMILY as FAMILY } from './theme-family.ts'
 import { applicationText } from './report-applications.ts'
 import type { ReportApplication } from './report-applications.ts'
@@ -102,8 +102,8 @@ export function finishReading(data: Omit<CategoryReading, 'fullText' | 'wordCoun
   const fullText = plainReadingText([
     `THE FATE KEY · ${data.title}`, `Report edition ${REPORT_EDITION} · Reference year ${data.referenceYear}`,
     ...data.subjects.flatMap(item => [item.label, item.birthSummary, item.pillarSummary.join(' · '), `Cycle setting: ${item.calculation.cycleSetting}; direction: ${item.calculation.cycleDirection}.`, ...(data.subjects.length > 1 ? item.calculation.notes : [])]),
-    withoutFocusEvidence(readingBriefText(buildReadingBrief(chapters[0], undefined, data.focus))),
-    ...data.summary.filter(item => !chapters.some(chapter => chapter.lead === item.text)).map(item => `${item.label}: ${item.text}`), ...chapters.flatMap(chapterText),
+    reportOverviewText(chapters),
+    ...chapters.flatMap(chapterText),
     ...(data.months.length ? ['Your Twelve Months', ...data.months.flatMap(chapterText)] : []),
     ...(data.applications.length ? ['Situations you can work through', ...data.applications.map(applicationText)] : []),
     reportExtrasText(data.extras, true),
