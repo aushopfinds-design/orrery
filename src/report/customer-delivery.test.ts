@@ -8,6 +8,7 @@ describe('customer appendix',()=>{
   expect(result).toContain(body);expect(result).toContain('2027-01-15: 辛丑');expect(result).toContain('branch 沖')
   expect(result.match(/Root at month/g)).toHaveLength(1);expect(result).not.toMatch(/FATE-activity|No judgement/)
   expect(text).toContain('FATE-activity')
+  expect(customerDeliveryText('Calculation notes\n\nThe separate FATE-ordinary-structure-r1 policy.')).toContain('work-pattern check')
  })
  it('does not filter customer prose when a second bundled report begins',()=>{
   const text='Calculation notes\n\nFrom the chart: Root at month.\n\nTHE FATE KEY · Second report\n\nYour work changes.'

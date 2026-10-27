@@ -12,5 +12,5 @@ export function customerDeliveryText(text:string):string {
   const key=block.replace(/^From the chart: /,'').replace(/\s+/g,' ').trim()
   if(seen.has(key))return false
   seen.add(key);return true
- }).join('\n\n')
+ }).map(block=>block.replaceAll('FATE-qualitative-r1','support-and-workload check').replaceAll('FATE-ordinary-structure-r1','work-pattern check')).join('\n\n')
 }
