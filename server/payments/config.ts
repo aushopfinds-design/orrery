@@ -34,6 +34,7 @@ export function paymentConfig(env: NodeJS.ProcessEnv): PaymentConfig {
   if (!keyPattern.test(stripeKey) || !/^whsec_[A-Za-z0-9]+$/.test(webhookSecret) ||
       !/^[a-f0-9]{64}$/i.test(dataKey) || !/^[a-f0-9]{64}$/i.test(accessKey) || dataKey === accessKey || (!live && testToken.length < 32) ||
       (live && (!env.FATE_PUBLIC_OPERATOR_NAME?.trim() || dataKey === env.FATE_ORDER_DATA_KEY || accessKey === env.FATE_ORDER_ACCESS_KEY || databaseUrl === env.FATE_PAYMENTS_DATABASE_URL))) {
+    console.warn('Payment configuration check failed', { stripeKeyFormat: keyPattern.test(stripeKey), webhookSecretFormat: /^whsec_[A-Za-z0-9]+$/.test(webhookSecret), dataKeyFormat: /^[a-f0-9]{64}$/i.test(dataKey), accessKeyFormat: /^[a-f0-9]{64}$/i.test(accessKey), keysDistinct: dataKey !== accessKey, operatorPresent: Boolean(env.FATE_PUBLIC_OPERATOR_NAME?.trim()) })
     throw new PaymentError('payment_configuration_incomplete', 503)
   }
   try {
@@ -41,6 +42,6 @@ export function paymentConfig(env: NodeJS.ProcessEnv): PaymentConfig {
     if (env.VERCEL_ENV === 'preview' && !/^saju-english-report-preview(?:-[a-z0-9-]+)?\.vercel\.app$/.test(site.hostname)) throw new Error()
     if (site.origin !== origin || site.username || site.password || site.protocol !== 'https:' ||
         !['postgres:', 'postgresql:'].includes(database.protocol) || database.searchParams.get('sslmode') !== 'verify-full') throw new Error()
-  } catch { throw new PaymentError('payment_configuration_incomplete', 503) }
+  } catch { console.warn('Payment configuration URL validation failed'); throw new PaymentError('payment_configuration_incomplete', 503) }
   return { customerRecordsEnabled: env.FATE_CUSTOMER_RECORDS_ENABLED === 'true', mode: live ? 'live' : 'test', checkoutOpen: !live || (env.FATE_CHECKOUT_OPEN === 'true' && env.FATE_SALES_POLICIES_READY === 'true'), stripeKey, webhookSecret, databaseUrl, origin, dataKey, accessKey, testToken: live ? '' : testToken }
 }

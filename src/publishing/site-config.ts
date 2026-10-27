@@ -14,7 +14,7 @@ export function publishingIdentity(env: Record<string, string | undefined>) {
     throw new Error('FATE_ADSENSE_PUBLISHER_ID must be the actual pub- or ca-pub- ID')
   }
   const publisherId = suppliedId?.replace(/^ca-/, '') ?? null
-  return { contactEmail, publisherId, accountId: publisherId ? `ca-${publisherId}` : null }
+  return { operatorName: env.FATE_PUBLIC_OPERATOR_NAME?.trim() || null, liveSales: env.FATE_PAYMENTS_MODE === 'live', contactEmail, publisherId, accountId: publisherId ? `ca-${publisherId}` : null }
 }
 
 export const PUBLIC_SAMPLES = [

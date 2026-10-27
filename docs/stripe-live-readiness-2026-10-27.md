@@ -7,7 +7,7 @@
 - thefatekey 실계정: 결제/정산 활성, 사업자 정보 제출 완료. currently_due/past_due/pending_verification 모두 없음.
 - AUD 기본 은행 계좌 등록. 계좌 상태 new. 주간 월요일 정산 설정, API의 delay_days=2. 실제 은행 입금 성공을 검증한 것은 아님.
 - 고객 판매 가격은 모두 USD. 은행 정산 통화 AUD와 구분.
-- 실계정 webhook endpoint는 현재 없음. 운영 Vercel에 실결제 키, 서명 비밀값, 별도 주문 DB 및 암호화 키가 없음.
+- 출시 준비용 실계정 webhook과 별도 운영 DB/암호화 키를 준비함. webhook은 최종 승인 전까지 disabled. 운영 Secret 등록은 확인했으나 새 제한 API 키의 실제 호출 권한과 운영 결제 흐름은 아직 미검증.
 - 운영 사이트 availability는 closed. 이번 작업에서 실결제 청구, 운영 배포, 도메인 변경 없음.
 
 ## 승인된 상품 매핑
@@ -63,11 +63,22 @@ wellbeing 가상 주문 전액 테스트 환불 succeeded. webhook 환불 기록
 
 브라우저: 7개 상품 구매 링크 목적지와 USD 가격 확인. 연도 상품에서 출생정보 입력→결제 준비 화면 전환 확인. 운영 사이트는 판매 미개방 문구 유지. 실제 iOS/Android 휴대폰에서 Checkout 왕복은 미검증.
 
+## 최종 설정 확인 (2026-10-27 UTC 11:49)
+
+- 사용자가 직접 등록한 STRIPE_LIVE_SECRET_KEY: Production 전용 sensitive 확인. 값을 읽거나 보고서에 기록하지 않음.
+- STRIPE_LIVE_WEBHOOK_SECRET, FATE_PAYMENTS_LIVE_DATABASE_URL, FATE_LIVE_ORDER_DATA_KEY, FATE_LIVE_ORDER_ACCESS_KEY: Production 전용 sensitive 확인.
+- FATE_PUBLIC_OPERATOR_NAME=FATE KEY 저장 및 재조회 확인. 사용자 제공 ASIC 등록증의 사업자명 기준. 고객 브랜드 THE FATE KEY는 유지.
+- 별도 운영 DB: payments-live 브랜치 / fate_payments_live. 준비 시 스키마와 빈 주문 테이블, 앱 역할 읽기 권한 검증. 고객 데이터 사용 없음.
+- 출시 준비용 webhook we_1UV7p4GyUNAMaZunST5K1X54는 준비 시 disabled 확인. 최종 승인 전 활성화하지 않음.
+- FATE_CHECKOUT_OPEN=false, FATE_SALES_POLICIES_READY=false 확인. Production에 live 모드 미설정.
+- 운영 availability 재조회: available=false, mode=closed.
+- 최신 Preview availability 재조회: available=true, mode=test, emailDeliveryReady=true, customerRecordsReady=false. 홍보용 고객 정보 저장 준비 완료로 판정하지 않음.
+
 ## 남은 출시 조건
 
-1. 사용자가 Stripe 실계정 제한 API 키를 Vercel 서버 Secret에 직접 등록. 채팅에 비밀키 전달 금지.
-2. 운영용 별도 DB/암호화 키, 판매자 공개 정보와 판매 정책 확인.
-3. 최종 승인 후 운영 배포 및 실계정 webhook 등록/서명 Secret 저장, 구매 공개 스위치 활성화.
-4. 실제 휴대폰에서 구매/취소/복구/다운로드 확인. 실계정의 실제 청구와 은행 정산은 별도 명시 승인 없이는 테스트하지 않음.
+1. 새 제한 실계정 키의 API 호출 및 권한 검증. Secret 등록 여부만으로 작동 성공을 판정하지 않음. Secret 값을 복원하거나 Preview로 복사하지 않음.
+2. 판매자 정보가 표시되는 최종 운영 빌드와 판매 정책 검수. FATE_SALES_POLICIES_READY는 검수 완료 전 false 유지.
+3. 사용자의 명시적 최종 승인 후 운영 배포, live 모드 설정과 webhook 활성화 및 구매 공개. 이번 마무리 요청을 실제 판매 시작 승인으로 해석하지 않음.
+4. 실제 휴대폰에서 구매/취소/복구/다운로드 확인. 실제 수신 메일함 도착 확인. 실계정의 실제 청구와 은행 정산은 별도 명시 승인 없이는 테스트하지 않음.
 
-승인 전까지 Production과 도메인은 변경하지 않는다. 상품 카탈로그와 Sandbox 통과만으로 실판매 PASS를 선언하지 않는다.
+판정은 CONDITIONAL. Sandbox 7개 상품 발급/전달은 통과했지만 실계정 운영 검증은 미완료. 운영 배포와 실제 청구, 도메인 변경은 수행하지 않음.

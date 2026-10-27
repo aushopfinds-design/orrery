@@ -70,7 +70,7 @@ describe('public reading publication and AdSense preflight',()=>{
     expect(html).not.toContain('adsbygoogle')
   })
   it('uses the approved public contact without inventing a publisher identity',()=>{
-    expect(identity).toEqual({contactEmail:'thefatekey@gmail.com',publisherId:null,accountId:null})
+    expect(identity).toMatchObject({contactEmail:'thefatekey@gmail.com',publisherId:null,accountId:null})
     expect(pages.some(p=>p.path==='/contact/')).toBe(true)
     for(const path of ['/contact/','/privacy/'])expect(renderDocument(pages.find(p=>p.path===path)!,identity)).toContain('mailto:thefatekey@gmail.com')
     for(const value of ['pub-123','ca-pub-000','pub-1234567890123456"><script>','pub-1234567890123456\n\nother'])expect(()=>publishingIdentity({FATE_ADSENSE_PUBLISHER_ID:value})).toThrow()
@@ -126,3 +126,15 @@ describe('r14 actual public reading layout',()=>{
   dom.window.close()
  })
 })
+
+ it('publishes live seller and delivery terms without closed-sale notices',()=>{
+ const live=publishingIdentity({FATE_PAYMENTS_MODE:'live',FATE_PUBLIC_OPERATOR_NAME:'FATE KEY'})
+ const content=publicContent(live)
+ for(const path of ['/','/purchases/','/privacy/','/contact/','/use-and-limitations/']){
+  const page=content.find(p=>p.path===path)!
+  expect(page.body).not.toMatch(/Paid purchasing is not open|paid purchasing is not open|Public paid purchases are not open|planned prices/i)
+  expect(renderDocument(page,live)).toContain('Seller: FATE KEY')
+ }
+ expect(content.find(p=>p.path==='/purchases/')!.body).toContain('USD')
+ expect(content.find(p=>p.path==='/privacy/')!.body).toContain('promotional email collection is not enabled')
+ })
