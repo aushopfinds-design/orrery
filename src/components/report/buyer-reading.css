@@ -1,11 +1,11 @@
 .fate-buyer-report-text { max-inline-size: 74ch; margin-inline: auto; overflow-wrap: anywhere; }
-.fate-buyer-report-text p { line-height: 1.85; margin-block: 0 1.1em; }
+.fate-buyer-report-text p { font-size: 1.1rem; line-height: 1.9; margin-block: 0 1.1em; }
 .fate-buyer-report-text h3 { line-height: 1.35; margin-block: 2em 1em; scroll-margin-top: 6rem; }
 .fate-buyer-report-text strong { color: #1b2c42; font-weight: 700; }
 .fate-buyer-calculation-notes { max-inline-size: 74ch; margin: 2rem auto; padding: 1rem; border: 1px solid #ddcbb1; border-radius: 12px; }
 .fate-buyer-calculation-notes summary { cursor: pointer; font-weight: 600; min-height: 44px; display: list-item; }
 .fate-buyer-calculation-notes[open] summary { margin-bottom: 1rem; }
-.fate-buyer-calculation-notes .fate-buyer-report-text { font-size: .88rem; }
+.fate-buyer-calculation-notes .fate-buyer-report-text p { font-size: .96rem; }
 @media (max-width: 600px) {
   .fate-buyer-report-text { font-size: 1rem; }
   .fate-buyer-report-text h3 { font-size: 1.35rem; }
