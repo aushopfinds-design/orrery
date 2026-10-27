@@ -30,7 +30,7 @@ export function purchaseMail(config:PaymentConfig,id:string,email:string,report:
   const test=(config.mode??'test')==='test'
   // Sandbox can never email an arbitrary checkout address.
   const to=test?'delivered@resend.dev':email
-  const title=/^your\s/i.test(report.title)?report.title:'Your '+report.title
+  const title=report.title
   const recovery=`FK1.${id}.${orderAccessToken(config.accessKey,id)}`
   const url=config.origin+'/#purchase'
   const lines=[test?'SANDBOX TEST — no real payment charged.':'Thank you for your purchase.',
