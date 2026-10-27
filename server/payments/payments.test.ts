@@ -465,3 +465,14 @@ describe('paid report email integration',()=>{
     expect((await store.status(order.id))?.fulfillment_state).toBe('complete')
   })
 })
+
+it('refreshes required events on an existing Sandbox endpoint without replacing its signing secret',async()=>{
+  const saved=sealOrder(config.dataKey,'stripe-webhook',{id:'we_existing',url:config.origin+'/api/payments?action=webhook',secret:'whsec_existing'})
+  await store.saveSetting('stripe-webhook',saved)
+  const updateWebhook=vi.fn(async()=>{}),setupWebhook=vi.fn(async()=>({id:'we_new',secret:'whsec_new'}))
+  const service=new PaymentService(config,store,{...gateway(),updateWebhook,setupWebhook})
+  await expect(service.setupWebhook(config.origin+'/api/payments?action=webhook')).resolves.toMatchObject({id:'we_existing',configured:true})
+  expect(updateWebhook).toHaveBeenCalledWith('we_existing',config.origin+'/api/payments?action=webhook')
+  expect(setupWebhook).not.toHaveBeenCalled()
+  expect(await store.setting('stripe-webhook')).toBe(saved)
+})

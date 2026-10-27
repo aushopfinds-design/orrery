@@ -21,6 +21,7 @@ export interface StripeGateway {
   retrievePaymentIntent?(id: string): Promise<Stripe.PaymentIntent>
   verifyEvent(body: string, signature: string, secret?: string): Stripe.Event
   setupWebhook?(url: string, key: string): Promise<{ id: string; secret?: string }>
+  updateWebhook?(id: string, url: string): Promise<void>
   testPayment?(id: string, amount: number, scenario: 'success' | 'decline' | 'expire'): Promise<{ outcome: string }>
 }
 const events = new Set(['checkout.session.completed', 'checkout.session.async_payment_succeeded', 'checkout.session.async_payment_failed', 'checkout.session.expired'])
@@ -217,6 +218,7 @@ export class PaymentService {
     const existing = await this.store.setting('stripe-webhook')
     if (existing) {
       const value = openOrder(this.config.dataKey, 'stripe-webhook', existing) as { id: string; url: string }
+      if (this.stripe.updateWebhook) await this.stripe.updateWebhook(value.id, value.url)
       return { id: value.id, url: value.url, configured: true }
     }
     if (!this.stripe.setupWebhook) throw new PaymentError('webhook_setup_unavailable', 503)

@@ -21,6 +21,12 @@ export function paymentService() {
       'checkout.session.completed', 'checkout.session.async_payment_succeeded',
       'checkout.session.async_payment_failed', 'checkout.session.expired', 'charge.refunded',
     ], description: 'THE FATE KEY private Sandbox fulfillment' }, { idempotencyKey: key }),
+    updateWebhook: async (id, url) => {
+      await stripe.webhookEndpoints.update(id, { url, enabled_events: [
+        'checkout.session.completed', 'checkout.session.async_payment_succeeded',
+        'checkout.session.async_payment_failed', 'checkout.session.expired', 'charge.refunded',
+      ] })
+    },
     // Same test-token flow used by Stripe's official CLI checkout.session.completed fixture:
     // https://github.com/stripe/stripe-cli/blob/master/pkg/fixtures/triggers/checkout.session.completed.json
     // This adapter is reachable only in non-production mode with a test secret key and private QA token.
