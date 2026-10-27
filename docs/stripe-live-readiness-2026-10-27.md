@@ -82,3 +82,11 @@ wellbeing 가상 주문 전액 테스트 환불 succeeded. webhook 환불 기록
 4. 실제 휴대폰에서 구매/취소/복구/다운로드 확인. 실제 수신 메일함 도착 확인. 실계정의 실제 청구와 은행 정산은 별도 명시 승인 없이는 테스트하지 않음.
 
 판정은 CONDITIONAL. Sandbox 7개 상품 발급/전달은 통과했지만 실계정 운영 검증은 미완료. 운영 배포와 실제 청구, 도메인 변경은 수행하지 않음.
+
+## 사용자 출시 승인 후 운영 검증
+
+사용자가 실제 판매와 운영 배포를 명시적으로 승인함. c336b70 운영 배포 READY 및 thefatekey.com 별칭 확인.
+새 서버 진단에서 stripeKeyFormat=false, webhookSecretFormat/dataKeyFormat/accessKeyFormat/keysDistinct/operatorPresent=true 확인.
+따라서 실제 키 값의 잘못된 복사 또는 종류/형식 오류를 사용자가 직접 수정해야 함. Secret 값을 읽거나 출력하지 않음.
+구매 공개 스위치와 정책 게이트 false 유지, 실제 청구 없음. webhook은 잠시 활성화한 뒤 키 오류 확인 후 다시 비활성화.
+정식 판매 미완료. 수정 코드의 타입 검사 및 관련 테스트 46개 통과.

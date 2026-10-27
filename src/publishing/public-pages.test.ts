@@ -128,7 +128,7 @@ describe('r14 actual public reading layout',()=>{
 })
 
  it('publishes live seller and delivery terms without closed-sale notices',()=>{
- const live=publishingIdentity({FATE_PAYMENTS_MODE:'live',FATE_PUBLIC_OPERATOR_NAME:'FATE KEY'})
+ const live=publishingIdentity({FATE_PAYMENTS_MODE:'live',FATE_CHECKOUT_OPEN:'true',FATE_SALES_POLICIES_READY:'true',FATE_PUBLIC_OPERATOR_NAME:'FATE KEY'})
  const content=publicContent(live)
  for(const path of ['/','/purchases/','/privacy/','/contact/','/use-and-limitations/']){
   const page=content.find(p=>p.path===path)!
