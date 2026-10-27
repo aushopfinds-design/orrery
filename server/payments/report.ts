@@ -1,3 +1,4 @@
+import { customerDeliveryText } from '../../src/report/customer-delivery.ts'
 import { reportReference } from '../../src/report/report-reference.ts'
 import type { ReportCertificate } from '../../src/report/report-reference.ts'
 import sharp from 'sharp'
@@ -73,7 +74,7 @@ export async function issueReport(input: OrderInput, orderId: string, referenceY
   const report: BuyerReport = {
     title: previewProduct(input.kind).title, kind: input.kind, edition: REPORT_EDITION, reference, certificates,
     ...(input.recipientName ? { recipientName: input.recipientName } : {}),
-    issuedAt: new Date().toISOString(), text: plainReadingText(text), emphasis: reportEmphasis(source), documents,
+    issuedAt: new Date().toISOString(), text: customerDeliveryText(plainReadingText(text)), emphasis: reportEmphasis(source), documents,
     cards: [buildDestinyCard(input.first, input.recipientName ?? ''), ...(input.second ? [buildDestinyCard(input.second, 'Person B')] : [])], pdf: '',
   }
   const pdf = await reportPdf(report, orderId, reportEmphasis(source), mode)
@@ -226,13 +227,28 @@ async function reportPdf(report: BuyerReport, orderId: string, emphasis: string[
   y -= 25; paragraph('Your reading follows on the next page.', 10, muted)
   addPage()
   let inAppendix = false
-  for (const block of report.text.split(/\n+/)) {
+  const blocks = report.text.split(/\n+/).map(block => block.trim()).filter(Boolean)
+  for (const [blockIndex, block] of blocks.entries()) {
     const value = block.trim()
     if (!value) continue
-    if (value === 'Calculation notes') inAppendix = true
+    if (/^THE FATE KEY · /.test(value)) inAppendix = false
+    if (value === 'Calculation notes') { inAppendix = true; if (y < 650) addPage() }
+    // A two-person header must not consume the space reserved for five key answers.
+    if (value === 'Your reading at a glance') {
+      const answerHeight = blocks.slice(blockIndex + 1, blockIndex + 6).reduce((height, answer) => {
+        let lines = 1, width = 0
+        for (const word of clean(answer).split(/\s+/)) {
+          const next = font.widthOfTextAtSize(word + ' ', 10.4)
+          if (width + next > textWidth && width) { lines++; width = 0 }
+          width += next
+        }
+        return height + lines * 10.4 * 1.65 + 9
+      }, 70)
+      if (y - answerHeight < 83) addPage()
+    }
     const heading = /^(\d{2} [·-]|THE FATE KEY|Your Ten-Year|Your reading at a glance|Your Everyday Compass|Calculation notes|Symbolic colours & numbers|Chart terms in plain English|How this reading is prepared)/.test(value)
     const note = inAppendix || /^(From (your|the) chart:|Why this focus:|Report edition|Sources|Method|Calculated start:)/.test(value)
-    if (heading && value !== 'Your reading at a glance' && y < 650) addPage()
+    if (heading && !inAppendix && value !== 'Your reading at a glance' && y < 650) addPage()
     if (heading) { y -= 10; paragraph(value, 16, gold); y -= 5 }
     else paragraph(value, note ? 9.2 : 10.4, note ? muted : ink, !note)
   }
