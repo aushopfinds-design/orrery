@@ -58,7 +58,10 @@ export function explainCalculation(input: BirthInput): CalculationExplanation {
     nearBoundary: false, notes,
   }
   if (input.unknownTime) {
-    notes.push('Birth time is unknown. The hour pillar and hour comparisons are excluded. Midday is used only to support date-based calculations; ten-year starting dates are approximate.')
+    notes.push('Birth time is unknown. The hour pillar and hour comparisons are excluded. Midday is used only as a calculation reference; it is not an estimated birth time. The displayed ten-year cycle start date is also only a reference and may shift with the actual birth time.')
+    notes.push(input.jasiMethod === 'split'
+      ? 'The displayed day pillar uses the entered calendar date. Under the selected split Zi-hour convention, a birth after 23:30 calculation clock keeps that day pillar but may have a different hour pillar, which is excluded here.'
+      : 'The displayed day pillar uses the midday reference. Under this engine’s default unified Zi-hour convention, a birth at or after 23:30 calculation clock can move the day pillar to the next day. Because the birth time is unknown, that possibility cannot be checked; the day-based interpretation may therefore differ.')
     return base
   }
   notes.push(`Recorded local clock: ${clockLabel(input)} in ${input.timezone ?? 'Asia/Seoul (default)'}. Calculation clock: ${clockLabel(effective)} (${correction}). The calculation clock is a convention-based value, not a second recorded birth time.`)

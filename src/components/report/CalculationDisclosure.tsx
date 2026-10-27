@@ -4,6 +4,10 @@ import { CHART_GLOSSARY, chartGlossaryFor, explainCalculation } from '../../repo
 
 export function CalculationNotice({ input, label }: { input: BirthInput; label?: string }) {
   const basis = explainCalculation(input)
+  if (input.unknownTime) {
+    const caveat = basis.notes.find(note => note.startsWith('The displayed day pillar'))
+    return caveat ? <p role="status" className="fate-reading-time-note">{label && <strong>{label}: </strong>}{caveat}</p> : null
+  }
   if (!basis.nearBoundary) return null
   return <p role="status" className="fate-reading-time-note">{label && <strong>{label}: </strong>}{basis.boundaryNote}</p>
 }

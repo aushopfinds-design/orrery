@@ -54,6 +54,21 @@ describe('Customer PDF review regressions', () => {
     expect(basis.hourPillar).toBe('Unknown; excluded')
     expect(basis.adjacentHours).toBeUndefined()
     expect(basis.nearBoundary).toBe(false)
+    expect(basis.notes.join(' ')).toContain('day-based interpretation may therefore differ')
+    expect(basis.notes.join(' ')).toContain('not an estimated birth time')
+  })
+  it('describes the split Zi-hour convention separately for unknown birth time', () => {
+    const basis = explainCalculation({ ...input, unknownTime: true, jasiMethod: 'split' })
+    expect(basis.notes.join(' ')).toContain('selected split Zi-hour convention')
+    expect(basis.notes.join(' ')).not.toContain('default unified Zi-hour convention')
+  })
+  it('flags the day-pillar uncertainty found in the Seoul sample at the late-night boundary', () => {
+    const sample = { year: 1980, month: 3, day: 25, hour: 12, minute: 0, gender: 'M' as const, timezone: 'Asia/Seoul' }
+    const unknown = calculateSaju({ ...sample, unknownTime: true })
+    const late = calculateSaju({ ...sample, hour: 23, minute: 30 })
+    expect(unknown.pillars[1].pillar.ganzi).toBe('丁酉')
+    expect(late.pillars[1].pillar.ganzi).toBe('戊戌')
+    expect(explainCalculation({ ...sample, unknownTime: true }).notes.join(' ')).toContain('day-based interpretation may therefore differ')
   })
   it('retains all twelve month pillars, with distinct exercises and practical checks', () => {
     const expected = ['辛丑', '壬寅', '癸卯', '甲辰', '乙巳', '丙午', '丁未', '戊申', '己酉', '庚戌', '辛亥', '壬子']
