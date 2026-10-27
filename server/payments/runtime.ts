@@ -16,6 +16,7 @@ export function paymentService() {
     retrievePaymentIntent: id => stripe.paymentIntents.retrieve(id),
     createSession: (params, key) => stripe.checkout.sessions.create(params, { idempotencyKey: key }),
     retrieveSession: id => stripe.checkout.sessions.retrieve(id, { expand: ['line_items.data.price.product'] }),
+    retrievePrice: id => stripe.prices.retrieve(id, { expand: ['product'] }),
     verifyEvent: (body, signature, secret) => stripe.webhooks.constructEvent(body, signature, secret ?? config.webhookSecret),
     setupWebhook: (url, key) => stripe.webhookEndpoints.create({ url, enabled_events: [
       'checkout.session.completed', 'checkout.session.async_payment_succeeded',

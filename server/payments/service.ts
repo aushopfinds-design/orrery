@@ -12,10 +12,12 @@ import { orderInput, uuid } from './input.ts'
 import { OrderStore } from './store.ts'
 import { issueReport } from './report.ts'
 import type { BuyerReport } from './report.ts'
+import { LIVE_CATALOG, livePriceMatches, requireLivePrice } from './live-catalog.ts'
 
 export interface StripeGateway {
   createSession(params: Stripe.Checkout.SessionCreateParams, key: string): Promise<Stripe.Checkout.Session>
   retrieveSession(id: string): Promise<Stripe.Checkout.Session>
+  retrievePrice?(id: string): Promise<Stripe.Price>
   accountReady?(): Promise<boolean>
   retrieveCharge?(id: string): Promise<Stripe.Charge>
   retrievePaymentIntent?(id: string): Promise<Stripe.PaymentIntent>
@@ -63,13 +65,17 @@ export class PaymentService {
       expires_at: new Date(Math.floor(Date.now() / 1000) * 1000 + 60 * 60 * 1000) })
     if (Boolean(order.livemode) !== (this.mode === 'live')) throw new PaymentError('payment_database_mode_mismatch', 503)
     if (order.payment_state !== 'pending' || new Date(order.expires_at).getTime() <= Date.now()) throw new PaymentError('order_not_open_for_checkout', 409)
+    if (this.mode === 'live' && !order.checkout_session_id) {
+      if (!this.stripe.retrievePrice) throw new PaymentError('live_catalog_unavailable', 503)
+      requireLivePrice(order.kind, await this.stripe.retrievePrice(LIVE_CATALOG[order.kind].price))
+    }
     const session = order.checkout_session_id ? await this.stripe.retrieveSession(order.checkout_session_id) :
       await this.stripe.createSession({
         mode: 'payment', allowed_payment_method_types: ['card'],
         adaptive_pricing: { enabled: false }, automatic_tax: { enabled: false }, allow_promotion_codes: false,
         client_reference_id: order.id, metadata: { fate_order_id: order.id, fate_kind: order.kind, integration },
         payment_intent_data: { metadata: { fate_order_id: order.id, fate_kind: order.kind, integration } },
-        line_items: [{ quantity: 1, price_data: { currency: 'usd', unit_amount: order.amount,
+        line_items: this.mode === 'live' ? [{ quantity: 1, price: LIVE_CATALOG[order.kind].price }] : [{ quantity: 1, price_data: { currency: 'usd', unit_amount: order.amount,
           product_data: { name: previewProduct(order.kind).title, metadata: { fate_kind: order.kind, integration } } } }],
         // Phase two adds the buyer receipt/download page; a redirect is never proof of payment.
         success_url: this.config.origin + '/?checkout=success&order_id=' + order.id + '&session_id={CHECKOUT_SESSION_ID}#purchase',
@@ -127,7 +133,8 @@ export class PaymentService {
         (order.checkout_session_id && order.checkout_session_id !== session.id) ||
         !lines || lines.has_more || lines.data.length !== 1 || item?.quantity !== 1 || item.amount_total !== order.amount ||
         item.currency !== order.currency || price?.unit_amount !== order.amount || price.currency !== order.currency ||
-        typeof product !== 'object' || !product || !('metadata' in product) || product.deleted || product.metadata?.fate_kind !== order.kind || product.metadata?.integration !== this.integration) {
+        (this.mode === 'live' ? !price || !livePriceMatches(order.kind, price) :
+          typeof product !== 'object' || !product || !('metadata' in product) || product.deleted || product.metadata?.fate_kind !== order.kind || product.metadata?.integration !== this.integration)) {
       throw new PaymentError('payment_order_mismatch', 409)
     }
     const paid = session.status === 'complete' && session.payment_status === 'paid'

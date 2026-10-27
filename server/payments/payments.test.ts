@@ -12,6 +12,8 @@ import { OrderStore } from './store.ts'
 import type { Database } from './store.ts'
 import { PaymentService } from './service.ts'
 import { paymentHandler } from './handler.ts'
+import { LIVE_CATALOG } from './live-catalog.ts'
+import { REPORT_PRICE_CENTS } from '../../src/report/pricing.ts'
 
 const birth = { year: 1992, month: 8, day: 17, hour: 0, minute: 0, unknownTime: true, gender: 'M', latitude: -33.8688, longitude: 151.2093, timezone: 'Australia/Sydney' }
 const config: PaymentConfig = {
@@ -405,13 +407,19 @@ describe('launch gates and verified full refunds', () => {
     try {
       await liveDb.exec(readFileSync(new URL('./live-schema.sql', import.meta.url), 'utf8'))
       const provider = gateway(), create = provider.createSession
+      const kind = 'career', catalog = LIVE_CATALOG[kind]
+      const livePrice = { id: catalog.price, livemode: true, active: true, type: 'one_time', currency: 'usd', unit_amount: REPORT_PRICE_CENTS[kind],
+        product: { id: catalog.product, livemode: true, active: true, default_price: catalog.price, metadata: { report_kind: kind } } } as unknown as Stripe.Price
       provider.createSession = vi.fn(async (params, key) => {
-        const session = await create(params, key)
+        expect(params.line_items![0]).toEqual({ quantity: 1, price: catalog.price })
+        const session = await create({ ...params, line_items: [{ quantity: 1, price_data: { currency: 'usd', unit_amount: REPORT_PRICE_CENTS[kind], product_data: { name: kind } } }] }, key)
+        session.line_items!.data[0].price = livePrice
         provider.sessions.delete(session.id); session.id = session.id.replace('cs_test_', 'cs_live_'); session.livemode = true
         provider.sessions.set(session.id, session); return session
       })
       const liveConfig = { ...config, mode: 'live' as const, checkoutOpen: true }
-      const liveService = new PaymentService(liveConfig, new OrderStore(liveDb as unknown as Database), { ...provider, accountReady: async () => true })
+      const retrievePrice = vi.fn(async () => livePrice)
+      const liveService = new PaymentService(liveConfig, new OrderStore(liveDb as unknown as Database), { ...provider, retrievePrice, accountReady: async () => true })
       const handler = paymentHandler(() => liveService)
       const request = (action: string, origin = config.origin) => new Request(config.origin + '/api/payments?action=' + action, {
         method: 'POST', headers: { Origin: origin, 'Content-Type': 'application/json', 'Idempotency-Key': randomUUID(), 'x-vercel-forwarded-for': '203.0.113.2' },
@@ -428,6 +436,10 @@ describe('launch gates and verified full refunds', () => {
       for (let i = 0; i < 11; i++) expect((await handler(request('checkout'))).status).toBe(200)
       expect((await handler(request('checkout'))).status).toBe(429)
       expect(provider.createSession).toHaveBeenCalledTimes(12)
+      livePrice.active = false
+      await expect(liveService.createCheckout({ kind, first: birth }, randomUUID())).rejects.toMatchObject({ code: 'live_catalog_mismatch' })
+      expect(provider.createSession).toHaveBeenCalledTimes(12)
+      livePrice.active = true
       const closed = new PaymentService({ ...liveConfig, checkoutOpen: false }, liveService.store, provider)
       await expect(closed.createCheckout({ kind: 'career', first: birth }, randomUUID())).rejects.toMatchObject({ code: 'merchant_not_ready' })
       const closedHandler = paymentHandler(() => closed)
