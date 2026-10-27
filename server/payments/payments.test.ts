@@ -14,6 +14,7 @@ import { PaymentService } from './service.ts'
 import { paymentHandler } from './handler.ts'
 import { LIVE_CATALOG } from './live-catalog.ts'
 import { REPORT_PRICE_CENTS } from '../../src/report/pricing.ts'
+import * as reportIssuer from './report.ts'
 
 const birth = { year: 1992, month: 8, day: 17, hour: 0, minute: 0, unknownTime: true, gender: 'M', latitude: -33.8688, longitude: 151.2093, timezone: 'Australia/Sydney' }
 const config: PaymentConfig = {
@@ -364,6 +365,21 @@ describe('seven products: paid reports, PDFs and access isolation', () => {
     expect((await service.report(order.id)).kind).toBe('complete')
     expect(await count('fate_order_artifacts')).toBe(1)
     expect(await count('fate_payment_orders')).toBe(1)
+  }, 120000)
+  it('retries PDF generation failure without charging again or exposing a partial report', async () => {
+    const { service, session, order, provider } = await prepare()
+    session.status = 'complete'; session.payment_status = 'paid'; session.payment_intent = 'pi_' + randomUUID()
+    const render = vi.spyOn(reportIssuer, 'issueReport').mockRejectedValueOnce(new Error('PDF renderer unavailable'))
+    try {
+      await expect(service.report(order.id)).rejects.toThrow('PDF renderer unavailable')
+      expect(await store.artifact(order.id)).toBeUndefined()
+      expect((await store.status(order.id))?.fulfillment_state).toBe('queued')
+      const report = await service.report(order.id)
+      expect(Buffer.from(report.pdf, 'base64').subarray(0, 5).toString()).toBe('%PDF-')
+      expect(provider.createSession).toHaveBeenCalledTimes(1)
+      expect(await count('fate_payment_orders')).toBe(1)
+      expect(await count('fate_order_artifacts')).toBe(1)
+    } finally { render.mockRestore() }
   }, 120000)
 })
 
