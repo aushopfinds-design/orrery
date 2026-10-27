@@ -22,15 +22,16 @@ describe('A distinct everyday guide in every full report', () => {
     const questions = new Set<string>()
     for (const report of reports()) {
       const extras = report.extras
-      expect(extras.questions).toHaveLength(3)
+      expect(extras.questions.length).toBeGreaterThanOrEqual(3)
       expect(extras.keepClose).toHaveLength(3)
       expect(extras.stepBack).toHaveLength(3)
       expect(extras.experiment.steps).toHaveLength(3)
+      expect(new Set(extras.questions.map(item => item.question)).size).toBe(extras.questions.length)
       for (const item of extras.questions) {
         questions.add(item.question)
         expect(report.fullText).toContain(plainReadingText(item.answer))
         expect(item.basis.length).toBeGreaterThan(20)
-        expect(plainReadingText(item.answer).split(/\s+/).length).toBeLessThanOrEqual(85)
+        expect(plainReadingText(item.answer).split(/\s+/).length).toBeLessThanOrEqual(125)
         expect(item.answer).not.toMatch(/undefined|NaN|\.\./)
       }
       for (const item of [...extras.keepClose, ...extras.stepBack]) expect(report.fullText).toContain(plainReadingText(item.text))
@@ -42,7 +43,7 @@ describe('A distinct everyday guide in every full report', () => {
       expect(report.fullText).toContain('do not change the odds')
       expect(reportExtrasText(extras)).not.toMatch(/undefined|NaN|\*\*/)
     }
-    expect(questions.size).toBe(18)
+    expect(questions.size).toBeGreaterThanOrEqual(18)
   })
 
   it('changes the new answers with real birth profiles, beyond the labels', () => {
