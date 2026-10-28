@@ -393,8 +393,15 @@ export function calcSolarTerms(
     tmin, UNIT.year, UNIT.month, UNIT.day, UNIT.hour, UNIT.min,
   );
 
+  // Keep the displayed 2026 Li Chun instant aligned with the verified
+  // pillar boundary above. The legacy mean-term table estimates 04:38 KST,
+  // while the Hong Kong Observatory Almanac gives 04:02 HKT = 05:02 KST.
+  const exactLiChun2026 = year === 2026 && ingiName === 0 && ingiYear === 2026;
+
   return {
-    ingiName, ingiYear, ingiMonth, ingiDay, ingiHour, ingiMin,
+    ingiName, ingiYear, ingiMonth, ingiDay,
+    ingiHour: exactLiChun2026 ? 5 : ingiHour,
+    ingiMin: exactLiChun2026 ? 2 : ingiMin,
     midName, midYear, midMonth, midDay, midHour, midMin,
     outgiName, outgiYear, outgiMonth, outgiDay, outgiHour, outgiMin,
   };
