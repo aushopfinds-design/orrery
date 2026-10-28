@@ -1,6 +1,8 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import type { ReactNode } from 'react'
 import type { CategoryReading } from '../../report/category-shared.ts'
+import { calculateSaju } from '@orrery/core/saju'
+import { careerMoneyChartData } from '../../report/career-money-charts.ts'
 import { categoryInfo } from '../../report/category-catalog.ts'
 import { REPORT_EDITION } from '../../report/complete-reading.ts'
 import { useLocale } from '../../i18n/index.ts'
@@ -19,6 +21,7 @@ import ReportBriefView, { BackToChapters } from './ReportBriefView.tsx'
 import { buildReadingBrief } from '../../report/reading-brief.ts'
 import ReportApplicationsView from './ReportApplicationsView.tsx'
 import { CalculationNotice, ChartGlossary } from './CalculationDisclosure.tsx'
+import CareerMoneyCharts from './CareerMoneyCharts.tsx'
 
 export default function CategoryReadingView({ report, embedded = false, controls, prefix: customPrefix }: { report: CategoryReading; embedded?: boolean; controls?: ReactNode; prefix?: string }) {
   const { t } = useLocale()
@@ -27,6 +30,7 @@ export default function CategoryReadingView({ report, embedded = false, controls
   const [preparedOn] = useState(() => new Date().toLocaleDateString('en-GB', { timeZone: 'UTC', day: 'numeric', month: 'long', year: 'numeric' }))
   const [showPrintHelp, setShowPrintHelp] = useState(false)
   const [first, second] = report.subjects
+  const careerCharts = useMemo(() => report.kind === 'career' ? careerMoneyChartData(calculateSaju(first.input), report.referenceYear) : null, [first.input, report.kind, report.referenceYear])
   useEffect(() => { if (!embedded) document.getElementById(window.location.hash.slice(1))?.scrollIntoView({ block: 'start' }) }, [embedded])
   const contents = [...report.chapters.map(item => ({ id: item.id, title: item.title, icon: item.icon })), ...(report.months.length ? [{ id: 'calendar', title: `${String(report.chapters.length + 1).padStart(2, '0')} · ${t('category.months.title')}`, icon: 'timeline' }] : [])]
   const chartDetails = <>
@@ -51,7 +55,7 @@ export default function CategoryReadingView({ report, embedded = false, controls
         <div className="hidden print:block">{chartDetails}</div>
     </section>
     <ReportApplicationsView items={report.applications} prefix={prefix} />
-    {report.chapters.map(item => <ReportChapterView key={item.id} chapter={item} prefix={prefix}>{item.id === 'visible-elements' ? <ElementBalance elements={first.elements} visibleMarkers={first.visibleMarkers} /> : null}</ReportChapterView>)}
+    {report.chapters.map(item => <ReportChapterView key={item.id} chapter={item} prefix={prefix}>{item.id === 'visible-elements' ? <ElementBalance elements={first.elements} visibleMarkers={first.visibleMarkers} /> : null}{careerCharts && <CareerMoneyCharts data={careerCharts} chapterId={item.id} />}</ReportChapterView>)}
     {report.months.length > 0 && <section id={`${prefix}-calendar`} className="fate-reading-chapter fate-category-calendar"><ChapterHeading title={`${String(report.chapters.length + 1).padStart(2, '0')} · ${t('category.months.title')}`} kind="timeline" /><p>{t('category.months.intro')}</p><div className="fate-complete-table-wrap"><table className="fate-complete-comparison"><thead><tr><th scope="col">{t('category.months.title')}</th><th scope="col">{t('reading.design.summaryThemes')}</th></tr></thead><tbody>{report.months.map(month=><tr key={month.id}><th scope="row"><a href={`#${prefix}-${month.id}`}>{month.label}</a></th><td><ReadingText text={month.lead.replace(`${month.label}: `,'')} /></td></tr>)}</tbody></table></div><div className="fate-report-periods">{report.months.map((month, index) => <section id={`${prefix}-${month.id}`} className="fate-reading-period" key={month.id}><span className="fate-report-period-dot" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span><p className="fate-eyebrow">{month.label}</p><h3><ReadingText text={month.lead} /></h3><div className="fate-report-chapter-layout"><div className="fate-report-prose">{month.paragraphs.map(text => <p key={text}><ReadingText text={text} /></p>)}</div><ReadingGuidance guidance={month.guidance} headingLevel="h4" /></div>{!month.guidance.keepClose.includes(month.tryThis)&&<div className="fate-reading-practice"><FateKeyMark /><div><strong>{t('reading.tryThis')}</strong><p>{month.tryThis}</p></div></div>}<ChartEvidence facts={month.evidence} /><BackToChapters prefix={prefix} /></section>)}</div></section>}
     {!report.sharedAppendixInLifeReport && <>
     <ReportExtrasView extras={report.extras} prefix={prefix} />

@@ -24,7 +24,7 @@ describe('Native Korean and English from one neutral plan', () => {
     const english = buildTraditionalCategoryFromPlan(plan)
     expect(JSON.stringify(plan)).toBe(before)
     expect(korean).toContain('이직을 생각해 볼 시기')
-    expect(english.chapters.find(x => x.id === 'feedback-and-boundaries')!.title).toContain('Career Change')
+    expect(english.chapters.find(x => x.id === 'feedback-and-boundaries')!.title).toContain('Your Career & Money Turning Points')
     expect(english).not.toHaveProperty('koreanOriginal')
     expect(english.fullText).not.toMatch(/[가-힣]/)
   })

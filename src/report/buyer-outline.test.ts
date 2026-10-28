@@ -22,9 +22,9 @@ describe('Buyer questions, not a repeated six-part technical template', () => {
     for (const point of selected) expect(supportive.evidence.join(' ')).toContain(point.date)
     expect(report.months).toHaveLength(12)
   })
-  it('actually answers job-change, promotion, launch and expansion topics with calculated years', () => {
+  it('answers work and money questions while keeping career and business topics separate', () => {
     const career = buildCategoryReading('career', a, { year: 2026 }), business = buildCategoryReading('business', a, { year: 2026 })
-    for (const [report, id] of [[career, 'feedback-and-boundaries'], [career, 'proof-of-skill'], [business, 'offer-test'], [business, 'customer-communication']] as const) {
+    for (const [report, id] of [[career, 'feedback-and-boundaries'], [career, 'work-chapters'], [business, 'offer-test'], [business, 'customer-communication']] as const) {
       const chapter = report.chapters.find(c => c.id === id)!
       expect(chapter.evidence.join(' ')).toContain('2026-07-15')
       expect(chapter.evidence.join(' ')).toContain('2030-07-15')

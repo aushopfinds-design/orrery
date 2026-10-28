@@ -71,4 +71,4 @@ export function monthlyPoint(result: SajuResult, year: number, month: number) {
   const [yearPillar, monthPillar] = getFourPillars(year, month, 15, 12, 0)
   return pointForPillar(result, monthPillar, `${year}-${String(month).padStart(2, '0')}-15`, yearPillar)
 }
-export function fiveYearPoints(result: SajuResult, year: number) { return Array.from({ length: Math.min(5, 2101 - year) }, (_, i) => timingPoint(result, year + i)) }
+export function fiveYearPoints(result: SajuResult, year: number, count = 5) { return Array.from({ length: Math.min(count, 2101 - year) }, (_, i) => timingPoint(result, year + i)) }

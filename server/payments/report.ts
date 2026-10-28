@@ -14,6 +14,7 @@ import { buildBundleReading, buildCategoryReading } from '../../src/report/categ
 import { buildDestinyCard } from '../../src/report/destiny-card.ts'
 import { plainReadingText, readingTextParts } from '../../src/report/reading-text.ts'
 import { previewProduct } from '../../src/report/personal-products.ts'
+import { careerMoneyChartData } from '../../src/report/career-money-charts.ts'
 import type { OrderInput } from './input.ts'
 
 export interface BuyerReport {
@@ -29,6 +30,7 @@ export interface BuyerReport {
   documents: string[]
   cards: ReturnType<typeof buildDestinyCard>[]
   pdf: string
+  careerCharts?: ReturnType<typeof careerMoneyChartData>
 }
 let fontBytes: Promise<Buffer> | undefined
 let artworkBytes: Promise<Buffer> | undefined
@@ -76,6 +78,7 @@ export async function issueReport(input: OrderInput, orderId: string, referenceY
     ...(input.recipientName ? { recipientName: input.recipientName } : {}),
     issuedAt: new Date().toISOString(), text: customerDeliveryText(plainReadingText(text)), emphasis: reportEmphasis(source), documents,
     cards: [buildDestinyCard(input.first, input.recipientName ?? ''), ...(input.second ? [buildDestinyCard(input.second, 'Person B')] : [])], pdf: '',
+    ...(input.kind === 'career' ? { careerCharts: careerMoneyChartData(a, referenceYear) } : {}),
   }
   const pdf = await reportPdf(report, orderId, reportEmphasis(source), mode)
   report.pdf = Buffer.from(pdf).toString('base64')
@@ -179,7 +182,7 @@ async function reportPdf(report: BuyerReport, orderId: string, emphasis: string[
     for (const part of parts) {
       for (const token of part.text.match(/\S+|\s+/g) ?? []) {
         if (!width && !token.trim()) continue
-        const face = part.bold && [...token].every(c => boldCharacters.has(c.codePointAt(0)!)) ? boldFont : font
+        const face = part.bold && report.kind !== 'career' && [...token].every(c => boldCharacters.has(c.codePointAt(0)!)) ? boldFont : font
         const tokenWidth = face.widthOfTextAtSize(token, size)
         if (width + tokenWidth > textWidth && width) {
           flush()
@@ -251,6 +254,44 @@ async function reportPdf(report: BuyerReport, orderId: string, emphasis: string[
     if (heading && !inAppendix && value !== 'Your reading at a glance' && y < 650) addPage()
     if (heading) { y -= 10; paragraph(value, 16, gold); y -= 5 }
     else paragraph(value, note ? 9.6 : 11.4, note ? muted : ink, !note)
+  }
+  if (report.kind === 'career' && report.careerCharts) {
+    const charts = report.careerCharts
+    const section = (title: string, subtitle: string) => {
+      addPage(); paragraph(title, 16, gold); paragraph(subtitle, 9.6, muted)
+    }
+    section('Career & Money Chart Appendix', 'Labels describe calculated chart relationships; they are not scores or income predictions.')
+    paragraph('Four Pillars', 13, gold)
+    for (const pillar of charts.pillars) paragraph(`${pillar.position}: ${pillar.ganzi} | stem ${pillar.stemGod} | branch ${pillar.branchGod} | hidden ${pillar.hidden.map(item => item.god).join(', ') || 'none listed'}`, 9.6, ink)
+    paragraph(`Day Master: ${charts.dayMaster} | strength: ${charts.strength}`, 10)
+    paragraph(charts.strengthEvidence.join(' '), 9.6, muted)
+    paragraph('Visible Five Elements (exposed stems and branches)', 13, gold)
+    paragraph(charts.elements.map(item => `${item.element} ${item.count}`).join('  ·  ') + `  |  ${charts.elementTotal} counted markers`, 10)
+    y -= 8
+    const elementPalette: Record<string, ReturnType<typeof rgb>> = { Wood: rgb(.25,.43,.34), Fire: rgb(.65,.32,.28), Earth: rgb(.65,.51,.28), Metal: rgb(.39,.46,.51), Water: rgb(.20,.32,.49) }
+    const maxElement = Math.max(1, ...charts.elements.map(item => item.count))
+    for (const [index, item] of charts.elements.entries()) {
+      const yy = y - index * 25
+      page.drawText(item.element, { x: textX, y: yy, size: 9, font, color: ink })
+      page.drawRectangle({ x: textX + 70, y: yy - 1, width: 290, height: 10, color: rgb(.91,.89,.83) })
+      if (item.count) page.drawRectangle({ x: textX + 70, y: yy - 1, width: 290 * item.count / maxElement, height: 10, color: elementPalette[item.element] ?? gold })
+      page.drawText(String(item.count), { x: textX + 372, y: yy, size: 9, font, color: ink })
+    }
+    y -= charts.elements.length * 25 + 10
+    section('Ten Gods & Money Structure', 'Visible and hidden counts are kept separate. A count is not a fortune score.')
+    for (const item of charts.visibleCounts.filter(row => row.count)) paragraph(`${item.label}: ${item.count} visible`, 10)
+    for (const item of charts.hiddenCounts.filter(row => row.count)) paragraph(`${item.label}: ${item.count} hidden`, 10)
+    paragraph(`Visible money markers: ${charts.moneyEvidence.map(item => `${item.label} (${item.source})`).join('; ') || 'none in the available visible positions'}`, 9.6)
+    paragraph(`Hidden money markers: ${charts.hiddenMoneyEvidence.map(item => `${item.label} (${item.source})`).join('; ') || 'none in the listed hidden stems'}`, 9.6)
+    paragraph('Checked income routes', 13, gold)
+    for (const route of charts.incomeRoutes) paragraph(`${route.from} → ${route.to}: ${route.present ? route.gods.join(', ') || 'route detected' : 'not detected in the checked structure'}`, 9.6)
+    paragraph(charts.structureStatus, 9.6, muted)
+    section('Employment & Independent Work Signals', 'Signals reflect principal positions in this chart and do not promise an outcome.')
+    for (const signal of [...charts.employmentSignals, ...charts.independentSignals]) paragraph(`${signal.label}: ${signal.note}`, 10)
+    section('Ten-Year Cycle Timeline', charts.caveat)
+    for (const cycle of charts.cycles) paragraph(`${cycle.span} · ${cycle.ganzi} · ${cycle.stemGod} / ${cycle.branchGod}. Work: ${cycle.workTheme}. Money: ${cycle.moneyTheme}. ${cycle.relation}`, 9.6)
+    section('Year-by-Year Outlook', 'Annual pillars and checked relationships are interpretive themes, not event or income forecasts.')
+    for (const year of charts.years) paragraph(`${year.year} · ${year.pillar} · ${year.stemGod} / ${year.branchGod}. Work: ${year.work}. Money: ${year.money} Cycle: ${year.cycle}. ${year.direction}. ${year.caution} ${year.evidence.join(' ')}`, 9.2)
   }
   cardArtData ??= readFile(new URL('../../public/images/cards/destiny-background-v2.webp', import.meta.url))
     .then(bytes => sharp(bytes).png().toBuffer()).then(bytes => 'data:image/png;base64,' + bytes.toString('base64'))
