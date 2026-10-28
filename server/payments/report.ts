@@ -258,38 +258,38 @@ async function reportPdf(report: BuyerReport, orderId: string, emphasis: string[
   if (report.kind === 'career' && report.careerCharts) {
     const charts = report.careerCharts
     const section = (title: string, subtitle: string) => {
-      addPage(); paragraph(title, 16, gold); paragraph(subtitle, 9.6, muted)
+      addPage(); paragraph(title, 16, gold); paragraph(subtitle, 10.2, muted)
     }
     section('Career & Money Chart Appendix', 'Labels describe calculated chart relationships; they are not scores or income predictions.')
     paragraph('Four Pillars', 13, gold)
-    for (const pillar of charts.pillars) paragraph(`${pillar.position}: ${pillar.ganzi} | stem ${pillar.stemGod} | branch ${pillar.branchGod} | hidden ${pillar.hidden.map(item => item.god).join(', ') || 'none listed'}`, 9.6, ink)
-    paragraph(`Day Master: ${charts.dayMaster} | strength: ${charts.strength}`, 10)
-    paragraph(charts.strengthEvidence.join(' '), 9.6, muted)
+    for (const pillar of charts.pillars) paragraph(`${pillar.position}: ${pillar.ganzi} | stem ${pillar.stemGod} | branch ${pillar.branchGod} | hidden ${pillar.hidden.map(item => item.god).join(', ') || 'none listed'}`, 10.2, ink)
+    paragraph(`Day Master: ${charts.dayMaster} | strength: ${charts.strength}`, 10.5)
+    paragraph(charts.strengthEvidence.join(' '), 10.2, muted)
     paragraph('Visible Five Elements (exposed stems and branches)', 13, gold)
-    paragraph(charts.elements.map(item => `${item.element} ${item.count}`).join('  ·  ') + `  |  ${charts.elementTotal} counted markers`, 10)
+    paragraph(charts.elements.map(item => `${item.element} ${item.count}`).join('  ·  ') + `  |  ${charts.elementTotal} counted markers`, 10.5)
     y -= 8
     const elementPalette: Record<string, ReturnType<typeof rgb>> = { Wood: rgb(.25,.43,.34), Fire: rgb(.65,.32,.28), Earth: rgb(.65,.51,.28), Metal: rgb(.39,.46,.51), Water: rgb(.20,.32,.49) }
     const maxElement = Math.max(1, ...charts.elements.map(item => item.count))
     for (const [index, item] of charts.elements.entries()) {
       const yy = y - index * 25
-      page.drawText(item.element, { x: textX, y: yy, size: 9, font, color: ink })
+      page.drawText(item.element, { x: textX, y: yy, size: 10, font, color: ink })
       page.drawRectangle({ x: textX + 70, y: yy - 1, width: 290, height: 10, color: rgb(.91,.89,.83) })
       if (item.count) page.drawRectangle({ x: textX + 70, y: yy - 1, width: 290 * item.count / maxElement, height: 10, color: elementPalette[item.element] ?? gold })
-      page.drawText(String(item.count), { x: textX + 372, y: yy, size: 9, font, color: ink })
+      page.drawText(String(item.count), { x: textX + 372, y: yy, size: 10, font, color: ink })
     }
     y -= charts.elements.length * 25 + 10
     section('Ten Gods & Money Structure', 'Visible and hidden counts are kept separate. A count is not a fortune score.')
-    for (const item of charts.visibleCounts.filter(row => row.count)) paragraph(`${item.label}: ${item.count} visible`, 10)
-    for (const item of charts.hiddenCounts.filter(row => row.count)) paragraph(`${item.label}: ${item.count} hidden`, 10)
-    paragraph(`Visible money markers: ${charts.moneyEvidence.map(item => `${item.label} (${item.source})`).join('; ') || 'none in the available visible positions'}`, 9.6)
-    paragraph(`Hidden money markers: ${charts.hiddenMoneyEvidence.map(item => `${item.label} (${item.source})`).join('; ') || 'none in the listed hidden stems'}`, 9.6)
+    for (const item of charts.visibleCounts.filter(row => row.count)) paragraph(`${item.label}: ${item.count} visible`, 10.5)
+    for (const item of charts.hiddenCounts.filter(row => row.count)) paragraph(`${item.label}: ${item.count} hidden`, 10.5)
+    paragraph(`Visible money markers: ${charts.moneyEvidence.map(item => `${item.label} (${item.source})`).join('; ') || 'none in the available visible positions'}`, 10.2)
+    paragraph(`Hidden money markers: ${charts.hiddenMoneyEvidence.map(item => `${item.label} (${item.source})`).join('; ') || 'none in the listed hidden stems'}`, 10.2)
     paragraph('Checked income routes', 13, gold)
-    for (const route of charts.incomeRoutes) paragraph(`${route.from} → ${route.to}: ${route.present ? route.gods.join(', ') || 'route detected' : 'not detected in the checked structure'}`, 9.6)
-    paragraph(charts.structureStatus, 9.6, muted)
+    for (const route of charts.incomeRoutes) paragraph(`${route.from} → ${route.to}: ${route.present ? route.gods.join(', ') || 'route detected' : 'not detected in the checked structure'}`, 10.2)
+    paragraph(charts.structureStatus, 10.2, muted)
     section('Employment & Independent Work Signals', 'Signals reflect principal positions in this chart and do not promise an outcome.')
-    for (const signal of [...charts.employmentSignals, ...charts.independentSignals]) paragraph(`${signal.label}: ${signal.note}`, 10)
+    for (const signal of [...charts.employmentSignals, ...charts.independentSignals]) paragraph(`${signal.label}: ${signal.note}`, 10.5)
     section('Ten-Year Cycle Timeline', charts.caveat)
-    for (const cycle of charts.cycles) paragraph(`${cycle.span} · ${cycle.ganzi} · ${cycle.stemGod} / ${cycle.branchGod}. Work: ${cycle.workTheme}. Money: ${cycle.moneyTheme}. ${cycle.relation}`, 9.6)
+    for (const cycle of charts.cycles) paragraph(`${cycle.span} · ${cycle.ganzi} · ${cycle.stemGod} / ${cycle.branchGod}. Work: ${cycle.workTheme}. Money: ${cycle.moneyTheme}. ${cycle.relation}`, 10.2)
     section('Year-by-Year Outlook', 'Annual pillars and checked relationships are interpretive themes, not event or income forecasts.')
     for (const year of charts.years) paragraph(`${year.year} · ${year.pillar} · ${year.stemGod} / ${year.branchGod}. Work: ${year.work}. Money: ${year.money} Cycle: ${year.cycle}. ${year.direction}. ${year.caution} ${year.evidence.join(' ')}`, 9.8)
   }
