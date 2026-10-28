@@ -106,10 +106,12 @@ export function finishReading(data: Omit<CategoryReading, 'fullText' | 'wordCoun
     ...chapters.flatMap(chapterText),
     ...(data.months.length ? ['Your Twelve Months', ...data.months.flatMap(chapterText)] : []),
     ...(data.applications.length ? ['Situations you can work through', ...data.applications.map(applicationText)] : []),
-    reportExtrasText(data.extras, true),
-    calculationAppendix([{ title: 'Reading focus', evidence: data.focus.evidence }, { title: 'Symbol guide evidence', evidence: data.extras.evidence }, ...[...chapters, ...data.months].map(item => ({ title: item.title, evidence: item.evidence }))]),
-    'Chart terms in plain English', ...chartGlossaryFor([...chapters.flatMap(chapter => chapter.evidence), ...data.months.flatMap(month => month.evidence), ...data.focus.evidence]).map(item => `${item.term}: ${item.meaning}`),
-    'How this reading is prepared', ...data.methodNotes,
+    ...(data.kind === 'career' ? [] : [reportExtrasText(data.extras, true)]),
+    data.kind === 'career'
+      ? calculationAppendix([{ title: 'Calculation basis', evidence: [data.subjects[0].birthSummary, data.subjects[0].pillarSummary.join(' · '), `Annual comparison dates: ${Array.from({ length: Math.min(10, 2101 - data.referenceYear) }, (_, index) => `${data.referenceYear + index}-07-15`).join(', ')}. These are comparison points, not full calendar years.`, `Ten-year-cycle dates use the supplied birth details and the engine time convention.`] }])
+      : calculationAppendix([{ title: 'Reading focus', evidence: data.focus.evidence }, { title: 'Symbol guide evidence', evidence: data.extras.evidence }, ...[...chapters, ...data.months].map(item => ({ title: item.title, evidence: item.evidence }))]),
+    'Chart terms in plain English', ...(data.kind === 'career' ? ['Ten Gods name relationships between the Day Master and other chart symbols. A visible count is a placement count, not a strength or fortune score.', 'Annual comparisons use 15 July; ten-year cycles begin on their calculated dates.'] : chartGlossaryFor([...chapters.flatMap(chapter => chapter.evidence), ...data.months.flatMap(month => month.evidence), ...data.focus.evidence]).map(item => `${item.term}: ${item.meaning}`)),
+    'How this reading is prepared', ...(data.kind === 'career' ? ['This is a traditional interpretation of calculated symbols, not a validated prediction. Timing markers describe chart relationships, not guaranteed events.'] : data.methodNotes),
   ].join('\n\n'))
   return { ...data, chapters, fullText, wordCount: fullText.split(/\s+/).length }
 }

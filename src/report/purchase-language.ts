@@ -48,7 +48,7 @@ export const WORKING_LANGUAGE:Record<string,{name:Passage;work:Passage;money:Pas
   money:pair('Deals, changing fees and customers beyond a fixed routine stand out. More openings can also mean more customers to follow up and more work to finish.','거래와 변동 수수료, 정해진 일상 밖의 고객이 두드러집니다. 기회가 많아지면 후속 대응할 고객과 마칠 업무도 늘 수 있습니다.'),
   love:pair('Interest may show through shared experiences, generosity and a wide social world. Early enthusiasm needs steady attention if the relationship is to feel dependable.','함께하는 경험과 너그러움, 넓은 사회생활로 관심을 표현할 수 있습니다. 관계가 믿음직하게 느껴지려면 처음의 열정 뒤에도 꾸준한 관심이 필요합니다.'),
   business:pair('Finding customers, trading and selling through several channels fit this pattern. Expansion becomes harder to manage when orders grow before delivery and payment collection are settled.','고객 확보와 거래, 여러 판매 경로를 쓰는 방식에 맞습니다. 납품과 수금이 정리되기 전에 주문이 늘면 확장을 감당하기 어려워질 수 있습니다.'),
-  pressure:pair('The blind spot is treating an attractive possibility as money already secured.','매력적인 가능성을 이미 확보한 돈처럼 여기는 점이 약점으로 나타날 수 있습니다.'),
+  pressure:pair('Do not count a promising deal as income before the payment arrives.','좋은 거래 가능성도 실제 대금을 받기 전에는 수입으로 계산하지 않습니다.'),
   balance:pair('Variety can be energising while too many open commitments compete for attention.','다양함은 활력을 줄 수 있지만 마무리하지 않은 약속이 많으면 동시에 주의를 요구할 수 있습니다.')},
  正官:{
   name:pair('recognised responsibility and clear standards','인정받는 책임과 분명한 기준'),

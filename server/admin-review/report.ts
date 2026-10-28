@@ -12,6 +12,9 @@ import { plainReadingText } from '../../src/report/reading-text.ts'
 import { previewProduct } from '../../src/report/personal-products.ts'
 import { orderInput } from '../payments/input.ts'
 import { ReviewError } from './config.ts'
+import { periodAssessment } from '../../src/report/structural-assessment.ts'
+import { resolutionEnglish } from '../../src/report/resolution-language.ts'
+import { customerEnglish } from '../../src/report/customer-language.ts'
 
 export interface ReviewBlock { id: string; english: string }
 export interface ReviewDocument { id: string; title: string; english: string; koreanOriginal: string; analysisId: string; blocks: ReviewBlock[]; reviewedClaims: ReviewedClaim[]; sentenceReview: { status: string; englishSentences: number; koreanSentences: number; coverage: string } }
@@ -31,7 +34,8 @@ export function buildReview(value: unknown, referenceYear = new Date().getUTCFul
     const plan = buildInterpretationPlan(input.kind, a, input.year ?? referenceYear, input.kind === 'compatibility' ? b : undefined)
     const korean = koreanReadingFromPlan(plan)
     const english = input.kind === 'complete' ? buildTraditionalCompleteFromPlan(plan) : buildTraditionalCategoryFromPlan(plan)
-    sources = [{ ...english, korean, analysisId: id(plan), reviewedClaims: structureClaimReview(plan) }]
+    const reviewOnlyEvidence = ['INTERNAL CALCULATION CROSS-CHECK — NOT CUSTOMER REPORT', ...[...plan.annual.map(point => ({ point, chart: plan.first })), ...plan.months.map(point => ({ point, chart: plan.first })), ...plan.partnerAnnual.map(point => ({ point, chart: plan.second! }))].map(({ point, chart }) => `${point.date}: ${point.pillar} / ${point.yearPillar}. ${customerEnglish(periodAssessment(chart, point.pillar, point.date, point.yearPillar).text)}`), ...resolutionEnglish(plan.primary.resolution).map(claim => claim.text), ...(plan.partner ? resolutionEnglish(plan.partner.resolution).map(claim => claim.text) : [])]
+    sources = [{ ...english, fullText: english.fullText + '\n\n' + reviewOnlyEvidence.join('\n\n'), korean, analysisId: id(plan), reviewedClaims: structureClaimReview(plan) }]
   }
   const documents: ReviewDocument[] = sources.map((source, d) => {
     const english = plainReadingText(source.fullText)
