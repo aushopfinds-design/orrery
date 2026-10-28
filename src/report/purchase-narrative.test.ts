@@ -153,4 +153,18 @@ describe('Customer conclusions before planning advice',()=>{
   expect(career).toContain('training and dependable support, alongside recognised responsibility and clear standards')
   expect(career).toContain('does not predict a payment or income increase')
  })
+ it('answers the life reading’s relationship and final-life questions from this chart',()=>{
+  const samplePlan=buildInterpretationPlan('complete',customerSample,2026)
+  const first=customerNarrative(samplePlan),other=customerNarrative(buildInterpretationPlan('complete',a,2026))
+  const love=first.love.lines.map(line=>line.en).join(' ')
+  expect(love).toContain(`private-life marker ${samplePlan.primary.dayBranch}`)
+  expect(love).toMatch(/next ten-year comparison/)
+  expect(love).toMatch(/marriage or separation|partner, marriage or separation/)
+  expect(love).not.toBe(other.love.lines.map(line=>line.en).join(' '))
+  const ending=first['next-moves'].lines.at(-1)!.en
+  expect(ending).toContain('Taken together, your chart centres on')
+  expect(ending).toContain('At work')
+  expect(ending).toContain('checked money markers')
+  expect(ending).not.toBe(other['next-moves'].lines.at(-1)!.en)
+ })
 })
