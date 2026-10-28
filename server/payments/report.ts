@@ -156,7 +156,7 @@ async function reportPdf(report: BuyerReport, orderId: string, emphasis: string[
     page.drawText('THE FATE KEY', { x: 54, y: 786, size: 9, font: display, color: gold })
     page.drawLine({ start: { x: 54, y: 774 }, end: { x: W - 54, y: 774 }, thickness: .4, color: gold })
   }
-  const paragraph = (text: string, size = 11.4, color = ink, emphasise = false) => {
+  const paragraph = (text: string, size = 12.4, color = ink, emphasise = false) => {
     const value = clean(text)
     const parts: { text: string; bold: boolean }[] = []
     let last = 0
@@ -177,12 +177,12 @@ async function reportPdf(report: BuyerReport, orderId: string, emphasis: string[
         page.drawText(run.text, { x, y, size, font: run.face, color })
         x += run.face.widthOfTextAtSize(run.text, size)
       }
-      y -= size * (size === 11.4 ? 1.72 : 1.65); runs = []; width = 0
+      y -= size * (size === 12.4 ? 1.72 : 1.65); runs = []; width = 0
     }
     for (const part of parts) {
       for (const token of part.text.match(/\S+|\s+/g) ?? []) {
         if (!width && !token.trim()) continue
-        const face = part.bold && report.kind !== 'career' && [...token].every(c => boldCharacters.has(c.codePointAt(0)!)) ? boldFont : font
+        const face = part.bold && (token.trim() === '' || [...token].every(c => boldCharacters.has(c.codePointAt(0)!))) ? boldFont : font
         const tokenWidth = face.widthOfTextAtSize(token, size)
         if (width + tokenWidth > textWidth && width) {
           flush()
@@ -253,7 +253,7 @@ async function reportPdf(report: BuyerReport, orderId: string, emphasis: string[
     const note = inAppendix || /^(From (your|the) chart:|Why this focus:|Report edition|Sources|Method|Calculated start:)/.test(value)
     if (heading && !inAppendix && value !== 'Your reading at a glance' && y < 650) addPage()
     if (heading) { y -= 10; paragraph(value, 16, gold); y -= 5 }
-    else paragraph(value, note ? 9.6 : 11.4, note ? muted : ink, !note)
+    else paragraph(value, note ? 10.2 : 12.4, note ? muted : ink, !note)
   }
   if (report.kind === 'career' && report.careerCharts) {
     const charts = report.careerCharts
@@ -291,7 +291,7 @@ async function reportPdf(report: BuyerReport, orderId: string, emphasis: string[
     section('Ten-Year Cycle Timeline', charts.caveat)
     for (const cycle of charts.cycles) paragraph(`${cycle.span} · ${cycle.ganzi} · ${cycle.stemGod} / ${cycle.branchGod}. Work: ${cycle.workTheme}. Money: ${cycle.moneyTheme}. ${cycle.relation}`, 9.6)
     section('Year-by-Year Outlook', 'Annual pillars and checked relationships are interpretive themes, not event or income forecasts.')
-    for (const year of charts.years) paragraph(`${year.year} · ${year.pillar} · ${year.stemGod} / ${year.branchGod}. Work: ${year.work}. Money: ${year.money} Cycle: ${year.cycle}. ${year.direction}. ${year.caution} ${year.evidence.join(' ')}`, 9.2)
+    for (const year of charts.years) paragraph(`${year.year} · ${year.pillar} · ${year.stemGod} / ${year.branchGod}. Work: ${year.work}. Money: ${year.money} Cycle: ${year.cycle}. ${year.direction}. ${year.caution} ${year.evidence.join(' ')}`, 9.8)
   }
   cardArtData ??= readFile(new URL('../../public/images/cards/destiny-background-v2.webp', import.meta.url))
     .then(bytes => sharp(bytes).png().toBuffer()).then(bytes => 'data:image/png;base64,' + bytes.toString('base64'))
