@@ -29,4 +29,15 @@
 4. Print/PDF check on mobile and desktop including page breaks, fonts and caveats.
 5. Payment, delivery, refunds, privacy and licensing requirements reviewed before collecting money.
 
+## Korean report-market benchmark (reviewed 2026-10-28)
+
+Public product pages reviewed for category coverage and presentation, not copied wording or artwork:
+
+- Shinhan Life's public fortune guide separates traditional, everyday, and love/compatibility readings and describes an unknown-time path based on the available year, month, and day pillars: https://www.shinhangroup.com/kr/archive/insight/extend/detail/33324
+- Sajuroad presents a premium comprehensive reading with the natal chart, elements, Ten Gods, major cycles, annual outlook, and monthly themes, alongside focused compatibility, money, and career readings: https://www.sajuroad.co.kr/
+- Wolhwadang's public catalog separates full-chart, relationship, career, money, annual, and ten-year-cycle readings; it describes a downloadable keepsake report: https://wolhwadang.issking.co.kr/shop
+- Smith Lab explains one explicit convention for element counts, Ten Gods, and cycle direction, and distinguishes a simple visible-element count from deeper seasonal/root analysis: https://smithlab.co.kr/tools/saju/saju-calculator/
+
+Implementation choices informed by this review: retain a clear chart summary; offer distinct work, money, relationship, and timing chapters; show long cycles and year/month reference points as dated tables; explain the calculation evidence beside the interpretation; and disclose unknown-time limits. These are common functional patterns. No competitor prose, illustrations, or distinctive visual layout were reused. Market pages describe their own products and are not evidence that their interpretations or calculation conventions are independently correct.
+
 This audit documents evidence and unresolved risks; it is not a claim of expert certification.
