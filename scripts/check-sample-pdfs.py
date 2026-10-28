@@ -7,7 +7,7 @@ from PIL import Image, ImageDraw, ImageFont
 parser=argparse.ArgumentParser();parser.add_argument('--work-dir',required=True);args=parser.parse_args()
 TMP=Path(args.work_dir).resolve()
 manifest=json.loads((TMP/'export-manifest.json').read_text())
-def norm(s):return re.sub(r'\s+','',unicodedata.normalize('NFKC',s)).replace('\u00ad','')
+def norm(s):return re.sub(r'\s+','',unicodedata.normalize('NFKC',s).translate(str.maketrans({c:'-' for c in '\u2010\u2011\u2012\u2013\u2014\u2015'}))).replace('\u00ad','')
 errors=[];summaries=[];primary=[]
 for item in manifest:
     path=Path(item['path']);doc=fitz.open(path)
