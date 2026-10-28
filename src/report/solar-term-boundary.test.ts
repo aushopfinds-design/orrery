@@ -1,24 +1,37 @@
 import { describe, expect, it } from 'vitest'
-import { calcSolarTerms, getFourPillars } from '@orrery/core/pillars'
+import { getFourPillars } from '@orrery/core/pillars'
+import { getSolarTermEvent } from '../../packages/core/src/solar-terms.ts'
 
-// Regression checks at the exact minute of a boundary returned by this engine.
-// The 2026 Li Chun boundary is checked separately against the independent
-// Hong Kong Observatory reference in solar-term.official-2026.test.ts.
-// These verify transition consistency, NOT independent astronomical accuracy.
-describe('solar-term minute-boundary regression', () => {
-  it.each([
-    [2026, 3, 7, 12, 0], // near Gyeongchip
-    [2026, 4, 7, 12, 0], // near Cheongmyeong
-    [2026, 8, 9, 12, 0], // near Ipchu
-  ])('month pillar changes at calculated ingress around %i-%i', (y,m,d,h,min) => {
-    const t = calcSolarTerms(y,m,d,h,min)
-    const instant = Date.UTC(t.ingiYear,t.ingiMonth-1,t.ingiDay,t.ingiHour,t.ingiMin)
-    const read = (offsetMinutes: number) => {
-      const dt = new Date(instant + offsetMinutes*60000)
-      return getFourPillars(dt.getUTCFullYear(),dt.getUTCMonth()+1,dt.getUTCDate(),dt.getUTCHours(),dt.getUTCMinutes())
+function pillarsAt(clockMs: number, offsetMinutes = 0, longitude?: number) {
+  const date = new Date(clockMs + offsetMinutes * 60_000)
+  const solarTermClock = longitude == null ? undefined : { longitude }
+  return getFourPillars(
+    date.getUTCFullYear(), date.getUTCMonth() + 1, date.getUTCDate(),
+    date.getUTCHours(), date.getUTCMinutes(), undefined, solarTermClock,
+  )
+}
+
+describe('ephemeris minute-boundary regression', () => {
+  it('switches month pillars at every ingress from 1900 through 2100', () => {
+    let checked = 0
+    for (let year = 1900; year <= 2100; year++) {
+      for (let index = 0; index < 24; index += 2) {
+        const term = getSolarTermEvent(year, index)
+        const before = pillarsAt(term.localClockMs, -1)
+        const at = pillarsAt(term.localClockMs)
+        expect(at[1], `month pillar at ${year} term ${index}`).not.toBe(before[1])
+        if (index === 0) expect(at[0], `year pillar at Li Chun ${year}`).not.toBe(before[0])
+        checked++
+      }
     }
-    const before = read(-1), at = read(0), after = read(1)
-    expect(before[1]).not.toBe(after[1])
-    expect(at[1]).toBe(after[1])
+    expect(checked).toBe(201 * 12)
+  })
+
+  it('places foreign birth term boundaries in that location’s apparent solar clock', () => {
+    const longitude = -74.006
+    const term = getSolarTermEvent(2026, 2, { longitude })
+    const before = pillarsAt(term.localClockMs, -1, longitude)
+    const at = pillarsAt(term.localClockMs, 0, longitude)
+    expect(at[1]).not.toBe(before[1])
   })
 })

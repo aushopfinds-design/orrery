@@ -15,7 +15,7 @@
 import type { BirthInput } from './types.ts';
 
 export const DEFAULT_TIMEZONE = 'Asia/Seoul';
-const DEFAULT_LONGITUDE = 127.0992;
+export const DEFAULT_LONGITUDE = 127.0992;
 const KST_FIXED_OFFSET_MINUTES = 9 * 60;
 const ONE_DAY_MS = 24 * 60 * 60 * 1000;
 const DST_GAP_ERROR_PREFIX = 'DST gap';
@@ -202,7 +202,7 @@ function getDayOfYear(year: number, month: number, day: number): number {
   return Math.floor((current - start) / ONE_DAY_MS);
 }
 
-function getEquationOfTimeMinutes(year: number, month: number, day: number): number {
+export function getEquationOfTimeMinutes(year: number, month: number, day: number): number {
   const dayOfYear = getDayOfYear(year, month, day);
   const b = (2 * Math.PI * (dayOfYear - 81)) / 364;
   return 9.87 * Math.sin(2 * b) - 7.53 * Math.cos(b) - 1.5 * Math.sin(b);

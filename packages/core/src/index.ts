@@ -35,6 +35,7 @@ export {
   getSpecialSals, findTransits, calculateJwabeop, calculateInjongbeop,
   calcPillarIndices, calcSolarTerms, getGongmang, getYearGanzi,
 } from './pillars.ts'
+export type { SolarTermClock } from './solar-terms.ts'
 
 // 상수/심볼
 export {

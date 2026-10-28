@@ -237,8 +237,9 @@ export function buildEnglishReading(result: SajuResult, asOfYear = new Date().ge
   const periods = getActivePeriods(result, asOfYear)
   // Twelve chart-informed reflections anchored to a calculated mid-month pillar.
   // A representative date is not a full calendar-month forecast.
-  const monthNames = Array.from({ length: 12 }, (_, i) =>
-    new Date(Date.UTC(asOfYear, i, 1)).toLocaleString('en-US', { month: 'long', timeZone: 'UTC' }))
+  const hasTermCoverage = Number.isInteger(asOfYear) && asOfYear >= 1900 && asOfYear <= 2100
+  const monthNames = hasTermCoverage ? Array.from({ length: 12 }, (_, i) =>
+    new Date(Date.UTC(asOfYear, i, 1)).toLocaleString('en-US', { month: 'long', timeZone: 'UTC' })) : []
   const monthly: ReadingPeriod[] = monthNames.map((name, i) => {
     const themes = [
       { headline: 'A Fresh Direction', action: self.practice },
@@ -293,6 +294,7 @@ export function buildEnglishReading(result: SajuResult, asOfYear = new Date().ge
     'Day: ' + day.pillar.ganzi,
     'Hour: ' + (input.unknownTime ? 'Unknown' : hour.pillar.ganzi),
   ]
+  if (!hasTermCoverage) caveats.push('Monthly solar-term references are unavailable outside the supported 1900–2100 calculation range.')
   const headline = 'Your Life Story, Through the Lens of Saju'
   const subtitle = 'Discover what your traditional birth chart suggests about your personality, love, work, money and the chapters ahead.'
   const fullText = [

@@ -61,7 +61,8 @@
   ],
   "scripts": {
     "build": "tsup",
-    "test": "vitest run"
+    "test": "vitest run",
+    "generate:solar-terms": "node scripts/generate-solar-terms.mjs"
   },
   "dependencies": {
     "lunar-javascript": "^1.7.7"

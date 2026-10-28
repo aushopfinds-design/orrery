@@ -291,6 +291,12 @@ function practicalDetails(kind: ApplicationKind, item: SituationCase, first: Saj
 }
 
 export function buildReportApplications(kind: ApplicationKind, first: SajuResult, options: { second?: SajuResult; year?: number } = {}): ReportApplication[] {
+  if (kind === 'year') {
+    const year = options.year ?? new Date().getFullYear() + 1
+    if (!Number.isInteger(year) || year < first.input.year || year < 1900 || year > 2100) {
+      throw new Error('Choose a valid year for the situation plan')
+    }
+  }
   return SITUATION_CASES[kind].map(item => ({
     ...item, ...practicalDetails(kind, item, first, options.second, options.year), id: `${kind}-${item.id}`, kind,
     scope: kind === 'year' ? `What Awaits You This Year? — ${options.year ?? new Date().getFullYear() + 1}` : title[kind],

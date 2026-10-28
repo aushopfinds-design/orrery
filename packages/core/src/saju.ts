@@ -9,6 +9,7 @@ import {
 import {
   adjustBirthInputToSolarTime,
   adjustBirthInputToKstWallClock,
+  DEFAULT_LONGITUDE,
   DEFAULT_TIMEZONE,
 } from './timezone.ts';
 import type {
@@ -34,6 +35,9 @@ export function calculateSaju(input: BirthInput): SajuResult {
   // 적용한다. 이 경로는 1948-1951 KDT, 1954-1961 UTC+8:30/+9:30, 1987-1988 KDT 등
   // 한국 표준시 역사적 편차를 ICU/tzdb 기반으로 모두 자동 흡수한다.
   const useSolarTime = calculationInput.timezone != null && calculationInput.timezone !== DEFAULT_TIMEZONE;
+  const solarTermClock = useSolarTime
+    ? { longitude: calculationInput.longitude ?? DEFAULT_LONGITUDE }
+    : undefined;
   const { year, month, day, hour, minute } = useSolarTime
     ? adjustBirthInputToSolarTime(calculationInput)
     : adjustBirthInputToKstWallClock(calculationInput);
@@ -41,7 +45,7 @@ export function calculateSaju(input: BirthInput): SajuResult {
   const isMale = gender === 'M';
 
   // 사주 계산 (년, 월, 일, 시)
-  const [yp, mp, dp, hp] = getFourPillars(year, month, day, hour, minute, input.jasiMethod);
+  const [yp, mp, dp, hp] = getFourPillars(year, month, day, hour, minute, input.jasiMethod, solarTermClock);
 
   // 일간 (일주의 천간)
   const dayStem = dp[0];
@@ -103,7 +107,7 @@ export function calculateSaju(input: BirthInput): SajuResult {
   });
 
   // 대운 계산 (시간 미상 입력은 위에서 정오로 정규화됨)
-  const rawDaewoon = getDaewoon(isMale, year, month, day, hour, minute, input.jasiMethod);
+  const rawDaewoon = getDaewoon(isMale, year, month, day, hour, minute, input.jasiMethod, solarTermClock);
 
   const yearBranch = yp[1];
 

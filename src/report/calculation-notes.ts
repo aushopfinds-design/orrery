@@ -1,7 +1,7 @@
 import type { BirthInput } from '@orrery/core/types'
 import { getFourPillars } from '@orrery/core/pillars'
 import { YANGGAN } from '@orrery/core/constants'
-import { adjustBirthInputToKstWallClock, adjustBirthInputToSolarTime } from '@orrery/core/timezone'
+import { adjustBirthInputToKstWallClock, adjustBirthInputToSolarTime, DEFAULT_LONGITUDE } from '@orrery/core/timezone'
 
 type Clock = Pick<BirthInput, 'year' | 'month' | 'day' | 'hour' | 'minute'>
 const stamp = (c: Clock) => Date.UTC(c.year, c.month - 1, c.day, c.hour, c.minute)
@@ -14,7 +14,12 @@ const shift = (c: Clock, minutes: number): Clock => {
   const d = new Date(stamp(c) + minutes * 60_000)
   return { year: d.getUTCFullYear(), month: d.getUTCMonth() + 1, day: d.getUTCDate(), hour: d.getUTCHours(), minute: d.getUTCMinutes() }
 }
-const pillarAt = (c: Clock, input: BirthInput) => getFourPillars(c.year, c.month, c.day, c.hour, c.minute, input.jasiMethod)
+const pillarAt = (c: Clock, input: BirthInput) => getFourPillars(
+  c.year, c.month, c.day, c.hour, c.minute, input.jasiMethod,
+  input.timezone != null && input.timezone !== 'Asia/Seoul'
+    ? { longitude: input.longitude ?? DEFAULT_LONGITUDE }
+    : undefined,
+)
 
 export interface CalculationExplanation {
   cycleSetting: string
@@ -48,6 +53,9 @@ export function explainCalculation(input: BirthInput): CalculationExplanation {
   const notes = [
     `Traditional cycle setting: ${cycleSetting}. The calculated year stem ${yearPillar[0]} is ${yang ? 'yang' : 'yin'}, so the ten-year cycles run ${cycleDirection.toLowerCase()}. This setting determines cycle direction; it is not a personality judgement.`,
     convention,
+    solar
+      ? 'Solar-term boundaries are converted to the birthplace longitude’s apparent solar clock, using the same equation-of-time convention as the birth-time adjustment.'
+      : 'Solar-term boundaries are compared on the Korean KST wall clock. The engine uses a generated astronomical term table rounded to the input’s minute precision.',
   ]
   const base: CalculationExplanation = {
     cycleSetting, cycleDirection,
