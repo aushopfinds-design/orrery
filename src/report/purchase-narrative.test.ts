@@ -7,6 +7,7 @@ import { buildTraditionalCompleteFromPlan, buildTraditionalCategoryFromPlan } fr
 import { koreanReadingFromPlan } from '../../server/admin-review/korean-reading.ts'
 import { buildBundleFromPlans } from './category-readings.ts'
 const a=calculateSaju(CATEGORY_SCENARIOS[0].first),b=calculateSaju(CATEGORY_SCENARIOS[0].second)
+const customerSample=calculateSaju({year:1992,month:6,day:15,hour:9,minute:30,gender:'F',latitude:-33.8688,longitude:151.2093,timezone:'Australia/Sydney'})
 const normal=(s:string)=>s.replace(/\s+/g,' ').trim()
 describe('Complete customer narrative language coverage, rather than only selected claims',()=>{
  it.each(['complete','career','business','compatibility','year','wellbeing'] as const)('%s has no unpaired chapter, month or practical point',kind=>{
@@ -125,8 +126,31 @@ describe('Customer conclusions before planning advice',()=>{
  })
  it('answers recognition and income questions before listing timing windows',()=>{
   const plan=buildInterpretationPlan('career',a,2026),sections=customerNarrative(plan)
-  expect(sections['proof-of-skill'].lines[0].en).toMatch(/in \d{4}|No promotion year/)
+  expect(sections['proof-of-skill'].lines[0].en).toMatch(/Structured employment|Independent work|staged hybrid|stronger answer about the kind of work/)
   expect(sections['money-commitments'].lines[0].en).not.toMatch(/^For paid projects|^Keep a steady income/)
   expect(sections['work-chapters'].lines.map(x=>x.en).join(' ')).toContain('2035')
+ })
+ it('separates this chart’s paid-work periods from career-change periods and the 2035 cycle shift',()=>{
+  const sections=customerNarrative(buildInterpretationPlan('career',customerSample,2026))
+  const money=sections['money-commitments'].lines.map(line=>line.en).join(' ')
+  const career=sections['career-plan'].lines.map(line=>line.en).join(' ')
+  const work=sections['feedback-and-boundaries'].lines.map(line=>line.en).join(' ')
+  expect(money).toContain('2026 (New customers, deals and changing fees stand out)')
+  expect(money).toContain('2027 (Regular income and continuing commitments are the main money themes)')
+  expect(money).toContain('2034 (Skilled, repeatable work takes priority)')
+  expect(money).toContain('a paid-work focus, not a clear money opening')
+  expect(money).toContain('2035 (Improving a method or putting an idea into words stands out)')
+  expect(money).toContain('a route where caution takes priority')
+  expect(money).toContain('work arrangements may also need adjustment')
+  expect(work).toContain('Why 2035 is highlighted here:')
+  expect(career).toContain('clearest chart-linked paid-work routes are 2026, 2027')
+  expect(career).toContain('2034 is a paid-skill focus, not a clear money opening')
+  expect(career).toContain('2035 has a possible paid-work route, but caution takes priority')
+  expect(career).toContain('Work-duty or arrangement changes are separately marked in 2026, 2032, 2033, 2035')
+  expect(career).toContain('2035-08-27')
+  expect(career).toContain('壬寅')
+  expect(career).toContain('辛丑')
+  expect(career).toContain('training and dependable support, alongside recognised responsibility and clear standards')
+  expect(career).toContain('does not predict a payment or income increase')
  })
 })

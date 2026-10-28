@@ -1,6 +1,7 @@
 import type { InterpretationPlan } from './interpretation-plan.ts'
 import { purchaseYears, purchaseMonths } from './purchase-timing.ts'
 import type { TimingSentence } from './purchase-timing.ts'
+import { pair } from './purchase-language.ts'
 export interface PurchaseTimingSection { lines: TimingSentence[]; evidence: string[] }
 const cache = new WeakMap<InterpretationPlan, Record<string, PurchaseTimingSection>>()
 export function purchaseTimingSections(plan: InterpretationPlan): Record<string, PurchaseTimingSection> {
@@ -32,6 +33,26 @@ function buildSections(plan:InterpretationPlan):Record<string,PurchaseTimingSect
  const opportunities=money.filter(opens)
  const moneyThemes=money.filter(row=>row.evidence.some(fact=>/reference stem.*(?:正財|偏財)|principal inner stem.*(?:正財|偏財)/.test(fact)))
  const themeYears=dates(moneyThemes)
+ const moneyRoutes=money.filter(row=>Boolean(row.route))
+ const moneySummary=moneyRoutes.length?pair(
+  `These periods differ: ${moneyRoutes.map(row=>{
+   const year=row.date.slice(0,4),theme=row.lines.find(line=>line.id.endsWith('.verdict'))?.en.replace(/^\d{4}: [^—]+ — /,'').split(/(?<=[.!?])\s/)[0].replace(/[.!?]$/,'')??'a money theme'
+   const route=row.route==='skill-to-customers'?'skill-to-customer':'skill-to-fee'
+   const status=row.status==='opening-with-caution'?'a conditional opening with extra pressure':row.status==='conditional-opening'?'a conditional work route':row.status==='topic-only'?'a paid-work focus, not a clear money opening':row.status==='extra-care'?'a route where caution takes priority':'a theme to review, not a confirmed opening'
+   const workChange=row.lines.some(line=>line.id.endsWith('.change-month'))?'; work arrangements may also need adjustment':''
+   return `${year} (${theme}) has a ${route} route: ${status}${workChange}`
+  }).join('; ')}. Read them as different activities, not income promises.`,
+  `시기별 재물 주제는 서로 다릅니다. ${moneyRoutes.map(row=>{
+   const year=row.date.slice(0,4),theme=row.lines.find(line=>line.id.endsWith('.verdict'))?.ko.replace(/^\d{4}: [^—]+ — /,'').split(/(?<=[.!?])\s/)[0].replace(/[.!?]$/,'')??'재물 주제'
+   const route=row.route==='skill-to-customers'?'기술·고객 연결':'기술·합의된 보수의 연결'
+   const status=row.status==='opening-with-caution'?'추가 부담이 따르는 조건부 기회':row.status==='conditional-opening'?'조건부 업무 통로':row.status==='topic-only'?'분명한 재물 기회보다 유료 업무에 초점':row.status==='extra-care'?'주의가 먼저인 통로':'확정된 기회가 아닌 검토 주제'
+   const workChange=row.lines.some(line=>line.id.endsWith('.change-month'))?'; 업무 방식도 조정될 수 있습니다':''
+   return `${year}년(${theme})은 ${route}이며 ${status}${workChange}`
+  }).join('; ')}. 수입을 보장하는 예측이 아닙니다.`
+ ):pair(
+  `${themeYears?`Direct regular- or opportunity-money themes appear in ${themeYears}, but the checked activity route does not establish a clear paid-work opening. `:''}No direct paid-work route stands out in this window. A money symbol alone is not a prediction of higher income.`,
+  `${themeYears?`${themeYears}년에 정기 수입 또는 기회 수입의 주제가 나타나지만, 확인한 활동 흐름은 분명한 유료 업무 기회를 정해 주지 않습니다. `:''}이 기간에 두드러지는 직접적인 유료 업무 통로는 없습니다. 재물 글자만으로 수입 증가를 예측하지 않습니다.`
+ )
  // Editorial priority is the count of observed conflicts, not an invented luck score.
  // All periods remain in the full timeline. Highlights never relabel omitted periods as safe.
  const priority=(rows:Row[])=>rows.map((r,i)=>({r,i,n:r.lines.filter(l=>/\.(change-|background-pressure|wider-pressure)/.test(l.id)).length})).sort((a,b)=>b.n-a.n||a.i-b.i).slice(0,3).map(x=>x.r).sort((a,b)=>a.date.localeCompare(b.date))
@@ -43,8 +64,8 @@ function buildSections(plan:InterpretationPlan):Record<string,PurchaseTimingSect
  }
  if(plan.kind==='career'){
   const changed=years.filter(r=>r.lines.some(l=>l.id.endsWith('change-month')))
-  put('feedback-and-boundaries',changed.length?`Changing duties or working arrangements stand out in ${dates(changed)}. These years are more relevant to a job-change question than years with only a general money theme.`:`No direct change to work arrangements stands out in this window. A decision to move would need to rest more on the actual role than on a clear timing signal.`,changed.length?`${dates(changed)}년에는 업무나 일하는 방식의 변화가 두드러집니다. 단순히 재물 주제만 있는 해보다 이직 질문과 더 관련이 있는 시기입니다.`:'이 기간에는 업무 방식의 직접적인 변화가 두드러지지 않습니다. 이직 판단에서는 시기 신호보다 실제 자리를 더 중요하게 봐야 합니다.',priority(changed),'highlight')
-  put('money-commitments',opportunities.length?`For paid projects or customer work, examine ${dates(opportunities)}. These periods connect earning activity with your existing skills; payment terms and workload remain part of the judgement.`:`${themeYears?`Money and customer themes appear in ${themeYears}. Use those years to review paid work and customer offers. `:``}These are earning themes, not a prediction of a pay rise. Agree the fee, hours and costs before accepting more work.`,opportunities.length?`유료 업무나 고객을 통한 돈벌이는 ${dates(opportunities)}년을 살펴볼 수 있습니다. 가진 기술과 수입 활동이 연결되며 대금 조건과 업무량도 함께 판단합니다.`:`${themeYears?`${themeYears}년에 재물과 고객의 주제가 나타납니다. 유료 업무와 고객 제안을 검토하는 계기로 삼습니다. `:``}급여 인상을 예측하는 표시는 아닙니다. 추가 업무를 받기 전에 대금과 시간, 비용을 정합니다.`)
+  put('feedback-and-boundaries',changed.length?`Changing duties or working arrangements stand out in ${dates(changed)}. These years are more relevant to a job-change question than years with only a general money theme.`:`No direct change to work arrangements stands out in this window. A decision to move would need to rest more on the actual role than on a clear timing signal.`,changed.length?`${dates(changed)}년에는 업무나 일하는 방식의 변화가 두드러집니다. 단순히 재물 주제만 있는 해보다 이직 질문과 더 관련이 있는 시기입니다.`:'이 기간에는 업무 방식의 직접적인 변화가 두드러지지 않습니다. 이직 판단에서는 시기 신호보다 실제 자리를 더 중요하게 봐야 합니다.',changed,'highlight')
+  put('money-commitments',moneySummary.en,moneySummary.ko)
   const transition=(year:number)=>{
    const index=plan.first.daewoon.findIndex(cycle=>cycle.startDate.getUTCFullYear()===year)
    if(index<0)return undefined
