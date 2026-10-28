@@ -23,8 +23,9 @@ export function livePriceMatches(kind: PricedReportKind, price: Stripe.Price): b
 }
 
 export function requireLivePrice(kind: PricedReportKind, price: Stripe.Price) {
-  if (!livePriceMatches(kind, price) || !price.active || typeof price.product !== 'object' ||
-      price.product.deleted || !price.product.active || price.product.default_price !== price.id) {
+  const product = price.product
+  if (!livePriceMatches(kind, price) || !price.active || typeof product !== 'object' || product === null ||
+      !('active' in product) || !product.active || product.default_price !== price.id) {
     throw new PaymentError('live_catalog_mismatch', 503)
   }
 }
