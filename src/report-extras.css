@@ -81,3 +81,15 @@
   .fate-compass-print-sources { font-size: 9px; line-height: 1.6; overflow-wrap: anywhere; }
   .fate-compass-preview { border: 1px solid #ddd; background: #fff; box-shadow: none; }
 }
+
+
+/* Accessible Five Elements comparison, shared by report previews and printable readings. */
+.fate-element-comparison { display:grid; gap:12px; margin:18px 0 12px; }
+.fate-element-comparison-row { display:grid; grid-template-columns:58px minmax(0,1fr) 64px; gap:12px; align-items:center; font-size:13px; }
+.fate-element-comparison-row > span { font-weight:600; }
+.fate-element-comparison-row strong { text-align:right; font-variant-numeric:tabular-nums; font-size:12px; }
+.fate-element-comparison-track { height:12px; border-radius:999px; background:#e9e4dc; overflow:hidden; }
+.fate-element-comparison-track > span { display:block; height:100%; border-radius:999px; }
+.fate-element-method-note { font-size:12px; line-height:1.7; opacity:.8; max-width:65ch; }
+@media(max-width:420px) { .fate-element-comparison-row { grid-template-columns:48px minmax(0,1fr) 56px; gap:7px; font-size:12px; } }
+@media print { .fate-element-comparison-track, .fate-element-comparison-track > span { print-color-adjust:exact; -webkit-print-color-adjust:exact; } }
