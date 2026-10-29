@@ -4,7 +4,8 @@ import type { PreviewKind } from '../../report/personal-products.ts'
 import ReportIcon from './ReportIcon.tsx'
 import { destinyCardCount } from '../../report/destiny-card.ts'
 
-function reportScope(kind: PreviewKind, t: (key: string) => string) {
+// eslint-disable-next-line react-refresh/only-export-components
+export function reportScope(kind: PreviewKind, t: (key: string) => string) {
   const count = previewProduct(kind).chapters
   return t(kind === 'bundle' ? 'buyer.choice.reports' : kind === 'year' ? 'buyer.choice.annualChapters' : 'buyer.choice.chapters').replace('{count}', String(count))
 }
