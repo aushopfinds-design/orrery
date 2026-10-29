@@ -15,12 +15,12 @@ const normalized = p => p?.korean ?? p?.ganzi ?? p?.pillar?.ganzi ?? null;
 const rows = [];
 for (const [id,year,month,day,hour,minute,timeZone] of fixtures) {
   try {
-    const a = existing({year,month,day,hour,minute,gender:'M'});
+    const a = existing({year,month,day,hour,minute,gender:'M',timezone:timeZone});
     const b = external({birth:{date:{calendar:'gregorian',year,month,day},time:{hour,minute},timeZone},rules:{ziHourPolicy:'civilMidnight',dayHourClock:{kind:'civil'}}});
-    const current = a.pillars?.map(normalized) ?? [];
+    // Orrery stores hour/day/month/year; normalize to year/month/day/hour.\n    const current = [3,2,1,0].map(i=>normalized(a.pillars?.[i]));
     const independent = ['year','month','day','hour'].map(k=>normalized(b.pillars?.[k]));
     // Existing API returns ordered pillars; verify order before interpreting comparisons.
-    rows.push({id,timeZone,current,independent,manualReviewRequired:true});
+    rows.push({id,timeZone,current,independent,manualReviewRequired:true,exactPillarMatch:current.every((v,i)=>v===independent[i])});
   } catch (e) { rows.push({id,timeZone,error:String(e)}); }
 }
 console.log(JSON.stringify({count:rows.length,note:'Do not treat differences as errors until pillar order, UTC normalization, DST and policy are aligned.',rows},null,2));
