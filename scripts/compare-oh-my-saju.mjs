@@ -30,7 +30,7 @@ for (const [id,year,month,day,hour,minute,timeZone] of fixtures) {
     const longitude = locationByTimeZone[timeZone];
     const a = existing({year,month,day,hour,minute,gender:'M',timezone:timeZone,longitude});
     const clock = timeZone === 'Asia/Seoul' ? {kind:'civil'} : {kind:'local-apparent-solar',longitudeDegreesEast:longitude,equationOfTime:'apply'};
-    const b = external({birth:{date:{calendar:'gregorian',year,month,day},time:{hour,minute},timeZone},rules:{ziHourPolicy:'ziStart23',dayHourClock:clock}});
+    const b = external({birth:{date:{calendar:'gregorian',year,month,day},time:{hour,minute},timeZone},rules:{ziHourPolicy:'ziStart',dayHourClock:clock}});
     // Orrery stores hour/day/month/year; normalize to year/month/day/hour.
     const current = [3,2,1,0].map(i=>normalized(a.pillars?.[i]));
     const independent = ['year','month','day','hour'].map(k=>normalized(b.pillars?.[k]));
