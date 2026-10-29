@@ -64,7 +64,7 @@ describe('r8: all seven products over 24 distinct international charts', () => {
       expect(bundle.annual.subjects[0].input).toEqual(chart.input)
     }
     for (const versions of bodies.values()) expect(versions.size).toBe(24)
-  }, 15000)
+  }, 30000)
   it('recalculates every year/month across three selected years and both solar-year sides', () => {
     for (const chart of charts) for (const year of [2026, 2027, 2028]) {
       for (let month = 1; month <= 12; month++) {

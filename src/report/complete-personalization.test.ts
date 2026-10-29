@@ -4,6 +4,8 @@ import type { BirthInput } from '@orrery/core/types'
 import { buildCompleteReading } from './complete-reading.ts'
 import { purchaseYears } from './purchase-timing.ts'
 import { timingPoint } from './traditional-analysis.ts'
+import { buildInterpretationPlan } from './interpretation-plan.ts'
+import { customerNarrative } from './purchase-narrative.ts'
 
 const locations = [
   { timezone: 'Asia/Seoul', latitude: 37.5665, longitude: 126.978 },
@@ -48,6 +50,36 @@ describe('My Life personalization across 24 international birth charts', () => {
       }
     }
   })
+
+  it('gives twenty different charts a direct relationship conclusion and ten complete yearly answers', () => {
+    const reports = births.slice(0, 20).map(birth => {
+      const chart = calculateSaju(birth)
+      const plan = buildInterpretationPlan('complete', chart, 2026)
+      const reading = buildCompleteReading(chart, 2026)
+      const love = customerNarrative(plan).love.lines.map(line => line.en).join(' ')
+      const years = customerNarrative(plan)['next-moves'].lines.filter(line => /^20\d\d: Main theme/.test(line.en))
+      expect(love).toMatch(/steadier fit is a partner/)
+      expect(love).toContain(`close-relationship marker is ${chart.pillars[1].pillar.branch}`)
+      expect(love).not.toContain('In close relationships, your chart points to a need for')
+      expect(love).not.toContain('alongside the ten-year theme')
+      expect(years).toHaveLength(10)
+      expect(new Set(years.map(line => line.en)).size).toBe(10)
+      for (const line of years) {
+        expect(line.en).toContain('Career & money —')
+        expect(line.en).toContain('Love & relationships —')
+        expect(line.en).toContain('Opportunity —')
+        expect(line.en).toContain('Caution —')
+        expect(line.en).toContain('Why —')
+      }
+      if (birth.unknownTime) {
+        expect(love).not.toMatch(/birth-hour marker|hour pillar|hour branch/i)
+        expect(reading.pillarSummary).toContain('Hour: Unknown')
+      }
+      return { love, years: years.map(line => line.en).join(' ') }
+    })
+    expect(new Set(reports.map(report => report.love)).size).toBeGreaterThan(15)
+    expect(new Set(reports.map(report => report.years)).size).toBeGreaterThan(15)
+  })
 })
 
 describe('My Life direct buyer answers and annual distinctions', () => {
@@ -72,6 +104,14 @@ describe('My Life direct buyer answers and annual distinctions', () => {
     expect(text('patterns')).toContain('己酉')
     expect(text('patterns')).toContain('辛亥')
     expect(report.chapters.every(chapter => chapter.evidence.length > 0)).toBe(true)
+  })
+
+  it('describes ten-year cycle boundaries as approximate when calculation conventions differ', () => {
+    const report = buildCompleteReading(joy, 2026)
+    expect(report.periods[0].period).toMatch(/^Around /)
+    expect(report.periods[0].text).toMatch(/Cycle start dates are estimates and can differ across calculation conventions/)
+    expect(report.periods[0].evidence.join(' ')).toMatch(/Approximate FATE KEY cycle boundary reference/)
+    expect(report.fullText).not.toMatch(/From the calculated start \d{4}-\d{2}-\d{2}/)
   })
 
   it('does not call the 2026 revision pattern a clash; distinguishes daily and visible work layers', () => {

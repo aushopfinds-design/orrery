@@ -149,11 +149,14 @@ describe('Complete reading quality across 60 international profiles', () => {
     }
   })
 
-  it('shows each chapter with its own calculated cycle data and starting date', () => {
+  it('shows each chapter with its own calculated cycle data and approximate starting period', () => {
     for (const { result, reading } of readings) {
       for (const period of reading.periods) {
         const cycle = result.daewoon.find(cycle => cycle.ganzi === period.pillar && period.evidence[0].includes(cycle.startDate.toISOString().slice(0,10)))!
-        expect(period.text).toContain(cycle.startDate.toISOString().slice(0, 10))
+        expect(period.text).toMatch(/Cycle start dates are estimates and can differ across calculation conventions/)
+        expect(period.text).not.toContain(cycle.startDate.toISOString().slice(0, 10))
+        expect(period.period).toMatch(/^Around /)
+        expect(period.evidence[0]).toMatch(/Approximate FATE KEY cycle boundary reference/)
         expect(period.evidence.join(' ')).toContain(cycle.stemSipsin)
         expect(reading.fullText).toContain(cycle.stemSipsin)
       }

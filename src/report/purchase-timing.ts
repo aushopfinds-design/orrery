@@ -109,7 +109,7 @@ export function purchaseTiming(result: SajuResult, point: ReturnType<typeof mont
  if(widerTension.length)add('wider-pressure',`Other demands concern ${widerTension.map(c=>location[POSITION[c.index]][0]).join(' and ')}. Include these obligations when deciding how much to take on.`,`${widerTension.map(c=>location[POSITION[c.index]][1]).join('·')}에도 부담이 나타납니다. 기회를 살필 때 그 책임을 감당할 여유도 함께 봅니다.`)
  add('caution',PERIOD_VOICE[point.god].action.en,PERIOD_VOICE[point.god].action.ko)
  const evidence = [...point.facts, ...assessment.evidence, `Activity policy FATE-activity-r1: area ${area}; route ${relevantRoute ?? 'none'}; status ${status}; capacity ${facts.tendency}; natal roles ${present.join('/')}; reference roles ${now.join('/')}; longer roles ${longer.join('/')}; no overall luck judgement from a matched activity.`]
- return { date: point.date, area, status, route: opening, capacity: facts.tendency, lines, evidence, assessment }
+ return { date: point.date, area, status, route: opening, capacity: facts.tendency, pillar: point.pillar, yearPillar: point.yearPillar, god: point.god, innerGod: point.innerGod, comparisons: point.comparisons, lines, evidence, assessment }
 }
 export function purchaseYears(result: SajuResult, year: number, area: TimingArea, count=10, distinguishWorkLayer=false) {
  return Array.from({length:Math.min(count,2101-year)},(_,i)=>purchaseTiming(result,timingPoint(result,year+i),area,String(year+i),distinguishWorkLayer))

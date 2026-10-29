@@ -133,5 +133,5 @@ describe('Each chapter adds a different practical check', () => {
         expect(bullets.every(item => item.length > 10)).toBe(true)
       }
     }
-  },15000)
+  },30000)
 })

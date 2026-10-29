@@ -32,7 +32,7 @@ describe('Personal letter and subject-specific revision', () => {
       const money = report.chapters.find(x => x.id === 'money')!
       const love = report.chapters.find(x => x.id === 'love')!
       expect([money.lead, ...money.paragraphs].join(' ')).toMatch(/money|income|financial/i)
-      expect([love.lead, ...love.paragraphs].join(' ')).toContain('close relationships')
+      expect([love.lead, ...love.paragraphs].join(' ')).toMatch(/steadier fit is a partner|close-relationship marker/)
       expect(love.paragraphs.join(' ')).not.toContain('Your birth-day reading also points to')
       expect(new Set(report.periods.map(x => x.paragraphs[1])).size).toBe(report.periods.length)
       const compass = report.extras
