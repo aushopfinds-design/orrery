@@ -1,4 +1,5 @@
 import { buildTraditionalComplete } from './traditional-reading.ts'
+import { independentPersonalizationEligibility, type IndependentPillarAudit } from './independent-personalization.ts'
 import type { SajuResult, BirthInput, PillarDetail } from '@orrery/core/types'
 import { BRANCH_ELEMENTS, STEM_ELEMENTS, STEMS, TEN_GODS } from './reading.ts'
 import type { ReadingElement, ReadingPeriod } from './reading.ts'
@@ -134,6 +135,20 @@ export function buildFreeReading(result: SajuResult): FreeReading {
   }
 }
 
-export function buildCompleteReading(result: SajuResult, asOfYear = new Date().getFullYear()): CompleteReading {
-  return buildTraditionalComplete(result, asOfYear)
+export function buildCompleteReading(result: SajuResult, asOfYear = new Date().getFullYear(), independentAudit?: IndependentPillarAudit): CompleteReading {
+  const reading = buildTraditionalComplete(result, asOfYear)
+  // Independent facts are optional and never overwrite the paid-report calculation.
+  if (!independentAudit) return reading
+  const chart = [3, 2, 1, 0].map(i => result.pillars[i].pillar.ganzi)
+  if (!chart.every((pillar, i) => pillar === independentAudit.current[i])) return reading
+  const eligible = independentPersonalizationEligibility(independentAudit)
+  if (!eligible.canUseYearMonthDay) return reading
+  const note = [
+    'Independent calculation cross-check:',
+    'year ' + eligible.confirmed.year + ', month ' + eligible.confirmed.month + ', and day ' + eligible.confirmed.day + ' agree.',
+    eligible.canUseHour ? 'Hour ' + eligible.confirmed.hour + ' also agrees.' : 'The hour result is not independently confirmed.',
+    'Decade-cycle timing is not independently confirmed. This reading uses THE FATE KEY calculations.'
+  ].join(' ')
+  const fullText = reading.fullText + '\n\n' + note
+  return { ...reading, methodNotes: [...reading.methodNotes, note], fullText, wordCount: fullText.split(/\s+/).length }
 }
