@@ -35,7 +35,14 @@ describe('A distinct everyday guide in every full report', () => {
         expect(plainReadingText(item.answer).split(/\s+/).length).toBeLessThanOrEqual(125)
         expect(item.answer).not.toMatch(/undefined|NaN|\.\./)
       }
-      if (!focusedCareer) for (const item of [...extras.keepClose, ...extras.stepBack]) expect(report.fullText).toContain(plainReadingText(item.text))
+      if (!focusedCareer) for (const item of [...extras.keepClose, ...extras.stepBack]) {
+        const text = plainReadingText(item.text)
+        if (report.title === 'My Life') {
+          // My Life suppresses advice already answered in its chart-specific
+          // chapters. Any retained extra should appear once, never be echoed.
+          expect(report.fullText.split(text).length - 1).toBeLessThanOrEqual(1)
+        } else expect(report.fullText).toContain(text)
+      }
       for (const item of focusedCareer ? [] : extras.symbols) {
         expect(report.fullText).toContain(item.colors[0].name)
         expect(report.fullText).toContain('Numbers: ' + item.numbers.join(' / '))
