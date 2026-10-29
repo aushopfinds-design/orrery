@@ -321,7 +321,7 @@ describe('six products: paid reports, PDFs and access isolation', () => {
     expect(rendered.getSubject()).toContain(report.reference)
     expect(rendered.getTitle()).toContain(report.title)
     const { mkdir, writeFile } = await import('node:fs/promises')
-    const dir = '/workspace/scratch/0102d8f465a1/qa-pdfs'
+    const dir = (await import('node:path')).join((await import('node:os')).tmpdir(), 'the-fate-key-qa-pdfs')
     await mkdir(dir, { recursive: true }); await writeFile(`${dir}/${kind}.pdf`, bytes)
     const saved = await store.artifact(order.id)
     // Random base64 ciphertext can coincidentally contain short plaintext fragments.
