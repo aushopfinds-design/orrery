@@ -24,4 +24,12 @@ describe('customer appendix',()=>{
   expect(buyer).toContain('From the chart: Money markers at month.')
   expect(customerDeliveryText(text)).toContain('Main caution: Too many duties can be tiring.')
  })
+ it('keeps only one identical decade practical point in My Life',()=>{
+  const first='Practical point: Read the calculated start 2024-07-19 alongside actual changes in responsibility.'
+  const second='Practical point: Read the calculated start 2034-07-19 alongside actual changes in responsibility.'
+  const text=['THE FATE KEY · My Life','08 · What Do Your Ten-Year Life Cycles Reveal?','Cycle one',first,'Cycle two',second,'THE FATE KEY · My Year','08 · What Do Your Ten-Year Life Cycles Reveal?',second].join('\n\n')
+  const buyer=customerDeliveryText(text,true)
+  expect(buyer).toContain(first)
+  expect(buyer.split(second)).toHaveLength(2)
+ })
 })
