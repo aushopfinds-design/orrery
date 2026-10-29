@@ -16,7 +16,10 @@ export function structureClaimReview(plan: InterpretationPlan): ReviewedClaim[] 
     if (en.length !== ko.length || en.some((c, i) => c.id !== ko[i].id || !c.text || !ko[i].text)) throw new Error('Unpaired structural interpretation')
     return en.map((c, i) => ({ id: `${index ? 'B' : 'A'}.${c.id}`, english: c.text, korean: ko[i].text }))
   })
-  const personal: ReviewedClaim[] = ['complete', 'wellbeing'].includes(plan.kind) ? (['strength', 'pressure'] as const).map(field => ({ id: 'A.personal.' + field, english: plainReadingText(PERSONAL_PROFILES[plan.primary.dayStem][field]), korean: PERSONAL_KO[plan.primary.dayStem][field] })) : []
+  // My Life now authors a chart-grounded answer from its actual day stem,
+  // season and roots. The generic profile sentence is reserved for wellbeing;
+  // counting both as delivered content would validate prose the buyer never sees.
+  const personal: ReviewedClaim[] = plan.kind === 'wellbeing' ? (['strength', 'pressure'] as const).map(field => ({ id: 'A.personal.' + field, english: plainReadingText(PERSONAL_PROFILES[plan.primary.dayStem][field]), korean: PERSONAL_KO[plan.primary.dayStem][field] })) : []
   const years = plan.kind === 'wellbeing' ? [] : plan.kind === 'year' ? plan.annual.slice(0, 1) : plan.annual
   const periods: ReviewedClaim[] = [...years, ...plan.months].map((point, index) => ({ id: 'A.timing.' + (index < years.length ? 'annual.' : 'monthly.') + point.date, english: customerEnglish(periodAssessment(plan.first, point.pillar, point.date, point.yearPillar).text), korean: timing(point) }))
   if (plan.second && plan.kind === 'compatibility') periods.push(...plan.partnerAnnual.map(point => ({ id: 'B.timing.' + point.date, english: customerEnglish(periodAssessment(plan.second!, point.pillar, point.date, point.yearPillar).text), korean: timing(point) })))
