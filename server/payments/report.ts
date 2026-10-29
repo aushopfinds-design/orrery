@@ -16,6 +16,7 @@ import { plainReadingText, readingTextParts } from '../../src/report/reading-tex
 import { previewProduct } from '../../src/report/personal-products.ts'
 import { careerMoneyChartData } from '../../src/report/career-money-charts.ts'
 import type { OrderInput } from './input.ts'
+import { auditBirthInput } from './independent-audit.ts'
 
 export interface BuyerReport {
   title: string
@@ -56,7 +57,8 @@ export async function issueReport(input: OrderInput, orderId: string, referenceY
   const a = calculateSaju(input.first), b = input.second ? calculateSaju(input.second) : undefined
   let text: string, documents: string[], source: unknown
   if (input.kind === 'complete') {
-    const reading = buildCompleteReading(a, referenceYear)
+    const independentAudit = await auditBirthInput(input.first, a)
+    const reading = buildCompleteReading(a, referenceYear, independentAudit)
     source = reading; text = reading.fullText; documents = [reading.title]
   } else if (input.kind === 'bundle') {
     if (!b) throw new Error('Missing second chart')

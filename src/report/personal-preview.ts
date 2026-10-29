@@ -15,6 +15,7 @@ import { buildReadingBrief, readingBriefText } from './reading-brief.ts'
 import type { ReadingBrief } from './reading-brief.ts'
 import { applicationText } from './report-applications.ts'
 import type { ReportApplication } from './report-applications.ts'
+import type { IndependentPillarAudit } from './independent-personalization.ts'
 
 export interface PersonalPreview {
   title: string
@@ -38,7 +39,7 @@ function extrasExcerpt(extras: ReportExtras) {
   return { question: extras.questions[0], symbols: extras.symbols }
 }
 /** A limited personal preview. No full text, purchase receipt or paid entitlement. */
-export function buildPersonalPreview(kind: PreviewKind, draft: PreviewDraft): PersonalPreview {
+export function buildPersonalPreview(kind: PreviewKind, draft: PreviewDraft, independentAudit?: IndependentPillarAudit): PersonalPreview {
   const first = normalizePreviewBirth(draft.first)
   if (!first) throw new Error('Valid birth details and a birthplace time zone are needed')
   const a = calculateSaju(first)
@@ -51,7 +52,7 @@ export function buildPersonalPreview(kind: PreviewKind, draft: PreviewDraft): Pe
   const year = draft.year ?? currentYear + 1
   if (!Number.isInteger(year) || year < first.year || year > 2100 || year < 1900) throw new Error('Choose a valid report year')
   if (kind === 'complete') {
-    const full = buildCompleteReading(a, currentYear)
+    const full = buildCompleteReading(a, currentYear, independentAudit)
     return { title: full.title, subjects: [subjectA], headline: full.headline, brief: buildReadingBrief(full.chapters.find(chapter => chapter.id === 'career')!, undefined, full.focus), summary: full.summary, applications: full.applications, excerpts: ['career', 'love', 'money'].map(id => excerpt(full.chapters.find(chapter => chapter.id === id)!)), contents: [...full.chapters, { id: 'timeline', title: '08 · Your Ten-Year Chapters' }, full.actionPlan].map(chapter => ({ id: chapter.id, title: chapter.title.replace(/^\d+ · /, '') })), monthly: [], needsPartner: false, extras: extrasExcerpt(full.extras) }
   }
   const b = second ? calculateSaju(second) : undefined

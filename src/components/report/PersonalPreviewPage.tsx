@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import type { BirthInput } from '@orrery/core/types'
+import { calculateSaju } from '@orrery/core/saju'
 import { useLocale } from '../../i18n/index.ts'
 import BirthForm from '../BirthForm.tsx'
 import { FateEmblem } from '../HomeOverview.tsx'
@@ -20,6 +21,7 @@ import ReportApplicationsView from './ReportApplicationsView.tsx'
 import DestinyCardBonus from './DestinyCardBonus.tsx'
 import BuyReportLink from './BuyReportLink.tsx'
 import SandboxCheckout from './SandboxCheckout.tsx'
+import type { IndependentPillarAudit } from '../../report/independent-personalization.ts'
 
 function focusSection(id: string) {
   const section = document.getElementById(id)
@@ -37,7 +39,20 @@ export default function PersonalPreviewPage({ kind, input, onFirstBirth }: { kin
   const focusAfterSubmit = useRef(false)
   const checkoutIntent = window.location.hash.endsWith('-checkout')
   const product = previewProduct(kind)
-  const preview = useMemo(() => input ? buildPersonalPreview(kind, { first: input, second, year }) : null, [kind, input, second, year])
+  const [auditResult, setAuditResult] = useState<{ input: BirthInput; audit?: IndependentPillarAudit } | null>(null)
+  useEffect(() => {
+    let cancelled = false
+    if (!input) return () => { cancelled = true }
+    void import('../../report/customer-audit.ts').then(({ auditCustomerBirthLocally }) => auditCustomerBirthLocally(input, calculateSaju(input))).then(audit => {
+      if (!cancelled) setAuditResult({ input, audit })
+    }).catch(() => {
+      if (!cancelled) setAuditResult({ input })
+    })
+    return () => { cancelled = true }
+  }, [input, setAuditResult])
+  const auditReady = !input || Boolean(input.unknownTime) || auditResult?.input === input
+  const independentAudit = input?.unknownTime ? undefined : auditResult?.input === input ? auditResult.audit : undefined
+  const preview = useMemo(() => input && auditReady ? buildPersonalPreview(kind, { first: input, second, year }, independentAudit) : null, [kind, input, second, year, independentAudit, auditReady])
   const paired = kind === 'compatibility' || kind === 'bundle'
   const needsPartner = Boolean(preview?.needsPartner)
   const ready = Boolean(preview && !needsPartner && !editing)
@@ -95,7 +110,7 @@ export default function PersonalPreviewPage({ kind, input, onFirstBirth }: { kin
       <h2 id="personal-first-heading" tabIndex={-1}>{t(input ? 'buyer.preview.change' : 'buyer.preview.enter')}</h2><p>{t('buyer.preview.enterText')}</p>
       <BirthForm key={input ? 'edit-first' : 'new-first'} initialInput={input ?? undefined} onSubmit={submitFirst} submitLabel={t(checkoutIntent ? 'purchase.continue' : input ? 'buyer.preview.update' : 'buyer.preview.calculate')} />
       {input && <button type="button" className="fate-outline-button" onClick={() => { setEditing(null); requestAnimationFrame(() => focusSection(needsPartner ? 'personal-partner-heading' : checkoutIntent ? 'personal-checkout' : 'personal-opening-heading')) }}>{t('buyer.preview.cancel')}</button>}
-    </section> : <>
+    </section> : !auditReady ? <p role="status" className="fate-personal-pending">Preparing your chart-based preview…</p> : <>
       <section className="fate-personal-subjects" aria-label={t('buyer.preview.details')}>
         <div><p className="fate-eyebrow">{t('buyer.preview.details')}</p>{preview?.subjects.map((person, index) => <div className="fate-preview-person" key={person.label}><div><strong>{paired ? person.label : t('buyer.preview.yourChart')}</strong><p>{person.birthSummary}</p><details><summary>{t('buyer.preview.chartNotes')}</summary><span>{person.dayMaster} · {person.pillarSummary.join(' · ')}</span></details></div><button type="button" className="fate-outline-button" onClick={() => editPerson(index === 0 ? 'first' : 'second')}>{t(paired ? index === 0 ? 'buyer.preview.editA' : 'buyer.preview.editB' : 'buyer.preview.change')}</button></div>)}</div>
       </section>
