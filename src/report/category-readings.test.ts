@@ -7,7 +7,7 @@ import { getFourPillars, getJeonggi, getRelation } from '@orrery/core/pillars'
 import type { BirthInput } from '@orrery/core/types'
 import { buildBundleReading, buildCategoryReading, buildCompatibilityReading, buildCareerReading, buildBusinessReading, buildYearAheadReading, buildBalanceReading } from './category-readings.ts'
 import { CATEGORY_SCENARIOS, FOCUS_CATALOG } from './category-catalog.ts'
-import { cycleFacts, moneyTimingFacts } from './category-shared.ts'
+import { cycleFacts } from './category-shared.ts'
 import { plainReadingText } from './reading-text.ts'
 import { resolveFocusCategory, resolveReportRoute } from '../utils/report-route.ts'
 
