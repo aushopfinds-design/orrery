@@ -9,9 +9,13 @@ export type TimingArea = 'work' | 'money' | 'business' | 'love' | 'life'
 export interface TimingSentence { id: string; en: string; ko: string }
 const OUTPUT = ['食神', '傷官'], MONEY = ['正財', '偏財'], RESOURCE = ['正印', '偏印'], AUTHORITY = ['正官', '偏官']
 const FRIC = ['沖', '刑', '害', '破']
+const ROUTINE: Record<string,string> = {
+ 比肩:'independent ownership of a specialist task', 劫財:'shared projects and divided responsibilities', 食神:'repeatable work and steady delivery', 傷官:'improving a method and explaining the result',
+ 正財:'ongoing accounts and practical duties', 偏財:'commercial sourcing and wider contacts', 正官:'formal responsibility and standards', 偏官:'urgent targets and decisive action', 正印:'training and dependable support', 偏印:'specialist questions and protected thinking time',
+}
 const has = (gods: string[], set: string[]) => gods.some(g => set.includes(g))
 const location: Record<string, [string, string]> = { hour: ['plans and longer-term commitments', '앞으로의 계획과 오래 맡을 일'], day: ['private choices and close relationships', '개인적인 선택과 가까운 관계'], month: ['work and daily responsibilities', '직장과 매일 맡는 일'], year: ['wider contacts and shared obligations', '주변 사람들과 공동 책임'] }
-export function purchaseTiming(result: SajuResult, point: ReturnType<typeof monthlyPoint>, area: TimingArea, label = point.date.slice(0, 7)) {
+export function purchaseTiming(result: SajuResult, point: ReturnType<typeof monthlyPoint>, area: TimingArea, label = point.date.slice(0, 7), distinguishWorkLayer = false) {
  const assessment = periodAssessment(result, point.pillar, point.date, point.yearPillar), facts = structuralFacts(result)
  const present = [...facts.exposed.map(n => n.god), ...facts.hidden.filter(n => n.principal).map(n => n.god)]
  const now = [point.god, point.innerGod], longer = assessment.cycle ? [assessment.cycle.stemSipsin, assessment.cycle.branchSipsin] : []
@@ -41,6 +45,10 @@ export function purchaseTiming(result: SajuResult, point: ReturnType<typeof mont
  const add = (id: string, en: string, ko: string) => lines.push({id: `${area}.${point.date}.${id}`, en, ko})
  const labelEn = /^\d{4}-\d{2}$/.test(label) ? new Date(label+'-15T12:00:00Z').toLocaleDateString('en-GB',{month:'long',year:'numeric',timeZone:'UTC'}) : label
  const focus=periodFocus(point.god,point.innerGod)
+ if(distinguishWorkLayer){
+  add('annual-pillar',point.yearPillar,`${point.yearPillar}년주`)
+  add('annual-theme',WORKING_LANGUAGE[point.god].name.en,WORKING_LANGUAGE[point.god].name.ko)
+ }
  const activity: Record<string,[string,string]> = {
   'skill-to-customers': area==='business' ? ['selling a product or service built on a skill you already use','이미 쓰는 기술을 상품이나 서비스로 판매하는 일'] : ['turning an established skill into paid work','익숙한 기술을 유료 업무로 연결하는 일'],
   'customers-to-offer': area==='business' ? ['improving what you sell to an existing customer base','기존 고객에게 제공하는 상품을 개선하는 일'] : ['using your skills on work with an agreed fee','대금이 정해진 일에 기술을 쓰는 일'],
@@ -68,7 +76,22 @@ export function purchaseTiming(result: SajuResult, point: ReturnType<typeof mont
  for(const c of tension){
   const clash=c.found.some(p=>p.type==='沖')
   const role=WORKING_LANGUAGE[point.god].name, natal=WORKING_LANGUAGE[result.pillars[c.index].branchSipsin].name
-  add('change-'+POSITION[c.index],c.index===2?`${clash?'A direct clash':'An adjustment pattern'} links this period with your work side. The demand for ${role.en} meets your established daily pattern of ${natal.en}; ${clash?'a change in duties or schedule is a stronger theme here':'the way tasks are shared may need adjustment'}.`:`The ${clash?'clash':'adjustment pattern'} affects your home and relationship side. ${role.en[0].toUpperCase()+role.en.slice(1)} may compete with time together or the freedom to make a personal choice.`,c.index===2?`이번 시기와 태어난 달의 지지가 ${clash?'충으로 직접 부딪힙니다':'마찰을 이룹니다'}. ${role.ko}의 요구가 평소 ${natal.ko}의 업무 방식과 만납니다. ${clash?'담당이나 일정의 변화를 더 강하게 읽습니다':'업무를 나누는 방식을 조정할 수 있습니다'}.`:`사적인 생활을 읽는 태어난 날의 지지에 ${clash?'충':'마찰'}이 닿습니다. ${role.ko}의 요구가 함께하는 시간이나 개인적으로 선택할 여유와 겹칠 수 있습니다.`)
+  if(c.index===2&&distinguishWorkLayer){
+   const clashLayers=[...new Set(c.found.filter(p=>p.type==='沖').map(p=>p.layer))]
+   const linkNames:Record<string,string>={合:'a combining link',半合:'a partial combination',刑:'a repeated-friction pattern',害:'a crossed-expectations pattern',破:'a pattern of revision'}
+   const otherLinks=[...new Set(c.found.filter(p=>p.type!=='沖').map(p=>linkNames[p.type]??'another recorded link'))]
+   const primaryPattern=clash?'clash':'adjustment pattern'
+   const secondLayer=otherLinks.length?` The same pair also records ${otherLinks.join(' and ')} in another layer, so a distinct secondary connection sits alongside this ${primaryPattern}.`:''
+   const layerTerms=[...new Set(c.found.filter(p=>p.type==='沖').map(p=>p.layer))]
+   const patternNames:Record<string,string>={破:'a branch-revision pattern',刑:'a repeated-friction pattern',害:'a crossed-expectations pattern'}
+   const structuralText=clash?layerTerms.includes('stem')?'a clash in the visible work terms':'a clash in the daily work pattern':c.found.map(item=>patternNames[item.type]).filter(Boolean).join(' and ')||'an adjustment pattern'
+   const dailyRoutine=ROUTINE[result.pillars[c.index].branchSipsin]??natal.en
+   const secondaryExplanation=otherLinks.includes('a partial combination')?' The annual branch also forms a partial combination with your birth-month branch, adding a cooperative work link alongside the pressure.':clash?secondLayer:''
+   const reviewTarget=clashLayers.includes('stem')?"the role's terms and decision-making authority":'the division of daily duties and schedule'
+   add('change-'+POSITION[c.index],`${point.pillar} meets your birth-month ${result.pillars[c.index].pillar.ganzi} through ${structuralText}. The year brings ${role.en} into contact with your usual pattern of ${dailyRoutine}, so review ${reviewTarget}. This marks a point to assess, not a guaranteed job change.${secondaryExplanation}`,`${point.pillar}년은 태어난 달의 ${result.pillars[c.index].pillar.ganzi}와 만나 ${clash?layerTerms.includes('stem')?'겉으로 드러난 직무 조건의 충':'일상 업무 방식의 충':'지지의 조정 패턴'}을 이룹니다. 그해의 ${role.ko}이 평소 ${dailyRoutine}의 업무 방식과 맞닿으므로 ${clashLayers.includes('stem')?'직무 조건과 결정 권한':'일상 업무 분담과 일정'}을 살펴볼 수 있습니다. 반드시 직업이 바뀐다는 뜻은 아닙니다.${otherLinks.includes('a partial combination')?' 같은 해의 지지에는 태어난 달과 반합도 있어 압력과 함께 협력의 연결도 나타납니다.':''}`)
+  }else{
+   add('change-'+POSITION[c.index],c.index===2?`${clash?'A direct clash':'An adjustment pattern'} links this period with your work side. The demand for ${role.en} meets your established daily pattern of ${natal.en}; ${clash?'a change in duties or schedule is a stronger theme here':'the way tasks are shared may need adjustment'}.`:`The ${clash?'clash':'adjustment pattern'} affects your home and relationship side. ${role.en[0].toUpperCase()+role.en.slice(1)} may compete with time together or the freedom to make a personal choice.`,c.index===2?`이번 시기와 태어난 달의 지지가 ${clash?'충으로 직접 부딪힙니다':'마찰을 이룹니다'}. ${role.ko}의 요구가 평소 ${natal.ko}의 업무 방식과 만납니다. ${clash?'담당이나 일정의 변화를 더 강하게 읽습니다':'업무를 나누는 방식을 조정할 수 있습니다'}.`:`사적인 생활을 읽는 태어난 날의 지지에 ${clash?'충':'마찰'}이 닿습니다. ${role.ko}의 요구가 함께하는 시간이나 개인적으로 선택할 여유와 겹칠 수 있습니다.`)
+  }
  }
  if(!tension.length&&combination.length)add('connection','Making plans together is a clearer theme here. Agreeing on what each person will actually do can matter as much as the promise itself.','함께 계획을 정하는 주제가 두드러집니다. 약속뿐 아니라 각자 실제로 무엇을 맡을지 정하는 일도 중요합니다.')
  if(cycleTension||yearTension){
@@ -88,8 +111,8 @@ export function purchaseTiming(result: SajuResult, point: ReturnType<typeof mont
  const evidence = [...point.facts, ...assessment.evidence, `Activity policy FATE-activity-r1: area ${area}; route ${relevantRoute ?? 'none'}; status ${status}; capacity ${facts.tendency}; natal roles ${present.join('/')}; reference roles ${now.join('/')}; longer roles ${longer.join('/')}; no overall luck judgement from a matched activity.`]
  return { date: point.date, area, status, route: opening, capacity: facts.tendency, lines, evidence, assessment }
 }
-export function purchaseYears(result: SajuResult, year: number, area: TimingArea, count=10) {
- return Array.from({length:Math.min(count,2101-year)},(_,i)=>purchaseTiming(result,timingPoint(result,year+i),area,String(year+i)))
+export function purchaseYears(result: SajuResult, year: number, area: TimingArea, count=10, distinguishWorkLayer=false) {
+ return Array.from({length:Math.min(count,2101-year)},(_,i)=>purchaseTiming(result,timingPoint(result,year+i),area,String(year+i),distinguishWorkLayer))
 }
 export function purchaseMonths(result: SajuResult, year: number, area: TimingArea='life') {
  return Array.from({length:12},(_,i)=>purchaseTiming(result,monthlyPoint(result,year,i+1),area))
