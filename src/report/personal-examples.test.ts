@@ -5,7 +5,7 @@ import { buildCompleteReading } from './complete-reading.ts'
 import { buildBundleReading, buildCategoryReading } from './category-readings.ts'
 import { buildPersonalPreview, personalPreviewText } from './personal-preview.ts'
 import { PREVIEW_KINDS } from './personal-products.ts'
-import { workExample, compatibilityExample, relationshipExample, everydayExampleText } from './personal-examples.ts'
+import { workExample, compatibilityExample, relationshipExample } from './personal-examples.ts'
 import { plainReadingText } from './reading-text.ts'
 
 const [a, b] = [calculateSaju(CATEGORY_SCENARIOS[0].first), calculateSaju(CATEGORY_SCENARIOS[0].second)]
