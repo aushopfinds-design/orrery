@@ -10,7 +10,14 @@ export function customerDeliveryText(text:string, simplifyMyLifeRepetition=false
   // Several My Life chapters already explain the same caution in their body.
   // Keep the practical point and the full source note, but avoid echoing it in a
   // second labelled sentence. The other paid reports retain their own endings.
-  if(myLife&&block.startsWith('Main caution: ')&&(['02','03','05','06','07','08'].includes(section)))return false
+  if(myLife&&block.startsWith('Main caution: ')&&(['01','02','03','05','06','07','08'].includes(section)))return false
+  // The cycle source repeats the same labelled practical point on every decade.
+  // Keep its first occurrence in My Life; the cycle-specific reading and dates remain.
+  if(myLife&&block.startsWith('Practical point: ')){
+   const key=block.replace(/\d{4}-\d{2}-\d{2}/g,'<cycle-date>').replace(/\s+/g,' ').trim()
+   if(seen.has(key))return false
+   seen.add(key)
+  }
   if(!appendix)return true
   // Internal policy decisions are not additional chart facts. Keep dated pillars,
   // pair relationships, roots and the glossary, without repeating audit diagnostics.
