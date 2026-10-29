@@ -30,7 +30,7 @@ it('only includes product-update confirmation when a separate consent was reques
  expect(purchaseMail(config,id,'buyer@example.org',report,true).text).toContain('preference=unsubscribe')
 })
 it('uses the real Resend endpoint, secret header, attachment and stable idempotency key',async()=>{
- const send=vi.fn(async(..._args:[string|URL|Request,RequestInit?])=>Response.json({id:'provider-id'})), transport=resendTransport({RESEND_API_KEY:'re_fixture',RESEND_EMAIL_DOMAIN:'thefatekey.com'},send)
+ const send=vi.fn(async(...args:[string|URL|Request,RequestInit?])=>{ void args; return Response.json({id:'provider-id'}) }), transport=resendTransport({RESEND_API_KEY:'re_fixture',RESEND_EMAIL_DOMAIN:'thefatekey.com'},send)
  expect(resendTransport({})).toBeUndefined()
  await transport!.send(purchaseMail(config,randomUUID(),'buyer@example.org',report),'fate-report-v1/order')
  expect(send.mock.calls[0][0]).toBe('https://api.resend.com/emails')
