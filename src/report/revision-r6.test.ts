@@ -37,7 +37,10 @@ describe('Personal letter and subject-specific revision', () => {
       expect(new Set(report.periods.map(x => x.paragraphs[1])).size).toBe(report.periods.length)
       const compass = report.extras
       for (const item of [...compass.keepClose, ...compass.stepBack]) {
-        expect(compass.questions.some(q => q.answer.includes(item.text))).toBe(false)
+        const plainItem = item.text.replace(/\*\*/g, '')
+        // Extras can intentionally reuse a chapter's exact customer answer;
+        // the full report must not print that same advice more than once.
+        expect(report.fullText.split(plainItem).length - 1).toBeLessThanOrEqual(1)
       }
     }
   })

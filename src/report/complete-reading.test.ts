@@ -138,7 +138,8 @@ describe('Complete reading quality across 60 international profiles', () => {
       expect(reading.methodNotes.join(' ')).toContain('not a full assessment of day-master strength')
       expect(reading.methodNotes.join(' ')).toContain('does not claim to diagnose')
       const balance = reading.chapters.find(chapter => chapter.id === 'balance')!
-      if (reading.elements.some(element => element.count === 0)) expect([balance.lead,...balance.paragraphs].join(' ')).toMatch(/do not appear in the visible signs|not a measure of ability/)
+      expect([balance.lead,...balance.paragraphs].join(' ')).toMatch(/feel balanced when/)
+      expect([balance.lead,...balance.paragraphs].join(' ')).not.toMatch(/element.*(?:health|prescription)|missing element/i)
     }
   })
 
@@ -193,24 +194,17 @@ describe('Shareable report routes', () => {
   })
 })
 
-describe('Independently confirmed pillars inform customer interpretations safely', () => {
-  it('connects confirmed chart facts to My Life answers without using an unmatched hour or cycle', () => {
+describe('Independent checks do not change the customer-facing reading', () => {
+  it('keeps the same personal answers when common pillars agree and records the check separately', () => {
     const result = calculateSaju(base)
     const current = [3, 2, 1, 0].map(index => result.pillars[index].pillar.ganzi)
+    const baseline = buildCompleteReading(result, 2026)
     const report = buildCompleteReading(result, 2026, {
       current,
       independent: [current[0], current[1], current[2], '戊辰'],
     })
-    const personality = report.chapters.find(chapter => chapter.id === 'personality')!
-    const money = report.chapters.find(chapter => chapter.id === 'money')!
-    const career = report.chapters.find(chapter => chapter.id === 'career')!
-    const love = report.chapters.find(chapter => chapter.id === 'love')!
-    expect(personality.paragraphs[0]).toContain(`birth-day sign is ${current[2]}`)
-    expect(money.paragraphs[0]).toContain(`birth-month sign ${current[1]}`)
-    expect(career.paragraphs[0]).toContain(`birth-month sign ${current[1]}`)
-    expect(love.paragraphs[0]).toContain(`birth-day sign is ${current[2]}`)
-    expect(report.fullText).toContain(personality.paragraphs[0])
-    expect(report.fullText).toContain(money.paragraphs[0])
+    expect(report.chapters).toEqual(baseline.chapters)
+    expect(report.fullText.startsWith(baseline.fullText)).toBe(true)
     expect(report.fullText).toContain('The hour result is not independently confirmed.')
     expect(report.fullText).toContain('Decade-cycle timing is not independently confirmed.')
     expect(report.fullText).not.toContain('Hour 戊辰 also agrees.')
@@ -223,7 +217,7 @@ describe('Independently confirmed pillars inform customer interpretations safely
       current: [...current, null],
       independent: [...current, null],
     })
-    expect(report.chapters.find(chapter => chapter.id === 'personality')!.paragraphs[0]).toContain('birth-day sign')
+    expect(report.chapters.find(chapter => chapter.id === 'personality')!.lead).toContain(result.pillars[1].pillar.stem)
     expect(report.pillarSummary).toContain('Hour: Unknown')
     expect(report.fullText).toContain('The hour result is not independently confirmed.')
     expect(report.fullText).not.toMatch(/Hour (?:stem|branch) (?!result)/)

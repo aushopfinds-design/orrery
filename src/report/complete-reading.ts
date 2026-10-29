@@ -135,32 +135,6 @@ export function buildFreeReading(result: SajuResult): FreeReading {
   }
 }
 
-function addVerifiedChartInterpretation(reading: CompleteReading, result: SajuResult, eligible: ReturnType<typeof independentPersonalizationEligibility>): CompleteReading {
-  const day = result.pillars[1]
-  const month = result.pillars[2]
-  const dayProfile = STEMS[day.pillar.stem]
-  const dayRelationship = TEN_GODS[day.branchSipsin]?.lens
-  const monthPublic = TEN_GODS[month.stemSipsin]?.lens
-  const monthInner = TEN_GODS[month.branchSipsin]?.lens
-  if (!dayProfile || !dayRelationship || !monthPublic || !monthInner) return reading
-
-  const personalized: Record<string, string> = {
-    personality: `Your birth-day sign is ${eligible.confirmed.day}. Its starting stem is traditionally read as ${dayProfile.approach.toLowerCase()} The daily relationship side of this same pillar adds ${dayRelationship}. These are the specific chart signals behind the personal pattern in this chapter.`,
-    money: `Your birth-day sign ${eligible.confirmed.day} is read alongside your birth-month sign ${eligible.confirmed.month}. Your birth-month sign points to ${monthPublic}; a second part of that sign points to ${monthInner}. This combination is the chart-specific basis for the money pattern described here.`,
-    career: `Your birth-day sign ${eligible.confirmed.day} is read alongside your birth-month sign ${eligible.confirmed.month}. Your birth-month sign points to ${monthPublic}, while a second part of that sign points to ${monthInner}. These are the chart details behind the work pattern described here.`,
-    love: `Your birth-day sign is ${eligible.confirmed.day}. Its daily relationship side is traditionally read through ${dayRelationship}. This is the chart detail behind the relationship pattern described here.`,
-  }
-  let fullText = reading.fullText
-  const chapters = reading.chapters.map(chapter => {
-    const interpretation = personalized[chapter.id]
-    if (!interpretation) return chapter
-    const first = chapter.paragraphs[0]
-    if (first) fullText = fullText.replace(first, `${interpretation} ${first}`)
-    return { ...chapter, paragraphs: [interpretation, ...chapter.paragraphs] }
-  })
-  return { ...reading, chapters, fullText, wordCount: fullText.split(/\s+/).length }
-}
-
 export function buildCompleteReading(result: SajuResult, asOfYear = new Date().getFullYear(), independentAudit?: IndependentPillarAudit): CompleteReading {
   const reading = buildTraditionalComplete(result, asOfYear)
   // Independent facts are optional and never overwrite the paid-report calculation.
@@ -173,13 +147,12 @@ export function buildCompleteReading(result: SajuResult, asOfYear = new Date().g
   if (!corePillarsMatch || !hourInputIsConsistent) return reading
   const eligible = independentPersonalizationEligibility(independentAudit)
   if (!eligible.canUseYearMonthDay) return reading
-  const personalized = addVerifiedChartInterpretation(reading, result, eligible)
   const note = [
     'Independent calculation cross-check:',
     'year ' + eligible.confirmed.year + ', month ' + eligible.confirmed.month + ', and day ' + eligible.confirmed.day + ' agree.',
     eligible.canUseHour ? 'Hour ' + eligible.confirmed.hour + ' also agrees.' : 'The hour result is not independently confirmed.',
     'Decade-cycle timing is not independently confirmed. This reading uses THE FATE KEY calculations.'
   ].join(' ')
-  const fullText = personalized.fullText + '\n\n' + note
-  return { ...personalized, methodNotes: [...reading.methodNotes, note], fullText, wordCount: fullText.split(/\s+/).length }
+  const fullText = reading.fullText + '\n\n' + note
+  return { ...reading, methodNotes: [...reading.methodNotes, note], fullText, wordCount: fullText.split(/\s+/).length }
 }

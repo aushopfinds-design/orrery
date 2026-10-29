@@ -57,11 +57,19 @@ describe('My Life personalization across 24 international birth charts', () => {
       const plan = buildInterpretationPlan('complete', chart, 2026)
       const reading = buildCompleteReading(chart, 2026)
       const love = customerNarrative(plan).love.lines.map(line => line.en).join(' ')
+      const social = customerNarrative(plan).social.lines.map(line => line.en).join(' ')
+      const balance = customerNarrative(plan).balance.lines.map(line => line.en).join(' ')
       const years = customerNarrative(plan)['next-moves'].lines.filter(line => /^20\d\d: Main theme/.test(line.en))
       expect(love).toMatch(/steadier fit is a partner/)
       expect(love).toContain(`close-relationship marker is ${chart.pillars[1].pillar.branch}`)
       expect(love).not.toContain('In close relationships, your chart points to a need for')
       expect(love).not.toContain('alongside the ten-year theme')
+      expect(social).toContain(chart.pillars[1].pillar.stem)
+      expect(social).toMatch(/natural strength|weakness to watch/i)
+      expect(social).toMatch(/hidden layer/i)
+      expect(social).toMatch(/others may notice this side first/i)
+      expect(balance).toMatch(/feel balanced when/i)
+      expect(balance).toContain(chart.pillars[1].pillar.branch)
       expect(years).toHaveLength(10)
       expect(new Set(years.map(line => line.en)).size).toBe(10)
       for (const line of years) {
@@ -75,9 +83,16 @@ describe('My Life personalization across 24 international birth charts', () => {
         expect(love).not.toMatch(/birth-hour marker|hour pillar|hour branch/i)
         expect(reading.pillarSummary).toContain('Hour: Unknown')
       }
-      return { love, years: years.map(line => line.en).join(' ') }
+      const socialChapter = reading.chapters.find(chapter => chapter.id === 'social')!
+      const balanceChapter = reading.chapters.find(chapter => chapter.id === 'balance')!
+      expect([socialChapter.lead, ...socialChapter.paragraphs].join(' ')).toMatch(/main weakness|weakness to watch/i)
+      expect([socialChapter.lead, ...socialChapter.paragraphs].join(' ')).toMatch(/others may notice this side first/i)
+      expect([balanceChapter.lead, ...balanceChapter.paragraphs].join(' ')).toMatch(/feel balanced when/i)
+      return { love, social, balance, years: years.map(line => line.en).join(' ') }
     })
     expect(new Set(reports.map(report => report.love)).size).toBeGreaterThan(15)
+    expect(new Set(reports.map(report => report.social)).size).toBeGreaterThan(15)
+    expect(new Set(reports.map(report => report.balance)).size).toBeGreaterThan(15)
     expect(new Set(reports.map(report => report.years)).size).toBeGreaterThan(15)
   })
 })
