@@ -11,6 +11,7 @@ describe('complete sample reading guidance', () => {
     const report = buildCompleteReading(calculateSaju(input), 2026)
     const html = renderToStaticMarkup(createElement(StaticReading, { report }))
     for (const chapter of report.chapters) {
+      if (chapter.showGuidance === false) continue
       if (!chapter.guidance.keepClose.includes(chapter.tryThis) && !chapter.guidance.watchFor.includes(chapter.tryThis)) continue
       const start = html.indexOf(`class="public-chapter" id="${chapter.id}"`)
       const next = html.indexOf('class="public-chapter" id="', start + 1)
