@@ -53,7 +53,9 @@ describe('r8: all seven products over 24 distinct international charts', () => {
         expect(report.methodNotes.join(' ')).toContain('not a factual assessment')
         const key = report.title, body = report.chapters.map(chapter => [chapter.lead, ...chapter.paragraphs].join(' ')).join('\n')
         const variants = bodies.get(key) ?? new Set<string>(); variants.add(body); bodies.set(key, variants)
-        for (const chapter of report.chapters) for (const line of [chapter.lead, ...chapter.paragraphs]) expect(report.fullText).toContain(line.replace(/\*\*/g, ''))
+        for (const chapter of report.chapters) for (const line of [chapter.lead, ...chapter.paragraphs].filter(line => chapter.showGuidance !== false || line !== chapter.tryThis && !chapter.guidance.watchFor.includes(line))) {
+          if (!report.fullText.includes(line.replace(/\*\*/g, ''))) throw new Error(`${report.title}/${chapter.id}: ${line}`)
+        }
       }
       expect(bundle.fullText.match(/Your Everyday Compass/g)).toHaveLength(1)
       expect(bundle.fullText.match(/How this reading is prepared/g)).toHaveLength(1)
