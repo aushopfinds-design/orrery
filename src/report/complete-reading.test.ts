@@ -220,7 +220,7 @@ describe('Independently confirmed pillars inform customer interpretations safely
       current: [...current, null],
       independent: [...current, null],
     })
-    expect(report.chapters.find(chapter => chapter.id === 'personality')!.paragraphs[0]).toContain('Day pillar')
+    expect(report.chapters.find(chapter => chapter.id === 'personality')!.paragraphs[0]).toContain('birth-day sign')
     expect(report.pillarSummary).toContain('Hour: Unknown')
     expect(report.fullText).toContain('The hour result is not independently confirmed.')
     expect(report.fullText).not.toMatch(/Hour (?:stem|branch) (?!result)/)
