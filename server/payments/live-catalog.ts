@@ -4,7 +4,7 @@ import { REPORT_PRICE_CENTS } from '../../src/report/pricing.ts'
 import { PaymentError } from './config.ts'
 
 // Public catalog identifiers, not credentials. Approved USD launch prices.
-export const LIVE_CATALOG = {
+export const LIVE_CATALOG: Partial<Record<PricedReportKind, { product: string; price: string }>> = {
   complete: { product: 'prod_VTU4tKm4OYGJZK', price: 'price_1UV7CyGyUNAMaZunO59VP3Co' },
   compatibility: { product: 'fate_compatibility', price: 'price_1UV7DfGyUNAMaZun9bpbidw8' },
   year: { product: 'fate_year', price: 'price_1UV7DoGyUNAMaZunqAusMIJ8' },
@@ -12,13 +12,13 @@ export const LIVE_CATALOG = {
   business: { product: 'fate_business', price: 'price_1UV7E6GyUNAMaZun9HquBo1o' },
   wellbeing: { product: 'fate_wellbeing', price: 'price_1UV7EFGyUNAMaZuncutcKC5R' },
   bundle: { product: 'fate_bundle', price: 'price_1UV7EOGyUNAMaZunY5kOA1kK' },
-} as const satisfies Record<PricedReportKind, { product: string; price: string }>
+}
 
 export function livePriceMatches(kind: PricedReportKind, price: Stripe.Price): boolean {
   const product = price.product, expected = LIVE_CATALOG[kind]
-  return price.id === expected.price && price.livemode && price.currency === 'usd' &&
+  return Boolean(expected) && price.id === expected!.price && price.livemode && price.currency === 'usd' &&
     price.unit_amount === REPORT_PRICE_CENTS[kind] && price.type === 'one_time' &&
-    typeof product === 'object' && !product.deleted && product.id === expected.product &&
+    typeof product === 'object' && !product.deleted && product.id === expected!.product &&
     product.livemode && product.metadata.report_kind === kind
 }
 

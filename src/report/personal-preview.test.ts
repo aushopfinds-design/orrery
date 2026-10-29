@@ -94,7 +94,7 @@ describe('Personal previews use the supplied people, not fictional samples', () 
   it('exposes only limited passages and contents, without the full text or a paid entitlement', () => {
     for (const kind of PREVIEW_KINDS) {
       const preview = buildPersonalPreview(kind, { first: a, second: b, year: 2030 })
-      expect(preview.excerpts).toHaveLength(3)
+      expect(preview.excerpts).toHaveLength(kind === 'bundle' ? 5 : 3)
       for (const section of preview.excerpts) {
         expect(section.paragraphs.length).toBeLessThanOrEqual(kind === 'compatibility' || kind === 'bundle' ? 2 : 1)
         expect(section.evidence.length).toBeLessThanOrEqual(2)

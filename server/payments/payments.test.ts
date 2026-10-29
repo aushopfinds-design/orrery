@@ -22,7 +22,7 @@ const config: PaymentConfig = {
   origin: 'https://test.example.com', dataKey: '11'.repeat(32), accessKey: '22'.repeat(32), testToken: 'test-only-fixture-token-'.repeat(3),
 }
 const verifier = new Stripe(config.stripeKey)
-const migration = readFileSync(new URL('./migrations/001_test_orders.sql', import.meta.url), 'utf8') + readFileSync(new URL('./migrations/002_report_artifacts.sql', import.meta.url), 'utf8') + readFileSync(new URL('./migrations/003_customer_records.sql', import.meta.url), 'utf8')
+const migration = ['001_test_orders.sql','002_report_artifacts.sql','003_customer_records.sql','004_love_report_kind.sql'].map(file=>readFileSync(new URL('./migrations/'+file, import.meta.url), 'utf8')).join('\n')
 let db: PGlite
 let store: OrderStore
 
@@ -121,7 +121,7 @@ describe('checkout retry and price ownership', () => {
     expect(provider.sessions.size).toBe(1)
     expect(await count('fate_payment_orders')).toBe(1)
     const params = provider.createSession.mock.calls[0][0]
-    expect(params.line_items![0].price_data!.unit_amount).toBe(1699)
+    expect(params.line_items![0].price_data!.unit_amount).toBe(1999)
     expect(JSON.stringify(params)).not.toMatch(/Sydney|1992|latitude/)
     expect(params.client_reference_id).not.toContain('1992')
   })
@@ -270,14 +270,14 @@ describe('HTTP boundary', () => {
   })
 })
 
-describe('seven products: paid reports, PDFs and access isolation', () => {
-  const kinds = ['complete', 'compatibility', 'year', 'career', 'business', 'wellbeing', 'bundle'] as const
+describe('six products: paid reports, PDFs and access isolation', () => {
+  const kinds = ['complete', 'year', 'compatibility', 'career', 'love', 'bundle'] as const
   for (const kind of kinds) it(`issues only the purchased ${kind} report and an immutable downloadable PDF`, async () => {
     const provider = gateway(), service = new PaymentService(config, store, provider)
     const input = { kind, first: birth, ...(kind === 'complete' ? { recipientName: 'Minji' } : {}), ...(['compatibility', 'bundle'].includes(kind) ? { second: { ...birth, year: 1988, gender: 'F' } } : {}),
       ...(['year', 'bundle'].includes(kind) ? { year: 2027 } : {}) }
     const checkout = await service.createCheckout(input, randomUUID()), order = (await store.get(checkout.orderId))!
-    const expected = { complete:1699, compatibility:1199, year:999, career:1099, business:1199, wellbeing:899, bundle:2499 }[kind]
+    const expected = { complete:1999, year:899, compatibility:1499, career:1499, love:999, bundle:4827 }[kind]
     const line = provider.createSession.mock.calls[0][0].line_items![0].price_data!
     expect(line.unit_amount).toBe(expected)
     expect(line.currency).toBe('usd')
@@ -299,9 +299,9 @@ describe('seven products: paid reports, PDFs and access isolation', () => {
     expect(report.recipientName).toBe(kind === 'complete' ? 'Minji' : undefined)
     expect(report.text.length).toBeGreaterThan(5000)
     expect(report).not.toHaveProperty('pdf')
-    expect(report.documents).toHaveLength(kind === 'bundle' ? 3 : 1)
+    expect(report.documents).toHaveLength(kind === 'bundle' ? 5 : 1)
     expect(readReportReference(report.reference)?.orderId).toBe(order.id)
-    expect(report.certificates).toHaveLength(kind === 'bundle' ? 3 : 1)
+    expect(report.certificates).toHaveLength(kind === 'bundle' ? 5 : 1)
     for(const certificate of report.certificates){ expect(report.text).toContain(certificate.number); expect(readReportReference(certificate.number)?.orderId).toBe(order.id) }
     expect(report.cards).toHaveLength(['compatibility', 'bundle'].includes(kind) ? 2 : 1)
     expect(report.text).toContain('17 August 1992')
@@ -341,13 +341,13 @@ describe('seven products: paid reports, PDFs and access isolation', () => {
 
   it('rejects same-priced product substitution, quantity changes and wrong product metadata', async () => {
     const { service, provider } = await prepare()
-    const checkout = await service.createCheckout({ kind: 'business', first: birth }, randomUUID())
+    const checkout = await service.createCheckout({ kind: 'career', first: birth }, randomUUID())
     const order = (await store.get(checkout.orderId))!, session = provider.sessions.get(order.checkout_session_id!)!
     session.status = 'complete'; session.payment_status = 'paid'; session.payment_intent = 'pi_' + randomUUID()
     const product = session.line_items!.data[0].price!.product as Stripe.Product
     product.metadata.fate_kind = 'compatibility'
     await expect(service.report(order.id)).rejects.toMatchObject({ code: 'payment_order_mismatch' })
-    product.metadata.fate_kind = 'business'; session.line_items!.data[0].quantity = 2
+    product.metadata.fate_kind = 'career'; session.line_items!.data[0].quantity = 2
     await expect(service.report(order.id)).rejects.toMatchObject({ code: 'payment_order_mismatch' })
     session.line_items!.data[0].quantity = 1
     session.line_items!.data[0].price!.product = { id: 'prod_deleted_fixture', object: 'product', deleted: true }
@@ -400,8 +400,8 @@ describe('launch gates and verified full refunds', () => {
   })
   it('blocks refunded content even when an old paid notification arrives afterward', async () => {
     const provider = gateway()
-    const charge = { id: 'ch_fixture', livemode: false, amount: 1699, currency: 'usd', amount_refunded: 1699, payment_intent: 'pi_fixture' } as Stripe.Charge
-    const intent = { id: 'pi_fixture', livemode: false, amount: 1699, currency: 'usd', latest_charge: charge.id, metadata: {} } as Stripe.PaymentIntent
+    const charge = { id: 'ch_fixture', livemode: false, amount: 1999, currency: 'usd', amount_refunded: 1999, payment_intent: 'pi_fixture' } as Stripe.Charge
+    const intent = { id: 'pi_fixture', livemode: false, amount: 1999, currency: 'usd', latest_charge: charge.id, metadata: {} } as Stripe.PaymentIntent
     const service = new PaymentService(config, store, { ...provider, retrieveCharge: async () => charge, retrievePaymentIntent: async () => intent })
     const checkout = await service.createCheckout({ kind: 'complete', first: birth }, randomUUID())
     intent.metadata = { fate_order_id: checkout.orderId, fate_kind: 'complete', integration: 'fate-key-test-v1' }
@@ -424,6 +424,7 @@ describe('launch gates and verified full refunds', () => {
       await liveDb.exec(readFileSync(new URL('./live-schema.sql', import.meta.url), 'utf8'))
       const provider = gateway(), create = provider.createSession
       const kind = 'career', catalog = LIVE_CATALOG[kind]
+      if (!catalog) throw new Error('Missing test price mapping')
       const livePrice = { id: catalog.price, livemode: true, active: true, type: 'one_time', currency: 'usd', unit_amount: REPORT_PRICE_CENTS[kind],
         product: { id: catalog.product, livemode: true, active: true, default_price: catalog.price, metadata: { report_kind: kind } } } as unknown as Stripe.Price
       provider.createSession = vi.fn(async (params, key) => {

@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS fate_payment_orders (
   id uuid PRIMARY KEY,
   request_key_hash text NOT NULL UNIQUE,
   input_hash text NOT NULL,
-  kind text NOT NULL CHECK (kind IN ('complete','compatibility','year','career','business','wellbeing','bundle')),
+  kind text NOT NULL CHECK (kind IN ('complete','year','compatibility','career','love','business','wellbeing','bundle')),
   amount integer NOT NULL CHECK (amount > 0),
   currency text NOT NULL CHECK (currency = 'usd'),
   livemode boolean NOT NULL DEFAULT true CHECK (livemode = true),

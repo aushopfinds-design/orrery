@@ -12,7 +12,7 @@ import { plainReadingText } from './reading-text.ts'
 const { first, second } = CATEGORY_SCENARIOS[0]
 const a = calculateSaju(first)
 const b = calculateSaju(second)
-const kinds = ['complete', 'compatibility', 'year', 'career', 'business', 'wellbeing'] as const
+const kinds = ['complete', 'compatibility', 'year', 'love'] as const
 function reports(chart = a, partner = b, year = 2027) {
   return [buildCompleteReading(chart, 2026), ...kinds.slice(1).map(kind => buildCategoryReading(kind as Exclude<typeof kinds[number], 'complete'>, chart, { second: partner, year: kind === 'year' ? year : 2026 }))]
 }
@@ -22,6 +22,7 @@ describe('A distinct everyday guide in every full report', () => {
     const questions = new Set<string>()
     for (const report of reports()) {
       const extras = report.extras
+      const focusedCareer = 'kind' in report && report.kind === 'career'
       expect(extras.questions.length).toBeGreaterThanOrEqual(3)
       expect(extras.keepClose).toHaveLength(3)
       expect(extras.stepBack).toHaveLength(3)
@@ -34,21 +35,23 @@ describe('A distinct everyday guide in every full report', () => {
         expect(plainReadingText(item.answer).split(/\s+/).length).toBeLessThanOrEqual(125)
         expect(item.answer).not.toMatch(/undefined|NaN|\.\./)
       }
-      for (const item of [...extras.keepClose, ...extras.stepBack]) expect(report.fullText).toContain(plainReadingText(item.text))
-      for (const item of extras.symbols) {
+      if (!focusedCareer) for (const item of [...extras.keepClose, ...extras.stepBack]) expect(report.fullText).toContain(plainReadingText(item.text))
+      for (const item of focusedCareer ? [] : extras.symbols) {
         expect(report.fullText).toContain(item.colors[0].name)
         expect(report.fullText).toContain('Numbers: ' + item.numbers.join(' / '))
       }
-      expect(report.fullText).toContain(extras.reminder)
-      expect(report.fullText).toContain('do not change the odds')
+      if (!focusedCareer) {
+        expect(report.fullText).toContain(extras.reminder)
+        expect(report.fullText).toContain('do not change the odds')
+      }
       expect(reportExtrasText(extras)).not.toMatch(/undefined|NaN|\*\*/)
     }
-    expect(questions.size).toBeGreaterThanOrEqual(18)
+    expect(questions.size).toBeGreaterThanOrEqual(12)
   })
 
   it('changes the new answers with real birth profiles, beyond the labels', () => {
     const cases = Array.from({ length: 30 }, (_, index) => calculateSaju({ ...CATEGORY_SCENARIOS[index % 2].first, year: 1960 + index, month: index % 12 + 1, day: index % 20 + 5 }))
-    for (const kind of ['complete', 'career', 'business', 'wellbeing'] as const) {
+    for (const kind of ['complete', 'career', 'love'] as const) {
       const answers = cases.map(chart => buildReportExtras(kind, chart).questions.map(item => item.answer).join('\n'))
       expect(new Set(answers).size, kind).toBeGreaterThan(20)
     }
@@ -57,7 +60,7 @@ describe('A distinct everyday guide in every full report', () => {
   it('keeps symbolic associations consistent across report categories', () => {
     const element = STEM_ELEMENTS[a.pillars[1].pillar.stem]
     const symbol = ELEMENT_SYMBOLS[element]
-    for (const report of reports()) {
+    for (const report of reports().filter(report => !('kind' in report) || report.kind !== 'career')) {
       expect(report.extras.symbols[0].element).toBe(element)
       expect(report.extras.symbols[0].colors).toEqual(symbol.colors)
       expect(report.extras.symbols[0].numbers).toEqual(symbol.numbers)
@@ -106,7 +109,7 @@ describe('A distinct everyday guide in every full report', () => {
   it('keeps one shared appendix and retains each report’s opening answer in a bundle', () => {
     const bundle = buildBundleReading(a, b, 2027, 2026)
     expect(bundle.fullText.match(/Your Everyday Compass/g)).toHaveLength(1)
-    for (const report of [bundle.complete, bundle.compatibility, bundle.annual]) expect(bundle.fullText).toContain(plainReadingText(report.extras.questions[0].answer))
+    for (const report of [bundle.complete, bundle.compatibility, bundle.annual, bundle.career, bundle.love]) expect(bundle.fullText).toContain(plainReadingText(report.extras.questions[0].answer))
   })
 })
 

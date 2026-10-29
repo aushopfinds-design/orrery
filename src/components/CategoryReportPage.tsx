@@ -23,8 +23,10 @@ export default function CategoryReportPage({ kind }: { kind: FocusCategory | 'bu
       const bundle = buildBundleReading(first, second)
       return { count: bundle.wordCount, items: [
         { title: bundle.complete.title, text: t('category.bundle.life'), href: '#sample-report' },
-        { title: bundle.compatibility.title, text: t('category.bundle.compatibility'), href: '#love-compatibility-sample' },
         { title: bundle.annual.title, text: t('category.bundle.year'), href: '#year-ahead-sample' },
+        { title: bundle.compatibility.title, text: t('category.bundle.compatibility'), href: '#love-compatibility-sample' },
+        { title: bundle.career.title, text: bundle.career.chapters[0].lead, href: '#career-money-sample' },
+        { title: bundle.love.title, text: bundle.love.chapters[0].lead, href: '#my-love-sample' },
       ] }
     }
     const reading = buildCategoryReading(kind, first, { second })

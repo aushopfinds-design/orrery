@@ -51,5 +51,5 @@ export function buildInterpretationPlan(kind: BuyerOutlineKind, first: SajuResul
 }
 export type InterpretationPlan = ReturnType<typeof buildInterpretationPlan>
 export function bundleInterpretationPlans(first: SajuResult, second: SajuResult, annualYear: number, referenceYear: number) {
-  return { complete: buildInterpretationPlan('complete', first, referenceYear), compatibility: { ...buildInterpretationPlan('compatibility', first, referenceYear, second), includeReadingNotice: false }, annual: { ...buildInterpretationPlan('year', first, annualYear), includeReadingNotice: false } }
+  return { complete: buildInterpretationPlan('complete', first, referenceYear), compatibility: { ...buildInterpretationPlan('compatibility', first, referenceYear, second), includeReadingNotice: false }, annual: { ...buildInterpretationPlan('year', first, annualYear), includeReadingNotice: false }, career: { ...buildInterpretationPlan('career', first, referenceYear), includeReadingNotice: false }, love: { ...buildInterpretationPlan('love', first, referenceYear), includeReadingNotice: false } }
 }

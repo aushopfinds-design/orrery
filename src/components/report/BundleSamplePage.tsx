@@ -11,15 +11,15 @@ import ReadingView from './ReadingView.tsx'
 import CategoryReadingView from './CategoryReadingView.tsx'
 import ReadingText from './ReadingText.tsx'
 
-type BundleTab = 'life' | 'compatibility' | 'year'
-const tabs: BundleTab[] = ['life', 'compatibility', 'year']
+type BundleTab = 'life' | 'year' | 'compatibility' | 'career' | 'love'
+const tabs: BundleTab[] = ['life', 'year', 'compatibility', 'career', 'love']
 
 export default function BundleSamplePage() {
   const { t } = useLocale()
   const [scenarioIndex, setScenarioIndex] = useState(0)
   const [year, setYear] = useState(2027)
   const hash = useReportHash()
-  const tab: BundleTab = hash.includes('-compatibility') ? 'compatibility' : hash.includes('-year') ? 'year' : 'life'
+  const tab: BundleTab = hash.includes('-compatibility') ? 'compatibility' : hash.includes('-year') ? 'year' : hash.includes('-career') ? 'career' : hash.includes('-love') ? 'love' : 'life'
   const [showPrintHelp, setShowPrintHelp] = useState(false)
   const scenario = CATEGORY_SCENARIOS[scenarioIndex]
   const bundle = useMemo(() => buildBundleReading(calculateSaju(scenario.first), calculateSaju(scenario.second), year), [scenario, year])
@@ -37,13 +37,13 @@ export default function BundleSamplePage() {
       if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return
       event.preventDefault()
       const index = tabs.indexOf(value)
-      const next = event.key === 'Home' ? tabs[0] : event.key === 'End' ? tabs[2] : tabs[(index + (event.key === 'ArrowRight' ? 1 : 2)) % 3]
+      const next = event.key === 'Home' ? tabs[0] : event.key === 'End' ? tabs[tabs.length - 1] : tabs[(index + (event.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length]
       selectTab(next)
       document.getElementById(`bundle-tab-${next}`)?.focus()
     }} tabIndex={tab === value ? 0 : -1}>{t(`category.bundle.tab.${value}`)}</button>)}</div>
     <p className="fate-reading-small-note fate-bundle-print-note print:hidden">{t('category.bundle.printNote')}</p>
     {tabs.map(value => <section key={value} id={`complete-bundle-sample-${value}`} role="tabpanel" aria-labelledby={`bundle-tab-${value}`} tabIndex={0} className="fate-bundle-pane" data-active={value === tab}>
-      {value === 'life' ? <ReadingView input={scenario.first} embedded prefix="complete-bundle-sample-life-report" /> : <CategoryReadingView report={value === 'compatibility' ? bundle.compatibility : bundle.annual} embedded prefix={`complete-bundle-sample-${value}-report`} />}
+      {value === 'life' ? <ReadingView input={scenario.first} embedded prefix="complete-bundle-sample-life-report" /> : <CategoryReadingView report={value === 'compatibility' ? bundle.compatibility : value === 'year' ? bundle.annual : value === 'career' ? bundle.career : bundle.love} embedded prefix={`complete-bundle-sample-${value}-report`} />}
     </section>)}
   </article>
 }

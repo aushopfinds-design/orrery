@@ -12,7 +12,7 @@ import type { PaymentService } from './service.ts'
 const config={mode:'test' as const,stripeKey:'sk_test_fixture',webhookSecret:'whsec_fixture',databaseUrl:'postgres://unused',origin:'https://test.example.com',dataKey:'11'.repeat(32),accessKey:'22'.repeat(32),testToken:'fixture'}
 const first={year:1992,month:8,day:17,hour:0,minute:0,unknownTime:true,gender:'M' as const,latitude:-33.8688,longitude:151.2093,timezone:'Australia/Sydney'}
 let db:PGlite,store:OrderStore,records:CustomerRecords
-beforeAll(async()=>{db=await PGlite.create();for(const file of ['001_test_orders.sql','002_report_artifacts.sql','003_customer_records.sql'])await db.exec(readFileSync(new URL('./migrations/'+file,import.meta.url),'utf8'))},120000)
+beforeAll(async()=>{db=await PGlite.create();for(const file of ['001_test_orders.sql','002_report_artifacts.sql','003_customer_records.sql','004_love_report_kind.sql'])await db.exec(readFileSync(new URL('./migrations/'+file,import.meta.url),'utf8'))},120000)
 beforeEach(async()=>{await db.exec('TRUNCATE fate_customer_consent_events,fate_customer_purchases,fate_customer_contacts,fate_fulfillment_jobs,fate_payment_events,fate_order_artifacts,fate_payment_orders');store=new OrderStore(db as unknown as Database);records=new CustomerRecords(config,store)})
 afterAll(async()=>{await db.close()})
 async function purchase(consent=false,email='buyer@example.com',id=randomUUID()){

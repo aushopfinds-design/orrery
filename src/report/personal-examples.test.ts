@@ -18,7 +18,7 @@ function fullReports(kind: typeof PREVIEW_KINDS[number]) {
   if (kind === 'complete') return [buildCompleteReading(a, 2026)]
   if (kind === 'bundle') {
     const bundle = buildBundleReading(a, b, 2030, 2026)
-    return [bundle.complete, bundle.compatibility, bundle.annual]
+    return [bundle.complete, bundle.annual, bundle.compatibility, bundle.career, bundle.love]
   }
   return [buildCategoryReading(kind, a, { second: b, year: kind === 'year' ? 2030 : 2026 })]
 }

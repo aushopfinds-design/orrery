@@ -4,7 +4,7 @@ import type { MailTransport } from './email.ts'
 import { randomUUID } from 'node:crypto'
 import type Stripe from 'stripe'
 import { REPORT_PRICE_CENTS } from '../../src/report/pricing.ts'
-import { previewHash, previewProduct } from '../../src/report/personal-products.ts'
+import { isActiveProductKind, previewHash, previewProduct } from '../../src/report/personal-products.ts'
 import type { PaymentConfig } from './config.ts'
 import { PaymentError } from './config.ts'
 import { fingerprint, hash, openOrder, orderAccessToken, sealOrder } from './crypto.ts'
@@ -58,7 +58,9 @@ export class PaymentService {
     if (!uuid(requestKey)) throw new PaymentError('valid_idempotency_key_required')
     if (!await this.available()) throw new PaymentError('merchant_not_ready', 503)
     const integration = this.integration
-    const input = orderInput(value), id = randomUUID(), amount = REPORT_PRICE_CENTS[input.kind]
+    const input = orderInput(value)
+    if (!isActiveProductKind(input.kind)) throw new PaymentError('product_not_available', 409)
+    const id = randomUUID(), amount = REPORT_PRICE_CENTS[input.kind]
     const inputHash = fingerprint(this.config.dataKey, JSON.stringify({ input, amount, currency: 'usd', integration }))
     const order = await this.store.create({ id, request_key_hash: hash(requestKey.toLowerCase()), input_hash: inputHash,
       kind: input.kind, amount, currency: 'usd', input_encrypted: sealOrder(this.config.dataKey, id, input),
@@ -67,7 +69,9 @@ export class PaymentService {
     if (order.payment_state !== 'pending' || new Date(order.expires_at).getTime() <= Date.now()) throw new PaymentError('order_not_open_for_checkout', 409)
     if (this.mode === 'live' && !order.checkout_session_id) {
       if (!this.stripe.retrievePrice) throw new PaymentError('live_catalog_unavailable', 503)
-      requireLivePrice(order.kind, await this.stripe.retrievePrice(LIVE_CATALOG[order.kind].price))
+      const catalog = LIVE_CATALOG[order.kind]
+      if (!catalog) throw new PaymentError('live_catalog_unavailable', 503)
+      requireLivePrice(order.kind, await this.stripe.retrievePrice(catalog.price))
     }
     const session = order.checkout_session_id ? await this.stripe.retrieveSession(order.checkout_session_id) :
       await this.stripe.createSession({
@@ -75,7 +79,7 @@ export class PaymentService {
         adaptive_pricing: { enabled: false }, automatic_tax: { enabled: false }, allow_promotion_codes: false,
         client_reference_id: order.id, metadata: { fate_order_id: order.id, fate_kind: order.kind, integration },
         payment_intent_data: { metadata: { fate_order_id: order.id, fate_kind: order.kind, integration } },
-        line_items: this.mode === 'live' ? [{ quantity: 1, price: LIVE_CATALOG[order.kind].price }] : [{ quantity: 1, price_data: { currency: 'usd', unit_amount: order.amount,
+        line_items: this.mode === 'live' ? [{ quantity: 1, price: LIVE_CATALOG[order.kind]!.price }] : [{ quantity: 1, price_data: { currency: 'usd', unit_amount: order.amount,
           product_data: { name: previewProduct(order.kind).title, metadata: { fate_kind: order.kind, integration } } } }],
         // Phase two adds the buyer receipt/download page; a redirect is never proof of payment.
         success_url: this.config.origin + '/?checkout=success&order_id=' + order.id + '&session_id={CHECKOUT_SESSION_ID}#purchase',

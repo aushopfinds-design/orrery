@@ -4,11 +4,13 @@ import type { TimingSentence } from './purchase-timing.ts'
 import { pair } from './purchase-language.ts'
 export interface PurchaseTimingSection { lines: TimingSentence[]; evidence: string[] }
 const cache = new WeakMap<InterpretationPlan, Record<string, PurchaseTimingSection>>()
-export function purchaseTimingSections(plan: InterpretationPlan): Record<string, PurchaseTimingSection> {
- const existing=cache.get(plan);if(existing)return existing
- const made=buildSections(plan);cache.set(plan,made);return made
+export function purchaseTimingSections(plan: InterpretationPlan, targetedProduct01=true): Record<string, PurchaseTimingSection> {
+ if(targetedProduct01){const existing=cache.get(plan);if(existing)return existing}
+ const made=buildSections(plan,targetedProduct01)
+ if(targetedProduct01)cache.set(plan,made)
+ return made
 }
-function buildSections(plan:InterpretationPlan):Record<string,PurchaseTimingSection>{
+function buildSections(plan:InterpretationPlan,targetedProduct01=true):Record<string,PurchaseTimingSection>{
  const out:Record<string,PurchaseTimingSection>={}
  if(plan.kind==='wellbeing'||plan.kind==='compatibility')return out
  const area=plan.kind==='business'?'business':plan.kind==='career'?'work':'life'
@@ -24,7 +26,14 @@ function buildSections(plan:InterpretationPlan):Record<string,PurchaseTimingSect
     const reasons=row.lines.filter(l=>/\.(change-(day|month)|background-pressure)$/.test(l.id)).map(l=>({en:l.en.split(/(?<=[.!?])\s/)[0],ko:l.ko.split(/(?<=[.!?])\s/)[0]}))
     if(reasons.length)lines.push({id:id+'.'+row.date,en:`Why ${row.date.slice(0,4)} is highlighted here: ${reasons.map(r=>r.en).join(' ')}`,ko:`여기서 ${row.date.slice(0,4)}년을 꼽은 이유: ${reasons.map(r=>r.ko).join(' ')}`})
    }else if(detail){
-   const selected=(id==='work-chapters'?row.lines:row.lines.filter(l=>/\.(verdict|opening|reason|area-context|change-day|change-month|background-pressure|wider-pressure|caution)$/.test(l.id))).filter(l=>{if(l.id.endsWith('.verdict')||l.id.endsWith('.buyer-summary'))return true;if(explained.has(l.en))return false;explained.add(l.en);return true})
+   const isCompleteTimeline=targetedProduct01&&plan.kind==='complete'&&id==='next-moves'
+   const selected=(id==='work-chapters'?row.lines:row.lines.filter(l=>isCompleteTimeline
+    ?/\.(verdict|opening|reason|change-day|change-month|background-pressure|wider-pressure|caution)$/.test(l.id)
+    :/\.(verdict|opening|reason|area-context|change-day|change-month|background-pressure|wider-pressure|caution)$/.test(l.id))).filter(l=>{
+     if(l.id.endsWith('.verdict')||l.id.endsWith('.buyer-summary'))return true
+     if(explained.has(l.en))return false
+     explained.add(l.en);return true
+    })
     lines.push({id:id+'.'+row.date,en:selected.map(l=>l.en).join(' '),ko:selected.map(l=>l.ko).join(' ')})
    }
   }
@@ -60,7 +69,7 @@ function buildSections(plan:InterpretationPlan):Record<string,PurchaseTimingSect
  if(plan.kind==='complete'){
   const changed=years.filter(r=>r.lines.some(l=>/\.change-(day|month)$/.test(l.id))),highlights=priority(changed)
   put('patterns',highlights.length?`Give ${dates(highlights)} a closer look when planning a change. These stand out because the reading finds more changes to work or close relationships; the full timeline below keeps the other years in view.`:`No work or relationship clash stands out in this ten-year comparison. Your timeline still shows how the focus changes from year to year.`,highlights.length?`변화를 계획할 때는 ${dates(highlights)}년을 먼저 살펴봅니다. 일이나 가까운 관계에서 변화가 더 두드러지는 해이며, 다른 해의 흐름도 아래 전체 일정에 남겨 두었습니다.`:'이번 10년 비교에서는 일이나 관계에 부딪히는 변화가 두드러지지 않습니다. 매년 달라지는 중심 주제는 전체 흐름에서 설명합니다.',highlights,'highlight')
-  put('next-moves',`Your ${plan.referenceYear}–${plan.referenceYear+years.length-1} timeline: each year below gives the main opportunity or pressure, the reason and what needs attention.`,` ${plan.referenceYear}–${plan.referenceYear+years.length-1}년의 전체 흐름입니다. 각 해의 기회나 부담, 그 이유와 주의할 점을 함께 읽습니다.`,years,true)
+  put('next-moves',targetedProduct01?`Your ${plan.referenceYear}–${plan.referenceYear+years.length-1} timeline names each year's main theme, its chart link and what to watch. When a theme returns, compare the new year's chart contacts rather than treating it as the same year again.`:`Your ${plan.referenceYear}–${plan.referenceYear+years.length-1} timeline: each year below gives the main opportunity or pressure, the reason and what needs attention.`,targetedProduct01?`${plan.referenceYear}–${plan.referenceYear+years.length-1}년 흐름에서 매년의 중심 주제와 명식 근거, 살펴볼 점을 확인합니다. 같은 주제가 다시 나타나면 그해에 새로 작용하는 관계를 비교해 읽습니다.`:`${plan.referenceYear}–${plan.referenceYear+years.length-1}년의 전체 흐름입니다. 각 해의 기회나 부담, 그 이유와 주의할 점을 함께 읽습니다.`,years,true)
  }
  if(plan.kind==='career'){
   const changed=years.filter(r=>r.lines.some(l=>l.id.endsWith('change-month')))

@@ -8,7 +8,7 @@ import { plainReadingText } from './reading-text.ts'
 import { LIFE_FOCUS } from './reading-scenarios.ts'
 import { moneyTiming, moneyTimingFacts } from './timing-observations.ts'
 
-export type ExtrasKind = 'complete' | 'compatibility' | 'year' | 'career' | 'business' | 'wellbeing'
+export type ExtrasKind = 'complete' | 'compatibility' | 'year' | 'career' | 'business' | 'wellbeing' | 'love'
 export interface InsightQuestion { question: string; answer: string; basis: string }
 export interface EverydayChoice { title: string; text: string }
 export interface SymbolCard {
@@ -145,6 +145,7 @@ const LIFE_DETAILS: Record<string, LifeDetail> = {
 const SYMBOL_USES: Record<ExtrasKind, string> = {
   complete: 'Use a colour in a notebook or phone background. Let it remind you of one choice you want to make more deliberately.',
   compatibility: 'Choose a shade each for a shared note. Use the note to record one request from each person; neither palette is the better one.',
+  love: 'Use a colour in a private note to remind yourself to name one relationship need clearly.',
   year: 'Use a colour to mark your own priorities in the year’s planner. The numbers can label a personal reminder, not a lucky date.',
   career: 'Use a shade to mark the tasks that show your best work. Keep the numbers as a reminder to review a choice before committing.',
   business: 'Try a shade in your private planning notes. Choose customer-facing colours for clarity and fit with your audience.',
@@ -188,6 +189,19 @@ export function buildReportExtras(kind: ExtrasKind, result: SajuResult, options:
   let reminder = detail.reminder
   const evidence = [`Birth-day stem ${day.pillar.stem} (${STEMS[day.pillar.stem].name}); birth-day branch ${day.pillar.branch}.`, `Birth-month stem ${month.pillar.stem}: ${month.stemSipsin}; day-stem reference ${day.pillar.stem}.`]
   switch (kind) {
+    case 'love':
+      questions = [
+        q('What helps me feel close to someone?', `Your birth-day branch points to **${relationship.need}**. That is the kind of relationship condition to look for, not a description of a particular partner.`, loveBasis),
+        q('What may draw me toward someone?', `Your day-stem image centres on **${personal.focus}**, while the private relationship layer values **${relationship.need}**. Notice whether attraction also leaves room for that need.`, `${dayBasis} ${loveBasis}`),
+        q('Where can the same pattern become difficult?', `The relationship friction to notice is **${relationship.friction}**. The birth-month role adds **${work.theme}**, which can shape how much time or responsibility work takes from close relationships.`, `${loveBasis} ${workBasis}`),
+        q('When might relationships take more attention?', timingAnswer, `Annual comparisons from ${referenceYear} use your birth-day reference and separately calculated year pillars.`),
+      ]
+      keepClose = [card('A relationship need to name', relationship.need), card('A useful way to express it', relationship.words), card('A work-life boundary to discuss', work.friction)]
+      stepBack = [card('A pattern to notice', relationship.friction), card('A common misreading', detail.misread), card('A conclusion the chart cannot make', 'A chart cannot identify a future partner or guarantee marriage, separation or another person’s feelings.')]
+      experiment = { title: 'Notice what makes closeness easier', steps: [`Write down what **${relationship.need}** looks like in one real interaction.`, 'Describe what the other person did, without guessing what they intended.', 'Ask for one specific change and check whether it feels workable for both of you.'] }
+      reminder = 'A chart can describe your side of a relationship question; the other person’s choices still matter.'
+      evidence.push(`Day branch ${day.pillar.branch}: traditional relationship theme; day stem ${day.pillar.stem}: personal starting image.`)
+      break
     case 'complete':
       questions = [
         q('What is one strength I may overlook?', `**${detail.gift}** You may dismiss it because it feels ordinary to you. Think of a recent moment when someone found your contribution useful, and ask what part helped them.`, dayBasis),

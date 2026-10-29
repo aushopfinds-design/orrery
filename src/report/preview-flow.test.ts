@@ -70,7 +70,7 @@ describe('A continuous preview before checkout', () => {
       for (const line of visible) expect(text).toContain(plainReadingText(line))
       expect((brief.focus?.firstStep ?? brief.action).split(/\s+/).length).toBeLessThanOrEqual(40)
     }
-    expect(buildPersonalPreview('bundle', { first, second, year: 2030 }).brief?.scope).toBe('Person A · Your Life, Your Destiny')
+    expect(buildPersonalPreview('bundle', { first, second, year: 2030 }).brief?.scope).toBe('Person A · My Life')
     expect(buildPersonalPreview('compatibility', { first }).brief).toBeNull()
   })
 

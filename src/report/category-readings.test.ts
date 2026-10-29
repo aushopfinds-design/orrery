@@ -188,17 +188,21 @@ describe('Work, money, cycles and daily balance', () => {
 })
 
 describe('Bundle and public report navigation', () => {
-  it('contains the actual three full reports and keeps one- and two-person subjects distinct', () => {
+  it('contains all five full reports and keeps one- and two-person subjects distinct', () => {
     const bundle = buildBundleReading(baseA, baseB, 2027, 2026)
     expect(bundle.compatibility.subjects).toHaveLength(2)
     expect(bundle.annual.subjects).toHaveLength(1)
     expect(bundle.annual.subjects[0].input).toEqual(baseA.input)
-    for (const report of [bundle.complete, bundle.compatibility, bundle.annual]) {
+    expect(bundle.career.subjects).toHaveLength(1)
+    expect(bundle.love.subjects).toHaveLength(1)
+    expect(bundle.career.subjects[0].input).toEqual(baseA.input)
+    expect(bundle.love.subjects[0].input).toEqual(baseA.input)
+    for (const report of [bundle.complete, bundle.annual, bundle.compatibility, bundle.career, bundle.love]) {
       const parts = splitDeliveredReading(report.fullText)
       expect(bundle.fullText).toContain(parts.body)
       expect(bundle.fullText).toContain(parts.appendix)
     }
-    expect(bundle.wordCount).toBeGreaterThan(7500)
+    expect(bundle.wordCount).toBeGreaterThan(12000)
   })
   it('routes every category, chapter and bundle without leaking into a personal free result', () => {
     for (const info of FOCUS_CATALOG) {

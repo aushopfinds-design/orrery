@@ -16,7 +16,7 @@ describe('Korean operator guide follows the actual product and site sources', ()
     }
     expect(Object.keys(en).some(key => key.startsWith('admin.'))).toBe(false)
   })
-  it('uses current prices, scope and chapter counts for all seven products', () => {
+  it('uses current prices, scope and chapter counts for all six products', () => {
     const products = operatorProducts()
     expect(products.map(p => p.kind)).toEqual(PREVIEW_KINDS)
     for (const p of products) {
@@ -27,7 +27,7 @@ describe('Korean operator guide follows the actual product and site sources', ()
       expect(p.korean).toMatch(/[가-힣]/)
       expect(p.explanation).toMatch(/[가-힣]/)
     }
-    expect(products.find(p => p.kind === 'bundle')!.count).toBe(3)
+    expect(products.find(p => p.kind === 'bundle')!.count).toBe(5)
     expect(products.find(p => p.kind === 'bundle')!.people).toBe('2명')
     expect(products.find(p => p.kind === 'complete')!.people).toBe('1명')
   })

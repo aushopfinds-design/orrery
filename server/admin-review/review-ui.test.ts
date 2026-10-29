@@ -101,9 +101,9 @@ describe('Private review interactions (local DOM, no provider or deployment)', (
       beforeParse(window) { window.fetch = fetcher } })
     try {
       const doc = dom.window.document
-      expect(doc.querySelectorAll('[data-product]')).toHaveLength(7)
-      expect(doc.querySelector('[data-product=complete]')!.textContent).toContain('US$16.99')
-      expect(doc.querySelector('[data-product=bundle]')!.textContent).toContain('US$24.99')
+      expect(doc.querySelectorAll('[data-product]')).toHaveLength(6)
+      expect(doc.querySelector('[data-product=complete]')!.textContent).toContain('$19.99')
+      expect(doc.querySelector('[data-product=bundle]')!.textContent).toContain('$48.27')
       expect(doc.getElementById('panel-overview')!.hidden).toBe(false)
       ;(doc.querySelector('[data-panel=site]') as HTMLButtonElement).click()
       expect(doc.getElementById('panel-site')!.hidden).toBe(false)

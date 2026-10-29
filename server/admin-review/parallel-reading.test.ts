@@ -31,7 +31,7 @@ describe('Native Korean and English from one neutral plan', () => {
   it.each(PREVIEW_KINDS)('%s provides full native Korean immediately, not a provider translation', kind => {
     const review = buildReview({ kind, first, ...(['bundle', 'compatibility'].includes(kind) ? { second } : {}), ...(['year', 'bundle'].includes(kind) ? { year: 2027 } : {}) }, 2026)
     expect(review.sourceMode).toBe('parallel-analysis')
-    expect(review.documents).toHaveLength(kind === 'bundle' ? 4 : 1)
+    expect(review.documents).toHaveLength(kind === 'bundle' ? 6 : 1)
     for (const document of review.documents) {
       expect(document.analysisId).toMatch(/^[0-9a-f]{64}$/)
       expect(document.koreanOriginal.length).toBeGreaterThan(300)

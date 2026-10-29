@@ -4,9 +4,8 @@ import { LIVE_CATALOG, livePriceMatches, requireLivePrice } from './live-catalog
 import { REPORT_PRICE_CENTS, type PricedReportKind } from '../../src/report/pricing.ts'
 
 describe('approved live catalog', () => {
-  for (const kind of Object.keys(LIVE_CATALOG) as PricedReportKind[]) {
+  for (const [kind, entry] of Object.entries(LIVE_CATALOG) as [PricedReportKind, { product: string; price: string }][]) {
     it(`rejects substituted, inactive and non-USD prices for ${kind}`, () => {
-      const entry = LIVE_CATALOG[kind]
       const price = { id: entry.price, livemode: true, active: true, type: 'one_time', currency: 'usd', unit_amount: REPORT_PRICE_CENTS[kind],
         product: { id: entry.product, livemode: true, active: true, default_price: entry.price, metadata: { report_kind: kind } } } as unknown as Stripe.Price
       expect(() => requireLivePrice(kind, price)).not.toThrow()

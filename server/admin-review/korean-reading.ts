@@ -20,6 +20,7 @@ const TITLES: Record<string, string> = {
   'founder-style': '나는 사업에 맞는 사람일까?', 'offer-test': '내 사주는 창업을 어떻게 읽을까?', 'team-decisions': '동업은 도움이 될까, 부담이 될까?', 'delivery-capacity': '사업에서 어떻게 벌고 남길까?', 'customer-communication': '확장을 살펴볼 시기는 언제일까?', 'business-chapters': '10년 대운은 사업에 무엇을 더할까?', 'business-plan': '사업에서 언제 더 조심해야 할까?',
   'annual-theme': '올해 내 운의 중심 주제는?', 'annual-money': '올해 돈의 흐름에 무엇이 작용할까?', 'annual-work': '올해 직장과 일은 어떻게 흐를까?', 'annual-connections': '올해 사랑과 관계에는 무엇이 더해질까?', 'annual-cycle-context': '매달 무엇에 집중하면 좋을까?', 'annual-plan': '언제 더 주의해서 살펴야 할까?',
   'two-styles': '우리는 어떻게 맞는 사람들일까?', 'two-directions': '우리는 왜 서로에게 끌릴까?', 'close-conversation': '왜 같은 일을 다르게 느낄까?', 'shared-routine': '함께하는 일상도 잘 맞을까?', 'shared-money': '돈에 대한 생각도 맞을까?', 'chart-patterns': '무엇이 가까워지게 하고, 무엇이 부딪히게 할까?', 'support-each-other': '앞으로의 운은 두 사람에게 무엇을 더할까?', 'shared-week': '이 관계에서 서로에게 필요한 것은?',
+  'love-style': '나는 연애를 어떻게 시작하고 이어갈까?', 'love-needs': '관계에서 무엇이 안정감을 줄까?', 'love-attraction': '나는 어떤 관계에 끌릴까?', 'love-friction': '관계에서 무엇이 어려워질 수 있을까?', 'love-patterns': '사주가 보여주는 가까운 관계의 특징은?', 'love-timing': '관계의 우선순위가 바뀌는 때는?', 'love-outlook': '나에게 맞는 관계를 어떻게 만들어갈까?',
   'everyday-pace': '겉모습 뒤의 진짜 나는?', 'visible-elements': '내 타고난 기운에서 무엇이 두드러질까?', 'workload-rhythm': '나는 언제 부담을 느낄까?', 'support-and-space': '사람들과의 관계에서 무엇이 필요할까?', 'balance-week': '내 강점은 언제 약점이 될까?',
 }
 const ELEMENT: Record<string, string> = { Wood: '목', Fire: '화', Earth: '토', Metal: '금', Water: '수' }
