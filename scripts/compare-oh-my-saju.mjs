@@ -38,5 +38,9 @@ for (const [id,year,month,day,hour,minute,timeZone] of fixtures) {
     rows.push({id,timeZone,longitude,clock:clock.kind,current,independent,manualReviewRequired:true,exactPillarMatch:current.every((v,i)=>v != null && independent[i] != null && v===independent[i])});
   } catch (e) { rows.push({id,timeZone,error:String(e)}); }
 }
-console.log(JSON.stringify({count:rows.length,note:'Do not treat differences as errors until pillar order, UTC normalization, DST and policy are aligned.',rows},null,2));
+const comparable = rows.filter(row => !row.error);
+const pillarNames = ['year','month','day','hour'];
+const mismatchesByPillar = Object.fromEntries(pillarNames.map((name,i)=>[name,comparable.filter(row=>row.current[i] !== row.independent[i]).map(row=>row.id)]));
+const summary = {total:rows.length,comparable:comparable.length,exactMatches:comparable.filter(row=>row.exactPillarMatch).length,mismatchesByPillar,errors:rows.filter(row=>row.error).map(row=>({id:row.id,error:row.error}))};
+console.log(JSON.stringify({count:rows.length,summary,note:'Do not treat differences as errors until pillar order, UTC normalization, DST and policy are aligned.',rows},null,2));
 if (rows.some(r=>r.error)) process.exitCode=1;
