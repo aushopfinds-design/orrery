@@ -145,10 +145,10 @@ function addVerifiedChartInterpretation(reading: CompleteReading, result: SajuRe
   if (!dayProfile || !dayRelationship || !monthPublic || !monthInner) return reading
 
   const personalized: Record<string, string> = {
-    personality: `Your independently confirmed Day pillar is ${eligible.confirmed.day}. Its starting stem is traditionally read as ${dayProfile.approach.toLowerCase()} The daily relationship side of this same pillar adds ${dayRelationship}. These are the specific chart signals behind the personal pattern in this chapter.`,
-    money: `Your confirmed Day pillar ${eligible.confirmed.day} is read alongside your confirmed Month pillar ${eligible.confirmed.month}. The month’s public role points to ${monthPublic}; its inner role points to ${monthInner}. This combination is the chart-specific basis for the money pattern described here.`,
-    career: `Your confirmed Day pillar ${eligible.confirmed.day} is read alongside your confirmed Month pillar ${eligible.confirmed.month}. The month’s public role points to ${monthPublic}, while its inner role points to ${monthInner}. This is why the work answer is tied to your chart’s actual mix of roles.`,
-    love: `Your independently confirmed Day pillar is ${eligible.confirmed.day}. Its daily relationship side is traditionally read through ${dayRelationship}. This is the chart-specific clue used for the close-relationship pattern in this chapter.`,
+    personality: `Your birth-day sign is ${eligible.confirmed.day}. Its starting stem is traditionally read as ${dayProfile.approach.toLowerCase()} The daily relationship side of this same pillar adds ${dayRelationship}. These are the specific chart signals behind the personal pattern in this chapter.`,
+    money: `Your birth-day sign ${eligible.confirmed.day} is read alongside your birth-month sign ${eligible.confirmed.month}. Your birth-month sign points to ${monthPublic}; a second part of that sign points to ${monthInner}. This combination is the chart-specific basis for the money pattern described here.`,
+    career: `Your birth-day sign ${eligible.confirmed.day} is read alongside your birth-month sign ${eligible.confirmed.month}. Your birth-month sign points to ${monthPublic}, while a second part of that sign points to ${monthInner}. These are the chart details behind the work pattern described here.`,
+    love: `Your birth-day sign is ${eligible.confirmed.day}. Its daily relationship side is traditionally read through ${dayRelationship}. This is the chart detail behind the relationship pattern described here.`,
   }
   let fullText = reading.fullText
   const chapters = reading.chapters.map(chapter => {
