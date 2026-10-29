@@ -14,7 +14,7 @@ function buildSections(plan:InterpretationPlan,targetedProduct01=true):Record<st
  const out:Record<string,PurchaseTimingSection>={}
  if(plan.kind==='wellbeing'||plan.kind==='compatibility')return out
  const area=plan.kind==='business'?'business':plan.kind==='career'?'work':'life'
- const years=purchaseYears(plan.first,plan.referenceYear,area),money=purchaseYears(plan.first,plan.referenceYear,plan.kind==='business'?'business':'money')
+ const years=purchaseYears(plan.first,plan.referenceYear,area,10,targetedProduct01&&plan.kind==='complete'),money=purchaseYears(plan.first,plan.referenceYear,plan.kind==='business'?'business':'money')
  type Row=typeof years[number]
  const opens=(r:Row)=>Boolean(r.route)
  const dates=(rows:Row[])=>rows.map(r=>r.date.slice(0,4)).join(', ')
@@ -24,11 +24,15 @@ function buildSections(plan:InterpretationPlan,targetedProduct01=true):Record<st
   for(const row of rows){
    if(detail==='highlight'){
     const reasons=row.lines.filter(l=>/\.(change-(day|month)|background-pressure)$/.test(l.id)).map(l=>({en:l.en.split(/(?<=[.!?])\s/)[0],ko:l.ko.split(/(?<=[.!?])\s/)[0]}))
-    if(reasons.length)lines.push({id:id+'.'+row.date,en:`Why ${row.date.slice(0,4)} is highlighted here: ${reasons.map(r=>r.en).join(' ')}`,ko:`여기서 ${row.date.slice(0,4)}년을 꼽은 이유: ${reasons.map(r=>r.ko).join(' ')}`})
+    if(reasons.length){
+     const annual=row.lines.find(line=>line.id.endsWith('.annual-pillar'))
+     const label=annual?`Why ${row.date.slice(0,4)} (${annual.en}) is highlighted here:`:`Why ${row.date.slice(0,4)} is highlighted here:`
+     lines.push({id:id+'.'+row.date,en:`${label} ${reasons.map(r=>r.en).join(' ')}`,ko:`여기서 ${row.date.slice(0,4)}년${annual?`(${annual.ko})`:''}을 꼽은 이유: ${reasons.map(r=>r.ko).join(' ')}`})
+    }
    }else if(detail){
    const isCompleteTimeline=targetedProduct01&&plan.kind==='complete'&&id==='next-moves'
    const selected=(id==='work-chapters'?row.lines:row.lines.filter(l=>isCompleteTimeline
-    ?/\.(verdict|opening|reason|change-day|change-month|background-pressure|wider-pressure|caution)$/.test(l.id)
+    ?/\.(verdict|opening|reason|change-day|change-month|wider-pressure)$/.test(l.id)
     :/\.(verdict|opening|reason|area-context|change-day|change-month|background-pressure|wider-pressure|caution)$/.test(l.id))).filter(l=>{
      if(l.id.endsWith('.verdict')||l.id.endsWith('.buyer-summary'))return true
      if(explained.has(l.en))return false
