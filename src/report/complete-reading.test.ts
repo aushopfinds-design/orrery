@@ -202,10 +202,10 @@ describe('Independently confirmed pillars inform customer interpretations safely
     const money = report.chapters.find(chapter => chapter.id === 'money')!
     const career = report.chapters.find(chapter => chapter.id === 'career')!
     const love = report.chapters.find(chapter => chapter.id === 'love')!
-    expect(personality.paragraphs[0]).toContain(`Day pillar is ${current[2]}`)
-    expect(money.paragraphs[0]).toContain(`Month pillar ${current[1]}`)
-    expect(career.paragraphs[0]).toContain(`Month pillar ${current[1]}`)
-    expect(love.paragraphs[0]).toContain(`Day pillar is ${current[2]}`)
+    expect(personality.paragraphs[0]).toContain(`birth-day sign is ${current[2]}`)
+    expect(money.paragraphs[0]).toContain(`birth-month sign ${current[1]}`)
+    expect(career.paragraphs[0]).toContain(`birth-month sign ${current[1]}`)
+    expect(love.paragraphs[0]).toContain(`birth-day sign is ${current[2]}`)
     expect(report.fullText).toContain(personality.paragraphs[0])
     expect(report.fullText).toContain(money.paragraphs[0])
     expect(report.fullText).toContain('The hour result is not independently confirmed.')
