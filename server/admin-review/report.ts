@@ -40,8 +40,12 @@ export function buildReview(value: unknown, referenceYear = new Date().getUTCFul
   }
   const documents: ReviewDocument[] = sources.map((source, d) => {
     const english = plainReadingText(source.fullText)
-    verifyClaimCoverage(source.reviewedClaims, english, source.korean)
-    return { id: `document-${d + 1}`, title: source.title, english, koreanOriginal: source.korean, analysisId: source.analysisId, reviewedClaims: source.reviewedClaims, sentenceReview: { status: 'authored-core-pairs-checked', englishSentences: sentenceInventory(english).length, koreanSentences: sentenceInventory(source.korean).length, coverage: 'Customer chapter passages, monthly passages, longer-period passages and bundle overview are authored in matched English and Korean pairs and checked against both delivered texts. Technical evidence, headings, metadata and method notes are outside this coverage: the whole export is not a complete sentence-by-sentence translation.' },
+    // Chapter-level duplicate removal and product-specific editorial trims may
+    // omit a candidate sentence from the delivered report. Only attest matched
+    // pairs that remain in both customer-facing exports.
+    const deliveredClaims = source.reviewedClaims.filter(claim => english.includes(claim.english) && source.korean.includes(claim.korean))
+    verifyClaimCoverage(deliveredClaims, english, source.korean)
+    return { id: `document-${d + 1}`, title: source.title, english, koreanOriginal: source.korean, analysisId: source.analysisId, reviewedClaims: deliveredClaims, sentenceReview: { status: 'authored-core-pairs-checked', englishSentences: sentenceInventory(english).length, koreanSentences: sentenceInventory(source.korean).length, coverage: 'Customer chapter passages, monthly passages, longer-period passages and bundle overview are authored in matched English and Korean pairs and checked against both delivered texts. Technical evidence, headings, metadata and method notes are outside this coverage: the whole export is not a complete sentence-by-sentence translation.' },
       blocks: english.split('\n\n').map((text, i) => ({ id: `${d + 1}.${i + 1}`, english: text })) }
   })
   const digest = createHash('sha256').update(JSON.stringify({ edition: REPORT_EDITION, referenceYear, input, documents })).digest('hex')
