@@ -23,7 +23,8 @@ for (const [id,year,month,day,hour,minute,timeZone] of fixtures) {
   try {
     const a = existing({year,month,day,hour,minute,gender:'M',timezone:timeZone});
     const b = external({birth:{date:{calendar:'gregorian',year,month,day},time:{hour,minute},timeZone},rules:{ziHourPolicy:'civilMidnight',dayHourClock:{kind:'civil'}}});
-    // Orrery stores hour/day/month/year; normalize to year/month/day/hour.\n    const current = [3,2,1,0].map(i=>normalized(a.pillars?.[i]));
+    // Orrery stores hour/day/month/year; normalize to year/month/day/hour.
+    const current = [3,2,1,0].map(i=>normalized(a.pillars?.[i]));
     const independent = ['year','month','day','hour'].map(k=>normalized(b.pillars?.[k]));
     // Existing API returns ordered pillars; verify order before interpreting comparisons.
     rows.push({id,timeZone,current,independent,manualReviewRequired:true,exactPillarMatch:current.every((v,i)=>v != null && independent[i] != null && v===independent[i])});
