@@ -76,7 +76,7 @@ export async function issueReport(input: OrderInput, orderId: string, referenceY
   const report: BuyerReport = {
     title: previewProduct(input.kind).title, kind: input.kind, edition: REPORT_EDITION, reference, certificates,
     ...(input.recipientName ? { recipientName: input.recipientName } : {}),
-    issuedAt: new Date().toISOString(), text: customerDeliveryText(plainReadingText(text)), emphasis: reportEmphasis(source), documents,
+    issuedAt: new Date().toISOString(), text: customerDeliveryText(plainReadingText(text), input.kind === 'complete'), emphasis: reportEmphasis(source), documents,
     cards: [buildDestinyCard(input.first, input.recipientName ?? ''), ...(input.second ? [buildDestinyCard(input.second, 'Person B')] : [])], pdf: '',
     ...(input.kind === 'career' ? { careerCharts: careerMoneyChartData(a, referenceYear) } : {}),
   }
