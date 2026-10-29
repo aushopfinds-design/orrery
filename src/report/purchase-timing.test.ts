@@ -80,7 +80,7 @@ describe('24 distinct international buyers: ten-year facts and twelve months rea
    expect(claims.length).toBeGreaterThan(10)
    const normal=(s:string)=>s.replace(/\s+/g,' ')
    for(const claim of claims){expect(normal(doc.english)).toContain(normal(claim.english));expect(normal(doc.koreanOriginal)).toContain(normal(claim.korean))}
-   expect(doc.english).not.toMatch(/NaN|undefined|guaranteed profit|will get married/)
+   expect(doc.english).not.toMatch(/\b(?:NaN|undefined|guaranteed profit|will get married)\b/i)
   }
  },15000)
 })
