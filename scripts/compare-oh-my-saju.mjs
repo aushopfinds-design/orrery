@@ -18,16 +18,24 @@ const toHanja = value => {
   return (stems[value[0]] ?? value[0]) + (branches[value[1]] ?? value[1]);
 };
 const normalized = p => toHanja(p?.hanja ?? p?.korean ?? p?.ganzi ?? p?.pillar?.ganzi ?? null);
+const locationByTimeZone = {
+  'America/New_York': -74.006, 'Asia/Seoul': 126.978, 'Australia/Sydney': 151.2093,
+  'Europe/London': -0.1278, 'Asia/Tokyo': 139.6917, 'America/Los_Angeles': -118.2437,
+  'Pacific/Auckland': 174.7633, 'Europe/Paris': 2.3522, 'America/Toronto': -79.3832,
+  'Asia/Singapore': 103.8198,
+};
 const rows = [];
 for (const [id,year,month,day,hour,minute,timeZone] of fixtures) {
   try {
-    const a = existing({year,month,day,hour,minute,gender:'M',timezone:timeZone});
-    const b = external({birth:{date:{calendar:'gregorian',year,month,day},time:{hour,minute},timeZone},rules:{ziHourPolicy:'civilMidnight',dayHourClock:{kind:'civil'}}});
+    const longitude = locationByTimeZone[timeZone];
+    const a = existing({year,month,day,hour,minute,gender:'M',timezone:timeZone,longitude});
+    const clock = timeZone === 'Asia/Seoul' ? {kind:'civil'} : {kind:'local-apparent-solar',longitudeDegreesEast:longitude,equationOfTime:'apply'};
+    const b = external({birth:{date:{calendar:'gregorian',year,month,day},time:{hour,minute},timeZone},rules:{ziHourPolicy:'ziStart23',dayHourClock:clock}});
     // Orrery stores hour/day/month/year; normalize to year/month/day/hour.
     const current = [3,2,1,0].map(i=>normalized(a.pillars?.[i]));
     const independent = ['year','month','day','hour'].map(k=>normalized(b.pillars?.[k]));
     // Existing API returns ordered pillars; verify order before interpreting comparisons.
-    rows.push({id,timeZone,current,independent,manualReviewRequired:true,exactPillarMatch:current.every((v,i)=>v != null && independent[i] != null && v===independent[i])});
+    rows.push({id,timeZone,longitude,clock:clock.kind,current,independent,manualReviewRequired:true,exactPillarMatch:current.every((v,i)=>v != null && independent[i] != null && v===independent[i])});
   } catch (e) { rows.push({id,timeZone,error:String(e)}); }
 }
 console.log(JSON.stringify({count:rows.length,note:'Do not treat differences as errors until pillar order, UTC normalization, DST and policy are aligned.',rows},null,2));
