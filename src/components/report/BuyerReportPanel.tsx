@@ -27,6 +27,7 @@ export default function BuyerReportPanel() {
 
   const loadReport = useCallback(async () => {
     if (!orderId || !success || !allowed) return
+    setReport(null)
     activeRequest.current?.abort()
     const controller = new AbortController(); activeRequest.current = controller
     const timeout = setTimeout(() => controller.abort(), 90000)
@@ -46,9 +47,9 @@ export default function BuyerReportPanel() {
   }, [orderId, success, allowed])
   useEffect(() => {
     if (recoveredId) return
-    setReport(null); setError('')
-    void loadReport()
-    return () => { activeRequest.current?.abort(); activeRequest.current = null }
+    let active = true
+    void Promise.resolve().then(() => { if (active) void loadReport() })
+    return () => { active = false; activeRequest.current?.abort(); activeRequest.current = null }
   }, [loadReport, recoveredId])
   async function download() {
     if (!orderId || !report) return

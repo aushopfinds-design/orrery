@@ -158,7 +158,7 @@ describe('Customer conclusions before planning advice',()=>{
   const first=customerNarrative(samplePlan),other=customerNarrative(buildInterpretationPlan('complete',a,2026))
   const love=first.love.lines.map(line=>line.en).join(' ')
   expect(love).toContain(`private-life marker ${samplePlan.primary.dayBranch}`)
-  expect(love).toMatch(/next ten-year comparison/)
+  expect(love).toMatch(/years that most clearly touch relationship priorities/)
   expect(love).toMatch(/marriage or separation|partner, marriage or separation/)
   expect(love).not.toBe(other.love.lines.map(line=>line.en).join(' '))
   const ending=first['next-moves'].lines.at(-1)!.en
