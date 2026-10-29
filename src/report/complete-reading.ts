@@ -135,20 +135,51 @@ export function buildFreeReading(result: SajuResult): FreeReading {
   }
 }
 
+function addVerifiedChartInterpretation(reading: CompleteReading, result: SajuResult, eligible: ReturnType<typeof independentPersonalizationEligibility>): CompleteReading {
+  const day = result.pillars[1]
+  const month = result.pillars[2]
+  const dayProfile = STEMS[day.pillar.stem]
+  const dayRelationship = TEN_GODS[day.branchSipsin]?.lens
+  const monthPublic = TEN_GODS[month.stemSipsin]?.lens
+  const monthInner = TEN_GODS[month.branchSipsin]?.lens
+  if (!dayProfile || !dayRelationship || !monthPublic || !monthInner) return reading
+
+  const personalized: Record<string, string> = {
+    personality: `Your independently confirmed Day pillar is ${eligible.confirmed.day}. Its starting stem is traditionally read as ${dayProfile.approach.toLowerCase()} The daily relationship side of this same pillar adds ${dayRelationship}. These are the specific chart signals behind the personal pattern in this chapter.`,
+    money: `Your confirmed Day pillar ${eligible.confirmed.day} is read alongside your confirmed Month pillar ${eligible.confirmed.month}. The month’s public role points to ${monthPublic}; its inner role points to ${monthInner}. This combination is the chart-specific basis for the money pattern described here.`,
+    career: `Your confirmed Day pillar ${eligible.confirmed.day} is read alongside your confirmed Month pillar ${eligible.confirmed.month}. The month’s public role points to ${monthPublic}, while its inner role points to ${monthInner}. This is why the work answer is tied to your chart’s actual mix of roles.`,
+    love: `Your independently confirmed Day pillar is ${eligible.confirmed.day}. Its daily relationship side is traditionally read through ${dayRelationship}. This is the chart-specific clue used for the close-relationship pattern in this chapter.`,
+  }
+  let fullText = reading.fullText
+  const chapters = reading.chapters.map(chapter => {
+    const interpretation = personalized[chapter.id]
+    if (!interpretation) return chapter
+    const first = chapter.paragraphs[0]
+    if (first) fullText = fullText.replace(first, `${interpretation} ${first}`)
+    return { ...chapter, paragraphs: [interpretation, ...chapter.paragraphs] }
+  })
+  return { ...reading, chapters, fullText, wordCount: fullText.split(/\s+/).length }
+}
+
 export function buildCompleteReading(result: SajuResult, asOfYear = new Date().getFullYear(), independentAudit?: IndependentPillarAudit): CompleteReading {
   const reading = buildTraditionalComplete(result, asOfYear)
   // Independent facts are optional and never overwrite the paid-report calculation.
   if (!independentAudit) return reading
   const chart = [3, 2, 1, 0].map(i => result.pillars[i].pillar.ganzi)
-  if (!chart.every((pillar, i) => pillar === independentAudit.current[i])) return reading
+  const corePillarsMatch = chart.slice(0, 3).every((pillar, i) => pillar === independentAudit.current[i])
+  const hourInputIsConsistent = result.input.unknownTime
+    ? independentAudit.current[3] == null && independentAudit.independent[3] == null
+    : chart[3] === independentAudit.current[3]
+  if (!corePillarsMatch || !hourInputIsConsistent) return reading
   const eligible = independentPersonalizationEligibility(independentAudit)
   if (!eligible.canUseYearMonthDay) return reading
+  const personalized = addVerifiedChartInterpretation(reading, result, eligible)
   const note = [
     'Independent calculation cross-check:',
     'year ' + eligible.confirmed.year + ', month ' + eligible.confirmed.month + ', and day ' + eligible.confirmed.day + ' agree.',
     eligible.canUseHour ? 'Hour ' + eligible.confirmed.hour + ' also agrees.' : 'The hour result is not independently confirmed.',
     'Decade-cycle timing is not independently confirmed. This reading uses THE FATE KEY calculations.'
   ].join(' ')
-  const fullText = reading.fullText + '\n\n' + note
-  return { ...reading, methodNotes: [...reading.methodNotes, note], fullText, wordCount: fullText.split(/\s+/).length }
+  const fullText = personalized.fullText + '\n\n' + note
+  return { ...personalized, methodNotes: [...reading.methodNotes, note], fullText, wordCount: fullText.split(/\s+/).length }
 }

@@ -189,3 +189,51 @@ describe('Shareable report routes', () => {
     expect(resolveReportRoute('#birth-details')).toBe('home')
   })
 })
+
+describe('Independently confirmed pillars inform customer interpretations safely', () => {
+  it('connects confirmed chart facts to My Life answers without using an unmatched hour or cycle', () => {
+    const result = calculateSaju(base)
+    const current = [3, 2, 1, 0].map(index => result.pillars[index].pillar.ganzi)
+    const report = buildCompleteReading(result, 2026, {
+      current,
+      independent: [current[0], current[1], current[2], '戊辰'],
+    })
+    const personality = report.chapters.find(chapter => chapter.id === 'personality')!
+    const money = report.chapters.find(chapter => chapter.id === 'money')!
+    const career = report.chapters.find(chapter => chapter.id === 'career')!
+    const love = report.chapters.find(chapter => chapter.id === 'love')!
+    expect(personality.paragraphs[0]).toContain(`Day pillar is ${current[2]}`)
+    expect(money.paragraphs[0]).toContain(`Month pillar ${current[1]}`)
+    expect(career.paragraphs[0]).toContain(`Month pillar ${current[1]}`)
+    expect(love.paragraphs[0]).toContain(`Day pillar is ${current[2]}`)
+    expect(report.fullText).toContain(personality.paragraphs[0])
+    expect(report.fullText).toContain(money.paragraphs[0])
+    expect(report.fullText).toContain('The hour result is not independently confirmed.')
+    expect(report.fullText).toContain('Decade-cycle timing is not independently confirmed.')
+    expect(report.fullText).not.toContain('Hour 戊辰 also agrees.')
+  })
+
+  it('uses the confirmed three-pillar path for unknown time without inventing an hour', () => {
+    const result = calculateSaju({ ...base, unknownTime: true })
+    const current = [3, 2, 1].map(index => result.pillars[index].pillar.ganzi)
+    const report = buildCompleteReading(result, 2026, {
+      current: [...current, null],
+      independent: [...current, null],
+    })
+    expect(report.chapters.find(chapter => chapter.id === 'personality')!.paragraphs[0]).toContain('Day pillar')
+    expect(report.pillarSummary).toContain('Hour: Unknown')
+    expect(report.fullText).toContain('The hour result is not independently confirmed.')
+    expect(report.fullText).not.toMatch(/Hour (?:stem|branch) (?!result)/)
+  })
+
+  it('does not personalize from independent facts when a core pillar conflicts', () => {
+    const result = calculateSaju(base)
+    const current = [3, 2, 1, 0].map(index => result.pillars[index].pillar.ganzi)
+    const baseline = buildCompleteReading(result, 2026)
+    const conflicted = buildCompleteReading(result, 2026, {
+      current,
+      independent: ['甲子', current[1], current[2], current[3]],
+    })
+    expect(conflicted.fullText).toBe(baseline.fullText)
+  })
+})

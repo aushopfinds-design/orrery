@@ -9,7 +9,9 @@ import { resolve } from 'node:path';
 const dist = process.env.OH_MY_SAJU_DIST;
 if (!dist) { console.error('OH_MY_SAJU_DIST must point to the built Oh My Saju dist/index.js'); process.exit(2); }
 const { calculateSaju: external } = await import(pathToFileURL(resolve(dist)).href);
+const { calculateSajuTiming: externalTiming } = await import(pathToFileURL(resolve(dist, '../timing.js')).href);
 const { calculateSaju: existing } = await import('@orrery/core/saju');
+const { adjustBirthInputToSolarTime, adjustBirthInputToKstWallClock } = await import('@orrery/core/timezone');
 const fixtures = [["ny-1998",1998,3,25,3,0,"America/New_York"],["seoul-1980",1980,3,25,12,0,"Asia/Seoul"],["sydney-2000",2000,1,1,12,0,"Australia/Sydney"],["seoul-1992",1992,10,24,5,30,"Asia/Seoul"],["ny-dst-spring",2024,3,10,3,30,"America/New_York"],["ny-dst-fall",2024,11,3,2,30,"America/New_York"],["sydney-dst",2024,10,6,3,30,"Australia/Sydney"],["london-dst",2024,3,31,2,30,"Europe/London"],["seoul-lichun",2024,2,4,17,30,"Asia/Seoul"],["seoul-midnight",2001,8,12,0,10,"Asia/Seoul"],["seoul-zi",2001,8,12,23,30,"Asia/Seoul"],["tokyo-1970",1970,6,1,11,0,"Asia/Tokyo"],["la-1988",1988,12,31,22,0,"America/Los_Angeles"],["auckland-2005",2005,7,20,8,0,"Pacific/Auckland"],["paris-1999",1999,9,9,9,9,"Europe/Paris"],["seoul-2000",2000,2,29,12,0,"Asia/Seoul"],["seoul-2020",2020,1,25,13,0,"Asia/Seoul"],["toronto-1990",1990,5,15,7,5,"America/Toronto"],["singapore-2010",2010,10,10,10,10,"Asia/Singapore"],["seoul-1987",1987,7,1,12,0,"Asia/Seoul"]];
 const stems = Object.fromEntries([... '갑을병정무기경신임계'].map((k,i)=>[k,[...'甲乙丙丁戊己庚辛壬癸'][i]]));
 const branches = Object.fromEntries([... '자축인묘진사오미신유술해'].map((k,i)=>[k,[...'子丑寅卯辰巳午未申酉戌亥'][i]]));
@@ -28,19 +30,35 @@ const rows = [];
 for (const [id,year,month,day,hour,minute,timeZone] of fixtures) {
   try {
     const longitude = locationByTimeZone[timeZone];
-    const a = existing({year,month,day,hour,minute,gender:'M',timezone:timeZone,longitude});
+    const birth = {year,month,day,hour,minute,gender:'M',timezone:timeZone,longitude};
+    const a = existing(birth);
+    const currentClock = timeZone === 'Asia/Seoul'
+      ? adjustBirthInputToKstWallClock(birth)
+      : adjustBirthInputToSolarTime(birth);
     const clock = timeZone === 'Asia/Seoul' ? {kind:'civil'} : {kind:'local-apparent-solar',longitudeDegreesEast:longitude,equationOfTime:'apply'};
     const b = external({birth:{date:{calendar:'gregorian',year,month,day},time:{hour,minute},timeZone},rules:{ziHourPolicy:'ziStart',dayHourClock:clock}});
     // Orrery stores hour/day/month/year; normalize to year/month/day/hour.
     const current = [3,2,1,0].map(i=>normalized(a.pillars?.[i]));
     const independent = ['year','month','day','hour'].map(k=>normalized(b.pillars?.[k]));
     // Existing API returns ordered pillars; verify order before interpreting comparisons.
-    rows.push({id,timeZone,longitude,clock:clock.kind,current,independent,manualReviewRequired:true,exactPillarMatch:current.every((v,i)=>v != null && independent[i] != null && v===independent[i])});
+    rows.push({id,timeZone,longitude,clock:clock.kind,currentClock,independentClock:b.chronology?.dayHourDateTime ?? null,current,independent,manualReviewRequired:true,exactPillarMatch:current.every((v,i)=>v != null && independent[i] != null && v===independent[i]),hourDifferenceCause:current[3]===independent[3]?null:(timeZone==='Asia/Seoul'&&currentClock.hour!==hour?'korean-historical-clock-normalization-plus-hour-window-policy':'hour-window-policy')});
   } catch (e) { rows.push({id,timeZone,error:String(e)}); }
 }
 const comparable = rows.filter(row => !row.error);
 const pillarNames = ['year','month','day','hour'];
 const mismatchesByPillar = Object.fromEntries(pillarNames.map((name,i)=>[name,comparable.filter(row=>row.current[i] !== row.independent[i]).map(row=>row.id)]));
-const summary = {total:rows.length,comparable:comparable.length,exactMatches:comparable.filter(row=>row.exactPillarMatch).length,mismatchesByPillar,errors:rows.filter(row=>row.error).map(row=>({id:row.id,error:row.error}))};
-console.log(JSON.stringify({count:rows.length,summary,note:'Do not treat differences as errors until pillar order, UTC normalization, DST and policy are aligned.',rows},null,2));
+const timingFixture = {year:1998,month:3,day:25,hour:3,minute:0,timezone:'America/New_York',latitude:40.7128,longitude:-74.006};
+const timingClock = {kind:'local-apparent-solar',longitudeDegreesEast:timingFixture.longitude,equationOfTime:'apply'};
+const timingByGender = ['M','F'].map(gender => {
+  const currentResult = existing({...timingFixture,gender});
+  const independentResult = externalTiming({
+    natalRequest:{birth:{date:{calendar:'gregorian',year:timingFixture.year,month:timingFixture.month,day:timingFixture.day},time:{hour:timingFixture.hour,minute:timingFixture.minute},timeZone:timingFixture.timezone},rules:{ziHourPolicy:'ziStart',dayHourClock:timingClock}},
+    fromYear:2024,throughYear:2035,gender:gender==='M'?'male':'female',luckPillarCount:5,
+  });
+  const currentCycle = currentResult.daewoon[2];
+  const independentCycle = independentResult.luckPillars?.pillars[2];
+  return {gender,current:{pillar:currentCycle?.ganzi,start:currentCycle?.startDate.toISOString().slice(0,10)},independent:{pillar:independentCycle?.pillar?.hanja,start:independentCycle?.approximateStartDate?.date},samePillar:currentCycle?.ganzi===independentCycle?.pillar?.hanja};
+});
+const summary = {total:rows.length,comparable:comparable.length,exactMatches:comparable.filter(row=>row.exactPillarMatch).length,mismatchesByPillar,hourDifferenceCauses:Object.fromEntries([...new Set(comparable.map(row=>row.hourDifferenceCause).filter(Boolean))].map(cause=>[cause,comparable.filter(row=>row.hourDifferenceCause===cause).map(row=>row.id)])),errors:rows.filter(row=>row.error).map(row=>({id:row.id,error:row.error})),timingGenderComparison:timingByGender};
+console.log(JSON.stringify({count:rows.length,summary,timingFixture,note:'Differences are diagnostic; the timing comparison keeps birth details and gender identical per row, and reports approximate independent cycle-start dates.',rows},null,2));
 if (rows.some(r=>r.error)) process.exitCode=1;
