@@ -11,21 +11,21 @@ import { buildBalanceReading } from './balance-reading.ts'
 import { plainReadingText } from './reading-text.ts'
 
 export { buildCompatibilityReading, buildCareerReading, buildBusinessReading, buildYearAheadReading, buildBalanceReading }
-export function buildCategoryReading(kind: FocusCategory, first: SajuResult, options: { second?: SajuResult; year?: number } = {}) {
+export function buildCategoryReading(kind: FocusCategory, first: SajuResult, options: { second?: SajuResult; year?: number; periodStart?: string; periodTimezone?: string } = {}) {
   const year = options.year ?? new Date().getFullYear()
   switch (kind) {
     case 'compatibility':
       if (!options.second) throw new Error('Two birth charts are needed for compatibility')
       return buildCompatibilityReading(first, options.second, year)
-    case 'year': return buildYearAheadReading(first, options.year ?? new Date().getFullYear() + 1)
+    case 'year': return buildYearAheadReading(first, options.year ?? new Date().getFullYear() + 1, options.periodStart, options.periodTimezone)
     case 'career': return buildCareerReading(first, year)
     case 'love': return buildTraditionalCategory(kind, first, year)
     case 'business': return buildBusinessReading(first, year)
     case 'wellbeing': return buildBalanceReading(first, year)
   }
 }
-export function buildBundleReading(first: SajuResult, second: SajuResult, annualYear = new Date().getFullYear() + 1, referenceYear = new Date().getFullYear()) {
-  return buildBundleFromPlans(bundleInterpretationPlans(first, second, annualYear, referenceYear))
+export function buildBundleReading(first: SajuResult, second: SajuResult, annualYear = new Date().getFullYear() + 1, referenceYear = new Date().getFullYear(), periodStart?: string, periodTimezone?: string) {
+  return buildBundleFromPlans(bundleInterpretationPlans(first, second, annualYear, referenceYear, periodStart, periodTimezone))
 }
 export function buildBundleFromPlans(plans: ReturnType<typeof bundleInterpretationPlans>) {
   const complete = buildTraditionalCompleteFromPlan(plans.complete)

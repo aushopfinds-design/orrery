@@ -25,12 +25,17 @@ describe('seven purchased report PDF generation', () => {
     for (const [personIndex, first] of samples.entries()) {
       for (const kind of products) {
         const second = kind === 'compatibility' || kind === 'bundle' ? CATEGORY_SCENARIOS[1].second : undefined
-        const report = await issueReport({ kind, first, ...(second ? { second } : {}), ...(['year', 'bundle'].includes(kind) ? { year: 2027 } : {}) }, '12345678-1234-4234-8234-123456789012', 2026, 'test')
+        const report = await issueReport({ kind, first, ...(second ? { second } : {}), ...(['year', 'bundle'].includes(kind) ? { year: 2026, periodStart: '2026-11', periodEnd: '2027-10', periodTimezone: 'Australia/Sydney' } : {}) }, '12345678-1234-4234-8234-123456789012', 2026, 'test')
         const bytes = Buffer.from(report.pdf, 'base64')
         expect(bytes.subarray(0, 5).toString(), `${kind} for profile ${personIndex + 1}`).toBe('%PDF-')
         const pdf = await PDFDocument.load(bytes)
         expect(pdf.getPageCount(), `${kind} for profile ${personIndex + 1}`).toBeGreaterThan(1)
         expect(report.text).not.toMatch(/undefined|NaN|\[object Object\]/)
+        if (kind === 'year') {
+          expect(report.title).toBe('Your Next 12 Months')
+          expect(report.text).toContain('Analysis window: November 2026 through October 2027.')
+          expect(report.text).toContain('Australia/Sydney timezone')
+        }
         if (first.unknownTime) {
           expect(report.text).toContain('Hour: Unknown')
           expect(report.text).not.toMatch(/Hour (?:pillar|stem|branch) [甲乙丙丁戊己庚辛壬癸]/)

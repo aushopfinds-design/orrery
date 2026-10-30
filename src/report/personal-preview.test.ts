@@ -111,9 +111,9 @@ describe('Personal previews use the supplied people, not fictional samples', () 
   })
 
   it('uses the selected year and twelve limited monthly headings', () => {
-    const first = buildPersonalPreview('year', { first: a, year: 2030 })
-    const second = buildPersonalPreview('year', { first: a, year: 2031 })
-    expect(first.title).toContain('2030')
+    const first = buildPersonalPreview('year', { first: a, year: 2030, periodStart: '2030-01' })
+    const second = buildPersonalPreview('year', { first: a, year: 2031, periodStart: '2031-01' })
+    expect(first.title).toBe('Your Next 12 Months')
     expect(first.monthly).toHaveLength(12)
     expect(first.monthly[0].label).toContain('January')
     expect(first.monthly[11].label).toContain('December')

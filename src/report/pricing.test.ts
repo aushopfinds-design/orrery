@@ -20,6 +20,14 @@ describe('launch prices and genuine bundle comparison', () => {
     expect(previewProduct('wellbeing').price).toBe('$8.99')
   })
 
+  it('offers the approved seven-product set while retaining My Love for legacy orders and the existing package', () => {
+    expect([...ACTIVE_PRODUCT_KINDS]).toEqual(['complete', 'career', 'compatibility', 'year', 'business', 'wellbeing', 'bundle'])
+    expect(previewProduct('love').title).toBe('My Love')
+    expect(reportPrice('business')).toBe('$11.99')
+    expect(reportPrice('wellbeing')).toBe('$8.99')
+    expect(BUNDLE_REPORTS).toEqual(['complete', 'year', 'compatibility', 'career', 'love'])
+  })
+
   it('compares the bundle with all five included reports', () => {
     expect(BUNDLE_REPORTS).toEqual(['complete', 'year', 'compatibility', 'career', 'love'])
     expect(bundleSavings()).toEqual({ separatePrice: '$68.95', savedAmount: '$20.68', percent: 30 })

@@ -14,9 +14,11 @@ export const REPORT_PRICE_CENTS = {
 } as const
 
 export type PricedReportKind = keyof typeof REPORT_PRICE_CENTS
-export const ACTIVE_PRODUCT_KINDS = ['complete', 'year', 'compatibility', 'career', 'love', 'bundle'] as const
+export const ACTIVE_PRODUCT_KINDS = ['complete', 'career', 'compatibility', 'year', 'business', 'wellbeing', 'bundle'] as const
 export type ActiveProductKind = typeof ACTIVE_PRODUCT_KINDS[number]
-export const LEGACY_PRODUCT_KINDS = ['business', 'wellbeing'] as const
+// My Love remains readable for previously paid orders and in the existing
+// Complete Package contract, but is no longer sold as a standalone product.
+export const LEGACY_PRODUCT_KINDS = ['love'] as const
 export const BUNDLE_REPORTS = ['complete', 'year', 'compatibility', 'career', 'love'] as const
 
 export function formatUSD(cents: number) { return `$${(cents / 100).toFixed(2)}` }

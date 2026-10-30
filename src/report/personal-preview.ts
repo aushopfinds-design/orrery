@@ -4,6 +4,7 @@ import { buildBundleReading, buildCategoryReading } from './category-readings.ts
 import type { ReportChapter } from './complete-reading.ts'
 
 import { previewProduct } from './personal-products.ts'
+import { nextTwelveMonthWindow, parseCalendarMonth } from './calendar-window.ts'
 import type { PreviewKind } from './personal-products.ts'
 import { normalizePreviewBirth } from '../utils/preview-draft.ts'
 import type { PreviewDraft } from '../utils/preview-draft.ts'
@@ -49,7 +50,11 @@ export function buildPersonalPreview(kind: PreviewKind, draft: PreviewDraft, ind
   const paired = kind === 'compatibility' || kind === 'bundle'
   if (paired && !second) return { title: previewProduct(kind).title, subjects: [subjectA], headline: snapshot.headline, brief: null, applications: [], summary: [], excerpts: [], contents: [], monthly: [], needsPartner: true, extras: null }
   const currentYear = new Date().getFullYear()
-  const year = draft.year ?? currentYear + 1
+  const annualWindow = kind === 'year' || kind === 'bundle' ? (draft.periodStart
+    ? { start: draft.periodStart, end: draft.periodStart, timezone: draft.periodTimezone ?? 'UTC' }
+    : nextTwelveMonthWindow(new Date(), Intl.DateTimeFormat().resolvedOptions().timeZone)) : undefined
+  const annualStart = annualWindow ? parseCalendarMonth(annualWindow.start) : undefined
+  const year = annualStart?.year ?? draft.year ?? currentYear + 1
   if (!Number.isInteger(year) || year < first.year || year > 2100 || year < 1900) throw new Error('Choose a valid report year')
   if (kind === 'complete') {
     const full = buildCompleteReading(a, currentYear, independentAudit)
@@ -57,10 +62,10 @@ export function buildPersonalPreview(kind: PreviewKind, draft: PreviewDraft, ind
   }
   const b = second ? calculateSaju(second) : undefined
   if (kind === 'bundle') {
-    const bundle = buildBundleReading(a, b!, year, currentYear)
+    const bundle = buildBundleReading(a, b!, year, currentYear, annualWindow?.start, annualWindow?.timezone)
     return { title: 'Complete Package', subjects: bundle.compatibility.subjects, headline: bundle.complete.headline, brief: buildReadingBrief(bundle.complete.chapters[0], 'Person A · My Life', bundle.complete.focus), summary: bundle.summary, applications: [], excerpts: [excerpt(bundle.complete.chapters[0]), excerpt(bundle.annual.chapters[0]), excerpt(bundle.compatibility.chapters[1], true), excerpt(bundle.career.chapters[0]), excerpt(bundle.love.chapters[0])], contents: [bundle.complete, bundle.annual, bundle.compatibility, bundle.career, bundle.love].map((report, index) => ({ id: `report-${index + 1}`, title: report.title })), monthly: [], needsPartner: false, extras: extrasExcerpt(bundle.compatibility.extras) }
   }
-  const full = buildCategoryReading(kind, a, { second: b, year: kind === 'year' ? year : currentYear })
+  const full = buildCategoryReading(kind, a, { second: b, year: kind === 'year' ? year : currentYear, ...(annualWindow ? { periodStart: annualWindow.start, periodTimezone: annualWindow.timezone } : {}) })
   return { title: full.title, subjects: paired ? full.subjects : [subjectA], headline: full.headline, brief: buildReadingBrief(full.chapters[0], undefined, full.focus), summary: full.summary, applications: full.applications, excerpts: full.chapters.slice(0, 3).map(chapter => excerpt(chapter, paired)), contents: full.chapters.map(chapter => ({ id: chapter.id, title: chapter.title.replace(/^\d+ · /, '') })), monthly: full.months.map(month => ({ label: month.label, lead: month.lead })), needsPartner: false, extras: extrasExcerpt(full.extras) }
 }
 

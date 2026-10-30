@@ -143,7 +143,7 @@ describe('Calculated annual and monthly references', () => {
   it('changes annual and monthly meanings with the selected year and birth chart', () => {
     const reading = buildYearAheadReading(baseA, 2027)
     const next = buildYearAheadReading(baseA, 2028)
-    expect(next.title).toContain('2028')
+    expect(next.title).toBe('Your Next 12 Months')
     expect(next.chapters[0].paragraphs).not.toEqual(reading.chapters[0].paragraphs)
     expect(next.months.map(month => month.pillar)).not.toEqual(reading.months.map(month => month.pillar))
     expect(new Set(reports.map(({ readings }) => readings[2].months[0].lead)).size).toBeGreaterThanOrEqual(8)

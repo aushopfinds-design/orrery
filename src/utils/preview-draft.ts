@@ -2,7 +2,7 @@ import type { BirthInput } from '@orrery/core/types'
 import { isPreviewKind } from '../report/personal-products.ts'
 import type { PreviewKind } from '../report/personal-products.ts'
 
-export interface PreviewDraft { first?: BirthInput; second?: BirthInput; year?: number; kind?: PreviewKind }
+export interface PreviewDraft { first?: BirthInput; second?: BirthInput; year?: number; kind?: PreviewKind; periodStart?: string; periodTimezone?: string }
 export const PREVIEW_STORAGE_KEY = 'fate-key-preview-v1'
 
 /** Browser storage is untrusted. Only recognised birth fields are retained. */

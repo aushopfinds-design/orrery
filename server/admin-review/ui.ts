@@ -1,5 +1,6 @@
 import ko from './locales/ko.ts'
 import { guideText as g, operatorProducts, operatorSiteGuide } from './operators-guide.ts'
+import { PREVIEW_KINDS } from '../../src/report/personal-products.ts'
 
 const t = (key: string) => ko[`admin.review.${key}`]
 const escape = (v: string) => v.replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]!)
@@ -25,7 +26,7 @@ function person(prefix: string, year: number) {
     ${field('timezone', 'text', 'Australia/Sydney')}${field('latitude', 'number', '-33.8688', 'step="any" min="-90" max="90"')}${field('longitude', 'number', '151.2093', 'step="any" min="-180" max="180"')}</fieldset>`
 }
 export function reviewPage(nonce: string) {
-  const products = ['complete', 'year', 'compatibility', 'career', 'love', 'bundle']
+  const products = PREVIEW_KINDS
   const body = `<header><h1>${escape(t('title'))}</h1><button id="customer-export">${escape(t('customerExport'))}</button><button id="marketing-export">${escape(t('marketingExport'))}</button><button id="logout">${escape(t('logout'))}</button></header><p class="notice">${escape(t('notice'))}</p>
     <h2>${escape(g('purpose'))}</h2><p>${escape(g('purposeText'))}</p>
     <nav class="workspace-nav" aria-label="${escape(g('purpose'))}">${['overview', 'site', 'reports'].map(id => `<button type="button" data-panel="${id}" aria-controls="panel-${id}" aria-pressed="${id === 'overview'}">${escape(g(id))}</button>`).join('')}</nav>

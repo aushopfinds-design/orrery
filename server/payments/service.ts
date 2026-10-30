@@ -13,6 +13,7 @@ import { OrderStore } from './store.ts'
 import { issueReport } from './report.ts'
 import type { BuyerReport } from './report.ts'
 import { LIVE_CATALOG, livePriceMatches, requireLivePrice } from './live-catalog.ts'
+import { nextTwelveMonthWindow } from '../../src/report/calendar-window.ts'
 
 export interface StripeGateway {
   createSession(params: Stripe.Checkout.SessionCreateParams, key: string): Promise<Stripe.Checkout.Session>
@@ -58,7 +59,11 @@ export class PaymentService {
     if (!uuid(requestKey)) throw new PaymentError('valid_idempotency_key_required')
     if (!await this.available()) throw new PaymentError('merchant_not_ready', 503)
     const integration = this.integration
-    const input = orderInput(value)
+    const submitted = orderInput(value)
+    const window = submitted.kind === 'year' || submitted.kind === 'bundle'
+      ? nextTwelveMonthWindow(new Date(), submitted.customerTimezone)
+      : undefined
+    const input = { ...submitted, ...(window ? { periodStart: window.start, periodEnd: window.end, periodTimezone: window.timezone } : {}) }
     if (!isActiveProductKind(input.kind)) throw new PaymentError('product_not_available', 409)
     const id = randomUUID(), amount = REPORT_PRICE_CENTS[input.kind]
     const inputHash = fingerprint(this.config.dataKey, JSON.stringify({ input, amount, currency: 'usd', integration }))

@@ -39,7 +39,8 @@ export default function SandboxCheckout({ order }: { order: OrderInput }) {
     try {
       if (mode === 'test') sessionStorage.setItem(TEST_ACCESS_KEY, access)
       // A retry of the same input reuses its order/session, including after a network error.
-      const draft = JSON.stringify({ ...order, ...(contactRecordsReady ? { marketingConsent } : {}), ...(recipientName.trim() ? { recipientName: recipientName.trim() } : {}) }), previous = JSON.parse(sessionStorage.getItem('fate-sandbox-attempt') ?? 'null')
+      const customerTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone
+      const draft = JSON.stringify({ ...order, ...(['year', 'bundle'].includes(order.kind) ? { customerTimezone } : {}), ...(contactRecordsReady ? { marketingConsent } : {}), ...(recipientName.trim() ? { recipientName: recipientName.trim() } : {}) }), previous = JSON.parse(sessionStorage.getItem('fate-sandbox-attempt') ?? 'null')
       const key = previous?.draft === draft ? previous.key : crypto.randomUUID()
       sessionStorage.setItem('fate-sandbox-attempt', JSON.stringify({ draft, key }))
       const response = await fetch('/api/payments?action=checkout', {

@@ -17,10 +17,10 @@ const charts = Array.from({ length: 120 }, (_, index) => calculateSaju({
 function fullReports(kind: typeof PREVIEW_KINDS[number]) {
   if (kind === 'complete') return [buildCompleteReading(a, 2026)]
   if (kind === 'bundle') {
-    const bundle = buildBundleReading(a, b, 2030, 2026)
+    const bundle = buildBundleReading(a, b, 2030, 2026, '2030-01', 'UTC')
     return [bundle.complete, bundle.annual, bundle.compatibility, bundle.career, bundle.love]
   }
-  return [buildCategoryReading(kind, a, { second: b, year: kind === 'year' ? 2030 : 2026 })]
+  return [buildCategoryReading(kind, a, { second: b, year: kind === 'year' ? 2030 : 2026, ...(kind === 'year' ? { periodStart: '2030-01', periodTimezone: 'UTC' } : {}) })]
 }
 
 describe('Concrete examples use several chart features', () => {
@@ -88,7 +88,7 @@ describe('Direct interpretations replace supplementary fictional scenes', () => 
   it('shows actual chapter excerpts in previews without the remaining paid prose', () => {
     for (const kind of PREVIEW_KINDS) {
       const full = fullReports(kind)
-      const preview = buildPersonalPreview(kind, { first: a.input, second: b.input, year: 2030 })
+      const preview = buildPersonalPreview(kind, { first: a.input, second: b.input, year: 2030, periodStart: '2030-01', periodTimezone: 'UTC' })
       for (const excerpt of preview.excerpts) {
         const chapter = full.flatMap(report => report.chapters).find(item => item.id === excerpt.id)!
         expect(excerpt.example).toBeUndefined()

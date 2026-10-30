@@ -104,8 +104,8 @@ describe('A personal decision focus uses two themes and an observable next step'
 
   it('uses the same focus in the full report, preview, public markup and saved text', () => {
     for (const kind of [...kinds, 'compatibility'] as const) {
-      const report = kind === 'complete' ? buildCompleteReading(a, 2026) : buildCategoryReading(kind, a, { second: b, year: 2027 })
-      const preview = buildPersonalPreview(kind, { first: a.input, second: b.input, year: 2027 })
+      const report = kind === 'complete' ? buildCompleteReading(a, 2026) : buildCategoryReading(kind, a, { second: b, year: kind === 'year' ? 2026 : 2027, ...(kind === 'year' ? { periodStart: '2026-11', periodTimezone: 'UTC' } : {}) })
+      const preview = buildPersonalPreview(kind, { first: a.input, second: b.input, year: 2026, periodStart: '2026-11', periodTimezone: 'UTC' })
       expect(preview.brief!.focus).toEqual(report.focus)
       const expected = plainReadingText(decisionFocusText(report.focus))
       expect(report.fullText).toContain('Your reading at a glance')

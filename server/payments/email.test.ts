@@ -74,7 +74,7 @@ it('does not repeat Your in collection titles and explains direct downloads',()=
 })
 
 it('preserves each product title without adding a possessive before a question',()=>{
- for(const title of ['Your Life, Your Destiny','Are We Meant to Be?','What Awaits You This Year?','Success, Money & Your Future','Born to Build a Business?','The Real You: Strengths & Weaknesses','Your Destiny Collection']){
+ for(const title of ['Your Life, Your Destiny','Are We Meant to Be?','Your Next 12 Months','Success, Money & Your Future','Born to Build a Business?','The Real You: Strengths & Weaknesses','Your Destiny Collection']){
   const mail=purchaseMail(config,randomUUID(),'buyer@example.org',{...report,title})
   expect(mail.subject).toBe(title+' | THE FATE KEY')
   expect(mail.text).toContain(title+' is attached as a PDF.')

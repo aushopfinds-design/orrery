@@ -62,10 +62,10 @@ export async function issueReport(input: OrderInput, orderId: string, referenceY
     source = reading; text = reading.fullText; documents = [reading.title]
   } else if (input.kind === 'bundle') {
     if (!b) throw new Error('Missing second chart')
-    const reading = buildBundleReading(a, b, input.year!, referenceYear)
+    const reading = buildBundleReading(a, b, Number(input.periodStart?.slice(0, 4) ?? input.year!), referenceYear, input.periodStart, input.periodTimezone)
     source = reading; text = reading.fullText; documents = [reading.complete.title, reading.annual.title, reading.compatibility.title, reading.career.title, reading.love.title]
   } else {
-    const reading = buildCategoryReading(input.kind, a, { second: b, year: input.year ?? referenceYear })
+    const reading = buildCategoryReading(input.kind, a, { second: b, year: Number(input.periodStart?.slice(0, 4) ?? input.year ?? referenceYear), ...(input.periodStart ? { periodStart: input.periodStart } : {}), ...(input.periodTimezone ? { periodTimezone: input.periodTimezone } : {}) })
     source = reading; text = reading.fullText; documents = [reading.title]
   }
   const certificates = documents.map((title,index) => ({ title, number: reportReference(orderId, referenceYear, index + 1) }))

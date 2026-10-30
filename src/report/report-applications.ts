@@ -293,7 +293,7 @@ function practicalDetails(kind: ApplicationKind, item: SituationCase, first: Saj
 export function buildReportApplications(kind: ApplicationKind, first: SajuResult, options: { second?: SajuResult; year?: number } = {}): ReportApplication[] {
   return SITUATION_CASES[kind].map(item => ({
     ...item, ...practicalDetails(kind, item, first, options.second, options.year), id: `${kind}-${item.id}`, kind,
-    scope: kind === 'year' ? `What Awaits You This Year? — ${options.year ?? new Date().getFullYear() + 1}` : title[kind],
+    scope: kind === 'year' ? 'Your Next 12 Months' : title[kind],
     pattern: patternFor(kind, item, first, options.second, options.year),
   }))
 }

@@ -81,14 +81,15 @@ describe('A continuous preview before checkout', () => {
     const changed = buildPersonalPreview('compatibility', { first, second: { ...second, day: second.day + 1 } })
     expect(changed.headline).not.toBe(pair.headline)
     for (const year of [2027, 2028]) {
-      const preview = buildPersonalPreview('year', { first, year })
-      const full = buildCategoryReading('year', calculateSaju(first), { year })
+      const periodStart = `${year}-01`
+      const preview = buildPersonalPreview('year', { first, year, periodStart, periodTimezone: 'UTC' })
+      const full = buildCategoryReading('year', calculateSaju(first), { year, periodStart, periodTimezone: 'UTC' })
       expect(preview.brief!.support).toEqual(full.chapters[0].guidance.keepClose)
       expect(preview.brief!.watchFor).toEqual(full.chapters[0].guidance.watchFor)
       expect(preview.brief!.focus).toEqual(full.focus)
       expect(full.fullText).toContain(plainReadingText(preview.brief!.focus!.firstStep))
     }
-    expect(buildPersonalPreview('year', { first, year: 2027 }).brief?.focus).not.toEqual(buildPersonalPreview('year', { first, year: 2028 }).brief?.focus)
+    expect(buildPersonalPreview('year', { first, year: 2027, periodStart: '2027-01' }).brief?.focus).not.toEqual(buildPersonalPreview('year', { first, year: 2028, periodStart: '2028-01' }).brief?.focus)
   })
 
   it('includes both real subjects and their own symbols for a two-person preview', () => {

@@ -26,7 +26,7 @@ export { moneyTiming, moneyTimingFacts } from './timing-observations.ts'
 export const POSITIONS = ['hour', 'day', 'month', 'year']
 export interface ReportSubject { label: string; input: BirthInput; birthSummary: string; pillarSummary: string[]; dayMaster: string; elements: ElementCount[]; visibleMarkers: number; calculation: CalculationExplanation }
 export interface ReportMonth extends ReportChapter { label: string; referenceDate: string; pillar: string; yearPillar: string }
-export interface CategoryReading { sharedAppendixInLifeReport?: true; focus: DecisionFocus; kind: FocusCategory; title: string; headline: string; referenceYear: number; subjects: ReportSubject[]; summary: { label: string; text: string }[]; chapters: ReportChapter[]; months: ReportMonth[]; applications: ReportApplication[]; extras: ReportExtras; methodNotes: string[]; fullText: string; wordCount: number }
+export interface CategoryReading { sharedAppendixInLifeReport?: true; focus: DecisionFocus; kind: FocusCategory; title: string; headline: string; referenceYear: number; periodStart?: string; periodTimezone?: string; subjects: ReportSubject[]; summary: { label: string; text: string }[]; chapters: ReportChapter[]; months: ReportMonth[]; applications: ReportApplication[]; extras: ReportExtras; methodNotes: string[]; fullText: string; wordCount: number }
 
 export function chartContext(result: SajuResult) {
   const [hour, day, month, year] = result.pillars
@@ -99,8 +99,13 @@ export function commonMethod(result: SajuResult, year: number): string[] {
 export function finishReading(data: Omit<CategoryReading, 'fullText' | 'wordCount'>): CategoryReading {
   const chapters = data.chapters.map((item, index) => ({ ...item, title: `${String(index + 1).padStart(2, '0')} · ${item.title}` }))
   const chapterText = (item: ReportChapter) => [...deliveredChapter(item), ...(item.example ? everydayExampleText(item.example, item.lead !== item.example.scene) : [])]
+  const firstMonth = data.months[0], lastMonth = data.months.at(-1)
+  const periodNote = data.kind === 'year' && firstMonth && lastMonth && data.periodStart
+    ? [`Analysis window: ${firstMonth.label} through ${lastMonth.label}.`, `The window is fixed to the purchase date and ${data.periodTimezone ?? 'UTC'} timezone. Month names are calendar months; the Saju pillar references follow the solar-term calendar.`]
+    : []
   const fullText = plainReadingText([
     `THE FATE KEY · ${data.title}`, `Report edition ${REPORT_EDITION} · Reference year ${data.referenceYear}`,
+    ...periodNote,
     ...data.subjects.flatMap(item => [item.label, item.birthSummary, item.pillarSummary.join(' · '), `Cycle setting: ${item.calculation.cycleSetting}; direction: ${item.calculation.cycleDirection}.`, ...(data.subjects.length > 1 ? item.calculation.notes : [])]),
     reportOverviewText(chapters),
     ...chapters.flatMap(chapterText),

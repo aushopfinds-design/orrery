@@ -1,4 +1,5 @@
 import { selectedCycles } from './category-shared.ts'
+import { parseCalendarMonth } from './calendar-window.ts'
 import type { SajuResult } from '@orrery/core/types'
 import { getRelation, analyzePillarRelations } from '@orrery/core/pillars'
 import { STEM_ELEMENTS, BRANCH_ELEMENTS } from './reading.ts'
@@ -30,26 +31,33 @@ function timingPlan(chart: SajuResult, p: ReturnType<typeof monthlyPoint>) {
     comparisons: p.comparisons.map(item => ({ position: POSITION[item.index], patterns: item.found.map(pattern => ({ type: pattern.type, detail: pattern.detail, layer: pattern.layer })) })),
   }
 }
-export function buildInterpretationPlan(kind: BuyerOutlineKind, first: SajuResult, year: number, second?: SajuResult) {
+export function buildInterpretationPlan(kind: BuyerOutlineKind, first: SajuResult, year: number, second?: SajuResult, periodStart?: string, periodTimezone?: string) {
   if (!Number.isInteger(year) || year < first.input.year || year < 1900 || year > 2100) throw new Error('Invalid interpretation year')
   if (kind === 'compatibility' && !second) throw new Error('Two birth charts are needed for compatibility')
   if (second && year < second.input.year) throw new Error('Invalid partner reference year')
   const primary = subjectPlan(first), partner = second ? subjectPlan(second) : null
   const annual = fiveYearPoints(first, year).map(p => timingPlan(first, p))
-  return { schema: 'FATE-interpretation-plan-v1', kind, referenceYear: year, includeReadingNotice: true,
+  const windowStart = periodStart ? parseCalendarMonth(periodStart) : undefined
+  if (periodStart && !windowStart) throw new Error('Invalid twelve-month window start')
+  return { schema: 'FATE-interpretation-plan-v1', kind, referenceYear: year, ...(periodStart ? { periodStart } : {}), ...(periodTimezone ? { periodTimezone } : {}), includeReadingNotice: true,
     // Original calculated charts are language-neutral source data; neither writer recalculates birth pillars.
     first, second,
     primary, partner,
     pairPatterns: partner ? primary.positions.flatMap(left => partner.positions.map(right => { const pair = analyzePillarRelations(left.ganzi, right.ganzi); return { left: left.position, right: right.position, leftPillar: left.ganzi, rightPillar: right.ganzi, patterns: [...pair.stem.map(p => ({ ...p, layer: 'stem' })), ...pair.branch.filter(p => !(p.type === '刑' && ['無恩', '恃勢'].includes(p.detail ?? ''))).map(p => ({ ...p, layer: 'branch' }))] } })) : [],
     sections: BUYER_OUTLINES[kind].map(([id]) => ({ id })), annual,
     partnerAnnual: second ? fiveYearPoints(second, year).map(p => timingPlan(second, p)) : [],
-    months: kind === 'year' ? Array.from({ length: 12 }, (_, i) => timingPlan(first, monthlyPoint(first, year, i + 1))) : [],
+    months: kind === 'year' ? Array.from({ length: 12 }, (_, i) => {
+      const index = (windowStart ? windowStart.month - 1 : 0) + i
+      const monthYear = (windowStart?.year ?? year) + Math.floor(index / 12)
+      const month = (index % 12) + 1
+      return timingPlan(first, monthlyPoint(first, monthYear, month))
+    }) : [],
     directions: second ? { aToB: getRelation(first.pillars[1].pillar.stem, second.pillars[1].pillar.stem)!.hanja, bToA: getRelation(second.pillars[1].pillar.stem, first.pillars[1].pillar.stem)!.hanja } : null,
     selectedCycles: selectedCycles(first, year).map(cycle => ({ ganzi: cycle.ganzi, start: cycle.startDate.toISOString(), next: first.daewoon[first.daewoon.indexOf(cycle) + 1]?.startDate.toISOString() ?? null, stemGod: cycle.stemSipsin, branchGod: cycle.branchSipsin })),
     cycles: first.daewoon.map((cycle, index) => ({ ganzi: cycle.ganzi, start: cycle.startDate.toISOString(), next: first.daewoon[index + 1]?.startDate.toISOString() ?? null, stemGod: cycle.stemSipsin, branchGod: cycle.branchSipsin })),
   }
 }
 export type InterpretationPlan = ReturnType<typeof buildInterpretationPlan>
-export function bundleInterpretationPlans(first: SajuResult, second: SajuResult, annualYear: number, referenceYear: number) {
-  return { complete: buildInterpretationPlan('complete', first, referenceYear), compatibility: { ...buildInterpretationPlan('compatibility', first, referenceYear, second), includeReadingNotice: false }, annual: { ...buildInterpretationPlan('year', first, annualYear), includeReadingNotice: false }, career: { ...buildInterpretationPlan('career', first, referenceYear), includeReadingNotice: false }, love: { ...buildInterpretationPlan('love', first, referenceYear), includeReadingNotice: false } }
+export function bundleInterpretationPlans(first: SajuResult, second: SajuResult, annualYear: number, referenceYear: number, periodStart?: string, periodTimezone?: string) {
+  return { complete: buildInterpretationPlan('complete', first, referenceYear), compatibility: { ...buildInterpretationPlan('compatibility', first, referenceYear, second), includeReadingNotice: false }, annual: { ...buildInterpretationPlan('year', first, annualYear, undefined, periodStart, periodTimezone), includeReadingNotice: false }, career: { ...buildInterpretationPlan('career', first, referenceYear), includeReadingNotice: false }, love: { ...buildInterpretationPlan('love', first, referenceYear), includeReadingNotice: false } }
 }
