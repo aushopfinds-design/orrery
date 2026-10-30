@@ -53,6 +53,7 @@ export function shortParagraphs(text: string): string[] {
   if (current) out.push(current)
   return out
 }
+function labelledParagraph(label: string, text: string) { return shortParagraphs(`${label}: ${text}`) }
 function section(id: string, title: string, paragraphs: string[], evidence: string[], caution: string, action: string, icon = 'personality'): ReportChapter {
   const detailed = paragraphs.filter(text => /^(The checked positions are |No complete three-branch |A complete branch group |Only within the hidden stems|Every relationship found in the hidden stems|No same-element hidden stem)/.test(text) || /day stem has same-element roots/.test(text) || text.startsWith('The evidence lists every cross-chart pair.'))
   const readable = paragraphs.filter(text => !detailed.includes(text)).flatMap(shortParagraphs)
@@ -141,7 +142,25 @@ function withPurchaseTiming(chapters: ReportChapter[], plan: InterpretationPlan,
     const body = added.lines.map(line => line.en).flatMap(shortParagraphs)
     const paragraphs = body.slice(1)
     if(!paragraphs.length) paragraphs.push(added.action.en)
-    return { ...item, lead: body[0], paragraphs, evidence: [...new Set([...item.evidence, ...(timing[item.id]?.evidence ?? [])])],
+    let lead = body[0]
+    if(plan.kind==='career'){
+      const answer=labelledParagraph('Direct answer',lead)
+      lead=answer[0]
+      if(answer.length>1)paragraphs.unshift(...answer.slice(1))
+      if(paragraphs.length&&!['work-chapters','feedback-and-boundaries'].includes(item.id)&&!/^Reading basis:|^About this reading:/.test(paragraphs[0])){
+        paragraphs.splice(0,1,...labelledParagraph('What this means for you',paragraphs[0]))
+      }
+      if(item.id==='feedback-and-boundaries'&&paragraphs.length){
+        paragraphs.splice(0,1,...labelledParagraph('Important timing',paragraphs[0]))
+      }
+      if(item.id==='career-plan'&&paragraphs.length>1){
+        const timingIndex=paragraphs.findIndex(text=>/\b(?:19|20)\d{2}\b/.test(text))
+        if(timingIndex>=0)paragraphs.splice(timingIndex,1,...labelledParagraph('Important timing',paragraphs[timingIndex]))
+        const last=paragraphs.length-1
+        paragraphs.splice(last,1,...labelledParagraph('Bottom line',paragraphs[last]))
+      }
+    }
+    return { ...item, lead, paragraphs, evidence: [...new Set([...item.evidence, ...(timing[item.id]?.evidence ?? [])])],
       showGuidance: added.showGuidance, tryThis: added.action.en, guidance:{keepClose:[added.action.en],watchFor:[added.caution.en]} }
   })
 }

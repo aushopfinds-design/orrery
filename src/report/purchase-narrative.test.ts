@@ -18,7 +18,10 @@ describe('Complete customer narrative language coverage, rather than only select
   for(const c of chapters){
    const original=paired[c.id], sentences=original.lines.map(l=>normal(l.en))
    expect(original.lines.every(l=>l.ko.length>0)).toBe(true)
-   for(const paragraph of [c.lead,...c.paragraphs])expect(sentences.some(s=>s.includes(normal(paragraph)))||paragraph===original.action.en).toBe(true)
+   for(const paragraph of [c.lead,...c.paragraphs]){
+    const authored=paragraph.replace(/^(?:Direct answer|What this means for you|Important timing|Bottom line):\s*/,'')
+    expect(sentences.some(s=>s.includes(normal(authored)))||paragraph===original.action.en).toBe(true)
+   }
    expect(c.tryThis).toBe(original.action.en)
    expect(c.guidance.watchFor).toEqual([original.caution.en])
    for(const line of original.lines)expect(ko).toContain(normal(line.ko))
@@ -150,7 +153,8 @@ describe('Customer conclusions before planning advice',()=>{
   expect(career).toContain('2035-08-27')
   expect(career).toContain('壬寅')
   expect(career).toContain('辛丑')
-  expect(career).toContain('training and dependable support, alongside recognised responsibility and clear standards')
+  expect(career).toContain('training and dependable support')
+  expect(career).toContain('recognised responsibility and clear standards shaping daily responsibilities')
   expect(career).toContain('does not predict a payment or income increase')
  })
  it('answers the life reading’s relationship and final-life questions from this chart',()=>{

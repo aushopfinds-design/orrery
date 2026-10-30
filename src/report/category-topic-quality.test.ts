@@ -31,7 +31,9 @@ describe('Direct subject-specific traditional interpretation', () => {
     for (const chart of charts) {
       const career = buildCategoryReading('career', chart, { year: 2026 })
       const business = buildCategoryReading('business', chart, { year: 2026 })
-      expect(career.chapters[0].lead).toBe(BUYER_ANSWERS[chart.pillars[2].stemSipsin].career.en)
+      expect(career.chapters[0].title).toBe('01 · What Kind of Career Suits You Best?')
+      expect(career.chapters[0].lead).toContain('Direct answer:')
+      expect(career.fullText).toContain(BUYER_ANSWERS[chart.pillars[2].stemSipsin].workplace.en)
       expect(business.chapters[0].lead).toBe(businessVerdict(buildInterpretationPlan('business',chart,2026).primary).en)
       const money = career.chapters.find(x => x.id === 'money-commitments')!
       expect(money.paragraphs.join(' ')).toContain('confirmed pay')

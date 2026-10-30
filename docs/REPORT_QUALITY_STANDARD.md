@@ -36,6 +36,11 @@ For each major conclusion:
 **Customer question → Verified chart evidence → Plain-English interpretation → Relevant real-life example → Direct takeaway.**
 Do not expose unnecessary technical detail to customers, but make the reason for each interpretation understandable.
 
+### Customer-first writing standard
+Customer-facing section titles should use the question the buyer came to answer. Put the personal conclusion in the opening paragraph, then explain its practical meaning in ordinary life. Keep calculation evidence in the internal report model and optional source notes; explain only the evidence the customer needs, in one or two plain-English sentences. Do not replace a personal answer with generic self-help, repeated cautions or a long explanation of Saju terms. When evidence is mixed, say which choice is better supported and which remains uncertain. When evidence is insufficient, say so plainly without filling the gap with a generic prediction. Specific timing belongs only where the calculated chart supports it.
+
+For focused products, keep the buyer's question visible throughout the generated preview and PDF. Use a concise direct answer, a practical implication, relevant timing only when supported, and a clear takeaway. The display and PDF must be built from the same interpreted chapter data.
+
 ## Personalization review
 Compare at least 10 appropriately varied birth charts. Check that meaningful chart differences lead to meaningful differences in the relevant explanations. Identical verified charts may legitimately have identical interpretations; never invent differences.
 
