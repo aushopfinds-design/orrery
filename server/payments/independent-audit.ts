@@ -1,7 +1,7 @@
 import { gunzipSync } from 'node:zlib'
 import { readFile } from 'node:fs/promises'
 import type { BirthInput, SajuResult } from '../../packages/core/src/types.ts'
-import { auditCustomerBirth } from '../../src/report/customer-audit.ts'
+import { auditCustomerBirth } from '../../src/report/independent-personalization.ts'
 
 /** Runs only in the server runtime. Failures and slow responses preserve the existing Orrery reading. */
 let engineModule: Promise<{ calculateSaju: (request: unknown) => unknown }> | undefined

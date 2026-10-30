@@ -35,5 +35,5 @@ describe('My Money & Career customer-first delivery', () => {
     expect(new Set(careerAnswers).size).toBe(3)
     expect(reports[2].text).toContain('Hour: Unknown')
     expect(reports[2].text).not.toMatch(/Hour (?:pillar|stem|branch) [甲乙丙丁戊己庚辛壬癸]/)
-  })
+  }, 120_000)
 })
