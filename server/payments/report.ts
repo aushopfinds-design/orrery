@@ -107,8 +107,10 @@ async function reportPdf(report: BuyerReport, orderId: string, emphasis: string[
   const phrases = [...new Set(emphasis.map(clean))].sort((a, b) => b.length - a.length)
   const emphasisPattern = phrases.length ? new RegExp(phrases.map(x => x.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|'), 'g') : undefined
   const W = 595.28, H = 841.89
-  const night = rgb(.07, .10, .17), gold = rgb(.65, .51, .28), paper = rgb(.98, .96, .91)
+  // Moonlit Envelope (70%) + Antique Scroll Letter (30%): shared by every paid PDF.
+  const night = rgb(.065, .092, .155), gold = rgb(.68, .54, .32), paper = rgb(.982, .963, .925)
   const ink = rgb(.17, .20, .25), muted = rgb(.36, .38, .41)
+  const moonlight = rgb(.79, .85, .91), parchmentEdge = rgb(.85, .79, .68)
   let page = pdf.addPage([W, H]), y = 748
   const textX = 54, textWidth = W - 108
   const centre = (text: string, yy: number, size: number, color = gold, face = display) => {
@@ -124,6 +126,17 @@ async function reportPdf(report: BuyerReport, orderId: string, emphasis: string[
     page.drawRectangle({ x: 0, y: 0, width: W, height: H, color: dark ? night : paper })
     page.drawRectangle({ x: 28, y: 28, width: W - 56, height: H - 56, borderColor: gold, borderWidth: .6 })
     page.drawRectangle({ x: 33, y: 33, width: W - 66, height: H - 66, borderColor: gold, borderWidth: .2 })
+    if (!dark) {
+      // Quiet antique-letter border, kept outside the body text safe area.
+      page.drawRectangle({ x: 38, y: 38, width: W - 76, height: H - 76, borderColor: parchmentEdge, borderWidth: .4, borderOpacity: .7 })
+      for (const side of [-1, 1]) {
+        const cx = side < 0 ? 41 : W - 41
+        for (const cy of [77, H - 77]) {
+          page.drawCircle({ x: cx, y: cy, size: 9, borderColor: gold, borderWidth: .55, borderOpacity: .4 })
+          page.drawCircle({ x: cx, y: cy, size: 3, color: gold, opacity: .24 })
+        }
+      }
+    }
     if (!dark) {
       // Vector ornament remains faint behind type and crisp at print resolution.
       const star = (x: number, yy: number, r: number, opacity = .17) => {
@@ -201,10 +214,14 @@ async function reportPdf(report: BuyerReport, orderId: string, emphasis: string[
   // A private letter, with honest Sandbox labelling kept separate from the story.
   frame(true)
   centre('THE FATE KEY', 744, 17)
-  centre('A LETTER FROM YOUR CHART', 708, 10)
-  page.drawCircle({ x: W / 2, y: 610, size: 33, color: gold })
-  page.drawCircle({ x: W / 2 + 14, y: 620, size: 30, color: night })
-  key(W / 2, 529, 1.1)
+  centre('A PRIVATE LETTER OF DESTINY', 708, 10, moonlight)
+  // Luminous crescent over a translucent envelope silhouette.
+  page.drawCircle({ x: W / 2, y: 620, size: 37, color: moonlight, opacity: .92 })
+  page.drawCircle({ x: W / 2 + 17, y: 629, size: 34, color: night })
+  page.drawRectangle({ x: 130, y: 423, width: W - 260, height: 136, color: moonlight, opacity: .055, borderColor: gold, borderWidth: .6, borderOpacity: .6 })
+  page.drawLine({ start: { x: 130, y: 559 }, end: { x: W / 2, y: 459 }, color: moonlight, thickness: .65, opacity: .32 })
+  page.drawLine({ start: { x: W - 130, y: 559 }, end: { x: W / 2, y: 459 }, color: moonlight, thickness: .65, opacity: .32 })
+  key(W / 2, 538, .72)
   for (const [x, yy] of [[130, 625], [443, 580], [168, 475], [412, 690]]) {
     page.drawLine({ start: { x: x - 4, y: yy }, end: { x: x + 4, y: yy }, color: gold, thickness: .6 })
     page.drawLine({ start: { x, y: yy - 4 }, end: { x, y: yy + 4 }, color: gold, thickness: .6 })
@@ -216,7 +233,7 @@ async function reportPdf(report: BuyerReport, orderId: string, emphasis: string[
     else titleLine = candidate
   }
   centre(titleLine, titleY, 29, paper)
-  centre('A little clarity for the road ahead.', 245, 16, paper, italic)
+  centre('A letter written beneath the moonlight.', 245, 16, paper, italic)
   centre('Prepared from the birth details inside', 194, 10, paper, display)
   centre('Edition ' + report.edition + ' / ' + report.issuedAt.slice(0, 10), 163, 9)
   if (report.reference) centre(report.reference, 135, 8, gold, font)
@@ -319,6 +336,8 @@ async function reportPdf(report: BuyerReport, orderId: string, emphasis: string[
   }
   addPage()
   centre('The letter ends. Your story continues.', 685, 25, ink, italic)
+  // The closing seal rests on an antique stationery ribbon.
+  page.drawLine({ start: { x: 108, y: 370 }, end: { x: W - 108, y: 370 }, color: gold, thickness: .8, opacity: .48 })
   y = 618
   paragraph('You do not have to act on every page. Keep the passage that helped you understand yourself a little more clearly, and come back when another part of life asks for your attention.', 12)
   paragraph('With care, THE FATE KEY', 12, gold)
