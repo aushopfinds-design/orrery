@@ -17,6 +17,7 @@ import { previewProduct } from '../../src/report/personal-products.ts'
 import { careerMoneyChartData } from '../../src/report/career-money-charts.ts'
 import type { OrderInput } from './input.ts'
 import { auditBirthInput } from './independent-audit.ts'
+import { applyBuyerQuestions } from '../../src/report/buyer-outline.ts'
 
 export interface BuyerReport {
   title: string
@@ -59,14 +60,19 @@ export async function issueReport(input: OrderInput, orderId: string, referenceY
   if (input.kind === 'complete') {
     const independentAudit = await auditBirthInput(input.first, a)
     const reading = buildCompleteReading(a, referenceYear, independentAudit)
-    source = reading; text = reading.fullText; documents = [reading.title]
+    source = reading; text = applyBuyerQuestions(reading.fullText, 'complete', reading.chapters); documents = [reading.title]
   } else if (input.kind === 'bundle') {
     if (!b) throw new Error('Missing second chart')
     const reading = buildBundleReading(a, b, Number(input.periodStart?.slice(0, 4) ?? input.year!), referenceYear, input.periodStart, input.periodTimezone)
-    source = reading; text = reading.fullText; documents = [reading.complete.title, reading.annual.title, reading.compatibility.title, reading.career.title, reading.love.title]
+    source = reading
+    text = reading.fullText
+    for (const [kind, report] of [['complete', reading.complete], ['year', reading.annual], ['compatibility', reading.compatibility], ['career', reading.career], ['love', reading.love]] as const) {
+      text = applyBuyerQuestions(text, kind, report.chapters)
+    }
+    documents = [reading.complete.title, reading.annual.title, reading.compatibility.title, reading.career.title, reading.love.title]
   } else {
     const reading = buildCategoryReading(input.kind, a, { second: b, year: Number(input.periodStart?.slice(0, 4) ?? input.year ?? referenceYear), ...(input.periodStart ? { periodStart: input.periodStart } : {}), ...(input.periodTimezone ? { periodTimezone: input.periodTimezone } : {}) })
-    source = reading; text = reading.fullText; documents = [reading.title]
+    source = reading; text = applyBuyerQuestions(reading.fullText, input.kind, reading.chapters); documents = [reading.title]
   }
   const certificates = documents.map((title,index) => ({ title, number: reportReference(orderId, referenceYear, index + 1) }))
   const reference = input.kind === 'bundle' ? reportReference(orderId, referenceYear, 0) : certificates[0].number

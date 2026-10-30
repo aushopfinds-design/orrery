@@ -4,6 +4,7 @@ import { describe, expect, it } from 'vitest'
 import { CATEGORY_SCENARIOS } from '../../src/report/category-catalog.ts'
 import type { PreviewKind } from '../../src/report/personal-products.ts'
 import { issueReport } from './report.ts'
+import { BUYER_QUESTIONS, type BuyerOutlineKind } from '../../src/report/buyer-outline.ts'
 
 const samples = [
   CATEGORY_SCENARIOS[0].first,
@@ -31,6 +32,13 @@ describe('seven purchased report PDF generation', () => {
         const pdf = await PDFDocument.load(bytes)
         expect(pdf.getPageCount(), `${kind} for profile ${personIndex + 1}`).toBeGreaterThan(1)
         expect(report.text).not.toMatch(/undefined|NaN|\[object Object\]/)
+        const questionKinds: BuyerOutlineKind[] = kind === 'bundle'
+          ? ['complete', 'year', 'compatibility', 'career', 'love']
+          : [kind]
+        const expectedQuestions = questionKinds.flatMap(questionKind => BUYER_QUESTIONS[questionKind])
+        expect(report.text.match(/Question: /g)?.length, `${kind} question count`).toBe(expectedQuestions.length)
+        expect(report.text.match(/Answer: /g)?.length, `${kind} answer count`).toBe(expectedQuestions.length)
+        for (const question of expectedQuestions) expect(report.text).toContain(`Question: ${question.question}`)
         if (kind === 'year') {
           expect(report.title).toBe('Your Next 12 Months')
           expect(report.text).toContain('Analysis window: November 2026 through October 2027.')

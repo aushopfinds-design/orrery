@@ -1,4 +1,5 @@
 import type { ReportChapter } from './complete-reading.ts'
+import { deliveredChapter } from './report-delivery.ts'
 export const BUYER_OUTLINES = {
   complete: [['personality', "What Shapes Your Life and Destiny?"], ['social', "What Helps You Thrive — and What Holds You Back?"], ['money', "How Are You Meant to Make Money?"], ['career', "Where Could You Find Your Kind of Success?"], ['love', "What Do You Need in Love?"], ['balance', "What Helps You Feel More Balanced?"], ['patterns', "When Might Your Life Change Direction?"]],
   compatibility: [['two-styles', "How Do You Fit Together?"], ['two-directions', "Why Are You Drawn to Each Other?"], ['close-conversation', "Why Do You See Things Differently?"], ['shared-routine', "Can Your Everyday Lives Fit Together?"], ['shared-money', "Can You Agree About Money?"], ['chart-patterns', "What Brings You Closer — and What Creates Friction?"], ['support-each-other', "How Might the Years Ahead Affect Your Relationship?"], ['shared-week', "What Does This Connection Ask of You?"]],
@@ -9,6 +10,147 @@ export const BUYER_OUTLINES = {
   wellbeing: [['everyday-pace', "Who Are You Beneath the Surface?"], ['visible-elements', "Which Parts of Your Nature Stand Out?"], ['workload-rhythm', "What Tends to Put You Under Pressure?"], ['support-and-space', "What Do You Need From the People Around You?"], ['balance-week', "How Can Your Strengths Become Blind Spots?"]],
 } as const
 export type BuyerOutlineKind = keyof typeof BUYER_OUTLINES
+type AnswerPart = 'lead' | 'caution' | 'action' | 'timing' | `paragraph:${number}`
+interface BuyerQuestion { id: string; question: string; source: string; part: AnswerPart }
+
+/** Ten buyer questions per product. Answers reuse the existing chart-based chapter prose. */
+export const BUYER_QUESTIONS: Record<BuyerOutlineKind, BuyerQuestion[]> = {
+  complete: [
+    { id: 'personality', question: 'What kind of person am I?', source: 'personality', part: 'lead' },
+    { id: 'social', question: 'What are my greatest strengths?', source: 'social', part: 'lead' },
+    { id: 'q-hidden-weakness', question: 'What are my hidden weaknesses?', source: 'social', part: 'caution' },
+    { id: 'career', question: 'What kind of career suits me?', source: 'career', part: 'lead' },
+    { id: 'money', question: 'How does money work in my life?', source: 'money', part: 'lead' },
+    { id: 'love', question: 'What is my pattern in love?', source: 'love', part: 'lead' },
+    { id: 'patterns', question: 'What are my biggest life challenges?', source: 'patterns', part: 'lead' },
+    { id: 'q-turning-points', question: 'When are my major turning points?', source: 'patterns', part: 'timing' },
+    { id: 'q-next-cycle', question: 'What does my next ten-year cycle suggest?', source: 'patterns', part: 'paragraph:1' },
+    { id: 'balance', question: 'What is the most important insight about my life?', source: 'balance', part: 'lead' },
+  ],
+  career: [
+    { id: 'two-work-layers', question: 'Which careers suit me best?', source: 'two-work-layers', part: 'lead' },
+    { id: 'proof-of-skill', question: 'Am I better suited to employment or independent work?', source: 'proof-of-skill', part: 'lead' },
+    { id: 'money-commitments', question: 'How do I naturally make money?', source: 'money-commitments', part: 'lead' },
+    { id: 'q-earning-strength', question: 'What are my strongest earning abilities?', source: 'money-commitments', part: 'paragraph:0' },
+    { id: 'q-earning-keeping', question: 'Am I better at earning money or keeping it?', source: 'money-commitments', part: 'paragraph:1' },
+    { id: 'working-style', question: 'What tends to block my financial progress?', source: 'working-style', part: 'lead' },
+    { id: 'q-risk', question: 'What should I know about financial risk?', source: 'working-style', part: 'caution' },
+    { id: 'feedback-and-boundaries', question: 'Which upcoming periods deserve attention?', source: 'feedback-and-boundaries', part: 'lead' },
+    { id: 'work-chapters', question: 'How do my ten-year cycles affect work and money?', source: 'work-chapters', part: 'lead' },
+    { id: 'career-plan', question: 'What is my most important money and career insight?', source: 'career-plan', part: 'lead' },
+  ],
+  compatibility: [
+    { id: 'two-directions', question: 'Why are we attracted to each other?', source: 'two-directions', part: 'lead' },
+    { id: 'two-styles', question: 'What makes us compatible?', source: 'two-styles', part: 'lead' },
+    { id: 'close-conversation', question: 'Where are we different?', source: 'close-conversation', part: 'lead' },
+    { id: 'q-conflict', question: 'What causes conflict between us?', source: 'close-conversation', part: 'caution' },
+    { id: 'q-love-language', question: 'How do we express love differently?', source: 'two-directions', part: 'paragraph:0' },
+    { id: 'chart-patterns', question: 'What are our strongest relationship qualities?', source: 'chart-patterns', part: 'lead' },
+    { id: 'shared-week', question: 'What are our biggest relationship challenges?', source: 'shared-week', part: 'caution' },
+    { id: 'q-commitment', question: 'What do our individual charts suggest about commitment?', source: 'shared-week', part: 'lead' },
+    { id: 'support-each-other', question: 'Which upcoming periods may affect our relationship themes?', source: 'support-each-other', part: 'lead' },
+    { id: 'q-connection-insight', question: 'What is the most important insight about our connection?', source: 'shared-week', part: 'paragraph:0' },
+  ],
+  year: [
+    { id: 'annual-theme', question: 'What is the overall theme of my next 12 months?', source: 'annual-theme', part: 'lead' },
+    { id: 'annual-work', question: 'What does this period suggest for my career?', source: 'annual-work', part: 'lead' },
+    { id: 'annual-money', question: 'What does it suggest for money?', source: 'annual-money', part: 'lead' },
+    { id: 'annual-connections', question: 'What does it suggest for love?', source: 'annual-connections', part: 'lead' },
+    { id: 'annual-cycle-context', question: 'Which months have more supportive chart relationships?', source: 'annual-cycle-context', part: 'lead' },
+    { id: 'annual-plan', question: 'Which months require closer attention?', source: 'annual-plan', part: 'lead' },
+    { id: 'q-work-shift', question: 'When may work or money themes shift?', source: 'annual-work', part: 'paragraph:0' },
+    { id: 'q-relationship-themes', question: 'What relationship themes appear during this period?', source: 'annual-connections', part: 'paragraph:0' },
+    { id: 'q-key-periods', question: 'What are the three most important periods to understand?', source: 'annual-cycle-context', part: 'paragraph:0' },
+    { id: 'q-year-message', question: 'What is my overall message for the next 12 months?', source: 'annual-theme', part: 'paragraph:0' },
+  ],
+  business: [
+    { id: 'founder-style', question: 'Does my chart support business-oriented traits?', source: 'founder-style', part: 'lead' },
+    { id: 'offer-test', question: 'What kind of business work suits me?', source: 'offer-test', part: 'lead' },
+    { id: 'q-business-strengths', question: 'What are my entrepreneurial strengths?', source: 'founder-style', part: 'paragraph:0' },
+    { id: 'q-business-weakness', question: 'What are my business weaknesses?', source: 'business-plan', part: 'caution' },
+    { id: 'team-decisions', question: 'Am I better suited to working alone or with partners?', source: 'team-decisions', part: 'lead' },
+    { id: 'customer-communication', question: 'What customer or service strengths appear in my chart?', source: 'customer-communication', part: 'lead' },
+    { id: 'delivery-capacity', question: 'What financial risks should I understand?', source: 'delivery-capacity', part: 'lead' },
+    { id: 'business-chapters', question: 'What do my upcoming cycles suggest about business activity?', source: 'business-chapters', part: 'lead' },
+    { id: 'business-plan', question: 'What conditions may make expansion more demanding?', source: 'business-plan', part: 'lead' },
+    { id: 'q-business-insight', question: 'What is my most important business insight?', source: 'delivery-capacity', part: 'paragraph:0' },
+  ],
+  wellbeing: [
+    { id: 'everyday-pace', question: 'What is my core personality?', source: 'everyday-pace', part: 'lead' },
+    { id: 'q-how-others-see-me', question: 'How do others tend to experience me?', source: 'everyday-pace', part: 'paragraph:0' },
+    { id: 'visible-elements', question: 'What are my natural strengths?', source: 'visible-elements', part: 'paragraph:0' },
+    { id: 'q-hidden-strength', question: 'What are my hidden strengths?', source: 'balance-week', part: 'lead' },
+    { id: 'workload-rhythm', question: 'What are my weaknesses?', source: 'workload-rhythm', part: 'lead' },
+    { id: 'q-pressure', question: 'How do I respond under pressure?', source: 'workload-rhythm', part: 'caution' },
+    { id: 'q-environment', question: 'What kind of environment brings out my best?', source: 'support-and-space', part: 'paragraph:0' },
+    { id: 'support-and-space', question: 'What do I need most in relationships?', source: 'support-and-space', part: 'lead' },
+    { id: 'balance-week', question: 'What personal patterns deserve attention?', source: 'workload-rhythm', part: 'paragraph:0' },
+    { id: 'q-personal-insight', question: 'What is the most important thing to understand about myself?', source: 'everyday-pace', part: 'paragraph:0' },
+  ],
+  love: [
+    { id: 'love-style', question: 'How do I tend to approach love?', source: 'love-style', part: 'lead' },
+    { id: 'love-needs', question: 'What helps me feel secure in a relationship?', source: 'love-needs', part: 'lead' },
+    { id: 'love-attraction', question: 'What kind of connection suits me?', source: 'love-attraction', part: 'lead' },
+    { id: 'love-friction', question: 'What relationship patterns may cause conflict?', source: 'love-friction', part: 'lead' },
+    { id: 'q-love-strength', question: 'What is one of my strengths as a partner?', source: 'love-patterns', part: 'lead' },
+    { id: 'love-timing', question: 'When may relationship priorities shift?', source: 'love-timing', part: 'lead' },
+    { id: 'love-outlook', question: 'What can help me build a relationship that fits?', source: 'love-outlook', part: 'lead' },
+    { id: 'q-love-friction-detail', question: 'Why might this pattern repeat?', source: 'love-friction', part: 'paragraph:0' },
+    { id: 'q-love-need-detail', question: 'What kind of care matters most to me?', source: 'love-needs', part: 'paragraph:0' },
+    { id: 'q-love-timing-detail', question: 'What should I pay attention to in those periods?', source: 'love-timing', part: 'paragraph:0' },
+  ],
+}
+
+export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapters: ReportChapter[]): string {
+  const byId = new Map(chapters.map(chapter => [chapter.id, chapter]))
+  const questionsBySource = new Map<string, BuyerQuestion[]>()
+  for (const question of BUYER_QUESTIONS[kind]) {
+    if (!byId.has(question.source)) throw new Error(`Missing answer source: ${kind}/${question.source}`)
+    questionsBySource.set(question.source, [...(questionsBySource.get(question.source) ?? []), question])
+  }
+  for (const [source, questions] of questionsBySource) {
+    const chapter = byId.get(source)!, used = new Set<string>()
+    const answer = (question: BuyerQuestion) => {
+      let lead = chapter.lead
+      let paragraphs: string[] = []
+      if (question.part === 'caution') {
+        lead = chapter.guidance.watchFor[0] ?? chapter.tryThis
+        paragraphs = chapter.tryThis ? [chapter.tryThis] : []
+      } else if (question.part === 'action') {
+        lead = chapter.tryThis || chapter.lead
+        paragraphs = chapter.guidance.keepClose
+      } else if (question.part === 'timing') {
+        const index = chapter.paragraphs.findIndex(line => /\b20\d\d\b|cycle|period|month|year/i.test(line))
+        lead = index >= 0 ? chapter.paragraphs[index] : chapter.tryThis
+        paragraphs = index >= 0 ? chapter.paragraphs.slice(index + 1, index + 2) : []
+      } else if (question.part.startsWith('paragraph:')) {
+        const index = Number(question.part.slice('paragraph:'.length))
+        lead = chapter.paragraphs[index] ?? chapter.tryThis
+        paragraphs = []
+      }
+      if (!lead?.trim()) throw new Error(`Empty buyer answer: ${kind}/${question.id}`)
+      if (chapter.paragraphs.includes(lead)) used.add(lead)
+      for (const line of paragraphs) if (chapter.paragraphs.includes(line)) used.add(line)
+      return [lead, ...paragraphs].filter((line, index, all) => all.indexOf(line) === index)
+    }
+    const extraAnswers = questions.slice(1).map(question => ({ question, lines: answer(question) }))
+    const firstLines = [chapter.lead, ...chapter.paragraphs.filter(line => !used.has(line))]
+    const guidance = chapter.showGuidance === false ? [] : [
+      ...(!extraAnswers.some(item => item.lines.includes(chapter.tryThis)) ? ['Practical point: ' + chapter.tryThis] : []),
+      ...(!extraAnswers.some(item => chapter.guidance.watchFor.includes(item.lines[0])) ? ['Main caution: ' + chapter.guidance.watchFor.join(' ')] : []),
+    ]
+    const qas = [
+      `Question: ${questions[0].question}`,
+      ...firstLines.map((line, index) => `${index ? 'Answer detail: ' : 'Answer: '}${line}`),
+      ...extraAnswers.flatMap(({ question, lines }) => [`Question: ${question.question}`, ...lines.map((line, index) => `${index ? 'Answer detail: ' : 'Answer: '}${line}`)]),
+    ]
+    const replacement = [chapter.title, ...qas, ...guidance].join('\n\n')
+    const original = deliveredChapter(chapter).join('\n\n')
+    if (!text.includes(original)) throw new Error(`Missing delivered source: ${kind}/${source}`)
+    text = text.replace(original, replacement)
+  }
+  return text
+}
 /** Preserve chapter IDs for saved links, while making the reading order buyer-led. */
 export function buyerOutline(kind: BuyerOutlineKind, chapters: ReportChapter[]) {
   const byId = new Map(chapters.map(item => [item.id, item]))
