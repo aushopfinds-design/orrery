@@ -126,7 +126,7 @@ describe('My Life direct buyer answers and annual distinctions', () => {
     expect(report.chapters.every(chapter => chapter.evidence.length > 0)).toBe(true)
   })
 
-  it('connects all ten paid questions to the right personal answer and next ten-year cycle', () => {
+  it('connects all seven standalone questions to the right personal answers and timing', () => {
     const report = buildCompleteReading(joy, 2026)
     const paidText = applyBuyerQuestions(report.fullText, 'complete', report.chapters, report.periods)
     const questions = BUYER_QUESTIONS.complete
@@ -137,20 +137,16 @@ describe('My Life direct buyer answers and annual distinctions', () => {
       previous = index
     }
     const answerFor = (question: string, next: string) => paidText.slice(paidText.indexOf(question), paidText.indexOf(next, paidText.indexOf(question) + question.length))
-    const challenges = answerFor(questions[6].question, questions[7].question)
-    const turningPoints = answerFor(questions[7].question, questions[8].question)
-    const nextCycle = answerFor(questions[8].question, questions[9].question)
-    const insight = paidText.slice(paidText.indexOf(questions[9].question))
+    const challenges = answerFor(questions[5].question, questions[6].question)
+    const turningPoints = paidText.slice(paidText.indexOf(questions[6].question))
     expect(challenges).toMatch(/biggest life challenge may be/i)
     expect(challenges).toContain(joy.pillars[1].pillar.branch)
     expect(turningPoints).toContain('2026')
     expect(turningPoints).toContain('2029')
     expect(turningPoints).toContain('2031')
-    expect(nextCycle).toContain('辛亥')
-    expect(nextCycle).toMatch(/July 2034/i)
-    expect(nextCycle).toMatch(/money|work|relationship/i)
-    expect(insight).toMatch(/most important life insight is that/i)
-    expect(insight).toContain(joy.pillars[1].pillar.branch)
+    expect(turningPoints).toContain('辛亥')
+    expect(turningPoints).toMatch(/July 2034/i)
+    expect(turningPoints).toMatch(/money|work|relationship/i)
   })
 
   it('describes ten-year cycle boundaries as approximate when calculation conventions differ', () => {
