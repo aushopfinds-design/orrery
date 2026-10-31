@@ -12,7 +12,7 @@ export function deliveredChapter(chapter: ReportChapter): string[] {
   const caution = 'Main caution: ' + chapter.guidance.watchFor.join(' ')
   const lines = [chapter.lead, ...chapter.paragraphs]
     .filter(line => line !== chapter.tryThis && !chapter.guidance.watchFor.includes(line))
-  return [chapter.title, ...new Set(lines), ...(chapter.showGuidance === false ? [] : [action, [caution]])]
+  return [chapter.title, ...new Set(lines), ...(chapter.showGuidance === false ? [] : [action, caution])]
 }
 export function calculationAppendix(groups: { title: string; evidence: string[] }[]): string {
   const seen = new Set<string>()
