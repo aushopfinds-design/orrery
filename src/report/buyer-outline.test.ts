@@ -4,7 +4,7 @@ import { calculateSaju } from '@orrery/core/saju'
 import { CATEGORY_SCENARIOS } from './category-catalog.ts'
 import { buildCompleteReading } from './complete-reading.ts'
 import { buildCategoryReading } from './category-readings.ts'
-import { BUYER_OUTLINES, BUYER_QUESTIONS, applyBuyerQuestions } from './buyer-outline.ts'
+import { BUYER_OUTLINES, BUYER_QUESTIONS, COLLECTION_BUYER_QUESTIONS, applyBuyerQuestions } from './buyer-outline.ts'
 import { deliveredChapter } from './report-delivery.ts'
 const a = calculateSaju(CATEGORY_SCENARIOS[0].first), b = calculateSaju(CATEGORY_SCENARIOS[0].second)
 describe('Buyer questions, not a repeated six-part technical template', () => {
@@ -66,6 +66,34 @@ describe('Buyer questions, not a repeated six-part technical template', () => {
     expect(report).toContain('Question: What does this connection ask of each of us?\n\nAnswer: This connection asks each person to make room for the other’s different needs.')
     expect(report).toContain('Question: How do emotional closeness and everyday compatibility differ?\n\nAnswer: Private closeness is stronger than sharing a daily routine; attraction and practical agreements are different kinds of fit.')
     expect(report).not.toContain('Question: What tends to cause friction between us?\n\nAnswer: A generic caution.')
+  })
+  it('keeps ten collection questions and maps relationship answers to their matching details', () => {
+    expect(COLLECTION_BUYER_QUESTIONS.compatibility).toHaveLength(10)
+    const make = (id: string, lead: string, paragraphs: string[] = [], action = 'Make one clear agreement.') => ({
+      id, title: id, lead, paragraphs, evidence: [], tryThis: action,
+      guidance: { keepClose: [action], watchFor: ['A chart-specific caution.'] }, icon: 'personality' as const,
+    })
+    const chapters = [
+      make('two-directions', 'Attraction can grow through reassurance.'),
+      make('two-styles', 'Different care needs can fit together.', ['Private closeness is stronger than sharing a daily routine.']),
+      make('close-conversation', 'You value listening; your partner values practical help.', [
+        'You need time to finish a concern.',
+        'Your partner needs undivided attention.',
+        'The private-life patterns connect.',
+        'The clearest friction is advice arriving before listening.',
+      ]),
+      make('chart-patterns', 'Your main tension is correcting before clarifying the problem.'),
+      make('shared-week', 'This connection asks each person to make room for different needs.', [], 'Agree on who owns one shared task.'),
+      make('support-each-other', 'Each person has a separate relationship timeline.'),
+    ]
+    const source = chapters.map(chapter => deliveredChapter(chapter).join('\\n\\n')).join('\\n\\n')
+    const report = applyBuyerQuestions(source, 'compatibility', chapters, [], 'collection')
+    expect((report.match(/^Question:/gm) ?? [])).toHaveLength(10)
+    expect(report).toContain('Question: How do we express love differently?\\n\\nAnswer: You need time to finish a concern.\\n\\nAnswer detail: Your partner needs undivided attention.')
+    expect(report).toContain('Question: Where is closeness strongest, and where might daily routines be harder?\\n\\nAnswer: Private closeness is stronger than sharing a daily routine.')
+    expect(report).toContain('Question: What recurring tension should we watch for?\\n\\nAnswer: Your main tension is correcting before clarifying the problem.')
+    expect(report).toContain('Question: What does this connection ask of each of us?\\n\\nAnswer: This connection asks each person to make room for different needs.')
+    expect(report).toContain('Question: What practical step could strengthen this connection?\\n\\nAnswer: Agree on who owns one shared task.')
   })
   it('maps wellbeing questions to the chapter that answers each one', () => {
     const make = (id: string, lead: string, paragraphs: string[] = [], action = 'A chart-specific practical step.', caution = 'A chart reading cannot diagnose health.') => ({
