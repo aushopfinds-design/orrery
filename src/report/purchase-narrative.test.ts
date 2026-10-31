@@ -67,7 +67,7 @@ describe('Buyer review r14: direct answers without repeated warnings or lost dat
    const sections=customerNarrative(buildInterpretationPlan(kind,a,kind==='year'?2027:2026,kind==='compatibility'?b:undefined))
    const text=Object.values(sections).flatMap(s=>[...s.lines.map(x=>x.en),s.action.en,s.caution.en]).join('\n')
    expect(text).not.toMatch(/competing signals about support|comparison with work.*shows friction|does not establish a dismissal|whole period unlucky|You experiences|A’s .*daily style/)
-   expect(text.match(/About this reading:/g)).toHaveLength(1)
+   expect(text).not.toMatch(/About this reading:/)
   }
  })
  it('answers starting, partnership and expansion with different chart-based content',()=>{
@@ -103,11 +103,11 @@ describe('r15 paid-content review fixes',()=>{
  })
  it('keeps the common note once in the actual bundle, with no month-method note in personality or compatibility',()=>{
   const bundle=buildBundleFromPlans(bundleInterpretationPlans(a,b,2027,2026))
-  expect(bundle.fullText.match(/About this reading:/g)).toHaveLength(1)
+  expect(bundle.fullText.match(/About this reading:/g) ?? []).toHaveLength(0)
   for(const kind of ['wellbeing','compatibility'] as const){
    const p=buildInterpretationPlan(kind,a,2026,kind==='compatibility'?b:undefined)
-   const note=customerNarrative(p)[p.sections[0].id].lines.find(l=>l.en.startsWith('About this reading:'))!
-   expect(note.en).not.toMatch(/15 July|15th|mid-July/)
+   const delivered=buildTraditionalCategoryFromPlan(p).fullText
+   expect(delivered).not.toMatch(/15 July|15th|mid-July/)
   }
  })
  it('does not silently relabel a cautious period as calm or guaranteed favourable',()=>{
@@ -161,7 +161,7 @@ describe('Customer conclusions before planning advice',()=>{
   const samplePlan=buildInterpretationPlan('complete',customerSample,2026)
   const first=customerNarrative(samplePlan),other=customerNarrative(buildInterpretationPlan('complete',a,2026))
   const love=first.love.lines.map(line=>line.en).join(' ')
-  expect(love).toContain(`private-life marker ${samplePlan.primary.dayBranch}`)
+  expect(love).toContain(`to ${samplePlan.primary.dayBranch}, the day sign used to read close relationships`)
   expect(love).toMatch(/years that most clearly touch relationship priorities/)
   expect(love).toMatch(/marriage or separation|partner, marriage or separation/)
   expect(love).not.toBe(other.love.lines.map(line=>line.en).join(' '))
