@@ -67,7 +67,7 @@ export async function issueReport(input: OrderInput, orderId: string, referenceY
     source = reading
     text = reading.fullText
     for (const [kind, report] of [['complete', reading.complete], ['year', reading.annual], ['compatibility', reading.compatibility], ['career', reading.career], ['love', reading.love]] as const) {
-      text = applyBuyerQuestions(text, kind, report.chapters)
+      text = applyBuyerQuestions(text, kind, report.chapters, [], 'collection')
     }
     documents = [reading.complete.title, reading.annual.title, reading.compatibility.title, reading.career.title, reading.love.title]
   } else {
