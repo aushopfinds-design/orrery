@@ -58,13 +58,13 @@ describe('Buyer questions, not a repeated six-part technical template', () => {
       ]),
       make('support-each-other', 'The timing comparison highlights different personal themes in 2027.', []),
     ]
-    const source = chapters.map(chapter => deliveredChapter(chapter).join('\\n\\n')).join('\\n\\n')
+    const source = chapters.map(chapter => deliveredChapter(chapter).join('\n\n')).join('\n\n')
     const report = applyBuyerQuestions(source, 'compatibility', chapters)
     expect((report.match(/^Question:/gm) ?? [])).toHaveLength(7)
-    expect(report).toContain('Question: How do we express love differently?\\n\\nAnswer: Person A tends to express love through focused conversation.\\n\\nAnswer detail: Person B tends to express love through reliable practical help.')
-    expect(report).toContain('Question: What tends to cause friction between us?\\n\\nAnswer: The clearest friction is when advice arrives before listening, or help arrives without checking what was asked for.')
-    expect(report).toContain('Question: What are our biggest relationship challenges?\\n\\nAnswer: The main challenge is agreeing on time, duties and who follows through.')
-    expect(report).not.toContain('Question: What tends to cause friction between us?\\n\\nAnswer: A generic caution.')
+    expect(report).toContain('Question: How do we express love differently?\n\nAnswer: Person A tends to express love through focused conversation.\n\nAnswer detail: Person B tends to express love through reliable practical help.')
+    expect(report).toContain('Question: What tends to cause friction between us?\n\nAnswer: The clearest friction is when advice arrives before listening, or help arrives without checking what was asked for.')
+    expect(report).toContain('Question: What are our biggest relationship challenges?\n\nAnswer: The main challenge is agreeing on time, duties and who follows through.')
+    expect(report).not.toContain('Question: What tends to cause friction between us?\n\nAnswer: A generic caution.')
   })
 
 })
