@@ -4,6 +4,7 @@ import { WORKING_LANGUAGE } from './purchase-language.ts'
 import { periodFocus, PERIOD_VOICE } from './period-voice.ts'
 import type { SajuResult } from '@orrery/core/types'
 import { monthlyPoint, timingPoint, pointForPillar, POSITION } from './traditional-analysis.ts'
+import { parseCalendarMonth } from './calendar-window.ts'
 import { periodAssessment, structuralFacts } from './structural-assessment.ts'
 export type TimingArea = 'work' | 'money' | 'business' | 'love' | 'life'
 export interface TimingSentence { id: string; en: string; ko: string }
@@ -114,8 +115,13 @@ export function purchaseTiming(result: SajuResult, point: ReturnType<typeof mont
 export function purchaseYears(result: SajuResult, year: number, area: TimingArea, count=10, distinguishWorkLayer=false) {
  return Array.from({length:Math.min(count,2101-year)},(_,i)=>purchaseTiming(result,timingPoint(result,year+i),area,String(year+i),distinguishWorkLayer))
 }
-export function purchaseMonths(result: SajuResult, year: number, area: TimingArea='life') {
- return Array.from({length:12},(_,i)=>purchaseTiming(result,monthlyPoint(result,year,i+1),area))
+export function purchaseMonths(result: SajuResult, year: number, area: TimingArea='life', periodStart?: string) {
+ const start = periodStart ? parseCalendarMonth(periodStart) : { year, month: 1 }
+ if (!start) throw new Error('Invalid twelve-month window start')
+ return Array.from({length:12},(_,i)=>{
+  const absolute = start.month - 1 + i, monthYear = start.year + Math.floor(absolute / 12), month = absolute % 12 + 1
+  return purchaseTiming(result, monthlyPoint(result, monthYear, month), area)
+ })
 }
 export function purchaseCycle(result: SajuResult, cycle: SajuResult['daewoon'][number], area: TimingArea) {
  const check = new Date(cycle.startDate.getTime() + 86400000).toISOString().slice(0,10)
