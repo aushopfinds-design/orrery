@@ -49,8 +49,8 @@ describe('Buyer questions, not a repeated six-part technical template', () => {
         'The private-life pattern shows different expectations.',
         'The clearest friction is when advice arrives before listening, or help arrives without checking what was asked for.',
       ]),
-      make('chart-patterns', 'The strongest shared quality is the ability to make room for different needs.', []),
-      make('shared-week', 'Both people need to agree how recurring responsibilities are shared.', [
+      make('chart-patterns', 'Private closeness is stronger than sharing a daily routine; attraction and practical agreements are different kinds of fit.', []),
+      make('shared-week', 'This connection asks each person to make room for the other’s different needs.', [
         'The day comparison shows a private-life difference.',
         'The month comparison shows a different daily routine.',
         'Each person needs a clear voice in shared decisions.',
@@ -63,7 +63,8 @@ describe('Buyer questions, not a repeated six-part technical template', () => {
     expect((report.match(/^Question:/gm) ?? [])).toHaveLength(7)
     expect(report).toContain('Question: How do we express love differently?\n\nAnswer: Person A tends to express love through focused conversation.\n\nAnswer detail: Person B tends to express love through reliable practical help.')
     expect(report).toContain('Question: What tends to cause friction between us?\n\nAnswer: The clearest friction is when advice arrives before listening, or help arrives without checking what was asked for.')
-    expect(report).toContain('Question: What are our biggest relationship challenges?\n\nAnswer: The main challenge is agreeing on time, duties and who follows through.')
+    expect(report).toContain('Question: What does this connection ask of each of us?\n\nAnswer: This connection asks each person to make room for the other’s different needs.')
+    expect(report).toContain('Question: How do emotional closeness and everyday compatibility differ?\n\nAnswer: Private closeness is stronger than sharing a daily routine; attraction and practical agreements are different kinds of fit.')
     expect(report).not.toContain('Question: What tends to cause friction between us?\n\nAnswer: A generic caution.')
   })
   it('maps wellbeing questions to the chapter that answers each one', () => {
@@ -74,14 +75,14 @@ describe('Buyer questions, not a repeated six-part technical template', () => {
     const chapters = [
       make('everyday-pace', 'A personalized temperament answer.'),
       make('visible-elements', 'A clear explanation of the visible element pattern.'),
-      make('workload-rhythm', 'A personalized daily pressure pattern.'),
+      make('workload-rhythm', 'A personalized daily pressure pattern.', [], 'A chart-specific practical step.', 'Notice when a capable response is taking too much of your time.'),
       make('support-and-space', 'A relationship support need.'),
       make('balance-week', 'A strength and its matching blind spot.', [], 'Choose a routine that fits.'),
     ]
     const source = chapters.map(chapter => deliveredChapter(chapter).join('\n\n')).join('\n\n')
     const report = applyBuyerQuestions(source, 'wellbeing', chapters)
     expect((report.match(/^Question:/gm) ?? [])).toHaveLength(7)
-    expect(report).toContain('Question: Can this reading diagnose a health issue?\n\nAnswer: A chart reading cannot diagnose health.')
+    expect(report).toContain('Question: What should I watch for when pressure builds?\n\nAnswer: Notice when a capable response is taking too much of your time.')
     expect(report).toContain('Question: What practical step can help my everyday balance?\n\nAnswer: Choose a routine that fits.')
     expect(report).not.toContain('Question: What kind of environment brings out my best?')
   })
