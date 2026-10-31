@@ -330,7 +330,8 @@ export function customerNarrative(plan:InterpretationPlan,targetedProduct01=true
  }
  if(plan.kind==='year'){
   const y=plan.annual[0],yg=LANGUAGE[y.god],yi=LANGUAGE[y.innerGod]
-  const annualTheme=pair(`${plan.referenceYear} brings ${yg.name.en}, alongside ${yi.name.en}. Compared with your usual work, which emphasises ${m.name.en}, this ${y.god===p.monthStemGod?'repeats a familiar demand':'adds a different demand'}.`,`${plan.referenceYear}년에는 ${yg.name.ko}, 그리고 ${yi.name.ko}이 나타납니다. 타고난 업무 주제인 ${m.name.ko}과 비교하면 ${y.god===p.monthStemGod?'익숙한 요구가 반복되는':'다른 요구가 더해지는'} 흐름입니다.`)
+  const windowLabel=plan.months.length?`${humanMonth(plan.months[0].date)} through ${humanMonth(plan.months.at(-1)!.date)}`:`the twelve months following ${plan.referenceYear}`
+  const annualTheme=pair(`Your next twelve months run from ${windowLabel}. The opening annual comparison brings ${yg.name.en}, alongside ${yi.name.en}. Compared with your usual work, which emphasises ${m.name.en}, this ${y.god===p.monthStemGod?'repeats a familiar demand':'adds a different demand'}.`,`앞으로 12개월은 ${windowLabel}입니다. 시작 시점의 연간 비교에는 ${yg.name.ko}과 ${yi.name.ko}이 나타납니다. 타고난 업무 주제인 ${m.name.ko}과 비교하면 ${y.god===p.monthStemGod?'익숙한 요구가 반복되는':'다른 요구가 더해지는'} 흐름입니다.`)
   put('annual-theme',[annualTheme,yg.work,yi.money,capacity],pair('Compare the changing demands of the selected year with the work and relationship needs that repeat in your birth chart.','선택한 연도의 달라지는 요구와 타고난 일·관계에서 반복되는 필요를 비교합니다.'),yg.pressure)
   put('annual-work',[pair(`${plan.referenceYear}: ${BUYER_ANSWERS[y.god].career.en}`,`${plan.referenceYear}년: ${BUYER_ANSWERS[y.god].career.ko}`),yi.work,publicRole,answer.workplace,yg.pressure],keepWork,yi.pressure)
   const moneyMonths=plan.months.filter(x=>[x.god,x.innerGod].some(g=>['正財','偏財'].includes(g)))
