@@ -174,7 +174,7 @@ function withStructuralEvidence(chapters: ReportChapter[], plan: InterpretationP
   const facts = (item: ReturnType<typeof structuralAssessment>) => [...item.evidence, item.verdict, item.paragraphs[3], item.balanceText]
   return chapters.map((item, index) => index ? item : { ...item,
     paragraphs: item.paragraphs,
-    evidence: [...item.evidence, ...periodFacts, ...partnerFacts, ...facts(a).map(text => b ? 'You: ' + text : text), ...resolutionEnglish(plan.primary.resolution).map(c => b ? 'You: ' + c.text : c.text), ...(b ? [...facts(b), ...resolutionEnglish(plan.partner!.resolution).map(c => c.text)].map(text => 'Person B: ' + text) : [])],
+    evidence: [...item.evidence, ...periodFacts, ...partnerFacts, ...facts(a).map(text => b ? 'You: ' + text : text), ...resolutionEnglish(plan.primary.resolution).map(c => b ? 'You: ' + c.text : c.text), ...(b ? [...facts(b), ...resolutionEnglish(plan.partner!.resolution).map(c => c.text)].map(text => 'Your partner: ' + text) : [])],
   })
 }
 function distinctChapters(chapters: ReportChapter[]) {
