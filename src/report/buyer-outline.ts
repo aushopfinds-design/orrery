@@ -10,7 +10,7 @@ export const BUYER_OUTLINES = {
   wellbeing: [['everyday-pace', "Who Are You Beneath the Surface?"], ['visible-elements', "Which Parts of Your Nature Stand Out?"], ['workload-rhythm', "What Tends to Put You Under Pressure?"], ['support-and-space', "What Do You Need From the People Around You?"], ['balance-week', "How Can Your Strengths Become Blind Spots?"]],
 } as const
 export type BuyerOutlineKind = keyof typeof BUYER_OUTLINES
-type AnswerPart = 'lead' | 'lead-with-caution' | 'caution' | 'action' | 'timing' | 'turning-points' | 'next-cycle' | `paragraph:${number}`
+type AnswerPart = 'lead' | 'lead-with-caution' | 'caution' | 'action' | 'timing' | 'turning-points' | 'next-cycle' | `paragraph:${number}` | `paragraphs:${number}-${number}`
 interface BuyerQuestion { id: string; question: string; source: string; part: AnswerPart }
 
 /** Seven questions for the six standalone products. The collection keeps its existing question set. */
@@ -36,10 +36,10 @@ export const BUYER_QUESTIONS: Record<BuyerOutlineKind, BuyerQuestion[]> = {
   compatibility: [
     { id: 'two-directions', question: 'Why are we attracted to each other?', source: 'two-directions', part: 'lead' },
     { id: 'two-styles', question: 'What makes us compatible?', source: 'two-styles', part: 'lead' },
-    { id: 'q-conflict', question: 'What tends to cause friction between us?', source: 'close-conversation', part: 'caution' },
-    { id: 'q-love-language', question: 'How do we express love differently?', source: 'two-directions', part: 'paragraph:0' },
+    { id: 'q-conflict', question: 'What tends to cause friction between us?', source: 'close-conversation', part: 'paragraph:3' },
+    { id: 'q-love-language', question: 'How do we express love differently?', source: 'close-conversation', part: 'paragraphs:0-1' },
     { id: 'chart-patterns', question: 'What are our strongest relationship qualities?', source: 'chart-patterns', part: 'lead' },
-    { id: 'shared-week', question: 'What are our biggest relationship challenges?', source: 'shared-week', part: 'caution' },
+    { id: 'shared-week', question: 'What are our biggest relationship challenges?', source: 'shared-week', part: 'paragraph:3' },
     { id: 'support-each-other', question: 'Which upcoming periods may affect our relationship themes?', source: 'support-each-other', part: 'lead' },
   ],
   year: [
@@ -195,6 +195,12 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
             ...next.paragraphs.slice(2, 5),
           ]
         }
+      } else if (question.part.startsWith('paragraphs:')) {
+        const match = /^(\d+)-(\d+)$/.exec(question.part.slice('paragraphs:'.length))
+        const start = Number(match?.[1]), end = Number(match?.[2])
+        const selected = Number.isInteger(start) && Number.isInteger(end) && end >= start ? chapter.paragraphs.slice(start, end + 1) : []
+        lead = selected[0] ?? chapter.tryThis
+        paragraphs = selected.slice(1)
       } else if (question.part.startsWith('paragraph:')) {
         const index = Number(question.part.slice('paragraph:'.length))
         lead = chapter.paragraphs[index] ?? chapter.tryThis
