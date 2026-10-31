@@ -67,7 +67,7 @@ function style(result: SajuResult) {
   const a = natalAnalysis(result), p = PERSONAL_PROFILES[a.day.pillar.stem]
   return [
     `Your birth-day sign is ${STEMS[a.day.pillar.stem].name}, traditionally pictured as ${p.image}. In everyday life, this points to ${p.focus}. You tend to need ${p.need}.`,
-    `${p.strength} ${p.pressure}`,
+    p.strength,
     a.rootText,
     `Your birth month adds a ${a.season} theme to this picture. It is part of the traditional reading, but counting signs alone cannot tell us how easily you will handle extra demands.`,
   ]
