@@ -1,11 +1,15 @@
 /** 도시 정보 */
 export interface City {
-  /** 한국어 도시명 */
+  /** 도시명 (기존 목록은 한국어, 전 세계 검색은 영어 또는 현지명) */
   name: string
   /** 한국어 국가명 (국내 도시는 생략) */
   country?: string
   /** 한국어 광역 지역명 (예: '경기도', '강원도') */
   region?: string
+  /** ISO 3166-1 국가 코드 (전 세계 검색 및 신규 프로필) */
+  countryCode?: string
+  /** 검색 공급자의 장소 식별자 */
+  placeId?: string
   lat: number
   lon: number
 }
@@ -14,7 +18,6 @@ export interface City {
 // 한국어 초성 검색
 // =============================================
 
-const INITIALS = 'ㄱㄲㄴㄷㄸㄹㅁㅂㅃㅅㅆㅇㅈㅉㅊㅋㅌㅍㅎ'
 
 /** 자모 코드포인트 → 초성 인덱스 */
 const JAMO_TO_INITIAL: Record<number, number> = {
@@ -331,8 +334,11 @@ export const WORLD_CITIES: readonly City[] = [
   { name: '오클랜드', country: '뉴질랜드', lat: -36.8485, lon: 174.7633 },
 ] as const
 
-/** 기본값: 서울 */
+/** Seoul city reference. */
 export const SEOUL = KOREAN_CITIES[0]
+
+/** Default birthplace for the English-first experience. */
+export const NEW_YORK: City = { name: '뉴욕', country: '미국', lat: 40.7128, lon: -74.0060 }
 
 // =============================================
 // 검색 / 필터링

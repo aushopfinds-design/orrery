@@ -1,95 +1,194 @@
-import { useCallback, useRef, useState } from 'react'
+import { lazy, Suspense, useCallback, useEffect, useRef, useState } from 'react'
 import BirthForm from './BirthForm.tsx'
+import ProductCatalog from './ProductCatalog.tsx'
+import HomeOverview, { FateEmblem, HomeBenefits, HomeFAQ } from './HomeOverview.tsx'
+import LanguageMenu from './LanguageMenu.tsx'
+import HeroArtwork from './HeroArtwork.tsx'
+import HeroDestinyCard from './HeroDestinyCard.tsx'
 import type { BirthFormHandle, SavedFormState } from './BirthForm.tsx'
 import ProfileModal from './ProfileModal.tsx'
-import Guide from './Guide.tsx'
 import CopyButton from './CopyButton.tsx'
-import ThemeToggle from './ThemeToggle.tsx'
-import LanguageMenu from './LanguageMenu.tsx'
 import { useLocale } from '../i18n/index.ts'
-import SajuView from './saju/SajuView.tsx'
-import ZiweiView from './ziwei/ZiweiView.tsx'
-import NatalView from './natal/NatalView.tsx'
-import { calculateSaju } from '@orrery/core/saju'
-import { createChart } from '@orrery/core/ziwei'
-import { calculateNatal } from '@orrery/core/natal'
-import { sajuToText, ziweiToText, natalToText } from '../utils/text-export.ts'
+import { useReportHash, resolveReportRoute, resolveFocusCategory, navigationTarget } from '../utils/report-route.ts'
 import type { BirthInput } from '@orrery/core/types'
+import BuyerJourney from './BuyerJourney.tsx'
+import { previewHash, resolvePreviewKind } from '../report/personal-products.ts'
+import { readPreviewDraft, updatePreviewDraft } from '../utils/preview-draft.ts'
+import { formStateFromBirth, matchesBirth, normalizeBirthFormState, readBirthFormState } from '../utils/birth-form-state.ts'
+import { previewProduct } from '../report/personal-products.ts'
+import ReportBoundary from './report/ReportBoundary.tsx'
+import HomeLearning from './HomeLearning.tsx'
 
-type Tab = 'saju' | 'ziwei' | 'natal'
+type Tab = 'saju' | 'ziwei' | 'natal' | 'reading'
+const SajuView = lazy(() => import('./saju/SajuView.tsx'))
+const ZiweiView = lazy(() => import('./ziwei/ZiweiView.tsx'))
+const NatalView = lazy(() => import('./natal/NatalView.tsx'))
+const SiteInfoPage = lazy(() => import('./SiteInfoPage.tsx'))
+const ReadingView = lazy(() => import('./report/ReadingView.tsx'))
+const FreeReadingView = lazy(() => import('./report/FreeReadingView.tsx'))
+const CompleteReportPage = lazy(() => import('./CompleteReportPage.tsx'))
+const CategoryReportPage = lazy(() => import('./CategoryReportPage.tsx'))
+const CategorySamplePage = lazy(() => import('./report/CategorySamplePage.tsx'))
+const BundleSamplePage = lazy(() => import('./report/BundleSamplePage.tsx'))
+const BuyerReportPanel = lazy(() => import('./report/BuyerReportPanel.tsx'))
+const PersonalPreviewPage = lazy(() => import('./report/PersonalPreviewPage.tsx'))
+const HomeReportPreview = lazy(() => import('./HomeReportPreview.tsx'))
+const DestinyCardStudio = lazy(() => import('./DestinyCardStudio.tsx'))
+const SAMPLE_BIRTH: BirthInput = {
+  year: 1998, month: 3, day: 25, hour: 3, minute: 0,
+  gender: 'M', timezone: 'America/New_York', latitude: 40.7128, longitude: -74.006,
+}
 
 export default function App() {
   const { t } = useLocale()
-  const [tab, setTab] = useState<Tab>('saju')
-  const [birthInput, setBirthInput] = useState<BirthInput | null>(null)
+  const hash = useReportHash()
+  const route = resolveReportRoute(hash)
+  const focusCategory = resolveFocusCategory(hash)
+  const previewKind = resolvePreviewKind(hash)
+  const [tab, setTab] = useState<Tab>('reading')
+  const [menuOpen, setMenuOpen] = useState(false)
+  const [birthInput, setBirthInput] = useState<BirthInput | null>(() => readPreviewDraft().first ?? null)
   const [profileModalOpen, setProfileModalOpen] = useState(false)
   const [externalFormState, setExternalFormState] = useState<SavedFormState | null>(null)
   const resultsRef = useRef<HTMLDivElement>(null)
   const birthFormRef = useRef<BirthFormHandle>(null)
-
-  function handleSubmit(input: BirthInput) {
-    setBirthInput(input)
-    requestAnimationFrame(() => {
-      resultsRef.current?.scrollIntoView({ behavior: 'smooth' })
-    })
+  const lastFormStateRef = useRef<SavedFormState | null>(null)
+  function scrollToReading() {
+    requestAnimationFrame(() => resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }))
   }
-
+  function handleSubmit(input: BirthInput) {
+    lastFormStateRef.current = birthFormRef.current?.getCurrentState() ?? lastFormStateRef.current
+    updatePreviewDraft({ first: input })
+    setBirthInput(input)
+    setTab('reading')
+    window.location.hash = 'free-reading'
+    scrollToReading()
+  }
+  function handlePersonalBirth(input: BirthInput) {
+    updatePreviewDraft({ first: input })
+    setBirthInput(input)
+    setTab('reading')
+    const stored = readBirthFormState()
+    lastFormStateRef.current = stored && matchesBirth(stored, input) ? stored : formStateFromBirth(input)
+  }
+  function viewSample() {
+    window.location.hash = 'sample-report'
+    scrollToReading()
+  }
+  function startFree() {
+    window.location.hash = 'birth-details'
+    requestAnimationFrame(() => document.getElementById('birth-details')?.scrollIntoView({ behavior: 'smooth', block: 'start' }))
+  }
   const getCurrentFormState = useCallback(() => {
-    return birthFormRef.current?.getCurrentState() ?? null
-  }, [])
-
+    const active = birthFormRef.current?.getCurrentState()
+    if (active) return normalizeBirthFormState(active)
+    if (!birthInput) return null
+    const stored = readBirthFormState()
+    if (stored && matchesBirth(stored, birthInput)) return stored
+    const last = lastFormStateRef.current
+    return last && matchesBirth(last, birthInput) ? last : formStateFromBirth(birthInput)
+  }, [birthInput])
+  function handleDataCleared() {
+    setBirthInput(null); lastFormStateRef.current = null; setExternalFormState(null); setTab('reading'); setProfileModalOpen(false)
+  }
+  const currentNav = navigationTarget(hash)
+  const links = [
+    ['#home', 'home.nav.home'], ['#birth-details', 'home.nav.free'],
+    ['#reports', 'home.nav.reports'], ['/learn/', 'site.public.learn'],
+    ...(birthInput || route === 'personal-preview' ? [[previewHash(previewKind ?? readPreviewDraft().kind), 'site.nav.my']] : []),
+    ['#about', 'home.nav.about'], ['#help', 'site.help.nav'],
+  ]
+  function navigateHomeSection() {
+    setMenuOpen(false)
+  }
+  const showingFree = route === 'free' && birthInput != null
+  const showingSample = route === 'sample'
+  const showingReport = showingSample || route === 'category-sample' || route === 'bundle-sample'
+  const showingHome = route === 'home' || (route === 'free' && !birthInput)
+  useEffect(() => {
+    if (!showingHome) return
+    const section = hash.slice(1)
+    if (['home', 'birth-details', 'report-preview', 'reports', 'about', 'faq', 'discover', 'focused-reports', 'destiny-card'].includes(section)) {
+      document.getElementById(section)?.scrollIntoView({ block: 'start' })
+    }
+  }, [hash, showingHome])
+  useEffect(() => {
+    if (route === 'personal-preview') return
+    const title = route === 'card-studio' ? t('destiny.studio.title') : route === 'help' ? t('site.help.title') : route === 'guide' ? t('site.guide.title') : route === 'privacy' ? t('site.privacy.title') : route === 'free' ? t('reading.free.title') : route === 'bundle-product' || route === 'bundle-sample' ? t('category.bundle.title') : focusCategory ? previewProduct(focusCategory).title : route === 'sample' || route === 'product' ? t('complete.title') : t('home.hero.title')
+    document.title = title + (route.includes('sample') ? ' — ' + t('site.title.sample') : '') + ' | The Fate Key'
+  }, [route, focusCategory, t])
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-gray-100 relative">
-      <ThemeToggle />
-      <LanguageMenu />
-      <a
-        href="https://github.com/rath/orrery"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="fixed top-0 right-0 z-50"
-        aria-label="View source on GitHub"
-      >
-        <svg width="60" height="60" viewBox="0 0 250 250" className="fill-gray-700 text-white" aria-hidden="true">
-          <path d="M0 0l115 115h15l12 27 108 108V0z" />
-          <path d="M128.3 109c-14.5-9.3-9.3-19.4-9.3-19.4 3-6.9 1.5-11 1.5-11-1.3-6.6 2.9-2.3 2.9-2.3 3.9 4.6 2.1 11 2.1 11-2.6 10.3 5.1 14.6 8.9 15.9" fill="currentColor" style={{ transformOrigin: '130px 106px' }} />
-          <path d="M115 115c-.1.1 3.7 1.5 4.8.4l13.9-13.8c3.2-2.4 6.2-3.2 8.5-3 -8.4-10.6-14.7-24.2 1.6-40.6 4.7-4.6 10.2-6.8 15.9-7 .6-1.6 3.5-7.4 11.7-10.9 0 0 4.7 2.4 7.4 16.1 4.3 2.4 8.4 5.6 12.1 9.2 3.6 3.6 6.8 7.8 9.2 12.2 13.7 2.6 16.2 7.3 16.2 7.3-3.6 8.2-9.4 11.1-10.9 11.7-.3 5.8-2.4 11.2-7.1 15.9-16.4 16.4-29.4 11.6-36.4 8.8 .2 2.8-1 6.8-5 10.8L141 136.5c-1.2 1.2.6 5.4.8 5.3z" fill="currentColor" />
-        </svg>
-      </a>
-      <main className="max-w-2xl mx-auto px-4 py-6">
-        <div className="text-center mb-6">
-          <p className="text-base text-gray-500 dark:text-gray-400 tracking-wide">
-            {t('app.subtitle1')}<br className="sm:hidden" /> <span className="font-medium text-gray-700 dark:text-gray-200">{t('app.subtitle.tool')}</span> {t('app.subtitle2')}
-          </p>
-          <p className="text-sm text-gray-400 dark:text-gray-500 mt-1">{t('app.subtitle3')}</p>
+    <div className="fate-site" id="home">
+      <a className="fate-skip-link" href="#main-content" onClick={event => { event.preventDefault(); const main = document.getElementById('main-content'); main?.focus(); main?.scrollIntoView({ block: 'start' }) }}>{t('site.skip')}</a>
+      <header className="fate-hero">
+        <nav className="fate-nav" aria-label={t('home.nav.label')}>
+          <a href="#home" className="fate-brand" aria-label="The Fate Key" onClick={navigateHomeSection}>
+            <FateEmblem className="fate-brand-emblem" />
+            <span><strong>The Fate Key</strong><small>UNLOCK A BRIGHTER YOU</small></span>
+          </a>
+          <div className="fate-desktop-links">{links.map(([href, key]) => <a key={href} href={href} aria-current={currentNav === (href.startsWith('#my-report') ? '#my-report' : href) ? 'page' : undefined} onClick={navigateHomeSection}>{t(key)}</a>)}</div>
+          <div className="fate-nav-actions">
+            <LanguageMenu inline />
+            <button type="button" className="fate-saved-button" onClick={() => setProfileModalOpen(true)}>{t('home.nav.saved')}</button>
+            <button type="button" className="fate-menu-button" aria-label={t('home.nav.menu')} aria-expanded={menuOpen} aria-controls="fate-mobile-menu" onClick={() => setMenuOpen(open => !open)}><span aria-hidden="true">{menuOpen ? '×' : '☰'}</span></button>
+          </div>
+          {menuOpen && <div className="fate-mobile-menu" id="fate-mobile-menu">{links.map(([href, key]) => <a key={href} href={href} aria-current={currentNav === (href.startsWith('#my-report') ? '#my-report' : href) ? 'page' : undefined} onClick={navigateHomeSection}>{t(key)}</a>)}<button type="button" onClick={() => { setMenuOpen(false); setProfileModalOpen(true) }}>{t('home.nav.saved')}</button></div>}
+        </nav>
+        {showingHome && <HeroArtwork />}
+        <div className="fate-hero-layout" hidden={!showingHome}>
+          <div className="fate-hero-intro">
+            <p className="fate-eyebrow">{t('home.hero.eyebrow')}</p>
+            <h1>{t('home.hero.title')}<br /><em>{t('home.hero.highlight')}</em></h1>
+            <p className="fate-hero-description">{t('home.hero.text')}</p>
+            <div className="fate-hero-reading-actions">
+              <a href="#birth-details" className="fate-complete-primary">{t('preview.home.start')} <span aria-hidden="true">→</span></a>
+              <a href="#report-preview" className="fate-hero-example-link">{t('preview.home.look')} <span aria-hidden="true">↗</span></a>
+            </div>
+            {window.location.hostname.endsWith('.vercel.app') && <><div className="fate-hero-reading-actions"><a href="#my-report" className="fate-complete-primary">{t('sandbox.home')}</a></div>
+            <p className="fate-reading-small-note">{t('sandbox.note')}</p></>}
+            <div className="fate-hero-promises">{['free', 'card'].map(key => <span key={key}>{t(`buyer.hero.${key}`)}</span>)}</div>
+          </div>
+          <section id="birth-details" className="fate-birth-panel" aria-labelledby="birth-heading">
+            <div className="fate-birth-heading"><span aria-hidden="true">✦</span><h2 id="birth-heading">{t('home.form.title')}</h2></div>
+            <p className="fate-birth-description">{t('home.form.text')}</p>
+            {showingHome && <BirthForm compact ref={birthFormRef} onSubmit={handleSubmit} externalState={externalFormState} onExternalStateConsumed={() => setExternalFormState(null)} />}
+          </section>
+          {showingHome && <HeroDestinyCard />}
         </div>
-        <BirthForm
-          ref={birthFormRef}
-          onSubmit={handleSubmit}
-          externalState={externalFormState}
-          onExternalStateConsumed={() => setExternalFormState(null)}
-        />
-        <div className="flex justify-end mt-2">
-          <button
-            type="button"
-            onClick={() => setProfileModalOpen(true)}
-            className="flex items-center gap-1 text-sm text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
-          >
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
-            </svg>
-            {t('app.profileManage')}
-          </button>
-        </div>
-
-        {birthInput && (
-          <>
-            {/* 탭 네비게이션 */}
-            <div ref={resultsRef} className="flex items-center border-b border-gray-200 dark:border-gray-700 mt-6 mb-4">
+      </header>
+      <main id="main-content" tabIndex={-1} className={showingFree || showingReport ? 'fate-main fate-main-reading' : 'fate-main'}>
+        <ReportBoundary key={route}><Suspense fallback={<p role="status" className="fate-reading-loading">{t('reading.loading')}</p>}>
+        {showingHome && <>
+          <ProductCatalog />
+          <HomeBenefits />
+          <Suspense fallback={<section id="report-preview" className="fate-section"><p role="status">{t('reading.loading')}</p></section>}>
+            <HomeReportPreview input={SAMPLE_BIRTH} />
+          </Suspense>
+          <BuyerJourney />
+          <HomeOverview onViewSample={viewSample} />
+          <HomeLearning />
+          <HomeFAQ />
+        </>}
+        {route === 'product' && <CompleteReportPage onStartFree={startFree} onViewSample={viewSample} />}
+        {showingSample && <div ref={resultsRef}><ReadingView input={SAMPLE_BIRTH} /></div>}
+        {route === 'category-product' && focusCategory && <CategoryReportPage key={focusCategory} kind={focusCategory} />}
+        {route === 'bundle-product' && <CategoryReportPage kind="bundle" />}
+        {route === 'category-sample' && focusCategory && <CategorySamplePage key={focusCategory} kind={focusCategory} />}
+        {route === 'bundle-sample' && <BundleSamplePage />}
+        {route === 'card-studio' && <DestinyCardStudio input={birthInput} />}
+        {(route === 'help' || route === 'guide' || route === 'privacy') && <SiteInfoPage key={route} page={route} hash={hash} onDataCleared={handleDataCleared} onOpenSaved={() => setProfileModalOpen(true)} />}
+        {(hash === '#purchase' || new URLSearchParams(window.location.search).get('checkout') === 'cancelled') && <BuyerReportPanel />}
+        {route === 'personal-preview' && previewKind && <PersonalPreviewPage key={previewKind} kind={previewKind} input={birthInput} onFirstBirth={handlePersonalBirth} />}
+        {showingFree && birthInput && (
+          <div ref={resultsRef}>
+            <FreeReadingView input={birthInput} />
+            {/* Show the plain-English reading first; expert calculations remain available in separate tabs. */}
+            <details className="fate-chart-options print:hidden" onToggle={event => { if (!event.currentTarget.open) setTab('reading') }}><summary>{t('buyer.expert.optional')}</summary><div className="flex items-center gap-2 border-b border-[#b58b52]/40 mt-5 mb-5 overflow-x-auto pb-2">
               <button
                 className={`px-2 sm:px-4 py-2 text-sm sm:text-base font-medium whitespace-nowrap border-b-2 transition-colors ${
                   tab === 'saju'
-                    ? 'border-gray-800 text-gray-800 dark:border-gray-200 dark:text-gray-200'
-                    : 'border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200'
+                    ? 'border-[#eac18a] text-[#f4d19b]'
+                    : 'border-transparent text-slate-300 hover:text-[#f4d19b]'
                 }`}
                 onClick={() => setTab('saju')}
               >
@@ -98,8 +197,8 @@ export default function App() {
               <button
                 className={`px-2 sm:px-4 py-2 text-sm sm:text-base font-medium whitespace-nowrap border-b-2 transition-colors ${
                   tab === 'ziwei'
-                    ? 'border-gray-800 text-gray-800 dark:border-gray-200 dark:text-gray-200'
-                    : 'border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200'
+                    ? 'border-[#eac18a] text-[#f4d19b]'
+                    : 'border-transparent text-slate-300 hover:text-[#f4d19b]'
                 }`}
                 onClick={() => setTab('ziwei')}
               >
@@ -108,17 +207,28 @@ export default function App() {
               <button
                 className={`px-2 sm:px-4 py-2 text-sm sm:text-base font-medium whitespace-nowrap border-b-2 transition-colors ${
                   tab === 'natal'
-                    ? 'border-gray-800 text-gray-800 dark:border-gray-200 dark:text-gray-200'
-                    : 'border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200'
+                    ? 'border-[#eac18a] text-[#f4d19b]'
+                    : 'border-transparent text-slate-300 hover:text-[#f4d19b]'
                 }`}
                 onClick={() => setTab('natal')}
               >
                 {t('app.tab.natal')}
               </button>
+              <button
+                className={`px-2 sm:px-4 py-2 text-sm sm:text-base font-medium whitespace-nowrap border-b-2 transition-colors ${
+                  tab === 'reading'
+                    ? 'border-[#eac18a] text-[#f4d19b]'
+                    : 'border-transparent text-slate-300 hover:text-[#f4d19b]'
+                }`}
+                onClick={() => setTab('reading')}
+              >
+                {t('reading.free.tab')}
+              </button>
               <div className="ml-auto pb-1">
                 <CopyButton
                   label={<>{t('app.copyAll')}<br />{t('app.copyAllSub')}</>}
                   getText={async () => {
+                    const [{ calculateSaju }, { createChart }, { calculateNatal }, { sajuToText, ziweiToText, natalToText }] = await Promise.all([import('@orrery/core/saju'), import('@orrery/core/ziwei'), import('@orrery/core/natal'), import('../utils/text-export.ts')])
                     const saju = calculateSaju(birthInput)
                     const parts = [sajuToText(saju)]
                     if (!birthInput.unknownTime) {
@@ -143,20 +253,22 @@ export default function App() {
             {tab === 'saju' && <SajuView input={birthInput} />}
             {tab === 'ziwei' && <ZiweiView input={birthInput} />}
             {tab === 'natal' && <NatalView input={birthInput} />}
-          </>
+            </details>
+          </div>
         )}
-
-        <Guide />
+        </Suspense></ReportBoundary>
       </main>
-      <footer className="text-center text-xs text-gray-400 dark:text-gray-500 py-6">
-        <p>&copy; 2026 Jang-Ho Hwang &middot; <a href="https://x.com/xrath" target="_blank" rel="noopener noreferrer" className="hover:text-gray-600 dark:hover:text-gray-300">@xrath</a> &middot; <a href="https://x.com/xrath/status/2022548658562937028" target="_blank" rel="noopener noreferrer" className="hover:text-gray-600 dark:hover:text-gray-300">{t('app.intro')}</a></p>
+      <footer className="fate-footer">
+        <div className="fate-footer-inner">
+          <a href="#home" className="fate-brand" aria-label="The Fate Key" onClick={navigateHomeSection}><FateEmblem className="fate-brand-emblem" /><span><strong>The Fate Key</strong><small>UNLOCK A BRIGHTER YOU</small></span></a>
+          <div className="fate-footer-links">{links.slice(1).map(([href,key]) => <a key={href} href={href} aria-current={currentNav === (href.startsWith('#my-report') ? '#my-report' : href) ? 'page' : undefined} onClick={navigateHomeSection}>{t(key)}</a>)}</div>
+          <div className="fate-footer-service-links"><a href="#destiny-card">{t('destiny.nav')}</a><a href="#reading-guide">{t('site.guide.title')}</a><a href="#your-data">{t('site.privacy.title')}</a><a href="#help-faq">{t('home.nav.faq')}</a></div>
+          <div className="fate-footer-service-links"><a href="#purchase">{t('purchase.recovery.title')}</a><a href="/purchases/">{t('purchase.live.terms')}</a><a href="/samples/">{t('site.public.samples')}</a><a href="/learn/">{t('site.public.learn')}</a><a href="/about/">{t('site.public.about')}</a><a href="/editorial-policy/">{t('site.public.editorial')}</a><a href="/help/">{t('site.help.title')}</a><a href="/contact/">{t('site.public.contact')}</a><a href="/privacy/">{t('site.public.privacy')}</a><a href="/use-and-limitations/">{t('site.public.limitations')}</a></div>
+          <p>{t('home.footer.note')}</p>
+          <p className="fate-footer-credit">© {new Date().getFullYear()} The Fate Key · {t('home.footer.engine')} <a href="https://github.com/rath/orrery" target="_blank" rel="noopener noreferrer">Orrery</a></p>
+        </div>
       </footer>
-      <ProfileModal
-        open={profileModalOpen}
-        onClose={() => setProfileModalOpen(false)}
-        getCurrentFormState={getCurrentFormState}
-        onSelect={setExternalFormState}
-      />
+      {profileModalOpen && <ProfileModal open={true} onClose={() => setProfileModalOpen(false)} getCurrentFormState={getCurrentFormState} onSelect={data => { setExternalFormState(data); startFree() }} />}
     </div>
   )
 }

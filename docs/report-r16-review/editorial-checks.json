@@ -1,0 +1,16 @@
+{
+  "r15": {
+    "words": 9958,
+    "repeatedLongLines": 70,
+    "totalLongLines": 350,
+    "adviceBoxes": 53
+  },
+  "r16": {
+    "words": 9907,
+    "repeatedLongLines": 47,
+    "totalLongLines": 303,
+    "adviceBoxes": 25
+  },
+  "all24TimingStatesUnchanged": true,
+  "scope": "Exact long-line repetition, not semantic uniqueness or reader satisfaction. Timing rules and calculations unchanged."
+}

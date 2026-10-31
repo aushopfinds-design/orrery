@@ -1,0 +1,69 @@
+name: Saju calculation and reading validation
+on:
+  push:
+    branches:
+      - feature/english-saju-report-20261013
+  pull_request:
+  workflow_dispatch:
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - name: Install locked dependencies
+        run: bun install --frozen-lockfile
+      - name: Run complete test suite
+        run: bunx vitest run
+      - name: Typecheck and production build
+        run: bun run build
+      - name: Lint
+        run: bun run lint
+
+  # Independent diagnostic; failure never blocks production validation.
+  independent-compare:
+    continue-on-error: true
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout THE FATE KEY
+        uses: actions/checkout@v4
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+      - name: Install existing project dependencies
+        run: bun install --frozen-lockfile
+      - name: Build existing Saju core
+        run: bun run --cwd packages/core build
+      - name: Checkout independent Oh My Saju
+        uses: actions/checkout@v4
+        with:
+          repository: JaeSang1998/oh-my-saju
+          path: independent-oh-my-saju
+          persist-credentials: false
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.15.0
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Build independent engine
+        working-directory: independent-oh-my-saju
+        run: |
+          pnpm install --frozen-lockfile
+          pnpm run build
+      - name: Compare 20 fixtures (diagnostic, not release gate)
+        env:
+          OH_MY_SAJU_DIST: independent-oh-my-saju/dist/index.js
+        run: node scripts/compare-oh-my-saju.mjs > saju-comparison.json
+      - name: Upload diagnostic comparison
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: saju-comparison
+          path: saju-comparison.json
+          if-no-files-found: warn
