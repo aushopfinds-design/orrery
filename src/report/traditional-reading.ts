@@ -376,7 +376,7 @@ function chapterTexts(chapters: ReportChapter[]) {
       seenCautions.add(caution)
     }
     return lines
-  }).map(lines => lines.join('\\n\\n'))
+  }).map(lines => lines.join('\n\n'))
 }
 
 export function buildTraditionalComplete(result: SajuResult, year: number): CompleteReading {
