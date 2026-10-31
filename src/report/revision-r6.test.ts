@@ -4,6 +4,7 @@ import { calculateSaju } from '@orrery/core/saju'
 import { CATEGORY_SCENARIOS } from './category-catalog.ts'
 import { buildCompleteReading } from './complete-reading.ts'
 import { chartGlossaryFor } from './calculation-notes.ts'
+import { applyBuyerQuestions } from './buyer-outline.ts'
 
 const first = CATEGORY_SCENARIOS[0].first
 
@@ -41,7 +42,8 @@ describe('Personal letter and subject-specific revision', () => {
         const plainItem = item.text.replace(/\*\*/g, '')
         // Extras can intentionally reuse a chapter's exact customer answer;
         // the full report must not print that same advice more than once.
-        expect(report.fullText.split(plainItem).length - 1).toBeLessThanOrEqual(1)
+        const delivered = applyBuyerQuestions(report.fullText, 'complete', report.chapters, report.periods)
+        expect(delivered.split(plainItem).length - 1).toBeLessThanOrEqual(1)
       }
     }
   })
