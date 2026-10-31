@@ -84,7 +84,7 @@ export const BUYER_QUESTIONS: Record<BuyerOutlineKind, BuyerQuestion[]> = {
   ],
 }
 
-const COLLECTION_BUYER_QUESTIONS: Partial<Record<BuyerOutlineKind, BuyerQuestion[]>> = {
+export const COLLECTION_BUYER_QUESTIONS: Partial<Record<BuyerOutlineKind, BuyerQuestion[]>> = {
   complete: [
     { id: 'personality', question: 'What kind of person am I?', source: 'personality', part: 'lead' },
     { id: 'social', question: 'What are my greatest strengths?', source: 'social', part: 'lead' },
