@@ -179,7 +179,6 @@ function withStructuralEvidence(chapters: ReportChapter[], plan: InterpretationP
 }
 function distinctChapters(chapters: ReportChapter[]) {
   const seen = new Set(chapters.map(item=>item.lead))
-  const seenCautions = new Set<string>()
   return chapters.map(item=>{
     const paragraphs=item.paragraphs.filter(text=>{if(seen.has(text))return false;seen.add(text);return true})
     if(!paragraphs.length)paragraphs.push(item.tryThis)
