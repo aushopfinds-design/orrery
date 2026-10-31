@@ -83,7 +83,7 @@ describe('Buyer questions, not a repeated six-part technical template', () => {
     const report = applyBuyerQuestions(source, 'wellbeing', chapters)
     expect((report.match(/^Question:/gm) ?? [])).toHaveLength(7)
     expect(report).toContain('Question: What should I watch for when pressure builds?\n\nAnswer: Notice when a capable response is taking too much of your time.')
-    expect(report).toContain('Question: What practical step can help my everyday balance?\n\nAnswer: Choose a routine that fits.')
+    expect(report).toContain('Question: What boundary could help protect my everyday balance?\n\nAnswer: Choose a routine that fits.')
     expect(report).not.toContain('Question: What kind of environment brings out my best?')
   })
 
