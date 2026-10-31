@@ -130,8 +130,8 @@ function extras(kind: 'complete' | FocusCategory, result: SajuResult, chapters: 
   const chosen = chapters.slice(0, 3)
   return { ...original, compact: true,
     questions: chosen.map(item => ({ question: item.title.replace(/^\d+ · /, ''), answer: item.lead, basis: item.evidence[0] ?? '' })),
-    keepClose: chosen.map(item => ({ title: item.title, text: item.guidance.keepClose[0] })),
-    stepBack: [...chosen.filter(item => item.guidance.watchFor.length).map(item => ({ title: item.title, text: item.guidance.watchFor[0] })), ...original.stepBack].slice(0, 3),
+    keepClose: kind === 'complete' ? original.keepClose : chosen.map(item => ({ title: item.title, text: item.guidance.keepClose[0] })),
+    stepBack: kind === 'complete' ? original.stepBack : [...chosen.filter(item => item.guidance.watchFor.length).map(item => ({ title: item.title, text: item.guidance.watchFor[0] })), ...original.stepBack].slice(0, 3),
     reminder: 'Use the reading to name a traditional pattern. Actual choices, consent and circumstances determine what happens.',
     experiment: { title: 'Before a consequential decision', steps: chosen.map(item => item.tryThis) },
     evidence: [...new Set(chosen.flatMap(item => item.evidence).slice(0, 5))],
