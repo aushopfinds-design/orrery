@@ -17,6 +17,16 @@ jobs:
       - uses: oven-sh/setup-bun@v2
       - name: Install dependencies
         run: bun install --frozen-lockfile
+      - name: Generate customer passage review set
+        run: bun scripts/purchase-quality-review.ts docs/report-r16-review
+      - name: Upload generated review set
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: report-quality-review
+          path: docs/report-r16-review/
+          if-no-files-found: warn
+          retention-days: 7
       - name: Check all tests
         run: bunx vitest run
       - name: Check TypeScript and production build
