@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest'
 import { calculateSaju } from '@orrery/core/saju'
 import { STEM_ELEMENTS } from './reading.ts'
 import { buildCompleteReading } from './complete-reading.ts'
+import { applyBuyerQuestions } from './buyer-outline.ts'
 import { buildBundleReading, buildCategoryReading } from './category-readings.ts'
 import { CATEGORY_SCENARIOS } from './category-catalog.ts'
 import { buildPersonalPreview } from './personal-preview.ts'
@@ -40,7 +41,8 @@ describe('A distinct everyday guide in every full report', () => {
         if (report.title === 'My Life') {
           // My Life suppresses advice already answered in its chart-specific
           // chapters. Any retained extra should appear once, never be echoed.
-          expect(report.fullText.split(text).length - 1, `${report.title}: ${text}`).toBeLessThanOrEqual(1)
+          const delivered = applyBuyerQuestions(report.fullText, 'complete', report.chapters, report.periods)
+          expect(delivered.split(text).length - 1).toBeLessThanOrEqual(1)
         } else expect(report.fullText).toContain(text)
       }
       for (const item of focusedCareer ? [] : extras.symbols) {
