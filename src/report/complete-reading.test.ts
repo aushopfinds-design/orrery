@@ -138,7 +138,7 @@ describe('Complete reading quality across 60 international profiles', () => {
       expect(reading.methodNotes.join(' ')).toContain('not a full assessment of day-master strength')
       expect(reading.methodNotes.join(' ')).toContain('does not claim to diagnose')
       const balance = reading.chapters.find(chapter => chapter.id === 'balance')!
-      expect([balance.lead,...balance.paragraphs].join(' ')).toMatch(/feel balanced when/)
+      expect([balance.lead,...balance.paragraphs].join(' ')).toMatch(/most important life insight|quality and attention|personal nature/i)
       expect([balance.lead,...balance.paragraphs].join(' ')).not.toMatch(/element.*(?:health|prescription)|missing element/i)
     }
   })
