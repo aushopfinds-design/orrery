@@ -48,7 +48,7 @@ describe('seven purchased report PDF generation', () => {
           expect(report.text).toContain('Hour: Unknown')
           expect(report.text).not.toMatch(/Hour (?:pillar|stem|branch) [甲乙丙丁戊己庚辛壬癸]/)
         }
-        if (second) expect(report.text).toContain('Person B')
+        if (second) expect(report.text).toContain('Your partner')
         if (output && personIndex === 0) await writeFile(`${output}/${outputNames[kind]}`, bytes)
         generated++
       }
