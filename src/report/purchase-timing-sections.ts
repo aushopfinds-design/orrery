@@ -117,7 +117,7 @@ function buildSections(plan:InterpretationPlan,targetedProduct01=true):Record<st
  }
  if(plan.kind==='year'){
   const months=purchaseMonths(plan.first,plan.referenceYear,'life',plan.periodStart),good=months.filter(opens),careful=months.filter(r=>['extra-care','opening-with-caution'].includes(r.status)),key=priority(careful)
-  const labels=(rows:Row[])=>rows.map(r=>new Date(r.date+'T12:00:00Z').toLocaleDateString('en-GB',{month:'long',timeZone:'UTC'})).join(', ')
+  const labels=(rows:Row[])=>rows.map(r=>new Date(r.date+'T12:00:00Z').toLocaleDateString('en-GB',{month:'long',year:'numeric',timeZone:'UTC'})).join(', ')
   const koLabels=(rows:Row[])=>rows.map(r=>Number(r.date.slice(5,7))+'월').join('·')
   const openingThemes=months.filter(row=>row.status==='conditional-opening')
   const selected=(good.length?good:openingThemes).slice(0,3)
