@@ -44,7 +44,7 @@ export function buildInterpretationPlan(kind: BuyerOutlineKind, first: SajuResul
     first, second,
     primary, partner,
     pairPatterns: partner ? primary.positions.flatMap(left => partner.positions.map(right => { const pair = analyzePillarRelations(left.ganzi, right.ganzi); return { left: left.position, right: right.position, leftPillar: left.ganzi, rightPillar: right.ganzi, patterns: [...pair.stem.map(p => ({ ...p, layer: 'stem' })), ...pair.branch.filter(p => !(p.type === '刑' && ['無恩', '恃勢'].includes(p.detail ?? ''))).map(p => ({ ...p, layer: 'branch' }))] } })) : [],
-    sections: BUYER_OUTLINES[kind].map(([id]) => ({ id })), annual,
+    sections: BUYER_OUTLINES[kind].map(outline => ({ id: outline[0] })), annual,
     partnerAnnual: second ? fiveYearPoints(second, year).map(p => timingPlan(second, p)) : [],
     months: kind === 'year' ? Array.from({ length: 12 }, (_, i) => {
       const index = (windowStart ? windowStart.month - 1 : 0) + i
