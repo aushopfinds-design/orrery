@@ -34,7 +34,7 @@ const DESCRIPTIONS: Record<PreviewKind, string> = {
   wellbeing: 'Notice everyday patterns in effort, boundaries and support.',
 }
 export function previewProduct(kind: PreviewKind) {
-  if (kind === 'complete') return { subtitle: PRODUCT_SUBTITLES[kind], title: 'My Life', description: DESCRIPTIONS[kind], price: reportPrice(kind), sample: '#sample-report', chapters: 9, icon: 'personality' }
+  if (kind === 'complete') return { subtitle: PRODUCT_SUBTITLES[kind], title: 'My Life', description: DESCRIPTIONS[kind], price: reportPrice(kind), sample: '#sample-report', chapters: 10, icon: 'personality' }
   if (kind === 'bundle') return { subtitle: PRODUCT_SUBTITLES[kind], title: 'Complete Package', description: DESCRIPTIONS[kind], price: reportPrice(kind), sample: '#complete-bundle-sample', chapters: 5, icon: 'patterns' }
   const info = categoryInfo(kind)
   return { subtitle: PRODUCT_SUBTITLES[kind], title: kind === 'year' ? 'Your Next 12 Months' : info.title, description: DESCRIPTIONS[kind], price: reportPrice(kind), sample: `#${info.slug}-sample`, chapters: { compatibility: 8, year: 6, career: 7, love: 7, business: 7, wellbeing: 5 }[kind], icon: info.icon }
