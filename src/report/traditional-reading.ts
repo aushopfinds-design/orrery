@@ -298,8 +298,12 @@ function annualChapters(result: SajuResult, year: number, periodStart?: string) 
   const clashMonths = months.filter((_, i) => monthlyPoints[i].point.clash.length).map(item => item.label)
   const monthAssessments = months.map((month, index) => ({ month, assessment: periodAssessment(result, month.pillar, month.referenceDate, month.yearPillar), point: monthlyPoints[index].point }))
   const annualBackgrounds = [...new Set(monthlyPoints.map(item => item.year))].map(monthYear => {
+    const coveredMonths = monthlyPoints.filter(item => item.year === monthYear)
     const annualPoint = timingPoint(result, monthYear), stem = godText(annualPoint.god), branch = godText(annualPoint.innerGod)
-    return `${monthYear}: ${stem.name} with ${branch.name}. ${stem.meaning}`
+    const range = coveredMonths.length
+      ? `${coveredMonths[0].label} through ${coveredMonths.at(-1)!.label}`
+      : String(monthYear)
+    return `${range} (the ${monthYear} annual reference): ${stem.name} with ${branch.name}. ${stem.meaning}`
   })
   const windowLabel = `${months[0].label} to ${months[11].label}`
   const supportiveMonths = monthAssessments.filter(item => ['potential-support', 'potential-outlet'].includes(item.assessment.direction) && !item.assessment.tension)
