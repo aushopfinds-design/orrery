@@ -58,7 +58,7 @@ describe('Activity timing: opportunity requires a personal route and retains con
  })
  it('does not make a July month label look like an annual reading',()=>{
   expect(purchaseMonths(base,2027)[6].lines[0].en).toContain('July 2027')
-  expect(purchaseYears(base,2027,'work')[0].lines[0].en).toMatch(/^2027:/)
+  expect(purchaseYears(base,2027,'work')[0].lines[0].en).toMatch(/^2027 annual reference:/)
  })
  it('caps the full ten-year window at the supported calendar end',()=>{
   expect(purchaseYears(base,2099,'work').map(r=>r.date.slice(0,4))).toEqual(['2099','2100'])
