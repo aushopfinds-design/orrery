@@ -15,7 +15,7 @@ const KO: Record<string, { name: string; work: string; money: string; love: stri
   偏印: { name: '편인', work: '특수 지식·분석·전략·독립 연구처럼 깊이 생각할 여유가 필요한 일에 연결됩니다.', money: '특수한 지식이 실제 사용 가치와 유료 고객을 만날 때 수입과 연결되는 경로입니다.', love: '혼자 생각할 공간과 이해받는 느낌을 원하지만 거리 두기로 받아들여질 수 있습니다.', business: '틈새 전문 방법과 자문에 연결되며 복잡한 설명을 고객이 사용할 결과로 바꾸는 것이 과제입니다.', pressure: '제한된 결정을 내리기보다 설명과 가능성을 계속 다시 여는 부분' },
 }
 const TITLES: Record<string, string> = {
-  personality: '내 인생과 운명은 무엇이 이끌까?', social: '무엇이 나를 돕고, 무엇이 발목을 잡을까?', money: '나는 어떤 방식으로 돈을 벌까?', career: '어떤 일에서 내 능력을 펼칠까?', love: '나는 사랑에서 무엇을 원할까?', balance: '어떻게 해야 내 일상이 편해질까?', patterns: '내 인생의 방향은 언제 바뀔 수 있을까?',
+  personality: '내 인생과 운명은 무엇이 이끌까?', social: '무엇이 나를 돕고, 무엇이 발목을 잡을까?', 'life-challenges': '내 인생에서 반복되는 큰 과제는?', money: '나는 어떤 방식으로 돈을 벌까?', career: '어떤 일에서 내 능력을 펼칠까?', love: '나는 사랑에서 무엇을 원할까?', balance: '어떻게 해야 내 일상이 편해질까?', patterns: '내 인생의 방향은 언제 바뀔 수 있을까?',
   'working-style': '내 강점은 어떤 직업에서 빛날까?', 'two-work-layers': '어떤 직장에서 잘 풀릴까?', 'feedback-and-boundaries': '이직을 생각해 볼 시기는 언제일까?', 'proof-of-skill': '내 일이 인정받는 흐름은 언제일까?', 'money-commitments': '나에게 맞는 돈 버는 방식은?', 'work-chapters': '직업과 재물의 흐름은 어떻게 바뀔까?', 'career-plan': '성공을 가로막는 나의 약점은?',
   'founder-style': '나는 사업에 맞는 사람일까?', 'offer-test': '내 사주는 창업을 어떻게 읽을까?', 'team-decisions': '동업은 도움이 될까, 부담이 될까?', 'delivery-capacity': '사업에서 어떻게 벌고 남길까?', 'customer-communication': '확장을 살펴볼 시기는 언제일까?', 'business-chapters': '10년 대운은 사업에 무엇을 더할까?', 'business-plan': '사업에서 언제 더 조심해야 할까?',
   'annual-theme': '올해 내 운의 중심 주제는?', 'annual-money': '올해 돈의 흐름에 무엇이 작용할까?', 'annual-work': '올해 직장과 일은 어떻게 흐를까?', 'annual-connections': '올해 사랑과 관계에는 무엇이 더해질까?', 'annual-cycle-context': '매달 무엇에 집중하면 좋을까?', 'annual-plan': '언제 더 주의해서 살펴야 할까?',
