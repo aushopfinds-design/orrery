@@ -72,7 +72,7 @@ describe('Native Korean and English from one neutral plan', () => {
       }
       if (a.input.unknownTime) expect(plan.months.every(p => p.direction === 'unresolved')).toBe(true)
       const full = buildTraditionalCompleteFromPlan(buildInterpretationPlan('complete', a, 2026))
-      expect(full.chapters.slice(0, 5).map(c => c.id)).toEqual(['personality', 'social', 'money', 'career', 'love'])
+      expect(full.chapters.slice(0, 5).map(c => c.id)).toEqual(['personality', 'social', 'career', 'money', 'love'])
   })
 })
 
