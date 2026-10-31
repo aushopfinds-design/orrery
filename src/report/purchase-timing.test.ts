@@ -63,6 +63,11 @@ describe('Activity timing: opportunity requires a personal route and retains con
  it('caps the full ten-year window at the supported calendar end',()=>{
   expect(purchaseYears(base,2099,'work').map(r=>r.date.slice(0,4))).toEqual(['2099','2100'])
  })
+ it('uses the exact purchase-window months when evaluating monthly timing',()=>{
+  const actual=purchaseMonths(base,2026,'life','2026-11').map(row=>row.date.slice(0,7))
+  expect(actual).toEqual(['2026-11','2026-12','2027-01','2027-02','2027-03','2027-04','2027-05','2027-06','2027-07','2027-08','2027-09','2027-10'])
+ })
+
 })
 describe('24 distinct international buyers: ten-year facts and twelve months reach both languages',()=>{
  it.each(Array.from({length:24},(_,i)=>i))('buyer %i retains source dates, uncertainty and paired added content',i=>{
