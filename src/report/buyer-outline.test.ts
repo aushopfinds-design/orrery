@@ -18,7 +18,7 @@ describe('Buyer questions, not a repeated six-part technical template', () => {
   it('answers the twelve-month question with the actual selected window', () => {
     const report = buildCategoryReading('year', a, { year: 2027, periodStart: '2026-11' })
     const firstAnswer = report.chapters[0].lead
-    expect(firstAnswer).toContain('November 2026 to October 2027')
+    expect(firstAnswer).toContain('November 2026 through October 2027')
     expect(firstAnswer).toContain('opening annual comparison')
     expect(firstAnswer).not.toMatch(/^2027 brings/)
     expect(report.months.map(month => month.label)).toEqual([
