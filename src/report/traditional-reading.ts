@@ -366,6 +366,18 @@ export function buildTraditionalCategoryFromPlan(plan: InterpretationPlan): Cate
 function chapterText(item: ReportChapter) {
   return deliveredChapter(item).join('\n\n')
 }
+function chapterTexts(chapters: ReportChapter[]) {
+  const seenCautions = new Set<string>()
+  return chapters.map(item => {
+    const lines = deliveredChapter(item)
+    const caution = 'Main caution: ' + item.guidance.watchFor.join(' ')
+    if (item.showGuidance !== false && item.guidance.watchFor.length) {
+      if (seenCautions.has(caution)) return lines.filter(line => line !== caution)
+      seenCautions.add(caution)
+    }
+    return lines
+  }).map(lines => lines.join('\\n\\n'))
+}
 
 export function buildTraditionalComplete(result: SajuResult, year: number): CompleteReading {
   return buildTraditionalCompleteFromPlan(buildInterpretationPlan('complete', result, year))
@@ -392,6 +404,6 @@ export function buildTraditionalCompleteFromPlan(plan: InterpretationPlan, targe
     { id: 'close-conversations', chapterId: 'love', title: 'Personal Needs and Close Relationships', basis: `Day stem ${a.day.pillar.stem}; day branch ${a.day.pillar.branch}`, text: `The day-stem need is ${PERSONAL_PROFILES[a.day.pillar.stem].need}; the day-branch theme is ${RELATIONSHIP_PROFILES[a.day.pillar.branch].need}. These are separate layers of the same chart.`, question: 'Does the actual relationship make room for both needs?', evidence: chartFacts(result, [1]) },
   ]
   const focus = focusFrom(chapters), extra = extras('complete', result, chapters, year), notes = methods(result, undefined, 'complete')
-  const fullText = plainReadingText([`THE FATE KEY · My Life`, `Report edition ${REPORT_EDITION} · Reference year ${year}`, snap.birthSummary, snap.pillarSummary.join(' · '), reportOverviewText(chapters,targetedProduct01), ...chapters.map(chapterText), 'Ten-Year Cycles in Detail', ...periods.map(item => `${item.period} · ${item.pillar}\n\n${item.text}`), chapterText(actionPlan), reportExtrasText(extra, true), calculationAppendix([...connections.map(item=>({title:item.title,evidence:[item.basis,item.text,item.question,...item.evidence]})), { title: 'Reading focus', evidence: focus.evidence }, { title: 'Symbol guide evidence', evidence: extra.evidence }, ...chapters.map(item => ({ title: item.title, evidence: item.evidence })), ...periods.map(item => ({ title: item.period, evidence: item.evidence })), { title: actionPlan.title, evidence: actionPlan.evidence }]), 'Chart terms in plain English', ...chartGlossaryFor([...chapters.flatMap(item => item.evidence), ...actionPlan.evidence, '大運']).map(item => `${item.term}: ${item.meaning}`), 'How this reading is prepared', ...notes].join('\n\n'))
+  const fullText = plainReadingText([`THE FATE KEY · My Life`, `Report edition ${REPORT_EDITION} · Reference year ${year}`, snap.birthSummary, snap.pillarSummary.join(' · '), reportOverviewText(chapters,targetedProduct01), ...chapterTexts(chapters), 'Ten-Year Cycles in Detail', ...periods.map(item => `${item.period} · ${item.pillar}\n\n${item.text}`), chapterText(actionPlan), reportExtrasText(extra, true), calculationAppendix([...connections.map(item=>({title:item.title,evidence:[item.basis,item.text,item.question,...item.evidence]})), { title: 'Reading focus', evidence: focus.evidence }, { title: 'Symbol guide evidence', evidence: extra.evidence }, ...chapters.map(item => ({ title: item.title, evidence: item.evidence })), ...periods.map(item => ({ title: item.period, evidence: item.evidence })), { title: actionPlan.title, evidence: actionPlan.evidence }]), 'Chart terms in plain English', ...chartGlossaryFor([...chapters.flatMap(item => item.evidence), ...actionPlan.evidence, '大運']).map(item => `${item.term}: ${item.meaning}`), 'How this reading is prepared', ...notes].join('\n\n'))
   return { focus, calculation: explainCalculation(result.input), title: 'My Life', birthSummary: snap.birthSummary, pillarSummary: snap.pillarSummary, dayMaster: snap.dayMaster, headline: chapters[0].lead, summary, connections, referenceYear: year, chapters, periods, actionPlan, applications: [], extras: extra, elements: snap.elements, visibleMarkers: snap.visibleMarkers, methodNotes: notes, fullText, wordCount: fullText.split(/\s+/).length }
 }
