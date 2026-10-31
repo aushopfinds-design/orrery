@@ -41,7 +41,8 @@ describe('A distinct everyday guide in every full report', () => {
         if (report.title === 'My Life') {
           // My Life suppresses advice already answered in its chart-specific
           // chapters. Any retained extra should appear once, never be echoed.
-          const delivered = applyBuyerQuestions(report.fullText, 'complete', report.chapters, report.periods)
+          const periods = 'periods' in report ? report.periods : []
+          const delivered = applyBuyerQuestions(report.fullText, 'complete', report.chapters, periods)
           expect(delivered.split(text).length - 1).toBeLessThanOrEqual(1)
         } else expect(report.fullText).toContain(text)
       }
