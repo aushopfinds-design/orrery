@@ -56,7 +56,7 @@ export const BUYER_QUESTIONS: Record<BuyerOutlineKind, BuyerQuestion[]> = {
     { id: 'offer-test', question: 'What kind of business work suits me?', source: 'offer-test', part: 'lead' },
     { id: 'team-decisions', question: 'Am I better suited to working alone or with partners?', source: 'team-decisions', part: 'lead' },
     { id: 'customer-communication', question: 'When might expansion deserve a closer look?', source: 'customer-communication', part: 'lead' },
-    { id: 'delivery-capacity', question: 'What financial risks should I understand?', source: 'delivery-capacity', part: 'caution' },
+    { id: 'delivery-capacity', question: 'What financial risks should I understand?', source: 'delivery-capacity', part: 'lead-with-caution' },
     { id: 'business-chapters', question: 'What do my upcoming cycles suggest about business activity?', source: 'business-chapters', part: 'lead' },
     { id: 'business-plan', question: 'What should I be careful about in business?', source: 'business-plan', part: 'caution' },
   ],
