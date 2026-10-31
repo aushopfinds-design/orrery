@@ -15,6 +15,17 @@ describe('Buyer questions, not a repeated six-part technical template', () => {
     expect(report.chapters[0].paragraphs.join(' ')).not.toContain('A provisional month-led structure candidate')
     expect(report.chapters[0].evidence.join(' ')).toContain('Month hidden stem')
   })
+  it('answers the twelve-month question with the actual selected window', () => {
+    const report = buildCategoryReading('year', a, { year: 2027, periodStart: '2026-11' })
+    const firstAnswer = report.chapters[0].lead
+    expect(firstAnswer).toContain('November 2026 to October 2027')
+    expect(firstAnswer).toContain('broad annual themes shift during that window')
+    expect(firstAnswer).not.toMatch(/^2027 brings/)
+    expect(report.months.map(month => month.label)).toEqual([
+      'November 2026', 'December 2026', 'January 2027', 'February 2027', 'March 2027', 'April 2027',
+      'May 2027', 'June 2027', 'July 2027', 'August 2027', 'September 2027', 'October 2027',
+    ])
+  })
   it('does not label a money-topic month a good month without the shared balance and friction checks', () => {
     const report = buildCategoryReading('year', a, { year: 2027 })
     const supportive = report.chapters.find(c => c.id === 'annual-cycle-context')!
