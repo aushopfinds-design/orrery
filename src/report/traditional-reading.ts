@@ -126,10 +126,12 @@ function extras(kind: 'complete' | FocusCategory, result: SajuResult, chapters: 
   const annual = kind === 'year' ? timingPoint(result, year) : undefined
   const original = buildReportExtras(kind, result, { year, second, ...(annual ? { annual: { god: annual.god, pillar: annual.pillar, theme: godText(annual.god).name } } : {}) })
   const chosen = chapters.slice(0, 3)
+  const chapterText = chapters.flatMap(item => [item.title, item.lead, ...item.paragraphs, item.tryThis, ...item.guidance.keepClose, ...item.guidance.watchFor])
+  const alreadyDelivered = (text: string) => chapterText.some(line => line.includes(text) || text.includes(line))
   return { ...original, compact: true,
     questions: chosen.map(item => ({ question: item.title.replace(/^\d+ · /, ''), answer: item.lead, basis: item.evidence[0] ?? '' })),
-    keepClose: chosen.map(item => ({ title: item.title, text: item.guidance.keepClose[0] })),
-    stepBack: chosen.map(item => ({ title: item.title, text: item.guidance.watchFor[0] })),
+    keepClose: chosen.map(item => ({ title: item.title, text: item.guidance.keepClose[0] })).filter(item => !alreadyDelivered(item.text)),
+    stepBack: chosen.map(item => ({ title: item.title, text: item.guidance.watchFor[0] })).filter(item => !alreadyDelivered(item.text)),
     reminder: 'Use the reading to name a traditional pattern. Actual choices, consent and circumstances determine what happens.',
     experiment: { title: 'Before a consequential decision', steps: chosen.map(item => item.tryThis) },
     evidence: [...new Set(chosen.flatMap(item => item.evidence).slice(0, 5))],
