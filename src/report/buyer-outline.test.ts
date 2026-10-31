@@ -66,5 +66,24 @@ describe('Buyer questions, not a repeated six-part technical template', () => {
     expect(report).toContain('Question: What are our biggest relationship challenges?\n\nAnswer: The main challenge is agreeing on time, duties and who follows through.')
     expect(report).not.toContain('Question: What tends to cause friction between us?\n\nAnswer: A generic caution.')
   })
+  it('maps wellbeing questions to the chapter that answers each one', () => {
+    const make = (id: string, lead: string, paragraphs: string[] = [], action = 'A chart-specific practical step.', caution = 'A chart reading cannot diagnose health.') => ({
+      id, title: id, lead, paragraphs, evidence: [], tryThis: action,
+      guidance: { keepClose: [action], watchFor: [caution] }, icon: 'personality' as const,
+    })
+    const chapters = [
+      make('everyday-pace', 'A personalized temperament answer.'),
+      make('visible-elements', 'A clear explanation of the visible element pattern.'),
+      make('workload-rhythm', 'A personalized daily pressure pattern.'),
+      make('support-and-space', 'A relationship support need.'),
+      make('balance-week', 'A strength and its matching blind spot.', [], 'Choose a routine that fits.'),
+    ]
+    const source = chapters.map(chapter => deliveredChapter(chapter).join('\\n\\n')).join('\\n\\n')
+    const report = applyBuyerQuestions(source, 'wellbeing', chapters)
+    expect((report.match(/^Question:/gm) ?? [])).toHaveLength(7)
+    expect(report).toContain('Question: Can this reading diagnose a health issue?\\n\\nAnswer: A chart reading cannot diagnose health.')
+    expect(report).toContain('Question: What practical step can help my everyday balance?\\n\\nAnswer: Choose a routine that fits.')
+    expect(report).not.toContain('Question: What kind of environment brings out my best?')
+  })
 
 })
