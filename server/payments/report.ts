@@ -86,7 +86,7 @@ export async function issueReport(input: OrderInput, orderId: string, referenceY
     title: previewProduct(input.kind).title, kind: input.kind, edition: REPORT_EDITION, reference, certificates,
     ...(input.recipientName ? { recipientName: input.recipientName } : {}),
     issuedAt: new Date().toISOString(), text: customerDeliveryText(plainReadingText(text), input.kind === 'complete'), emphasis: reportEmphasis(source), documents,
-    cards: [buildDestinyCard(input.first, input.recipientName ?? ''), ...(input.second ? [buildDestinyCard(input.second, 'Person B')] : [])], pdf: '',
+    cards: [buildDestinyCard(input.first, input.recipientName ?? ''), ...(input.second ? [buildDestinyCard(input.second, 'Your partner')] : [])], pdf: '',
     ...(input.kind === 'career' ? { careerCharts: careerMoneyChartData(a, referenceYear) } : {}),
   }
   const pdf = await reportPdf(report, orderId, reportEmphasis(source), mode)
