@@ -183,8 +183,7 @@ function distinctChapters(chapters: ReportChapter[]) {
   return chapters.map(item=>{
     const paragraphs=item.paragraphs.filter(text=>{if(seen.has(text))return false;seen.add(text);return true})
     if(!paragraphs.length)paragraphs.push(item.tryThis)
-    const watchFor=item.guidance.watchFor.filter(text=>{if(seenCautions.has(text))return false;seenCautions.add(text);return true})
-    return {...item,paragraphs,guidance:{...item.guidance,watchFor}}
+    return {...item,paragraphs}
   })
 }
 function focusFrom(chapters: ReportChapter[]) {
