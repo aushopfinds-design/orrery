@@ -4,7 +4,8 @@ import { calculateSaju } from '@orrery/core/saju'
 import { CATEGORY_SCENARIOS } from './category-catalog.ts'
 import { buildCompleteReading } from './complete-reading.ts'
 import { buildCategoryReading } from './category-readings.ts'
-import { BUYER_OUTLINES } from './buyer-outline.ts'
+import { BUYER_OUTLINES, BUYER_QUESTIONS, applyBuyerQuestions } from './buyer-outline.ts'
+import { deliveredChapter } from './report-delivery.ts'
 const a = calculateSaju(CATEGORY_SCENARIOS[0].first), b = calculateSaju(CATEGORY_SCENARIOS[0].second)
 describe('Buyer questions, not a repeated six-part technical template', () => {
   it.each(Object.keys(BUYER_OUTLINES) as (keyof typeof BUYER_OUTLINES)[])('%s uses its own titles and reading order without breaking chapter anchors', kind => {
@@ -31,4 +32,39 @@ describe('Buyer questions, not a repeated six-part technical template', () => {
       expect(chapter.paragraphs.join(' ')).not.toMatch(/guaranteed promotion|guaranteed launch date/)
     }
   })
+  it('keeps seven questions in each standalone report and maps compatibility answers to their own chart detail', () => {
+    for (const kind of ['complete', 'career', 'compatibility', 'year', 'business', 'wellbeing'] as const) {
+      expect(BUYER_QUESTIONS[kind]).toHaveLength(7)
+    }
+    const make = (id: string, lead: string, paragraphs: string[]) => ({
+      id, title: id, lead, paragraphs, evidence: [], tryThis: 'Make one clear agreement.',
+      guidance: { keepClose: ['Name what each person needs.'], watchFor: ['A generic caution.'] }, icon: 'personality',
+    })
+    const chapters = [
+      make('two-directions', 'The chart comparison points to a shared attraction theme.', ['Person A is drawn to direct conversation.', 'Person B is drawn to practical care.']),
+      make('two-styles', 'The two charts connect through complementary ways of offering care.', []),
+      make('close-conversation', 'Person A needs listening; Person B needs practical help with listening.', [
+        'Person A tends to express love through focused conversation.',
+        'Person B tends to express love through reliable practical help.',
+        'The private-life pattern shows different expectations.',
+        'The clearest friction is when advice arrives before listening, or help arrives without checking what was asked for.',
+      ]),
+      make('chart-patterns', 'The strongest shared quality is the ability to make room for different needs.', []),
+      make('shared-week', 'Both people need to agree how recurring responsibilities are shared.', [
+        'The day comparison shows a private-life difference.',
+        'The month comparison shows a different daily routine.',
+        'Each person needs a clear voice in shared decisions.',
+        'The main challenge is agreeing on time, duties and who follows through.',
+      ]),
+      make('support-each-other', 'The timing comparison highlights different personal themes in 2027.', []),
+    ]
+    const source = chapters.map(chapter => deliveredChapter(chapter).join('\\n\\n')).join('\\n\\n')
+    const report = applyBuyerQuestions(source, 'compatibility', chapters)
+    expect((report.match(/^Question:/gm) ?? [])).toHaveLength(7)
+    expect(report).toContain('Question: How do we express love differently?\\n\\nAnswer: Person A tends to express love through focused conversation.\\n\\nAnswer detail: Person B tends to express love through reliable practical help.')
+    expect(report).toContain('Question: What tends to cause friction between us?\\n\\nAnswer: The clearest friction is when advice arrives before listening, or help arrives without checking what was asked for.')
+    expect(report).toContain('Question: What are our biggest relationship challenges?\\n\\nAnswer: The main challenge is agreeing on time, duties and who follows through.')
+    expect(report).not.toContain('Question: What tends to cause friction between us?\\n\\nAnswer: A generic caution.')
+  })
+
 })
