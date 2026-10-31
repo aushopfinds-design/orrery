@@ -300,8 +300,9 @@ function annualChapters(result: SajuResult, year: number, periodStart?: string) 
   const annualBackgrounds = [...new Set(monthlyPoints.map(item => item.year))].map(monthYear => {
     const coveredMonths = monthlyPoints.filter(item => item.year === monthYear)
     const annualPoint = timingPoint(result, monthYear), stem = godText(annualPoint.god), branch = godText(annualPoint.innerGod)
+    const monthLabel = (item: typeof monthlyPoints[number]) => humanMonth(`${item.year}-${String(item.month).padStart(2, '0')}-15`)
     const range = coveredMonths.length
-      ? `${coveredMonths[0].label} through ${coveredMonths.at(-1)!.label}`
+      ? `${monthLabel(coveredMonths[0])} through ${monthLabel(coveredMonths.at(-1)!)}`
       : String(monthYear)
     return `${range} (the ${monthYear} annual reference): ${stem.name} with ${branch.name}. ${stem.meaning}`
   })
