@@ -113,7 +113,7 @@ export function purchaseTiming(result: SajuResult, point: ReturnType<typeof mont
  return { date: point.date, area, status, route: opening, capacity: facts.tendency, pillar: point.pillar, yearPillar: point.yearPillar, god: point.god, innerGod: point.innerGod, comparisons: point.comparisons, lines, evidence, assessment }
 }
 export function purchaseYears(result: SajuResult, year: number, area: TimingArea, count=10, distinguishWorkLayer=false) {
- return Array.from({length:Math.min(count,2101-year)},(_,i)=>purchaseTiming(result,timingPoint(result,year+i),area,String(year+i),distinguishWorkLayer))
+ return Array.from({length:Math.min(count,2101-year)},(_,i)=>purchaseTiming(result,timingPoint(result,year+i),area,`${year+i} annual reference`,distinguishWorkLayer))
 }
 export function purchaseMonths(result: SajuResult, year: number, area: TimingArea='life', periodStart?: string) {
  const start = periodStart ? parseCalendarMonth(periodStart) : { year, month: 1 }
