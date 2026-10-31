@@ -78,11 +78,11 @@ describe('Buyer questions, not a repeated six-part technical template', () => {
       make('support-and-space', 'A relationship support need.'),
       make('balance-week', 'A strength and its matching blind spot.', [], 'Choose a routine that fits.'),
     ]
-    const source = chapters.map(chapter => deliveredChapter(chapter).join('\\n\\n')).join('\\n\\n')
+    const source = chapters.map(chapter => deliveredChapter(chapter).join('\n\n')).join('\n\n')
     const report = applyBuyerQuestions(source, 'wellbeing', chapters)
     expect((report.match(/^Question:/gm) ?? [])).toHaveLength(7)
-    expect(report).toContain('Question: Can this reading diagnose a health issue?\\n\\nAnswer: A chart reading cannot diagnose health.')
-    expect(report).toContain('Question: What practical step can help my everyday balance?\\n\\nAnswer: Choose a routine that fits.')
+    expect(report).toContain('Question: Can this reading diagnose a health issue?\n\nAnswer: A chart reading cannot diagnose health.')
+    expect(report).toContain('Question: What practical step can help my everyday balance?\n\nAnswer: Choose a routine that fits.')
     expect(report).not.toContain('Question: What kind of environment brings out my best?')
   })
 
