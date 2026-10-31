@@ -42,6 +42,7 @@ describe('Product 01 paid customer question answers', () => {
       expect(challenge).toMatch(/public role|role people see/i)
       expect(challenge).not.toContain(weakness.slice(weakness.indexOf('Answer: ') + 8, weakness.indexOf('Answer detail:')).trim().split(/[.!?]/)[0])
       const career = report.text.slice(report.text.indexOf('Question: What kind of career suits me?'), report.text.indexOf('Question: How does money work in my life?'))
+      expect(career).not.toMatch(/count a promising deal as income|payment arrives/i)
       careerAnswers.push(career)
       const love = report.text.slice(report.text.indexOf('Question: What is my pattern in love?'), report.text.indexOf('Question: What are my biggest life challenges?'))
       expect((love.match(/birth-hour marker/g) ?? []).length).toBeLessThanOrEqual(1)
