@@ -67,7 +67,8 @@ describe('Buyer review r14: direct answers without repeated warnings or lost dat
    const sections=customerNarrative(buildInterpretationPlan(kind,a,kind==='year'?2027:2026,kind==='compatibility'?b:undefined))
    const text=Object.values(sections).flatMap(s=>[...s.lines.map(x=>x.en),s.action.en,s.caution.en]).join('\n')
    expect(text).not.toMatch(/competing signals about support|comparison with work.*shows friction|does not establish a dismissal|whole period unlucky|You experiences|A’s .*daily style/)
-   expect(text).not.toMatch(/About this reading:/)
+   const notices=text.match(/About this reading:/g)??[]
+   expect(notices).toHaveLength(kind==='complete'?0:1)
   }
  })
  it('answers starting, partnership and expansion with different chart-based content',()=>{
@@ -101,13 +102,14 @@ describe('r15 paid-content review fixes',()=>{
   expect(s['month-7'].lines[0].en).toContain('Opening —')
   for(const id of ['month-5','month-6'])expect(s[id].lines[0].en).toContain('Opening + pressure')
  })
- it('keeps the common note once in the actual bundle, with no month-method note in personality or compatibility',()=>{
+ it('keeps bundle notices compact and includes only timing notes relevant to each category',()=>{
   const bundle=buildBundleFromPlans(bundleInterpretationPlans(a,b,2027,2026))
   expect(bundle.fullText.match(/About this reading:/g) ?? []).toHaveLength(0)
   for(const kind of ['wellbeing','compatibility'] as const){
    const p=buildInterpretationPlan(kind,a,2026,kind==='compatibility'?b:undefined)
    const delivered=buildTraditionalCategoryFromPlan(p).fullText
-   expect(delivered).not.toMatch(/15 July|15th|mid-July/)
+   if(kind==='wellbeing')expect(delivered).not.toMatch(/15 July|15th|mid-July/)
+   else { expect(delivered).toContain('15 July'); expect(delivered).not.toContain('monthly references use the 15th') }
   }
  })
  it('does not silently relabel a cautious period as calm or guaranteed favourable',()=>{
