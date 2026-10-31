@@ -23,7 +23,17 @@ function buildSections(plan:InterpretationPlan,targetedProduct01=true):Record<st
   const explained=new Set<string>()
   for(const row of rows){
    if(detail==='highlight'){
-    const reasons=row.lines.filter(l=>/\.(change-(day|month)|background-pressure)$/.test(l.id)).map(l=>({en:l.en.split(/(?<=[.!?])\s/)[0],ko:l.ko.split(/(?<=[.!?])\s/)[0]}))
+    const reasons=targetedProduct01&&plan.kind==='complete'&&id==='patterns'
+     ? (()=>{
+       const work=row.comparisons.some(item=>item.index===2&&item.found.length>0)
+       const privateLife=row.comparisons.some(item=>item.index===1&&item.found.length>0)
+       const areas=[work?'your work and daily responsibilities':'',privateLife?'your close relationships and personal choices':''].filter(Boolean)
+       const annualTheme=row.lines.find(line=>line.id.endsWith('.annual-theme'))?.en
+       const review=work&&privateLife?'Review how work demands, shared time and personal choices fit together.':work?'Review whether your duties, schedule and decision authority match the work you actually carry.':privateLife?'Pay attention to shared time, personal choices and expectations in close relationships.':'Use the year as a prompt to check the specific work or relationship plans described in the full timeline.'
+       const areaText=areas.length?areas.join(' and '):'the relevant parts of your birth chart'
+       return [{en:`The ${row.date.slice(0,4)} theme${annualTheme?` of ${annualTheme}`:''} connects with ${areaText}. ${review}`,ko:`${row.date.slice(0,4)}년${annualTheme?` ${annualTheme}`:''}의 주제가 ${work&&privateLife?'일상 업무와 가까운 관계 모두에':work?'일상 업무에':privateLife?'가까운 관계와 개인적 선택에':'명식에서 확인한 영역에'} 연결됩니다. ${work&&privateLife?'업무 부담과 함께하는 시간, 개인의 선택이 어떻게 맞물리는지 살펴봅니다.':work?'실제 맡은 업무와 일정, 결정 권한이 맞는지 살펴봅니다.':privateLife?'가까운 관계에서 함께하는 시간과 개인의 선택, 기대를 살펴봅니다.':'전체 흐름에서 설명한 일이나 관계 계획을 확인합니다.'}`}]
+      })()
+     : row.lines.filter(l=>/\.(change-(day|month)|background-pressure)$/.test(l.id)).map(l=>({en:l.en.split(/(?<=[.!?])\s/)[0],ko:l.ko.split(/(?<=[.!?])\s/)[0]}))
     if(reasons.length){
      const annual=row.lines.find(line=>line.id.endsWith('.annual-pillar'))
      const label=annual?`Why ${row.date.slice(0,4)} (${annual.en}) is highlighted here:`:`Why ${row.date.slice(0,4)} is highlighted here:`

@@ -60,7 +60,7 @@ export async function issueReport(input: OrderInput, orderId: string, referenceY
   if (input.kind === 'complete') {
     const independentAudit = await auditBirthInput(input.first, a)
     const reading = buildCompleteReading(a, referenceYear, independentAudit)
-    source = reading; text = applyBuyerQuestions(reading.fullText, 'complete', reading.chapters); documents = [reading.title]
+    source = reading; text = applyBuyerQuestions(reading.fullText, 'complete', reading.chapters, reading.periods); documents = [reading.title]
   } else if (input.kind === 'bundle') {
     if (!b) throw new Error('Missing second chart')
     const reading = buildBundleReading(a, b, Number(input.periodStart?.slice(0, 4) ?? input.year!), referenceYear, input.periodStart, input.periodTimezone)

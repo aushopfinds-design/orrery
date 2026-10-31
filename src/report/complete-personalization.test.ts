@@ -6,6 +6,7 @@ import { purchaseYears } from './purchase-timing.ts'
 import { timingPoint } from './traditional-analysis.ts'
 import { buildInterpretationPlan } from './interpretation-plan.ts'
 import { customerNarrative } from './purchase-narrative.ts'
+import { applyBuyerQuestions, BUYER_QUESTIONS } from './buyer-outline.ts'
 
 const locations = [
   { timezone: 'Asia/Seoul', latitude: 37.5665, longitude: 126.978 },
@@ -34,16 +35,17 @@ describe('My Life personalization across 24 international birth charts', () => {
       const chapter = report.chapters.find(item => item.id === id)!
       return [chapter.lead, ...chapter.paragraphs].join(' ')
     })
-    for (const id of ['personality', 'money', 'career', 'love', 'patterns']) {
+    for (const id of ['personality', 'money', 'career', 'love', 'life-challenges', 'patterns']) {
       expect(new Set(chapterText(id)).size, id).toBeGreaterThan(18)
     }
     expect(new Set(readings.map(report => report.actionPlan.paragraphs.join(' '))).size).toBeGreaterThan(18)
     for (const [index, report] of readings.entries()) {
-      expect(report.chapters).toHaveLength(7)
+      expect(report.chapters).toHaveLength(8)
       expect(report.periods.length).toBeGreaterThan(0)
       expect(report.chapters.find(chapter => chapter.id === 'money')!.evidence.length).toBeGreaterThan(0)
       expect(report.chapters.find(chapter => chapter.id === 'career')!.evidence.length).toBeGreaterThan(0)
       expect(report.chapters.find(chapter => chapter.id === 'love')!.evidence.length).toBeGreaterThan(0)
+      expect(report.chapters.find(chapter => chapter.id === 'life-challenges')!.evidence.length).toBeGreaterThan(0)
       if (births[index].unknownTime) {
         expect(report.pillarSummary).toContain('Hour: Unknown')
         expect(report.calculation.notes.join(' ')).toMatch(/unknown|hour/i)
@@ -62,8 +64,8 @@ describe('My Life personalization across 24 international birth charts', () => {
       const years = customerNarrative(plan)['next-moves'].lines.filter(line => /^20\d\d: Main theme/.test(line.en))
       expect(love).toMatch(/most likely to feel secure/i)
       expect(love).toMatch(/conflict can develop when/i)
-      expect(love).toMatch(/personal chart also points to a need for/i)
-      expect(love).toContain(`${chart.pillars[1].pillar.branch} in the day pillar`)
+      expect(love).toMatch(/It also points to a need for/i)
+      expect(love).toContain(`${chart.pillars[1].pillar.branch}, the day sign used`)
       expect(love).not.toContain('In close relationships, your chart points to a need for')
       expect(love).not.toContain('alongside the ten-year theme')
       expect(love).toMatch(/years that most clearly touch relationship priorities|No year in the next ten-year comparison/i)
@@ -71,7 +73,7 @@ describe('My Life personalization across 24 international birth charts', () => {
       expect(social).toMatch(/natural strength|weakness to watch/i)
       expect(social).toMatch(/hidden layer/i)
       expect(social).toMatch(/others may notice this side first/i)
-      expect(balance).toMatch(/feel balanced when/i)
+      expect(balance).toMatch(/most important life insight is that/i)
       expect(balance).toContain(chart.pillars[1].pillar.branch)
       expect(years).toHaveLength(10)
       expect(new Set(years.map(line => line.en)).size).toBe(10)
@@ -88,9 +90,9 @@ describe('My Life personalization across 24 international birth charts', () => {
       }
       const socialChapter = reading.chapters.find(chapter => chapter.id === 'social')!
       const balanceChapter = reading.chapters.find(chapter => chapter.id === 'balance')!
-      expect([socialChapter.lead, ...socialChapter.paragraphs].join(' ')).toMatch(/main weakness|weakness to watch/i)
+      expect([socialChapter.lead, ...socialChapter.paragraphs].join(' ')).not.toMatch(/main weakness|weakness to watch/i)
       expect([socialChapter.lead, ...socialChapter.paragraphs].join(' ')).toMatch(/others may notice this side first/i)
-      expect([balanceChapter.lead, ...balanceChapter.paragraphs].join(' ')).toMatch(/feel balanced when/i)
+      expect([balanceChapter.lead, ...balanceChapter.paragraphs].join(' ')).toMatch(/most important life insight is that/i)
       return { love, social, balance, years: years.map(line => line.en).join(' ') }
     })
     expect(new Set(reports.map(report => report.love)).size).toBeGreaterThan(15)
@@ -113,15 +115,42 @@ describe('My Life direct buyer answers and annual distinctions', () => {
       return [section.lead, ...section.paragraphs].join(' ')
     }
     expect(text('personality')).toContain(joy.pillars[1].pillar.stem)
-    expect(text('personality')).toContain('Day Master')
+    expect(text('personality')).toContain('day sign')
     expect(text('money')).toMatch(/regular income|repeat fees/i)
     expect(text('money')).toMatch(/projects|deals|variable/i)
-    expect(text('career')).toMatch(/structured role|organisation|organization/i)
+    expect(text('career')).toMatch(/work and money|knowledge|responsibility|independence/i)
     expect(text('career')).toContain('authority')
     expect(text('love')).toContain(joy.pillars[1].pillar.branch)
     expect(text('patterns')).toContain('己酉')
     expect(text('patterns')).toContain('辛亥')
     expect(report.chapters.every(chapter => chapter.evidence.length > 0)).toBe(true)
+  })
+
+  it('connects all ten paid questions to the right personal answer and next ten-year cycle', () => {
+    const report = buildCompleteReading(joy, 2026)
+    const paidText = applyBuyerQuestions(report.fullText, 'complete', report.chapters, report.periods)
+    const questions = BUYER_QUESTIONS.complete
+    let previous = -1
+    for (const item of questions) {
+      const index = paidText.indexOf(item.question)
+      expect(index, item.question).toBeGreaterThan(previous)
+      previous = index
+    }
+    const answerFor = (question: string, next: string) => paidText.slice(paidText.indexOf(question), paidText.indexOf(next, paidText.indexOf(question) + question.length))
+    const challenges = answerFor(questions[6].question, questions[7].question)
+    const turningPoints = answerFor(questions[7].question, questions[8].question)
+    const nextCycle = answerFor(questions[8].question, questions[9].question)
+    const insight = paidText.slice(paidText.indexOf(questions[9].question))
+    expect(challenges).toMatch(/biggest life challenge may be/i)
+    expect(challenges).toContain(joy.pillars[1].pillar.branch)
+    expect(turningPoints).toContain('2026')
+    expect(turningPoints).toContain('2029')
+    expect(turningPoints).toContain('2031')
+    expect(nextCycle).toContain('辛亥')
+    expect(nextCycle).toMatch(/July 2034/i)
+    expect(nextCycle).toMatch(/money|work|relationship/i)
+    expect(insight).toMatch(/most important life insight is that/i)
+    expect(insight).toContain(joy.pillars[1].pillar.branch)
   })
 
   it('describes ten-year cycle boundaries as approximate when calculation conventions differ', () => {

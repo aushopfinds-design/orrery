@@ -67,9 +67,10 @@ describe('Customer PDF review regressions', () => {
     expect(report.months[0].evidence.join(' ')).not.toContain('刑')
     expect(report.methodNotes.join(' ')).toContain('separate from the birthplace time zone')
   })
-  it('keeps the preparation basis and chapter 08 in the complete export', () => {
+  it('keeps the preparation basis and cycle details distinct from the numbered buyer questions', () => {
     const report = buildCompleteReading(calculateSaju(input), 2026)
-    expect(report.fullText).toContain('08 · What Do Your Ten-Year Life Cycles Reveal?')
+    expect(report.fullText).toContain('Ten-Year Cycles in Detail')
+    expect(report.actionPlan.title).toBe('Ten-Year Timeline by Year')
     expect(report.methodNotes.join(' ')).toContain('Traditional cycle setting: Male')
     expect(report.calculation.hourPillar).toBe(getFourPillars(1998, 3, 25, 2, 57)[3])
   })

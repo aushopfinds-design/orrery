@@ -1,7 +1,7 @@
-import type { ReportChapter } from './complete-reading.ts'
+import type { CompleteReadingPeriod, ReportChapter } from './complete-reading.ts'
 import { deliveredChapter } from './report-delivery.ts'
 export const BUYER_OUTLINES = {
-  complete: [['personality', "What Shapes Your Life and Destiny?"], ['social', "What Helps You Thrive — and What Holds You Back?"], ['money', "How Are You Meant to Make Money?"], ['career', "Where Could You Find Your Kind of Success?"], ['love', "What Do You Need in Love?"], ['balance', "What Helps You Feel More Balanced?"], ['patterns', "When Might Your Life Change Direction?"]],
+  complete: [['personality', "What Shapes Your Life and Destiny?"], ['social', "What Helps You Thrive — and What Holds You Back?"], ['career', "Where Could You Find Your Kind of Success?"], ['money', "How Are You Meant to Make Money?"], ['love', "What Do You Need in Love?"], ['life-challenges', "What Challenges Keep Returning in Your Life?"], ['patterns', "When Might Your Life Change Direction?"], ['balance', "What Is the Most Important Insight About Your Life?"]],
   compatibility: [['two-styles', "How Do You Fit Together?"], ['two-directions', "Why Are You Drawn to Each Other?"], ['close-conversation', "Why Do You See Things Differently?"], ['shared-routine', "Can Your Everyday Lives Fit Together?"], ['shared-money', "Can You Agree About Money?"], ['chart-patterns', "What Brings You Closer — and What Creates Friction?"], ['support-each-other', "How Might the Years Ahead Affect Your Relationship?"], ['shared-week', "What Does This Connection Ask of You?"]],
   year: [['annual-theme', "What Is the Main Story of Your Year?"], ['annual-money', "What Could Shape Your Money This Year?"], ['annual-work', "Where Could Work Take You This Year?"], ['annual-connections', "What Could This Year Bring to Your Love Life?"], ['annual-cycle-context', "What Should You Focus on Each Month?"], ['annual-plan', "When Might You Need Extra Care?"]],
   love: [['love-style', 'How Do You Approach Love?'], ['love-needs', 'What Helps You Feel Secure in a Relationship?'], ['love-attraction', 'What Kind of Connection Draws You In?'], ['love-friction', 'Where Can Relationships Feel Difficult?'], ['love-patterns', 'What Does Your Chart Show About Close Bonds?'], ['love-timing', 'When May Relationship Priorities Shift?'], ['love-outlook', 'How Can You Build a Relationship That Fits You?']],
@@ -10,7 +10,7 @@ export const BUYER_OUTLINES = {
   wellbeing: [['everyday-pace', "Who Are You Beneath the Surface?"], ['visible-elements', "Which Parts of Your Nature Stand Out?"], ['workload-rhythm', "What Tends to Put You Under Pressure?"], ['support-and-space', "What Do You Need From the People Around You?"], ['balance-week', "How Can Your Strengths Become Blind Spots?"]],
 } as const
 export type BuyerOutlineKind = keyof typeof BUYER_OUTLINES
-type AnswerPart = 'lead' | 'caution' | 'action' | 'timing' | `paragraph:${number}`
+type AnswerPart = 'lead' | 'caution' | 'action' | 'timing' | 'turning-points' | 'next-cycle' | `paragraph:${number}`
 interface BuyerQuestion { id: string; question: string; source: string; part: AnswerPart }
 
 /** Ten buyer questions per product. Answers reuse the existing chart-based chapter prose. */
@@ -22,9 +22,9 @@ export const BUYER_QUESTIONS: Record<BuyerOutlineKind, BuyerQuestion[]> = {
     { id: 'career', question: 'What kind of career suits me?', source: 'career', part: 'lead' },
     { id: 'money', question: 'How does money work in my life?', source: 'money', part: 'lead' },
     { id: 'love', question: 'What is my pattern in love?', source: 'love', part: 'lead' },
-    { id: 'patterns', question: 'What are my biggest life challenges?', source: 'patterns', part: 'lead' },
-    { id: 'q-turning-points', question: 'When are my major turning points?', source: 'patterns', part: 'timing' },
-    { id: 'q-next-cycle', question: 'What does my next ten-year cycle suggest?', source: 'patterns', part: 'paragraph:1' },
+    { id: 'patterns', question: 'What are my biggest life challenges?', source: 'life-challenges', part: 'lead' },
+    { id: 'q-turning-points', question: 'When are my major turning points?', source: 'patterns', part: 'turning-points' },
+    { id: 'q-next-cycle', question: 'What does my next ten-year cycle suggest?', source: 'patterns', part: 'next-cycle' },
     { id: 'balance', question: 'What is the most important insight about my life?', source: 'balance', part: 'lead' },
   ],
   career: [
@@ -101,7 +101,7 @@ export const BUYER_QUESTIONS: Record<BuyerOutlineKind, BuyerQuestion[]> = {
   ],
 }
 
-export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapters: ReportChapter[]): string {
+export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapters: ReportChapter[], periods: CompleteReadingPeriod[] = []): string {
   const byId = new Map(chapters.map(chapter => [chapter.id, chapter]))
   const questionsBySource = new Map<string, BuyerQuestion[]>()
   for (const question of BUYER_QUESTIONS[kind]) {
@@ -113,7 +113,9 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
     const answer = (question: BuyerQuestion) => {
       let lead = chapter.lead
       let paragraphs: string[] = []
-      if (question.part === 'caution') {
+      if (kind === 'complete' && question.id === 'balance') {
+        lead = `The most important life insight is that ${chapter.lead.charAt(0).toLowerCase()}${chapter.lead.slice(1)}`
+      } else if (question.part === 'caution') {
         lead = chapter.guidance.watchFor[0] ?? chapter.tryThis
         paragraphs = chapter.tryThis ? [chapter.tryThis] : []
       } else if (question.part === 'action') {
@@ -123,6 +125,22 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
         const index = chapter.paragraphs.findIndex(line => /\b20\d\d\b|cycle|period|month|year/i.test(line))
         lead = index >= 0 ? chapter.paragraphs[index] : chapter.tryThis
         paragraphs = index >= 0 ? chapter.paragraphs.slice(index + 1, index + 2) : []
+      } else if (question.part === 'turning-points') {
+        lead = chapter.lead
+        paragraphs = chapter.paragraphs.filter(line => /\b20\d\d\b/.test(line))
+      } else if (question.part === 'next-cycle') {
+        const current = periods[0]
+        const next = periods[1]
+        if (!next) {
+          lead = 'No next ten-year cycle is available in the supported calculation range, so this report does not invent a later cycle or timing conclusion.'
+          paragraphs = []
+        } else {
+          lead = `Your next ten-year cycle is ${next.period} (${next.pillar}). ${next.paragraphs[1] ?? next.paragraphs[0]}`
+          paragraphs = [
+            ...(current ? [`Your current cycle is ${current.period} (${current.pillar}); the next cycle marks a change from that emphasis.`] : []),
+            ...next.paragraphs.slice(2, 5),
+          ]
+        }
       } else if (question.part.startsWith('paragraph:')) {
         const index = Number(question.part.slice('paragraph:'.length))
         lead = chapter.paragraphs[index] ?? chapter.tryThis
@@ -134,7 +152,7 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
       return [lead, ...paragraphs].filter((line, index, all) => all.indexOf(line) === index)
     }
     const extraAnswers = questions.slice(1).map(question => ({ question, lines: answer(question) }))
-    const firstLines = [chapter.lead, ...chapter.paragraphs.filter(line => !used.has(line))]
+    const firstLines = [chapter.lead, ...chapter.paragraphs.filter(line => !used.has(line) && !(kind === 'complete' && source === 'personality' && chapter.guidance.watchFor.includes(line)))]
     const guidance = chapter.showGuidance === false ? [] : [
       ...(!extraAnswers.some(item => item.lines.includes(chapter.tryThis)) ? ['Practical point: ' + chapter.tryThis] : []),
       ...(!extraAnswers.some(item => chapter.guidance.watchFor.includes(item.lines[0])) ? ['Main caution: ' + chapter.guidance.watchFor.join(' ')] : []),
