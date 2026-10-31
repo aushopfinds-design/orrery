@@ -116,7 +116,7 @@ function buildSections(plan:InterpretationPlan,targetedProduct01=true):Record<st
   put('business-chapters',`Your ${plan.referenceYear}–${plan.referenceYear+years.length-1} business timeline separates finding customers, delivering the work and managing shared commitments.`,`${plan.referenceYear}–${plan.referenceYear+years.length-1}년의 사업 흐름입니다. 고객 확보와 납품, 공동 책임을 나누어 살펴봅니다.`,years,true)
  }
  if(plan.kind==='year'){
-  const months=purchaseMonths(plan.first,plan.referenceYear),good=months.filter(opens),careful=months.filter(r=>['extra-care','opening-with-caution'].includes(r.status)),key=priority(careful)
+  const months=purchaseMonths(plan.first,plan.referenceYear,'life',plan.periodStart),good=months.filter(opens),careful=months.filter(r=>['extra-care','opening-with-caution'].includes(r.status)),key=priority(careful)
   const labels=(rows:Row[])=>rows.map(r=>new Date(r.date+'T12:00:00Z').toLocaleDateString('en-GB',{month:'long',timeZone:'UTC'})).join(', ')
   const koLabels=(rows:Row[])=>rows.map(r=>Number(r.date.slice(5,7))+'월').join('·')
   const openingThemes=months.filter(row=>row.status==='conditional-opening')
