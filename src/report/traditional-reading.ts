@@ -37,7 +37,7 @@ function methods(result: SajuResult, second?: SajuResult, kind: BuyerOutlineKind
   const timingNote = kind === 'wellbeing' ? [] : kind === 'year'
     ? ['Annual references use 15 July and monthly references use the 15th, each at 12:00 Asia/Seoul. They are comparison points, not the start or the full span of a Gregorian year or month. Solar-term boundaries can change the pillar within a calendar month.']
     : ['Annual references use 15 July at 12:00 Asia/Seoul. They are comparison points, not the start or the full span of a Gregorian year.']
-  return [`Structural interpretation policy: ${STRUCTURE_POLICY}. Provisional evidence-led review edition; not a certified expert reading.`, ...explainCalculation(result.input).notes, ...(second ? explainCalculation(second.input).notes.map(note => `Person B: ${note}`) : []), ...METHOD, ...timingNote,
+  return [`Structural interpretation policy: ${STRUCTURE_POLICY}. Provisional evidence-led review edition; not a certified expert reading.`, ...explainCalculation(result.input).notes, ...(second ? explainCalculation(second.input).notes.map(note => `Your partner: ${note}`) : []), ...METHOD, ...timingNote,
     ...(result.input.unknownTime || second?.input.unknownTime ? ['An unknown birth time uses three pillars and excludes every hour fact, hidden stem and pair comparison. Ten-year starting dates remain approximate; no hour is inferred.'] : [])]
 }
 export function shortParagraphs(text: string): string[] {
