@@ -86,14 +86,14 @@ describe('Buyer questions, not a repeated six-part technical template', () => {
       make('shared-week', 'This connection asks each person to make room for different needs.', [], 'Agree on who owns one shared task.'),
       make('support-each-other', 'Each person has a separate relationship timeline.'),
     ]
-    const source = chapters.map(chapter => deliveredChapter(chapter).join('\\n\\n')).join('\\n\\n')
+    const source = chapters.map(chapter => deliveredChapter(chapter).join('\n\n')).join('\n\n')
     const report = applyBuyerQuestions(source, 'compatibility', chapters, [], 'collection')
     expect((report.match(/^Question:/gm) ?? [])).toHaveLength(10)
-    expect(report).toContain('Question: How do we express love differently?\\n\\nAnswer: You need time to finish a concern.\\n\\nAnswer detail: Your partner needs undivided attention.')
-    expect(report).toContain('Question: Where is closeness strongest, and where might daily routines be harder?\\n\\nAnswer: Private closeness is stronger than sharing a daily routine.')
-    expect(report).toContain('Question: What recurring tension should we watch for?\\n\\nAnswer: Your main tension is correcting before clarifying the problem.')
-    expect(report).toContain('Question: What does this connection ask of each of us?\\n\\nAnswer: This connection asks each person to make room for different needs.')
-    expect(report).toContain('Question: What practical step could strengthen this connection?\\n\\nAnswer: Agree on who owns one shared task.')
+    expect(report).toContain('Question: How do we express love differently?\n\nAnswer: You need time to finish a concern.\n\nAnswer detail: Your partner needs undivided attention.')
+    expect(report).toContain('Question: Where is closeness strongest, and where might daily routines be harder?\n\nAnswer: Private closeness is stronger than sharing a daily routine.')
+    expect(report).toContain('Question: What recurring tension should we watch for?\n\nAnswer: Your main tension is correcting before clarifying the problem.')
+    expect(report).toContain('Question: What does this connection ask of each of us?\n\nAnswer: This connection asks each person to make room for different needs.')
+    expect(report).toContain('Question: What practical step could strengthen this connection?\n\nAnswer: Agree on who owns one shared task.')
   })
   it('maps wellbeing questions to the chapter that answers each one', () => {
     const make = (id: string, lead: string, paragraphs: string[] = [], action = 'A chart-specific practical step.', caution = 'A chart reading cannot diagnose health.') => ({
