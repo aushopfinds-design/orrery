@@ -40,7 +40,7 @@ describe('A distinct everyday guide in every full report', () => {
         if (report.title === 'My Life') {
           // My Life suppresses advice already answered in its chart-specific
           // chapters. Any retained extra should appear once, never be echoed.
-          expect(report.fullText.split(text).length - 1).toBeLessThanOrEqual(1)
+          expect(report.fullText.split(text).length - 1, `${report.title}: ${text}`).toBeLessThanOrEqual(1)
         } else expect(report.fullText).toContain(text)
       }
       for (const item of focusedCareer ? [] : extras.symbols) {
