@@ -112,16 +112,22 @@ export function buildBundleFromPlans(plans: ReturnType<typeof bundleInterpretati
       `Bottom Line: ${plainReadingText(overviewParagraphs.at(-1) ?? 'Compare work demands with actual pay and capacity, then make room for the relationship needs shown in both charts.')}`,
     ].join('\n\n'),
   ]
+  const includedReports = [complete, compatibility, career, annual, love]
+  const deliveredReports = includedReports.map(report => splitDeliveredReading(report.fullText))
   const fullText = [
-    'THE FATE KEY · Your Destiny Collection', overview.fullText,
+    'THE FATE KEY · Your Destiny Collection',
+    overview.fullText,
     'Birth details', complete.birthSummary, ...complete.pillarSummary,
     "Your partner's birth details", compatibility.subjects[1].birthSummary,
     'Your Ten Questions', ...collectionQuestions,
+    'Your Included Reports',
+    ...deliveredReports.map(report => report.body),
     CALCULATION_NOTES,
     'Chart evidence for these answers', ...chartEvidence.map(fact => 'From the chart: ' + fact),
+    ...deliveredReports.map(report => report.appendix),
     'Longer-term timing reference', ...lifeTimeline,
     'How this reading is prepared', ...complete.methodNotes,
-  ].join('\n\n')
+  ].join('\\n\\n')
   const summary = [{ label: 'Your Life, Your Destiny', text: complete.summary[0].text }, { label: 'Your Next 12 Months', text: annual.summary[0].text }, { label: 'Are We Meant to Be?', text: compatibility.summary[0].text }, { label: 'Success, Money & Your Future', text: career.summary[0].text }, { label: 'Relationship Needs', text: love.summary[0].text }]
   return { title: 'Your Destiny Collection', complete, compatibility, annual, career, love, overview, summary, synthesis, fullText, wordCount: fullText.split(/\s+/).length }
 }
