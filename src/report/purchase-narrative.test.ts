@@ -47,7 +47,7 @@ describe('Buyer review r14: direct answers without repeated warnings or lost dat
    const report=kind==='complete'?buildTraditionalCompleteFromPlan(plan):buildTraditionalCategoryFromPlan(plan)
    const timeline='actionPlan'in report?report.actionPlan:report.chapters.find(c=>c.id===(kind==='career'?'work-chapters':'business-chapters'))!
    const text=[timeline.lead,...timeline.paragraphs].join(' ')
-   for(let year=2026;year<2036;year++)expect(text).toContain(`${year}:`)
+   for(let year=2026;year<2036;year++)expect(text).toMatch(new RegExp(`${year}(?: yearly comparison|:| —)`))
   }
  })
  it('keeps the annual caution shortlist separate from all twelve actual monthly states',()=>{
@@ -140,11 +140,11 @@ describe('Customer conclusions before planning advice',()=>{
   const money=sections['money-commitments'].lines.map(line=>line.en).join(' ')
   const career=sections['career-plan'].lines.map(line=>line.en).join(' ')
   const work=sections['feedback-and-boundaries'].lines.map(line=>line.en).join(' ')
-  expect(money).toContain('2026 (New customers, deals and changing fees stand out)')
-  expect(money).toContain('2027 (Regular income and continuing commitments are the main money themes)')
-  expect(money).toContain('2034 (Skilled, repeatable work takes priority)')
+  expect(money).toContain('2026 (2026 yearly comparison: Opening + pressure — New customers, deals and changing fees stand out)')
+  expect(money).toContain('2027 (2027 yearly comparison: Opening + pressure — Regular income and continuing commitments are the main money themes)')
+  expect(money).toContain('2034 (2034 yearly comparison: Focus — Skilled, repeatable work takes priority)')
   expect(money).toContain('a paid-work focus, not a clear money opening')
-  expect(money).toContain('2035 (Improving a method or putting an idea into words stands out)')
+  expect(money).toContain('2035 (2035 yearly comparison: Adjustment — Improving a method or putting an idea into words stands out)')
   expect(money).toContain('a route where caution takes priority')
   expect(money).toContain('work arrangements may also need adjustment')
   expect(work).toContain('Why 2035 is highlighted here:')

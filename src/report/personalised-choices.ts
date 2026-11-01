@@ -18,8 +18,8 @@ const TASKS:Record<string,Passage>={
 export function roleChoice(p:Subject):Passage{
  const visible=TASKS[p.monthStemGod],daily=TASKS[p.monthBranchGod]
  return p.monthStemGod===p.monthBranchGod
- ?pair(`Look for tasks such as ${visible.en}. Both sides of your birth-month pattern repeat this preference, so a clear remit is a better fit than a title that spreads you across unrelated duties. These are examples of work, not a fixed list of careers.`,`예를 들면 ${visible.ko}을 살펴봅니다. 태어난 달의 겉과 안이 같은 특징을 반복하므로 관련 없는 일을 넓게 맡는 직함보다 담당 범위가 분명한 쪽으로 읽습니다. 정해진 직업 목록이 아니라 업무의 예시입니다.`)
- :pair(`A useful job combines ${visible.en} with enough time for ${daily.en}. For example, being hired for the first while your whole week is consumed by the second would leave the role poorly matched. This comes from comparing the two different roles in your birth month, not from your job title.`,`맞는 자리는 ${visible.ko}과 ${daily.ko}을 위한 시간을 함께 담습니다. 앞의 역할로 채용됐는데 한 주를 뒤의 업무에만 쓰게 된다면 맞지 않는 부분이 생길 수 있습니다. 직업명보다 태어난 달의 서로 다른 두 역할을 비교한 풀이입니다.`)
+ ?pair(`A good career fit includes work such as ${visible.en}. Both sides of your birth-month pattern repeat this preference, so a clear remit fits better than a title that spreads you across unrelated duties. These are examples of work, not a fixed list of careers.`,`잘 맞는 직업에는 ${visible.ko} 같은 업무가 포함됩니다. 태어난 달의 겉과 안이 같은 특징을 반복하므로 관련 없는 일을 넓게 맡는 직함보다 담당 범위가 분명한 쪽에 맞습니다. 정해진 직업 목록이 아니라 업무의 예시입니다.`)
+ :pair(`Your best fit combines ${visible.en} with enough time for ${daily.en}. For example, being hired for the first while your whole week is consumed by the second would leave the role poorly matched. This comes from comparing the two different roles in your birth month, not from your job title.`,`본인에게 가장 잘 맞는 일은 ${visible.ko}과 ${daily.ko}을 위한 시간을 함께 담습니다. 앞의 역할로 채용됐는데 한 주를 뒤의 업무에만 쓰게 된다면 맞지 않는 부분이 생길 수 있습니다. 직업명보다 태어난 달의 서로 다른 두 역할을 비교한 풀이입니다.`)
 }
 export function businessDivision(p:Subject):Passage{
  const delivery=TASKS[p.monthBranchGod],front=TASKS[p.monthStemGod]
@@ -39,7 +39,7 @@ export function relationshipRepair(a:Subject,b:Subject):Passage{
  const ar=REPAIR[CARE_NEED[a.dayBranch]],br=REPAIR[CARE_NEED[b.dayBranch]]
  const shared=CARE_NEED[a.dayBranch]===CARE_NEED[b.dayBranch]
  const response=shared?pair(`For either of you, a useful first response is to ${ar.en}.`,`두 사람에게 공통으로 도움이 될 첫 대응은 ${ar.ko}입니다.`):pair(`To reach you, your partner could ${ar.en}; to reach your partner, you could ${br.en}.`,`본인에게는 상대가 ${ar.ko}, 상대방에게는 본인이 ${br.ko}로 시작할 수 있습니다.`)
- return pair(`For a concrete example, imagine a difficult conversation after a long day. ${response.en} ${shared?'The first response can be similar, but each person still needs a turn receiving it.':'Starting with the same response for both of you could miss one person’s need.'} This is an illustration of your compared private-life needs, not an event the chart predicts.`,`예를 들어 긴 하루 뒤 어려운 대화를 한다고 생각해 봅니다. ${response.ko} ${shared?'첫 대응이 비슷할 수 있지만 두 사람 모두 배려를 받을 차례가 필요합니다.':'두 사람에게 같은 방식으로만 대응하면 한 사람의 필요를 놓칠 수 있습니다.'} 사적인 필요를 비교한 예시이며 일어날 사건을 예측한 것이 아닙니다.`)
+ return pair(`${response.en} For example, imagine a difficult conversation after a long day. ${shared?'The first response can be similar, but each person still needs a turn receiving it.':'Starting with the same response for both of you could miss one person’s need.'} This is an illustration of your compared private-life needs, not an event the chart predicts.`,`먼저 ${response.ko}을 살핍니다. 예를 들어 긴 하루 뒤 어려운 대화를 한다고 생각해 봅니다. ${shared?'첫 대응이 비슷할 수 있지만 두 사람 모두 배려를 받을 차례가 필요합니다.':'두 사람에게 같은 방식으로만 대응하면 한 사람의 필요를 놓칠 수 있습니다.'} 사적인 필요를 비교한 예시이며 일어날 사건을 예측한 것이 아닙니다.`)
 }
 export function personalBoundary(p:Subject):Passage{
  const task=TASKS[p.monthStemGod],privateRole=WORDS[p.dayBranchGod]

@@ -1,4 +1,3 @@
-import { splitDeliveredReading } from './report-delivery.ts'
 import { structuralAssessment } from './structural-assessment.ts'
 import { shortParagraphs } from './traditional-reading.ts'
 import { describe, expect, it } from 'vitest'
@@ -100,7 +99,12 @@ describe('Two-person compatibility', () => {
     expect(facts).toContain(`B → A: ${b} comparing ${a} = ${getRelation(b, a)!.hanja}.`)
     const swapped = buildCompatibilityReading(baseB, baseA, 2026)
     expect(swapped.subjects[0].input).toEqual(baseB.input)
-    expect(swapped.chapters[1].paragraphs).not.toEqual(reading.chapters[1].paragraphs)
+    if (getRelation(a, b)!.hanja !== getRelation(b, a)!.hanja) {
+      expect(swapped.chapters[1].lead).not.toEqual(reading.chapters[1].lead)
+    } else {
+      expect(reading.chapters[1].lead).toContain('You may be drawn to your partner')
+      expect(reading.chapters[1].lead).toContain('your partner may be drawn to you')
+    }
     expect(buildCompatibilityReading(baseA, charts[4], 2026).chapters[0].paragraphs).not.toEqual(reading.chapters[0].paragraphs)
     expect(() => buildCategoryReading('compatibility', baseA)).toThrow('Two birth charts')
   })
@@ -188,7 +192,7 @@ describe('Work, money, cycles and daily balance', () => {
 })
 
 describe('Bundle and public report navigation', () => {
-  it('contains all five full reports and keeps one- and two-person subjects distinct', () => {
+  it('answers ten integrated collection questions and keeps five chart-source appendices', () => {
     const bundle = buildBundleReading(baseA, baseB, 2027, 2026)
     expect(bundle.compatibility.subjects).toHaveLength(2)
     expect(bundle.annual.subjects).toHaveLength(1)
@@ -197,12 +201,16 @@ describe('Bundle and public report navigation', () => {
     expect(bundle.love.subjects).toHaveLength(1)
     expect(bundle.career.subjects[0].input).toEqual(baseA.input)
     expect(bundle.love.subjects[0].input).toEqual(baseA.input)
-    for (const report of [bundle.complete, bundle.annual, bundle.compatibility, bundle.career, bundle.love]) {
-      const parts = splitDeliveredReading(report.fullText)
-      expect(bundle.fullText).toContain(parts.body)
-      expect(bundle.fullText).toContain(parts.appendix)
-    }
-    expect(bundle.wordCount).toBeGreaterThan(12000)
+    expect((bundle.fullText.match(/^Question:/gm) ?? [])).toHaveLength(10)
+    expect((bundle.fullText.match(/^Your Answer:/gm) ?? [])).toHaveLength(10)
+    expect((bundle.fullText.match(/^Why This Fits You:/gm) ?? [])).toHaveLength(10)
+    expect((bundle.fullText.match(/^What You May Experience:/gm) ?? [])).toHaveLength(10)
+    expect((bundle.fullText.match(/^Bottom Line:/gm) ?? [])).toHaveLength(10)
+    expect(bundle.fullText).toContain('Chart evidence for these answers')
+    expect(bundle.fullText).toContain('What should you know about the next 12 months?')
+    expect(bundle.fullText).toContain('How do you and your partner fit together?')
+    expect(bundle.fullText).toContain('Your chart highlights this work strength:')
+    expect(bundle.wordCount).toBeLessThan(12000)
   })
   it('routes every category, chapter and bundle without leaking into a personal free result', () => {
     for (const info of FOCUS_CATALOG) {

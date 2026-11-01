@@ -66,22 +66,18 @@ export async function issueReport(input: OrderInput, orderId: string, referenceY
     const reading = buildBundleReading(a, b, Number(input.periodStart?.slice(0, 4) ?? input.year!), referenceYear, input.periodStart, input.periodTimezone)
     source = reading
     text = reading.fullText
-    for (const [kind, report] of [['complete', reading.complete], ['year', reading.annual], ['compatibility', reading.compatibility], ['career', reading.career], ['love', reading.love]] as const) {
-      const periods = kind === 'complete' ? reading.complete.periods : []
-      text = applyBuyerQuestions(text, kind, report.chapters, periods, 'collection')
-    }
-    documents = [reading.complete.title, reading.annual.title, reading.compatibility.title, reading.career.title, reading.love.title]
+    documents = [reading.title]
   } else {
     const reading = buildCategoryReading(input.kind, a, { second: b, year: Number(input.periodStart?.slice(0, 4) ?? input.year ?? referenceYear), ...(input.periodStart ? { periodStart: input.periodStart } : {}), ...(input.periodTimezone ? { periodTimezone: input.periodTimezone } : {}) })
     source = reading; text = applyBuyerQuestions(reading.fullText, input.kind, reading.chapters); documents = [reading.title]
   }
-  const certificates = documents.map((title,index) => ({ title, number: reportReference(orderId, referenceYear, index + 1) }))
+  const certificates = documents.map((title,index) => ({ title, number: reportReference(orderId, referenceYear, input.kind === 'bundle' ? 5 : index + 1) }))
   const reference = input.kind === 'bundle' ? reportReference(orderId, referenceYear, 0) : certificates[0].number
   for (const certificate of certificates) {
     const heading = 'THE FATE KEY · ' + certificate.title
     text = text.replace(heading + '\n\n', heading + '\n\nReport ID: ' + certificate.number + '\n\n')
   }
-  if (input.kind === 'bundle') text = text.replace('THE FATE KEY · Complete Package\n\n', 'THE FATE KEY · Complete Package\n\nCollection ID: ' + reference + '\n\n')
+  if (input.kind === 'bundle') text = text.replace('THE FATE KEY · Complete Package\n\n', 'THE FATE KEY · Complete Package\n\nCollection ID: ' + reference + '\n\nReport ID: ' + certificates[0].number + '\n\n')
   const report: BuyerReport = {
     title: previewProduct(input.kind).title, kind: input.kind, edition: REPORT_EDITION, reference, certificates,
     ...(input.recipientName ? { recipientName: input.recipientName } : {}),

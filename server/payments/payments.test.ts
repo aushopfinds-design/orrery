@@ -315,9 +315,9 @@ describe('seven products: paid reports, PDFs and access isolation', () => {
     expect(report.recipientName).toBe(kind === 'complete' ? 'Minji' : undefined)
     expect(report.text.length).toBeGreaterThan(5000)
     expect(report).not.toHaveProperty('pdf')
-    expect(report.documents).toHaveLength(kind === 'bundle' ? 5 : 1)
+    expect(report.documents).toHaveLength(1)
     expect(readReportReference(report.reference)?.orderId).toBe(order.id)
-    expect(report.certificates).toHaveLength(kind === 'bundle' ? 5 : 1)
+    expect(report.certificates).toHaveLength(1)
     for(const certificate of report.certificates){ expect(report.text).toContain(certificate.number); expect(readReportReference(certificate.number)?.orderId).toBe(order.id) }
     expect(report.cards).toHaveLength(['compatibility', 'bundle'].includes(kind) ? 2 : 1)
     expect(report.text).toContain('17 August 1992')

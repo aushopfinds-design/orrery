@@ -27,6 +27,7 @@ describe('r24 chart-specific customer choices',()=>{
  it('gives each partner the appropriate response without calling shared needs different',()=>{
   const p=plan.primary
   const repair=relationshipRepair({...p,dayBranch:'子'},{...p,dayBranch:'午'})
+  expect(repair.en).toMatch(/^To reach you,/)
   expect(repair.en).toContain('time to think');expect(repair.en).toContain('undivided attention')
   expect(relationshipRepair({...p,dayBranch:'未'},{...p,dayBranch:'申'}).en).toContain('first response can be similar')
   expect(relationshipRepair({...p,dayBranch:'午'},{...p,dayBranch:'子'}).en).not.toBe(repair.en)
