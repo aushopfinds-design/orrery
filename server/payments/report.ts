@@ -60,16 +60,16 @@ export async function issueReport(input: OrderInput, orderId: string, referenceY
   if (input.kind === 'complete') {
     const independentAudit = await auditBirthInput(input.first, a)
     const reading = buildCompleteReading(a, referenceYear, independentAudit)
-    source = reading; text = applyBuyerQuestions(reading.fullText, 'complete', reading.chapters, reading.periods); documents = [reading.title]
+    source = reading; text = applyBuyerQuestions(reading.fullText, 'complete', reading.chapters, reading.periods); documents = [previewProduct('complete').title]
   } else if (input.kind === 'bundle') {
     if (!b) throw new Error('Missing second chart')
     const reading = buildBundleReading(a, b, Number(input.periodStart?.slice(0, 4) ?? input.year!), referenceYear, input.periodStart, input.periodTimezone)
     source = reading
-    text = reading.fullText
-    documents = [reading.title]
+    documents = [previewProduct('bundle').title]
+    text = reading.fullText.replace('THE FATE KEY · ' + reading.title + '\n\n', 'THE FATE KEY · ' + documents[0] + '\n\n')
   } else {
     const reading = buildCategoryReading(input.kind, a, { second: b, year: Number(input.periodStart?.slice(0, 4) ?? input.year ?? referenceYear), ...(input.periodStart ? { periodStart: input.periodStart } : {}), ...(input.periodTimezone ? { periodTimezone: input.periodTimezone } : {}) })
-    source = reading; text = applyBuyerQuestions(reading.fullText, input.kind, reading.chapters); documents = [reading.title]
+    source = reading; documents = [previewProduct(input.kind).title]; text = applyBuyerQuestions(reading.fullText.replace('THE FATE KEY · ' + reading.title + '\n\n', 'THE FATE KEY · ' + documents[0] + '\n\n'), input.kind, reading.chapters)
   }
   const certificates = documents.map((title,index) => ({ title, number: reportReference(orderId, referenceYear, input.kind === 'bundle' ? 5 : index + 1) }))
   const reference = input.kind === 'bundle' ? reportReference(orderId, referenceYear, 0) : certificates[0].number
@@ -77,7 +77,7 @@ export async function issueReport(input: OrderInput, orderId: string, referenceY
     const heading = 'THE FATE KEY · ' + certificate.title
     text = text.replace(heading + '\n\n', heading + '\n\nReport ID: ' + certificate.number + '\n\n')
   }
-  if (input.kind === 'bundle') text = text.replace('THE FATE KEY · Your Destiny Collection\n\n', 'THE FATE KEY · Complete Package\n\nCollection ID: ' + reference + '\n\nReport ID: ' + certificates[0].number + '\n\n')
+  if (input.kind === 'bundle') text = text.replace('THE FATE KEY · ' + documents[0] + '\n\n', 'THE FATE KEY · ' + documents[0] + '\n\nCollection ID: ' + reference + '\n\nReport ID: ' + certificates[0].number + '\n\n')
   const report: BuyerReport = {
     title: previewProduct(input.kind).title, kind: input.kind, edition: REPORT_EDITION, reference, certificates,
     ...(input.recipientName ? { recipientName: input.recipientName } : {}),
