@@ -5,13 +5,13 @@ import { PaymentError } from './config.ts'
 
 // Public catalog identifiers, not credentials. Approved USD launch prices.
 export const LIVE_CATALOG: Partial<Record<PricedReportKind, { product: string; price: string }>> = {
-  complete: { product: 'prod_VTU4tKm4OYGJZK', price: 'price_1UV7CyGyUNAMaZunO59VP3Co' },
-  compatibility: { product: 'fate_compatibility', price: 'price_1UV7DfGyUNAMaZun9bpbidw8' },
-  year: { product: 'fate_year', price: 'price_1UV7DoGyUNAMaZunqAusMIJ8' },
-  career: { product: 'fate_career', price: 'price_1UV7DxGyUNAMaZunZg1xiaCA' },
+  complete: { product: 'prod_VTU4tKm4OYGJZK', price: 'price_1UX7BYGyUNAMaZunuvl56ylp' },
+  compatibility: { product: 'fate_compatibility', price: 'price_1UX7BrGyUNAMaZunLhV3SOjW' },
+  year: { product: 'fate_year', price: 'price_1UX7BzGyUNAMaZunYWzpovUl' },
+  career: { product: 'fate_career', price: 'price_1UX7BkGyUNAMaZunSThtfDoa' },
   business: { product: 'fate_business', price: 'price_1UV7E6GyUNAMaZun9HquBo1o' },
   wellbeing: { product: 'fate_wellbeing', price: 'price_1UV7EFGyUNAMaZuncutcKC5R' },
-  bundle: { product: 'fate_bundle', price: 'price_1UV7EOGyUNAMaZunY5kOA1kK' },
+  bundle: { product: 'fate_bundle', price: 'price_1UX7C6GyUNAMaZuncKX3to8n' },
 }
 
 export function livePriceMatches(kind: PricedReportKind, price: Stripe.Price): boolean {
