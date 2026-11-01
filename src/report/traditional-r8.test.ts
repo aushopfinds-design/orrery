@@ -58,7 +58,7 @@ describe('r8: all seven products over 24 distinct international charts', () => {
         }
       }
       expect(bundle.fullText.match(/Your Everyday Compass/g)).toHaveLength(1)
-      expect(bundle.fullText.match(/How this reading is prepared/g)).toHaveLength(5)
+      expect(bundle.fullText.match(/How this reading is prepared/g)).toHaveLength(2)
       expect(bundle.annual.sharedAppendixInLifeReport).toBe(true)
       expect(bundle.compatibility.subjects[1].input).toEqual(partner.input)
       expect(bundle.annual.subjects[0].input).toEqual(chart.input)
