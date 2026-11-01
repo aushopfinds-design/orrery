@@ -77,7 +77,7 @@ export async function issueReport(input: OrderInput, orderId: string, referenceY
     const heading = 'THE FATE KEY · ' + certificate.title
     text = text.replace(heading + '\n\n', heading + '\n\nReport ID: ' + certificate.number + '\n\n')
   }
-  if (input.kind === 'bundle') text = text.replace('THE FATE KEY · Complete Package\n\n', 'THE FATE KEY · Complete Package\n\nCollection ID: ' + reference + '\n\nReport ID: ' + certificates[0].number + '\n\n')
+  if (input.kind === 'bundle') text = text.replace('THE FATE KEY · Your Destiny Collection\n\n', 'THE FATE KEY · Complete Package\n\nCollection ID: ' + reference + '\n\nReport ID: ' + certificates[0].number + '\n\n')
   const report: BuyerReport = {
     title: previewProduct(input.kind).title, kind: input.kind, edition: REPORT_EDITION, reference, certificates,
     ...(input.recipientName ? { recipientName: input.recipientName } : {}),
