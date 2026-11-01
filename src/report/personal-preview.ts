@@ -36,6 +36,16 @@ function excerpt(chapter: ReportChapter, paired = false) {
   return { id: chapter.id, title: chapter.title.replace(/^\d+ · /, ''), icon: chapter.icon ?? chapter.id, lead: content[0] ?? chapter.lead, paragraphs: chapter.example ? [] : content.slice(1, 1 + Math.min(paired ? 2 : 1, Math.max(0, content.length - 2))), ...(chapter.example ? { example: chapter.example } : {}), evidence: chapter.evidence.slice(0, 2) }
 }
 
+function bundleContents(text: string) {
+  const startMarker = '\\n\\nYour Ten Questions\\n\\n'
+  const endMarker = '\\n\\nYour Included Reports\\n\\n'
+  const start = text.indexOf(startMarker)
+  const end = start < 0 ? -1 : text.indexOf(endMarker, start + startMarker.length)
+  if (start < 0 || end < 0) return []
+  return text.slice(start + startMarker.length, end).split('\\n\\n')
+    .filter(block => /^\\d{2} · /.test(block))
+    .map((block, index) => ({ id: `question-${index + 1}`, title: block.split('\\n', 1)[0].replace(/^\\d{2} · /, '') }))
+}
 function extrasExcerpt(extras: ReportExtras) {
   return { question: extras.questions[0], symbols: extras.symbols }
 }
@@ -63,7 +73,7 @@ export function buildPersonalPreview(kind: PreviewKind, draft: PreviewDraft, ind
   const b = second ? calculateSaju(second) : undefined
   if (kind === 'bundle') {
     const bundle = buildBundleReading(a, b!, year, currentYear, annualWindow?.start, annualWindow?.timezone)
-    return { title: 'Complete Package', subjects: bundle.compatibility.subjects, headline: bundle.complete.headline, brief: buildReadingBrief(bundle.complete.chapters[0], 'Person A · My Life', bundle.complete.focus), summary: bundle.summary, applications: [], excerpts: [excerpt(bundle.complete.chapters[0]), excerpt(bundle.annual.chapters[0]), excerpt(bundle.compatibility.chapters[1], true), excerpt(bundle.career.chapters[0]), excerpt(bundle.love.chapters[0])], contents: [bundle.complete, bundle.annual, bundle.compatibility, bundle.career, bundle.love].map((report, index) => ({ id: `report-${index + 1}`, title: report.title })), monthly: [], needsPartner: false, extras: extrasExcerpt(bundle.compatibility.extras) }
+    return { title: bundle.title, subjects: bundle.compatibility.subjects, headline: bundle.complete.headline, brief: buildReadingBrief(bundle.complete.chapters[0], 'Person A · Your Life, Your Destiny', bundle.complete.focus), summary: bundle.summary, applications: [], excerpts: [excerpt(bundle.complete.chapters[0]), excerpt(bundle.annual.chapters[0]), excerpt(bundle.compatibility.chapters[1], true), excerpt(bundle.career.chapters[0]), excerpt(bundle.love.chapters[0])], contents: bundleContents(bundle.fullText), monthly: [], needsPartner: false, extras: extrasExcerpt(bundle.compatibility.extras) }
   }
   const full = buildCategoryReading(kind, a, { second: b, year: kind === 'year' ? year : currentYear, ...(annualWindow ? { periodStart: annualWindow.start, periodTimezone: annualWindow.timezone } : {}) })
   return { title: full.title, subjects: paired ? full.subjects : [subjectA], headline: full.headline, brief: buildReadingBrief(full.chapters[0], undefined, full.focus), summary: full.summary, applications: full.applications, excerpts: full.chapters.slice(0, 3).map(chapter => excerpt(chapter, paired)), contents: full.chapters.map(chapter => ({ id: chapter.id, title: chapter.title.replace(/^\d+ · /, '') })), monthly: full.months.map(month => ({ label: month.label, lead: month.lead })), needsPartner: false, extras: extrasExcerpt(full.extras) }
