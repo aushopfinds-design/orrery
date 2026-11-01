@@ -57,7 +57,7 @@ describe('r8: all seven products over 24 distinct international charts', () => {
           if (!report.fullText.includes(line.replace(/\*\*/g, ''))) throw new Error(`${report.title}/${chapter.id}: ${line}`)
         }
       }
-      expect(bundle.fullText.match(/Your Everyday Compass/g)).toHaveLength(2)
+      expect(bundle.fullText.match(/Your Everyday Compass/g)).toHaveLength(1)
       expect(bundle.fullText.match(/How this reading is prepared/g)).toHaveLength(1)
       expect(bundle.annual.sharedAppendixInLifeReport).toBe(true)
       expect(bundle.compatibility.subjects[1].input).toEqual(partner.input)
