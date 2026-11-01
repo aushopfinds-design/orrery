@@ -127,7 +127,7 @@ export function buildBundleFromPlans(plans: ReturnType<typeof bundleInterpretati
     ...deliveredReports.map(report => report.appendix),
     'Longer-term timing reference', ...lifeTimeline,
     'How this reading is prepared', ...complete.methodNotes,
-  ].join('\\n\\n')
+  ].join('\n\n')
   const summary = [{ label: 'Your Life, Your Destiny', text: complete.summary[0].text }, { label: 'Your Next 12 Months', text: annual.summary[0].text }, { label: 'Are We Meant to Be?', text: compatibility.summary[0].text }, { label: 'Success, Money & Your Future', text: career.summary[0].text }, { label: 'Relationship Needs', text: love.summary[0].text }]
   return { title: 'Your Destiny Collection', complete, compatibility, annual, career, love, overview, summary, synthesis, fullText, wordCount: fullText.split(/\s+/).length }
 }
