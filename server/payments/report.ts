@@ -60,7 +60,7 @@ export async function issueReport(input: OrderInput, orderId: string, referenceY
   if (input.kind === 'complete') {
     const independentAudit = await auditBirthInput(input.first, a)
     const reading = buildCompleteReading(a, referenceYear, independentAudit)
-    source = reading; text = applyBuyerQuestions(reading.fullText, 'complete', reading.chapters, reading.periods); documents = [previewProduct('complete').title]
+    source = reading; documents = [previewProduct('complete').title]; text = applyBuyerQuestions(reading.fullText.replace('THE FATE KEY · ' + reading.title + '\n\n', 'THE FATE KEY · ' + documents[0] + '\n\n'), 'complete', reading.chapters, reading.periods)
   } else if (input.kind === 'bundle') {
     if (!b) throw new Error('Missing second chart')
     const reading = buildBundleReading(a, b, Number(input.periodStart?.slice(0, 4) ?? input.year!), referenceYear, input.periodStart, input.periodTimezone)
