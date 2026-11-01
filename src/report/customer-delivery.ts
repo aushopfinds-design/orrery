@@ -4,6 +4,9 @@ export function customerDeliveryText(text:string, simplifyMyLifeRepetition=false
  let myLife=false, section=''
  const seen=new Set<string>()
  return text.split(/\n\n/).filter(block=>{
+  // A malformed buyer-answer sentence can leave a closing quote with no opening quote.
+  // Never expose a label or quote that has no answer text.
+  if (/^(?:Answer detail:\s*)?[”’"']+$/u.test(block.trim())) return false
   if(block==='Calculation notes'){appendix=true;myLife=false;return true}
   if(/^THE FATE KEY · /.test(block)){appendix=false;myLife=simplifyMyLifeRepetition&&block==='THE FATE KEY · My Life';section='';seen.clear();return true}
   if(myLife&&/^\d{2} · /.test(block))section=block.slice(0,2)

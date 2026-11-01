@@ -1,6 +1,12 @@
 import { describe,it,expect } from 'vitest'
 import { customerDeliveryText } from './customer-delivery.ts'
 describe('customer appendix',()=>{
+ it('drops a closing quote that has no answer text',()=>{
+  const text=['THE FATE KEY · Test','Question: What helps you feel secure?','Answer: Clear and kind communication.','Answer detail: ”','Calculation notes','From the chart: Day branch 未.'].join('\n\n')
+  const buyer=customerDeliveryText(text)
+  expect(buyer).toContain('Answer: Clear and kind communication.')
+  expect(buyer).not.toContain('Answer detail: ”')
+ })
  it('keeps body, dated facts, conflicts and roots while dropping repetitive internal audit prose',()=>{
   const body='THE FATE KEY · Test\n\nOpening + pressure: your work changes.'
   const text=body+'\n\nCalculation notes\n\nFrom the chart: Reference 2027-01-15: 辛丑.\n\nFrom the chart: Reference / birth day: branch 沖.\n\nFrom the chart: Root at month.\n\nFrom the chart: Activity policy FATE-activity-r1: capacity deferred.\n\nFrom the chart: 2027-01-15: No judgement about whether the period may be easier or harder is assigned: the balance of support and demands in your birth chart or a current longer period is unresolved.\n\nFrom the chart: Root at month.'
