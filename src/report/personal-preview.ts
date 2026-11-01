@@ -37,14 +37,14 @@ function excerpt(chapter: ReportChapter, paired = false) {
 }
 
 function bundleContents(text: string) {
-  const startMarker = '\\n\\nYour Ten Questions\\n\\n'
-  const endMarker = '\\n\\nYour Included Reports\\n\\n'
+  const startMarker = '\n\nYour Ten Questions\n\n'
+  const endMarker = '\n\nYour Included Reports\n\n'
   const start = text.indexOf(startMarker)
   const end = start < 0 ? -1 : text.indexOf(endMarker, start + startMarker.length)
   if (start < 0 || end < 0) return []
-  return text.slice(start + startMarker.length, end).split('\\n\\n')
-    .filter(block => /^\\d{2} · /.test(block))
-    .map((block, index) => ({ id: `question-${index + 1}`, title: block.split('\\n', 1)[0].replace(/^\\d{2} · /, '') }))
+  return text.slice(start + startMarker.length, end).split('\n\n')
+    .filter(block => /^\d{2} · /.test(block))
+    .map((block, index) => ({ id: `question-${index + 1}`, title: block.split('\n', 1)[0].replace(/^\d{2} · /, '') }))
 }
 function extrasExcerpt(extras: ReportExtras) {
   return { question: extras.questions[0], symbols: extras.symbols }
