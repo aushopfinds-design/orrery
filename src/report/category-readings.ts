@@ -122,6 +122,7 @@ export function buildBundleFromPlans(plans: ReturnType<typeof bundleInterpretati
     'Your Ten Questions', ...collectionQuestions,
     'Your Included Reports',
     ...deliveredReports.map(report => report.body),
+    'Chart evidence for these answers',
     ...deliveredReports.map(report => report.appendix),
     'Longer-term timing reference', ...lifeTimeline,
     'How this reading is prepared', ...complete.methodNotes,
