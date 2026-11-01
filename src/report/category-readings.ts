@@ -113,7 +113,7 @@ export function buildBundleFromPlans(plans: ReturnType<typeof bundleInterpretati
     ].join('\n\n'),
   ]
   const fullText = [
-    'THE FATE KEY · Complete Package', overview.fullText,
+    'THE FATE KEY · Your Destiny Collection', overview.fullText,
     'Birth details', complete.birthSummary, ...complete.pillarSummary,
     "Your partner's birth details", compatibility.subjects[1].birthSummary,
     'Your Ten Questions', ...collectionQuestions,
@@ -122,6 +122,6 @@ export function buildBundleFromPlans(plans: ReturnType<typeof bundleInterpretati
     'Longer-term timing reference', ...lifeTimeline,
     'How this reading is prepared', ...complete.methodNotes,
   ].join('\n\n')
-  const summary = [{ label: 'Life', text: complete.summary[0].text }, { label: 'Year', text: annual.summary[0].text }, { label: 'Our Love', text: compatibility.summary[0].text }, { label: 'Career & Money', text: career.summary[0].text }, { label: 'My Love', text: love.summary[0].text }]
-  return { title: 'Complete Package', complete, compatibility, annual, career, love, overview, summary, synthesis, fullText, wordCount: fullText.split(/\s+/).length }
+  const summary = [{ label: 'Your Life, Your Destiny', text: complete.summary[0].text }, { label: 'Your Next 12 Months', text: annual.summary[0].text }, { label: 'Are We Meant to Be?', text: compatibility.summary[0].text }, { label: 'Success, Money & Your Future', text: career.summary[0].text }, { label: 'Relationship Needs', text: love.summary[0].text }]
+  return { title: 'Your Destiny Collection', complete, compatibility, annual, career, love, overview, summary, synthesis, fullText, wordCount: fullText.split(/\s+/).length }
 }
