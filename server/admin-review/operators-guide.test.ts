@@ -16,7 +16,7 @@ describe('Korean operator guide follows the actual product and site sources', ()
     }
     expect(Object.keys(en).some(key => key.startsWith('admin.'))).toBe(false)
   })
-  it('uses current prices, scope and chapter counts for all six products', () => {
+  it('uses current prices, scope and chapter counts for all seven offered products', () => {
     const products = operatorProducts()
     expect(products.map(p => p.kind)).toEqual(PREVIEW_KINDS)
     for (const p of products) {
