@@ -2,7 +2,7 @@ import { describe,it,expect } from 'vitest'
 import { customerDeliveryText } from './customer-delivery.ts'
 describe('customer appendix',()=>{
  it('drops a closing quote that has no answer text',()=>{
-  const text=['THE FATE KEY · Test','Question: What helps you feel secure?','Answer: Clear and kind communication.','Answer detail: ”','Calculation notes','From the chart: Day branch 未.'].join('\\n\\n')
+  const text=['THE FATE KEY · Test','Question: What helps you feel secure?','Answer: Clear and kind communication.','Answer detail: ”','Calculation notes','From the chart: Day branch 未.'].join('\n\n')
   const buyer=customerDeliveryText(text)
   expect(buyer).toContain('Answer: Clear and kind communication.')
   expect(buyer).not.toContain('Answer detail: ”')
