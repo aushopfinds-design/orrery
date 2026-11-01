@@ -122,7 +122,6 @@ export function buildBundleFromPlans(plans: ReturnType<typeof bundleInterpretati
     'Your Ten Questions', ...collectionQuestions,
     'Your Included Reports',
     ...deliveredReports.map(report => report.body),
-    CALCULATION_NOTES,
     'Chart evidence for these answers', ...chartEvidence.map(fact => 'From the chart: ' + fact),
     ...deliveredReports.map(report => report.appendix),
     'Longer-term timing reference', ...lifeTimeline,
