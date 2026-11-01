@@ -18,13 +18,13 @@ export function publishingIdentity(env: Record<string, string | undefined>) {
 }
 
 export const PUBLIC_SAMPLES = [
-  { kind: 'complete', slug: 'complete-life-reading', title: 'My Life', description: 'Discover your personality, strengths, and life path.' },
+  { kind: 'complete', slug: 'complete-life-reading', title: 'Your Life, Your Destiny', description: 'Discover your personality, strengths, and life path.' },
   { kind: 'year', slug: 'year-ahead', title: 'Your Next 12 Months', description: 'Explore the next twelve calendar months, month by month.' },
-  { kind: 'compatibility', slug: 'love-compatibility', title: 'Our Love', description: 'Discover your relationship strengths and challenges.' },
-  { kind: 'career', slug: 'career-money', title: 'My Money & Career', description: 'Explore your career strengths and money patterns.' },
+  { kind: 'compatibility', slug: 'love-compatibility', title: 'Are We Meant to Be?', description: 'Discover your relationship strengths and challenges.' },
+  { kind: 'career', slug: 'career-money', title: 'Success, Money & Your Future', description: 'Explore your career strengths and money patterns.' },
   { kind: 'business', slug: 'business-reading', title: 'Born to Build a Business?', description: 'Explore your business habits, risks and timing.' },
   { kind: 'wellbeing', slug: 'everyday-balance', title: 'The Real You: Strengths & Weaknesses', description: 'Explore your personality patterns, strengths and pressure points.' },
-  { kind: 'love', slug: 'my-love', title: 'My Love — Existing Package Sample', description: 'A legacy report retained in the existing Complete Package contract.' },
+  { kind: 'love', slug: 'my-love', title: 'Legacy: My Love (not sold separately)', description: 'A legacy reading example retained for reference. It is not a standalone product.' },
 ] as const
 
 export const INFO_PATHS = ['/', '/about/', '/reading-guide/', '/privacy/', '/use-and-limitations/', '/purchases/', '/samples/', '/learn/', '/editorial-policy/', '/help/']
