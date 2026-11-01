@@ -16,10 +16,10 @@ export const REPORT_PRICE_CENTS = {
 export type PricedReportKind = keyof typeof REPORT_PRICE_CENTS
 export const ACTIVE_PRODUCT_KINDS = ['complete', 'career', 'compatibility', 'year', 'business', 'wellbeing', 'bundle'] as const
 export type ActiveProductKind = typeof ACTIVE_PRODUCT_KINDS[number]
-// My Love remains readable for previously paid orders and in the existing
-// Complete Package contract, but is no longer sold as a standalone product.
+// My Love remains readable for previously paid orders, but is no longer sold separately.
 export const LEGACY_PRODUCT_KINDS = ['love'] as const
-export const BUNDLE_REPORTS = ['complete', 'year', 'compatibility', 'career', 'love'] as const
+// The integrated Collection replaces four standalone reports with one 10-question reading.
+export const BUNDLE_REPORTS = ['complete', 'year', 'compatibility', 'career'] as const
 
 export function formatUSD(cents: number) { return `$${(cents / 100).toFixed(2)}` }
 export function reportPrice(kind: PricedReportKind) { return formatUSD(REPORT_PRICE_CENTS[kind]) }
@@ -30,7 +30,6 @@ export function bundleSavings() {
   return {
     separatePrice: formatUSD(separateCents),
     savedAmount: formatUSD(savedCents),
-    // The fixed package price is the nearest cent to a 30% discount.
     percent: Math.round(savedCents * 100 / separateCents),
   }
 }
