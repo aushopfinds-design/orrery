@@ -83,8 +83,6 @@ export function buildBundleFromPlans(plans: ReturnType<typeof bundleInterpretati
   const yearTheme = chapter(annual, 'annual-theme')
   const yearPeriods = chapter(annual, 'annual-plan')
   const longTerm = chapter(complete, 'patterns')
-  const evidenceChapters = [life, social, careerFit, moneyFit, relationshipNeed, relationshipFit, challenge, yearTheme, yearPeriods, longTerm]
-  const chartEvidence = [...new Set([...evidenceChapters.flatMap(item => item.evidence), ...annual.months.flatMap(item => item.evidence)])]
   const nextCycle = complete.periods[1]
   const longTiming = nextCycle
     ? `${nextCycle.period} (${nextCycle.pillar}). ${nextCycle.paragraphs[1] ?? nextCycle.paragraphs[0]}`
