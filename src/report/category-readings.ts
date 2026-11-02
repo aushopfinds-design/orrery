@@ -10,7 +10,6 @@ import { buildCareerReading, buildBusinessReading } from './work-focus-readings.
 import { buildYearAheadReading } from './year-ahead-reading.ts'
 import { buildBalanceReading } from './balance-reading.ts'
 import { plainReadingText } from './reading-text.ts'
-import { BUYER_ANSWERS } from './buyer-answers.ts'
 
 export { buildCompatibilityReading, buildCareerReading, buildBusinessReading, buildYearAheadReading, buildBalanceReading }
 export function buildCategoryReading(kind: FocusCategory, first: SajuResult, options: { second?: SajuResult; year?: number; periodStart?: string; periodTimezone?: string } = {}) {
@@ -71,7 +70,7 @@ export function buildBundleFromPlans(plans: ReturnType<typeof bundleInterpretati
   const strengthsOverview = {
     ...life,
     title: 'Your Strengths and Blind Spots',
-    lead: `Your chart highlights this work strength: ${BUYER_ANSWERS[plans.complete.primary.monthStemGod].recognition.en}`,
+    lead: social.lead,
     paragraphs: [social.paragraphs[0] ?? social.tryThis, life.paragraphs[0] ?? life.tryThis],
     tryThis: social.tryThis,
   }
