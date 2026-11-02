@@ -22,7 +22,7 @@ describe('visible purchase entry points', () => {
     expect(html).toContain('id="personal-checkout"')
     expect(html).toContain('Are We Meant to Be?')
     expect(html).toContain('$14.99')
-    expect(html).toContain('Two-person reports also need')
+    expect(html).toContain('Compatibility needs two real sets of birth details')
     expect(html).not.toContain('Buy test report')
   })
   it('shows the locked test checkout above the report once birth details are ready', () => {
@@ -32,7 +32,7 @@ describe('visible purchase entry points', () => {
     expect(html).toContain('Buy test report')
     expect(html).toContain('Private test checkout')
     expect(html).toContain('aria-describedby="checkout-access-help"')
-    expect(html.indexOf('Buy test report')).toBeLessThan(html.indexOf('id="personal-preview-excerpts"'))
     expect(html).toMatch(/disabled=""[^>]*aria-describedby="checkout-access-help"/)
+    expect(html).not.toContain('personal-preview-excerpts')
   })
 })

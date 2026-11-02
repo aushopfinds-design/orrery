@@ -141,21 +141,20 @@ describe('Situation guides provide choices that a reader can actually review', (
     }
   })
 
-  it('includes the same situation content in full reports, previews and copy, with the right bundle subjects', () => {
+  it('keeps situation content in paid reports and excludes it from free previews', () => {
     for (const kind of kinds) {
       const draft = { first: CATEGORY_SCENARIOS[0].first, second: CATEGORY_SCENARIOS[0].second, year: 2027 }
       const preview = buildPersonalPreview(kind, draft)
       const full = kind === 'complete' ? buildCompleteReading(first) : buildCategoryReading(kind, first, { second, year: 2027 })
-      expect(preview.applications).toEqual(full.applications)
+      expect(preview).not.toHaveProperty('applications')
       const text = personalPreviewText(preview)
-      for (const item of preview.applications) {
-        expect(text).toContain(applicationText(item))
+      expect(text).not.toContain('Situations you can work through')
+      for (const item of full.applications) {
         expect(full.fullText).toContain(applicationText(item))
       }
     }
     const bundle = buildPersonalPreview('bundle', { first: CATEGORY_SCENARIOS[0].first, second: CATEGORY_SCENARIOS[0].second, year: 2028 })
-    expect(bundle.applications).toEqual([])
-    expect(bundle.excerpts).toHaveLength(5)
-    expect(buildPersonalPreview('bundle', { first: CATEGORY_SCENARIOS[0].first }).applications).toEqual([])
+    expect(bundle).not.toHaveProperty('applications')
+    expect(buildPersonalPreview('bundle', { first: CATEGORY_SCENARIOS[0].first })).toHaveProperty('needsPartner', true)
   })
 })

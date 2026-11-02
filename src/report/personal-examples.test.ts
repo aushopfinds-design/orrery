@@ -85,17 +85,14 @@ describe('Concrete examples use several chart features', () => {
 })
 
 describe('Direct interpretations replace supplementary fictional scenes', () => {
-  it('shows actual chapter excerpts in previews without the remaining paid prose', () => {
+  it('keeps chapter excerpts out of free previews while retaining them in paid reports', () => {
     for (const kind of PREVIEW_KINDS) {
       const full = fullReports(kind)
       const preview = buildPersonalPreview(kind, { first: a.input, second: b.input, year: 2030, periodStart: '2030-01', periodTimezone: 'UTC' })
-      for (const excerpt of preview.excerpts) {
-        const chapter = full.flatMap(report => report.chapters).find(item => item.id === excerpt.id)!
-        expect(excerpt.example).toBeUndefined()
-        expect(excerpt.lead).toBe(chapter.lead)
-        expect(excerpt.paragraphs.length).toBeLessThan(chapter.paragraphs.length)
-        expect(personalPreviewText(preview)).toContain(plainReadingText(excerpt.lead))
-      }
+      expect(preview).not.toHaveProperty('excerpts')
+      expect(preview).not.toHaveProperty('monthly')
+      expect(preview).not.toHaveProperty('contents')
+      expect(personalPreviewText(preview)).not.toContain(plainReadingText(full.flatMap(report => report.chapters)[0].lead))
     }
   })
   it('changes annual interpretation and evidence with the selected year', () => {

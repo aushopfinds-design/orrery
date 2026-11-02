@@ -21,13 +21,13 @@ describe('Customer reading before its calculation appendix', () => {
     if('chapters' in report)for(const chapter of report.chapters)for(const fact of chapter.evidence)expect(parts.appendix).toContain(fact)
     if('complete' in report)for(const title of [report.complete.title,report.compatibility.title,report.annual.title])expect(parts.body).toContain(title)
   })
-  it('opens every personal preview with actual interpretation, including unknown-time charts', () => {
+  it('keeps paid interpretations out of every personal preview, including unknown-time charts', () => {
     for(const kind of ['complete','career','business','compatibility','year','wellbeing','bundle'] as const){
       const preview=buildPersonalPreview(kind,{first,second:b.input,year:2027})
-      for(const excerpt of preview.excerpts){
-        expect(excerpt.lead).not.toMatch(/^(Reading basis:|About this reading:)/)
-        expect(excerpt.paragraphs.join(' ')).not.toMatch(/Reading basis:|About this reading:/)
-      }
+      expect(preview).not.toHaveProperty('excerpts')
+      expect(preview).not.toHaveProperty('monthly')
+      expect(preview).not.toHaveProperty('applications')
+      expect(preview.timeUnknown).toBe(true)
     }
   })
   it('does not reuse complete money and relationship paragraphs across twelve months', () => {

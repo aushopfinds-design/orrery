@@ -124,16 +124,15 @@ describe('A distinct everyday guide in every full report', () => {
 })
 
 describe('A limited extra in each personal preview', () => {
-  it('shares one question and the correct symbol cards without the full added guide', () => {
+  it('shows only locked questions and a two-colour, two-number symbol pair', () => {
     for (const kind of PREVIEW_KINDS) {
       const preview = buildPersonalPreview(kind, { first, second, year: 2030 })
-      expect(preview.extras?.question.question).toBeTruthy()
-      expect(preview.extras?.symbols).toHaveLength(kind === 'compatibility' || kind === 'bundle' ? 2 : 1)
-      expect(Object.keys(preview.extras!)).toEqual(['question', 'symbols'])
-      expect(preview.extras).not.toHaveProperty('keepClose')
-      expect(preview.extras).not.toHaveProperty('stepBack')
+      expect(preview.lockedQuestions).toHaveLength(4)
+      expect(preview.symbol.colors).toHaveLength(2)
+      expect(preview.symbol.numbers).toHaveLength(2)
+      expect(preview).not.toHaveProperty('extras')
     }
-    expect(buildPersonalPreview('compatibility', { first }).extras).toBeNull()
-    expect(buildPersonalPreview('bundle', { first }).extras).toBeNull()
+    expect(buildPersonalPreview('compatibility', { first }).needsPartner).toBe(true)
+    expect(buildPersonalPreview('bundle', { first }).needsPartner).toBe(true)
   })
 })
