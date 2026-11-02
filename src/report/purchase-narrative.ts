@@ -162,7 +162,8 @@ export function customerNarrative(plan:InterpretationPlan,targetedProduct01=true
   const careerRisk=p.monthStemGod===p.monthBranchGod
     ?pair(`Your birth month repeats ${m.name.en} in the public role and daily routine. The work risk is ${TEN_GODS[p.monthStemGod]?.caution??'taking on more duties than your role can support'}. Check priorities, workload and decision authority before accepting another responsibility.`,`태어난 달의 겉 역할과 일상 업무에 ${m.name.ko}이 반복됩니다. 우선순위와 업무량, 결정 권한을 확인한 뒤 새 책임을 맡습니다.`)
     :pair(`Your visible work role centres on ${m.name.en}, while daily duties add ${inner.name.en}. The first layer can bring ${TEN_GODS[p.monthStemGod]?.caution??'unclear priorities'}; the daily layer adds ${TEN_GODS[p.monthBranchGod]?.caution??'work that exceeds the agreed scope'}. Ask how both parts of the job will be measured before accepting the role.`,`겉 업무는 ${m.name.ko}, 일상 업무는 ${inner.name.ko}을 중심으로 합니다. 겉 역할과 매일 맡을 일을 모두 어떤 기준으로 평가하는지 확인한 뒤 자리를 선택합니다.`)
-  put('career',targetedProduct01?[roleChoice(p),careerFit,careerRisk]:[lifeWork(p),roleChoice(p),publicRole,underneath],keepWork,m.pressure)
+  const careerCaution=pair('Before accepting extra responsibility, confirm which decisions you control and what time, support and pay come with it.','추가 책임을 맡기 전에 직접 결정할 수 있는 범위와 함께 제공되는 시간, 지원, 급여를 확인합니다.')
+  put('career',targetedProduct01?[roleChoice(p),careerFit,careerRisk]:[lifeWork(p),roleChoice(p),publicRole,underneath],keepWork,careerCaution)
   put('love',[relationshipConclusion,relationshipReason,privateStructure,relationshipTiming,relationshipExample],pair('Use this as a starting question, then judge the relationship by both people’s actual words, actions and consent.','이 내용을 대화의 출발점으로 삼고, 두 사람의 실제 말과 행동, 동의를 기준으로 관계를 살핍니다.'),relationshipWatch)
   if(targetedProduct01){out.money.showGuidance=false;out.love.showGuidance=false}
   const publicExperience=TEN_GODS[p.yearStemGod]?.lens??LANGUAGE[p.yearStemGod].name.en

@@ -18,7 +18,7 @@ describe('r23 customer review regressions',()=>{
   const report=buildCategoryReading('career',a,{year:2026})
   const section=report.chapters.find(x=>x.id==='feedback-and-boundaries')!
   expect(section.lead).toMatch(/Changing duties|No direct change/)
-  for(let year=2026;year<=2035;year++)expect(report.fullText).toContain(year+':')
+  for(let year=2026;year<=2035;year++)expect(report.fullText).toContain(year+' yearly comparison:')
  })
  it('does not turn plural signs into spelling errors or damage dates and amounts',()=>{
   expect(customerEnglish('day branches and day stems')).toBe('close-relationship signs and birth-day signs')

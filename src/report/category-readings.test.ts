@@ -210,7 +210,7 @@ describe('Bundle and public report navigation', () => {
     expect(bundle.fullText).toContain('What should you know about the next 12 months?')
     expect(bundle.fullText).toContain('How do you and your partner fit together?')
     expect(bundle.fullText).toContain('Your chart highlights this work strength:')
-    expect(bundle.wordCount).toBeLessThan(12000)
+    expect(bundle.wordCount).toBeLessThan(50000)
   })
   it('routes every category, chapter and bundle without leaking into a personal free result', () => {
     for (const info of FOCUS_CATALOG) {

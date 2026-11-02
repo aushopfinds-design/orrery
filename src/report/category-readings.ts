@@ -83,8 +83,6 @@ export function buildBundleFromPlans(plans: ReturnType<typeof bundleInterpretati
   const yearTheme = chapter(annual, 'annual-theme')
   const yearPeriods = chapter(annual, 'annual-plan')
   const longTerm = chapter(complete, 'patterns')
-  const evidenceChapters = [life, social, careerFit, moneyFit, relationshipNeed, relationshipFit, challenge, yearTheme, yearPeriods, longTerm]
-  const chartEvidence = [...new Set([...evidenceChapters.flatMap(item => item.evidence), ...annual.months.flatMap(item => item.evidence)])]
   const nextCycle = complete.periods[1]
   const longTiming = nextCycle
     ? `${nextCycle.period} (${nextCycle.pillar}). ${nextCycle.paragraphs[1] ?? nextCycle.paragraphs[0]}`
@@ -112,13 +110,20 @@ export function buildBundleFromPlans(plans: ReturnType<typeof bundleInterpretati
       `Bottom Line: ${plainReadingText(overviewParagraphs.at(-1) ?? 'Compare work demands with actual pay and capacity, then make room for the relationship needs shown in both charts.')}`,
     ].join('\n\n'),
   ]
+  const includedReports = [complete, compatibility, career, annual, love]
+  const deliveredReports = includedReports.map(report => splitDeliveredReading(report.fullText))
+  const deliveredBodies = deliveredReports.map(report => report.body.split('\n\n').filter(block => !block.includes('From the chart:')).join('\n\n'))
   const fullText = [
-    'THE FATE KEY · Your Destiny Collection', overview.fullText,
+    'THE FATE KEY · Your Destiny Collection',
+    overview.fullText,
     'Birth details', complete.birthSummary, ...complete.pillarSummary,
     "Your partner's birth details", compatibility.subjects[1].birthSummary,
     'Your Ten Questions', ...collectionQuestions,
+    'Your Included Reports',
+    ...deliveredBodies,
     CALCULATION_NOTES,
-    'Chart evidence for these answers', ...chartEvidence.map(fact => 'From the chart: ' + fact),
+    'Chart evidence for these answers',
+    ...deliveredReports.map(report => report.appendix),
     'Longer-term timing reference', ...lifeTimeline,
     'How this reading is prepared', ...complete.methodNotes,
   ].join('\n\n')
