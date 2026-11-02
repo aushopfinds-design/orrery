@@ -206,7 +206,7 @@ describe('Bundle and public report navigation', () => {
     expect((bundle.fullText.match(/^Why This Fits You:/gm) ?? [])).toHaveLength(10)
     expect((bundle.fullText.match(/^What You May Experience:/gm) ?? [])).toHaveLength(10)
     expect((bundle.fullText.match(/^Bottom Line:/gm) ?? [])).toHaveLength(10)
-    expect(bundle.fullText).toContain('Chart evidence for these answers')
+    for (const section of bundle.fullText.split(/(?=^\\d{2} · )/m)) {\n      const experience = section.match(/^What You May Experience: (.*)$/m)?.[1]\n      const bottomLine = section.match(/^Bottom Line: (.*)$/m)?.[1]\n      if (experience && bottomLine) expect(experience).not.toBe(bottomLine)\n    }\n    expect(bundle.fullText).toContain('Chart evidence for these answers')
     expect(bundle.fullText).toContain('What should you know about the next 12 months?')
     expect(bundle.fullText).toContain('How do you and your partner fit together?')
     expect(bundle.fullText).toContain('A natural strength:')
