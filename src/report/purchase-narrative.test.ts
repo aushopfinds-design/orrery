@@ -4,6 +4,7 @@ import { CATEGORY_SCENARIOS } from './category-catalog.ts'
 import { buildInterpretationPlan, bundleInterpretationPlans } from './interpretation-plan.ts'
 import { customerNarrative, customerPeriod, bundleNarrative } from './purchase-narrative.ts'
 import { buildTraditionalCompleteFromPlan, buildTraditionalCategoryFromPlan } from './traditional-reading.ts'
+import { RELATIONSHIP_PROFILES } from './reading-profiles.ts'
 import { koreanReadingFromPlan } from '../../server/admin-review/korean-reading.ts'
 import { buildBundleFromPlans } from './category-readings.ts'
 const a=calculateSaju(CATEGORY_SCENARIOS[0].first),b=calculateSaju(CATEGORY_SCENARIOS[0].second)
@@ -164,6 +165,7 @@ describe('Customer conclusions before planning advice',()=>{
   const first=customerNarrative(samplePlan),other=customerNarrative(buildInterpretationPlan('complete',a,2026))
   const love=first.love.lines.map(line=>line.en).join(' ')
   expect(love).toContain(`to ${samplePlan.primary.dayBranch}, the day sign used to read close relationships`)
+  expect(love).toContain(`The form of care associated with this chart is ${RELATIONSHIP_PROFILES[samplePlan.primary.dayBranch].need}.`)
   expect(love).toMatch(/years that most clearly touch relationship priorities/)
   expect(love).toMatch(/marriage or separation|partner, marriage or separation/)
   expect(love).not.toBe(other.love.lines.map(line=>line.en).join(' '))
