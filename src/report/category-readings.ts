@@ -54,15 +54,25 @@ export function buildBundleFromPlans(plans: ReturnType<typeof bundleInterpretati
   const answer = (number: number, question: string, source: ReportChapter, timing?: string) => {
     const details = source.paragraphs.filter(line => line !== source.lead)
     const why = details[0] ?? source.evidence[0] ?? source.lead
-    const experience = details[1] ?? source.guidance.keepClose[0] ?? source.tryThis
+    const bottomLine = plainReadingText(source.tryThis || source.guidance.keepClose[0] || source.lead)
+    const experience = [
+      ...details.slice(1),
+      ...source.guidance.keepClose,
+      ...source.guidance.watchFor,
+      source.lead,
+    ].map(plainReadingText).find(line =>
+      line !== plainReadingText(source.lead) &&
+      line !== plainReadingText(why) &&
+      line !== bottomLine
+    )
     return [
       `${String(number).padStart(2, '0')} · ${question}`,
       `Question: ${question}`,
       `Your Answer: ${plainReadingText(source.lead)}`,
       `Why This Fits You: ${plainReadingText(why)}`,
-      `What You May Experience: ${plainReadingText(experience)}`,
+      ...(experience ? [`What You May Experience: ${experience}`] : []),
       ...(timing ? [`Important Timing: ${plainReadingText(timing)}`] : []),
-      `Bottom Line: ${plainReadingText(source.tryThis || source.guidance.keepClose[0] || source.lead)}`,
+      `Bottom Line: ${bottomLine}`,
     ].join('\n\n')
   }
   const life = chapter(complete, 'personality')
