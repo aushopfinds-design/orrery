@@ -203,14 +203,8 @@ describe('Bundle and public report navigation', () => {
     expect(bundle.love.subjects[0].input).toEqual(baseA.input)
     expect((bundle.fullText.match(/^Question:/gm) ?? [])).toHaveLength(10)
     expect((bundle.fullText.match(/^Your Answer:/gm) ?? [])).toHaveLength(10)
-    expect((bundle.fullText.match(/^Why This Fits You:/gm) ?? [])).toHaveLength(10)
-    expect((bundle.fullText.match(/^What You May Experience:/gm) ?? [])).toHaveLength(10)
-    expect((bundle.fullText.match(/^Bottom Line:/gm) ?? [])).toHaveLength(10)
-    for (const section of bundle.fullText.split(/(?=^\d{2} · )/m)) {
-      const experience = section.match(/^What You May Experience: (.*)$/m)?.[1]
-      const bottomLine = section.match(/^Bottom Line: (.*)$/m)?.[1]
-      if (experience && bottomLine) expect(experience).not.toBe(bottomLine)
-    }
+    expect((bundle.fullText.match(/^Practical Step:/gm) ?? [])).toHaveLength(10)
+    expect(bundle.fullText).not.toMatch(/^Why This Fits You:|^What You May Experience:/m)
     expect(bundle.fullText).toContain('Chart evidence for these answers')
     expect(bundle.fullText).toContain('What should you know about the next 12 months?')
     expect(bundle.fullText).toContain('How do you and your partner fit together?')
