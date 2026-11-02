@@ -114,7 +114,7 @@ export function buildBundleFromPlans(plans: ReturnType<typeof bundleInterpretati
   ]
   const includedReports = [complete, compatibility, career, annual, love]
   const deliveredReports = includedReports.map(report => splitDeliveredReading(report.fullText))
-  const deliveredBodies = deliveredReports.map(report => report.body.split('\n\n').filter(block => !block.startsWith('From the chart:')).join('\n\n'))
+  const deliveredBodies = deliveredReports.map(report => report.body.split('\n\n').filter(block => !block.includes('From the chart:')).join('\n\n'))
   const fullText = [
     'THE FATE KEY · Your Destiny Collection',
     overview.fullText,
