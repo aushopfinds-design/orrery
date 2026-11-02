@@ -52,27 +52,13 @@ export function buildBundleFromPlans(plans: ReturnType<typeof bundleInterpretati
     return found
   }
   const answer = (number: number, question: string, source: ReportChapter, timing?: string) => {
-    const details = source.paragraphs.filter(line => line !== source.lead)
-    const why = details[0] ?? source.evidence[0] ?? source.lead
-    const bottomLine = plainReadingText(source.tryThis || source.guidance.keepClose[0] || source.lead)
-    const experience = [
-      ...details.slice(1),
-      ...source.guidance.keepClose,
-      ...source.guidance.watchFor,
-      source.lead,
-    ].map(plainReadingText).find(line =>
-      line !== plainReadingText(source.lead) &&
-      line !== plainReadingText(why) &&
-      line !== bottomLine
-    )
+    const practicalStep = plainReadingText(source.tryThis || source.guidance.keepClose[0] || source.lead)
     return [
       `${String(number).padStart(2, '0')} · ${question}`,
       `Question: ${question}`,
       `Your Answer: ${plainReadingText(source.lead)}`,
-      `Why This Fits You: ${plainReadingText(why)}`,
-      ...(experience ? [`What You May Experience: ${experience}`] : []),
       ...(timing ? [`Important Timing: ${plainReadingText(timing)}`] : []),
-      `Bottom Line: ${bottomLine}`,
+      `Practical Step: ${practicalStep}`,
     ].join('\n\n')
   }
   const life = chapter(complete, 'personality')
@@ -114,9 +100,9 @@ export function buildBundleFromPlans(plans: ReturnType<typeof bundleInterpretati
       '10 · How Do Your Life, Love, Work and Timing Fit Together?',
       'Question: How do these parts of your life connect?',
       `Your Answer: ${plainReadingText(integratedAnswer)}`,
-      `Why This Fits You: ${plainReadingText(overviewParagraphs.slice(1, 3).join(' '))}`,
-      `What You May Experience: ${plainReadingText(overviewParagraphs.slice(3, 5).join(' '))}`,
-      `Bottom Line: ${plainReadingText(overviewParagraphs.at(-1) ?? 'Compare work demands with actual pay and capacity, then make room for the relationship needs shown in both charts.')}`,
+      `Chart Links: ${plainReadingText(overviewParagraphs.slice(1, 3).join(' '))}`,
+      `Shared Timing: ${plainReadingText(overviewParagraphs.slice(3, 5).join(' '))}`,
+      `Practical Step: ${plainReadingText(overviewParagraphs.at(-1) ?? 'Compare work demands with actual pay and capacity, then make room for the relationship needs shown in both charts.')}`,
     ].join('\n\n'),
   ]
   const includedReports = [complete, compatibility, career, annual, love]
