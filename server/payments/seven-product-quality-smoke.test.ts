@@ -12,13 +12,13 @@ describe('seven-product sandbox fulfillment smoke tests', () => {
     { kind: 'complete' as const, first },
     { kind: 'career' as const, first },
     { kind: 'compatibility' as const, first, second },
-    { kind: 'year' as const, first, year: 2027, periodStart: '2027-01-01', periodTimezone: 'America/New_York' },
+    { kind: 'year' as const, first, year: 2027, periodStart: '2027-01', periodTimezone: 'America/New_York' },
     { kind: 'business' as const, first },
     { kind: 'wellbeing' as const, first },
-    { kind: 'bundle' as const, first, second, year: 2027, periodStart: '2027-01-01', periodTimezone: 'America/New_York' },
+    { kind: 'bundle' as const, first, second, year: 2027, periodStart: '2027-01', periodTimezone: 'America/New_York' },
   ]
   for (const input of cases) {
-    it(`generates a PDF for ${input.kind} even when diagnostic QA cannot certify it`, async () => {
+    it(`generates a PDF for ${input.kind} without letting QA block fulfillment`, async () => {
       const report = await issueReport(input, orderId, 2026, 'test')
       expect(Buffer.from(report.pdf, 'base64').subarray(0, 5).toString()).toBe('%PDF-')
       expect(report.text.length).toBeGreaterThan(100)
@@ -26,8 +26,14 @@ describe('seven-product sandbox fulfillment smoke tests', () => {
       if (input.kind !== 'bundle') {
         expect(BUYER_QUESTIONS[input.kind]).toHaveLength(7)
       }
-      // A diagnostic failure must never block report creation.
-      expect(report.qualityAudit?.passed).toBe(false)
+      // Product 02 can pass structural QA after its calculation audit succeeds;
+      // an unverified product still fails diagnostics without blocking issuance.
+      if (input.kind === 'career') {
+        expect(report.qualityAudit?.passed).toBe(true)
+        expect(report.answerProvenance).toHaveLength(7)
+      } else {
+        expect(report.qualityAudit?.passed).toBe(false)
+      }
     }, 120000)
   }
 })

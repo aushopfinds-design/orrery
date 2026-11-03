@@ -16,6 +16,11 @@ const GOD_NAMES: Record<string, string> = {
   正財: 'Regular income', 偏財: 'Commercial openings', 正官: 'Formal responsibility', 偏官: 'Decisive pressure',
   正印: 'Learning and support', 偏印: 'Specialist insight',
 }
+const WORK_FOCUS: Record<string, string> = {
+  比肩: 'independent work', 劫財: 'shared and team work', 食神: 'skilled work and steady output', 傷官: 'creative work and improving methods',
+  正財: 'reliable delivery and practical commitments', 偏財: 'commercial and customer-facing work', 正官: 'structured roles and formal responsibility', 偏官: 'demanding work and decisive action',
+  正印: 'training and dependable support', 偏印: 'specialist work and independent thought',
+}
 
 export function careerMoneyChartData(result: SajuResult, referenceYear: number) {
   const natal = natalAnalysis(result), strength = structuralFacts(result), structure = resolveStructure(strength)
@@ -43,6 +48,8 @@ export function careerMoneyChartData(result: SajuResult, referenceYear: number) 
   })
   const years = Array.from({ length: Math.min(10, 2101 - referenceYear) }, (_, index) => {
     const year = referenceYear + index, point = timingPoint(result, year), assessment = periodAssessment(result, point.pillar, point.date, point.yearPillar)
+    const workLink = pairObservation(point.pillar, result.pillars[2].pillar.ganzi, 'Annual reference / birth-month work area')
+    const workTension = workLink.found.some(item => ['沖', '刑', '害', '破'].includes(item.type))
     const activeCycle = assessment.cycle
     const natalWork = GODS[monthGods[0]]?.work ?? ''
     const activeCycleLabel = activeCycle ? `${activeCycle.ganzi} (${GOD_NAMES[activeCycle.stemSipsin] ?? activeCycle.stemSipsin} / ${GOD_NAMES[activeCycle.branchSipsin] ?? activeCycle.branchSipsin})` : 'No calculated cycle in range'
@@ -51,9 +58,9 @@ export function careerMoneyChartData(result: SajuResult, referenceYear: number) 
     const direction = assessment.direction === 'potential-support' || assessment.direction === 'potential-outlet' ? 'Potential support / outlet under the stated rule'
       : assessment.direction === 'added-demand' ? 'Added demand under the stated rule'
         : assessment.direction === 'added-support' ? 'More support; not automatically favourable' : 'Mixed or unresolved'
-    return { year, pillar: point.pillar, stemGod: GOD_NAMES[point.god] ?? point.god, branchGod: GOD_NAMES[point.innerGod] ?? point.innerGod,
+    return { year, pillar: point.pillar, stemGod: GOD_NAMES[point.god] ?? point.god, branchGod: GOD_NAMES[point.innerGod] ?? point.innerGod, monthWorkTheme: WORK_FOCUS[monthGods[0]] ?? GOD_NAMES[monthGods[0]] ?? monthGods[0],
       work: `${GODS[point.god]?.work ?? ''} ${natalWork}`.trim(), money: moneyThemes.length ? `${moneyThemes.join(' and ')} appears at this annual reference. This is a theme, not an income forecast.` : `${GODS[point.god]?.money ?? ''} No direct regular- or opportunity-money symbol appears at this annual reference.`,
-      cycle: activeCycleLabel, direction, caution, evidence: assessment.evidence, tension: assessment.tension }
+      cycle: activeCycleLabel, direction, caution, evidence: [...assessment.evidence, workLink.facts], tension: assessment.tension, workTension }
   })
   const elementSnapshot = buildFreeReading(result)
   const employmentSignals = [
