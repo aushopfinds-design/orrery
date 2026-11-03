@@ -60,7 +60,7 @@ export function purchaseTiming(result: SajuResult, point: ReturnType<typeof mont
  const labels:Record<string,[string,string]>={'conditional-opening':['Opening','기회'],'opening-with-caution':['Opening + pressure','기회와 부담'],'conditional-support':['Support','도움'],'extra-care':['Adjustment','조정'],'topic-only':['Focus','중심 주제']}
  const badge=labels[status]
  add('verdict',`${labelEn}: ${badge[0]} — ${focus.en}`,`${label}: ${badge[1]} — ${focus.ko}`)
- if(opening)add('opening',`There is an opening for ${activity[opening][0]}${openingHasCaution?', with extra demands to manage':''}.`,`${activity[opening][1]}을 살펴볼 기회입니다.${openingHasCaution?' 함께 늘어나는 부담도 관리해야 합니다.':''}`)
+ if(opening)add('opening',`There is an opening for ${activity[opening][0].replace(/[.!?]+$/,'')}${openingHasCaution?', with extra demands to manage':''}.`,`${activity[opening][1]}을 살펴볼 기회입니다.${openingHasCaution?' 함께 늘어나는 부담도 관리해야 합니다.':''}`)
  // Explain the observed relationship, without treating a symbol as a guaranteed event.
  if(opening){
   const reason:Record<string,[string,string]>={

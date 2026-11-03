@@ -128,7 +128,7 @@ function buildSections(plan:InterpretationPlan,targetedProduct01=true):Record<st
   const overlapNotes=overlap.map(row=>{
    const opening=row.lines.find(line=>line.id.endsWith('.opening'))?.en
    const caution=row.lines.find(line=>line.id.endsWith('.caution'))?.en
-   return `${labels([row])} appears in both lists. Activity opening: ${opening??'the activity check identifies an opening'}. Extra-care note: ${caution??'the separate check also identifies competing demands'}.`
+   return `${labels([row])} appears in both lists. Activity opening: ${opening?.replace(/[.!?]+$/,'')??'the activity check identifies an opening'}. Extra-care note: ${caution?.replace(/[.!?]+$/,'')??'the separate check also identifies competing demands'}.`
   })
   const supportBasis=good.length
    ? `These are conditional activity openings, not a ranking of lucky months. The extra-care list uses a separate check for friction and competing demands. ${overlapNotes.length?overlapNotes.join(' '):'None of these selected months also meets the extra-care check.'}`

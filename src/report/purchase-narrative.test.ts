@@ -105,6 +105,7 @@ describe('r15 paid-content review fixes',()=>{
   expect(s['annual-theme'].lines[0].en).toContain('The clearest work theme for January 2027 through December 2027 is this:')
   expect(s['annual-cycle-context'].lines[0].en).toContain('not a ranking of lucky months')
   expect(s['month-7'].lines[0].en).toContain('Opening —')
+  expect(text).not.toContain('manage..')
   for(const id of ['month-5','month-6'])expect(s[id].lines[0].en).toContain('Opening + pressure')
  })
  it('keeps bundle notices compact and includes only timing notes relevant to each category',()=>{
