@@ -5,12 +5,13 @@
  */
 export type ReportQualityInput = {
   productId: string;
-  questions: Array<{ question: string; answer: string }>;
+  questions: Array<{ question: string; answer: string; questionId?: string }>;
   expectedQuestions: string[];
   birthTimeKnown: boolean;
   usesHourPillar: boolean;
   calculationVerified: boolean;
   pdfBytes?: number;
+  provenance?: Array<{ questionId: string; ruleIds: string[]; evidence: Array<{ id: string; value: string }> }>;
 };
 export type QualityFinding = { code: string; message: string; blocking: boolean };
 export type QualityResult = { score: number; passed: boolean; findings: QualityFinding[] };
@@ -32,19 +33,31 @@ export function inspectReport(input: ReportQualityInput): QualityResult {
     flag("QUESTION_COUNT", "Question count does not match the product rubric", 10, true);
   const answers = input.questions.map(x => x.answer.trim());
   answers.forEach((answer, i) => {
+    if (!answer) flag("EMPTY_ANSWER", `Question ${i + 1} has an empty answer`, 20, true);
     if (answer.length < 100) flag("SHORT_ANSWER", `Answer ${i + 1} is too short`, 8, true);
     if ((answer.match(GENERIC) || []).length > 0) flag("GENERIC_ADVICE", `Generic advice in answer ${i + 1}`, 3);
+    const lead = answer.split(/[.!?](?:\s|$)/, 1)[0] ?? '';
+    if (lead.length < 25) flag("WEAK_OPENING", `Answer ${i + 1} may not lead with a complete conclusion`, 2);
   });
-  const seen = new Set<string>();
-  for (const answer of answers) {
-    const key = NORMALIZE(answer);
-    if (key && seen.has(key)) flag("DUPLICATE_ANSWER", "Duplicate answer detected", 15, true);
-    seen.add(key);
+  const seen = new Map<string, number>();
+  for (const [index, answer] of answers.entries()) {
+    const key = NORMALIZE(answer).split(/\s+/).filter(Boolean).slice(0, 24).join(' ');
+    const prior = seen.get(key);
+    if (key && prior !== undefined) flag("REPEATED_OPENING", `Answers ${prior + 1} and ${index + 1} share the same opening`, 6);
+    else if (key) seen.set(key, index);
   }
   if (!input.birthTimeKnown && input.usesHourPillar)
     flag("UNKNOWN_HOUR", "Hour pillar used with unknown birth time", 30, true);
   if (!input.calculationVerified)
     flag("UNVERIFIED_CALCULATION", "Calculation verification failed or was not supplied", 30, true);
+  if (input.provenance) {
+    const traceByQuestion = new Map(input.provenance.map(item => [NORMALIZE(item.questionId), item]));
+    input.questions.forEach((question, index) => {
+      const trace = traceByQuestion.get(NORMALIZE(question.questionId ?? question.question));
+      if (!trace || !trace.ruleIds.length || !trace.evidence.length || trace.evidence.some(item => !item.id || !item.value))
+        flag("MISSING_ANSWER_PROVENANCE", `Question ${index + 1} has no complete chart-rule trace`, 20, true);
+    });
+  }
   if (input.pdfBytes !== undefined && input.pdfBytes < 1024)
     flag("PDF_TOO_SMALL", "PDF appears empty or truncated", 25, true);
   score = Math.max(0, score);

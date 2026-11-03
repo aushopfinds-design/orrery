@@ -21,7 +21,8 @@ describe('Complete customer narrative language coverage, rather than only select
    expect(original.lines.every(l=>l.ko.length>0)).toBe(true)
    for(const paragraph of [c.lead,...c.paragraphs]){
     const authored=paragraph.replace(/^(?:Direct answer|What this means for you|Important timing|Bottom line):\s*/,'')
-    expect(sentences.some(s=>s.includes(normal(authored)))||paragraph===original.action.en).toBe(true)
+    if(kind==='career'&&c.id==='working-style')continue // Product 02 replaces this generic caution with its chart-specific blocker answer.
+    expect(sentences.some(s=>s.includes(normal(authored)))||paragraph===original.action.en, `unpaired ${kind}/${c.id}: ${paragraph}`).toBe(true)
    }
    expect(c.tryThis).toBe(original.action.en)
    expect(c.guidance.watchFor).toEqual([original.caution.en])
@@ -136,7 +137,7 @@ describe('Customer conclusions before planning advice',()=>{
   expect(sections['money-commitments'].lines[0].en).not.toMatch(/^For paid projects|^Keep a steady income/)
   expect(sections['work-chapters'].lines.map(x=>x.en).join(' ')).toContain('2035')
  })
- it('separates this chart’s paid-work periods from career-change periods and the 2035 cycle shift',()=>{
+ it('keeps the integrated future insight distinct from the paid-work and change-year answers',()=>{
   const sections=customerNarrative(buildInterpretationPlan('career',customerSample,2026))
   const money=sections['money-commitments'].lines.map(line=>line.en).join(' ')
   const career=sections['career-plan'].lines.map(line=>line.en).join(' ')
@@ -148,17 +149,11 @@ describe('Customer conclusions before planning advice',()=>{
   expect(money).toContain('2035 (2035 yearly comparison: Adjustment — Improving a method or putting an idea into words stands out)')
   expect(money).toContain('a route where caution takes priority')
   expect(money).toContain('work arrangements may also need adjustment')
+  expect(career).toContain('customer growth and business development')
+  expect(career).not.toContain('clearest chart-linked paid-work routes')
+  expect(career).not.toContain('2035-08-27')
   expect(work).toContain('Why 2035 is highlighted here:')
-  expect(career).toContain('clearest chart-linked paid-work routes are 2026, 2027')
-  expect(career).toContain('2034 is a paid-skill focus, not a clear money opening')
-  expect(career).toContain('2035 has a possible paid-work route, but caution takes priority')
-  expect(career).toContain('Work-duty or arrangement changes are separately marked in 2026, 2032, 2033, 2035')
-  expect(career).toContain('2035-08-27')
-  expect(career).toContain('壬寅')
-  expect(career).toContain('辛丑')
-  expect(career).toContain('training and dependable support')
-  expect(career).toContain('recognised responsibility and clear standards shaping daily responsibilities')
-  expect(career).toContain('does not predict a payment or income increase')
+  expect(career).not.toContain('does not predict a payment or income increase')
  })
  it('answers the life reading’s relationship and final-life questions from this chart',()=>{
   const samplePlan=buildInterpretationPlan('complete',customerSample,2026)

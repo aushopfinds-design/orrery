@@ -20,6 +20,7 @@ import { STEMS, TEN_GODS } from './reading.ts'
 export interface CustomerSection { lines:Passage[]; action:Passage; caution:Passage; showGuidance:boolean }
 const NEED:Record<string,string>={子:'어려운 대화 전에 생각할 시간',丑:'작더라도 지켜지는 약속',寅:'두 사람 모두 선택할 수 있는 기회',卯:'친절한 말과 솔직한 답',辰:'분명한 결정과 함께 나누는 책임',巳:'사생활과 신뢰, 서로를 이해할 만큼의 정보',午:'따뜻한 관심과 자신의 관심사를 위한 시간',未:'해결책을 듣기 전에 내 이야기를 들어 주는 것',申:'실질적인 도움과 함께 이야기를 들어 주는 것',酉:'각자의 취향에 대한 존중',戌:'꾸준한 일상 행동으로 쌓는 신뢰',亥:'재촉받지 않고 감정을 말할 시간'}
 const ELEMENT:Record<string,string>={Wood:'나무',Fire:'불',Earth:'흙',Metal:'금속',Water:'물'}
+const CAREER_THEME_LABEL:Record<string,string>={比肩:'independent specialist work',劫財:'negotiation and shared work',食神:'reliable products and repeatable service',傷官:'creative improvement and problem-solving',正財:'operations and resource management',偏財:'customer growth and business development',正官:'defined responsibility and standards',偏官:'technical problem-solving under pressure',正印:'training, research and knowledge-sharing',偏印:'specialist research and independent problem-solving'}
 const CACHE=new WeakMap<InterpretationPlan,Record<string,CustomerSection>>()
 const clone=(p:Passage)=>pair(plainReadingText(customerEnglish(p.en)),p.ko)
 export function customerNarrative(plan:InterpretationPlan,targetedProduct01=true):Record<string,CustomerSection>{
@@ -241,53 +242,127 @@ export function customerNarrative(plan:InterpretationPlan,targetedProduct01=true
   if(targetedProduct01)out['next-moves'].lines=out['next-moves'].lines.filter(line=>line.en!==noOutcome.en&&line.ko!==noOutcome.ko)
  }
  if(plan.kind==='career'){
-  const publicRisk=m.pressure.en.replace(/^The blind spot is /,'')
-  const workRisk=pair(`One chart-based work risk to watch: ${publicRisk} Your chart ties it to ${m.name.en} in the public role, while ${inner.name.en.toLowerCase()} shapes the daily routine. For the day-to-day side, watch for this: ${inner.pressure.en} In practice, check that the targets, time and authority of a role match.`,`일과 재물에서 먼저 살필 위험은 다음과 같습니다. ${m.pressure.ko} 명식에서 이는 겉으로 드러난 업무의 ${m.name.ko}과 연결되고, 일상 업무에는 ${inner.name.ko}이 더해집니다. 일상 쪽에서는 ${inner.pressure.ko} 목표와 시간, 결정 권한이 서로 맞는지 확인합니다.`)
-  put('working-style',[workRisk,roleChoice(p),pair(`Your chart links this pressure to the difference between the work people see and the routine underneath it. For example, a role may reward customer growth while leaving you to carry delivery, follow-up or costs without matching control. Check which duty is yours, what decision you can make and what pay covers the added work.`,`사주에서는 겉으로 보이는 일과 그 아래의 일상 업무 사이에서 부담이 생길 수 있습니다. 예를 들어 고객을 늘리는 목표를 주면서 납품과 후속 업무, 비용은 권한에 맞는 보상 없이 맡길 수 있습니다. 담당 업무와 결정 권한, 추가 업무에 대한 보상을 확인합니다.`),capacityBasis(p)],pair('Before accepting a wider remit, match the target with the time, authority, support and pay you will actually receive.','담당 범위가 넓어질 때 목표에 필요한 시간과 권한, 지원, 실제 보상이 따르는지 먼저 확인합니다.'),m.pressure)
-  put('two-work-layers',[answer.workplace,p.monthStemGod===p.monthBranchGod?pair('The outward role and the everyday work repeat the same theme. A title that promises one kind of work but delivers another is therefore an important mismatch to notice.','겉으로 보이는 역할과 매일 하는 일이 같은 주제를 반복합니다. 직함이 약속한 일과 실제 업무가 다르면 특히 맞지 않는 부분이 될 수 있습니다.'):pair(`Your public role points to ${m.name.en}, but daily tasks add ${inner.name.en}. A suitable job needs room for both.`,`겉으로 보이는 역할은 ${m.name.ko}이고 매일의 업무에는 ${inner.name.ko}이 더해집니다. 맞는 직장은 두 요구를 함께 담을 수 있어야 합니다.`),...(p.monthStemGod!==p.monthBranchGod?[dailyAnswer.workplace]:[])],pair('Compare the advertised role with the tasks you would actually do each week.','채용 공고의 역할과 매주 실제로 할 일을 비교합니다.'),inner.pressure)
+  const moneyPositionNames:Record<string,[string,string]>={month:['day-to-day work','일상 업무'],year:['your wider network','주변 인맥'],day:['shared commitments','가까운 관계의 책임'],hour:['long-term plans','장기 계획']}
+  const groupedMoneyPositions=new Map<string,{en:Set<string>;ko:Set<string>}>()
+  for(const item of [...p.visibleMoney,...p.hiddenMoney]){
+   const type=item.god==='正財'?'regular pay':'customer and project income'
+   if(!groupedMoneyPositions.has(type))groupedMoneyPositions.set(type,{en:new Set(),ko:new Set()})
+   const names=moneyPositionNames[item.position]??['the available chart areas','확인된 사주 위치']
+   groupedMoneyPositions.get(type)!.en.add(names[0]);groupedMoneyPositions.get(type)!.ko.add(names[1])
+  }
+  const joinAreas=(areas:string[])=>areas.length===2?`${areas[0]} and ${areas[1]}`:areas.join(', ')
+  const careerMoneyEvidence=[...groupedMoneyPositions].map(([type,positions])=>({type,areas:joinAreas([...positions.en])}))
+  const careerMoneyEvidenceKo=[...groupedMoneyPositions].map(([type,positions])=>({type,areas:[...positions.ko].join('·')}))
+  const englishMoneyLinks=careerMoneyEvidence.map(item=>item.type==='regular pay'?`Steady pay is linked to ${item.areas}`:`Customer or project income is linked to ${item.areas}`).join('. ')
+  const koreanMoneyLinks=careerMoneyEvidenceKo.map(item=>`${item.areas}에서 ${item.type==='regular pay'?'정기 수입':'고객·프로젝트 수입'}의 표시가 확인됩니다`).join('. ')
+  const careerMoneyAnswer=pair(
+   careerMoneyEvidence.length?`${englishMoneyLinks}. These are possible earning routes, not expected pay.`:'The checked chart positions do not show a direct money route, so the report does not assign one.',
+   careerMoneyEvidence.length?`${koreanMoneyLinks}. 실제 수입액이 아니라 가능한 업무 통로를 보여 주는 사주 표시입니다.`:'확인한 사주 위치에 직접적인 재물 흐름이 나타나지 않아 특정 수입 방식을 정하지 않습니다.')
+  const moneyRiskCodes=new Set(p.resolution.risks.map(risk=>risk.code))
+  const financialBlock=moneyRiskCodes.has('money-versus-resource')
+   ? pair('Your chart places earning activity beside a need for training or support. If both draw on the same time or resources, financial progress may feel slower.','명식에서 수입 활동과 교육 또는 지원의 필요가 함께 나타납니다. 두 가지가 같은 시간이나 자원을 요구한다면 재정 진전이 더딜 수 있습니다.')
+   : moneyRiskCodes.has('money-adds-pressure')
+    ? pair('Your chart links money themes with demanding responsibilities. A larger paid task could add obligations before it adds money you keep.','명식에서 재물 주제와 부담이 큰 책임이 연결됩니다. 더 큰 유료 업무를 맡을 때 실제 남는 돈보다 책임이 먼저 늘 수 있습니다.')
+    : !p.visibleMoney.length&&p.hiddenMoney.length
+     ? pair('The chart does not identify a specific financial blocker. Less-visible money indicators alone do not explain a real slowdown.','명식은 구체적인 재정 장애를 짚지 않습니다. 덜 드러난 재물 표지만으로 실제 진전이 느린 이유를 설명할 수는 없습니다.')
+     : p.resolution.circuits.some(circuit=>circuit.code==='output-to-money')
+      ? pair('Your chart connects useful work with customers or pay, so it does not identify a broken earning route.','명식에서 유용한 업무가 고객이나 대가와 연결되어 돈벌이 통로가 끊겼다고 보기는 어렵습니다.')
+      : p.visibleMoney.length
+       ? pair('Your chart shows money indicators but no complete path from useful work to paid income. The chart cannot confirm this is a real financial setback.','명식에 재물 표시는 있지만 유용한 업무가 유료 수입으로 이어지는 전체 흐름은 보이지 않습니다. 이것이 실제 재정 문제라는 점은 사주로 확인할 수 없습니다.')
+       : pair('The checked chart positions do not show a direct money route, so they cannot identify a specific financial blockage.','확인한 사주 위치에는 직접적인 재물 통로가 나타나지 않아 구체적인 재정 장애를 짚을 수 없습니다.')
+  const financialScope=moneyRiskCodes.has('money-versus-resource')
+   ? pair('This is a possible overlap in demands; it cannot identify what caused a real financial problem.','이는 부담이 겹칠 수 있다는 사주상 가능성이며, 현실의 재정 문제 원인을 확인한 것은 아닙니다.')
+   : moneyRiskCodes.has('money-adds-pressure')
+    ? pair('This is a chart tendency, not evidence that added duties caused a real financial setback.','이는 사주상 경향이지, 추가 책임이 현실의 재정 문제를 일으켰다는 근거는 아닙니다.')
+    : !p.visibleMoney.length&&p.hiddenMoney.length
+     ? pair('Less-visible money signs cannot explain a real-world slowdown on their own.','덜 드러난 재물 표시만으로 현실의 재정 진전이 느린 이유를 설명할 수는 없습니다.')
+     : p.resolution.circuits.some(circuit=>circuit.code==='output-to-money')
+      ? pair('A chart link between work and payment does not establish your actual income or rule out other obstacles.','업무와 대가의 사주상 연결이 실제 수입을 확인하거나 다른 장애 요인을 배제하는 것은 아닙니다.')
+      : pair('The chart does not identify what caused a real financial change.','명식만으로 현실에서 재정 상황이 바뀐 원인을 확인할 수는 없습니다.')
+  put('working-style',[financialBlock],financialScope,m.pressure)
+  const careerFitLead: Record<string, Passage> = {
+   比肩: pair('Specialist work with control over your method is a stronger career fit than constant people management.','사람을 계속 관리하는 일보다 방법을 스스로 정할 수 있는 전문 업무가 더 잘 맞습니다.'),
+   劫財: pair('Negotiation, partnership sales or team work with clear credit suits your chart better than hidden competition.','공로가 분명한 협업이나 협상, 제휴 영업이 보이지 않는 경쟁보다 더 잘 맞습니다.'),
+   食神: pair('A career built on dependable products, teaching or repeatable service fits your stronger work style.','믿을 수 있는 상품과 교육, 반복 가능한 서비스를 만드는 일이 강한 업무 방식에 맞습니다.'),
+   傷官: pair('Product improvement, creative problem-solving or explaining new ideas gives your strongest work style room to contribute.','상품 개선과 창의적인 문제 해결, 새로운 생각을 설명하는 일이 강점을 발휘할 여지를 줍니다.'),
+   正財: pair('Operations, account management or resource coordination fits the value your chart places on reliable delivery.','운영과 고객 관리, 자원 조정 업무가 명식에서 강조하는 믿을 수 있는 결과와 맞습니다.'),
+   偏財: pair('Business development, sales or account growth matches your chart’s emphasis on finding customers and openings.','사업 개발과 영업, 고객 확대가 고객과 기회를 찾는다는 명식의 특징에 맞습니다.'),
+   正官: pair('Roles with defined responsibility, standards or team leadership fit your chart’s structured work style.','책임과 기준이 분명한 자리나 팀을 이끄는 일이 체계적인 업무 방식에 맞습니다.'),
+   偏官: pair('Technical problem-solving or response work with clear authority fits your ability to act under pressure.','권한이 분명한 기술 문제 해결이나 대응 업무가 압박 속에서 움직이는 강점에 맞습니다.'),
+   正印: pair('Training, research or knowledge-based service fits your chart’s emphasis on learning and guidance.','교육과 연구, 지식 기반 서비스가 배움과 안내를 중시하는 명식에 맞습니다.'),
+   偏印: pair('Specialist research, diagnosis or technical problem-solving fits your independent way of thinking.','전문 연구와 문제 분석, 기술 문제 해결이 독립적으로 생각하는 방식에 맞습니다.'),
+  }
+  const careerVerdict=careerFitLead[p.monthStemGod]?.en ?? BUYER_ANSWERS[p.monthStemGod].career.en.split(/(?<=\.)\s/)[0]
+  const careerVerdictKo=careerFitLead[p.monthStemGod]?.ko ?? BUYER_ANSWERS[p.monthStemGod].career.ko.split(/(?<=\.)\s/)[0]
+  put('two-work-layers',[pair(careerVerdict,careerVerdictKo),answer.workplace,roleChoice(p),p.monthStemGod===p.monthBranchGod?pair('The outward role and the everyday work repeat the same theme. A title that promises one kind of work but delivers another is therefore an important mismatch to notice.','겉으로 보이는 역할과 매일 하는 일이 같은 주제를 반복합니다. 직함이 약속한 일과 실제 업무가 다르면 특히 맞지 않는 부분이 될 수 있습니다.'):pair(`Your public role points to ${m.name.en}, but daily tasks add ${inner.name.en}. A suitable job needs room for both.`,`겉으로 보이는 역할은 ${m.name.ko}이고 매일의 업무에는 ${inner.name.ko}이 더해집니다. 맞는 직장은 두 요구를 함께 담을 수 있어야 합니다.`),...(p.monthStemGod!==p.monthBranchGod?[dailyAnswer.workplace]:[])],pair('Compare the advertised role with the tasks you would actually do each week.','채용 공고의 역할과 매주 실제로 할 일을 비교합니다.'),inner.pressure)
   const chartGods=p.positions.flatMap(position=>[position.stemGod,position.principalGod]).filter((god):god is string=>!!god)
   const employeeGods=[...new Set(chartGods.filter(god=>['正官','偏官','正印','偏印'].includes(god)))]
-  const employmentBasis=[...(chartGods.some(god=>['正官','偏官'].includes(god))?['formal responsibility']:[]),...(chartGods.some(god=>['正印','偏印'].includes(god))?['learning or specialist support']:[])]
-  const independentBasis=[...(chartGods.some(god=>['食神','傷官'].includes(god))?['ideas and practical output']:[]),...(chartGods.some(god=>['正財','偏財'].includes(god))?['paid customer work']:[]),...(chartGods.some(god=>['比肩','劫財'].includes(god))?['self-direction and shared resources']:[])]
-  const hasCommercialRoute=chartGods.includes('食神')||chartGods.includes('傷官')
-  const hasMoneyRoute=chartGods.includes('正財')||chartGods.includes('偏財')
+  const employmentBasis=[...(chartGods.some(god=>['正官','偏官'].includes(god))?['clear responsibility']:[]),...(chartGods.some(god=>['正印','偏印'].includes(god))?['training or specialist support']:[])]
+  const independentBasis=[...(chartGods.some(god=>['食神','傷官'].includes(god))?['creating useful products or services']:[]),...(chartGods.some(god=>['正財','偏財'].includes(god))?['customer income']:[]),...(chartGods.some(god=>['比肩','劫財'].includes(god))?['independent or shared work']:[])]
+  const employmentBasisKo=[...(chartGods.some(god=>['正官','偏官'].includes(god))?['분명한 책임']:[]),...(chartGods.some(god=>['正印','偏印'].includes(god))?['교육 또는 전문 지원']:[])]
+  const independentBasisKo=[...(chartGods.some(god=>['食神','傷官'].includes(god))?['유용한 상품이나 서비스 만들기']:[]),...(chartGods.some(god=>['正財','偏財'].includes(god))?['고객 수입']:[]),...(chartGods.some(god=>['比肩','劫財'].includes(god))?['독립 업무나 협업']:[])]
+  const hasOutputToMoneyRoute=p.resolution.circuits.some(circuit=>circuit.code==='output-to-money')
   const hasAuthoritySupport=employeeGods.length>0
-  const workVerdict=hasCommercialRoute&&hasMoneyRoute&&hasAuthoritySupport
-   ? pair('Your chart leans toward a staged hybrid: build income through a commercially focused role with clear pay and authority, then test independent work alongside it. The chart shows both a route from useful output to customers or money and formal responsibility or specialist support; it does not show that an all-at-once business jump is necessary.','명식은 단계적인 병행 쪽에 무게가 실립니다. 보수와 권한이 분명한 상업·고객 중심의 역할에서 수입 기반을 만들고, 독립 업무는 곁에서 시험하는 방식입니다. 쓸모 있는 결과물을 고객·재물과 잇는 흐름과 조직의 책임·전문 지원이 함께 보여 처음부터 사업에 전부 거는 선택이 필요하다고 읽히지는 않습니다.')
-   : hasCommercialRoute&&hasMoneyRoute
-    ? pair('Independent work has the clearer chart support because output and money both appear in the checked positions. Keep the first offer small and repeatable; the chart does not establish that you should leave secure income now.','확인한 명식에서는 결과물과 재물이 함께 나타나 독립 업무에 더 분명한 근거가 있습니다. 다만 첫 상품은 작고 반복 가능하게 시작해야 하며, 지금 안정적인 수입을 그만두라는 뜻은 아닙니다.')
+  const listSignals=(signals:string[],none:string)=>signals.length===1?signals[0]:signals.length===2?`${signals[0]} and ${signals[1]}`:signals.length?`${signals.slice(0,-1).join(', ')}, and ${signals.at(-1)}`:none
+  const employmentSignalsText=listSignals(employmentBasis,'few signs of structured-role support')
+  const employmentSignalsTextKo=listSignals(employmentBasisKo,'조직 업무를 뒷받침하는 신호가 적음')
+  const independentSignalsTextKo=listSignals(independentBasisKo,'독립 업무를 뒷받침하는 신호가 적음')
+  const employmentComparison=hasAuthoritySupport
+   ? `For a structured job, your chart shows ${employmentSignalsText}.`
+   : 'The checked positions show few signs of formal responsibility or specialist support.'
+  const hasIndependentOutput=independentBasis.includes('creating useful products or services')
+  const hasIndependentAutonomy=independentBasis.includes('independent or shared work')
+  const hasCustomerIncomeSign=independentBasis.includes('customer income')
+  const independentWorkSkills=[...(hasIndependentOutput?['making useful products or services']:[]),...(hasIndependentAutonomy?['working independently or with others']:[])]
+  const independentWorkSkillsText=listSignals(independentWorkSkills,'few independent-work skills')
+  const independentComparison=hasOutputToMoneyRoute
+   ? `For independent work, your chart links useful output to payment${independentBasis.includes('independent or shared work')?' and also shows independent or shared-work signals':''}.`
+   : independentWorkSkills.length
+    ? `For independent work, your chart supports ${independentWorkSkillsText}. ${hasCustomerIncomeSign?'It also shows a customer-income marker, but does not connect that sign to useful work and paid customers.':'It does not show a complete link from useful work to paid customers.'}`
+    : hasCustomerIncomeSign
+     ? 'For independent work, a customer-income marker appears, but the chart does not show a complete link from useful work to paid customers.'
+     : 'The chart shows few direct signs of independent work or a complete route to paid customers.'
+  const workVerdict=hasOutputToMoneyRoute&&hasAuthoritySupport
+   ? pair('Your chart supports both employment and independent work; it does not show a clear winner.','명식에는 조직 업무와 독립 업무의 근거가 모두 있지만, 어느 한쪽이 더 낫다고 뚜렷하게 나타나지는 않습니다.')
+   : hasOutputToMoneyRoute
+    ? pair('Independent work is better supported by the chart.','명식에서는 독립 업무 쪽에 더 직접적인 근거가 있습니다.')
     : hasAuthoritySupport
-     ? pair('Structured employment has the clearer chart support: responsibility or specialist backing is more visible than a complete output-to-customer-to-money route. A defined remit and real decision authority matter more than title alone.','조직 생활에 더 분명한 근거가 있습니다. 책임이나 전문 지원이 결과물·고객·재물로 이어지는 완결된 흐름보다 두드러집니다. 직함보다 담당 범위와 실제 결정 권한이 중요합니다.')
-     : pair('The chart gives a stronger answer about the kind of work than about employment versus business. Keep income commitments measured while you test which setting rewards the work pattern shown here.','명식은 직장과 사업 중 하나를 고르기보다 어떤 업무가 맞는지를 더 분명히 보여줍니다. 여기서 나타난 업무 방식에 실제로 보상이 따르는 환경을 시험하는 동안 수입 약속은 감당 가능한 수준으로 유지합니다.')
-  put('proof-of-skill',[workVerdict,pair(`Your chart has both sides: ${employmentBasis.join(' and ')||'no clear employment signal'} for a structured role, and ${independentBasis.join(', ')||'no clear independent-work signal'} for independent work. In your birth month, the visible role is finding new customers; the everyday layer is repeat income and practical commitments. That supports the staged recommendation: help win the work, then keep a say in how it is delivered.`,`명식에는 두 방향이 함께 있습니다. 조직 생활에는 ${employmentBasis.length?employmentBasis.join('·'):'뚜렷한 신호가 없고'}, 독립 업무에는 ${independentBasis.length?independentBasis.join('·'):'뚜렷한 신호가 없습니다'}. 태어난 달에서는 겉으로 새 고객을 찾고 일상에서는 반복 수입과 현실적 책임을 맡습니다. 그래서 먼저 일을 따오고 실제로 제공하는 방식에도 관여하는 단계적 선택이 맞습니다.`)],pair('Compare a real offer with this direction: secure the role, pay and authority first, then set a fixed limit for any independent trial.','실제 제안을 이 방향과 비교합니다. 먼저 역할과 보수, 권한을 확인하고 독립 업무를 시험할 때는 투입 한도를 정합니다.'),m.pressure)
+     ? pair('Structured employment is better supported by the chart.','명식에서는 조직 업무 쪽에 더 직접적인 근거가 있습니다.')
+     : pair('Your chart gives a clearer answer about the kind of work than about employment versus business. The setting itself remains an open question.','명식은 직장과 사업 중 하나를 고르기보다 어떤 업무가 맞는지를 더 분명히 보여줍니다. 일하는 환경은 아직 판단하기 어렵습니다.')
+  put('proof-of-skill',[workVerdict,pair(`${employmentComparison} ${independentComparison}`,`${hasAuthoritySupport?`조직 업무에는 ${employmentSignalsTextKo}의 근거가 있습니다.`:'확인한 위치에는 조직 업무를 뒷받침하는 신호가 적습니다.'} ${hasOutputToMoneyRoute?`유용한 결과물이 대가로 이어지는 흐름이 확인됩니다${independentBasisKo.includes('독립 업무나 협업')?'과 독립 업무나 협업 신호도 나타납니다.':'.'}`:`독립 업무 관련 근거는 ${independentSignalsTextKo}이며, 유용한 업무가 유료 고객으로 이어지는 전체 흐름은 확인되지 않습니다.`}`)],pair('The actual duties and payment terms decide which route fits a real offer.','실제 제안의 업무 내용과 대금 조건을 살펴 어느 쪽이 맞는지 판단해야 합니다.'),m.pressure)
   put('feedback-and-boundaries',[m.pressure,m.balance],keepWork,m.pressure)
-  put('money-commitments',[moneyPassage(p,'career'),moneyBasis(p),moneyDepth(p,'career'),capacityBasis(p),pair('For an actual role, compare confirmed pay and expected hours with variable fees, necessary costs and extra duties. A larger role is not necessarily better paid.','실제 자리에서는 확정 급여와 예상 근무 시간을 변동 수수료와 필요한 비용, 추가 업무와 함께 비교합니다. 역할이 커진다고 보상이 반드시 좋아지는 것은 아닙니다.')],practicalMoney,moneyWatch)
+  put('money-commitments',[moneyPassage(p,'career'),careerMoneyAnswer,moneyDepth(p,'career'),capacityBasis(p),pair('For an actual role, compare confirmed pay and expected hours with variable fees, necessary costs and extra duties. A larger role is not necessarily better paid.','실제 자리에서는 확정 급여와 예상 근무 시간을 변동 수수료와 필요한 비용, 추가 업무와 함께 비교합니다. 역할이 커진다고 보상이 반드시 좋아지는 것은 아닙니다.')],practicalMoney,moneyWatch)
   put('work-chapters',[],pair('Compare a real opportunity with the specific year and the longer period it falls within.','실제 기회를 해당 연도와 그때의 긴 흐름에 함께 대조합니다.'),moneyWatch)
-  const nextBoundary=plan.first.daewoon.find((cycle,index)=>cycle.startDate.getUTCFullYear()>plan.referenceYear&&cycle.startDate.getUTCFullYear()<=plan.referenceYear+10&&index>0)
-  const previousBoundary=nextBoundary?plan.first.daewoon[plan.first.daewoon.indexOf(nextBoundary)-1]:undefined
-  const transitionDate=nextBoundary?.startDate.toISOString().slice(0,10)
-  const julyDate=transitionDate?new Date(`${transitionDate.slice(0,4)}-07-15T12:00:00.000Z`):undefined
-  const julyCycle=nextBoundary&&julyDate&&nextBoundary.startDate>julyDate?previousBoundary:nextBoundary
-  const cycleShift=nextBoundary?`${nextBoundary.stemSipsin===nextBoundary.branchSipsin?`The next cycle repeats ${LANGUAGE[nextBoundary.stemSipsin].name.en} in both layers.`:`The next cycle shifts the longer-term emphasis toward ${LANGUAGE[nextBoundary.stemSipsin].name.en}, with ${LANGUAGE[nextBoundary.branchSipsin].name.en} shaping daily responsibilities.`} This does not predict a payment or income increase.`:''
-  const cycleShiftKo=nextBoundary?`새 대운은 긴 흐름의 중심을 ${LANGUAGE[nextBoundary.stemSipsin].name.ko} 및 ${LANGUAGE[nextBoundary.branchSipsin].name.ko} 쪽으로 옮깁니다. 수입이나 대금이 늘어난다는 예측은 아닙니다.`:''
-  const boundaryText=nextBoundary&&previousBoundary?pair(`At the 15 July comparison in ${transitionDate!.slice(0,4)}, ${julyCycle?.ganzi} is active. From the calculated change on ${transitionDate}, ${nextBoundary.ganzi} sets the context for later months. ${cycleShift} ${plan.first.input.unknownTime?'This start date is approximate because no birth time was supplied.':''}`,`${transitionDate!.slice(0,4)}년 7월 15일 비교 시점에는 ${julyCycle?.ganzi} 대운이 적용됩니다. ${transitionDate} 계산 전환일 이후에는 ${nextBoundary.ganzi}가 그 뒤의 달에 장기 배경을 더합니다. ${cycleShiftKo} ${plan.first.input.unknownTime?'출생시간이 없어 대운 시작일은 근사치입니다.':''}`):undefined
-  const regularMoney=p.visibleMoney.some(item=>item.god==='正財'),variableMoney=p.visibleMoney.some(item=>item.god==='偏財')
-  const finalMoney=regularMoney&&variableMoney?'Regular income and customer or deal income both appear. This is a two-route pattern, not a measure of wealth.':regularMoney?'Steady pay or repeat work is the clearer visible money theme. The chart does not measure how much you will retain.':variableMoney?'Customers, deals and variable fees are the clearer visible money theme. A promising transaction still has to become paid work.':p.hiddenMoney.length?'Money signs sit in less visible positions, so earning is read through the work behind your public role.':'The checked positions do not establish a direct money route, so the report does not invent one.'
-  const capacityConclusion=p.strength.tendency==='mixed'?'The strength checks do not settle how much extra work you can carry.':p.strength.tendency==='support-needed'?'The capacity check points to needing support before you add continuing obligations.':'The capacity check supports useful activity, but does not guarantee profit.'
-  const moneyRouteRows=purchaseYears(plan.first,plan.referenceYear,'money').filter(row=>Boolean(row.route))
-  const years=(rows:typeof moneyRouteRows)=>rows.map(row=>row.date.slice(0,4)).join(', ')
-  const conditionalYears=years(moneyRouteRows.filter(row=>['opening-with-caution','conditional-opening'].includes(row.status)))
-  const focusYears=years(moneyRouteRows.filter(row=>row.status==='topic-only'))
-  const cautionYears=years(moneyRouteRows.filter(row=>row.status==='extra-care'))
-  const workChangeYears=years(purchaseYears(plan.first,plan.referenceYear,'work').filter(row=>row.lines.some(line=>line.id.endsWith('.change-month'))))
-  const moneyTimingEn=[conditionalYears?`The clearest chart-linked paid-work routes are ${conditionalYears}, though both still carry conditions or extra demands.`:'No clear chart-linked paid-work window stands out; the report does not assign one from a money symbol alone.',focusYears?`${focusYears} is a paid-skill focus, not a clear money opening.`:'',cautionYears?`${cautionYears} has a possible paid-work route, but caution takes priority.`:'',workChangeYears?`Work-duty or arrangement changes are separately marked in ${workChangeYears}; those signals do not mean income will rise.`:''].filter(Boolean).join(' ')
-  const moneyTimingKo=[conditionalYears?`명식과 연결된 유료 업무 통로는 ${conditionalYears}년에 가장 분명하지만, 조건이나 추가 부담이 따릅니다.`:'재물 글자만으로 유료 업무 기회를 정하지 않으며, 뚜렷한 수입 통로는 확인되지 않습니다.',focusYears?`${focusYears}년은 기술을 활용한 유료 업무의 중심 주제이지 분명한 재물 기회는 아닙니다.`:'',cautionYears?`${cautionYears}년에도 유료 업무 통로가 보이지만 주의가 더 중요합니다.`:'',workChangeYears?`${workChangeYears}년에는 업무나 담당 방식의 변화가 별도로 표시됩니다. 이는 수입 증가를 뜻하지 않습니다.`:''].filter(Boolean).join(' ')
-  put('career-plan',[
-   pair(p.monthStemGod===p.monthBranchGod?`The chart repeats ${m.name.en} in both the public role and the daily routine. Choose a customer-facing role where you can follow the work through to delivery, rather than carrying a sales target without control over the result.`:`Your public role centres on ${m.name.en}, while daily work adds ${inner.name.en}. Choose a position where both count, rather than one visible target hiding a second unpaid responsibility.`,p.monthStemGod===p.monthBranchGod?`명식은 겉으로 보이는 역할과 일상 업무 모두 ${m.name.ko}을 반복합니다. 결과를 조정할 권한 없이 영업 목표만 맡기보다 고객을 만난 뒤 실제 제공까지 이어 갈 수 있는 일을 고릅니다.`:`겉으로 보이는 역할은 ${m.name.ko}이고 일상 업무에는 ${inner.name.ko}이 더해집니다. 겉의 목표만 보이고 다른 책임은 보상받지 못하는 자리보다 두 업무를 모두 인정하는 일을 고릅니다.`),
-   pair(`${finalMoney} ${capacityConclusion} Judge a real offer by collected pay after costs, time and shared obligations, not its headline value.`, `${finalMoney} ${capacityConclusion} 실제 제안은 매출 규모가 아니라 비용과 시간, 공동 책임을 뺀 뒤 받은 보수로 판단합니다.`),
-   pair(`${moneyTimingEn} ${boundaryText?.en??''}`, `${moneyTimingKo} ${boundaryText?.ko??''}`),
-   pair(`The practical conclusion is to keep a clear income base while testing independent work within a fixed limit. Expand only when repeat customers, delivery capacity and the amount left after costs are visible in real records.`, `현실적인 결론은 수입 기반을 유지하면서 정해 둔 한도 안에서 독립 업무를 시험하는 것입니다. 반복 고객과 납품 여력, 비용을 뺀 뒤 남는 금액이 실제 기록으로 확인될 때 확장을 검토합니다.`),
-  ], pair('Before accepting a bigger title or launching a separate offer, write down what you will decide, deliver and keep after costs.', '더 큰 직함을 받거나 독립 상품을 내기 전에 직접 정할 일과 제공할 결과, 비용을 뺀 뒤 남는 금액을 적어 봅니다.'), moneyWatch)
+  const careerThemeLabel=CAREER_THEME_LABEL[p.monthStemGod]??publicRoleLabel(p.monthStemGod).en
+  const chartMoneyMarkers=[...p.visibleMoney,...p.hiddenMoney]
+  const workAreaMoney=chartMoneyMarkers.filter(item=>item.position==='month')
+  const otherMoneyAreas=[...new Set(chartMoneyMarkers.filter(item=>item.position!=='month').map(item=>moneyPositionNames[item.position]?.[0]??'other checked chart areas'))]
+  const workAreaMoneyKinds=[...new Set(workAreaMoney.map(item=>item.god==='正財'?'regular-pay':'customer-and-project'))]
+  const workAreaMoneyText=workAreaMoneyKinds.length===2?'steady pay and income from customers or projects':workAreaMoneyKinds[0]==='regular-pay'?'steady pay':'income from customers or projects'
+  const otherMoneyAreaText=otherMoneyAreas.length===1?otherMoneyAreas[0]:otherMoneyAreas.length===2?`${otherMoneyAreas[0]} and ${otherMoneyAreas[1]}`:otherMoneyAreas.join(', ')
+  const integratedMoneyInsight=workAreaMoney.length
+   ? `Your chart places signs for ${workAreaMoneyText} in the same birth-month area that points to ${careerThemeLabel}. This links your work pattern and earning theme, but does not predict what a real role will pay.`
+   : chartMoneyMarkers.length
+    ? `Your work signature is ${careerThemeLabel}, while the chart places its money signs in ${otherMoneyAreaText}, away from the birth-month work area. This is the key distinction: work fit and earning signs do not automatically line up.`
+    : `Your chart points to ${careerThemeLabel} as a work strength, but no direct money sign appears in the checked positions. That makes your work direction clearer than a specific income route.`
+  const capacityInsight=p.strength.tendency==='support-needed'
+   ? 'Its caution is about carrying the workload: added duties may need more support before they improve your finances.'
+   : p.strength.tendency==='supported'
+    ? 'Support for handling work appears in the chart, but that does not establish the pay or profit of a real role.'
+    : 'The chart does not settle how much added work you can carry, so a larger role should not be treated as better-paid by default.'
+  const integratedMoneyInsightKo=workAreaMoney.length
+   ? `명식에서 ${workAreaMoneyKinds.length===1?(workAreaMoneyKinds[0]==='regular-pay'?'정기 수입':'고객·프로젝트 수입'):'정기 수입과 고객·프로젝트 수입'} 표시가 ${publicRoleLabel(p.monthStemGod).ko} 업무 특징을 나타내는 태어난 달의 위치에 함께 있습니다. 업무 방식과 수입 주제가 연결되지만 실제 보수까지 예측하지는 않습니다.`
+   : chartMoneyMarkers.length
+    ? `업무 특징은 ${publicRoleLabel(p.monthStemGod).ko}이고 재물 표시는 ${otherMoneyAreaText}에 있습니다. 직업 적합성과 수입 방식이 서로 다른 사주 위치에 나타나며, 한쪽이 다른 쪽을 보장하지 않습니다.`
+    : `명식은 ${publicRoleLabel(p.monthStemGod).ko}이라는 업무 강점을 보여 주지만, 확인한 위치에 직접적인 재물 표시는 없습니다. 직업 방향은 수입 통로보다 분명합니다.`
+  const capacityInsightKo=p.strength.tendency==='support-needed'
+   ? '주의할 점은 업무량을 감당하는 부분입니다. 일이 늘어 재정이 나아지기 전에 더 많은 도움이 필요할 수 있습니다.'
+   : p.strength.tendency==='supported'
+    ? '일을 맡아 수행할 기반은 보이지만, 실제 자리의 급여나 사업의 수익까지 계산해 주는 것은 아닙니다.'
+    : '추가 업무를 얼마나 감당할 수 있는지는 명식만으로 정해지지 않으므로, 일이 커진다고 보수가 좋아진다고 단정할 수 없습니다.'
+  const futureInsight=pair(integratedMoneyInsight,integratedMoneyInsightKo)
+  const futureInsightDetail=pair(capacityInsight,capacityInsightKo)
+  put('career-plan',[futureInsight,futureInsightDetail],pair('The key is to judge the work and its payment route together; one does not prove the other.','업무 적합성과 보수 방식을 함께 살펴야 하며, 한쪽이 맞는다고 다른 쪽까지 보장되는 것은 아닙니다.'),moneyWatch)
  }
  if(plan.kind==='love'){
   const theme=LANGUAGE[p.dayBranchGod].love
@@ -434,6 +509,11 @@ function capacityPassage(p:InterpretationPlan['primary']):Passage{
 }
 function moneyPassage(p:InterpretationPlan['primary'],area:'life'|'career'|'business'='life'):Passage{
  const steady=p.visibleMoney.some(x=>x.god==='正財'),variable=p.visibleMoney.some(x=>x.god==='偏財')
+ const hiddenSteady=p.hiddenMoney.some(x=>x.god==='正財'),hiddenVariable=p.hiddenMoney.some(x=>x.god==='偏財')
+ const hiddenAreaNames:Record<string,[string,string]>={month:['day-to-day work','일상 업무'],day:['private commitments','개인적인 약속'],year:['wider contacts','주변 인맥'],hour:['long-term plans','장기 계획']}
+ const hiddenAreas=[...new Set(p.hiddenMoney.filter(x=>x.god==='正財'||x.god==='偏財').map(x=>hiddenAreaNames[x.position]?.[0]).filter((x):x is string=>Boolean(x)))]
+ const hiddenAreasKo=[...new Set(p.hiddenMoney.filter(x=>x.god==='正財'||x.god==='偏財').map(x=>hiddenAreaNames[x.position]?.[1]).filter((x):x is string=>Boolean(x)))]
+ const joinHiddenAreas=(items:string[])=>items.length===2?`${items[0]} and ${items[1]}`:items.join(', ')
  if(area==='business')return steady&&variable?pair('Your business money pattern combines repeat customers with new deals. Recurring sales provide continuity, while new buyers bring a less predictable income stream.','사업 재물에서는 반복 고객과 새 거래가 함께 나타납니다. 반복 판매가 수입을 이어 주고 새 구매자는 수입의 변동을 더하는 방식입니다.')
  :steady?pair('Repeat sales and clearly priced ongoing work are the stronger business money theme. The pressure is how much continuing service each sale requires.','반복 판매와 가격이 분명한 지속 업무가 사업 재물의 더 강한 주제입니다. 판매 뒤 계속 제공해야 할 서비스가 부담이 될 수 있습니다.')
  :variable?pair('The business money theme favours finding buyers and making deals over simply maintaining a fixed book of work. Cash can arrive unevenly when the fees depend on new sales.','정해진 업무를 유지하기보다 구매자를 찾고 거래하는 일이 사업 재물의 중심입니다. 새 판매에 수입이 달리면 수금의 간격도 달라질 수 있습니다.')
@@ -442,7 +522,10 @@ function moneyPassage(p:InterpretationPlan['primary'],area:'life'|'career'|'busi
  if(area==='career')return steady&&variable?pair('Your income pattern has two routes: regular pay or repeat work, and additional income from projects or new customers. Both appear in your chart, rather than a single fixed earning style.','수입 통로는 정기 급여·반복 업무와 프로젝트·새 고객을 통한 추가 수입으로 나뉩니다. 한 가지 고정된 돈벌이보다 두 방식이 함께 나타납니다.')
  :steady?pair('Regular pay and dependable repeat work are your clearer income pattern. A role with defined hours and duties makes that pattern easier to evaluate.','정기 급여와 꾸준한 반복 업무가 더 분명한 수입 방식입니다. 시간과 담당이 정해진 자리에서 그 방식을 판단하기 쉽습니다.')
  :variable?pair('Customer-facing or project-based income stands out more than a purely fixed routine. Your income question is closely tied to access to buyers and control over the terms of the work.','고정된 일상만으로 버는 방식보다 고객이나 프로젝트를 통한 수입이 더 두드러집니다. 구매자를 만날 기회와 업무 조건을 정할 권한이 수입 질문에 중요합니다.')
- :p.hiddenMoney.length?pair('Your income pattern is less direct: the money signs are inside the chart rather than in its main outward roles. Specialist delivery or work behind the public role deserves a closer look.','수입 방식이 직접 드러나는 쪽은 아닙니다. 재물 글자가 겉의 주된 역할보다 안쪽에 있어 전문적인 수행과 겉 역할 뒤의 업무를 더 살핍니다.')
+ :hiddenSteady&&hiddenVariable?pair(`Your chart has limited signs for both regular pay and customer or project income${hiddenAreas.length?`, linked to ${joinHiddenAreas(hiddenAreas)}`:''}. They point to possible routes, not guaranteed income.`,`명식에는 정기 수입과 고객·프로젝트 수입의 근거가 제한적으로 함께 나타납니다${hiddenAreasKo.length?`. 확인된 위치는 ${joinHiddenAreas(hiddenAreasKo)}입니다`:''}. 가능한 수입 경로이지 보장된 수입은 아닙니다.`)
+ :hiddenSteady?pair(`Your chart has a limited sign for regular pay${hiddenAreas.length?`, linked to ${joinHiddenAreas(hiddenAreas)}`:''}. This points to a possible earning route, not how much you would earn or whether a job pays more than a business.`,`명식에 정기 수입을 가리키는 제한적인 표시가 있습니다${hiddenAreasKo.length?`. 확인된 위치는 ${joinHiddenAreas(hiddenAreasKo)}입니다`:''}. 가능한 경로일 뿐이며 실제 수입이나 직장과 사업 중 어느 쪽이 더 많이 벌지는 알 수 없습니다.`)
+ :hiddenVariable?pair(`Your chart has a limited sign for customer or project income${hiddenAreas.length?`, linked to ${joinHiddenAreas(hiddenAreas)}`:''}. It points to a possible route, not a promise of income or proof that business would pay more than a job.`,`명식에 고객·프로젝트 수입을 가리키는 제한적인 표시가 있습니다${hiddenAreasKo.length?`. 확인된 위치는 ${joinHiddenAreas(hiddenAreasKo)}입니다`:''}. 가능한 경로일 뿐이며 실제 수입이나 사업이 직장보다 더 벌 것이라는 보장은 아닙니다.`)
+ :p.hiddenMoney.length?pair('The money-related signs are less visible, so the chart cannot favour a specific pay route. It does not establish whether salary or business income would be higher.','재물 표시가 덜 드러나 특정 수입 방식을 선택하기 어렵습니다. 급여와 사업 수입 중 어느 쪽이 더 클지 명식만으로 판단할 수 없습니다.')
  :pair('A direct earning pattern is not clear in the checked signs. This report therefore gives more weight to work fit and responsibility than to naming a money-making route.','확인한 글자에서 직접적인 수입 방식은 분명하지 않습니다. 특정 돈벌이 통로보다 맞는 업무와 책임에 더 무게를 둡니다.')
  return steady&&variable?pair('Your money pattern combines a steady base with income from new customers or deals. Relying on only one of those routes would leave out part of the reading.','꾸준한 기반 수입과 새 고객·거래의 수입이 함께 나타납니다. 한쪽 통로만 보면 재물 풀이의 일부가 빠집니다.')
  :steady?pair('Steady pay, repeat customers and manageable ongoing duties are the clearest money pattern in the visible chart.','겉으로 드러난 재물에서는 고정 수입과 단골 고객, 감당할 수 있는 반복 업무가 가장 분명한 방식입니다.')

@@ -14,7 +14,7 @@ describe('r24 chart-specific customer choices',()=>{
   expect(roleChoice(other).en).toContain('whole week')
   expect(roleChoice(same).en).not.toBe(roleChoice(other).en)
   expect(roleChoice(same).ko).not.toBe(roleChoice(other).ko)
-  expect(customerNarrative(buildInterpretationPlan('career',a,2026))['working-style'].lines.some(l=>l.en===roleChoice(p).en)).toBe(true)
+  expect(customerNarrative(buildInterpretationPlan('career',a,2026))['two-work-layers'].lines.some(l=>l.en===roleChoice(p).en)).toBe(true)
  })
  it('distinguishes an observed skill-to-sales link from absent outward money',()=>{
   const p=plan.primary

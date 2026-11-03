@@ -19,6 +19,7 @@ import type { OrderInput } from './input.ts'
 import { auditBirthInput } from './independent-audit.ts'
 import { applyBuyerQuestions, BUYER_QUESTIONS } from '../../src/report/buyer-outline.ts'
 import { inspectReport } from '../../src/lib/report-quality-gate.ts'
+import { buildAnswerProvenance, type AnswerProvenance } from '../../src/report/answer-provenance.ts'
 
 export interface BuyerReport {
   title: string
@@ -36,6 +37,8 @@ export interface BuyerReport {
   careerCharts?: ReturnType<typeof careerMoneyChartData>
   /** Internal sandbox audit only; never presented as an objective accuracy guarantee. */
   qualityAudit?: ReturnType<typeof inspectReport>
+  /** Internal structured provenance, encrypted with the stored order artifact; never sent to customers. */
+  answerProvenance?: AnswerProvenance[]
 }
 let fontBytes: Promise<Buffer> | undefined
 let artworkBytes: Promise<Buffer> | undefined
@@ -59,7 +62,9 @@ export function reportEmphasis(source: unknown): string[] {
 /** All report content is calculated from the encrypted order, never from the return URL. */
 export async function issueReport(input: OrderInput, orderId: string, referenceYear: number, mode: 'test' | 'live' = 'test'): Promise<BuyerReport> {
   const a = calculateSaju(input.first), b = input.second ? calculateSaju(input.second) : undefined
-  let text: string, documents: string[], source: unknown
+  let text: string, documents: string[], source: unknown, answerProvenance: AnswerProvenance[] | undefined
+  let careerCharts: ReturnType<typeof careerMoneyChartData> | undefined
+  let careerCalculationVerified = false
   if (input.kind === 'complete') {
     const independentAudit = await auditBirthInput(input.first, a)
     const reading = buildCompleteReading(a, referenceYear, independentAudit)
@@ -72,7 +77,13 @@ export async function issueReport(input: OrderInput, orderId: string, referenceY
     text = reading.fullText.replace('THE FATE KEY · ' + reading.title + '\n\n', 'THE FATE KEY · ' + documents[0] + '\n\n')
   } else {
     const reading = buildCategoryReading(input.kind, a, { second: b, year: Number(input.periodStart?.slice(0, 4) ?? input.year ?? referenceYear), ...(input.periodStart ? { periodStart: input.periodStart } : {}), ...(input.periodTimezone ? { periodTimezone: input.periodTimezone } : {}) })
-    source = reading; documents = [previewProduct(input.kind).title]; text = applyBuyerQuestions(reading.fullText.replace('THE FATE KEY · ' + reading.title + '\n\n', 'THE FATE KEY · ' + documents[0] + '\n\n'), input.kind, reading.chapters)
+    if (input.kind === 'career') {
+      careerCharts = careerMoneyChartData(a, referenceYear)
+      answerProvenance = buildAnswerProvenance('career', reading.chapters)
+      const audit = await auditBirthInput(input.first, a)
+      careerCalculationVerified = Boolean(audit && audit.current.slice(0, 3).every((pillar, index) => pillar && pillar === audit.independent[index]))
+    }
+    source = reading; documents = [previewProduct(input.kind).title]; text = applyBuyerQuestions(reading.fullText.replace('THE FATE KEY · ' + reading.title + '\n\n', 'THE FATE KEY · ' + documents[0] + '\n\n'), input.kind, reading.chapters, [], 'standalone', careerCharts?.years)
   }
   const certificates = documents.map((title,index) => ({ title, number: reportReference(orderId, referenceYear, input.kind === 'bundle' ? 5 : index + 1) }))
   const reference = input.kind === 'bundle' ? reportReference(orderId, referenceYear, 0) : certificates[0].number
@@ -86,7 +97,8 @@ export async function issueReport(input: OrderInput, orderId: string, referenceY
     ...(input.recipientName ? { recipientName: input.recipientName } : {}),
     issuedAt: new Date().toISOString(), text: customerDeliveryText(plainReadingText(text).replaceAll('Person A', 'You').replaceAll('Person B', 'Your partner'), input.kind === 'complete'), emphasis: reportEmphasis(source), documents,
     cards: [buildDestinyCard(input.first, input.recipientName ?? ''), ...(input.second ? [buildDestinyCard(input.second, 'Your partner')] : [])], pdf: '',
-    ...(input.kind === 'career' ? { careerCharts: careerMoneyChartData(a, referenceYear) } : {}),
+    ...(careerCharts ? { careerCharts } : {}),
+    ...(answerProvenance ? { answerProvenance } : {}),
   }
   // Run non-blocking diagnostics for both sandbox and live orders.
   // Never delay fulfillment because a heuristic score is low or QA throws.
@@ -99,10 +111,12 @@ export async function issueReport(input: OrderInput, orderId: string, referenceY
     }))
     const audit = inspectReport({
       productId: input.kind, expectedQuestions: expected,
-      questions: sections,
+      questions: sections.map(section => ({ ...section, questionId: BUYER_QUESTIONS[input.kind === 'bundle' ? 'complete' : input.kind]
+        .find(question => question.question === section.question)?.id ?? section.question })),
       birthTimeKnown: !input.first.unknownTime && (!input.second || !input.second.unknownTime),
       usesHourPillar: false, // No semantic hour-pillar audit implemented.
-      calculationVerified: false, // Never claim independent verification without evidence.
+      calculationVerified: input.kind === 'career' ? careerCalculationVerified : false,
+      ...(input.kind === 'career' ? { provenance: report.answerProvenance } : {}),
     })
     if (mode === 'test') report.qualityAudit = audit
     // Log codes only: do not log customer names, birth details or report content.
