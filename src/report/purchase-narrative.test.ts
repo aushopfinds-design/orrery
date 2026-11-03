@@ -44,6 +44,12 @@ describe('Complete customer narrative language coverage, rather than only select
 })
 
 describe('Buyer review r14: direct answers without repeated warnings or lost dates',()=>{
+ it('explains the chart-linked meaning of the life turning-point years in the first answer',()=>{
+  const answer=customerNarrative(buildInterpretationPlan('complete',a,2026)).patterns.lines[0].en
+  expect(answer).toContain('Review these chart-linked periods when planning a change:')
+  expect(answer).toMatch(/2026: .+ — work and daily responsibilities/)
+  expect(answer).toContain('not guaranteed turning points')
+ })
  it('keeps every year visible in the actual delivered timelines after deduplication',()=>{
   for(const kind of ['complete','career','business'] as const){
    const plan=buildInterpretationPlan(kind,a,2026)

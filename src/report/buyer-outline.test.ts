@@ -36,6 +36,13 @@ describe('Buyer questions, not a repeated six-part technical template', () => {
     for (const point of selected) expect(supportive.evidence.join(' ')).toContain(point.date)
     expect(report.months).toHaveLength(12)
   })
+  it('does not call quieter monthly themes supportive openings when none pass the full check', () => {
+    const report = buildCategoryReading('year', calculateSaju(CATEGORY_SCENARIOS[2].first), { year: 2026, periodStart: '2026-11' })
+    const answer = report.chapters.find(chapter => chapter.id === 'annual-cycle-context')!.lead
+    expect(answer).toContain('No month meets the full activity-opening check.')
+    expect(answer).not.toContain('The clearest conditional activity openings are')
+    expect(answer).toContain('they are not supportive openings')
+  })
   it('answers work and money questions while keeping career and business topics separate', () => {
     const career = buildCategoryReading('career', a, { year: 2026 }), business = buildCategoryReading('business', a, { year: 2026 })
     for (const [report, id] of [[career, 'feedback-and-boundaries'], [career, 'work-chapters'], [business, 'offer-test'], [business, 'customer-communication']] as const) {
@@ -57,10 +64,10 @@ describe('Buyer questions, not a repeated six-part technical template', () => {
       make('two-directions', 'The chart comparison points to a shared attraction theme.', ['Person A is drawn to direct conversation.', 'Person B is drawn to practical care.']),
       make('two-styles', 'The two charts connect through complementary ways of offering care.', []),
       make('close-conversation', 'Person A needs listening; Person B needs practical help with listening.', [
-        'Person A tends to express love through focused conversation.',
-        'Person B tends to express love through reliable practical help.',
-        'The private-life pattern shows different expectations.',
-        'The clearest friction is when advice arrives before listening, or help arrives without checking what was asked for.',
+        'Your private-life need is being heard before someone offers a solution. Your partner’s is practical help as well as listening. The same gesture may therefore feel different to each of you.',
+        'You: Focused conversation is one way you may show care.',
+        'Your partner: Reliable practical help is one way they may show care.',
+        'Your likely friction is advice arriving before listening; your partner’s is practical help arriving without checking what was asked for.',
       ]),
       make('chart-patterns', 'Private closeness is stronger than sharing a daily routine; attraction and practical agreements are different kinds of fit.', []),
       make('shared-week', 'This connection asks each person to make room for the other’s different needs.', [
@@ -74,8 +81,13 @@ describe('Buyer questions, not a repeated six-part technical template', () => {
     const source = chapters.map(chapter => deliveredChapter(chapter).join('\n\n')).join('\n\n')
     const report = applyBuyerQuestions(source, 'compatibility', chapters)
     expect((report.match(/^Question:/gm) ?? [])).toHaveLength(7)
-    expect(report).toContain('Question: How do we express love differently?\n\nAnswer: Person A tends to express love through focused conversation. Person B tends to express love through reliable practical help.')
-    expect(report).toContain('Question: What tends to cause friction between us?\n\nAnswer: The clearest friction is when advice arrives before listening, or help arrives without checking what was asked for.')
+    expect(report).toContain('Question: How do we express love differently?\n\nAnswer: The chart suggests different care styles. You: Focused conversation is one way you may show care. Your partner: Reliable practical help is one way they may show care. These are chart-based tendencies, not proof of how either person behaves.')
+    const sameStyleChapters = chapters.map(chapter => chapter.id === 'close-conversation'
+      ? { ...chapter, paragraphs: [chapter.paragraphs[0], 'You: Keeping promises matters.', 'Your partner: Keeping promises matters.', ...chapter.paragraphs.slice(3)] }
+      : chapter)
+    const sameStyleReport = applyBuyerQuestions(sameStyleChapters.map(chapter => deliveredChapter(chapter).join('\n\n')).join('\n\n'), 'compatibility', sameStyleChapters)
+    expect(sameStyleReport).toContain('Answer: The chart points to a shared care style. You: Keeping promises matters. Your partner: Keeping promises matters.')
+    expect(report).toContain('Question: What tends to cause friction between us?\n\nAnswer: Your friction point is advice arriving before listening. For your partner, tension may arise from practical help arriving without checking what was asked for.')
     expect(report).toContain('Question: What does this connection ask of each of us?\n\nAnswer: This connection asks each person to make room for the other’s different needs.')
     expect(report).toContain('Question: How do emotional closeness and everyday compatibility differ?\n\nAnswer: Private closeness is stronger than sharing a daily routine; attraction and practical agreements are different kinds of fit.')
     expect(report).not.toContain('Question: What tends to cause friction between us?\n\nAnswer: A generic caution.')

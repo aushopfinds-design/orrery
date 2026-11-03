@@ -1,7 +1,7 @@
 import type { InterpretationPlan } from './interpretation-plan.ts'
 import { purchaseYears, purchaseMonths } from './purchase-timing.ts'
 import type { TimingSentence } from './purchase-timing.ts'
-import { pair } from './purchase-language.ts'
+import { pair, WORKING_LANGUAGE } from './purchase-language.ts'
 export interface PurchaseTimingSection { lines: TimingSentence[]; evidence: string[] }
 const cache = new WeakMap<InterpretationPlan, Record<string, PurchaseTimingSection>>()
 export function purchaseTimingSections(plan: InterpretationPlan, targetedProduct01=true): Record<string, PurchaseTimingSection> {
@@ -82,7 +82,20 @@ function buildSections(plan:InterpretationPlan,targetedProduct01=true):Record<st
  const care=years.filter(r=>['extra-care','opening-with-caution'].includes(r.status))
  if(plan.kind==='complete'){
   const changed=years.filter(r=>r.lines.some(l=>/\.change-(day|month)$/.test(l.id))),highlights=priority(changed)
-  put('patterns',highlights.length?`Give ${dates(highlights)} a closer look when planning a change. These stand out because the reading finds more changes to work or close relationships; the full timeline below keeps the other years in view.`:`No work or relationship clash stands out in this ten-year comparison. Your timeline still shows how the focus changes from year to year.`,highlights.length?`변화를 계획할 때는 ${dates(highlights)}년을 먼저 살펴봅니다. 일이나 가까운 관계에서 변화가 더 두드러지는 해이며, 다른 해의 흐름도 아래 전체 일정에 남겨 두었습니다.`:'이번 10년 비교에서는 일이나 관계에 부딪히는 변화가 두드러지지 않습니다. 매년 달라지는 중심 주제는 전체 흐름에서 설명합니다.',highlights,'highlight')
+  const turningPointSummary=(locale:'en'|'ko')=>highlights.map(row=>{
+   const year=row.date.slice(0,4),theme=WORKING_LANGUAGE[row.god].name[locale]
+   const areas=[
+    row.lines.some(line=>line.id.endsWith('.change-month'))?(locale==='en'?'work and daily responsibilities':'일과 일상 책임'):undefined,
+    row.lines.some(line=>line.id.endsWith('.change-day'))?(locale==='en'?'close relationships and personal choices':'가까운 관계와 개인적 선택'):undefined,
+   ].filter((area):area is string=>Boolean(area))
+   return locale==='en'?`${year}: ${theme} — ${areas.join('; ')}`:`${year}년: ${theme} — ${areas.join('·')}`
+  }).join(locale==='en'?'. ':'; ')
+  const turningPointAnswer=highlights.length&&targetedProduct01
+   ?[`Review these chart-linked periods when planning a change: ${turningPointSummary('en')}. They are planning prompts, not guaranteed turning points.`,`변화를 계획할 때 명식에서 살펴볼 시기는 ${turningPointSummary('ko')}입니다. 계획 점검을 위한 시기이지, 반드시 큰일이 일어난다는 예측은 아닙니다.`]
+   :highlights.length
+    ?[`Give ${dates(highlights)} a closer look when planning a change. These stand out because the reading finds more changes to work or close relationships; the full timeline below keeps the other years in view.`,`변화를 계획할 때는 ${dates(highlights)}년을 먼저 살펴봅니다. 일이나 가까운 관계에서 변화가 더 두드러지는 해이며, 다른 해의 흐름도 아래 전체 일정에 남겨 두었습니다.`]
+    :['No work or relationship clash stands out in this ten-year comparison. Your timeline still shows how the focus changes from year to year.','이번 10년 비교에서는 일이나 관계에 부딪히는 변화가 두드러지지 않습니다. 매년 달라지는 중심 주제는 전체 흐름에서 설명합니다.']
+  put('patterns',turningPointAnswer[0],turningPointAnswer[1],highlights,'highlight')
   put('next-moves',targetedProduct01?`Your ${plan.referenceYear}–${plan.referenceYear+years.length-1} timeline names each year's main theme, its chart link and what to watch. When a theme returns, compare the new year's chart contacts rather than treating it as the same year again.`:`Your ${plan.referenceYear}–${plan.referenceYear+years.length-1} timeline: each year below gives the main opportunity or pressure, the reason and what needs attention.`,targetedProduct01?`${plan.referenceYear}–${plan.referenceYear+years.length-1}년 흐름에서 매년의 중심 주제와 명식 근거, 살펴볼 점을 확인합니다. 같은 주제가 다시 나타나면 그해에 새로 작용하는 관계를 비교해 읽습니다.`:`${plan.referenceYear}–${plan.referenceYear+years.length-1}년의 전체 흐름입니다. 각 해의 기회나 부담, 그 이유와 주의할 점을 함께 읽습니다.`,years,true)
  }
  if(plan.kind==='career'){
@@ -132,8 +145,18 @@ function buildSections(plan:InterpretationPlan,targetedProduct01=true):Record<st
   })
   const supportBasis=good.length
    ? `These are conditional activity openings, not a ranking of lucky months. The extra-care list uses a separate check for friction and competing demands. ${overlapNotes.length?overlapNotes.join(' '):'None of these selected months also meets the extra-care check.'}`
-   : 'No month passes the activity-opening check; these are quieter work-and-relationship comparisons. The extra-care list separately identifies months with friction or competing demands.'
-  put('annual-cycle-context',selected.length?`The clearest conditional activity openings are ${labels(selected)}. ${supportBasis}`:`No clear activity opening or quieter comparison stands out. Use the full monthly reading to identify the specific commitments needing adjustment.`,selected.length?`${koLabels(selected)}월은 조건부 활동 기회입니다. 행운 순위가 아닙니다. ${overlap.length?`${koLabels(overlap)}월은 두 목록에 모두 있습니다. 활동의 기회와 별도의 부담을 함께 살핍니다.`:'주의 목록은 마찰과 겹치는 부담을 별도 기준으로 확인합니다.'}`:'뚜렷한 활동 기회나 상대적으로 조용한 달을 꼽기 어렵습니다. 전체 월별 풀이에서 조정할 약속을 확인합니다.')
+   : ''
+  const supportiveLead=good.length
+   ? `The clearest conditional activity openings are ${labels(selected)}. ${supportBasis}`
+   : selected.length
+    ? `No month meets the full activity-opening check. Quieter work-and-relationship themes appear in ${labels(selected)}; they are not supportive openings. The extra-care list separately identifies months with friction or competing demands.`
+    : 'No month meets the full activity-opening check, and no quieter comparison stands out. Use the full monthly reading to identify the specific commitments needing adjustment.'
+  const supportiveLeadKo=good.length
+   ? `${koLabels(selected)}월은 조건부 활동 기회입니다. 행운 순위가 아닙니다. ${overlap.length?`${koLabels(overlap)}월은 두 목록에 모두 있습니다. 활동의 기회와 별도의 부담을 함께 살핍니다.`:'주의 목록은 마찰과 겹치는 부담을 별도 기준으로 확인합니다.'}`
+   : selected.length
+    ? '전체 활동 기회 기준을 통과한 달은 없습니다. 상대적으로 조용한 일·관계 주제가 나타난 달은 아래와 같으며, 활동 기회로 분류한 것은 아닙니다. 주의 목록은 마찰이나 겹치는 부담을 별도 기준으로 확인합니다.'
+    : '전체 활동 기회 기준을 통과한 달도, 상대적으로 조용한 달도 뚜렷하지 않습니다. 전체 월별 풀이에서 조정할 약속을 확인합니다.'
+  put('annual-cycle-context',supportiveLead,supportiveLeadKo)
   for(const [i,pick] of picks.entries())out['annual-cycle-context'].lines.push({id:'annual-cycle-context.pick-'+i,...pick})
 
   put('annual-plan',key.length?`Put ${labels(key)} first on your review list. They carry more overlapping demands in this reading. Start with these, then use the full monthly table to keep the remaining adjustments in view.`:`No month stands out under these extra-care checks. The twelve-month overview still shows the commitments and changing focus of each month.`,key.length?`${koLabels(key)}을 먼저 확인할 달로 꼽습니다. 이번 풀이에서 부담이 더 겹치는 달입니다. 이 달부터 살피고 전체 표에서 나머지 달의 조정할 부분도 함께 봅니다.`:'사용한 주의 기준에서 특별히 두드러지는 달이 없습니다. 매달의 약속과 달라지는 중심 주제는 12개월 흐름에서 설명합니다.')

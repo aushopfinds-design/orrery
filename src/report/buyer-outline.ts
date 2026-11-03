@@ -37,7 +37,7 @@ export const BUYER_QUESTIONS: Record<BuyerOutlineKind, BuyerQuestion[]> = {
     { id: 'two-directions', question: 'Why are we attracted to each other?', source: 'two-directions', part: 'lead' },
     { id: 'two-styles', question: 'What makes us compatible?', source: 'two-styles', part: 'lead' },
     { id: 'q-conflict', question: 'What tends to cause friction between us?', source: 'close-conversation', part: 'paragraph:3' },
-    { id: 'q-love-language', question: 'How do we express love differently?', source: 'close-conversation', part: 'paragraphs:0-1' },
+    { id: 'q-love-language', question: 'How do we express love differently?', source: 'close-conversation', part: 'paragraphs:2-3' },
     { id: 'chart-patterns', question: 'How do emotional closeness and everyday compatibility differ?', source: 'chart-patterns', part: 'lead' },
     { id: 'shared-week', question: 'What does this connection ask of each of us?', source: 'shared-week', part: 'lead' },
     { id: 'support-each-other', question: 'Which upcoming periods may affect our relationship themes?', source: 'support-each-other', part: 'lead' },
@@ -196,15 +196,16 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
         paragraphs = []
         chapter.paragraphs.forEach(line => used.add(line))
       } else if (kind === 'compatibility' && question.id === 'q-love-language') {
-        const needs = chapter.paragraphs.find(line => line.startsWith('Your private-life need is '))
-        const match = needs?.match(/^Your private-life need is (.*?)\. Your partner’s is (.*?)\. The same gesture/)
         const firstCare = chapter.paragraphs.find(line => /^You: /.test(line))
         const secondCare = chapter.paragraphs.find(line => /^Your partner: /.test(line))
-        lead = match
-          ? `You need ${match[1]}; your partner needs ${match[2]}. The same caring gesture may not feel equally useful to both of you.`
-          : firstCare && secondCare
-            ? `You and your partner may show care in different ways: ${firstCare.replace(/^You: /, '').split(/(?<=[.!?])\s/)[0]} Your partner: ${secondCare.replace(/^Your partner: /, '').split(/(?<=[.!?])\s/)[0]}`
-          : `${chapter.paragraphs[0] ?? 'Person A’s chart gives one clue about care.'} ${chapter.paragraphs[1] ?? 'Person B’s chart gives a separate clue.'}`
+        const careStyle = (line: string, prefix: RegExp) => line.replace(prefix, '').split(/(?<=[.!?])\s/)[0]
+        const yourCare = firstCare ? careStyle(firstCare, /^You: /) : ''
+        const partnerCare = secondCare ? careStyle(secondCare, /^Your partner: /) : ''
+        lead = firstCare && secondCare
+          ? yourCare === partnerCare
+            ? `The chart points to a shared care style. You: ${yourCare} Your partner: ${partnerCare} These are chart-based tendencies, not proof of how either person behaves.`
+            : `The chart suggests different care styles. You: ${yourCare} Your partner: ${partnerCare} These are chart-based tendencies, not proof of how either person behaves.`
+          : `${chapter.paragraphs[0] ?? 'Your chart gives one clue about how care may be recognised.'} ${chapter.paragraphs[1] ?? 'Your partner’s chart gives a separate clue.'}`
         paragraphs = []
         chapter.paragraphs.forEach(line => used.add(line))
         paragraphs = []
