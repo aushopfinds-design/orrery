@@ -91,9 +91,9 @@ export function buildBundleFromPlans(plans: ReturnType<typeof bundleInterpretati
   const privateNeed = RELATIONSHIP_PROFILES[plans.complete.primary.dayBranch].need
   const workTheme = LANGUAGE[plans.complete.primary.monthStemGod].name.en
   const coreAnswer = `At your core, you bring ${coreProfile.focus} to daily life. Your work pattern centres on ${workTheme}, while your private relationship need is ${privateNeed}.`
-  const pressurePattern = plainReadingText(coreProfile.pressure).replace(/^(?:You may |You )/i, '').replace(/^[A-Z]/, letter => letter.toLowerCase())
-  const strengthAnswer = `Your clearest strength is this: ${plainReadingText(coreProfile.strength)} Under pressure, you may find yourself ${pressurePattern}`
-  const challengeAnswer = `Your recurring personal challenge is this: ${plainReadingText(coreProfile.pressure)} It matters alongside your work pattern of ${workTheme}; it is a response to strain, not a prediction that a problem must happen.`
+  const blindSpot = plainReadingText(coreProfile.watchFor.at(-1) ?? coreProfile.watchFor[0])
+  const strengthAnswer = `Your clearest strength is this: ${plainReadingText(coreProfile.strength)} A blind spot to watch for is ${blindSpot.charAt(0).toLowerCase()}${blindSpot.slice(1)}`
+  const challengeAnswer = `Under pressure, ${plainReadingText(coreProfile.pressure).replace(/^[A-Z]/, letter => letter.toLowerCase())} This is a possible response to strain, not a prediction that a problem must happen.`
   const earningPattern = plainReadingText(moneyFit.lead).replace(/^Direct answer:\s*/i, '').replace(/^Your /i, '')
   const integratedCollectionAnswer = `Your main trade-off is making ${workTheme} pay without letting the work crowd out ${privateNeed}. The chart shows ${earningPattern.toLowerCase()} and adds a separate twelve-month timing layer; none of these themes guarantees an event or income.`
   const collectionQuestions = [
