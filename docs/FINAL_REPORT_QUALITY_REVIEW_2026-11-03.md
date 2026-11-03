@@ -136,17 +136,20 @@ Product 01, 05, 06, 07은 각 질문의 첫 문장을 5개 프로필에 걸쳐 �
 
 ## 8. GitHub / Preview / Production
 
+- 최종 원격 브랜치 `report-final-quality-signoff-20261103`은 `b591f085d4492ec43033e2ad8aa77fb0fead625c`이며 로컬 작업 트리와 원격 트리 SHA(`7284b7c054abe27d6067cd4b87a3ab05e9a6bd7b`)가 같다. 원격 백업 브랜치 `backup/report-final-quality-signoff-pre-recovery-20261103`은 문제 커밋 `edf991d22433d034228b1127c52001a5fe21d9d6`을 보존한다.
+- 최종 원격 브랜치 커밋의 Vercel Preview `dpl_FfUYHKWQ1YwrvWGZ5X67km8DDeUu` 상태는 `READY`이며 Preview URL은 `https://saju-english-report-preview-77zo6ha8g-shopping-shorts-ai.vercel.app`이다. 이 커밋은 검수 문서 반영 커밋이고, 앱 코드가 마지막으로 변경된 커밋 `159429412ea06efcf3f95a19059d22f5fadf6995`도 별도 Preview `dpl_7v1m4ewsQ5TNparUtZAk7hqunWZD`에서 `READY`다. 두 배포 모두 target이 `null`로 Production이 아니다.
 - 복구 전 원격 상태는 `backup/report-final-quality-signoff-pre-recovery-20261103` 브랜치에 보존했다.
 - `src/report/purchase-narrative.ts` 전체 파일을 복구했다. 복구 후 로컬과 원격 blob SHA는 `8098c02b3fbcb955adf4a8552f060b60a636cc70`으로 일치했다.
 - 최종 코드 커밋 `159429412ea06efcf3f95a19059d22f5fadf6995`에서 원격 파일 트리와 로컬 작업 트리의 차이는 없었다.
 - Vercel Preview `dpl_7v1m4ewsQ5TNparUtZAk7hqunWZD`가 해당 커밋으로 `READY`가 되었고, 사이트 요청은 HTTP 200을 반환했다.
 - Preview에는 6개 단품과 Collection이 표시되고 USD 가격이 보였다. `Test payments only`, `Purchases are not open yet` 안내도 확인했다. Destiny Card 샘플과 정지 컨트롤이 표시됐다.
 - 한국어 선택 후 출생정보 입력 일부만 한국어로 바뀌고, 내비게이션·홈 소개·상품 설명은 영어로 남았다. 한국어 UI 전체 적용은 확인되지 않았다.
-- Production과 Stripe Live 설정은 변경하지 않았다.
+- Production과 Stripe Live 설정은 변경하지 않았다. 실제 구매 비활성 안내는 Preview 화면에서 확인했다.
 
 ## 9. 남은 품질 작업 및 판매 전 미검증 항목
 
-1. 95점 미만인 모든 PDF를 승인하지 않는다. Product 01, 03, 04, 05, 06, 07에서 위에 기록한 실제 감점 문제를 다음 작업 단위로 나눈다.
-2. 30개 전체 본문을 사람이 한 줄씩 재검토한 것은 아니다. 30개 PDF의 질문 라벨, 각 질문의 첫 답변, 미상 시간 안전, PDF 열림을 확인했다. 대표 6개 PDF를 생성하고 주요 답변 세부 문단과 모바일/A4 레이아웃을 확인했다.
-3. Stripe 테스트 결제 → webhook → 주문 저장 → PDF 생성 → 메일 → 다운로드/재다운로드의 전체 고객 흐름은 이번 작업에서 실행하지 않았다.
-4. 실제 판매는 비활성 상태로 유지한다. 이 작업은 Product 02 이외의 운영 콘텐츠를 Production에 올리지 않는다.
+1. 현재 원격에는 위 코드·문서만 저장했다. `review-pdfs/final-quality-review-20261103/`의 30개 PDF 산출물은 로컬 검수 증거이며 Git에 추적되지 않는다.
+2. 95점 미만인 모든 PDF를 승인하지 않는다. Product 01, 03, 04, 05, 06, 07에서 위에 기록한 실제 감점 문제를 다음 작업 단위로 나눈다.
+3. 30개 전체 본문을 사람이 한 줄씩 재검토한 것은 아니다. 30개 PDF의 질문 라벨, 각 질문의 첫 답변, 미상 시간 안전, PDF 열림을 확인했다. 대표 6개 PDF를 생성하고 주요 답변 세부 문단과 모바일/A4 레이아웃을 확인했다.
+4. Stripe 테스트 결제 → webhook → 주문 저장 → PDF 생성 → 메일 → 다운로드/재다운로드의 전체 고객 흐름은 이번 작업에서 실행하지 않았다.
+5. 실제 판매는 비활성 상태로 유지한다. 이 작업은 Product 02 이외의 운영 콘텐츠를 Production에 올리지 않는다.
