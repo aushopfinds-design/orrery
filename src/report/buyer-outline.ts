@@ -11,139 +11,139 @@ export const BUYER_OUTLINES = {
 } as const
 export type BuyerOutlineKind = keyof typeof BUYER_OUTLINES
 type AnswerPart = 'lead' | 'lead-with-caution' | 'caution' | 'action' | 'timing' | 'turning-points' | 'next-cycle' | `paragraph:${number}` | `paragraphs:${number}-${number}`
-export interface BuyerQuestion { id: string; question: string; source: string; part: AnswerPart }
+export interface BuyerQuestion { id: string; question: string; source: string; part: AnswerPart; role: string }
 
 /** Seven questions for the six standalone products. The collection keeps its existing question set. */
 export const BUYER_QUESTIONS: Record<BuyerOutlineKind, BuyerQuestion[]> = {
   complete: [
-    { id: 'personality', question: 'What kind of person am I?', source: 'personality', part: 'lead' },
-    { id: 'social', question: 'What helps me thrive, and what can hold me back?', source: 'social', part: 'lead-with-caution' },
-    { id: 'career', question: 'What kind of career suits me?', source: 'career', part: 'lead' },
-    { id: 'money', question: 'How does money work in my life?', source: 'money', part: 'lead' },
-    { id: 'love', question: 'What is my pattern in love?', source: 'love', part: 'lead' },
-    { id: 'patterns', question: 'What are my biggest life challenges?', source: 'life-challenges', part: 'lead' },
-    { id: 'q-turning-points', question: 'When may my life change direction?', source: 'patterns', part: 'turning-points' },
+    { id: 'personality', question: 'What kind of person am I?', source: 'personality', part: 'lead', role: 'identity' },
+    { id: 'social', question: 'What helps me thrive, and what can hold me back?', source: 'social', part: 'lead-with-caution', role: 'strengths-and-limits' },
+    { id: 'career', question: 'What kind of career suits me?', source: 'career', part: 'lead', role: 'career-fit' },
+    { id: 'money', question: 'How does money work in my life?', source: 'money', part: 'lead', role: 'earning-pattern' },
+    { id: 'love', question: 'What is my pattern in love?', source: 'love', part: 'lead', role: 'relationship-need' },
+    { id: 'patterns', question: 'What are my biggest life challenges?', source: 'life-challenges', part: 'lead', role: 'recurring-challenge' },
+    { id: 'q-turning-points', question: 'When may my life change direction?', source: 'patterns', part: 'turning-points', role: 'turning-point-timing' },
   ],
   career: [
-    { id: 'two-work-layers', question: 'Which careers suit me best?', source: 'two-work-layers', part: 'lead' },
-    { id: 'proof-of-skill', question: 'Am I better suited to employment or independent work?', source: 'proof-of-skill', part: 'lead' },
-    { id: 'money-commitments', question: 'How do I naturally make money?', source: 'money-commitments', part: 'lead' },
-    { id: 'working-style', question: 'What tends to block my financial progress?', source: 'working-style', part: 'lead' },
-    { id: 'feedback-and-boundaries', question: 'When might my career or money situation improve?', source: 'feedback-and-boundaries', part: 'lead' },
-    { id: 'work-chapters', question: 'What do the next ten years suggest for my work and money?', source: 'work-chapters', part: 'lead' },
-    { id: 'career-plan', question: 'What is the most important insight for my future?', source: 'career-plan', part: 'lead' },
+    { id: 'two-work-layers', question: 'Which careers suit me best?', source: 'two-work-layers', part: 'lead', role: 'career-fit' },
+    { id: 'proof-of-skill', question: 'Am I better suited to employment or independent work?', source: 'proof-of-skill', part: 'lead', role: 'work-structure-fit' },
+    { id: 'money-commitments', question: 'How do I naturally make money?', source: 'money-commitments', part: 'lead', role: 'earning-route' },
+    { id: 'working-style', question: 'What tends to block my financial progress?', source: 'working-style', part: 'lead', role: 'financial-blocker' },
+    { id: 'feedback-and-boundaries', question: 'When might my career or money situation improve?', source: 'feedback-and-boundaries', part: 'lead', role: 'career-timing' },
+    { id: 'work-chapters', question: 'What do the next ten years suggest for my work and money?', source: 'work-chapters', part: 'lead', role: 'long-cycle-work-theme' },
+    { id: 'career-plan', question: 'What is the most important insight for my future?', source: 'career-plan', part: 'lead', role: 'career-priority' },
   ],
   compatibility: [
-    { id: 'two-directions', question: 'Why are we attracted to each other?', source: 'two-directions', part: 'lead' },
-    { id: 'two-styles', question: 'What makes us compatible?', source: 'two-styles', part: 'lead' },
-    { id: 'q-conflict', question: 'What tends to cause friction between us?', source: 'close-conversation', part: 'paragraph:3' },
-    { id: 'q-love-language', question: 'How do we express love differently?', source: 'close-conversation', part: 'paragraphs:2-3' },
-    { id: 'chart-patterns', question: 'How do emotional closeness and everyday compatibility differ?', source: 'chart-patterns', part: 'lead' },
-    { id: 'shared-week', question: 'What does this connection ask of each of us?', source: 'shared-week', part: 'lead' },
-    { id: 'support-each-other', question: 'Which upcoming periods may affect our relationship themes?', source: 'support-each-other', part: 'lead' },
+    { id: 'two-directions', question: 'Why are we attracted to each other?', source: 'two-directions', part: 'lead', role: 'attraction' },
+    { id: 'two-styles', question: 'What makes us compatible?', source: 'two-styles', part: 'lead', role: 'overall-fit' },
+    { id: 'q-conflict', question: 'What tends to cause friction between us?', source: 'close-conversation', part: 'paragraph:3', role: 'conflict-trigger' },
+    { id: 'q-love-language', question: 'How do we express love differently?', source: 'close-conversation', part: 'paragraphs:2-3', role: 'care-expression' },
+    { id: 'chart-patterns', question: 'How do emotional closeness and everyday compatibility differ?', source: 'chart-patterns', part: 'lead', role: 'closeness-vs-routine' },
+    { id: 'shared-week', question: 'What does this connection ask of each of us?', source: 'shared-week', part: 'lead', role: 'mutual-adjustment' },
+    { id: 'support-each-other', question: 'Which upcoming periods may affect our relationship themes?', source: 'support-each-other', part: 'lead', role: 'relationship-timing' },
   ],
   year: [
-    { id: 'annual-theme', question: 'What is the overall theme of my next 12 months?', source: 'annual-theme', part: 'lead' },
-    { id: 'annual-work', question: 'What does this period suggest for my career?', source: 'annual-work', part: 'lead' },
-    { id: 'annual-money', question: 'What does it suggest for money?', source: 'annual-money', part: 'lead' },
-    { id: 'annual-connections', question: 'What does it suggest for love?', source: 'annual-connections', part: 'lead' },
-    { id: 'annual-cycle-context', question: 'Which months have more supportive chart relationships?', source: 'annual-cycle-context', part: 'lead' },
-    { id: 'annual-plan', question: 'Which months require closer attention?', source: 'annual-plan', part: 'lead' },
-    { id: 'q-year-focus', question: 'What should I focus on most this year?', source: 'annual-plan', part: 'action' },
+    { id: 'annual-theme', question: 'What is the overall theme of my next 12 months?', source: 'annual-theme', part: 'lead', role: 'year-overview' },
+    { id: 'annual-work', question: 'What does this period suggest for my career?', source: 'annual-work', part: 'lead', role: 'career-theme' },
+    { id: 'annual-money', question: 'What does it suggest for money?', source: 'annual-money', part: 'lead', role: 'money-theme' },
+    { id: 'annual-connections', question: 'What does it suggest for love?', source: 'annual-connections', part: 'lead', role: 'relationship-theme' },
+    { id: 'annual-cycle-context', question: 'Which months have more supportive chart relationships?', source: 'annual-cycle-context', part: 'lead', role: 'supportive-months' },
+    { id: 'annual-plan', question: 'Which months require closer attention?', source: 'annual-plan', part: 'lead', role: 'caution-months' },
+    { id: 'q-year-focus', question: 'What should I focus on most this year?', source: 'annual-plan', part: 'action', role: 'year-priority' },
   ],
   business: [
-    { id: 'founder-style', question: 'Does my chart support business-oriented traits?', source: 'founder-style', part: 'lead' },
-    { id: 'offer-test', question: 'What kind of business work suits me?', source: 'offer-test', part: 'lead' },
-    { id: 'team-decisions', question: 'Am I better suited to working alone or with partners?', source: 'team-decisions', part: 'lead' },
-    { id: 'customer-communication', question: 'When might expansion deserve a closer look?', source: 'customer-communication', part: 'lead' },
-    { id: 'delivery-capacity', question: 'What financial risks should I understand?', source: 'delivery-capacity', part: 'lead-with-caution' },
-    { id: 'business-chapters', question: 'What do my upcoming cycles suggest about business activity?', source: 'business-chapters', part: 'lead' },
-    { id: 'business-plan', question: 'What should I be careful about in business?', source: 'business-plan', part: 'caution' },
+    { id: 'founder-style', question: 'Does my chart support business-oriented traits?', source: 'founder-style', part: 'lead', role: 'business-fit' },
+    { id: 'offer-test', question: 'What kind of business work suits me?', source: 'offer-test', part: 'lead', role: 'offer-and-work-style' },
+    { id: 'team-decisions', question: 'Am I better suited to working alone or with partners?', source: 'team-decisions', part: 'lead', role: 'partner-fit' },
+    { id: 'customer-communication', question: 'When might expansion deserve a closer look?', source: 'customer-communication', part: 'lead', role: 'expansion-timing' },
+    { id: 'delivery-capacity', question: 'What financial risks should I understand?', source: 'delivery-capacity', part: 'lead-with-caution', role: 'financial-risk' },
+    { id: 'business-chapters', question: 'What do my upcoming cycles suggest about business activity?', source: 'business-chapters', part: 'lead', role: 'business-cycle' },
+    { id: 'business-plan', question: 'What should I be careful about in business?', source: 'business-plan', part: 'caution', role: 'business-caution' },
   ],
   wellbeing: [
-    { id: 'everyday-pace', question: 'What is my core personality?', source: 'everyday-pace', part: 'lead' },
-    { id: 'visible-elements', question: 'Which parts of my nature stand out?', source: 'visible-elements', part: 'lead' },
-    { id: 'workload-rhythm', question: 'What tends to put me under pressure?', source: 'workload-rhythm', part: 'lead' },
-    { id: 'q-pressure', question: 'What should I watch for when pressure builds?', source: 'workload-rhythm', part: 'paragraph:1' },
-    { id: 'support-and-space', question: 'What do I need most in relationships?', source: 'support-and-space', part: 'lead' },
-    { id: 'balance-week', question: 'How can my strengths become blind spots?', source: 'balance-week', part: 'lead' },
-    { id: 'q-balance-action', question: 'What boundary could help protect my everyday balance?', source: 'balance-week', part: 'action' },
+    { id: 'everyday-pace', question: 'What is my core personality?', source: 'everyday-pace', part: 'lead', role: 'core-personality' },
+    { id: 'visible-elements', question: 'Which parts of my nature stand out?', source: 'visible-elements', part: 'lead', role: 'distinctive-traits' },
+    { id: 'workload-rhythm', question: 'What tends to put me under pressure?', source: 'workload-rhythm', part: 'lead', role: 'pressure-trigger' },
+    { id: 'q-pressure', question: 'What should I watch for when pressure builds?', source: 'workload-rhythm', part: 'paragraph:1', role: 'pressure-response' },
+    { id: 'support-and-space', question: 'What do I need most in relationships?', source: 'support-and-space', part: 'lead', role: 'relationship-need' },
+    { id: 'balance-week', question: 'How can my strengths become blind spots?', source: 'balance-week', part: 'lead', role: 'strength-blindspot' },
+    { id: 'q-balance-action', question: 'What boundary could help protect my everyday balance?', source: 'balance-week', part: 'action', role: 'daily-boundary' },
   ],
   // This category is included only inside the collection, so it keeps its existing set.
   love: [
-    { id: 'love-style', question: 'How do I tend to approach love?', source: 'love-style', part: 'lead' },
-    { id: 'love-needs', question: 'What helps me feel secure in a relationship?', source: 'love-needs', part: 'lead' },
-    { id: 'love-attraction', question: 'What kind of connection suits me?', source: 'love-attraction', part: 'lead' },
-    { id: 'love-friction', question: 'What relationship patterns may cause conflict?', source: 'love-friction', part: 'lead' },
-    { id: 'q-love-strength', question: 'What is one of my strengths as a partner?', source: 'love-patterns', part: 'lead' },
-    { id: 'love-timing', question: 'When may relationship priorities shift?', source: 'love-timing', part: 'lead' },
-    { id: 'love-outlook', question: 'What can help me build a relationship that fits?', source: 'love-outlook', part: 'lead' },
-    { id: 'q-love-friction-detail', question: 'Why might this pattern repeat?', source: 'love-friction', part: 'paragraph:0' },
-    { id: 'q-love-need-detail', question: 'What kind of care matters most to me?', source: 'love-needs', part: 'paragraph:0' },
-    { id: 'q-love-timing-detail', question: 'What should I pay attention to in those periods?', source: 'love-timing', part: 'paragraph:0' },
+    { id: 'love-style', question: 'How do I tend to approach love?', source: 'love-style', part: 'lead', role: 'love-approach' },
+    { id: 'love-needs', question: 'What helps me feel secure in a relationship?', source: 'love-needs', part: 'lead', role: 'security-need' },
+    { id: 'love-attraction', question: 'What kind of connection suits me?', source: 'love-attraction', part: 'lead', role: 'attraction-pattern' },
+    { id: 'love-friction', question: 'What relationship patterns may cause conflict?', source: 'love-friction', part: 'lead', role: 'conflict-pattern' },
+    { id: 'q-love-strength', question: 'What is one of my strengths as a partner?', source: 'love-patterns', part: 'lead', role: 'partner-strength' },
+    { id: 'love-timing', question: 'When may relationship priorities shift?', source: 'love-timing', part: 'lead', role: 'relationship-timing' },
+    { id: 'love-outlook', question: 'What can help me build a relationship that fits?', source: 'love-outlook', part: 'lead', role: 'relationship-fit' },
+    { id: 'q-love-friction-detail', question: 'Why might this pattern repeat?', source: 'love-friction', part: 'paragraph:0', role: 'pattern-origin' },
+    { id: 'q-love-need-detail', question: 'What kind of care matters most to me?', source: 'love-needs', part: 'paragraph:0', role: 'care-need' },
+    { id: 'q-love-timing-detail', question: 'What should I pay attention to in those periods?', source: 'love-timing', part: 'paragraph:0', role: 'timing-attention' },
   ],
 }
 
 export const COLLECTION_BUYER_QUESTIONS: Partial<Record<BuyerOutlineKind, BuyerQuestion[]>> = {
   complete: [
-    { id: 'personality', question: 'What kind of person am I?', source: 'personality', part: 'lead' },
-    { id: 'social', question: 'What are my greatest strengths?', source: 'social', part: 'lead' },
-    { id: 'q-hidden-weakness', question: 'What are my hidden weaknesses?', source: 'social', part: 'caution' },
-    { id: 'career', question: 'What kind of career suits me?', source: 'career', part: 'lead' },
-    { id: 'money', question: 'How does money work in my life?', source: 'money', part: 'lead' },
-    { id: 'love', question: 'What is my pattern in love?', source: 'love', part: 'lead' },
-    { id: 'patterns', question: 'What are my biggest life challenges?', source: 'life-challenges', part: 'lead' },
-    { id: 'q-turning-points', question: 'When are my major turning points?', source: 'patterns', part: 'turning-points' },
-    { id: 'q-next-cycle', question: 'What does my next ten-year cycle suggest?', source: 'patterns', part: 'next-cycle' },
-    { id: 'balance', question: 'What is the most important insight about my life?', source: 'balance', part: 'lead' },
+    { id: 'personality', question: 'What kind of person am I?', source: 'personality', part: 'lead', role: 'integrated-identity' },
+    { id: 'social', question: 'What are my greatest strengths?', source: 'social', part: 'lead', role: 'core-strengths' },
+    { id: 'q-hidden-weakness', question: 'What are my hidden weaknesses?', source: 'social', part: 'caution', role: 'hidden-limits' },
+    { id: 'career', question: 'What kind of career suits me?', source: 'career', part: 'lead', role: 'career-direction' },
+    { id: 'money', question: 'How does money work in my life?', source: 'money', part: 'lead', role: 'money-pattern' },
+    { id: 'love', question: 'What is my pattern in love?', source: 'love', part: 'lead', role: 'relationship-pattern' },
+    { id: 'patterns', question: 'What are my biggest life challenges?', source: 'life-challenges', part: 'lead', role: 'recurring-challenge' },
+    { id: 'q-turning-points', question: 'When are my major turning points?', source: 'patterns', part: 'turning-points', role: 'turning-point-timing' },
+    { id: 'q-next-cycle', question: 'What does my next ten-year cycle suggest?', source: 'patterns', part: 'next-cycle', role: 'long-cycle-theme' },
+    { id: 'balance', question: 'What is the most important insight about my life?', source: 'balance', part: 'lead', role: 'life-synthesis' },
   ],
   career: [
-    { id: 'two-work-layers', question: 'Which careers suit me best?', source: 'two-work-layers', part: 'lead' },
-    { id: 'proof-of-skill', question: 'Am I better suited to employment or independent work?', source: 'proof-of-skill', part: 'lead' },
-    { id: 'money-commitments', question: 'How do I naturally make money?', source: 'money-commitments', part: 'lead' },
-    { id: 'q-earning-strength', question: 'What are my strongest earning abilities?', source: 'money-commitments', part: 'paragraph:0' },
-    { id: 'q-earning-keeping', question: 'Am I better at earning money or keeping it?', source: 'money-commitments', part: 'paragraph:1' },
-    { id: 'working-style', question: 'What tends to block my financial progress?', source: 'working-style', part: 'lead' },
-    { id: 'q-risk', question: 'What should I know about financial risk?', source: 'working-style', part: 'caution' },
-    { id: 'feedback-and-boundaries', question: 'Which upcoming periods deserve attention?', source: 'feedback-and-boundaries', part: 'lead' },
-    { id: 'work-chapters', question: 'How do my ten-year cycles affect work and money?', source: 'work-chapters', part: 'lead' },
-    { id: 'career-plan', question: 'What is my most important money and career insight?', source: 'career-plan', part: 'lead' },
+    { id: 'two-work-layers', question: 'Which careers suit me best?', source: 'two-work-layers', part: 'lead', role: 'career-fit' },
+    { id: 'proof-of-skill', question: 'Am I better suited to employment or independent work?', source: 'proof-of-skill', part: 'lead', role: 'work-structure-fit' },
+    { id: 'money-commitments', question: 'How do I naturally make money?', source: 'money-commitments', part: 'lead', role: 'earning-route' },
+    { id: 'q-earning-strength', question: 'What are my strongest earning abilities?', source: 'money-commitments', part: 'paragraph:0', role: 'earning-strength' },
+    { id: 'q-earning-keeping', question: 'Am I better at earning money or keeping it?', source: 'money-commitments', part: 'paragraph:1', role: 'money-retention' },
+    { id: 'working-style', question: 'What tends to block my financial progress?', source: 'working-style', part: 'lead', role: 'financial-blocker' },
+    { id: 'q-risk', question: 'What should I know about financial risk?', source: 'working-style', part: 'caution', role: 'financial-risk' },
+    { id: 'feedback-and-boundaries', question: 'Which upcoming periods deserve attention?', source: 'feedback-and-boundaries', part: 'lead', role: 'career-timing' },
+    { id: 'work-chapters', question: 'How do my ten-year cycles affect work and money?', source: 'work-chapters', part: 'lead', role: 'long-cycle-work-theme' },
+    { id: 'career-plan', question: 'What is my most important money and career insight?', source: 'career-plan', part: 'lead', role: 'career-money-synthesis' },
   ],
   compatibility: [
-    { id: 'two-directions', question: 'Why are we attracted to each other?', source: 'two-directions', part: 'lead' },
-    { id: 'two-styles', question: 'What makes us compatible?', source: 'two-styles', part: 'lead' },
-    { id: 'close-conversation', question: 'Where are we different?', source: 'close-conversation', part: 'lead' },
-    { id: 'q-conflict', question: 'What causes conflict between us?', source: 'close-conversation', part: 'caution' },
-    { id: 'q-love-language', question: 'How do we express love differently?', source: 'close-conversation', part: 'paragraphs:0-1' },
-    { id: 'chart-patterns', question: 'Where is closeness strongest, and where might daily routines be harder?', source: 'two-styles', part: 'paragraph:0' },
-    { id: 'shared-week', question: 'What recurring tension should we watch for?', source: 'chart-patterns', part: 'lead' },
-    { id: 'q-commitment', question: 'What does this connection ask of each of us?', source: 'shared-week', part: 'lead' },
-    { id: 'support-each-other', question: 'Which upcoming periods may affect our relationship themes?', source: 'support-each-other', part: 'lead' },
-    { id: 'q-connection-insight', question: 'What practical step could strengthen this connection?', source: 'shared-week', part: 'action' },
+    { id: 'two-directions', question: 'Why are we attracted to each other?', source: 'two-directions', part: 'lead', role: 'attraction' },
+    { id: 'two-styles', question: 'What makes us compatible?', source: 'two-styles', part: 'lead', role: 'overall-fit' },
+    { id: 'close-conversation', question: 'Where are we different?', source: 'close-conversation', part: 'lead', role: 'key-difference' },
+    { id: 'q-conflict', question: 'What causes conflict between us?', source: 'close-conversation', part: 'caution', role: 'conflict-trigger' },
+    { id: 'q-love-language', question: 'How do we express love differently?', source: 'close-conversation', part: 'paragraphs:0-1', role: 'care-expression' },
+    { id: 'chart-patterns', question: 'Where is closeness strongest, and where might daily routines be harder?', source: 'two-styles', part: 'paragraph:0', role: 'closeness-vs-routine' },
+    { id: 'shared-week', question: 'What recurring tension should we watch for?', source: 'chart-patterns', part: 'lead', role: 'recurring-tension' },
+    { id: 'q-commitment', question: 'What does this connection ask of each of us?', source: 'shared-week', part: 'lead', role: 'mutual-adjustment' },
+    { id: 'support-each-other', question: 'Which upcoming periods may affect our relationship themes?', source: 'support-each-other', part: 'lead', role: 'relationship-timing' },
+    { id: 'q-connection-insight', question: 'What practical step could strengthen this connection?', source: 'shared-week', part: 'action', role: 'practical-connection-step' },
   ],
   year: [
-    { id: 'annual-theme', question: 'What is the overall theme of my next 12 months?', source: 'annual-theme', part: 'lead' },
-    { id: 'annual-work', question: 'What does this period suggest for my career?', source: 'annual-work', part: 'lead' },
-    { id: 'annual-money', question: 'What does it suggest for money?', source: 'annual-money', part: 'lead' },
-    { id: 'annual-connections', question: 'What does it suggest for love?', source: 'annual-connections', part: 'lead' },
-    { id: 'annual-cycle-context', question: 'Which months have more supportive chart relationships?', source: 'annual-cycle-context', part: 'lead' },
-    { id: 'annual-plan', question: 'Which months require closer attention?', source: 'annual-plan', part: 'lead' },
-    { id: 'q-work-shift', question: 'When may work or money themes shift?', source: 'annual-work', part: 'paragraph:0' },
-    { id: 'q-relationship-themes', question: 'What relationship themes appear during this period?', source: 'annual-connections', part: 'paragraph:0' },
-    { id: 'q-key-periods', question: 'What are the three most important periods to understand?', source: 'annual-cycle-context', part: 'paragraph:0' },
-    { id: 'q-year-message', question: 'What should I do with this year’s main theme?', source: 'annual-theme', part: 'action' },
+    { id: 'annual-theme', question: 'What is the overall theme of my next 12 months?', source: 'annual-theme', part: 'lead', role: 'year-overview' },
+    { id: 'annual-work', question: 'What does this period suggest for my career?', source: 'annual-work', part: 'lead', role: 'career-theme' },
+    { id: 'annual-money', question: 'What does it suggest for money?', source: 'annual-money', part: 'lead', role: 'money-theme' },
+    { id: 'annual-connections', question: 'What does it suggest for love?', source: 'annual-connections', part: 'lead', role: 'relationship-theme' },
+    { id: 'annual-cycle-context', question: 'Which months have more supportive chart relationships?', source: 'annual-cycle-context', part: 'lead', role: 'supportive-months' },
+    { id: 'annual-plan', question: 'Which months require closer attention?', source: 'annual-plan', part: 'lead', role: 'caution-months' },
+    { id: 'q-work-shift', question: 'When may work or money themes shift?', source: 'annual-work', part: 'paragraph:0', role: 'career-timing' },
+    { id: 'q-relationship-themes', question: 'What relationship themes appear during this period?', source: 'annual-connections', part: 'paragraph:0', role: 'relationship-timing' },
+    { id: 'q-key-periods', question: 'What are the three most important periods to understand?', source: 'annual-cycle-context', part: 'paragraph:0', role: 'key-periods' },
+    { id: 'q-year-message', question: 'What should I do with this year’s main theme?', source: 'annual-theme', part: 'action', role: 'year-priority' },
   ],
   love: [
-    { id: 'love-style', question: 'How do I tend to approach love?', source: 'love-style', part: 'lead' },
-    { id: 'love-needs', question: 'What helps me feel secure in a relationship?', source: 'love-needs', part: 'lead' },
-    { id: 'love-attraction', question: 'What kind of connection suits me?', source: 'love-attraction', part: 'lead' },
-    { id: 'love-friction', question: 'What relationship patterns may cause conflict?', source: 'love-friction', part: 'lead' },
-    { id: 'q-love-strength', question: 'What is one of my strengths as a partner?', source: 'love-patterns', part: 'lead' },
-    { id: 'love-timing', question: 'When may relationship priorities shift?', source: 'love-timing', part: 'lead' },
-    { id: 'love-outlook', question: 'What can help me build a relationship that fits?', source: 'love-outlook', part: 'lead' },
-    { id: 'q-love-friction-detail', question: 'Why might this pattern repeat?', source: 'love-friction', part: 'paragraph:0' },
-    { id: 'q-love-need-detail', question: 'What kind of care matters most to me?', source: 'love-needs', part: 'paragraph:0' },
-    { id: 'q-love-timing-detail', question: 'What should I pay attention to in those periods?', source: 'love-timing', part: 'paragraph:0' },
+    { id: 'love-style', question: 'How do I tend to approach love?', source: 'love-style', part: 'lead', role: 'love-approach' },
+    { id: 'love-needs', question: 'What helps me feel secure in a relationship?', source: 'love-needs', part: 'lead', role: 'security-need' },
+    { id: 'love-attraction', question: 'What kind of connection suits me?', source: 'love-attraction', part: 'lead', role: 'attraction-pattern' },
+    { id: 'love-friction', question: 'What relationship patterns may cause conflict?', source: 'love-friction', part: 'lead', role: 'conflict-pattern' },
+    { id: 'q-love-strength', question: 'What is one of my strengths as a partner?', source: 'love-patterns', part: 'lead', role: 'partner-strength' },
+    { id: 'love-timing', question: 'When may relationship priorities shift?', source: 'love-timing', part: 'lead', role: 'relationship-timing' },
+    { id: 'love-outlook', question: 'What can help me build a relationship that fits?', source: 'love-outlook', part: 'lead', role: 'relationship-fit' },
+    { id: 'q-love-friction-detail', question: 'Why might this pattern repeat?', source: 'love-friction', part: 'paragraph:0', role: 'pattern-origin' },
+    { id: 'q-love-need-detail', question: 'What kind of care matters most to me?', source: 'love-needs', part: 'paragraph:0', role: 'care-need' },
+    { id: 'q-love-timing-detail', question: 'What should I pay attention to in those periods?', source: 'love-timing', part: 'paragraph:0', role: 'timing-attention' },
   ],
 }
 
@@ -155,7 +155,7 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
   for (const question of buyerQuestions) {
     // The annual focus question draws its action from the annual-theme chapter,
     // while remaining next to the annual-plan chapter in the delivered order.
-    const source = kind === 'year' && question.id === 'q-year-focus' ? 'annual-theme' : question.source
+    const source = kind === 'year' && question.role === 'year-priority' ? 'annual-theme' : question.source
     if (!byId.has(source)) throw new Error(`Missing answer source: ${kind}/${source}`)
     questionsBySource.set(source, [...(questionsBySource.get(source) ?? []), question])
   }
@@ -166,10 +166,10 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
       let paragraphs: string[] = []
       if (kind === 'complete' && question.id === 'balance') {
         lead = `The most important life insight is that ${chapter.lead.charAt(0).toLowerCase()}${chapter.lead.slice(1)}`
-      } else if (kind === 'year' && question.id === 'q-year-focus') {
+      } else if (kind === 'year' && question.role === 'year-priority') {
         lead = byId.get('annual-theme')?.tryThis ?? chapter.tryThis
         paragraphs = []
-      } else if (kind === 'business' && question.id === 'delivery-capacity') {
+      } else if (kind === 'business' && question.role === 'financial-risk') {
         const moneyPattern = chapter.lead.toLowerCase()
         lead = moneyPattern.includes('combines repeat customers with new deals')
           ? 'Your main financial risk is relying on new-deal income to cover ongoing delivery for repeat customers before payment is secure.'
@@ -183,7 +183,7 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
                 ? 'Your main financial risk is taking on fixed costs before a direct business income route is clear.'
                 : 'Your main financial risk is counting a promising deal as income before payment arrives.'
         paragraphs = chapter.paragraphs.filter(line => line !== chapter.lead).slice(0, 2)
-      } else if (kind === 'compatibility' && question.id === 'q-conflict') {
+      } else if (kind === 'compatibility' && question.role === 'conflict-trigger') {
         const friction = chapter.paragraphs.find(line => /^(?:Your likely friction is|The practical tension for Person A is)/.test(line))
         lead = friction?.startsWith('Your likely friction is')
           ? (() => {
@@ -195,7 +195,7 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
             : chapter.paragraphs.find(line => /^Your partner: /.test(line)) ?? chapter.paragraphs[3] ?? chapter.guidance.watchFor[0] ?? chapter.lead
         paragraphs = []
         chapter.paragraphs.forEach(line => used.add(line))
-      } else if (kind === 'compatibility' && question.id === 'q-love-language') {
+      } else if (kind === 'compatibility' && question.role === 'care-expression') {
         const firstCare = chapter.paragraphs.find(line => /^You: /.test(line))
         const secondCare = chapter.paragraphs.find(line => /^Your partner: /.test(line))
         const careStyle = (line: string, prefix: RegExp) => line.replace(prefix, '').split(/(?<=[.!?])\s/)[0]
@@ -209,7 +209,7 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
         paragraphs = []
         chapter.paragraphs.forEach(line => used.add(line))
         paragraphs = []
-      } else if (kind === 'wellbeing' && question.id === 'q-pressure') {
+      } else if (kind === 'wellbeing' && question.role === 'pressure-response') {
         const warning = chapter.paragraphs[0] ?? chapter.guidance.watchFor[0] ?? chapter.lead
         const finishing = /^You may keep fixing small details, even when the work is already good enough\./i.test(warning)
         const setting = chapter.paragraphs[1]
@@ -218,7 +218,7 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
           : warning
         paragraphs = setting ? [setting] : []
         chapter.paragraphs.slice(0, 2).forEach(line => used.add(line))
-      } else if (kind === 'complete' && question.id === 'social') {
+      } else if (kind === 'complete' && question.role === 'strengths-and-limits') {
         lead = chapter.lead
         paragraphs = chapter.paragraphs.slice(0, 2)
         chapter.paragraphs.forEach(line => used.add(line))

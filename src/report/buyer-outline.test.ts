@@ -8,6 +8,17 @@ import { BUYER_OUTLINES, BUYER_QUESTIONS, COLLECTION_BUYER_QUESTIONS, applyBuyer
 import { deliveredChapter } from './report-delivery.ts'
 const a = calculateSaju(CATEGORY_SCENARIOS[0].first), b = calculateSaju(CATEGORY_SCENARIOS[0].second)
 describe('Buyer questions, not a repeated six-part technical template', () => {
+  it('gives every question a distinct answer role within its product', () => {
+    for (const [kind, questions] of Object.entries(BUYER_QUESTIONS)) {
+      expect(questions.every(question => question.role.trim().length > 0), `${kind} missing role`).toBe(true)
+      expect(new Set(questions.map(question => question.role)).size, `${kind} repeats an answer role`).toBe(questions.length)
+    }
+    for (const [kind, questions] of Object.entries(COLLECTION_BUYER_QUESTIONS)) {
+      if (!questions) continue
+      expect(questions.every(question => question.role.trim().length > 0), `collection ${kind} missing role`).toBe(true)
+      expect(new Set(questions.map(question => question.role)).size, `collection ${kind} repeats an answer role`).toBe(questions.length)
+    }
+  })
   it.each(Object.keys(BUYER_OUTLINES) as (keyof typeof BUYER_OUTLINES)[])('%s uses its own titles and reading order without breaking chapter anchors', kind => {
     const report = kind === 'complete' ? buildCompleteReading(a, 2026) : buildCategoryReading(kind, a, { year: kind === 'year' ? 2027 : 2026, second: kind === 'compatibility' ? b : undefined })
     expect(report.chapters.map(c => c.id)).toEqual(BUYER_OUTLINES[kind].map(([id]) => id))
