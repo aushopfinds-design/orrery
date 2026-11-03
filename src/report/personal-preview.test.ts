@@ -23,6 +23,20 @@ describe('Short, chart-based free preview', () => {
     expect(previews[9].personality).not.toMatch(/hour pillar|hour stem|hour branch/i)
   })
 
+  it('personalizes the Korean glimpse across ten varied birth profiles', () => {
+    const dates = [
+      [1978, 1, 14, 2], [1980, 3, 25, 8], [1982, 5, 19, 15], [1984, 7, 8, 23], [1986, 9, 27, 4],
+      [1988, 11, 3, 11], [1990, 2, 17, 19], [1992, 4, 22, 6], [1995, 8, 12, 13], [2000, 12, 5, 21],
+    ] as const
+    const previews = dates.map(([year, month, day, hour], index) => buildPersonalPreview('complete', {
+      first: { ...sample, year, month, day, hour, minute: index * 5, unknownTime: index === 9 },
+    }, 'ko'))
+    expect(new Set(previews.map(preview => preview.personality)).size).toBeGreaterThanOrEqual(5)
+    expect(new Set(previews.map(preview => preview.strength)).size).toBeGreaterThanOrEqual(5)
+    expect(previews[9].birthSummary).toContain('출생 시간 미상')
+    expect(previews[9].personality).not.toMatch(/시주|시간 기둥|hour pillar/i)
+  })
+
   it('returns only the four approved free fields, with no paid answer payload', () => {
     for (const kind of PREVIEW_KINDS) {
       const preview = buildPersonalPreview(kind, { first: sample, second: CATEGORY_SCENARIOS[0].second })
@@ -54,6 +68,19 @@ describe('Short, chart-based free preview', () => {
     const two = buildPersonalPreview('complete', { first: { ...unknown, hour: 22, minute: 59 } })
     expect(one).toEqual(two)
     expect(one.birthSummary).toContain('birth time unknown')
+  })
+
+  it('renders a localized Korean glimpse without revealing paid answers', () => {
+    const preview = buildPersonalPreview('complete', { first: { ...sample, unknownTime: true } }, 'ko')
+    const text = personalPreviewText(preview, 'ko')
+    expect(preview.birthSummary).toContain('출생 시간 미상')
+    expect(preview.personality).toMatch(/[가-힣]/)
+    expect(preview.strength).toMatch(/[가-힣]/)
+    expect(preview.symbol.elementLabel).toMatch(/[가-힣]/)
+    expect(preview.symbol.colors.every(color => /[가-힣]/.test(color.name))).toBe(true)
+    expect(preview.lockedQuestions).toHaveLength(4)
+    expect(text).toContain('나의 운명 전체 살펴보기')
+    expect(text).not.toMatch(/Your Answer:|Hidden Insights|monthly forecast|career fit/i)
   })
 
   it('requires a second birth chart only for paired products', () => {

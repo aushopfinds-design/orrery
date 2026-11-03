@@ -18,7 +18,7 @@ function focusSection(id: string) {
 }
 
 export default function PersonalPreviewPage({ kind, input, onFirstBirth }: { kind: PreviewKind; input: BirthInput | null; onFirstBirth: (input: BirthInput) => void }) {
-  const { t } = useLocale()
+  const { t, locale } = useLocale()
   const [draft] = useState(readPreviewDraft)
   const [second, setSecond] = useState(draft.second)
   const [editing, setEditing] = useState<'first' | 'second' | null>(null)
@@ -27,10 +27,10 @@ export default function PersonalPreviewPage({ kind, input, onFirstBirth }: { kin
   const checkoutIntent = window.location.hash.endsWith('-checkout')
   const sandbox = isSandboxHost(window.location.hostname)
   const product = previewProduct(kind)
-  const preview = useMemo(() => input ? buildPersonalPreview(kind, { first: input, second }) : null, [kind, input, second])
+  const preview = useMemo(() => input ? buildPersonalPreview(kind, { first: input, second }, locale) : null, [kind, input, second, locale])
   const paired = kind === 'compatibility' || kind === 'bundle'
   const needsPartner = Boolean(preview?.needsPartner)
-  const pageTitle = preview?.title ?? product.title
+  const pageTitle = preview?.title ?? (locale === 'ko' ? ({ complete: '나의 삶과 운명', year: '앞으로 12개월 리딩', compatibility: '관계 리딩', career: '직업과 재물 리딩', love: '나의 연애 리딩', bundle: '운명 종합 패키지', business: '사업과 창업 리딩', wellbeing: '성격과 오행 리딩' } as const)[kind] : product.title)
 
   useEffect(() => {
     document.title = pageTitle + ' | The Fate Key'
@@ -67,10 +67,10 @@ export default function PersonalPreviewPage({ kind, input, onFirstBirth }: { kin
     requestAnimationFrame(() => focusSection(person === 'first' ? 'personal-first-heading' : 'personal-partner-heading'))
   }
 
-  return <article id="my-report" className="fate-personal-preview fate-glimpse" lang="en" aria-labelledby="personal-preview-title">
+  return <article id="my-report" className="fate-personal-preview fate-glimpse" lang={locale} aria-labelledby="personal-preview-title">
     <a href="#reports" className="fate-product-back">← {t('complete.back')}</a>
     <header className="fate-personal-preview-heading"><FateKeyMark /><div><p className="fate-eyebrow">{t('buyer.preview.eyebrow')}</p><h1 id="personal-preview-title">{pageTitle}</h1><p>{t('buyer.preview.intro')}</p></div></header>
-    {checkoutIntent && !input && <section id="personal-checkout" className="fate-glimpse-cta"><h2>{product.title}</h2><p><strong>{product.price}</strong></p><p>{paired ? t('buyer.preview.partnerText') : t('purchase.needDetails')}</p></section>}
+    {checkoutIntent && !input && <section id="personal-checkout" className="fate-glimpse-cta"><h2>{pageTitle}</h2><p><strong>{product.price}</strong></p><p>{paired ? t('buyer.preview.partnerText') : t('purchase.needDetails')}</p></section>}
     {!input || editing === 'first' ? <section className="fate-personal-birth-form">
       <h2 id="personal-first-heading" tabIndex={-1}>{t(input ? 'buyer.preview.change' : 'buyer.preview.enter')}</h2><p>{t('buyer.preview.enterText')}</p>
       <BirthForm key={input ? 'edit-first' : 'new-first'} initialInput={input ?? undefined} onSubmit={submitFirst} submitLabel={t(input ? 'buyer.preview.update' : 'buyer.preview.calculate')} />
@@ -84,11 +84,11 @@ export default function PersonalPreviewPage({ kind, input, onFirstBirth }: { kin
         <p className="fate-eyebrow">{preview.birthSummary}</p>
         <h2 id="personal-opening-heading" tabIndex={-1}>{t('glimpse.personality')}</h2><p>{preview.personality}</p>
         <h2>{t('glimpse.strength')}</h2><p>{preview.strength}</p>
-        <h2>{t('glimpse.symbols')}</h2><div className="fate-glimpse-symbols"><span>{preview.symbol.colors.map(color => <i key={color.name} title={color.name} style={{ backgroundColor: color.hex }} />)} {preview.symbol.colors.map(color => color.name).join(' · ')}</span><strong>{preview.symbol.numbers.slice(0, 2).join(' · ')}</strong></div>
+        <h2>{t('glimpse.symbols')}</h2><div className="fate-glimpse-symbols"><span>{preview.symbol.colors.map(color => <i key={color.name} title={color.name} style={{ backgroundColor: color.hex }} />)} {preview.symbol.colors.map(color => color.name).join(' · ')}</span><strong>{preview.symbol.elementLabel} · {preview.symbol.numbers.slice(0, 2).join(' · ')}</strong></div>
       </section>
       <section className="fate-glimpse-locked" aria-labelledby="glimpse-locked-title"><h2 id="glimpse-locked-title">{t('glimpse.locked')}</h2><ul>{preview.lockedQuestions.slice(0, 4).map(question => <li key={question}><span aria-hidden="true">🔒</span>{question}</li>)}</ul></section>
       <section id="personal-checkout" className="fate-glimpse-cta" tabIndex={-1}><h2>{t('glimpse.ctaTitle')}</h2><p>{t('glimpse.ctaText')}</p><div className="fate-glimpse-purchase"><strong>{product.price}</strong>{purchaseAvailable && !checkoutIntent ? <a className="fate-complete-primary" href={checkoutHash(kind)}>{t('glimpse.buy').replace('$19.99', product.price)}</a> : checkoutIntent && (purchaseAvailable || sandbox) && input ? <SandboxCheckout order={{ kind, first: input, ...(paired ? { second } : {}) }} /> : <p role="status">{t('glimpse.purchaseClosed')}</p>}</div></section>
-      <nav className="fate-glimpse-tools" aria-label={t('buyer.preview.tools')}><CopyButton label={t('buyer.preview.copy')} getText={() => personalPreviewText(preview)} /><button type="button" onClick={() => window.print()}>{t('buyer.preview.print')}</button>{input && <button type="button" onClick={() => editPerson('first')}>{t('buyer.preview.change')}</button>}</nav>
+      <nav className="fate-glimpse-tools" aria-label={t('buyer.preview.tools')}><CopyButton label={t('buyer.preview.copy')} getText={() => personalPreviewText(preview, locale)} /><button type="button" onClick={() => window.print()}>{t('buyer.preview.print')}</button>{input && <button type="button" onClick={() => editPerson('first')}>{t('buyer.preview.change')}</button>}</nav>
       <p className="fate-reading-small-note">{t('buyer.preview.local')}</p>
     </> : null}
   </article>

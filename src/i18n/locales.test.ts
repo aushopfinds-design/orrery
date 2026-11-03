@@ -44,4 +44,9 @@ describe('i18n locale parity', () => {
       expect(tpl, `'${code}'`).toContain('{d}')
     }
   })
+
+  it('Korean customer-facing messages are not silently falling back to English', () => {
+    const englishFallbacks = Object.keys(en).filter(key => messages.ko[key] === en[key])
+    expect(englishFallbacks).toEqual([])
+  })
 })
