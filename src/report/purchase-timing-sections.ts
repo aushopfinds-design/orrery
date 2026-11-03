@@ -134,7 +134,10 @@ function buildSections(plan:InterpretationPlan,targetedProduct01=true):Record<st
   const labels=(rows:Row[])=>rows.map(r=>new Date(r.date+'T12:00:00Z').toLocaleDateString('en-GB',{month:'long',year:'numeric',timeZone:'UTC'})).join(', ')
   const koLabels=(rows:Row[])=>rows.map(r=>Number(r.date.slice(5,7))+'월').join('·')
   const openingThemes=months.filter(row=>row.status==='conditional-opening')
-  const selected=(good.length?good:openingThemes).slice(0,3)
+  // A month can have a work opening and extra demands at once. Keep it out of
+  // the clean-support list, then explain the two signals separately below.
+  const cleanGood=good.filter(row=>!key.some(item=>item.date===row.date))
+  const selected=(cleanGood.length?cleanGood:openingThemes).slice(0,3)
   const overlap=selected.filter(row=>key.some(item=>item.date===row.date))
   const why=(r:Row)=>r.lines[0]
   const picks=selected.map(r=>({en:`${labels([r])}: ${why(r).en.replace(/^.*? — /,'')}`,ko:`${koLabels([r])}월: ${why(r).ko}`}))
@@ -144,22 +147,31 @@ function buildSections(plan:InterpretationPlan,targetedProduct01=true):Record<st
    return `${labels([row])} appears in both lists. Activity opening: ${opening?.replace(/[.!?]+$/,'')??'the activity check identifies an opening'}. Extra-care note: ${caution?.replace(/[.!?]+$/,'')??'the separate check also identifies competing demands'}.`
   })
   const supportBasis=good.length
-   ? `These are conditional activity openings, not a ranking of lucky months. The extra-care list uses a separate check for friction and competing demands. ${overlapNotes.length?overlapNotes.join(' '):'None of these selected months also meets the extra-care check.'}`
+   ? `These are conditional activity openings, not a ranking of lucky months. The extra-care list separately checks friction and competing demands. ${overlapNotes.length?overlapNotes.join(' '):'None of these selected months also meets the extra-care check.'}`
    : ''
-  const supportiveLead=good.length
+  const supportiveLead=cleanGood.length
    ? `The clearest conditional activity openings are ${labels(selected)}. ${supportBasis}`
+   : good.length
+    ? `The full activity check identifies ${labels(good)}, but each also meets the separate extra-care check. The opening and the added demands should be considered together. ${overlapNotes.join(' ')}`
    : selected.length
     ? `No month meets the full activity-opening check. Quieter work-and-relationship themes appear in ${labels(selected)}; they are not supportive openings. The extra-care list separately identifies months with friction or competing demands.`
     : 'No month meets the full activity-opening check, and no quieter comparison stands out. Use the full monthly reading to identify the specific commitments needing adjustment.'
-  const supportiveLeadKo=good.length
+  const supportiveLeadKo=cleanGood.length
    ? `${koLabels(selected)}월은 조건부 활동 기회입니다. 행운 순위가 아닙니다. ${overlap.length?`${koLabels(overlap)}월은 두 목록에 모두 있습니다. 활동의 기회와 별도의 부담을 함께 살핍니다.`:'주의 목록은 마찰과 겹치는 부담을 별도 기준으로 확인합니다.'}`
+   : good.length
+    ? `전체 활동 기회 기준을 통과한 ${koLabels(good)}월은 별도의 주의 기준도 충족합니다. 기회와 추가 부담을 함께 고려해야 합니다.`
    : selected.length
     ? '전체 활동 기회 기준을 통과한 달은 없습니다. 상대적으로 조용한 일·관계 주제가 나타난 달은 아래와 같으며, 활동 기회로 분류한 것은 아닙니다. 주의 목록은 마찰이나 겹치는 부담을 별도 기준으로 확인합니다.'
     : '전체 활동 기회 기준을 통과한 달도, 상대적으로 조용한 달도 뚜렷하지 않습니다. 전체 월별 풀이에서 조정할 약속을 확인합니다.'
   put('annual-cycle-context',supportiveLead,supportiveLeadKo)
   for(const [i,pick] of picks.entries())out['annual-cycle-context'].lines.push({id:'annual-cycle-context.pick-'+i,...pick})
 
-  put('annual-plan',key.length?`Put ${labels(key)} first on your review list. They carry more overlapping demands in this reading. Start with these, then use the full monthly table to keep the remaining adjustments in view.`:`No month stands out under these extra-care checks. The twelve-month overview still shows the commitments and changing focus of each month.`,key.length?`${koLabels(key)}을 먼저 확인할 달로 꼽습니다. 이번 풀이에서 부담이 더 겹치는 달입니다. 이 달부터 살피고 전체 표에서 나머지 달의 조정할 부분도 함께 봅니다.`:'사용한 주의 기준에서 특별히 두드러지는 달이 없습니다. 매달의 약속과 달라지는 중심 주제는 12개월 흐름에서 설명합니다.')
+  const careReasons=key.map(row=>{
+   const caution=row.lines.find(line=>line.id.endsWith('.caution'))?.en
+   const area=row.lines.find(line=>line.id.endsWith('.area-context'))?.en
+   return `${labels([row])}: ${[area,caution].filter(Boolean).join(' ')}`
+  })
+  put('annual-plan',key.length?`Review ${careReasons.join(' ')} These are specific demands to plan around, not a forecast of a bad event.`:`No month meets the stated extra-care checks. That means no checked friction or added-demand signal stands out; it does not certify a risk-free year.`,key.length?`${koLabels(key)}은 각 달에 표시된 업무 주제와 부담을 확인합니다. 이는 나쁜 사건의 예측이 아니라 계획할 구체적인 요구입니다.`:'정해진 주의 기준을 충족한 달이 없습니다. 확인한 마찰이나 추가 부담 신호가 두드러지지 않는다는 뜻이지, 위험이 전혀 없다는 보장은 아닙니다.')
   months.forEach((r,i)=>out['month-'+(i+1)]={lines:r.lines,evidence:r.evidence})
  }
  return out

@@ -211,7 +211,7 @@ describe('Bundle and public report navigation', () => {
     const challengeAnswer = bundle.fullText.slice(challengeStart, bundle.fullText.indexOf('Practical Step:', challengeStart))
     expect(strengthAnswer).toContain('A blind spot to watch for is')
     expect(strengthAnswer).not.toMatch(/find yourself keep|you may People/i)
-    expect(challengeAnswer).toContain('Under pressure,')
+    expect(challengeAnswer).toContain('A recurring challenge is that you may')
     expect(challengeAnswer).not.toContain('Your clearest strength')
     const integratedStart = bundle.fullText.indexOf('10 · How Do Your Life, Love, Work and Timing Fit Together?')
     const integratedAnswer = bundle.fullText.slice(integratedStart, bundle.fullText.indexOf('Practical Step:', integratedStart))
@@ -232,7 +232,7 @@ describe('Bundle and public report navigation', () => {
       expect(tenAnswerFront).not.toContain(copiedLead)
     }
     expect(tenAnswerFront).not.toContain(bundle.career.chapters.find(chapter => chapter.id === 'money-commitments')!.lead)
-    expect(bundle.fullText).toContain('A natural strength:')
+    expect(bundle.fullText).toContain('Your clearest strength is this:')
     expect(bundle.wordCount).toBeLessThan(50000)
   })
   it('routes every category, chapter and bundle without leaking into a personal free result', () => {

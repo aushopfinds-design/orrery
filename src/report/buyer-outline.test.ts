@@ -140,4 +140,20 @@ describe('Buyer questions, not a repeated six-part technical template', () => {
     expect(report).not.toContain('Question: What kind of environment brings out my best?')
   })
 
+  it('answers the annual focus question with a chart-backed work theme', () => {
+    const make = (id: string, lead: string, paragraphs: string[] = [], tryThis = 'Review your priorities.') => ({
+      id, title: id, lead, paragraphs, evidence: [], tryThis,
+      guidance: { keepClose: ['Review your priorities.'], watchFor: ['Avoid overcommitting.'] }, icon: 'personality' as const,
+    })
+    const chapters = [
+      make('annual-theme', 'The year centres on changing demands at home and work.', [], 'Prioritize the chart-linked work theme.'),
+      make('annual-work', 'Career outlook.'), make('annual-money', 'Money outlook.'),
+      make('annual-connections', 'Relationship outlook.'), make('annual-cycle-context', 'Supportive months.'),
+      make('annual-plan', 'Months needing care.'),
+    ]
+    const source = chapters.map(chapter => deliveredChapter(chapter).join('\n\n')).join('\n\n')
+    const report = applyBuyerQuestions(source, 'year', chapters)
+    expect(report).toContain('Question: What should I focus on most this year?\n\nAnswer: Prioritize the chart-linked work theme.')
+  })
+
 })

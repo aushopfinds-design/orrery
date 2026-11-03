@@ -87,14 +87,15 @@ export function buildBundleFromPlans(plans: ReturnType<typeof bundleInterpretati
   const coreAnswer = `At your core, you tend to lead with ${coreProfile.focus}. Your ${plans.complete.primary.dayStem} day-stem pattern is the basis for this personal style; it describes a tendency, not every part of who you are.`
   const blindSpot = plainReadingText(coreProfile.watchFor.at(-1) ?? coreProfile.watchFor[0])
   const strengthAnswer = `Your clearest strength is this: ${plainReadingText(coreProfile.strength)} A blind spot to watch for is ${blindSpot.charAt(0).toLowerCase()}${blindSpot.slice(1)}`
-  const challengeAnswer = `Under pressure, ${plainReadingText(coreProfile.pressure).replace(/^[A-Z]/, letter => letter.toLowerCase())} This is a possible response to strain, not a prediction that a problem must happen.`
+  const pressurePattern = plainReadingText(coreProfile.pressure).replace(/[.!?]+$/u, '').replace(/^[A-Z]/u, letter => letter.toLowerCase())
+  const challengeAnswer = `A recurring challenge is that ${pressurePattern}. It can crowd out your need for ${privateNeed}, linking your chart's work and private-life themes. This is a pattern to notice, not a fixed outcome.`
   const primaryMoney = plans.complete.primary
   const hasSteadyIncome = (items: { god: string }[]) => items.some(item => item.god === '正財')
   const hasVariableIncome = (items: { god: string }[]) => items.some(item => item.god === '偏財')
   const visibleSteady = hasSteadyIncome(primaryMoney.visibleMoney), visibleVariable = hasVariableIncome(primaryMoney.visibleMoney)
   const hiddenSteady = hasSteadyIncome(primaryMoney.hiddenMoney), hiddenVariable = hasVariableIncome(primaryMoney.hiddenMoney)
   const collectionMoneyAnswer = visibleSteady && visibleVariable
-    ? 'Your chart supports both repeat income and new deals or projects; each route needs different cash planning.'
+    ? 'Your visible chart shows both repeat income and new customer or project income. Use repeat receipts to plan ongoing costs; keep deal-based income separate until it is collected, because the chart does not show when or how much a deal will pay.'
     : visibleSteady
       ? 'Regular pay or repeat work is the clearer income route in your visible chart.'
       : visibleVariable
@@ -133,7 +134,7 @@ export function buildBundleFromPlans(plans: ReturnType<typeof bundleInterpretati
   const annualInner = LANGUAGE[plans.annual.annual[0].innerGod]
   const annualWork = annualGod.work.en.split(/(?<=[.!?])\s/)[0].replace(/[.!?]+$/u, '').toLowerCase()
   const annualRelationship = annualInner.love.en.split(/(?<=[.!?])\s/)[0].replace(/[.!?]+$/u, '').toLowerCase()
-  const annualSummary = `The main work theme for ${annualWindow} is this: ${annualWork}. In close relationships, ${annualRelationship}. These are themes to compare with real choices, not promised events.`
+  const annualSummary = `For ${annualWindow}, the chart's main work theme is this: ${annualWork}. The money indicators point to ${incomeSummary}. In close relationships, ${annualRelationship}. Match extra work to its payment terms and the time it leaves for private life; these are chart themes, not promised events.`
   const longerShift = nextCycle
     ? `${nextCycle.period}. The longer-period emphasis moves toward ${nextCycle.headline.toLowerCase().replace(/ — repeated emphasis$/i, '')}.`
     : 'No further ten-year period is available in the supported calculation range, so this report does not add a later date.'

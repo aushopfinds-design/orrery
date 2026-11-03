@@ -68,11 +68,11 @@ describe('My Life personalization across 24 international birth charts', () => {
       expect(love).toContain(`${chart.pillars[1].pillar.branch}, the day sign used`)
       expect(love).not.toContain('In close relationships, your chart points to a need for')
       expect(love).not.toContain('alongside the ten-year theme')
-      expect(love).toMatch(/years that most clearly touch relationship priorities|No year in the next ten-year comparison/i)
+      expect(love).not.toMatch(/\b20\d{2}\b|next ten-year comparison|annual comparison/i)
       expect(social).toContain(chart.pillars[1].pillar.stem)
-      expect(social).toMatch(/natural strength|weakness to watch/i)
-      expect(social).toMatch(/hidden layer/i)
-      expect(social).toMatch(/others may notice this side first/i)
+      expect(social).toMatch(/standout strength/i)
+      expect(social).toMatch(/blind spot/i)
+      expect(social).not.toMatch(/hidden layer|public work role/i)
       expect(balance).toMatch(/most important life insight is that/i)
       expect(balance).toContain(chart.pillars[1].pillar.branch)
       expect(years).toHaveLength(10)
@@ -91,7 +91,7 @@ describe('My Life personalization across 24 international birth charts', () => {
       const socialChapter = reading.chapters.find(chapter => chapter.id === 'social')!
       const balanceChapter = reading.chapters.find(chapter => chapter.id === 'balance')!
       expect([socialChapter.lead, ...socialChapter.paragraphs].join(' ')).not.toMatch(/main weakness|weakness to watch/i)
-      expect([socialChapter.lead, ...socialChapter.paragraphs].join(' ')).toMatch(/others may notice this side first/i)
+      expect([socialChapter.lead, ...socialChapter.paragraphs].join(' ')).toMatch(/standout strength|blind spot/i)
       expect([balanceChapter.lead, ...balanceChapter.paragraphs].join(' ')).toMatch(/most important life insight is that/i)
       return { love, social, balance, years: years.map(line => line.en).join(' ') }
     })
@@ -116,7 +116,7 @@ describe('My Life direct buyer answers and annual distinctions', () => {
     }
     expect(text('personality')).toContain(joy.pillars[1].pillar.stem)
     expect(text('personality')).toContain('day sign')
-    expect(text('money')).toMatch(/regular income|repeat fees/i)
+    expect(text('money')).toMatch(/regular income|repeat fees|steady pay/i)
     expect(text('money')).toMatch(/projects|deals|variable/i)
     expect(text('career')).toMatch(/work and money|knowledge|responsibility|independence/i)
     expect(text('career')).toContain('authority')

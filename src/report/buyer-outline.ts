@@ -49,7 +49,7 @@ export const BUYER_QUESTIONS: Record<BuyerOutlineKind, BuyerQuestion[]> = {
     { id: 'annual-connections', question: 'What does it suggest for love?', source: 'annual-connections', part: 'lead' },
     { id: 'annual-cycle-context', question: 'Which months have more supportive chart relationships?', source: 'annual-cycle-context', part: 'lead' },
     { id: 'annual-plan', question: 'Which months require closer attention?', source: 'annual-plan', part: 'lead' },
-    { id: 'q-year-focus', question: 'What should I focus on most this year?', source: 'annual-plan', part: 'lead' },
+    { id: 'q-year-focus', question: 'What should I focus on most this year?', source: 'annual-plan', part: 'action' },
   ],
   business: [
     { id: 'founder-style', question: 'Does my chart support business-oriented traits?', source: 'founder-style', part: 'lead' },
@@ -64,7 +64,7 @@ export const BUYER_QUESTIONS: Record<BuyerOutlineKind, BuyerQuestion[]> = {
     { id: 'everyday-pace', question: 'What is my core personality?', source: 'everyday-pace', part: 'lead' },
     { id: 'visible-elements', question: 'Which parts of my nature stand out?', source: 'visible-elements', part: 'lead' },
     { id: 'workload-rhythm', question: 'What tends to put me under pressure?', source: 'workload-rhythm', part: 'lead' },
-    { id: 'q-pressure', question: 'What should I watch for when pressure builds?', source: 'workload-rhythm', part: 'paragraph:0' },
+    { id: 'q-pressure', question: 'What should I watch for when pressure builds?', source: 'workload-rhythm', part: 'paragraph:1' },
     { id: 'support-and-space', question: 'What do I need most in relationships?', source: 'support-and-space', part: 'lead' },
     { id: 'balance-week', question: 'How can my strengths become blind spots?', source: 'balance-week', part: 'lead' },
     { id: 'q-balance-action', question: 'What boundary could help protect my everyday balance?', source: 'balance-week', part: 'action' },
@@ -153,8 +153,11 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
   const buyerQuestions = set === 'collection' ? COLLECTION_BUYER_QUESTIONS[kind] ?? BUYER_QUESTIONS[kind] : BUYER_QUESTIONS[kind]
   const questionsBySource = new Map<string, BuyerQuestion[]>()
   for (const question of buyerQuestions) {
-    if (!byId.has(question.source)) throw new Error(`Missing answer source: ${kind}/${question.source}`)
-    questionsBySource.set(question.source, [...(questionsBySource.get(question.source) ?? []), question])
+    // The annual focus question draws its action from the annual-theme chapter,
+    // while remaining next to the annual-plan chapter in the delivered order.
+    const source = kind === 'year' && question.id === 'q-year-focus' ? 'annual-theme' : question.source
+    if (!byId.has(source)) throw new Error(`Missing answer source: ${kind}/${source}`)
+    questionsBySource.set(source, [...(questionsBySource.get(source) ?? []), question])
   }
   for (const [source, questions] of questionsBySource) {
     const chapter = byId.get(source)!, used = new Set<string>()
@@ -164,10 +167,7 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
       if (kind === 'complete' && question.id === 'balance') {
         lead = `The most important life insight is that ${chapter.lead.charAt(0).toLowerCase()}${chapter.lead.slice(1)}`
       } else if (kind === 'year' && question.id === 'q-year-focus') {
-        const months = /^Put (.+?) first on your review list\./.exec(chapter.lead)?.[1]
-        lead = months
-          ? `Your first priority is the commitments that overlap in ${months}. The chart flags competing demands there, not a bad outcome.`
-          : `Your first priority is matching each commitment to the time and money you actually have. No month stands out under the extra-care checks.`
+        lead = byId.get('annual-theme')?.tryThis ?? chapter.tryThis
         paragraphs = []
       } else if (kind === 'business' && question.id === 'delivery-capacity') {
         const moneyPattern = chapter.lead.toLowerCase()
@@ -210,8 +210,14 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
         chapter.paragraphs.forEach(line => used.add(line))
         paragraphs = []
       } else if (kind === 'wellbeing' && question.id === 'q-pressure') {
-        lead = chapter.paragraphs[0] ?? chapter.guidance.watchFor[0] ?? chapter.lead
-        paragraphs = chapter.paragraphs.slice(1, 2)
+        const warning = chapter.paragraphs[0] ?? chapter.guidance.watchFor[0] ?? chapter.lead
+        const finishing = /^You may keep fixing small details, even when the work is already good enough\./i.test(warning)
+        const setting = chapter.paragraphs[1]
+        lead = finishing
+          ? `Under pressure, attention to detail can turn into repeated edits after the work is ready, delaying completion. ${setting ?? ''}`.trim()
+          : warning
+        paragraphs = setting ? [setting] : []
+        chapter.paragraphs.slice(0, 2).forEach(line => used.add(line))
       } else if (kind === 'complete' && question.id === 'social') {
         lead = chapter.lead
         paragraphs = chapter.paragraphs.slice(0, 2)
@@ -220,9 +226,17 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
         const timingLines = chapter.paragraphs.filter(line => /^Why \d{4} is highlighted here/.test(line))
         const years = [...new Set(timingLines.map(line => /^Why (\d{4})/.exec(line)?.[1]).filter((year): year is string => Boolean(year)))]
         lead = years.length
-          ? `The clearest business caution years are ${years.join(', ')}. Check the work commitments and chart links for those years before adding a larger obligation.`
+          ? `Review ${years.join(', ')} before taking on larger business commitments; the checked annual comparison flags added demands in those years, not a forecast of failure.`
           : chapter.paragraphs.find(line => /^Give commitments in|^No period stands out/.test(line)) ?? chapter.guidance.watchFor[0] ?? chapter.lead
-        paragraphs = timingLines.slice(0, 3)
+        paragraphs = timingLines.slice(0, 3).map(line => line.replace(/^Why (\d{4}) is highlighted here: /, '$1: '))
+        chapter.paragraphs.forEach(line => used.add(line))
+      } else if (kind === 'business' && question.id === 'business-chapters') {
+        const cycles = chapter.paragraphs.filter(line => /^From the calculated start |^No current or upcoming ten-year cycle/.test(line))
+        const years = chapter.paragraphs.filter(line => /^\d{4}:/.test(line))
+        lead = cycles.length
+          ? `The calculated business-cycle emphasis is: ${cycles.slice(0, 2).join(' ')}`
+          : 'No current or upcoming ten-year cycle is available in the calculated range, so this report does not add a longer-term business date.'
+        paragraphs = years.filter(line => /Opening|extra pressure|extra-care|caution/i.test(line)).slice(0, 3).map(line => line.split(/(?<=[.!?])\s/).slice(0, 2).join(' '))
         chapter.paragraphs.forEach(line => used.add(line))
       } else if (question.part === 'lead-with-caution') {
         lead = chapter.lead

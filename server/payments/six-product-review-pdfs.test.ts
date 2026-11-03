@@ -31,6 +31,8 @@ describe('six final English product reports', () => {
         expect(bytes.subarray(0, 5).toString()).toBe('%PDF-')
         const pdf = await PDFDocument.load(bytes)
         expect(pdf.getPageCount()).toBeGreaterThan(1)
+        const internalLinks = pdf.getPages().flatMap(page => page.node.Annots()?.asArray() ?? [])
+        expect(internalLinks.length, `${kind}/${profileIndex + 1} linked overview entries`).toBeGreaterThanOrEqual(5)
         expect(report.text).not.toMatch(/undefined|NaN|\[object Object\]/)
         expect(report.text.match(/Question: /g)?.length).toBe(questions[kind])
         if (kind === 'bundle') expect(report.text.match(/Your Answer: /g)?.length).toBe(10)

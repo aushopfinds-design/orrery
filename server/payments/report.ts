@@ -6,7 +6,7 @@ import { createElement } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 import DestinyCardArtwork from '../../src/components/report/destiny-card-artwork.ts'
 import { readFile } from 'node:fs/promises'
-import { PDFDocument, rgb, StandardFonts, pushGraphicsState, popGraphicsState, rectangle, clip, endPath } from 'pdf-lib'
+import { PDFDocument, PDFName, PDFNumber, PDFNull, rgb, StandardFonts, pushGraphicsState, popGraphicsState, rectangle, clip, endPath } from 'pdf-lib'
 import fontkit from '@pdf-lib/fontkit'
 import { calculateSaju } from '../../packages/core/src/saju.ts'
 import { buildCompleteReading, REPORT_EDITION } from '../../src/report/complete-reading.ts'
@@ -155,6 +155,9 @@ async function reportPdf(report: BuyerReport, orderId: string, emphasis: string[
   const ink = rgb(.17, .20, .25), muted = rgb(.36, .38, .41)
   const moonlight = rgb(.79, .85, .91), parchmentEdge = rgb(.85, .79, .68)
   let page = pdf.addPage([W, H]), y = 748
+  const tocRows: { label: string; page: ReturnType<typeof pdf.addPage>; bottom: number; top: number }[] = []
+  const tocDestinations = new Map<string, { page: ReturnType<typeof pdf.addPage>; y: number }>()
+  let tocRowsRemaining = 0
   const textX = 54, textWidth = W - 108
   const centre = (text: string, yy: number, size: number, color = gold, face = display) => {
     page.drawText(text, { x: (W - face.widthOfTextAtSize(text, size)) / 2, y: yy, size, font: face, color })
@@ -304,6 +307,7 @@ async function reportPdf(report: BuyerReport, orderId: string, emphasis: string[
     if (value === 'Calculation notes') { inAppendix = true; if (y < 650) addPage() }
     // A two-person header must not consume the space reserved for five key answers.
     if (value === 'Your reading at a glance') {
+      tocRowsRemaining = 5
       const answerHeight = blocks.slice(blockIndex + 1, blockIndex + 6).reduce((height, answer) => {
         let lines = 1, width = 0
         for (const word of clean(answer).split(/\s+/)) {
@@ -318,8 +322,17 @@ async function reportPdf(report: BuyerReport, orderId: string, emphasis: string[
     const heading = /^(\d{2} [·-]|THE FATE KEY|Your Ten-Year|Your reading at a glance|Your Everyday Compass|Calculation notes|Symbolic colours & numbers|Chart terms in plain English|How this reading is prepared)/.test(value)
     const note = inAppendix || /^(From (your|the) chart:|Why this focus:|Report edition|Sources|Method|Calculated start:)/.test(value)
     if (heading && !inAppendix && value !== 'Your reading at a glance' && y < 650) addPage()
-    if (heading) { y -= 10; paragraph(value, 16, gold); y -= 5 }
-    else paragraph(value, note ? 10.2 : 12.4, note ? muted : ink, !note)
+    if (heading) {
+      if (/^\d{2} [·-]/.test(value)) tocDestinations.set(value.replace(/^\d{2} [·-]\s*/, '').trim(), { page, y: y - 10 })
+      y -= 10; paragraph(value, 16, gold); y -= 5
+    } else {
+      const toc = tocRowsRemaining > 0 && value.includes(' — ')
+      const top = y + 14
+      const tocLabel = toc ? value.split(' — ', 1)[0].trim() : ''
+      const tocPage = page
+      paragraph(value, note ? 10.2 : 12.4, note ? muted : ink, !note)
+      if (toc) { tocRows.push({ label: tocLabel, page: tocPage, bottom: y + 2, top }); tocRowsRemaining-- }
+    }
   }
   if (report.kind === 'career' && report.careerCharts) {
     const charts = report.careerCharts
@@ -434,5 +447,19 @@ async function reportPdf(report: BuyerReport, orderId: string, emphasis: string[
     if (report.reference) p.drawText(report.reference, { x: 54, y: 62, size: 7, font, color: muted })
     p.drawText(`THE FATE KEY | PRIVATE LETTER | ${i + 1} / ${pages.length}`, { x: 54, y: 47, size: 8, font, color: muted })
   })
+  // Make the five opening overview entries real internal PDF links. Each
+  // destination is captured from the rendered section heading, so page breaks
+  // do not invalidate the target.
+  for (const row of tocRows) {
+    const destination = [...tocDestinations.entries()].find(([title]) => title === row.label || title.startsWith(row.label) || row.label.startsWith(title))?.[1]
+    if (!destination) continue
+    const annotation = pdf.context.obj({
+      Type: PDFName.of('Annot'), Subtype: PDFName.of('Link'),
+      Rect: pdf.context.obj([PDFNumber.of(textX), PDFNumber.of(row.bottom), PDFNumber.of(W - 54), PDFNumber.of(row.top)]),
+      Border: pdf.context.obj([PDFNumber.of(0), PDFNumber.of(0), PDFNumber.of(0)]),
+      Dest: pdf.context.obj([destination.page.ref, PDFName.of('XYZ'), PDFNull, PDFNumber.of(destination.y), PDFNull]),
+    })
+    row.page.node.addAnnot(pdf.context.register(annotation))
+  }
   return pdf.save()
 }
