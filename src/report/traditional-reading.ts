@@ -144,7 +144,7 @@ function withPurchaseTiming(chapters: ReportChapter[], plan: InterpretationPlan,
     if (!added) return item
     const body = added.lines.map(line => line.en).flatMap(shortParagraphs)
     const paragraphs = body.slice(1)
-    if(!paragraphs.length) paragraphs.push(added.action.en)
+    if(!paragraphs.length&&!(targetedProduct01&&plan.kind==='complete'&&!added.showGuidance)) paragraphs.push(added.action.en)
     let lead = body[0]
     if(plan.kind==='career'){
       const answer=labelledParagraph('Direct answer',lead)
@@ -177,11 +177,11 @@ function withStructuralEvidence(chapters: ReportChapter[], plan: InterpretationP
     evidence: [...item.evidence, ...periodFacts, ...partnerFacts, ...facts(a).map(text => b ? 'You: ' + text : text), ...resolutionEnglish(plan.primary.resolution).map(c => b ? 'You: ' + c.text : c.text), ...(b ? [...facts(b), ...resolutionEnglish(plan.partner!.resolution).map(c => c.text)].map(text => 'Your partner: ' + text) : [])],
   })
 }
-function distinctChapters(chapters: ReportChapter[]) {
+function distinctChapters(chapters: ReportChapter[], suppressProduct01CareerFiller = false) {
   const seen = new Set(chapters.map(item=>item.lead))
   return chapters.map(item=>{
     const paragraphs=item.paragraphs.filter(text=>{if(seen.has(text))return false;seen.add(text);return true})
-    if(!paragraphs.length)paragraphs.push(item.tryThis)
+    if(!paragraphs.length&&!(suppressProduct01CareerFiller&&item.id==='career'))paragraphs.push(item.tryThis)
     return {...item,paragraphs}
   })
 }
@@ -383,7 +383,7 @@ export function buildTraditionalCompleteFromPlan(plan: InterpretationPlan, targe
   const { first: result, referenceYear: year } = plan
   validateYear(year, result)
   const snap = buildFreeReading(result), a = natalAnalysis(result)
-  const chapters = distinctChapters(withStructuralEvidence(withPurchaseTiming(buyerOutline('complete', buildSoloChapters('complete', result, year)), plan,targetedProduct01), plan)).map((item, index) => ({ ...item, title: `${String(index + 1).padStart(2, '0')} · ${item.title}` }))
+  const chapters = distinctChapters(withStructuralEvidence(withPurchaseTiming(buyerOutline('complete', buildSoloChapters('complete', result, year)), plan,targetedProduct01), plan),targetedProduct01).map((item, index) => ({ ...item, title: `${String(index + 1).padStart(2, '0')} · ${item.title}` }))
   const selected = selectedCycles(result, year)
   const periods = selected.map((cycle, index) => {
     const cycleIndex = result.daewoon.indexOf(cycle), next = result.daewoon[cycleIndex + 1]

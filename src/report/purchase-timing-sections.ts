@@ -91,7 +91,7 @@ function buildSections(plan:InterpretationPlan,targetedProduct01=true):Record<st
    return locale==='en'?`${year}: ${theme} — ${areas.join('; ')}`:`${year}년: ${theme} — ${areas.join('·')}`
   }).join(locale==='en'?'. ':'; ')
   const turningPointAnswer=highlights.length&&targetedProduct01
-   ?[`Review these chart-linked periods when planning a change: ${turningPointSummary('en')}. They are planning prompts, not guaranteed turning points.`,`변화를 계획할 때 명식에서 살펴볼 시기는 ${turningPointSummary('ko')}입니다. 계획 점검을 위한 시기이지, 반드시 큰일이 일어난다는 예측은 아닙니다.`]
+   ?[`The clearest periods to review a major change are ${turningPointSummary('en')}. These years mark chart contacts with work or close relationships; they do not guarantee an event.`,`큰 변화를 살펴볼 시기는 ${turningPointSummary('ko')}입니다. 일이나 가까운 관계에 닿는 명식의 시기이며, 특정 사건을 보장하지 않습니다.`]
    :highlights.length
     ?[`Give ${dates(highlights)} a closer look when planning a change. These stand out because the reading finds more changes to work or close relationships; the full timeline below keeps the other years in view.`,`변화를 계획할 때는 ${dates(highlights)}년을 먼저 살펴봅니다. 일이나 가까운 관계에서 변화가 더 두드러지는 해이며, 다른 해의 흐름도 아래 전체 일정에 남겨 두었습니다.`]
     :['No work or relationship clash stands out in this ten-year comparison. Your timeline still shows how the focus changes from year to year.','이번 10년 비교에서는 일이나 관계에 부딪히는 변화가 두드러지지 않습니다. 매년 달라지는 중심 주제는 전체 흐름에서 설명합니다.']

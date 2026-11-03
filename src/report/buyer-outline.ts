@@ -252,12 +252,18 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
         lead = index >= 0 ? chapter.paragraphs[index] : chapter.tryThis
         paragraphs = index >= 0 ? chapter.paragraphs.slice(index + 1, index + 2) : []
       } else if (question.part === 'turning-points') {
-        lead = chapter.lead
         const next = periods[1]
-        paragraphs = [
-          ...chapter.paragraphs.filter(line => /\b20\d\d\b/.test(line)),
-          ...(set === 'standalone' && next ? [`Your next ten-year cycle is ${next.period} (${next.pillar}). ${next.paragraphs[1] ?? next.paragraphs[0]}`] : []),
-        ]
+        const selectedYears = chapter.paragraphs.filter(line => /^Why \d{4}/.test(line)).slice(0, 3)
+        if (set === 'standalone' && kind === 'complete') {
+          lead = chapter.lead
+          paragraphs = [
+            ...selectedYears,
+            ...(next ? [`The next calculated ten-year cycle is ${next.period} (${next.pillar}); cycle boundaries are approximate and can vary by calculation convention.`] : []),
+          ]
+        } else {
+          lead = chapter.lead
+          paragraphs = [...chapter.paragraphs.filter(line => /\b20\d\d\b/.test(line)), ...(set === 'standalone' && next ? [`Your next ten-year cycle is ${next.period} (${next.pillar}). ${next.paragraphs[1] ?? next.paragraphs[0]}`] : [])]
+        }
       } else if (question.part === 'next-cycle') {
         const current = periods[0]
         const next = periods[1]

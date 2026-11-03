@@ -46,9 +46,9 @@ describe('Complete customer narrative language coverage, rather than only select
 describe('Buyer review r14: direct answers without repeated warnings or lost dates',()=>{
  it('explains the chart-linked meaning of the life turning-point years in the first answer',()=>{
   const answer=customerNarrative(buildInterpretationPlan('complete',a,2026)).patterns.lines[0].en
-  expect(answer).toContain('Review these chart-linked periods when planning a change:')
+  expect(answer).toContain('The clearest periods to review a major change are')
   expect(answer).toMatch(/2026: .+ — work and daily responsibilities/)
-  expect(answer).toContain('not guaranteed turning points')
+  expect(answer).toContain('do not guarantee an event')
  })
  it('keeps every year visible in the actual delivered timelines after deduplication',()=>{
   for(const kind of ['complete','career','business'] as const){
@@ -169,7 +169,7 @@ describe('Customer conclusions before planning advice',()=>{
   const samplePlan=buildInterpretationPlan('complete',customerSample,2026)
   const first=customerNarrative(samplePlan),other=customerNarrative(buildInterpretationPlan('complete',a,2026))
   const love=first.love.lines.map(line=>line.en).join(' ')
-  expect(love).toContain(`to ${samplePlan.primary.dayBranch}, the day sign used to read close relationships`)
+  expect(love).toContain(`${samplePlan.primary.dayBranch}, your day sign for close relationships`)
   const collection=buildBundleFromPlans(bundleInterpretationPlans(customerSample,a,2027,2026))
   expect(collection.love.fullText).toContain(`The form of care associated with this chart is ${RELATIONSHIP_PROFILES[samplePlan.primary.dayBranch].need}.`)
   expect(love).not.toMatch(/years that most clearly touch relationship priorities/)
