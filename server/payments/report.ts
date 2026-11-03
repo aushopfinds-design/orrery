@@ -92,19 +92,25 @@ export async function issueReport(input: OrderInput, orderId: string, referenceY
   // on an uncalibrated heuristic score. Question boundaries use the actual
   // "Question:" labels emitted by applyBuyerQuestions.
   if (mode === 'test') {
-    const expected = input.kind === 'bundle' ? [] : BUYER_QUESTIONS[input.kind].map(item => item.question)
-    const matches = [...report.text.matchAll(/(?:^|\\n)Question: ([^\\n]+)\\n/g)]
-    const sections = matches.map((match, index) => ({
-      question: match[1].trim(),
-      answer: report.text.slice(match.index! + match[0].length, matches[index + 1]?.index ?? report.text.length).trim(),
-    }))
-    report.qualityAudit = inspectReport({
-      productId: input.kind, expectedQuestions: expected,
-      questions: sections,
-      birthTimeKnown: !input.first.unknownTime && (!input.second || !input.second.unknownTime),
-      usesHourPillar: false, // Semantic verification is not implemented.
-      calculationVerified: false, // Fail closed; do not invent independent evidence.
-    })
+    // QA is best-effort and cannot prevent a paid report from being created.
+    // No arbitrary score may interrupt PDF generation or delivery.
+    try {
+      const expected = input.kind === 'bundle' ? [] : BUYER_QUESTIONS[input.kind].map(item => item.question)
+      const matches = [...report.text.matchAll(/(?:^|\\n)Question: ([^\\n]+)\\n/g)]
+      const sections = matches.map((match, index) => ({
+        question: match[1].trim(),
+        answer: report.text.slice(match.index! + match[0].length, matches[index + 1]?.index ?? report.text.length).trim(),
+      }))
+      report.qualityAudit = inspectReport({
+        productId: input.kind, expectedQuestions: expected,
+        questions: sections,
+        birthTimeKnown: !input.first.unknownTime && (!input.second || !input.second.unknownTime),
+        usesHourPillar: false, // Semantic verification remains a separate task.
+        calculationVerified: false, // Never claim a verified score without evidence.
+      })
+    } catch {
+      // QA diagnostics must not interrupt report fulfillment.
+    }
   }
   const pdf = await reportPdf(report, orderId, reportEmphasis(source), mode)
   report.pdf = Buffer.from(pdf).toString('base64')
