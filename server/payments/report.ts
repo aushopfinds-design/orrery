@@ -17,7 +17,8 @@ import { previewProduct } from '../../src/report/personal-products.ts'
 import { careerMoneyChartData } from '../../src/report/career-money-charts.ts'
 import type { OrderInput } from './input.ts'
 import { auditBirthInput } from './independent-audit.ts'
-import { applyBuyerQuestions } from '../../src/report/buyer-outline.ts'
+import { applyBuyerQuestions, BUYER_QUESTIONS } from '../../src/report/buyer-outline.ts'
+import { inspectReport } from '../../src/lib/report-quality-gate.ts'
 
 export interface BuyerReport {
   title: string
@@ -33,6 +34,8 @@ export interface BuyerReport {
   cards: ReturnType<typeof buildDestinyCard>[]
   pdf: string
   careerCharts?: ReturnType<typeof careerMoneyChartData>
+  /** Internal sandbox audit only; never presented as an objective accuracy guarantee. */
+  qualityAudit?: ReturnType<typeof inspectReport>
 }
 let fontBytes: Promise<Buffer> | undefined
 let artworkBytes: Promise<Buffer> | undefined
@@ -84,6 +87,28 @@ export async function issueReport(input: OrderInput, orderId: string, referenceY
     issuedAt: new Date().toISOString(), text: customerDeliveryText(plainReadingText(text).replaceAll('Person A', 'You').replaceAll('Person B', 'Your partner'), input.kind === 'complete'), emphasis: reportEmphasis(source), documents,
     cards: [buildDestinyCard(input.first, input.recipientName ?? ''), ...(input.second ? [buildDestinyCard(input.second, 'Your partner')] : [])], pdf: '',
     ...(input.kind === 'career' ? { careerCharts: careerMoneyChartData(a, referenceYear) } : {}),
+  }
+  // Sandbox-only integration: inspect all standalone product question sections without
+  // altering payment, delivery, the calculation engine, or live customer behavior.
+  // Bundle has its own outline and is deliberately not marked as passing until
+  // a collection-specific structured audit is implemented.
+  if (mode === 'test') {
+    const expected = input.kind === 'bundle' ? [] : BUYER_QUESTIONS[input.kind].map(item => item.question)
+    const sections = expected.map((question, index) => {
+      const start = report.text.indexOf(question)
+      const next = expected.slice(index + 1)
+        .map(q => report.text.indexOf(q, Math.max(0, start + question.length)))
+        .filter(position => position >= 0)
+      const end = next.length ? Math.min(...next) : report.text.length
+      return { question, answer: start < 0 ? '' : report.text.slice(start + question.length, end).trim() }
+    })
+    report.qualityAudit = inspectReport({
+      productId: input.kind, expectedQuestions: expected,
+      questions: sections,
+      birthTimeKnown: !input.first.unknownTime && (!input.second || !input.second.unknownTime),
+      usesHourPillar: false, // Not inferred from prose; requires a separate semantic audit.
+      calculationVerified: false, // Fail closed until verified audit evidence is wired.
+    })
   }
   const pdf = await reportPdf(report, orderId, reportEmphasis(source), mode)
   report.pdf = Buffer.from(pdf).toString('base64')
