@@ -88,29 +88,30 @@ export async function issueReport(input: OrderInput, orderId: string, referenceY
     cards: [buildDestinyCard(input.first, input.recipientName ?? ''), ...(input.second ? [buildDestinyCard(input.second, 'Your partner')] : [])], pdf: '',
     ...(input.kind === 'career' ? { careerCharts: careerMoneyChartData(a, referenceYear) } : {}),
   }
-  // Sandbox diagnostics are observational only. Never block a paid order based
-  // on an uncalibrated heuristic score. Question boundaries use the actual
-  // "Question:" labels emitted by applyBuyerQuestions.
-  if (mode === 'test') {
-    // QA is best-effort and cannot prevent a paid report from being created.
-    // No arbitrary score may interrupt PDF generation or delivery.
-    try {
-      const expected = input.kind === 'bundle' ? [] : BUYER_QUESTIONS[input.kind].map(item => item.question)
-      const matches = [...report.text.matchAll(/(?:^|\\n)Question: ([^\\n]+)\\n/g)]
-      const sections = matches.map((match, index) => ({
-        question: match[1].trim(),
-        answer: report.text.slice(match.index! + match[0].length, matches[index + 1]?.index ?? report.text.length).trim(),
-      }))
-      report.qualityAudit = inspectReport({
-        productId: input.kind, expectedQuestions: expected,
-        questions: sections,
-        birthTimeKnown: !input.first.unknownTime && (!input.second || !input.second.unknownTime),
-        usesHourPillar: false, // Semantic verification remains a separate task.
-        calculationVerified: false, // Never claim a verified score without evidence.
-      })
-    } catch {
-      // QA diagnostics must not interrupt report fulfillment.
-    }
+  // Run non-blocking diagnostics for both sandbox and live orders.
+  // Never delay fulfillment because a heuristic score is low or QA throws.
+  try {
+    const expected = input.kind === 'bundle' ? [] : BUYER_QUESTIONS[input.kind].map(item => item.question)
+    const matches = [...report.text.matchAll(/(?:^|\n)Question: ([^\n]+)\n/g)]
+    const sections = matches.map((match, index) => ({
+      question: match[1].trim(),
+      answer: report.text.slice(match.index! + match[0].length, matches[index + 1]?.index ?? report.text.length).trim(),
+    }))
+    const audit = inspectReport({
+      productId: input.kind, expectedQuestions: expected,
+      questions: sections,
+      birthTimeKnown: !input.first.unknownTime && (!input.second || !input.second.unknownTime),
+      usesHourPillar: false, // No semantic hour-pillar audit implemented.
+      calculationVerified: false, // Never claim independent verification without evidence.
+    })
+    if (mode === 'test') report.qualityAudit = audit
+    // Log codes only: do not log customer names, birth details or report content.
+    console.info('report_quality_diagnostic', {
+      orderId, kind: input.kind, mode, score: audit.score,
+      passed: audit.passed, findingCodes: audit.findings.map(finding => finding.code),
+    })
+  } catch {
+    console.warn('report_quality_diagnostic_unavailable', { orderId, kind: input.kind, mode })
   }
   const pdf = await reportPdf(report, orderId, reportEmphasis(source), mode)
   report.pdf = Buffer.from(pdf).toString('base64')
