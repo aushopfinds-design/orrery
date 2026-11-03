@@ -19,6 +19,7 @@ describe('six final English product reports', () => {
     const output = process.env.FATE_SIX_PRODUCT_PDF_DIR
     if (output) await mkdir(output, { recursive: true })
     let count = 0
+    const businessRiskOpenings: string[] = []
     for (const [profileIndex, profile] of profiles.entries()) {
       for (const kind of products) {
         const paired = kind === 'compatibility' || kind === 'bundle'
@@ -34,6 +35,11 @@ describe('six final English product reports', () => {
         expect(report.text.match(/Question: /g)?.length).toBe(questions[kind])
         if (kind === 'bundle') expect(report.text.match(/Your Answer: /g)?.length).toBe(10)
         else for (const item of BUYER_QUESTIONS[kind as BuyerOutlineKind]) expect(report.text).toContain(`Question: ${item.question}`)
+        if (kind === 'business') {
+          const risk = /Question: What financial risks should I understand\?\s+Answer: ([^.]+\.)/.exec(report.text)
+          expect(risk, `profile ${profileIndex + 1} business risk answer`).not.toBeNull()
+          businessRiskOpenings.push(risk![1])
+        }
         if (kind === 'year') expect(report.text).toContain('Analysis window: November 2026 through October 2027.')
         if (profile.first.unknownTime) {
           expect(report.text).toContain('Hour: Unknown')
@@ -44,5 +50,6 @@ describe('six final English product reports', () => {
       }
     }
     expect(count).toBe(30)
+    expect(new Set(businessRiskOpenings).size).toBeGreaterThan(1)
   }, 180_000)
 })

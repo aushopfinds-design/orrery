@@ -82,7 +82,7 @@ export function buildBundleFromPlans(plans: ReturnType<typeof bundleInterpretati
   const longTerm = chapter(complete, 'patterns')
   const nextCycle = complete.periods[1]
   const longTiming = nextCycle
-    ? `${nextCycle.period} (${nextCycle.pillar}). ${nextCycle.paragraphs[1] ?? nextCycle.paragraphs[0]}`
+    ? `${nextCycle.period}. The longer period shifts emphasis toward ${nextCycle.headline.toLowerCase().replace(/ — repeated emphasis$/i, '')}.`
     : longTerm.paragraphs.find(line => /\b20\d{2}\b/.test(line))
   const lifeTimeline = complete.periods.length
     ? complete.periods.map(period => `${period.period} · ${period.pillar}: ${period.paragraphs.join(' ')}`)
@@ -94,8 +94,9 @@ export function buildBundleFromPlans(plans: ReturnType<typeof bundleInterpretati
   const blindSpot = plainReadingText(coreProfile.watchFor.at(-1) ?? coreProfile.watchFor[0])
   const strengthAnswer = `Your clearest strength is this: ${plainReadingText(coreProfile.strength)} A blind spot to watch for is ${blindSpot.charAt(0).toLowerCase()}${blindSpot.slice(1)}`
   const challengeAnswer = `Under pressure, ${plainReadingText(coreProfile.pressure).replace(/^[A-Z]/, letter => letter.toLowerCase())} This is a possible response to strain, not a prediction that a problem must happen.`
-  const earningPattern = plainReadingText(moneyFit.lead).replace(/^Direct answer:\s*/i, '').replace(/^Your /i, '')
-  const integratedCollectionAnswer = `Your main trade-off is making ${workTheme} pay without letting the work crowd out ${privateNeed}. The chart shows ${earningPattern.toLowerCase()} and adds a separate twelve-month timing layer; none of these themes guarantees an event or income.`
+  const earningPattern = plainReadingText(moneyFit.lead).replace(/^Direct answer:\s*/i, '').replace(/^Your chart /i, 'The chart ')
+  const annualWindow = `${annual.months[0]?.label ?? 'the next twelve months'} through ${annual.months.at(-1)?.label ?? ''}`
+  const integratedCollectionAnswer = `The chart links your work pattern of ${workTheme} to your money pattern. ${earningPattern} That can affect the private time you need for ${privateNeed}. The annual comparison covers ${annualWindow}; it describes a timing theme, not a guaranteed event or income. Your priority is to choose work commitments that fit both the income pattern and that relationship need.`
   const collectionQuestions = [
     answer(1, 'What kind of person are you at your core?', life, undefined, coreAnswer),
     answer(2, 'Which strengths help you most, and what can get in your way?', strengthsOverview, undefined, strengthAnswer),
