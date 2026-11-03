@@ -166,9 +166,9 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
       } else if (kind === 'year' && question.id === 'q-year-focus') {
         const months = /^Put (.+?) first on your review list\./.exec(chapter.lead)?.[1]
         lead = months
-          ? `Focus first on the overlapping commitments in ${months}; this is a review priority, not a prediction that those are bad months.`
-          : `Focus on the specific work and money commitments named in each month; no single month stands out under the extra-care checks.`
-        paragraphs = chapter.paragraphs.slice(0, 1)
+          ? `Your first priority is the commitments that overlap in ${months}. The chart flags competing demands there, not a bad outcome.`
+          : `Your first priority is matching each commitment to the time and money you actually have. No month stands out under the extra-care checks.`
+        paragraphs = []
       } else if (kind === 'business' && question.id === 'delivery-capacity') {
         const moneyPattern = chapter.lead.toLowerCase()
         lead = moneyPattern.includes('combines repeat customers with new deals')
@@ -184,11 +184,45 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
                 : 'Your main financial risk is counting a promising deal as income before payment arrives.'
         paragraphs = chapter.paragraphs.filter(line => line !== chapter.lead).slice(0, 2)
       } else if (kind === 'compatibility' && question.id === 'q-conflict') {
-        lead = chapter.paragraphs.find(line => /^(?:Your likely friction is|The clearest friction is)/.test(line)) ?? chapter.guidance.watchFor[0] ?? chapter.lead
-        paragraphs = chapter.paragraphs.filter(line => line !== lead).slice(0, 3)
+        const friction = chapter.paragraphs.find(line => /^(?:Your likely friction is|The practical tension for Person A is)/.test(line))
+        lead = friction?.startsWith('Your likely friction is')
+          ? (() => {
+              const parts = friction.match(/^Your likely friction is (.*?); your partner’s is (.*?)\.$/)
+              return parts ? `Your friction point is ${parts[1]}. For your partner, tension may arise from ${parts[2]}.` : friction.replace(/^Your likely friction is /, 'The likely friction is ')
+            })()
+          : friction
+            ? `A likely friction point is ${friction.split('Person A is ')[1]?.split(';')[0] ?? 'a difference in private-life preferences'} for Person A, and ${friction.split('for Person B it is ')[1]?.split('.')[0] ?? 'a different reading of the same situation'} for Person B.`
+            : chapter.paragraphs.find(line => /^Your partner: /.test(line)) ?? chapter.paragraphs[3] ?? chapter.guidance.watchFor[0] ?? chapter.lead
+        paragraphs = []
+        chapter.paragraphs.forEach(line => used.add(line))
+      } else if (kind === 'compatibility' && question.id === 'q-love-language') {
+        const needs = chapter.paragraphs.find(line => line.startsWith('Your private-life need is '))
+        const match = needs?.match(/^Your private-life need is (.*?)\. Your partner’s is (.*?)\. The same gesture/)
+        const firstCare = chapter.paragraphs.find(line => /^You: /.test(line))
+        const secondCare = chapter.paragraphs.find(line => /^Your partner: /.test(line))
+        lead = match
+          ? `You need ${match[1]}; your partner needs ${match[2]}. The same caring gesture may not feel equally useful to both of you.`
+          : firstCare && secondCare
+            ? `You and your partner may show care in different ways: ${firstCare.replace(/^You: /, '').split(/(?<=[.!?])\s/)[0]} Your partner: ${secondCare.replace(/^Your partner: /, '').split(/(?<=[.!?])\s/)[0]}`
+          : `${chapter.paragraphs[0] ?? 'Person A’s chart gives one clue about care.'} ${chapter.paragraphs[1] ?? 'Person B’s chart gives a separate clue.'}`
+        paragraphs = []
+        chapter.paragraphs.forEach(line => used.add(line))
+        paragraphs = []
       } else if (kind === 'wellbeing' && question.id === 'q-pressure') {
         lead = chapter.paragraphs[0] ?? chapter.guidance.watchFor[0] ?? chapter.lead
         paragraphs = chapter.paragraphs.slice(1, 2)
+      } else if (kind === 'complete' && question.id === 'social') {
+        lead = chapter.lead
+        paragraphs = chapter.paragraphs.slice(0, 2)
+        chapter.paragraphs.forEach(line => used.add(line))
+      } else if (kind === 'business' && question.id === 'business-plan') {
+        const timingLines = chapter.paragraphs.filter(line => /^Why \d{4} is highlighted here/.test(line))
+        const years = [...new Set(timingLines.map(line => /^Why (\d{4})/.exec(line)?.[1]).filter((year): year is string => Boolean(year)))]
+        lead = years.length
+          ? `The clearest business caution years are ${years.join(', ')}. Check the work commitments and chart links for those years before adding a larger obligation.`
+          : chapter.paragraphs.find(line => /^Give commitments in|^No period stands out/.test(line)) ?? chapter.guidance.watchFor[0] ?? chapter.lead
+        paragraphs = timingLines.slice(0, 3)
+        chapter.paragraphs.forEach(line => used.add(line))
       } else if (question.part === 'lead-with-caution') {
         lead = chapter.lead
         paragraphs = [...chapter.paragraphs, chapter.guidance.watchFor[0], chapter.tryThis].filter((line): line is string => Boolean(line))

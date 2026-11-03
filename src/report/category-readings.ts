@@ -84,7 +84,7 @@ export function buildBundleFromPlans(plans: ReturnType<typeof bundleInterpretati
   const coreProfile = PERSONAL_PROFILES[plans.complete.primary.dayStem]
   const privateNeed = RELATIONSHIP_PROFILES[plans.complete.primary.dayBranch].need
   const workTheme = LANGUAGE[plans.complete.primary.monthStemGod].name.en
-  const coreAnswer = `Your core style centres on ${coreProfile.focus}. This is the personal quality that shapes how you approach everyday choices.`
+  const coreAnswer = `At your core, you tend to lead with ${coreProfile.focus}. Your ${plans.complete.primary.dayStem} day-stem pattern is the basis for this personal style; it describes a tendency, not every part of who you are.`
   const blindSpot = plainReadingText(coreProfile.watchFor.at(-1) ?? coreProfile.watchFor[0])
   const strengthAnswer = `Your clearest strength is this: ${plainReadingText(coreProfile.strength)} A blind spot to watch for is ${blindSpot.charAt(0).toLowerCase()}${blindSpot.slice(1)}`
   const challengeAnswer = `Under pressure, ${plainReadingText(coreProfile.pressure).replace(/^[A-Z]/, letter => letter.toLowerCase())} This is a possible response to strain, not a prediction that a problem must happen.`
@@ -106,6 +106,14 @@ export function buildBundleFromPlans(plans: ReturnType<typeof bundleInterpretati
             : hiddenVariable
               ? 'A possible customer or project income route appears in less visible chart signs; it is not a promise of sales.'
               : 'The chart gives clearer clues about your work fit than about a direct source of income.'
+  const incomeSummary = visibleSteady && visibleVariable
+    ? 'repeat income and new deals both appear in the visible chart, so cash planning needs to account for both'
+    : visibleSteady ? 'repeat income is the clearer visible route'
+      : visibleVariable ? 'new customers or project fees are the clearer visible route'
+        : hiddenSteady && hiddenVariable ? 'repeat and project income appear in less visible signs, without a clear amount'
+          : hiddenSteady ? 'a possible repeat-pay route appears in less visible signs'
+            : hiddenVariable ? 'a possible project-income route appears in less visible signs'
+              : 'the chart gives clearer work-fit clues than direct income clues'
   const earningPattern = collectionMoneyAnswer
   const annualWindow = `${annual.months[0]?.label ?? 'the next twelve months'} through ${annual.months.at(-1)?.label ?? ''}`
   const careerAnswer = `Your strongest work fit is a role centred on ${workTheme}. Look for a position where this is a regular task, not an occasional side responsibility.`
@@ -129,7 +137,8 @@ export function buildBundleFromPlans(plans: ReturnType<typeof bundleInterpretati
   const longerShift = nextCycle
     ? `${nextCycle.period}. The longer-period emphasis moves toward ${nextCycle.headline.toLowerCase().replace(/ — repeated emphasis$/i, '')}.`
     : 'No further ten-year period is available in the supported calculation range, so this report does not add a later date.'
-  const integratedCollectionAnswer = `Your work pattern centres on ${workTheme}; earning through it also depends on what you can deliver and collect. Your relationships need room for ${privateNeed}, so time is part of the money decision too. The full year runs ${annualWindow}; use its timing themes to review commitments, not predict results.`
+  const collectionTiming = plans.annual.months.filter(point => ['day', 'month'].every(position => point.comparisons.some(item => item.position === position && item.patterns.some(pattern => ['沖', '刑', '害', '破'].includes(pattern.type)))))
+  const integratedCollectionAnswer = `Your work pattern centres on ${workTheme}, and ${incomeSummary}. These connect through delivery: taking on more work only helps when the time and terms let you finish it and collect payment. In close relationships, you need ${privateNeed}. Across the fixed period from ${annualWindow}, the shared work-and-home comparison flags ${collectionTiming.length ? collectionTiming.map(point => point.date.slice(0, 7)).join(', ') : 'no overlapping pressure months'}; treat that as a timing check, not a prediction.`
   const collectionQuestions = [
     answer(1, 'What kind of person are you at your core?', life, undefined, coreAnswer),
     answer(2, 'Which strengths help you most, and what can get in your way?', strengthsOverview, undefined, strengthAnswer),
@@ -144,9 +153,7 @@ export function buildBundleFromPlans(plans: ReturnType<typeof bundleInterpretati
       '10 · How Do Your Life, Love, Work and Timing Fit Together?',
       'Question: How do these parts of your life connect?',
       `Your Answer: ${plainReadingText(integratedCollectionAnswer)}`,
-      `Chart Links: ${plainReadingText(overviewParagraphs.slice(1, 3).join(' '))}`,
-      `Shared Timing: ${plainReadingText(overviewParagraphs.slice(3, 5).join(' '))}`,
-      `Practical Step: ${plainReadingText(overviewParagraphs.at(-1) ?? 'Compare work demands with actual pay and capacity, then make room for the relationship needs shown in both charts.')}`,
+      'Practical Step: Compare the actual payment date and delivery hours before accepting more work.',
     ].join('\n\n'),
   ]
   const includedReports = [complete, compatibility, career, annual, love]
