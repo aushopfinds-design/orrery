@@ -10,6 +10,8 @@ import { buildCareerReading, buildBusinessReading } from './work-focus-readings.
 import { buildYearAheadReading } from './year-ahead-reading.ts'
 import { buildBalanceReading } from './balance-reading.ts'
 import { plainReadingText } from './reading-text.ts'
+import { PERSONAL_PROFILES, RELATIONSHIP_PROFILES } from './reading-profiles.ts'
+import { WORKING_LANGUAGE as LANGUAGE } from './purchase-language.ts'
 
 export { buildCompatibilityReading, buildCareerReading, buildBusinessReading, buildYearAheadReading, buildBalanceReading }
 export function buildCategoryReading(kind: FocusCategory, first: SajuResult, options: { second?: SajuResult; year?: number; periodStart?: string; periodTimezone?: string } = {}) {
@@ -51,12 +53,12 @@ export function buildBundleFromPlans(plans: ReturnType<typeof bundleInterpretati
     if (!found) throw new Error(`Missing collection answer source: ${id}`)
     return found
   }
-  const answer = (number: number, question: string, source: ReportChapter, timing?: string) => {
+  const answer = (number: number, question: string, source: ReportChapter, timing?: string, collectionLead?: string) => {
     const practicalStep = plainReadingText(source.tryThis || source.guidance.keepClose[0] || source.lead)
     return [
       `${String(number).padStart(2, '0')} · ${question}`,
       `Question: ${question}`,
-      `Your Answer: ${plainReadingText(source.lead)}`,
+      `Your Answer: ${plainReadingText(collectionLead ?? source.lead)}`,
       ...(timing ? [`Important Timing: ${plainReadingText(timing)}`] : []),
       `Practical Step: ${practicalStep}`,
     ].join('\n\n')
@@ -85,21 +87,29 @@ export function buildBundleFromPlans(plans: ReturnType<typeof bundleInterpretati
   const lifeTimeline = complete.periods.length
     ? complete.periods.map(period => `${period.period} · ${period.pillar}: ${period.paragraphs.join(' ')}`)
     : ['No ten-year cycle falls within the available calculated range.']
-  const integratedAnswer = overviewParagraphs[0] ?? 'Your chart brings work, personal needs and relationship choices into one practical decision.'
+  const coreProfile = PERSONAL_PROFILES[plans.complete.primary.dayStem]
+  const privateNeed = RELATIONSHIP_PROFILES[plans.complete.primary.dayBranch].need
+  const workTheme = LANGUAGE[plans.complete.primary.monthStemGod].name.en
+  const coreAnswer = `At your core, you bring ${coreProfile.focus} to daily life. Your work pattern centres on ${workTheme}, while your private relationship need is ${privateNeed}.`
+  const pressurePattern = plainReadingText(coreProfile.pressure).replace(/^(?:You may |You )/i, '').replace(/^[A-Z]/, letter => letter.toLowerCase())
+  const strengthAnswer = `Your clearest strength is this: ${plainReadingText(coreProfile.strength)} Under pressure, you may find yourself ${pressurePattern}`
+  const challengeAnswer = `Your recurring personal challenge is this: ${plainReadingText(coreProfile.pressure)} It matters alongside your work pattern of ${workTheme}; it is a response to strain, not a prediction that a problem must happen.`
+  const earningPattern = plainReadingText(moneyFit.lead).replace(/^Direct answer:\s*/i, '').replace(/^Your /i, '')
+  const integratedCollectionAnswer = `Your main trade-off is making ${workTheme} pay without letting the work crowd out ${privateNeed}. The chart shows ${earningPattern.toLowerCase()} and adds a separate twelve-month timing layer; none of these themes guarantees an event or income.`
   const collectionQuestions = [
-    answer(1, 'What kind of person are you at your core?', life),
-    answer(2, 'Which strengths help you most, and what can get in your way?', strengthsOverview),
+    answer(1, 'What kind of person are you at your core?', life, undefined, coreAnswer),
+    answer(2, 'Which strengths help you most, and what can get in your way?', strengthsOverview, undefined, strengthAnswer),
     answer(3, 'What kind of work is the best fit for you?', careerFit),
     answer(4, 'How are you most likely to earn and manage money?', moneyFit),
     answer(5, 'What do you need from a close relationship?', relationshipNeed),
     answer(6, 'How do you and your partner fit together?', relationshipFit),
-    answer(7, 'What recurring challenge deserves your attention?', challenge),
+    answer(7, 'What recurring challenge deserves your attention?', challenge, undefined, challengeAnswer),
     answer(8, 'What should you know about the next 12 months?', yearTheme, `${annual.months[0]?.label ?? ''} through ${annual.months.at(-1)?.label ?? ''}. ${yearPeriods.lead}`),
     answer(9, 'When could a longer-term life or work shift deserve attention?', longTerm, longTiming),
     [
       '10 · How Do Your Life, Love, Work and Timing Fit Together?',
       'Question: How do these parts of your life connect?',
-      `Your Answer: ${plainReadingText(integratedAnswer)}`,
+      `Your Answer: ${plainReadingText(integratedCollectionAnswer)}`,
       `Chart Links: ${plainReadingText(overviewParagraphs.slice(1, 3).join(' '))}`,
       `Shared Timing: ${plainReadingText(overviewParagraphs.slice(3, 5).join(' '))}`,
       `Practical Step: ${plainReadingText(overviewParagraphs.at(-1) ?? 'Compare work demands with actual pay and capacity, then make room for the relationship needs shown in both charts.')}`,

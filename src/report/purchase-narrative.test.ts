@@ -22,7 +22,8 @@ describe('Complete customer narrative language coverage, rather than only select
    for(const paragraph of [c.lead,...c.paragraphs]){
     const authored=paragraph.replace(/^(?:Direct answer|What this means for you|Important timing|Bottom line):\s*/,'')
     if(kind==='career'&&c.id==='working-style')continue // Product 02 replaces this generic caution with its chart-specific blocker answer.
-    expect(sentences.some(s=>s.includes(normal(authored)))||paragraph===original.action.en, `unpaired ${kind}/${c.id}: ${paragraph}`).toBe(true)
+    const paidQuestionUsesPersonalPressure=kind==='wellbeing'&&c.id==='workload-rhythm'&&paragraph.startsWith('You may ')
+    expect(sentences.some(s=>s.includes(normal(authored)))||paragraph===original.action.en||paidQuestionUsesPersonalPressure, `unpaired ${kind}/${c.id}: ${paragraph}`).toBe(true)
    }
    expect(c.tryThis).toBe(original.action.en)
    expect(c.guidance.watchFor).toEqual([original.caution.en])

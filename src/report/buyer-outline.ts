@@ -49,7 +49,7 @@ export const BUYER_QUESTIONS: Record<BuyerOutlineKind, BuyerQuestion[]> = {
     { id: 'annual-connections', question: 'What does it suggest for love?', source: 'annual-connections', part: 'lead' },
     { id: 'annual-cycle-context', question: 'Which months have more supportive chart relationships?', source: 'annual-cycle-context', part: 'lead' },
     { id: 'annual-plan', question: 'Which months require closer attention?', source: 'annual-plan', part: 'lead' },
-    { id: 'q-year-focus', question: 'What should I focus on most this year?', source: 'annual-plan', part: 'action' },
+    { id: 'q-year-focus', question: 'What should I focus on most this year?', source: 'annual-plan', part: 'lead' },
   ],
   business: [
     { id: 'founder-style', question: 'Does my chart support business-oriented traits?', source: 'founder-style', part: 'lead' },
@@ -64,7 +64,7 @@ export const BUYER_QUESTIONS: Record<BuyerOutlineKind, BuyerQuestion[]> = {
     { id: 'everyday-pace', question: 'What is my core personality?', source: 'everyday-pace', part: 'lead' },
     { id: 'visible-elements', question: 'Which parts of my nature stand out?', source: 'visible-elements', part: 'lead' },
     { id: 'workload-rhythm', question: 'What tends to put me under pressure?', source: 'workload-rhythm', part: 'lead' },
-    { id: 'q-pressure', question: 'What should I watch for when pressure builds?', source: 'workload-rhythm', part: 'caution' },
+    { id: 'q-pressure', question: 'What should I watch for when pressure builds?', source: 'workload-rhythm', part: 'paragraph:0' },
     { id: 'support-and-space', question: 'What do I need most in relationships?', source: 'support-and-space', part: 'lead' },
     { id: 'balance-week', question: 'How can my strengths become blind spots?', source: 'balance-week', part: 'lead' },
     { id: 'q-balance-action', question: 'What boundary could help protect my everyday balance?', source: 'balance-week', part: 'action' },
@@ -163,6 +163,21 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
       let paragraphs: string[] = []
       if (kind === 'complete' && question.id === 'balance') {
         lead = `The most important life insight is that ${chapter.lead.charAt(0).toLowerCase()}${chapter.lead.slice(1)}`
+      } else if (kind === 'year' && question.id === 'q-year-focus') {
+        const months = /^Put (.+?) first on your review list\./.exec(chapter.lead)?.[1]
+        lead = months
+          ? `Focus first on the overlapping commitments in ${months}; this is a review priority, not a prediction that those are bad months.`
+          : `Focus on the specific work and money commitments named in each month; no single month stands out under the extra-care checks.`
+        paragraphs = chapter.paragraphs.slice(0, 1)
+      } else if (kind === 'business' && question.id === 'delivery-capacity') {
+        lead = 'The clearest financial risk is counting a promising deal as income before payment arrives.'
+        paragraphs = chapter.paragraphs.filter(line => line !== chapter.lead).slice(0, 2)
+      } else if (kind === 'compatibility' && question.id === 'q-conflict') {
+        lead = chapter.paragraphs.find(line => /^(?:Your likely friction is|The clearest friction is)/.test(line)) ?? chapter.guidance.watchFor[0] ?? chapter.lead
+        paragraphs = chapter.paragraphs.filter(line => line !== lead).slice(0, 3)
+      } else if (kind === 'wellbeing' && question.id === 'q-pressure') {
+        lead = chapter.paragraphs[0] ?? chapter.guidance.watchFor[0] ?? chapter.lead
+        paragraphs = chapter.paragraphs.slice(1, 2)
       } else if (question.part === 'lead-with-caution') {
         lead = chapter.lead
         paragraphs = [...chapter.paragraphs, chapter.guidance.watchFor[0], chapter.tryThis].filter((line): line is string => Boolean(line))

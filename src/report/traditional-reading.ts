@@ -355,6 +355,11 @@ export function buildTraditionalCategoryFromPlan(plan: InterpretationPlan): Cate
   if (second) validateYear(year, second)
   const annual = kind === 'year' ? annualChapters(first, year, plan.periodStart) : undefined
   const chapters = distinctChapters(withStructuralEvidence(withPurchaseTiming(buyerOutline(kind, annual?.chapters ?? (kind === 'compatibility' ? compatibilityChapters(first, second!, year) : buildSoloChapters(kind as 'career' | 'business' | 'wellbeing' | 'love', first, year))), plan), plan))
+  if (kind === 'wellbeing') {
+    const reaction = PERSONAL_PROFILES[plan.primary.dayStem]?.pressure
+    const workload = chapters.find(chapter => chapter.id === 'workload-rhythm')
+    if (reaction && workload && !workload.paragraphs.includes(reaction)) workload.paragraphs.unshift(reaction)
+  }
   const title = { career: 'My Money & Career', business: 'Born to Build a Business?', wellbeing: 'The Real You: Strengths & Weaknesses', compatibility: 'Our Love', love: 'My Love', year: 'Your Next 12 Months' }[kind]
   const focus = focusFrom(chapters)
   const yearMonthPoints = annual?.months.map(month => {

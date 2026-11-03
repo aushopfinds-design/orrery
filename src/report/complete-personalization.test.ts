@@ -139,7 +139,7 @@ describe('My Life direct buyer answers and annual distinctions', () => {
     const answerFor = (question: string, next: string) => paidText.slice(paidText.indexOf(question), paidText.indexOf(next, paidText.indexOf(question) + question.length))
     const challenges = answerFor(questions[5].question, questions[6].question)
     const turningPoints = paidText.slice(paidText.indexOf(questions[6].question))
-    expect(challenges).toMatch(/biggest life challenge may be/i)
+    expect(challenges).toMatch(/recurring challenge under strain/i)
     expect(challenges).toContain(joy.pillars[1].pillar.branch)
     expect(turningPoints).toContain('2026')
     expect(turningPoints).toContain('2029')
