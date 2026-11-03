@@ -137,8 +137,6 @@ async function reportPdf(report: BuyerReport, orderId: string, emphasis: string[
   pdf.registerFontkit(fontkit)
   fontBytes ??= readFile(new URL('./assets/NotoSansSC-Report.ttf', import.meta.url))
   const font = await pdf.embedFont(await fontBytes, { subset: true })
-  const boldFont = await pdf.embedFont(StandardFonts.HelveticaBold)
-  const boldCharacters = new Set(boldFont.getCharacterSet())
   artworkBytes ??= readFile(new URL('./assets/HomepageArtwork.jpg', import.meta.url))
   const artwork = await pdf.embedJpg(await artworkBytes)
   const display = await pdf.embedFont(StandardFonts.TimesRoman)
@@ -228,29 +226,33 @@ async function reportPdf(report: BuyerReport, orderId: string, emphasis: string[
       }
     }
     if (last < value.length) parts.push({ text: value.slice(last), bold: false })
-    let runs: { text: string; face: typeof font }[] = [], width = 0
+    let runs: { text: string; bold: boolean }[] = [], width = 0
     const flush = () => {
       if (!runs.length) return
       if (y < 83) addPage()
       let x = textX
       for (const run of runs) {
-        page.drawText(run.text, { x, y, size, font: run.face, color })
-        x += run.face.widthOfTextAtSize(run.text, size)
+        // Keep emphasis in the same embedded font as body copy. Mixing the
+        // embedded CJK-capable face with PDF standard Helvetica caused visible
+        // tracking changes in bold phrases on some mobile PDF viewers.
+        page.drawText(run.text, { x, y, size, font, color })
+        const runWidth = font.widthOfTextAtSize(run.text, size)
+        if (run.bold) page.drawText(run.text, { x: x + .22, y, size, font, color })
+        x += runWidth
       }
       y -= size * (size === 12.4 ? 1.72 : 1.65); runs = []; width = 0
     }
     for (const part of parts) {
       for (const token of part.text.match(/\S+|\s+/g) ?? []) {
         if (!width && !token.trim()) continue
-        const face = part.bold && (token.trim() === '' || [...token].every(c => boldCharacters.has(c.codePointAt(0)!))) ? boldFont : font
-        const tokenWidth = face.widthOfTextAtSize(token, size)
+        const tokenWidth = font.widthOfTextAtSize(token, size)
         if (width + tokenWidth > textWidth && width) {
           flush()
           if (!token.trim()) continue
         }
         const previous = runs.at(-1)
-        if (previous?.face === face) previous.text += token
-        else runs.push({ text: token, face })
+        if (previous?.bold === part.bold) previous.text += token
+        else runs.push({ text: token, bold: part.bold })
         width += tokenWidth
       }
     }

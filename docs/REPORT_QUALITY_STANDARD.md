@@ -6,65 +6,81 @@ Scope: All paid Saju products, customer-facing previews, generated reports, PDFs
 ## Core mission
 A paying customer must receive understandable, personally relevant answers to the questions that motivated their purchase. Customer understanding and satisfaction matter more than a numerical score. A target such as 95/100 is not proof of quality.
 
-## Six mandatory quality priorities
+## Six quality priorities
 | Criterion | Priority |
 | --- | --- |
 | Directly answer the customer's actual purchase questions | CRITICAL |
 | Ground meaningful interpretations in their verified personal Saju chart | CRITICAL |
 | Explain findings in natural, everyday English | CRITICAL |
 | Explain relevant money, career, relationship, and timing patterns | HIGH |
-| Offer specific value without needless repetition | HIGH |
-| Provide appropriate professional PDF design and length | SUPPORTING |
+| Offer specific value without empty repetition | HIGH |
+| Provide an appropriate, readable PDF | SUPPORTING |
 
-Never prioritize length, decoration, or a numerical score above customer understanding.
+Never prioritize length, decoration, or a numerical score above customer understanding. A failure in a CRITICAL criterion blocks quality approval.
 
-## Ten absolute rules
+## Twelve absolute rules
 
-1. **No interpretation without chart evidence.** Important conclusions must be traceable to validated chart information (e.g. Day Master, Five Elements, Ten Gods, pillar relationships, or verified luck cycles). Never invent evidence.
-2. **No generic filler.** Do not pad reports with advice that would fit almost anyone. Names and birth dates must not be the only meaningful personalization.
-3. **Answer what the customer purchased.** Each product must answer its particular questions. A money report cannot substitute generic budgeting tips for Saju-specific financial interpretation.
-4. **No unsupported timing.** Specific years, months, and decade-cycle dates require validated calculations. If timing is disputed, omit precise claims and explain material limits.
-5. **Everyday English.** Write for readers unfamiliar with Saju; explain jargon briefly, use natural and concrete language.
-6. **Distinct product value.** Shared chart facts are fine, but each paid product must provide unique answers and avoid extensive repeated passages.
-7. **No guaranteed predictions.** Present Saju as a traditional interpretive practice, not scientifically proven forecasting. Never guarantee future marriage, divorce, illness, wealth, or other events; avoid fear-based upselling.
-8. **No invented birth details.** Never fabricate birth time, location, timezone, or historical daylight-saving adjustments. Disclose meaningful limitations without repetitive disclaimers.
-9. **Tests alone are not approval.** Passing builds and calculations is necessary but insufficient; inspect actual customer-readable reports and PDFs for interpretive usefulness.
-10. **Protect working functionality.** Fix verified issues with minimal safe changes. Avoid unnecessary rebuilds of calculation engines, payments, PDF systems, and unrelated products; run regression tests.
+1. **Answer first.** Start each answer with a direct response to the customer's question. Do not begin with general background. State uncertainty directly when the evidence is limited.
+2. **Personalize without inventing.** Use only interpretations supported by the verified chart. Do not force differences between profiles. Identical verified chart results may share the same central interpretation.
+3. **Repeat only with a purpose.** A chart feature may support answers to several questions. Reuse it only when each answer explains a distinct implication. Rephrasing the same explanation is not new value.
+4. **Use simple, natural English.** Write for everyday English-speaking customers. Prefer short, clear sentences and familiar words. Minimize Saju terms and explain any necessary term briefly.
+5. **Avoid generic filler.** Do not pad reports with advice that fits almost anyone. Brief, practical advice is allowed when grounded in the chart and relevant to the question; it must not replace the answer.
+6. **Be honest about timing.** Give years, months, or periods only when supported by the actual calculation. Avoid certainty when evidence is weak and explain meaningful limits in plain language.
+7. **Give each question a distinct purpose.** Related topics such as personality, strengths, and pressure responses may share evidence but must provide different answers suited to their questions.
+8. **Preserve collection value.** Product 07 may repeat material from its included reports. Do not treat that necessary inclusion as a defect or delete important included content. Evaluate whether the collection's ten opening answers connect the reports and add useful synthesis.
+9. **Protect unknown birth times.** Never present an unverified hour-pillar interpretation for an unknown birth time. Do not state unverified luck cycles or precise timing as certain.
+10. **Never guarantee outcomes.** Do not promise money, success, business results, love, or marriage. Present Saju as a traditional interpretive practice, not established prediction of future facts.
+11. **Keep the PDF readable.** Check body text, headings, emphasis, tables, charts, and page breaks at mobile scale and at A4 size. Do not add or remove content just to reach a page count.
+12. **Review evidence, not just automation.** Passing tests and content approval are separate. Read actual generated PDFs and assess answers question by question. For each deduction, record the question, actual wording, reason, and revised wording. Never adjust scores to meet a target.
 
-## Required interpretation pattern
-For each major conclusion:
-**Customer question → Verified chart evidence → Plain-English interpretation → Relevant real-life example → Direct takeaway.**
-Do not expose unnecessary technical detail to customers, but make the reason for each interpretation understandable.
+## Required answer pattern
+For each major conclusion, reviewers should be able to trace:
 
-### Customer-first writing standard
-Customer-facing section titles should use the question the buyer came to answer. Put the personal conclusion in the opening paragraph, then explain its practical meaning in ordinary life. Keep calculation evidence in the internal report model and optional source notes; explain only the evidence the customer needs, in one or two plain-English sentences. Do not replace a personal answer with generic self-help, repeated cautions or a long explanation of Saju terms. When evidence is mixed, say which choice is better supported and which remains uncertain. When evidence is insufficient, say so plainly without filling the gap with a generic prediction. Specific timing belongs only where the calculated chart supports it.
+**Customer question → verified chart evidence → plain-English interpretation → relevant practical meaning → direct takeaway.**
 
-For focused products, keep the buyer's question visible throughout the generated preview and PDF. Use a concise direct answer, a practical implication, relevant timing only when supported, and a clear takeaway. The display and PDF must be built from the same interpreted chapter data.
+Keep technical evidence in the internal report model and optional source notes. Explain only what helps the customer understand the answer. When evidence is mixed, say which conclusion is better supported and what remains uncertain. When evidence is insufficient, say so without filling the gap with a generic prediction.
 
-## Personalization review
-Compare at least 10 appropriately varied birth charts. Check that meaningful chart differences lead to meaningful differences in the relevant explanations. Identical verified charts may legitimately have identical interpretations; never invent differences.
+## Customer acceptance review
+Before quality approval, establish:
 
-## Customer acceptance questions
-Before release, reviewers must establish:
-1. Does this answer the questions customers paid to explore?
-2. Can the reader understand why the conclusions follow from their chart?
+1. Does the report answer the questions customers paid to explore?
+2. Can readers understand how the conclusions connect to their chart?
 3. Is the English clear to an everyday English-speaking customer?
-4. Are relevant money, career, love, and timing patterns specific and supported?
-5. Is needless repetition removed?
+4. Are relevant money, career, love, and timing themes specific and supported?
+5. Does each repeated chart feature add a distinct meaning where it is reused?
 6. Are uncertainty and missing birth data handled accurately?
-7. Does the final delivered PDF provide clear value to the customer?
+7. Does the delivered PDF provide clear value and remain readable on mobile and A4?
 
-Any failure of a CRITICAL criterion blocks approval. Do not claim customer satisfaction was measured without actual customer feedback.
+Do not claim customer satisfaction was measured without customer feedback. Do not claim a report passed a score threshold without a documented, evidence-based review.
 
 ## Release gate
-Confirm relevant calculation tests, real customer generation path, appropriately separated free preview and paid content, inspected generated PDF, verified payment and delivery flow, and customer-centered content review. Report any unverified items. Never claim 95/100, production readiness, or customer approval without evidence.
+Confirm relevant calculation tests, the real customer generation path, appropriate separation of free preview and paid content, an inspected generated PDF, and the payment and delivery flow. Report every unverified item. A quality score does not establish production readiness. Never claim customer approval without evidence.
 
-## Mandatory reporting for future paid-report work
+## Mandatory reporting for paid-report work
 State:
-- Which customer questions the change answers.
-- Which verified chart facts support the interpretation.
-- How personalization and natural English were evaluated.
-- Which tests and actual generated PDFs were reviewed.
+
+- Which customer questions changed and what the direct answers now say.
+- Which verified chart facts support the interpretations.
+- How distinct question purposes, personalization, uncertainty, and natural English were reviewed.
+- Which actual generated PDFs and tests were reviewed.
+- Prior and new scores when evidence supports comparable scoring, including deductions below target.
 - What remains unresolved or unverified.
 
-**Final principle:** The customer should understand the reading, recognize its connection to their own chart, and get meaningful answers to the questions they came with.
+## Change history — prior standard to this revision
+
+| Area | Previous standard | Revised standard | Reason |
+| --- | --- | --- | --- |
+| Direct answers | Put the personal conclusion first | Explicitly answer the customer's question in the first sentence | Makes answer placement testable |
+| Repetition | Avoid extensive repeated passages | Reuse chart evidence when each question gains a distinct implication | Avoids penalizing meaningful cross-question use |
+| Question distinction | Product-specific value and unique answers | Define separate purposes even for related questions | Clarifies personality, strengths, pressure, and relationship distinctions |
+| Product 07 | Avoid extensive repeated passages | Preserve included reports and assess the ten synthesis answers for added value | Prevents removing promised bundle content |
+| English | Everyday English | Simple, natural English; explain necessary terms briefly | Makes the reading standard more concrete |
+| Generic advice | No generic filler | Allow only brief, grounded practical advice that does not replace the answer | Keeps useful advice while stopping padding |
+| Timing | No unsupported timing | State uncertainty plainly; timing only when calculation supports it | Retains accuracy and improves customer clarity |
+| Unknown time | No invented birth details | Explicitly suppress unverified hour-pillar claims and uncertain cycles | Makes the safety requirement operational |
+| PDF review | Inspect actual PDFs | Inspect question answers and layout at mobile and A4 sizes | Separates content review from automation and print layout |
+| Scoring | 95 is not proof; no false release claims | Record evidence for deductions; never tune scores to target | Makes scoring auditable |
+
+The revision preserves the prior safeguards against invented chart evidence, unsupported timing, fabricated birth details, guaranteed predictions, test-only approval, and unnecessary changes to working calculation and payment systems.
+
+**Final principle:** The customer should understand the answer, recognize its connection to their own chart, and receive a distinct, meaningful response to each question.
