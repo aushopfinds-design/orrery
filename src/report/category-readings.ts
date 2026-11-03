@@ -54,13 +54,11 @@ export function buildBundleFromPlans(plans: ReturnType<typeof bundleInterpretati
     return found
   }
   const answer = (number: number, question: string, source: ReportChapter, timing?: string, collectionLead?: string) => {
-    const practicalStep = plainReadingText(source.tryThis || source.guidance.keepClose[0] || source.lead)
     return [
       `${String(number).padStart(2, '0')} · ${question}`,
       `Question: ${question}`,
       `Your Answer: ${plainReadingText(collectionLead ?? source.lead)}`,
       ...(timing ? [`Important Timing: ${plainReadingText(timing)}`] : []),
-      `Practical Step: ${practicalStep}`,
     ].join('\n\n')
   }
   const life = chapter(complete, 'personality')
@@ -78,35 +76,70 @@ export function buildBundleFromPlans(plans: ReturnType<typeof bundleInterpretati
   const relationshipFit = chapter(compatibility, 'two-styles')
   const challenge = chapter(complete, 'life-challenges')
   const yearTheme = chapter(annual, 'annual-theme')
-  const yearPeriods = chapter(annual, 'annual-plan')
   const longTerm = chapter(complete, 'patterns')
   const nextCycle = complete.periods[1]
-  const longTiming = nextCycle
-    ? `${nextCycle.period}. The longer period shifts emphasis toward ${nextCycle.headline.toLowerCase().replace(/ — repeated emphasis$/i, '')}.`
-    : longTerm.paragraphs.find(line => /\b20\d{2}\b/.test(line))
   const lifeTimeline = complete.periods.length
     ? complete.periods.map(period => `${period.period} · ${period.pillar}: ${period.paragraphs.join(' ')}`)
     : ['No ten-year cycle falls within the available calculated range.']
   const coreProfile = PERSONAL_PROFILES[plans.complete.primary.dayStem]
   const privateNeed = RELATIONSHIP_PROFILES[plans.complete.primary.dayBranch].need
   const workTheme = LANGUAGE[plans.complete.primary.monthStemGod].name.en
-  const coreAnswer = `At your core, you bring ${coreProfile.focus} to daily life. Your work pattern centres on ${workTheme}, while your private relationship need is ${privateNeed}.`
+  const coreAnswer = `Your core style centres on ${coreProfile.focus}. This is the personal quality that shapes how you approach everyday choices.`
   const blindSpot = plainReadingText(coreProfile.watchFor.at(-1) ?? coreProfile.watchFor[0])
   const strengthAnswer = `Your clearest strength is this: ${plainReadingText(coreProfile.strength)} A blind spot to watch for is ${blindSpot.charAt(0).toLowerCase()}${blindSpot.slice(1)}`
   const challengeAnswer = `Under pressure, ${plainReadingText(coreProfile.pressure).replace(/^[A-Z]/, letter => letter.toLowerCase())} This is a possible response to strain, not a prediction that a problem must happen.`
-  const earningPattern = plainReadingText(moneyFit.lead).replace(/^Direct answer:\s*/i, '').replace(/^Your chart /i, 'The chart ')
+  const primaryMoney = plans.complete.primary
+  const hasSteadyIncome = (items: { god: string }[]) => items.some(item => item.god === '正財')
+  const hasVariableIncome = (items: { god: string }[]) => items.some(item => item.god === '偏財')
+  const visibleSteady = hasSteadyIncome(primaryMoney.visibleMoney), visibleVariable = hasVariableIncome(primaryMoney.visibleMoney)
+  const hiddenSteady = hasSteadyIncome(primaryMoney.hiddenMoney), hiddenVariable = hasVariableIncome(primaryMoney.hiddenMoney)
+  const collectionMoneyAnswer = visibleSteady && visibleVariable
+    ? 'Your chart supports both repeat income and new deals or projects; each route needs different cash planning.'
+    : visibleSteady
+      ? 'Regular pay or repeat work is the clearer income route in your visible chart.'
+      : visibleVariable
+        ? 'New customers or project fees stand out more than a fixed pay route in your visible chart.'
+        : hiddenSteady && hiddenVariable
+          ? 'Both repeat pay and project income appear in less visible chart signs; neither indicates how much you will earn.'
+          : hiddenSteady
+            ? 'A possible regular-pay route appears in less visible chart signs; the chart does not estimate its amount.'
+            : hiddenVariable
+              ? 'A possible customer or project income route appears in less visible chart signs; it is not a promise of sales.'
+              : 'The chart gives clearer clues about your work fit than about a direct source of income.'
+  const earningPattern = collectionMoneyAnswer
   const annualWindow = `${annual.months[0]?.label ?? 'the next twelve months'} through ${annual.months.at(-1)?.label ?? ''}`
-  const integratedCollectionAnswer = `The chart links your work pattern of ${workTheme} to your money pattern. ${earningPattern} That can affect the private time you need for ${privateNeed}. The annual comparison covers ${annualWindow}; it describes a timing theme, not a guaranteed event or income. Your priority is to choose work commitments that fit both the income pattern and that relationship need.`
+  const careerAnswer = `Your strongest work fit is a role centred on ${workTheme}. Look for a position where this is a regular task, not an occasional side responsibility.`
+  const relationshipAnswer = `Your relationship needs include ${privateNeed}.`
+  const partnerNeed = RELATIONSHIP_PROFILES[plans.compatibility.partner!.dayBranch].need
+  const dayPair = plans.compatibility.pairPatterns.find(row => row.left === 'day' && row.right === 'day')!
+  const dayFriction = dayPair.patterns.some(pattern => ['沖', '刑', '害', '破'].includes(pattern.type))
+  const dayLink = dayPair.patterns.some(pattern => pattern.type === '合')
+  const sharedNeed = privateNeed === partnerNeed
+  const pairFit = dayFriction
+    ? 'Your private styles can pull in different directions, so each person needs room for independent choices.'
+    : dayLink
+      ? sharedNeed ? 'The chart comparison supports shared plans, which builds on that common need.' : 'Your private styles support shared plans, while each person still needs a different kind of care.'
+      : 'The chart shows no strong private-life link or clash; your stated needs are the clearest guide to how you fit.'
+  const partnerAnswer = `${sharedNeed ? `You share a need for ${privateNeed}.` : `Your needs differ: you value ${privateNeed}, while your partner values ${partnerNeed}.`} ${pairFit}`
+  const annualGod = LANGUAGE[plans.annual.annual[0].god]
+  const annualInner = LANGUAGE[plans.annual.annual[0].innerGod]
+  const annualWork = annualGod.work.en.split(/(?<=[.!?])\s/)[0].replace(/[.!?]+$/u, '').toLowerCase()
+  const annualRelationship = annualInner.love.en.split(/(?<=[.!?])\s/)[0].replace(/[.!?]+$/u, '').toLowerCase()
+  const annualSummary = `For ${annualWindow}, ${annualWork}. In close relationships, ${annualRelationship}. These are themes to compare with real choices, not promised events.`
+  const longerShift = nextCycle
+    ? `${nextCycle.period}. The longer-period emphasis moves toward ${nextCycle.headline.toLowerCase().replace(/ — repeated emphasis$/i, '')}.`
+    : 'No further ten-year period is available in the supported calculation range, so this report does not add a later date.'
+  const integratedCollectionAnswer = `Your work pattern centres on ${workTheme}; earning through it also depends on what you can deliver and collect. Your relationships need room for ${privateNeed}, so time is part of the money decision too. The full year runs ${annualWindow}; use its timing themes to review commitments, not predict results.`
   const collectionQuestions = [
     answer(1, 'What kind of person are you at your core?', life, undefined, coreAnswer),
     answer(2, 'Which strengths help you most, and what can get in your way?', strengthsOverview, undefined, strengthAnswer),
-    answer(3, 'What kind of work is the best fit for you?', careerFit),
-    answer(4, 'How are you most likely to earn and manage money?', moneyFit),
-    answer(5, 'What do you need from a close relationship?', relationshipNeed),
-    answer(6, 'How do you and your partner fit together?', relationshipFit),
+    answer(3, 'What kind of work is the best fit for you?', careerFit, undefined, careerAnswer),
+    answer(4, 'How are you most likely to earn and manage money?', moneyFit, undefined, earningPattern),
+    answer(5, 'What do you need from a close relationship?', relationshipNeed, undefined, relationshipAnswer),
+    answer(6, 'How do you and your partner fit together?', relationshipFit, undefined, partnerAnswer),
     answer(7, 'What recurring challenge deserves your attention?', challenge, undefined, challengeAnswer),
-    answer(8, 'What should you know about the next 12 months?', yearTheme, `${annual.months[0]?.label ?? ''} through ${annual.months.at(-1)?.label ?? ''}. ${yearPeriods.lead}`),
-    answer(9, 'When could a longer-term life or work shift deserve attention?', longTerm, longTiming),
+    answer(8, 'What should you know about the next 12 months?', yearTheme, undefined, annualSummary),
+    answer(9, 'When could a longer-term life or work shift deserve attention?', longTerm, undefined, longerShift),
     [
       '10 · How Do Your Life, Love, Work and Timing Fit Together?',
       'Question: How do these parts of your life connect?',
