@@ -88,26 +88,22 @@ export async function issueReport(input: OrderInput, orderId: string, referenceY
     cards: [buildDestinyCard(input.first, input.recipientName ?? ''), ...(input.second ? [buildDestinyCard(input.second, 'Your partner')] : [])], pdf: '',
     ...(input.kind === 'career' ? { careerCharts: careerMoneyChartData(a, referenceYear) } : {}),
   }
-  // Sandbox-only integration: inspect all standalone product question sections without
-  // altering payment, delivery, the calculation engine, or live customer behavior.
-  // Bundle has its own outline and is deliberately not marked as passing until
-  // a collection-specific structured audit is implemented.
+  // Sandbox diagnostics are observational only. Never block a paid order based
+  // on an uncalibrated heuristic score. Question boundaries use the actual
+  // "Question:" labels emitted by applyBuyerQuestions.
   if (mode === 'test') {
     const expected = input.kind === 'bundle' ? [] : BUYER_QUESTIONS[input.kind].map(item => item.question)
-    const sections = expected.map((question, index) => {
-      const start = report.text.indexOf(question)
-      const next = expected.slice(index + 1)
-        .map(q => report.text.indexOf(q, Math.max(0, start + question.length)))
-        .filter(position => position >= 0)
-      const end = next.length ? Math.min(...next) : report.text.length
-      return { question, answer: start < 0 ? '' : report.text.slice(start + question.length, end).trim() }
-    })
+    const matches = [...report.text.matchAll(/(?:^|\\n)Question: ([^\\n]+)\\n/g)]
+    const sections = matches.map((match, index) => ({
+      question: match[1].trim(),
+      answer: report.text.slice(match.index! + match[0].length, matches[index + 1]?.index ?? report.text.length).trim(),
+    }))
     report.qualityAudit = inspectReport({
       productId: input.kind, expectedQuestions: expected,
       questions: sections,
       birthTimeKnown: !input.first.unknownTime && (!input.second || !input.second.unknownTime),
-      usesHourPillar: false, // Not inferred from prose; requires a separate semantic audit.
-      calculationVerified: false, // Fail closed until verified audit evidence is wired.
+      usesHourPillar: false, // Semantic verification is not implemented.
+      calculationVerified: false, // Fail closed; do not invent independent evidence.
     })
   }
   const pdf = await reportPdf(report, orderId, reportEmphasis(source), mode)
