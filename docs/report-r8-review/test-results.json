@@ -1,0 +1,233 @@
+{
+  "numPassedTests": 548,
+  "numFailedTests": 0,
+  "numPendingTests": 0,
+  "numTotalTests": 548,
+  "files": 43,
+  "suites": [
+    {
+      "file": "server/admin-review/operators-guide.test.ts",
+      "status": "passed",
+      "tests": 3
+    },
+    {
+      "file": "server/admin-review/review-ui.test.ts",
+      "status": "passed",
+      "tests": 9
+    },
+    {
+      "file": "server/admin-review/review.test.ts",
+      "status": "passed",
+      "tests": 36
+    },
+    {
+      "file": "server/payments/payments.test.ts",
+      "status": "passed",
+      "tests": 26
+    },
+    {
+      "file": "server/payments/report-style.test.ts",
+      "status": "passed",
+      "tests": 1
+    },
+    {
+      "file": "src/i18n/locales.test.ts",
+      "status": "passed",
+      "tests": 15
+    },
+    {
+      "file": "src/publishing/public-pages.test.ts",
+      "status": "passed",
+      "tests": 8
+    },
+    {
+      "file": "src/report/category-readings.test.ts",
+      "status": "passed",
+      "tests": 13
+    },
+    {
+      "file": "src/report/category-topic-quality.test.ts",
+      "status": "passed",
+      "tests": 5
+    },
+    {
+      "file": "src/report/complete-reading.test.ts",
+      "status": "passed",
+      "tests": 13
+    },
+    {
+      "file": "src/report/decision-focus.test.tsx",
+      "status": "passed",
+      "tests": 7
+    },
+    {
+      "file": "src/report/destiny-card.test.tsx",
+      "status": "passed",
+      "tests": 7
+    },
+    {
+      "file": "src/report/editorial-narrative.test.ts",
+      "status": "passed",
+      "tests": 7
+    },
+    {
+      "file": "src/report/personal-examples.test.ts",
+      "status": "passed",
+      "tests": 8
+    },
+    {
+      "file": "src/report/personal-preview.test.ts",
+      "status": "passed",
+      "tests": 10
+    },
+    {
+      "file": "src/report/preview-flow.test.ts",
+      "status": "passed",
+      "tests": 8
+    },
+    {
+      "file": "src/report/pricing.test.ts",
+      "status": "passed",
+      "tests": 5
+    },
+    {
+      "file": "src/report/reading.editorial.test.ts",
+      "status": "passed",
+      "tests": 3
+    },
+    {
+      "file": "src/report/reading.international-customers.test.ts",
+      "status": "passed",
+      "tests": 4
+    },
+    {
+      "file": "src/report/reading.quality.test.ts",
+      "status": "passed",
+      "tests": 6
+    },
+    {
+      "file": "src/report/reading.test.ts",
+      "status": "passed",
+      "tests": 11
+    },
+    {
+      "file": "src/report/report-applications.test.ts",
+      "status": "passed",
+      "tests": 9
+    },
+    {
+      "file": "src/report/report-extras.test.ts",
+      "status": "passed",
+      "tests": 9
+    },
+    {
+      "file": "src/report/review-fixes.test.ts",
+      "status": "passed",
+      "tests": 9
+    },
+    {
+      "file": "src/report/revision-r6.test.ts",
+      "status": "passed",
+      "tests": 3
+    },
+    {
+      "file": "src/report/solar-term-boundary.test.ts",
+      "status": "passed",
+      "tests": 3
+    },
+    {
+      "file": "src/report/solar-term.official-2026.test.ts",
+      "status": "passed",
+      "tests": 2
+    },
+    {
+      "file": "src/report/traditional-r8.test.ts",
+      "status": "passed",
+      "tests": 7
+    },
+    {
+      "file": "src/utils/birth-form-state.test.ts",
+      "status": "passed",
+      "tests": 19
+    },
+    {
+      "file": "src/utils/city-search.test.ts",
+      "status": "passed",
+      "tests": 14
+    },
+    {
+      "file": "src/utils/coordinate-input.test.ts",
+      "status": "passed",
+      "tests": 5
+    },
+    {
+      "file": "src/utils/copy-text.test.ts",
+      "status": "passed",
+      "tests": 4
+    },
+    {
+      "file": "src/utils/profiles.test.ts",
+      "status": "passed",
+      "tests": 7
+    },
+    {
+      "file": "src/utils/reading-data.test.ts",
+      "status": "passed",
+      "tests": 3
+    },
+    {
+      "file": "src/utils/report-route.test.ts",
+      "status": "passed",
+      "tests": 15
+    },
+    {
+      "file": "src/utils/timezones.international.test.ts",
+      "status": "passed",
+      "tests": 10
+    },
+    {
+      "file": "src/utils/world-birthplaces.test.ts",
+      "status": "passed",
+      "tests": 14
+    },
+    {
+      "file": "packages/core/tests/natal.test.ts",
+      "status": "passed",
+      "tests": 71
+    },
+    {
+      "file": "packages/core/tests/pillars.test.ts",
+      "status": "passed",
+      "tests": 42
+    },
+    {
+      "file": "packages/core/tests/timezone.test.ts",
+      "status": "passed",
+      "tests": 52
+    },
+    {
+      "file": "packages/core/tests/ziwei.test.ts",
+      "status": "passed",
+      "tests": 21
+    },
+    {
+      "file": "src/components/report/BuyerReportPanel.test.tsx",
+      "status": "passed",
+      "tests": 15
+    },
+    {
+      "file": "src/components/report/CheckoutNavigation.test.tsx",
+      "status": "passed",
+      "tests": 9
+    }
+  ],
+  "checks": {
+    "typescript": "pass",
+    "changedImplementationEslint": "pass",
+    "viteBuild": "pass",
+    "staticPages": 21,
+    "livePaymentInvoked": false,
+    "liveTranslationProviderInvoked": false,
+    "productionDeployed": false
+  }
+}

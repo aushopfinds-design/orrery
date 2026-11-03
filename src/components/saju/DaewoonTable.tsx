@@ -69,26 +69,12 @@ export default function DaewoonTable({
 }: Props) {
   const { t } = useLocale()
 
-  if (daewoon.length === 0) {
-    return (
-      <section>
-        <h3 className="text-base font-medium text-gray-700 dark:text-gray-200 mb-2">大運</h3>
-        <p className="text-base text-gray-400 dark:text-gray-500">{t('saju.noData')}</p>
-      </section>
-    )
-  }
-
   const activeIdx = findActiveDaewoonIndex(daewoon)
   const [selectedIdx, setSelectedIdx] = useState(activeIdx)
   const activeRef = useRef<HTMLDivElement>(null)
   const scrollRef = useRef<HTMLDivElement>(null)
   const sewoonScrollRef = useRef<HTMLDivElement>(null)
   const sewoonActiveRef = useRef<HTMLDivElement>(null)
-
-  // 사주 재계산 시 선택 초기화
-  useEffect(() => {
-    setSelectedIdx(activeIdx)
-  }, [daewoon])
 
   useEffect(() => {
     if (activeRef.current && scrollRef.current) {
@@ -109,7 +95,7 @@ export default function DaewoonTable({
   const gmSet = useMemo(() => new Set(gongmangBranches), [gongmangBranches])
 
   const sewoonItems = useMemo(() => {
-    if (selectedIdx < 0) return []
+    if (selectedIdx < 0 || selectedIdx >= daewoon.length) return []
     const dw = daewoon[selectedIdx]
     const startYear = dw.startDate.getUTCFullYear()
     const endYear = selectedIdx + 1 < daewoon.length
@@ -119,6 +105,16 @@ export default function DaewoonTable({
   }, [selectedIdx, daewoon, birthYear, dayStem, yearBranch, gmSet])
 
   const currentYear = new Date().getFullYear()
+
+  if (daewoon.length === 0) {
+    return (
+      <section>
+        <h3 className="text-base font-medium text-gray-700 dark:text-gray-200 mb-2">大運</h3>
+        <p className="text-base text-gray-400 dark:text-gray-500">{t('saju.noData')}</p>
+      </section>
+    )
+  }
+
 
   return (
     <section className="space-y-4">

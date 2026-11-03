@@ -1,4 +1,5 @@
-import type { SavedFormState } from '../components/BirthForm.tsx'
+import type { SavedFormState } from './birth-form-state.ts'
+import { normalizeBirthFormState } from './birth-form-state.ts'
 
 export interface Profile {
   id: string
@@ -8,32 +9,42 @@ export interface Profile {
   data: SavedFormState
 }
 
-const STORAGE_KEY = 'orrery-profiles'
+export const PROFILES_STORAGE_KEY = 'orrery-profiles'
+
+function normalizeProfile(item: unknown): Profile | null {
+  if (!item || typeof item !== 'object') return null
+  const value = item as Record<string, unknown>
+  if (typeof value.id !== 'string' || !value.id || value.id.length > 200 || typeof value.name !== 'string' || !value.name.trim() || value.name.length > 120) return null
+  const data = normalizeBirthFormState(value.data)
+  if (!data) return null
+  return { id: value.id, name: value.name.trim(), createdAt: typeof value.createdAt === 'number' && Number.isFinite(value.createdAt) ? value.createdAt : Date.now(), updatedAt: typeof value.updatedAt === 'number' && Number.isFinite(value.updatedAt) ? value.updatedAt : Date.now(), data }
+}
 
 export function loadProfiles(): Profile[] {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY)
+    const raw = localStorage.getItem(PROFILES_STORAGE_KEY)
     if (!raw) return []
-    return JSON.parse(raw) as Profile[]
+    const items: unknown = JSON.parse(raw)
+    return Array.isArray(items) ? items.map(normalizeProfile).filter((item): item is Profile => item != null) : []
   } catch {
     return []
   }
 }
 
 function saveProfiles(profiles: Profile[]): void {
-  try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(profiles))
-  } catch { /* quota exceeded — ignore */ }
+  localStorage.setItem(PROFILES_STORAGE_KEY, JSON.stringify(profiles))
 }
 
 export function addProfile(name: string, data: SavedFormState): Profile {
+  const validData = normalizeBirthFormState(data)
+  if (!validData || !name.trim() || name.trim().length > 120) throw new Error('Invalid saved birth details')
   const profiles = loadProfiles()
   const profile: Profile = {
     id: crypto.randomUUID(),
     name: name.trim(),
     createdAt: Date.now(),
     updatedAt: Date.now(),
-    data,
+    data: validData,
   }
   profiles.push(profile)
   saveProfiles(profiles)
@@ -44,8 +55,15 @@ export function updateProfile(id: string, patch: { name?: string; data?: SavedFo
   const profiles = loadProfiles()
   const idx = profiles.findIndex(p => p.id === id)
   if (idx === -1) return
-  if (patch.name !== undefined) profiles[idx].name = patch.name.trim()
-  if (patch.data !== undefined) profiles[idx].data = patch.data
+  if (patch.name !== undefined) {
+    if (!patch.name.trim() || patch.name.trim().length > 120) throw new Error('Invalid saved name')
+    profiles[idx].name = patch.name.trim()
+  }
+  if (patch.data !== undefined) {
+    const data = normalizeBirthFormState(patch.data)
+    if (!data) throw new Error('Invalid saved birth details')
+    profiles[idx].data = data
+  }
   profiles[idx].updatedAt = Date.now()
   saveProfiles(profiles)
 }
@@ -68,15 +86,16 @@ export function importProfiles(json: string): number {
   const now = Date.now()
   let added = 0
   for (const item of parsed) {
-    if (!item || typeof item.name !== 'string' || !item.data) continue
-    if (item.id && existingIds.has(item.id)) continue
-    existing.push({
+    if (!item || typeof item !== 'object' || Array.isArray(item)) continue
+    const candidate = normalizeProfile({
+      ...item,
       id: item.id ?? crypto.randomUUID(),
-      name: item.name,
       createdAt: item.createdAt ?? now,
       updatedAt: item.updatedAt ?? now,
-      data: item.data,
     })
+    if (!candidate || existingIds.has(candidate.id)) continue
+    existing.push(candidate)
+    existingIds.add(candidate.id)
     added++
   }
   saveProfiles(existing)

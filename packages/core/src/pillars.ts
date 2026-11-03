@@ -30,11 +30,6 @@ function div(a: number, b: number): number {
   return Math.trunc(a / b);
 }
 
-/** Python 호환 모듈로 (항상 양수) */
-function pymod(a: number, b: number): number {
-  return ((a % b) + b) % b;
-}
-
 // =============================================
 // 절기 상수 (월 시작분)
 // =============================================
@@ -281,6 +276,18 @@ export function calcPillarIndices(
   t = t * 12 + 2 + so24monthIdx;
   let so24month = t;
   if (so24month > 59) so24month -= 60;
+
+  // 2026 Li Chun independently verified against the Hong Kong Observatory.
+  // The legacy mean-term approximation switches 24 minutes too early.
+  // This bounded correction avoids changing other years without verified ephemerides.
+  // HKO: 2026-02-04 04:02 HKT = 2026-02-04 05:02 KST.
+  const liChun2026 = Date.UTC(2026, 1, 4, 5, 2);
+  const approximate2026 = Date.UTC(2026, 1, 4, 4, 38);
+  const inputMinute = Date.UTC(year, month - 1, day, hour, min);
+  if (inputMinute >= approximate2026 && inputMinute < liChun2026) {
+    so24year = 41; // 乙巳
+    so24month = 25; // 己丑
+  }
 
   // 일주
   let so24day = displ2day % 60;
@@ -627,7 +634,7 @@ export function calculateInjongbeop(
 
     // 해당 카테고리의 오행 찾기
     let targetElement: Element | null = null;
-    for (const [el, info] of Object.entries(STEM_INFO)) {
+    for (const info of Object.values(STEM_INFO)) {
       if (info.yinyang !== '+') continue;
       const inter = getInteraction(dayInfo.element, info.element);
       if (inter && cat.interactions.includes(inter)) {
@@ -886,7 +893,7 @@ export function findTransits(
   const step = backward ? -msPerDay : msPerDay;
 
   while (backward ? current >= endDate : current <= endDate) {
-    const [yearP, monthP, dayP] = getFourPillars(
+    const [, monthP, dayP] = getFourPillars(
       current.getFullYear(), current.getMonth() + 1, current.getDate(), 12, 0,
     );
 

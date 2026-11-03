@@ -1,0 +1,49 @@
+{
+  "basis": "Assistant editorial assessment of the new review reports, not payment activation or independent reader certification.",
+  "products": [
+    {
+      "product": "complete",
+      "name": "종합 인생",
+      "contentReady": false,
+      "reason": "성향·일·돈·관계는 설명하지만, 인생이 유리하게 바뀌는 시기를 충분히 가려내지 못함"
+    },
+    {
+      "product": "compatibility",
+      "name": "두 사람의 궁합",
+      "contentReady": true,
+      "scope": "두 사람의 차이·끌림·갈등·생활 방식과 연도별 주제를 설명하는 범위",
+      "remaining": "결혼·이별 여부나 관계가 좋아지는 날짜를 확정하는 상품으로 판매하면 안 됨"
+    },
+    {
+      "product": "year",
+      "name": "올해의 운세",
+      "contentReady": false,
+      "reason": "12개월 주제와 주의점은 있지만 좋은 달을 고르는 근거가 부족함"
+    },
+    {
+      "product": "career",
+      "name": "직업·재물",
+      "contentReady": false,
+      "reason": "맞는 일과 돈을 다루는 방식은 설명하지만 이직·승진·재물에 유리한 시기의 설명이 부족함"
+    },
+    {
+      "product": "business",
+      "name": "사업",
+      "contentReady": false,
+      "reason": "사업 방식과 동업의 주의점은 있지만 창업·확장에 유리한 시기를 충분히 설명하지 못함"
+    },
+    {
+      "product": "wellbeing",
+      "name": "성향·강점과 약점",
+      "contentReady": true,
+      "scope": "타고난 기질·생활 방식·관계에서 필요한 배려를 설명하는 범위",
+      "remaining": "건강 진단이나 미래 건강 사건을 알려주는 상품은 아님"
+    },
+    {
+      "product": "bundle",
+      "name": "전체 묶음",
+      "contentReady": false,
+      "reason": "보강이 필요한 종합·올해 리포트가 포함됨"
+    }
+  ]
+}

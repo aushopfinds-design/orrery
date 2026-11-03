@@ -1,0 +1,17 @@
+{
+  "checks": {
+    "noPersonalContextScaffolding": true,
+    "noDuplicateTheFocusThePeriodSentences": true,
+    "noMachineDateInMonthlyActions": true,
+    "englishTableRowsContiguous": true,
+    "koreanTableRowsContiguous": true,
+    "mixedOpportunityLabelPresent": true,
+    "noInventedCalmLabel": true,
+    "all24TimingStatesUnchanged": true,
+    "all168ReportsHaveSources": true
+  },
+  "words": 9958,
+  "exactRepeatedLongLinePercent": 20.0,
+  "metricScope": "Exact lines over 65 characters excluding headings and table rows; not semantic originality or customer satisfaction.",
+  "readiness": "Internal content release recommendation within stated traditional-interpretation scope, not production launch, expert certification or reader study."
+}

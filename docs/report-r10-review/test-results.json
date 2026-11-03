@@ -1,0 +1,14 @@
+{
+  "edition": "2026.10-r10",
+  "passed": 605,
+  "failed": 0,
+  "total": 605,
+  "population": 24,
+  "typescript": "passed",
+  "changedImplementationLint": "passed",
+  "viteBuild": "passed",
+  "publicSampleGeneration": "passed",
+  "livePaymentsTested": false,
+  "authenticatedRealUserTested": false,
+  "populationCasesSplitIndividually": true
+}

@@ -24,9 +24,6 @@ export default function NatalView({ input }: Props) {
 
   useEffect(() => {
     let cancelled = false
-    setLoading(true)
-    setError(null)
-    setChart(null)
 
     calculateNatal(input, houseSystem)
       .then(result => {

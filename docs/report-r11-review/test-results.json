@@ -1,0 +1,22 @@
+{
+  "edition": "2026.10-r11",
+  "fullSuite": {
+    "passed": 684,
+    "failed": 0,
+    "total": 684
+  },
+  "focusedAfterSeparatingPatternAndBalancingGates": {
+    "passed": 55,
+    "failed": 0
+  },
+  "population": 24,
+  "productsPerChart": 7,
+  "generatedPaths": 168,
+  "typescript": "passed",
+  "implementationLint": "passed",
+  "viteBuild": "passed",
+  "publicSampleGeneration": "passed",
+  "livePaymentsTested": false,
+  "authenticatedRealUserTested": false,
+  "releaseVerdict": "Full traditional-structure/useful-element completion and all-sentence bilingual review are not established. Preview-only review."
+}

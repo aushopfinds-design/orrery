@@ -1,5 +1,6 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useLocale } from '../i18n/index.ts'
+import { copyText } from '../utils/copy-text.ts'
 
 interface Props {
   getText: () => string | Promise<string>
@@ -8,33 +9,33 @@ interface Props {
 
 export default function CopyButton({ getText, label }: Props) {
   const { t } = useLocale()
-  const [copied, setCopied] = useState(false)
+  const [status, setStatus] = useState<'idle' | 'copying' | 'copied' | 'error'>('idle')
+  useEffect(() => {
+    if (status === 'idle' || status === 'copying') return
+    const timer = setTimeout(() => setStatus('idle'), 3000)
+    return () => clearTimeout(timer)
+  }, [status])
 
   async function handleClick() {
-    const text = await getText()
+    setStatus('copying')
     try {
-      await navigator.clipboard.writeText(text)
-      setCopied(true)
-      setTimeout(() => setCopied(false), 2000)
+      await copyText(await getText())
+      setStatus('copied')
     } catch {
-      // fallback
-      const textarea = document.createElement('textarea')
-      textarea.value = text
-      document.body.appendChild(textarea)
-      textarea.select()
-      document.execCommand('copy')
-      document.body.removeChild(textarea)
-      setCopied(true)
-      setTimeout(() => setCopied(false), 2000)
+      setStatus('error')
     }
   }
 
   return (
     <button
+      type="button"
       onClick={handleClick}
+      disabled={status === 'copying'}
+      aria-busy={status === 'copying'}
+      aria-live="polite"
       className="px-3 py-1 text-sm border border-gray-300 dark:border-gray-600 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors text-gray-600 dark:text-gray-300 whitespace-nowrap"
     >
-      {copied ? t('copy.copied') : (label ?? t('copy.copy'))}
+      {status === 'copied' ? t('copy.copied') : status === 'error' ? t('copy.failed') : status === 'copying' ? t('copy.copying') : (label ?? t('copy.copy'))}
     </button>
   )
 }

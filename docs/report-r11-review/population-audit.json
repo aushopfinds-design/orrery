@@ -1,0 +1,2658 @@
+{
+  "edition": "2026.10-r11",
+  "fictionalPopulation": true,
+  "charts": [
+    {
+      "input": {
+        "year": 1960,
+        "month": 1,
+        "day": 5,
+        "hour": 3,
+        "minute": 0,
+        "gender": "M",
+        "timezone": "America/New_York",
+        "latitude": 40.7128,
+        "longitude": -74.006,
+        "unknownTime": true
+      },
+      "pillars": [
+        "壬辰",
+        "丙子",
+        "己亥"
+      ],
+      "strength": "deferred",
+      "resolution": {
+        "policy": "FATE-ordinary-structure-r1",
+        "pattern": {
+          "status": "withheld",
+          "god": null,
+          "stem": null,
+          "exposedAt": [],
+          "seasonalGod": "劫財"
+        },
+        "circuits": [
+          {
+            "code": "money-to-authority",
+            "evidence": [
+              {
+                "position": "month",
+                "stem": "丙",
+                "god": "偏財",
+                "layer": "stem"
+              },
+              {
+                "position": "year",
+                "stem": "己",
+                "god": "正官",
+                "layer": "stem"
+              }
+            ]
+          }
+        ],
+        "risks": [],
+        "seasonalContext": "winter",
+        "useful": {
+          "status": "withheld",
+          "method": "ordinary-chart-balancing",
+          "element": null,
+          "route": null,
+          "witnesses": [],
+          "reasons": [
+            "unknown-hour",
+            "unresolved-strength",
+            "climate-priority-unresolved",
+            "no-supported-single-route"
+          ]
+        },
+        "patternAssessment": {
+          "status": "unresolved",
+          "route": null,
+          "reasons": [
+            "unknown-hour",
+            "unresolved-strength",
+            "climate-priority-unresolved",
+            "no-supported-single-route",
+            "peer-led-month",
+            "no-clear-exposed-month-anchor",
+            "pattern-route-unresolved"
+          ]
+        },
+        "patternSuccess": "not-certified",
+        "transformation": "not-assumed",
+        "climatePrescription": null
+      }
+    },
+    {
+      "input": {
+        "year": 1961,
+        "month": 2,
+        "day": 6,
+        "hour": 9,
+        "minute": 15,
+        "gender": "F",
+        "timezone": "Asia/Seoul",
+        "latitude": 37.5665,
+        "longitude": 126.978,
+        "unknownTime": false
+      },
+      "pillars": [
+        "辛巳",
+        "庚午",
+        "庚寅",
+        "辛丑"
+      ],
+      "strength": "mixed",
+      "resolution": {
+        "policy": "FATE-ordinary-structure-r1",
+        "pattern": {
+          "status": "unresolved",
+          "god": null,
+          "stem": null,
+          "exposedAt": [],
+          "seasonalGod": "偏財"
+        },
+        "circuits": [
+          {
+            "code": "money-to-authority",
+            "evidence": [
+              {
+                "position": "day",
+                "stem": "丁",
+                "god": "正官",
+                "layer": "principal"
+              },
+              {
+                "position": "month",
+                "stem": "甲",
+                "god": "偏財",
+                "layer": "principal"
+              }
+            ]
+          },
+          {
+            "code": "authority-to-resource",
+            "evidence": [
+              {
+                "position": "hour",
+                "stem": "丙",
+                "god": "偏官",
+                "layer": "principal"
+              },
+              {
+                "position": "day",
+                "stem": "丁",
+                "god": "正官",
+                "layer": "principal"
+              },
+              {
+                "position": "year",
+                "stem": "己",
+                "god": "正印",
+                "layer": "principal"
+              }
+            ]
+          }
+        ],
+        "risks": [],
+        "seasonalContext": "transitional",
+        "useful": {
+          "status": "withheld",
+          "method": "ordinary-chart-balancing",
+          "element": null,
+          "route": null,
+          "witnesses": [],
+          "reasons": [
+            "unresolved-strength",
+            "month-branch-friction",
+            "no-supported-single-route"
+          ]
+        },
+        "patternAssessment": {
+          "status": "unresolved",
+          "route": null,
+          "reasons": [
+            "unresolved-strength",
+            "month-branch-friction",
+            "no-supported-single-route",
+            "no-clear-exposed-month-anchor",
+            "pattern-route-unresolved"
+          ]
+        },
+        "patternSuccess": "not-certified",
+        "transformation": "not-assumed",
+        "climatePrescription": null
+      }
+    },
+    {
+      "input": {
+        "year": 1962,
+        "month": 3,
+        "day": 7,
+        "hour": 3,
+        "minute": 0,
+        "gender": "M",
+        "timezone": "America/New_York",
+        "latitude": 40.7128,
+        "longitude": -74.006,
+        "unknownTime": false
+      },
+      "pillars": [
+        "乙丑",
+        "甲辰",
+        "癸卯",
+        "壬寅"
+      ],
+      "strength": "deferred",
+      "resolution": {
+        "policy": "FATE-ordinary-structure-r1",
+        "pattern": {
+          "status": "withheld",
+          "god": null,
+          "stem": null,
+          "exposedAt": [],
+          "seasonalGod": "劫財"
+        },
+        "circuits": [],
+        "risks": [],
+        "seasonalContext": "transitional",
+        "useful": {
+          "status": "withheld",
+          "method": "ordinary-chart-balancing",
+          "element": null,
+          "route": null,
+          "witnesses": [],
+          "reasons": [
+            "special-structure-or-combination",
+            "unresolved-strength",
+            "month-branch-friction",
+            "no-supported-single-route"
+          ]
+        },
+        "patternAssessment": {
+          "status": "unresolved",
+          "route": null,
+          "reasons": [
+            "special-structure-or-combination",
+            "unresolved-strength",
+            "month-branch-friction",
+            "no-supported-single-route",
+            "peer-led-month",
+            "no-clear-exposed-month-anchor",
+            "pattern-route-unresolved"
+          ]
+        },
+        "patternSuccess": "not-certified",
+        "transformation": "not-assumed",
+        "climatePrescription": null
+      }
+    },
+    {
+      "input": {
+        "year": 1963,
+        "month": 4,
+        "day": 8,
+        "hour": 9,
+        "minute": 15,
+        "gender": "F",
+        "timezone": "Asia/Seoul",
+        "latitude": 37.5665,
+        "longitude": 126.978,
+        "unknownTime": false
+      },
+      "pillars": [
+        "壬辰",
+        "辛巳",
+        "丙辰",
+        "癸卯"
+      ],
+      "strength": "mixed",
+      "resolution": {
+        "policy": "FATE-ordinary-structure-r1",
+        "pattern": {
+          "status": "month-anchored",
+          "god": "食神",
+          "stem": "癸",
+          "exposedAt": [
+            "year"
+          ],
+          "seasonalGod": "正印"
+        },
+        "circuits": [
+          {
+            "code": "output-to-money",
+            "evidence": [
+              {
+                "position": "hour",
+                "stem": "壬",
+                "god": "傷官",
+                "layer": "stem"
+              },
+              {
+                "position": "year",
+                "stem": "癸",
+                "god": "食神",
+                "layer": "stem"
+              },
+              {
+                "position": "year",
+                "stem": "乙",
+                "god": "偏財",
+                "layer": "principal"
+              }
+            ]
+          },
+          {
+            "code": "money-to-authority",
+            "evidence": [
+              {
+                "position": "month",
+                "stem": "丙",
+                "god": "正官",
+                "layer": "stem"
+              },
+              {
+                "position": "day",
+                "stem": "丙",
+                "god": "正官",
+                "layer": "principal"
+              },
+              {
+                "position": "year",
+                "stem": "乙",
+                "god": "偏財",
+                "layer": "principal"
+              }
+            ]
+          },
+          {
+            "code": "authority-to-resource",
+            "evidence": [
+              {
+                "position": "month",
+                "stem": "丙",
+                "god": "正官",
+                "layer": "stem"
+              },
+              {
+                "position": "hour",
+                "stem": "戊",
+                "god": "正印",
+                "layer": "principal"
+              },
+              {
+                "position": "day",
+                "stem": "丙",
+                "god": "正官",
+                "layer": "principal"
+              },
+              {
+                "position": "month",
+                "stem": "戊",
+                "god": "正印",
+                "layer": "principal"
+              }
+            ]
+          }
+        ],
+        "risks": [
+          {
+            "code": "expression-versus-authority",
+            "evidence": [
+              {
+                "position": "hour",
+                "stem": "壬",
+                "god": "傷官",
+                "layer": "stem"
+              },
+              {
+                "position": "month",
+                "stem": "丙",
+                "god": "正官",
+                "layer": "stem"
+              },
+              {
+                "position": "day",
+                "stem": "丙",
+                "god": "正官",
+                "layer": "principal"
+              }
+            ]
+          }
+        ],
+        "seasonalContext": "transitional",
+        "useful": {
+          "status": "withheld",
+          "method": "ordinary-chart-balancing",
+          "element": null,
+          "route": null,
+          "witnesses": [],
+          "reasons": [
+            "unresolved-strength",
+            "competing-exposed-relationships",
+            "month-branch-friction",
+            "no-supported-single-route"
+          ]
+        },
+        "patternAssessment": {
+          "status": "unresolved",
+          "route": null,
+          "reasons": [
+            "unresolved-strength",
+            "competing-exposed-relationships",
+            "month-branch-friction",
+            "no-supported-single-route",
+            "pattern-route-unresolved"
+          ]
+        },
+        "patternSuccess": "not-certified",
+        "transformation": "not-assumed",
+        "climatePrescription": null
+      }
+    },
+    {
+      "input": {
+        "year": 1964,
+        "month": 5,
+        "day": 9,
+        "hour": 3,
+        "minute": 0,
+        "gender": "M",
+        "timezone": "America/New_York",
+        "latitude": 40.7128,
+        "longitude": -74.006,
+        "unknownTime": false
+      },
+      "pillars": [
+        "癸丑",
+        "戊午",
+        "己巳",
+        "甲辰"
+      ],
+      "strength": "supported",
+      "resolution": {
+        "policy": "FATE-ordinary-structure-r1",
+        "pattern": {
+          "status": "unresolved",
+          "god": null,
+          "stem": null,
+          "exposedAt": [],
+          "seasonalGod": "偏印"
+        },
+        "circuits": [
+          {
+            "code": "authority-to-resource",
+            "evidence": [
+              {
+                "position": "year",
+                "stem": "甲",
+                "god": "偏官",
+                "layer": "stem"
+              },
+              {
+                "position": "day",
+                "stem": "丁",
+                "god": "正印",
+                "layer": "principal"
+              },
+              {
+                "position": "month",
+                "stem": "丙",
+                "god": "偏印",
+                "layer": "principal"
+              }
+            ]
+          }
+        ],
+        "risks": [
+          {
+            "code": "money-adds-pressure",
+            "evidence": [
+              {
+                "position": "hour",
+                "stem": "癸",
+                "god": "正財",
+                "layer": "stem"
+              },
+              {
+                "position": "year",
+                "stem": "甲",
+                "god": "偏官",
+                "layer": "stem"
+              }
+            ]
+          }
+        ],
+        "seasonalContext": "summer",
+        "useful": {
+          "status": "withheld",
+          "method": "ordinary-chart-balancing",
+          "element": null,
+          "route": null,
+          "witnesses": [],
+          "reasons": [
+            "climate-priority-unresolved",
+            "competing-exposed-relationships",
+            "no-supported-single-route"
+          ]
+        },
+        "patternAssessment": {
+          "status": "unresolved",
+          "route": null,
+          "reasons": [
+            "climate-priority-unresolved",
+            "competing-exposed-relationships",
+            "no-supported-single-route",
+            "no-clear-exposed-month-anchor",
+            "pattern-route-unresolved"
+          ]
+        },
+        "patternSuccess": "not-certified",
+        "transformation": "not-assumed",
+        "climatePrescription": null
+      }
+    },
+    {
+      "input": {
+        "year": 1965,
+        "month": 6,
+        "day": 10,
+        "hour": 9,
+        "minute": 15,
+        "gender": "F",
+        "timezone": "Asia/Seoul",
+        "latitude": 37.5665,
+        "longitude": 126.978,
+        "unknownTime": true
+      },
+      "pillars": [
+        "乙未",
+        "壬午",
+        "乙巳"
+      ],
+      "strength": "deferred",
+      "resolution": {
+        "policy": "FATE-ordinary-structure-r1",
+        "pattern": {
+          "status": "withheld",
+          "god": null,
+          "stem": null,
+          "exposedAt": [],
+          "seasonalGod": "食神"
+        },
+        "circuits": [
+          {
+            "code": "output-to-money",
+            "evidence": [
+              {
+                "position": "day",
+                "stem": "己",
+                "god": "偏財",
+                "layer": "principal"
+              },
+              {
+                "position": "month",
+                "stem": "丁",
+                "god": "食神",
+                "layer": "principal"
+              },
+              {
+                "position": "year",
+                "stem": "丙",
+                "god": "傷官",
+                "layer": "principal"
+              }
+            ]
+          }
+        ],
+        "risks": [],
+        "seasonalContext": "summer",
+        "useful": {
+          "status": "withheld",
+          "method": "ordinary-chart-balancing",
+          "element": null,
+          "route": null,
+          "witnesses": [],
+          "reasons": [
+            "unknown-hour",
+            "special-structure-or-combination",
+            "unresolved-strength",
+            "climate-priority-unresolved",
+            "no-supported-single-route"
+          ]
+        },
+        "patternAssessment": {
+          "status": "unresolved",
+          "route": null,
+          "reasons": [
+            "unknown-hour",
+            "special-structure-or-combination",
+            "unresolved-strength",
+            "climate-priority-unresolved",
+            "no-supported-single-route",
+            "no-clear-exposed-month-anchor",
+            "pattern-route-unresolved"
+          ]
+        },
+        "patternSuccess": "not-certified",
+        "transformation": "not-assumed",
+        "climatePrescription": null
+      }
+    },
+    {
+      "input": {
+        "year": 1966,
+        "month": 7,
+        "day": 11,
+        "hour": 3,
+        "minute": 0,
+        "gender": "M",
+        "timezone": "America/New_York",
+        "latitude": 40.7128,
+        "longitude": -74.006,
+        "unknownTime": false
+      },
+      "pillars": [
+        "己丑",
+        "辛未",
+        "乙未",
+        "丙午"
+      ],
+      "strength": "mixed",
+      "resolution": {
+        "policy": "FATE-ordinary-structure-r1",
+        "pattern": {
+          "status": "month-anchored",
+          "god": "偏印",
+          "stem": "己",
+          "exposedAt": [
+            "hour"
+          ],
+          "seasonalGod": "偏印"
+        },
+        "circuits": [
+          {
+            "code": "money-to-authority",
+            "evidence": [
+              {
+                "position": "month",
+                "stem": "乙",
+                "god": "偏財",
+                "layer": "stem"
+              },
+              {
+                "position": "year",
+                "stem": "丙",
+                "god": "正官",
+                "layer": "stem"
+              }
+            ]
+          },
+          {
+            "code": "authority-to-resource",
+            "evidence": [
+              {
+                "position": "hour",
+                "stem": "己",
+                "god": "偏印",
+                "layer": "stem"
+              },
+              {
+                "position": "year",
+                "stem": "丙",
+                "god": "正官",
+                "layer": "stem"
+              },
+              {
+                "position": "hour",
+                "stem": "己",
+                "god": "偏印",
+                "layer": "principal"
+              },
+              {
+                "position": "day",
+                "stem": "己",
+                "god": "偏印",
+                "layer": "principal"
+              },
+              {
+                "position": "month",
+                "stem": "己",
+                "god": "偏印",
+                "layer": "principal"
+              },
+              {
+                "position": "year",
+                "stem": "丁",
+                "god": "偏官",
+                "layer": "principal"
+              }
+            ]
+          }
+        ],
+        "risks": [
+          {
+            "code": "money-versus-resource",
+            "evidence": [
+              {
+                "position": "hour",
+                "stem": "己",
+                "god": "偏印",
+                "layer": "stem"
+              },
+              {
+                "position": "month",
+                "stem": "乙",
+                "god": "偏財",
+                "layer": "stem"
+              },
+              {
+                "position": "hour",
+                "stem": "己",
+                "god": "偏印",
+                "layer": "principal"
+              },
+              {
+                "position": "day",
+                "stem": "己",
+                "god": "偏印",
+                "layer": "principal"
+              },
+              {
+                "position": "month",
+                "stem": "己",
+                "god": "偏印",
+                "layer": "principal"
+              }
+            ]
+          }
+        ],
+        "seasonalContext": "summer",
+        "useful": {
+          "status": "withheld",
+          "method": "ordinary-chart-balancing",
+          "element": null,
+          "route": null,
+          "witnesses": [],
+          "reasons": [
+            "unresolved-strength",
+            "climate-priority-unresolved",
+            "competing-exposed-relationships",
+            "month-branch-friction",
+            "no-supported-single-route"
+          ]
+        },
+        "patternAssessment": {
+          "status": "unresolved",
+          "route": null,
+          "reasons": [
+            "unresolved-strength",
+            "climate-priority-unresolved",
+            "competing-exposed-relationships",
+            "month-branch-friction",
+            "no-supported-single-route",
+            "pattern-route-unresolved"
+          ]
+        },
+        "patternSuccess": "not-certified",
+        "transformation": "not-assumed",
+        "climatePrescription": null
+      }
+    },
+    {
+      "input": {
+        "year": 1967,
+        "month": 8,
+        "day": 12,
+        "hour": 9,
+        "minute": 15,
+        "gender": "F",
+        "timezone": "Asia/Seoul",
+        "latitude": 37.5665,
+        "longitude": 126.978,
+        "unknownTime": false
+      },
+      "pillars": [
+        "丙辰",
+        "戊申",
+        "戊申",
+        "丁未"
+      ],
+      "strength": "mixed",
+      "resolution": {
+        "policy": "FATE-ordinary-structure-r1",
+        "pattern": {
+          "status": "unresolved",
+          "god": null,
+          "stem": null,
+          "exposedAt": [],
+          "seasonalGod": "食神"
+        },
+        "circuits": [],
+        "risks": [],
+        "seasonalContext": "transitional",
+        "useful": {
+          "status": "withheld",
+          "method": "ordinary-chart-balancing",
+          "element": null,
+          "route": null,
+          "witnesses": [],
+          "reasons": [
+            "unresolved-strength",
+            "no-supported-single-route"
+          ]
+        },
+        "patternAssessment": {
+          "status": "unresolved",
+          "route": null,
+          "reasons": [
+            "unresolved-strength",
+            "no-supported-single-route",
+            "no-clear-exposed-month-anchor",
+            "pattern-route-unresolved"
+          ]
+        },
+        "patternSuccess": "not-certified",
+        "transformation": "not-assumed",
+        "climatePrescription": null
+      }
+    },
+    {
+      "input": {
+        "year": 1968,
+        "month": 9,
+        "day": 13,
+        "hour": 3,
+        "minute": 0,
+        "gender": "M",
+        "timezone": "America/New_York",
+        "latitude": 40.7128,
+        "longitude": -74.006,
+        "unknownTime": false
+      },
+      "pillars": [
+        "己丑",
+        "丙戌",
+        "辛酉",
+        "戊申"
+      ],
+      "strength": "deferred",
+      "resolution": {
+        "policy": "FATE-ordinary-structure-r1",
+        "pattern": {
+          "status": "withheld",
+          "god": "正財",
+          "stem": "辛",
+          "exposedAt": [
+            "month"
+          ],
+          "seasonalGod": "正財"
+        },
+        "circuits": [
+          {
+            "code": "output-to-money",
+            "evidence": [
+              {
+                "position": "hour",
+                "stem": "己",
+                "god": "傷官",
+                "layer": "stem"
+              },
+              {
+                "position": "month",
+                "stem": "辛",
+                "god": "正財",
+                "layer": "stem"
+              },
+              {
+                "position": "year",
+                "stem": "戊",
+                "god": "食神",
+                "layer": "stem"
+              },
+              {
+                "position": "hour",
+                "stem": "己",
+                "god": "傷官",
+                "layer": "principal"
+              },
+              {
+                "position": "day",
+                "stem": "戊",
+                "god": "食神",
+                "layer": "principal"
+              },
+              {
+                "position": "month",
+                "stem": "辛",
+                "god": "正財",
+                "layer": "principal"
+              },
+              {
+                "position": "year",
+                "stem": "庚",
+                "god": "偏財",
+                "layer": "principal"
+              }
+            ]
+          }
+        ],
+        "risks": [],
+        "seasonalContext": "transitional",
+        "useful": {
+          "status": "withheld",
+          "method": "ordinary-chart-balancing",
+          "element": null,
+          "route": null,
+          "witnesses": [],
+          "reasons": [
+            "special-structure-or-combination",
+            "unresolved-strength",
+            "month-branch-friction",
+            "no-supported-single-route"
+          ]
+        },
+        "patternAssessment": {
+          "status": "unresolved",
+          "route": null,
+          "reasons": [
+            "special-structure-or-combination",
+            "unresolved-strength",
+            "month-branch-friction",
+            "no-supported-single-route",
+            "pattern-route-unresolved"
+          ]
+        },
+        "patternSuccess": "not-certified",
+        "transformation": "not-assumed",
+        "climatePrescription": null
+      }
+    },
+    {
+      "input": {
+        "year": 1969,
+        "month": 10,
+        "day": 14,
+        "hour": 9,
+        "minute": 15,
+        "gender": "F",
+        "timezone": "Asia/Seoul",
+        "latitude": 37.5665,
+        "longitude": 126.978,
+        "unknownTime": false
+      },
+      "pillars": [
+        "甲辰",
+        "壬戌",
+        "甲戌",
+        "己酉"
+      ],
+      "strength": "mixed",
+      "resolution": {
+        "policy": "FATE-ordinary-structure-r1",
+        "pattern": {
+          "status": "unresolved",
+          "god": null,
+          "stem": null,
+          "exposedAt": [],
+          "seasonalGod": "偏官"
+        },
+        "circuits": [
+          {
+            "code": "authority-to-resource",
+            "evidence": [
+              {
+                "position": "year",
+                "stem": "己",
+                "god": "正官",
+                "layer": "stem"
+              },
+              {
+                "position": "hour",
+                "stem": "戊",
+                "god": "偏官",
+                "layer": "principal"
+              },
+              {
+                "position": "day",
+                "stem": "戊",
+                "god": "偏官",
+                "layer": "principal"
+              },
+              {
+                "position": "month",
+                "stem": "戊",
+                "god": "偏官",
+                "layer": "principal"
+              },
+              {
+                "position": "year",
+                "stem": "辛",
+                "god": "正印",
+                "layer": "principal"
+              }
+            ]
+          },
+          {
+            "code": "output-checks-pressure",
+            "evidence": [
+              {
+                "position": "hour",
+                "stem": "甲",
+                "god": "食神",
+                "layer": "stem"
+              },
+              {
+                "position": "month",
+                "stem": "甲",
+                "god": "食神",
+                "layer": "stem"
+              },
+              {
+                "position": "hour",
+                "stem": "戊",
+                "god": "偏官",
+                "layer": "principal"
+              },
+              {
+                "position": "day",
+                "stem": "戊",
+                "god": "偏官",
+                "layer": "principal"
+              },
+              {
+                "position": "month",
+                "stem": "戊",
+                "god": "偏官",
+                "layer": "principal"
+              }
+            ]
+          }
+        ],
+        "risks": [],
+        "seasonalContext": "transitional",
+        "useful": {
+          "status": "withheld",
+          "method": "ordinary-chart-balancing",
+          "element": null,
+          "route": null,
+          "witnesses": [],
+          "reasons": [
+            "unresolved-strength",
+            "month-branch-friction",
+            "no-supported-single-route"
+          ]
+        },
+        "patternAssessment": {
+          "status": "unresolved",
+          "route": null,
+          "reasons": [
+            "unresolved-strength",
+            "month-branch-friction",
+            "no-supported-single-route",
+            "no-clear-exposed-month-anchor",
+            "pattern-route-unresolved"
+          ]
+        },
+        "patternSuccess": "not-certified",
+        "transformation": "not-assumed",
+        "climatePrescription": null
+      }
+    },
+    {
+      "input": {
+        "year": 1970,
+        "month": 11,
+        "day": 15,
+        "hour": 3,
+        "minute": 0,
+        "gender": "M",
+        "timezone": "America/New_York",
+        "latitude": 40.7128,
+        "longitude": -74.006,
+        "unknownTime": true
+      },
+      "pillars": [
+        "己亥",
+        "丁亥",
+        "庚戌"
+      ],
+      "strength": "deferred",
+      "resolution": {
+        "policy": "FATE-ordinary-structure-r1",
+        "pattern": {
+          "status": "withheld",
+          "god": null,
+          "stem": null,
+          "exposedAt": [],
+          "seasonalGod": "正財"
+        },
+        "circuits": [
+          {
+            "code": "output-to-money",
+            "evidence": [
+              {
+                "position": "year",
+                "stem": "庚",
+                "god": "傷官",
+                "layer": "stem"
+              },
+              {
+                "position": "day",
+                "stem": "壬",
+                "god": "正財",
+                "layer": "principal"
+              },
+              {
+                "position": "month",
+                "stem": "壬",
+                "god": "正財",
+                "layer": "principal"
+              }
+            ]
+          }
+        ],
+        "risks": [],
+        "seasonalContext": "winter",
+        "useful": {
+          "status": "withheld",
+          "method": "ordinary-chart-balancing",
+          "element": null,
+          "route": null,
+          "witnesses": [],
+          "reasons": [
+            "unknown-hour",
+            "unresolved-strength",
+            "climate-priority-unresolved",
+            "month-branch-friction",
+            "no-supported-single-route"
+          ]
+        },
+        "patternAssessment": {
+          "status": "unresolved",
+          "route": null,
+          "reasons": [
+            "unknown-hour",
+            "unresolved-strength",
+            "climate-priority-unresolved",
+            "month-branch-friction",
+            "no-supported-single-route",
+            "no-clear-exposed-month-anchor",
+            "pattern-route-unresolved"
+          ]
+        },
+        "patternSuccess": "not-certified",
+        "transformation": "not-assumed",
+        "climatePrescription": null
+      }
+    },
+    {
+      "input": {
+        "year": 1971,
+        "month": 12,
+        "day": 16,
+        "hour": 9,
+        "minute": 15,
+        "gender": "F",
+        "timezone": "Asia/Seoul",
+        "latitude": 37.5665,
+        "longitude": 126.978,
+        "unknownTime": false
+      },
+      "pillars": [
+        "庚辰",
+        "乙亥",
+        "庚子",
+        "辛亥"
+      ],
+      "strength": "mixed",
+      "resolution": {
+        "policy": "FATE-ordinary-structure-r1",
+        "pattern": {
+          "status": "unresolved",
+          "god": null,
+          "stem": null,
+          "exposedAt": [],
+          "seasonalGod": "偏印"
+        },
+        "circuits": [
+          {
+            "code": "money-to-authority",
+            "evidence": [
+              {
+                "position": "hour",
+                "stem": "庚",
+                "god": "正官",
+                "layer": "stem"
+              },
+              {
+                "position": "month",
+                "stem": "庚",
+                "god": "正官",
+                "layer": "stem"
+              },
+              {
+                "position": "hour",
+                "stem": "戊",
+                "god": "正財",
+                "layer": "principal"
+              }
+            ]
+          },
+          {
+            "code": "authority-to-resource",
+            "evidence": [
+              {
+                "position": "hour",
+                "stem": "庚",
+                "god": "正官",
+                "layer": "stem"
+              },
+              {
+                "position": "month",
+                "stem": "庚",
+                "god": "正官",
+                "layer": "stem"
+              },
+              {
+                "position": "year",
+                "stem": "辛",
+                "god": "偏官",
+                "layer": "stem"
+              },
+              {
+                "position": "day",
+                "stem": "壬",
+                "god": "正印",
+                "layer": "principal"
+              },
+              {
+                "position": "month",
+                "stem": "癸",
+                "god": "偏印",
+                "layer": "principal"
+              },
+              {
+                "position": "year",
+                "stem": "壬",
+                "god": "正印",
+                "layer": "principal"
+              }
+            ]
+          }
+        ],
+        "risks": [
+          {
+            "code": "mixed-authority",
+            "evidence": [
+              {
+                "position": "hour",
+                "stem": "庚",
+                "god": "正官",
+                "layer": "stem"
+              },
+              {
+                "position": "month",
+                "stem": "庚",
+                "god": "正官",
+                "layer": "stem"
+              },
+              {
+                "position": "year",
+                "stem": "辛",
+                "god": "偏官",
+                "layer": "stem"
+              }
+            ]
+          }
+        ],
+        "seasonalContext": "winter",
+        "useful": {
+          "status": "withheld",
+          "method": "ordinary-chart-balancing",
+          "element": null,
+          "route": null,
+          "witnesses": [],
+          "reasons": [
+            "unresolved-strength",
+            "climate-priority-unresolved",
+            "competing-exposed-relationships",
+            "no-supported-single-route"
+          ]
+        },
+        "patternAssessment": {
+          "status": "unresolved",
+          "route": null,
+          "reasons": [
+            "unresolved-strength",
+            "climate-priority-unresolved",
+            "competing-exposed-relationships",
+            "no-supported-single-route",
+            "no-clear-exposed-month-anchor",
+            "pattern-route-unresolved"
+          ]
+        },
+        "patternSuccess": "not-certified",
+        "transformation": "not-assumed",
+        "climatePrescription": null
+      }
+    },
+    {
+      "input": {
+        "year": 1972,
+        "month": 1,
+        "day": 17,
+        "hour": 3,
+        "minute": 0,
+        "gender": "M",
+        "timezone": "America/New_York",
+        "latitude": 40.7128,
+        "longitude": -74.006,
+        "unknownTime": false
+      },
+      "pillars": [
+        "辛丑",
+        "丁未",
+        "辛丑",
+        "辛亥"
+      ],
+      "strength": "mixed",
+      "resolution": {
+        "policy": "FATE-ordinary-structure-r1",
+        "pattern": {
+          "status": "month-anchored",
+          "god": "偏財",
+          "stem": "辛",
+          "exposedAt": [
+            "hour",
+            "month",
+            "year"
+          ],
+          "seasonalGod": "食神"
+        },
+        "circuits": [
+          {
+            "code": "output-to-money",
+            "evidence": [
+              {
+                "position": "hour",
+                "stem": "辛",
+                "god": "偏財",
+                "layer": "stem"
+              },
+              {
+                "position": "month",
+                "stem": "辛",
+                "god": "偏財",
+                "layer": "stem"
+              },
+              {
+                "position": "year",
+                "stem": "辛",
+                "god": "偏財",
+                "layer": "stem"
+              },
+              {
+                "position": "hour",
+                "stem": "己",
+                "god": "食神",
+                "layer": "principal"
+              },
+              {
+                "position": "day",
+                "stem": "己",
+                "god": "食神",
+                "layer": "principal"
+              },
+              {
+                "position": "month",
+                "stem": "己",
+                "god": "食神",
+                "layer": "principal"
+              }
+            ]
+          },
+          {
+            "code": "money-to-authority",
+            "evidence": [
+              {
+                "position": "hour",
+                "stem": "辛",
+                "god": "偏財",
+                "layer": "stem"
+              },
+              {
+                "position": "month",
+                "stem": "辛",
+                "god": "偏財",
+                "layer": "stem"
+              },
+              {
+                "position": "year",
+                "stem": "辛",
+                "god": "偏財",
+                "layer": "stem"
+              },
+              {
+                "position": "year",
+                "stem": "壬",
+                "god": "正官",
+                "layer": "principal"
+              }
+            ]
+          }
+        ],
+        "risks": [],
+        "seasonalContext": "winter",
+        "useful": {
+          "status": "withheld",
+          "method": "ordinary-chart-balancing",
+          "element": null,
+          "route": null,
+          "witnesses": [],
+          "reasons": [
+            "unresolved-strength",
+            "climate-priority-unresolved",
+            "month-branch-friction",
+            "no-supported-single-route"
+          ]
+        },
+        "patternAssessment": {
+          "status": "unresolved",
+          "route": null,
+          "reasons": [
+            "unresolved-strength",
+            "climate-priority-unresolved",
+            "month-branch-friction",
+            "no-supported-single-route",
+            "pattern-route-unresolved"
+          ]
+        },
+        "patternSuccess": "not-certified",
+        "transformation": "not-assumed",
+        "climatePrescription": null
+      }
+    },
+    {
+      "input": {
+        "year": 1973,
+        "month": 2,
+        "day": 18,
+        "hour": 9,
+        "minute": 15,
+        "gender": "F",
+        "timezone": "Asia/Seoul",
+        "latitude": 37.5665,
+        "longitude": 126.978,
+        "unknownTime": false
+      },
+      "pillars": [
+        "庚辰",
+        "乙酉",
+        "甲寅",
+        "癸丑"
+      ],
+      "strength": "supported",
+      "resolution": {
+        "policy": "FATE-ordinary-structure-r1",
+        "pattern": {
+          "status": "unresolved",
+          "god": null,
+          "stem": null,
+          "exposedAt": [],
+          "seasonalGod": "劫財"
+        },
+        "circuits": [
+          {
+            "code": "money-to-authority",
+            "evidence": [
+              {
+                "position": "hour",
+                "stem": "庚",
+                "god": "正官",
+                "layer": "stem"
+              },
+              {
+                "position": "hour",
+                "stem": "戊",
+                "god": "正財",
+                "layer": "principal"
+              },
+              {
+                "position": "year",
+                "stem": "己",
+                "god": "偏財",
+                "layer": "principal"
+              }
+            ]
+          },
+          {
+            "code": "authority-to-resource",
+            "evidence": [
+              {
+                "position": "hour",
+                "stem": "庚",
+                "god": "正官",
+                "layer": "stem"
+              },
+              {
+                "position": "year",
+                "stem": "癸",
+                "god": "偏印",
+                "layer": "stem"
+              },
+              {
+                "position": "day",
+                "stem": "辛",
+                "god": "偏官",
+                "layer": "principal"
+              }
+            ]
+          }
+        ],
+        "risks": [],
+        "seasonalContext": "transitional",
+        "useful": {
+          "status": "withheld",
+          "method": "ordinary-chart-balancing",
+          "element": null,
+          "route": null,
+          "witnesses": [],
+          "reasons": [
+            "no-supported-single-route"
+          ]
+        },
+        "patternAssessment": {
+          "status": "unresolved",
+          "route": null,
+          "reasons": [
+            "no-supported-single-route",
+            "peer-led-month",
+            "no-clear-exposed-month-anchor",
+            "pattern-route-unresolved"
+          ]
+        },
+        "patternSuccess": "not-certified",
+        "transformation": "not-assumed",
+        "climatePrescription": null
+      }
+    },
+    {
+      "input": {
+        "year": 1974,
+        "month": 3,
+        "day": 19,
+        "hour": 3,
+        "minute": 0,
+        "gender": "M",
+        "timezone": "America/New_York",
+        "latitude": 40.7128,
+        "longitude": -74.006,
+        "unknownTime": false
+      },
+      "pillars": [
+        "乙丑",
+        "己未",
+        "丁卯",
+        "甲寅"
+      ],
+      "strength": "mixed",
+      "resolution": {
+        "policy": "FATE-ordinary-structure-r1",
+        "pattern": {
+          "status": "month-anchored",
+          "god": "偏官",
+          "stem": "乙",
+          "exposedAt": [
+            "hour"
+          ],
+          "seasonalGod": "偏官"
+        },
+        "circuits": [
+          {
+            "code": "authority-to-resource",
+            "evidence": [
+              {
+                "position": "hour",
+                "stem": "乙",
+                "god": "偏官",
+                "layer": "stem"
+              },
+              {
+                "position": "month",
+                "stem": "丁",
+                "god": "偏印",
+                "layer": "stem"
+              },
+              {
+                "position": "year",
+                "stem": "甲",
+                "god": "正官",
+                "layer": "stem"
+              },
+              {
+                "position": "month",
+                "stem": "乙",
+                "god": "偏官",
+                "layer": "principal"
+              },
+              {
+                "position": "year",
+                "stem": "甲",
+                "god": "正官",
+                "layer": "principal"
+              }
+            ]
+          }
+        ],
+        "risks": [
+          {
+            "code": "mixed-authority",
+            "evidence": [
+              {
+                "position": "hour",
+                "stem": "乙",
+                "god": "偏官",
+                "layer": "stem"
+              },
+              {
+                "position": "year",
+                "stem": "甲",
+                "god": "正官",
+                "layer": "stem"
+              },
+              {
+                "position": "month",
+                "stem": "乙",
+                "god": "偏官",
+                "layer": "principal"
+              },
+              {
+                "position": "year",
+                "stem": "甲",
+                "god": "正官",
+                "layer": "principal"
+              }
+            ]
+          }
+        ],
+        "seasonalContext": "transitional",
+        "useful": {
+          "status": "withheld",
+          "method": "ordinary-chart-balancing",
+          "element": null,
+          "route": null,
+          "witnesses": [],
+          "reasons": [
+            "unresolved-strength",
+            "competing-exposed-relationships",
+            "no-supported-single-route"
+          ]
+        },
+        "patternAssessment": {
+          "status": "unresolved",
+          "route": null,
+          "reasons": [
+            "unresolved-strength",
+            "competing-exposed-relationships",
+            "no-supported-single-route",
+            "pattern-route-unresolved"
+          ]
+        },
+        "patternSuccess": "not-certified",
+        "transformation": "not-assumed",
+        "climatePrescription": null
+      }
+    },
+    {
+      "input": {
+        "year": 1975,
+        "month": 4,
+        "day": 20,
+        "hour": 9,
+        "minute": 15,
+        "gender": "F",
+        "timezone": "Asia/Seoul",
+        "latitude": 37.5665,
+        "longitude": 126.978,
+        "unknownTime": true
+      },
+      "pillars": [
+        "丙申",
+        "庚辰",
+        "乙卯"
+      ],
+      "strength": "deferred",
+      "resolution": {
+        "policy": "FATE-ordinary-structure-r1",
+        "pattern": {
+          "status": "withheld",
+          "god": "正印",
+          "stem": "乙",
+          "exposedAt": [
+            "year"
+          ],
+          "seasonalGod": "食神"
+        },
+        "circuits": [
+          {
+            "code": "output-to-money",
+            "evidence": [
+              {
+                "position": "month",
+                "stem": "庚",
+                "god": "偏財",
+                "layer": "stem"
+              },
+              {
+                "position": "day",
+                "stem": "庚",
+                "god": "偏財",
+                "layer": "principal"
+              },
+              {
+                "position": "month",
+                "stem": "戊",
+                "god": "食神",
+                "layer": "principal"
+              }
+            ]
+          }
+        ],
+        "risks": [
+          {
+            "code": "money-versus-resource",
+            "evidence": [
+              {
+                "position": "month",
+                "stem": "庚",
+                "god": "偏財",
+                "layer": "stem"
+              },
+              {
+                "position": "year",
+                "stem": "乙",
+                "god": "正印",
+                "layer": "stem"
+              },
+              {
+                "position": "day",
+                "stem": "庚",
+                "god": "偏財",
+                "layer": "principal"
+              },
+              {
+                "position": "year",
+                "stem": "乙",
+                "god": "正印",
+                "layer": "principal"
+              }
+            ]
+          }
+        ],
+        "seasonalContext": "transitional",
+        "useful": {
+          "status": "withheld",
+          "method": "ordinary-chart-balancing",
+          "element": null,
+          "route": null,
+          "witnesses": [],
+          "reasons": [
+            "unknown-hour",
+            "unresolved-strength",
+            "anchor-stem-combination",
+            "competing-exposed-relationships",
+            "month-branch-friction",
+            "no-supported-single-route"
+          ]
+        },
+        "patternAssessment": {
+          "status": "unresolved",
+          "route": null,
+          "reasons": [
+            "unknown-hour",
+            "unresolved-strength",
+            "anchor-stem-combination",
+            "competing-exposed-relationships",
+            "month-branch-friction",
+            "no-supported-single-route",
+            "pattern-route-unresolved"
+          ]
+        },
+        "patternSuccess": "not-certified",
+        "transformation": "not-assumed",
+        "climatePrescription": null
+      }
+    },
+    {
+      "input": {
+        "year": 1976,
+        "month": 5,
+        "day": 21,
+        "hour": 3,
+        "minute": 0,
+        "gender": "M",
+        "timezone": "America/New_York",
+        "latitude": 40.7128,
+        "longitude": -74.006,
+        "unknownTime": false
+      },
+      "pillars": [
+        "癸丑",
+        "癸酉",
+        "癸巳",
+        "丙辰"
+      ],
+      "strength": "deferred",
+      "resolution": {
+        "policy": "FATE-ordinary-structure-r1",
+        "pattern": {
+          "status": "withheld",
+          "god": "正財",
+          "stem": "丙",
+          "exposedAt": [
+            "year"
+          ],
+          "seasonalGod": "正財"
+        },
+        "circuits": [
+          {
+            "code": "money-to-authority",
+            "evidence": [
+              {
+                "position": "year",
+                "stem": "丙",
+                "god": "正財",
+                "layer": "stem"
+              },
+              {
+                "position": "month",
+                "stem": "丙",
+                "god": "正財",
+                "layer": "principal"
+              },
+              {
+                "position": "year",
+                "stem": "戊",
+                "god": "正官",
+                "layer": "principal"
+              }
+            ]
+          },
+          {
+            "code": "authority-to-resource",
+            "evidence": [
+              {
+                "position": "hour",
+                "stem": "己",
+                "god": "偏官",
+                "layer": "principal"
+              },
+              {
+                "position": "day",
+                "stem": "辛",
+                "god": "偏印",
+                "layer": "principal"
+              },
+              {
+                "position": "year",
+                "stem": "戊",
+                "god": "正官",
+                "layer": "principal"
+              }
+            ]
+          }
+        ],
+        "risks": [],
+        "seasonalContext": "summer",
+        "useful": {
+          "status": "withheld",
+          "method": "ordinary-chart-balancing",
+          "element": null,
+          "route": null,
+          "witnesses": [],
+          "reasons": [
+            "special-structure-or-combination",
+            "unresolved-strength",
+            "climate-priority-unresolved",
+            "no-supported-single-route"
+          ]
+        },
+        "patternAssessment": {
+          "status": "unresolved",
+          "route": null,
+          "reasons": [
+            "special-structure-or-combination",
+            "unresolved-strength",
+            "climate-priority-unresolved",
+            "no-supported-single-route",
+            "pattern-route-unresolved"
+          ]
+        },
+        "patternSuccess": "not-certified",
+        "transformation": "not-assumed",
+        "climatePrescription": null
+      }
+    },
+    {
+      "input": {
+        "year": 1977,
+        "month": 6,
+        "day": 22,
+        "hour": 9,
+        "minute": 15,
+        "gender": "F",
+        "timezone": "Asia/Seoul",
+        "latitude": 37.5665,
+        "longitude": 126.978,
+        "unknownTime": false
+      },
+      "pillars": [
+        "庚辰",
+        "庚戌",
+        "丙午",
+        "丁巳"
+      ],
+      "strength": "mixed",
+      "resolution": {
+        "policy": "FATE-ordinary-structure-r1",
+        "pattern": {
+          "status": "month-anchored",
+          "god": "正官",
+          "stem": "丁",
+          "exposedAt": [
+            "year"
+          ],
+          "seasonalGod": "正官"
+        },
+        "circuits": [
+          {
+            "code": "authority-to-resource",
+            "evidence": [
+              {
+                "position": "month",
+                "stem": "丙",
+                "god": "偏官",
+                "layer": "stem"
+              },
+              {
+                "position": "year",
+                "stem": "丁",
+                "god": "正官",
+                "layer": "stem"
+              },
+              {
+                "position": "hour",
+                "stem": "戊",
+                "god": "偏印",
+                "layer": "principal"
+              },
+              {
+                "position": "day",
+                "stem": "戊",
+                "god": "偏印",
+                "layer": "principal"
+              },
+              {
+                "position": "month",
+                "stem": "丁",
+                "god": "正官",
+                "layer": "principal"
+              },
+              {
+                "position": "year",
+                "stem": "丙",
+                "god": "偏官",
+                "layer": "principal"
+              }
+            ]
+          }
+        ],
+        "risks": [
+          {
+            "code": "mixed-authority",
+            "evidence": [
+              {
+                "position": "month",
+                "stem": "丙",
+                "god": "偏官",
+                "layer": "stem"
+              },
+              {
+                "position": "year",
+                "stem": "丁",
+                "god": "正官",
+                "layer": "stem"
+              },
+              {
+                "position": "month",
+                "stem": "丁",
+                "god": "正官",
+                "layer": "principal"
+              },
+              {
+                "position": "year",
+                "stem": "丙",
+                "god": "偏官",
+                "layer": "principal"
+              }
+            ]
+          }
+        ],
+        "seasonalContext": "summer",
+        "useful": {
+          "status": "withheld",
+          "method": "ordinary-chart-balancing",
+          "element": null,
+          "route": null,
+          "witnesses": [],
+          "reasons": [
+            "unresolved-strength",
+            "climate-priority-unresolved",
+            "competing-exposed-relationships",
+            "no-supported-single-route"
+          ]
+        },
+        "patternAssessment": {
+          "status": "unresolved",
+          "route": null,
+          "reasons": [
+            "unresolved-strength",
+            "climate-priority-unresolved",
+            "competing-exposed-relationships",
+            "no-supported-single-route",
+            "pattern-route-unresolved"
+          ]
+        },
+        "patternSuccess": "not-certified",
+        "transformation": "not-assumed",
+        "climatePrescription": null
+      }
+    },
+    {
+      "input": {
+        "year": 1978,
+        "month": 7,
+        "day": 23,
+        "hour": 3,
+        "minute": 0,
+        "gender": "M",
+        "timezone": "America/New_York",
+        "latitude": 40.7128,
+        "longitude": -74.006,
+        "unknownTime": false
+      },
+      "pillars": [
+        "己丑",
+        "丙戌",
+        "己未",
+        "戊午"
+      ],
+      "strength": "mixed",
+      "resolution": {
+        "policy": "FATE-ordinary-structure-r1",
+        "pattern": {
+          "status": "month-anchored",
+          "god": "傷官",
+          "stem": "己",
+          "exposedAt": [
+            "hour",
+            "month"
+          ],
+          "seasonalGod": "傷官"
+        },
+        "circuits": [],
+        "risks": [],
+        "seasonalContext": "summer",
+        "useful": {
+          "status": "withheld",
+          "method": "ordinary-chart-balancing",
+          "element": null,
+          "route": null,
+          "witnesses": [],
+          "reasons": [
+            "unresolved-strength",
+            "climate-priority-unresolved",
+            "month-branch-friction",
+            "no-supported-single-route"
+          ]
+        },
+        "patternAssessment": {
+          "status": "unresolved",
+          "route": null,
+          "reasons": [
+            "unresolved-strength",
+            "climate-priority-unresolved",
+            "month-branch-friction",
+            "no-supported-single-route",
+            "pattern-route-unresolved"
+          ]
+        },
+        "patternSuccess": "not-certified",
+        "transformation": "not-assumed",
+        "climatePrescription": null
+      }
+    },
+    {
+      "input": {
+        "year": 1979,
+        "month": 8,
+        "day": 24,
+        "hour": 9,
+        "minute": 15,
+        "gender": "F",
+        "timezone": "Asia/Seoul",
+        "latitude": 37.5665,
+        "longitude": 126.978,
+        "unknownTime": false
+      },
+      "pillars": [
+        "丙辰",
+        "癸亥",
+        "壬申",
+        "己未"
+      ],
+      "strength": "supported",
+      "resolution": {
+        "policy": "FATE-ordinary-structure-r1",
+        "pattern": {
+          "status": "unresolved",
+          "god": null,
+          "stem": null,
+          "exposedAt": [],
+          "seasonalGod": "正印"
+        },
+        "circuits": [
+          {
+            "code": "money-to-authority",
+            "evidence": [
+              {
+                "position": "hour",
+                "stem": "丙",
+                "god": "正財",
+                "layer": "stem"
+              },
+              {
+                "position": "hour",
+                "stem": "戊",
+                "god": "正官",
+                "layer": "principal"
+              }
+            ]
+          },
+          {
+            "code": "authority-to-resource",
+            "evidence": [
+              {
+                "position": "year",
+                "stem": "己",
+                "god": "偏官",
+                "layer": "stem"
+              },
+              {
+                "position": "hour",
+                "stem": "戊",
+                "god": "正官",
+                "layer": "principal"
+              },
+              {
+                "position": "month",
+                "stem": "庚",
+                "god": "正印",
+                "layer": "principal"
+              },
+              {
+                "position": "year",
+                "stem": "己",
+                "god": "偏官",
+                "layer": "principal"
+              }
+            ]
+          }
+        ],
+        "risks": [
+          {
+            "code": "money-adds-pressure",
+            "evidence": [
+              {
+                "position": "hour",
+                "stem": "丙",
+                "god": "正財",
+                "layer": "stem"
+              },
+              {
+                "position": "year",
+                "stem": "己",
+                "god": "偏官",
+                "layer": "stem"
+              },
+              {
+                "position": "year",
+                "stem": "己",
+                "god": "偏官",
+                "layer": "principal"
+              }
+            ]
+          }
+        ],
+        "seasonalContext": "transitional",
+        "useful": {
+          "status": "withheld",
+          "method": "ordinary-chart-balancing",
+          "element": null,
+          "route": null,
+          "witnesses": [],
+          "reasons": [
+            "competing-exposed-relationships",
+            "month-branch-friction",
+            "no-supported-single-route"
+          ]
+        },
+        "patternAssessment": {
+          "status": "unresolved",
+          "route": null,
+          "reasons": [
+            "competing-exposed-relationships",
+            "month-branch-friction",
+            "no-supported-single-route",
+            "no-clear-exposed-month-anchor",
+            "pattern-route-unresolved"
+          ]
+        },
+        "patternSuccess": "not-certified",
+        "transformation": "not-assumed",
+        "climatePrescription": null
+      }
+    },
+    {
+      "input": {
+        "year": 1980,
+        "month": 9,
+        "day": 5,
+        "hour": 3,
+        "minute": 0,
+        "gender": "M",
+        "timezone": "America/New_York",
+        "latitude": 40.7128,
+        "longitude": -74.006,
+        "unknownTime": true
+      },
+      "pillars": [
+        "辛巳",
+        "甲申",
+        "庚申"
+      ],
+      "strength": "deferred",
+      "resolution": {
+        "policy": "FATE-ordinary-structure-r1",
+        "pattern": {
+          "status": "withheld",
+          "god": null,
+          "stem": null,
+          "exposedAt": [],
+          "seasonalGod": "劫財"
+        },
+        "circuits": [
+          {
+            "code": "money-to-authority",
+            "evidence": [
+              {
+                "position": "month",
+                "stem": "甲",
+                "god": "正財",
+                "layer": "stem"
+              },
+              {
+                "position": "day",
+                "stem": "丙",
+                "god": "正官",
+                "layer": "principal"
+              }
+            ]
+          }
+        ],
+        "risks": [],
+        "seasonalContext": "transitional",
+        "useful": {
+          "status": "withheld",
+          "method": "ordinary-chart-balancing",
+          "element": null,
+          "route": null,
+          "witnesses": [],
+          "reasons": [
+            "unknown-hour",
+            "unresolved-strength",
+            "month-branch-friction",
+            "no-supported-single-route"
+          ]
+        },
+        "patternAssessment": {
+          "status": "unresolved",
+          "route": null,
+          "reasons": [
+            "unknown-hour",
+            "unresolved-strength",
+            "month-branch-friction",
+            "no-supported-single-route",
+            "peer-led-month",
+            "no-clear-exposed-month-anchor",
+            "pattern-route-unresolved"
+          ]
+        },
+        "patternSuccess": "not-certified",
+        "transformation": "not-assumed",
+        "climatePrescription": null
+      }
+    },
+    {
+      "input": {
+        "year": 1981,
+        "month": 10,
+        "day": 6,
+        "hour": 9,
+        "minute": 15,
+        "gender": "F",
+        "timezone": "Asia/Seoul",
+        "latitude": 37.5665,
+        "longitude": 126.978,
+        "unknownTime": false
+      },
+      "pillars": [
+        "甲辰",
+        "丁巳",
+        "丁酉",
+        "辛酉"
+      ],
+      "strength": "mixed",
+      "resolution": {
+        "policy": "FATE-ordinary-structure-r1",
+        "pattern": {
+          "status": "month-anchored",
+          "god": "偏財",
+          "stem": "辛",
+          "exposedAt": [
+            "year"
+          ],
+          "seasonalGod": "偏財"
+        },
+        "circuits": [
+          {
+            "code": "output-to-money",
+            "evidence": [
+              {
+                "position": "year",
+                "stem": "辛",
+                "god": "偏財",
+                "layer": "stem"
+              },
+              {
+                "position": "hour",
+                "stem": "戊",
+                "god": "傷官",
+                "layer": "principal"
+              },
+              {
+                "position": "month",
+                "stem": "辛",
+                "god": "偏財",
+                "layer": "principal"
+              },
+              {
+                "position": "year",
+                "stem": "辛",
+                "god": "偏財",
+                "layer": "principal"
+              }
+            ]
+          }
+        ],
+        "risks": [
+          {
+            "code": "money-versus-resource",
+            "evidence": [
+              {
+                "position": "hour",
+                "stem": "甲",
+                "god": "正印",
+                "layer": "stem"
+              },
+              {
+                "position": "year",
+                "stem": "辛",
+                "god": "偏財",
+                "layer": "stem"
+              },
+              {
+                "position": "month",
+                "stem": "辛",
+                "god": "偏財",
+                "layer": "principal"
+              },
+              {
+                "position": "year",
+                "stem": "辛",
+                "god": "偏財",
+                "layer": "principal"
+              }
+            ]
+          }
+        ],
+        "seasonalContext": "transitional",
+        "useful": {
+          "status": "withheld",
+          "method": "ordinary-chart-balancing",
+          "element": null,
+          "route": null,
+          "witnesses": [],
+          "reasons": [
+            "unresolved-strength",
+            "competing-exposed-relationships",
+            "month-branch-friction",
+            "no-supported-single-route"
+          ]
+        },
+        "patternAssessment": {
+          "status": "unresolved",
+          "route": null,
+          "reasons": [
+            "unresolved-strength",
+            "competing-exposed-relationships",
+            "month-branch-friction",
+            "no-supported-single-route",
+            "pattern-route-unresolved"
+          ]
+        },
+        "patternSuccess": "not-certified",
+        "transformation": "not-assumed",
+        "climatePrescription": null
+      }
+    },
+    {
+      "input": {
+        "year": 1982,
+        "month": 11,
+        "day": 7,
+        "hour": 3,
+        "minute": 0,
+        "gender": "M",
+        "timezone": "America/New_York",
+        "latitude": 40.7128,
+        "longitude": -74.006,
+        "unknownTime": false
+      },
+      "pillars": [
+        "乙丑",
+        "甲午",
+        "庚戌",
+        "壬戌"
+      ],
+      "strength": "support-needed",
+      "resolution": {
+        "policy": "FATE-ordinary-structure-r1",
+        "pattern": {
+          "status": "unresolved",
+          "god": null,
+          "stem": null,
+          "exposedAt": [],
+          "seasonalGod": "偏財"
+        },
+        "circuits": [
+          {
+            "code": "output-to-money",
+            "evidence": [
+              {
+                "position": "hour",
+                "stem": "己",
+                "god": "正財",
+                "layer": "principal"
+              },
+              {
+                "position": "day",
+                "stem": "丁",
+                "god": "傷官",
+                "layer": "principal"
+              },
+              {
+                "position": "month",
+                "stem": "戊",
+                "god": "偏財",
+                "layer": "principal"
+              },
+              {
+                "position": "year",
+                "stem": "戊",
+                "god": "偏財",
+                "layer": "principal"
+              }
+            ]
+          },
+          {
+            "code": "authority-to-resource",
+            "evidence": [
+              {
+                "position": "month",
+                "stem": "庚",
+                "god": "偏官",
+                "layer": "stem"
+              },
+              {
+                "position": "year",
+                "stem": "壬",
+                "god": "偏印",
+                "layer": "stem"
+              }
+            ]
+          }
+        ],
+        "risks": [],
+        "seasonalContext": "transitional",
+        "useful": {
+          "status": "withheld",
+          "method": "ordinary-chart-balancing",
+          "element": null,
+          "route": null,
+          "witnesses": [],
+          "reasons": [
+            "no-supported-single-route"
+          ]
+        },
+        "patternAssessment": {
+          "status": "unresolved",
+          "route": null,
+          "reasons": [
+            "no-supported-single-route",
+            "no-clear-exposed-month-anchor",
+            "pattern-route-unresolved"
+          ]
+        },
+        "patternSuccess": "not-certified",
+        "transformation": "not-assumed",
+        "climatePrescription": null
+      }
+    },
+    {
+      "input": {
+        "year": 1983,
+        "month": 12,
+        "day": 8,
+        "hour": 9,
+        "minute": 15,
+        "gender": "F",
+        "timezone": "Asia/Seoul",
+        "latitude": 37.5665,
+        "longitude": 126.978,
+        "unknownTime": false
+      },
+      "pillars": [
+        "庚辰",
+        "庚午",
+        "甲子",
+        "癸亥"
+      ],
+      "strength": "support-needed",
+      "resolution": {
+        "policy": "FATE-ordinary-structure-r1",
+        "pattern": {
+          "status": "month-anchored",
+          "god": "傷官",
+          "stem": "癸",
+          "exposedAt": [
+            "year"
+          ],
+          "seasonalGod": "傷官"
+        },
+        "circuits": [
+          {
+            "code": "output-to-money",
+            "evidence": [
+              {
+                "position": "month",
+                "stem": "甲",
+                "god": "偏財",
+                "layer": "stem"
+              },
+              {
+                "position": "year",
+                "stem": "癸",
+                "god": "傷官",
+                "layer": "stem"
+              },
+              {
+                "position": "month",
+                "stem": "癸",
+                "god": "傷官",
+                "layer": "principal"
+              },
+              {
+                "position": "year",
+                "stem": "壬",
+                "god": "食神",
+                "layer": "principal"
+              }
+            ]
+          },
+          {
+            "code": "money-to-authority",
+            "evidence": [
+              {
+                "position": "month",
+                "stem": "甲",
+                "god": "偏財",
+                "layer": "stem"
+              },
+              {
+                "position": "day",
+                "stem": "丁",
+                "god": "正官",
+                "layer": "principal"
+              }
+            ]
+          },
+          {
+            "code": "authority-to-resource",
+            "evidence": [
+              {
+                "position": "hour",
+                "stem": "戊",
+                "god": "偏印",
+                "layer": "principal"
+              },
+              {
+                "position": "day",
+                "stem": "丁",
+                "god": "正官",
+                "layer": "principal"
+              }
+            ]
+          }
+        ],
+        "risks": [],
+        "seasonalContext": "winter",
+        "useful": {
+          "status": "withheld",
+          "method": "ordinary-chart-balancing",
+          "element": null,
+          "route": null,
+          "witnesses": [],
+          "reasons": [
+            "climate-priority-unresolved",
+            "month-branch-friction",
+            "no-supported-single-route"
+          ]
+        },
+        "patternAssessment": {
+          "status": "unresolved",
+          "route": null,
+          "reasons": [
+            "climate-priority-unresolved",
+            "month-branch-friction",
+            "no-supported-single-route",
+            "pattern-route-unresolved"
+          ]
+        },
+        "patternSuccess": "not-certified",
+        "transformation": "not-assumed",
+        "climatePrescription": null
+      }
+    }
+  ]
+}
