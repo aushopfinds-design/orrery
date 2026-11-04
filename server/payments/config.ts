@@ -15,6 +15,8 @@ export interface PaymentConfig {
   dataKey: string
   accessKey: string
   testToken: string
+  /** Explicitly allowlisted Preview recipient for a one-off Test Mode delivery check. */
+  testEmailRecipient?: string
 }
 
 /** Live checkout needs a separate credential set and an explicit launch switch. */
@@ -43,5 +45,7 @@ export function paymentConfig(env: NodeJS.ProcessEnv): PaymentConfig {
     if (site.origin !== origin || site.username || site.password || site.protocol !== 'https:' ||
         !['postgres:', 'postgresql:'].includes(database.protocol) || database.searchParams.get('sslmode') !== 'verify-full') throw new Error()
   } catch { console.warn('Payment configuration URL validation failed'); throw new PaymentError('payment_configuration_incomplete', 503) }
-  return { customerRecordsEnabled: env.FATE_CUSTOMER_RECORDS_ENABLED === 'true', mode: live ? 'live' : 'test', checkoutOpen: !live || (env.FATE_CHECKOUT_OPEN === 'true' && env.FATE_SALES_POLICIES_READY === 'true'), stripeKey, webhookSecret, databaseUrl, origin, dataKey, accessKey, testToken: live ? '' : testToken }
+  const testEmailRecipient = !live && env.VERCEL_ENV === 'preview' && /^[a-z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-z0-9](?:[a-z0-9-]*[a-z0-9])?(?:\.[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)+$/i.test(env.FATE_TEST_EMAIL_RECIPIENT ?? '')
+    ? env.FATE_TEST_EMAIL_RECIPIENT!.trim().toLowerCase() : undefined
+  return { customerRecordsEnabled: env.FATE_CUSTOMER_RECORDS_ENABLED === 'true', mode: live ? 'live' : 'test', checkoutOpen: !live || (env.FATE_CHECKOUT_OPEN === 'true' && env.FATE_SALES_POLICIES_READY === 'true'), stripeKey, webhookSecret, databaseUrl, origin, dataKey, accessKey, testToken: live ? '' : testToken, testEmailRecipient }
 }
