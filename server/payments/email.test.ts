@@ -23,6 +23,10 @@ it('routes every Sandbox receipt to the official test inbox, never an arbitrary 
  const mail=purchaseMail({...config,mode:'test'},randomUUID(),'someone@gmail.com',report)
  expect(mail.to).toEqual(['delivered@resend.dev']);expect(mail.subject).toContain('[Sandbox]')
 })
+it('routes Sandbox receipts only to the explicitly configured Preview test recipient',()=>{
+ const mail=purchaseMail({...config,mode:'test',testEmailRecipient:'preview-recipient@example.com'},randomUUID(),'someone@example.com',report)
+ expect(mail.to).toEqual(['preview-recipient@example.com']);expect(mail.subject).toContain('[Sandbox]')
+})
 it('only includes product-update confirmation when a separate consent was requested',()=>{
  const id=randomUUID()
  expect(purchaseMail(config,id,'buyer@example.org',report).text).not.toContain('preference=confirm')
