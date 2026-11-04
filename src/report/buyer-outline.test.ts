@@ -167,4 +167,121 @@ describe('Buyer questions, not a repeated six-part technical template', () => {
     expect(report).toContain('Question: What should I focus on most this year?\n\nAnswer: Prioritize the chart-linked work theme.')
   })
 
+  it('keeps the yearly career answer to its distinct annual and personal chart reasons', () => {
+    const make = (id: string, lead: string, paragraphs: string[] = [], tryThis = 'Review your priorities.') => ({
+      id, title: id, lead, paragraphs, evidence: ['checked chart relationship'], tryThis,
+      guidance: { keepClose: ['Generic advice.'], watchFor: ['Repeated caution.'] }, icon: 'personality' as const,
+    })
+    const chapters = [
+      make('annual-theme', 'The year centres on changing demands at home and work.', [], 'Focus on the changed work demand.'),
+      make('annual-work', 'For the fixed period, clear responsibility and standards are the strongest career theme.', [
+        'The annual comparison points to defined duties and enough authority to use them.',
+        'Your birth-chart work pattern centres on finding new customers.',
+        'A sales channel is repeated again in the yearly career detail.',
+        'The same blind spot appears in several other questions.',
+        '2030 is the separate timing reference.',
+      ]),
+      make('annual-money', 'Money outlook.'), make('annual-connections', 'Relationship outlook.'),
+      make('annual-cycle-context', 'Supportive months.'), make('annual-plan', 'Months needing care.'),
+    ]
+    const source = chapters.map(chapter => deliveredChapter(chapter).join('\n\n')).join('\n\n')
+    const report = applyBuyerQuestions(source, 'year', chapters)
+    const career = report.split('annual-work\n\n')[1].split('\n\nannual-money')[0]
+    expect(career).toContain('Answer: For the fixed period, clear responsibility and standards are the strongest career theme.')
+    expect(career).toContain('Answer detail: The annual comparison points to defined duties and enough authority to use them.')
+    expect(career).toContain('Answer detail: Your birth-chart work pattern centres on finding new customers.')
+    expect(career).not.toContain('A sales channel is repeated again')
+    expect(career).not.toContain('The same blind spot appears')
+    expect(report.match(/^Question:/gm)).toHaveLength(7)
+    expect(career).not.toContain('Practical point: Generic advice.')
+    expect(career).not.toContain('Main caution: Repeated caution.')
+  })
+
+  it('keeps business partnership and expansion answers short and distinct', () => {
+    const make = (id: string, lead: string, paragraphs: string[] = [], tryThis = 'Set a clear next step.') => ({
+      id, title: id, lead, paragraphs, evidence: ['checked chart relationship'], tryThis,
+      guidance: { keepClose: ['Set a clear next step.'], watchFor: ['Repeat the same caution.'] }, icon: 'personality' as const,
+    })
+    const sources = [...new Set(BUYER_QUESTIONS.business.map(question => question.source))]
+    const chapters = sources.map(source => source === 'team-decisions'
+      ? make(source, 'A partner helps when they add a skill you do not already carry.', ['Both work roles point to customer growth, leaving a delivery gap for the partner to own.', 'Further research may slow delivery.', 'The partner theme repeats the same work style.'])
+      : source === 'customer-communication'
+        ? make(source, 'Review demand and pricing after repeat sales.', ['A new channel adds follow-up work as well as orders.', 'A small offer for a clear customer group suits this style.', 'More channels can multiply delivery promises.'])
+        : make(source, `Direct answer for ${source}.`, ['A chart-linked reason for this answer.']))
+    const source = chapters.map(chapter => deliveredChapter(chapter).join('\n\n')).join('\n\n')
+    const report = applyBuyerQuestions(source, 'business', chapters)
+    const partner = report.split('team-decisions\n\n')[1].split('\n\ncustomer-communication')[0]
+    const expansion = report.split('customer-communication\n\n')[1].split('\n\ndelivery-capacity')[0]
+    expect(partner).toContain('Answer: A partner helps when they add a skill you do not already carry.')
+    expect(partner).toContain('Answer detail: Both work roles point to customer growth, leaving a delivery gap for the partner to own.')
+    expect(partner).not.toContain('Further research may slow delivery.')
+    expect(partner).not.toContain('Repeat the same caution.')
+    expect(expansion).toContain('Answer: Review demand and pricing after repeat sales.')
+    expect(expansion).toContain('Answer detail: A new channel adds follow-up work as well as orders.')
+    expect(expansion).not.toContain('More channels can multiply delivery promises.')
+    expect(report.match(/^Question:/gm)).toHaveLength(7)
+  })
+
+  it('separates compatibility evidence from repeated method notes and generic cautions', () => {
+    const make = (id: string, lead: string, paragraphs: string[] = [], tryThis = 'Ask one clear question.') => ({
+      id, title: id, lead, paragraphs, evidence: ['checked chart relationship'], tryThis,
+      guidance: { keepClose: ['Ask one clear question.'], watchFor: ['Generic caution.'] }, icon: 'personality' as const,
+    })
+    const sources = [...new Set(BUYER_QUESTIONS.compatibility.map(question => question.source))]
+    const chapters = sources.map(source => source === 'two-styles'
+      ? make(source, 'This match has shared care needs.', ['Neither a strong private-life link nor a direct conflict appears in the comparison.'])
+      : source === 'two-directions'
+        ? make(source, 'From your side: reassurance and feeling understood stand out.', [
+          "From your partner's side: fresh ideas and direct speech stand out.",
+          'The chart comparison is made in both directions.',
+          'One person may feel supported while the other feels challenged.',
+        ])
+        : make(source, `Direct answer for ${source}.`, ['A personal chart detail.']))
+    const source = chapters.map(chapter => deliveredChapter(chapter).join('\n\n')).join('\n\n')
+    const report = applyBuyerQuestions(source, 'compatibility', chapters)
+    const answerFor = (question: string) => {
+      const start = report.indexOf(`Question: ${question}`)
+      const next = report.indexOf('\n\nQuestion: ', start + 1)
+      return report.slice(start, next < 0 ? undefined : next)
+    }
+    const fit = answerFor('What makes us compatible?')
+    const attraction = answerFor('Why are we attracted to each other?')
+    expect(fit).toContain('Answer: This match has shared care needs.')
+    expect(fit).toContain('Answer detail: Neither a strong private-life link nor a direct conflict appears')
+    expect(fit).not.toContain('Main caution: Generic caution.')
+    expect(attraction).toContain('Answer: From your side: reassurance and feeling understood stand out.')
+    expect(attraction).toContain("Answer detail: From your partner's side: fresh ideas and direct speech stand out.")
+    expect(attraction).toContain('One person may feel supported while the other feels challenged.')
+    expect(attraction).not.toContain('comparison is made in both directions')
+    expect(attraction).not.toContain('Practical point: Ask one clear question.')
+    expect(report.match(/^Question:/gm)).toHaveLength(7)
+  })
+
+  it('separates core personality, visible strengths, pressure triggers and support needs', () => {
+    const make = (id: string, lead: string, paragraphs: string[] = [], tryThis = 'Use a practical next step.') => ({
+      id, title: id, lead, paragraphs, evidence: ['checked chart relationship'], tryThis,
+      guidance: { keepClose: ['Use a practical next step.'], watchFor: ['Generic caution.'] }, icon: 'personality' as const,
+    })
+    const sources = [...new Set(BUYER_QUESTIONS.wellbeing.map(question => question.source))]
+    const chapters = sources.map(source => {
+      if (source === 'everyday-pace') return make(source, 'Your core style is patient and precise.', ['Reading basis: use the three known pillars.', 'Your public role differs from your private pace.', 'The pressure reaction belongs in the pressure answer.', 'About this reading: symbolic, not a promise.'])
+      if (source === 'visible-elements') return make(source, 'Your standout strength is careful attention.', ['Work and relationship needs are separate.', 'The visible chart contains 3 Wood and 1 Metal.', 'Water is absent from this visible count; that does not mean you lack ability.', 'An extra generic trait.', 'Another generic trait.'])
+      if (source === 'workload-rhythm') return make(source, 'You feel pressure when a full workday leaves no time to switch off.', ['Under pressure, you may keep editing after the work is ready.', 'The birth-month pattern is the setting, not a claim about every day.', 'A repeated work pattern.'])
+      if (source === 'support-and-space') return make(source, 'You need to be heard before someone offers a solution.', ['The same need appears again.', 'A recurring difficulty can arise when help is offered too soon.', 'A specific kind of support is someone who listens before advising.'])
+      return make(source, `Direct answer for ${source}.`, ['A chart-linked reason.'])
+    })
+    const source = chapters.map(chapter => deliveredChapter(chapter).join('\n\n')).join('\n\n')
+    const report = applyBuyerQuestions(source, 'wellbeing', chapters)
+    expect(report).toContain('Answer: Your core style is patient and precise.')
+    expect(report).not.toContain('The pressure reaction belongs in the pressure answer.')
+    expect(report).not.toContain('About this reading: symbolic, not a promise.')
+    expect(report).toContain('The visible chart contains 3 Wood and 1 Metal. Water is absent')
+    expect(report).not.toContain('An extra generic trait.')
+    expect(report).not.toContain('Another generic trait.')
+    expect(report).toContain('Answer: You feel pressure when a full workday leaves no time to switch off.')
+    expect(report).not.toContain('Answer detail: The birth-month pattern is the setting')
+    expect(report).not.toContain('Answer detail: The same need appears again.')
+    expect(report.match(/^Question:/gm)).toHaveLength(7)
+  })
+
 })

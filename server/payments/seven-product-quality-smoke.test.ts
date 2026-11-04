@@ -31,6 +31,9 @@ describe('seven-product sandbox fulfillment smoke tests', () => {
       if (input.kind === 'career') {
         expect(report.qualityAudit?.passed).toBe(true)
         expect(report.answerProvenance).toHaveLength(7)
+      } else if (input.kind === 'complete') {
+        expect(report.answerProvenance).toHaveLength(7)
+        expect(report.calculationVerification?.status).toMatch(/^(verified|partial|mismatch|unavailable)$/)
       } else {
         expect(report.qualityAudit?.passed).toBe(false)
       }

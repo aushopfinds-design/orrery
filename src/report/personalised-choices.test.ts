@@ -11,6 +11,7 @@ describe('r24 chart-specific customer choices',()=>{
   const p=plan.primary,same={...p,monthBranchGod:p.monthStemGod}
   const other={...same,monthBranchGod:p.monthStemGod==='食神'?'偏印':'食神'}
   expect(roleChoice(same).en).toContain('clear remit')
+  expect(roleChoice(same,true).en).toContain('clear role with defined duties')
   expect(roleChoice(other).en).toContain('whole week')
   expect(roleChoice(same).en).not.toBe(roleChoice(other).en)
   expect(roleChoice(same).ko).not.toBe(roleChoice(other).ko)

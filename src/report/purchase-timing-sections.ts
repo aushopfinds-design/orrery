@@ -4,13 +4,13 @@ import type { TimingSentence } from './purchase-timing.ts'
 import { pair, WORKING_LANGUAGE } from './purchase-language.ts'
 export interface PurchaseTimingSection { lines: TimingSentence[]; evidence: string[] }
 const cache = new WeakMap<InterpretationPlan, Record<string, PurchaseTimingSection>>()
-export function purchaseTimingSections(plan: InterpretationPlan, targetedProduct01=true): Record<string, PurchaseTimingSection> {
- if(targetedProduct01){const existing=cache.get(plan);if(existing)return existing}
- const made=buildSections(plan,targetedProduct01)
- if(targetedProduct01)cache.set(plan,made)
+export function purchaseTimingSections(plan: InterpretationPlan, targetedProduct01=true, rootCauseFix=true): Record<string, PurchaseTimingSection> {
+ if(targetedProduct01&&rootCauseFix){const existing=cache.get(plan);if(existing)return existing}
+ const made=buildSections(plan,targetedProduct01,rootCauseFix)
+ if(targetedProduct01&&rootCauseFix)cache.set(plan,made)
  return made
 }
-function buildSections(plan:InterpretationPlan,targetedProduct01=true):Record<string,PurchaseTimingSection>{
+function buildSections(plan:InterpretationPlan,targetedProduct01=true,rootCauseFix=true):Record<string,PurchaseTimingSection>{
  const out:Record<string,PurchaseTimingSection>={}
  if(plan.kind==='wellbeing'||plan.kind==='compatibility')return out
  const area=plan.kind==='business'?'business':plan.kind==='career'?'work':'life'
@@ -76,12 +76,20 @@ function buildSections(plan:InterpretationPlan,targetedProduct01=true):Record<st
   `${themeYears?`Direct regular- or opportunity-money themes appear in ${themeYears}, but the checked activity route does not establish a clear paid-work opening. `:''}No direct paid-work route stands out in this window. A money symbol alone is not a prediction of higher income.`,
   `${themeYears?`${themeYears}년에 정기 수입 또는 기회 수입의 주제가 나타나지만, 확인한 활동 흐름은 분명한 유료 업무 기회를 정해 주지 않습니다. `:''}이 기간에 두드러지는 직접적인 유료 업무 통로는 없습니다. 재물 글자만으로 수입 증가를 예측하지 않습니다.`
  )
- // Editorial priority is the count of observed conflicts, not an invented luck score.
+ // Non-Product 01 sections retain their established editorial count policy.
  // All periods remain in the full timeline. Highlights never relabel omitted periods as safe.
  const priority=(rows:Row[])=>rows.map((r,i)=>({r,i,n:r.lines.filter(l=>/\.(change-|background-pressure|wider-pressure)/.test(l.id)).length})).sort((a,b)=>b.n-a.n||a.i-b.i).slice(0,3).map(x=>x.r).sort((a,b)=>a.date.localeCompare(b.date))
  const care=years.filter(r=>['extra-care','opening-with-caution'].includes(r.status))
  if(plan.kind==='complete'){
-  const changed=years.filter(r=>r.lines.some(l=>/\.change-(day|month)$/.test(l.id))),highlights=priority(changed)
+  const changed=years.filter(r=>r.lines.some(l=>/\.change-(day|month)$/.test(l.id)))
+  // Product 01 asks for a turning point, so choose one year using actual
+  // day/month pair interactions. Direct clashes outrank other named friction;
+  // a tie goes to the earlier comparison year. This ranks evidence, not luck.
+  const highlights=targetedProduct01&&rootCauseFix?changed.map((row,index)=>({row,index,weight:row.comparisons
+    .filter(item=>item.index===1||item.index===2)
+    .flatMap(item=>item.found)
+    .reduce((sum,pattern)=>sum+(pattern.type==='沖'?3:['刑','害','破'].includes(pattern.type)?2:0),0)}))
+    .sort((a,b)=>b.weight-a.weight||a.index-b.index).slice(0,1).map(item=>item.row):priority(changed)
   const turningPointSummary=(locale:'en'|'ko')=>highlights.map(row=>{
    const year=row.date.slice(0,4),theme=WORKING_LANGUAGE[row.god].name[locale]
    const areas=[
@@ -90,8 +98,10 @@ function buildSections(plan:InterpretationPlan,targetedProduct01=true):Record<st
    ].filter((area):area is string=>Boolean(area))
    return locale==='en'?`${year}: ${theme} — ${areas.join('; ')}`:`${year}년: ${theme} — ${areas.join('·')}`
   }).join(locale==='en'?'. ':'; ')
-  const turningPointAnswer=highlights.length&&targetedProduct01
-   ?[`Review these chart-linked periods when planning a change: ${turningPointSummary('en')}. They are planning prompts, not guaranteed turning points.`,`변화를 계획할 때 명식에서 살펴볼 시기는 ${turningPointSummary('ko')}입니다. 계획 점검을 위한 시기이지, 반드시 큰일이 일어난다는 예측은 아닙니다.`]
+  const turningPointAnswer=highlights.length&&targetedProduct01&&rootCauseFix
+   ?[`The clearest year to review a major change is ${turningPointSummary('en')}. This is a calculated timing signal for those areas, not a prediction that an event will happen.`,`큰 변화를 살펴볼 시기는 ${turningPointSummary('ko')}입니다. 계산에서 나온 시기 신호이지 특정 사건이 일어난다는 예측은 아닙니다.`]
+   :highlights.length&&targetedProduct01
+    ?[`The clearest periods to review a major change are ${turningPointSummary('en')}. These years mark chart contacts with work or close relationships; they do not guarantee an event.`,`큰 변화를 살펴볼 시기는 ${turningPointSummary('ko')}입니다. 일이나 가까운 관계에 닿는 명식의 시기이며, 특정 사건을 보장하지 않습니다.`]
    :highlights.length
     ?[`Give ${dates(highlights)} a closer look when planning a change. These stand out because the reading finds more changes to work or close relationships; the full timeline below keeps the other years in view.`,`변화를 계획할 때는 ${dates(highlights)}년을 먼저 살펴봅니다. 일이나 가까운 관계에서 변화가 더 두드러지는 해이며, 다른 해의 흐름도 아래 전체 일정에 남겨 두었습니다.`]
     :['No work or relationship clash stands out in this ten-year comparison. Your timeline still shows how the focus changes from year to year.','이번 10년 비교에서는 일이나 관계에 부딪히는 변화가 두드러지지 않습니다. 매년 달라지는 중심 주제는 전체 흐름에서 설명합니다.']

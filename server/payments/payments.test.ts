@@ -77,7 +77,7 @@ describe('sandbox configuration and private input', () => {
   })
   it('refuses a browser-provided price, bad dates, missing time zones and missing partner/year', () => {
     for (const value of [{ kind: 'complete', first: birth, amount: 1 }, { kind: 'complete', first: { ...birth, day: 32 } },
-      { kind: 'complete', first: { ...birth, timezone: undefined } }, { kind: 'compatibility', first: birth }, { kind: 'year', first: birth }]) {
+      { kind: 'complete', first: { ...birth, timezone: undefined } }, { kind: 'complete', first: { ...birth, longitude: undefined } }, { kind: 'compatibility', first: birth }, { kind: 'year', first: birth }]) {
       expect(() => orderInput(value)).toThrow(PaymentError)
     }
     expect(orderInput({ kind: 'bundle', first: birth, second: birth, year: new Date().getUTCFullYear() + 1 }).second?.timezone).toBe('Australia/Sydney')

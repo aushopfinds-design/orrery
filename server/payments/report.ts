@@ -10,7 +10,7 @@ import { PDFDocument, PDFName, PDFNumber, PDFNull, rgb, StandardFonts, pushGraph
 import fontkit from '@pdf-lib/fontkit'
 import { calculateSaju } from '../../packages/core/src/saju.ts'
 import { buildCompleteReading, REPORT_EDITION } from '../../src/report/complete-reading.ts'
-import { buildBundleReading, buildCategoryReading } from '../../src/report/category-readings.ts'
+import { buildBundleReading, buildCategoryReading, DESTINY_COLLECTION_QUESTIONS } from '../../src/report/category-readings.ts'
 import { buildDestinyCard } from '../../src/report/destiny-card.ts'
 import { plainReadingText, readingTextParts } from '../../src/report/reading-text.ts'
 import { previewProduct } from '../../src/report/personal-products.ts'
@@ -19,7 +19,8 @@ import type { OrderInput } from './input.ts'
 import { auditBirthInput } from './independent-audit.ts'
 import { applyBuyerQuestions, BUYER_QUESTIONS } from '../../src/report/buyer-outline.ts'
 import { inspectReport } from '../../src/lib/report-quality-gate.ts'
-import { buildAnswerProvenance, type AnswerProvenance } from '../../src/report/answer-provenance.ts'
+import { buildAnswerProvenance, buildCollectionAnswerProvenance, type AnswerProvenance } from '../../src/report/answer-provenance.ts'
+import { summarizeCalculationVerification, type CalculationVerification } from '../../src/report/independent-personalization.ts'
 
 export interface BuyerReport {
   title: string
@@ -39,6 +40,8 @@ export interface BuyerReport {
   qualityAudit?: ReturnType<typeof inspectReport>
   /** Internal structured provenance, encrypted with the stored order artifact; never sent to customers. */
   answerProvenance?: AnswerProvenance[]
+  /** Independent pillar comparison only; does not certify narrative accuracy. */
+  calculationVerification?: CalculationVerification
 }
 let fontBytes: Promise<Buffer> | undefined
 let artworkBytes: Promise<Buffer> | undefined
@@ -63,15 +66,38 @@ export function reportEmphasis(source: unknown): string[] {
 export async function issueReport(input: OrderInput, orderId: string, referenceYear: number, mode: 'test' | 'live' = 'test'): Promise<BuyerReport> {
   const a = calculateSaju(input.first), b = input.second ? calculateSaju(input.second) : undefined
   let text: string, documents: string[], source: unknown, answerProvenance: AnswerProvenance[] | undefined
+  let calculationVerification: CalculationVerification | undefined
   let careerCharts: ReturnType<typeof careerMoneyChartData> | undefined
   let careerCalculationVerified = false
   if (input.kind === 'complete') {
     const independentAudit = await auditBirthInput(input.first, a)
+    calculationVerification = summarizeCalculationVerification(independentAudit, Boolean(input.first.unknownTime))
     const reading = buildCompleteReading(a, referenceYear, independentAudit)
+    answerProvenance = buildAnswerProvenance('complete', reading.chapters)
     source = reading; documents = [previewProduct('complete').title]; text = applyBuyerQuestions(reading.fullText.replace('THE FATE KEY · ' + reading.title + '\n\n', 'THE FATE KEY · ' + documents[0] + '\n\n'), 'complete', reading.chapters, reading.periods)
   } else if (input.kind === 'bundle') {
     if (!b) throw new Error('Missing second chart')
     const reading = buildBundleReading(a, b, Number(input.periodStart?.slice(0, 4) ?? input.year!), referenceYear, input.periodStart, input.periodTimezone)
+    const chapter = (chapters: typeof reading.complete.chapters, id: string) => {
+      const found = chapters.find(item => item.id === id)
+      if (!found) throw new Error(`Missing collection answer source: ${id}`)
+      return found
+    }
+    answerProvenance = buildCollectionAnswerProvenance([
+      { questionId: 'collection-q1', sourceChapterId: 'complete.personality', ruleId: 'category-readings.buildBundleReading.q1.v1', chapters: [chapter(reading.complete.chapters, 'personality')] },
+      { questionId: 'collection-q2', sourceChapterId: 'complete.social', ruleId: 'category-readings.buildBundleReading.q2.v1', chapters: [chapter(reading.complete.chapters, 'social')] },
+      { questionId: 'collection-q3', sourceChapterId: 'career.two-work-layers', ruleId: 'category-readings.buildBundleReading.q3.v1', chapters: [chapter(reading.career.chapters, 'two-work-layers')] },
+      { questionId: 'collection-q4', sourceChapterId: 'career.money-commitments', ruleId: 'category-readings.buildBundleReading.q4.v1', chapters: [chapter(reading.career.chapters, 'money-commitments')] },
+      { questionId: 'collection-q5', sourceChapterId: 'love.love-needs', ruleId: 'category-readings.buildBundleReading.q5.v1', chapters: [chapter(reading.love.chapters, 'love-needs')] },
+      { questionId: 'collection-q6', sourceChapterId: 'compatibility.two-styles', ruleId: 'category-readings.buildBundleReading.q6.v1', chapters: [chapter(reading.compatibility.chapters, 'two-styles')] },
+      { questionId: 'collection-q7', sourceChapterId: 'complete.life-challenges', ruleId: 'category-readings.buildBundleReading.q7.v1', chapters: [chapter(reading.complete.chapters, 'life-challenges')] },
+      { questionId: 'collection-q8', sourceChapterId: 'annual.annual-theme', ruleId: 'category-readings.buildBundleReading.q8.v1', chapters: [chapter(reading.annual.chapters, 'annual-theme')] },
+      { questionId: 'collection-q9', sourceChapterId: 'complete.patterns', ruleId: 'category-readings.buildBundleReading.q9.v1', chapters: [chapter(reading.complete.chapters, 'patterns')] },
+      { questionId: 'collection-q10', sourceChapterId: 'collection.integration', ruleId: 'category-readings.buildBundleReading.q10.v1', chapters: [
+        chapter(reading.career.chapters, 'two-work-layers'), chapter(reading.career.chapters, 'money-commitments'),
+        chapter(reading.love.chapters, 'love-needs'), chapter(reading.annual.chapters, 'annual-theme'),
+      ] },
+    ])
     source = reading
     documents = [previewProduct('bundle').title]
     text = reading.fullText.replace('THE FATE KEY · ' + reading.title + '\n\n', 'THE FATE KEY · ' + documents[0] + '\n\n')
@@ -79,10 +105,10 @@ export async function issueReport(input: OrderInput, orderId: string, referenceY
     const reading = buildCategoryReading(input.kind, a, { second: b, year: Number(input.periodStart?.slice(0, 4) ?? input.year ?? referenceYear), ...(input.periodStart ? { periodStart: input.periodStart } : {}), ...(input.periodTimezone ? { periodTimezone: input.periodTimezone } : {}) })
     if (input.kind === 'career') {
       careerCharts = careerMoneyChartData(a, referenceYear)
-      answerProvenance = buildAnswerProvenance('career', reading.chapters)
       const audit = await auditBirthInput(input.first, a)
       careerCalculationVerified = Boolean(audit && audit.current.slice(0, 3).every((pillar, index) => pillar && pillar === audit.independent[index]))
     }
+    answerProvenance = buildAnswerProvenance(input.kind, reading.chapters)
     source = reading; documents = [previewProduct(input.kind).title]; text = applyBuyerQuestions(reading.fullText.replace('THE FATE KEY · ' + reading.title + '\n\n', 'THE FATE KEY · ' + documents[0] + '\n\n'), input.kind, reading.chapters, [], 'standalone', careerCharts?.years)
   }
   const certificates = documents.map((title,index) => ({ title, number: reportReference(orderId, referenceYear, input.kind === 'bundle' ? 5 : index + 1) }))
@@ -95,34 +121,47 @@ export async function issueReport(input: OrderInput, orderId: string, referenceY
   const report: BuyerReport = {
     title: previewProduct(input.kind).title, kind: input.kind, edition: REPORT_EDITION, reference, certificates,
     ...(input.recipientName ? { recipientName: input.recipientName } : {}),
-    issuedAt: new Date().toISOString(), text: customerDeliveryText(plainReadingText(text).replaceAll('Person A', 'You').replaceAll('Person B', 'Your partner'), input.kind === 'complete'), emphasis: reportEmphasis(source), documents,
+    issuedAt: new Date().toISOString(), text: customerDeliveryText(plainReadingText(text).replaceAll('Person A', 'You').replaceAll('Person B', 'Your partner'), input.kind !== 'career' && input.kind !== 'bundle'), emphasis: reportEmphasis(source), documents,
     cards: [buildDestinyCard(input.first, input.recipientName ?? ''), ...(input.second ? [buildDestinyCard(input.second, 'Your partner')] : [])], pdf: '',
     ...(careerCharts ? { careerCharts } : {}),
     ...(answerProvenance ? { answerProvenance } : {}),
+    ...(calculationVerification ? { calculationVerification } : {}),
   }
   // Run non-blocking diagnostics for both sandbox and live orders.
   // Never delay fulfillment because a heuristic score is low or QA throws.
   try {
-    const expected = input.kind === 'bundle' ? [] : BUYER_QUESTIONS[input.kind].map(item => item.question)
+    const questionTexts = input.kind === 'bundle' ? DESTINY_COLLECTION_QUESTIONS : BUYER_QUESTIONS[input.kind].map(item => item.question)
+    const expected = [...questionTexts]
     const matches = [...report.text.matchAll(/(?:^|\n)Question: ([^\n]+)\n/g)]
-    const sections = matches.map((match, index) => ({
-      question: match[1].trim(),
-      answer: report.text.slice(match.index! + match[0].length, matches[index + 1]?.index ?? report.text.length).trim(),
-    }))
+    const answerLabel = /^(?:Your Answer|Answer|Answer detail|What This Means for You|Important Timing|Bottom Line|Practical point|Main caution):\s*/i
+    const sections = matches.map((match, index) => {
+      const raw = report.text.slice(match.index! + match[0].length, matches[index + 1]?.index ?? report.text.length)
+      const blocks: string[] = []
+      for (const block of raw.split(/\n\s*\n/).map(value => value.trim()).filter(Boolean)) {
+        if (!answerLabel.test(block)) break
+        blocks.push(block.replace(answerLabel, ''))
+      }
+      return { question: match[1].trim(), answer: blocks.join('\n\n') }
+    })
     const audit = inspectReport({
       productId: input.kind, expectedQuestions: expected,
-      questions: sections.map(section => ({ ...section, questionId: BUYER_QUESTIONS[input.kind === 'bundle' ? 'complete' : input.kind]
-        .find(question => question.question === section.question)?.id ?? section.question })),
+      questions: sections.map((section, index) => ({ ...section, questionId: input.kind === 'bundle'
+        ? `collection-q${index + 1}`
+        : BUYER_QUESTIONS[input.kind].find(question => question.question === section.question)?.id ?? section.question })),
       birthTimeKnown: !input.first.unknownTime && (!input.second || !input.second.unknownTime),
-      usesHourPillar: false, // No semantic hour-pillar audit implemented.
-      calculationVerified: input.kind === 'career' ? careerCalculationVerified : false,
-      ...(input.kind === 'career' ? { provenance: report.answerProvenance } : {}),
+      usesHourPillar: (Boolean(input.first.unknownTime) || Boolean(input.second?.unknownTime)) && sections.some(section =>
+        /\b(?:hour pillar|hour stem|hour branch|birth-hour marker|hour sign)\b/i.test(section.answer)),
+      calculationVerified: input.kind === 'complete' ? calculationVerification?.status === 'verified' : input.kind === 'career' ? careerCalculationVerified : false,
+      ...(input.kind === 'complete' ? { calculationVerification: calculationVerification?.status ?? 'unavailable' } : {}),
+      provenance: report.answerProvenance,
     })
     if (mode === 'test') report.qualityAudit = audit
     // Log codes only: do not log customer names, birth details or report content.
     console.info('report_quality_diagnostic', {
       orderId, kind: input.kind, mode, score: audit.score,
-      passed: audit.passed, findingCodes: audit.findings.map(finding => finding.code),
+      passed: audit.passed, requiresHumanReview: audit.requiresHumanReview,
+      findingCodes: [...new Set(audit.findings.map(finding => finding.code))],
+      ...(input.kind === 'complete' ? { calculationVerification: calculationVerification?.status ?? 'unavailable' } : {}),
     })
   } catch {
     console.warn('report_quality_diagnostic_unavailable', { orderId, kind: input.kind, mode })
@@ -323,7 +362,13 @@ async function reportPdf(report: BuyerReport, orderId: string, emphasis: string[
     const note = inAppendix || /^(From (your|the) chart:|Why this focus:|Report edition|Sources|Method|Calculated start:)/.test(value)
     if (heading && !inAppendix && value !== 'Your reading at a glance' && y < 650) addPage()
     if (heading) {
-      if (/^\d{2} [·-]/.test(value)) tocDestinations.set(value.replace(/^\d{2} [·-]\s*/, '').trim(), { page, y: y - 10 })
+      if (/^\d{2} [·-]/.test(value)) {
+        const destinationTitle = value.replace(/^\d{2} [·-]\s*/, '').trim()
+        // Some detailed/source sections repeat the buyer-facing headings.
+        // Preserve the first occurrence so overview links land on the actual
+        // customer answer, not a later appendix copy.
+        if (!tocDestinations.has(destinationTitle)) tocDestinations.set(destinationTitle, { page, y: y - 10 })
+      }
       y -= 10; paragraph(value, 16, gold); y -= 5
     } else {
       const toc = tocRowsRemaining > 0 && value.includes(' — ')

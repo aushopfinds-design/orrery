@@ -30,6 +30,29 @@ describe('customer appendix',()=>{
   expect(buyer).toContain('From the chart: Money markers at month.')
   expect(customerDeliveryText(text)).toContain('Main caution: Too many duties can be tiring.')
  })
+ it('applies the existing targeted cleanup to the current Product 01 title',()=>{
+  const text=['THE FATE KEY · Your Life, Your Destiny','06 · What Challenges Keep Returning in Your Life?','Answer: A work pattern and private need differ.','Main caution: Do not expect one to resolve the other.','Calculation notes','From the chart: Day branch 未.'].join('\n\n')
+  const buyer=customerDeliveryText(text,true)
+  expect(buyer).not.toContain('Main caution: Do not expect one to resolve the other.')
+  expect(buyer).toContain('From the chart: Day branch 未.')
+  // Product 07 calls this function with cleanup disabled, preserving its included edition.
+  expect(customerDeliveryText(text,false)).toContain('Main caution: Do not expect one to resolve the other.')
+ })
+ it('keeps one repeated method note in standalone buyer copies while preserving protected editions',()=>{
+  const note='Answer detail: Reading basis: Your birth time is unknown, so this reading uses the three known pillars.'
+  const relationship=['THE FATE KEY · Are We Meant to Be?','01 · Fit',note,'02 · Love',note].join('\n\n')
+  expect(customerDeliveryText(relationship,true).split(note)).toHaveLength(2)
+  const product02=['THE FATE KEY · Success, Money & Your Future','01 · Work',note,'02 · Money',note].join('\n\n')
+  expect(customerDeliveryText(product02,false).split(note)).toHaveLength(3)
+ })
+ it('leaves the method disclaimer in the report-level method section, not repeated answer text',()=>{
+  const note='Answer detail: About this reading: traditional birth-chart interpretation, not guaranteed outcomes.'
+  const text=['THE FATE KEY · Are We Meant to Be?',note,'How this reading is prepared','Traditional birth-chart interpretation; outcomes are not guaranteed.'].join('\n\n')
+  const buyer=customerDeliveryText(text,true)
+  expect(buyer).not.toContain(note)
+  expect(buyer).toContain('How this reading is prepared\n\nTraditional birth-chart interpretation; outcomes are not guaranteed.')
+  expect(customerDeliveryText(text,false)).toContain(note)
+ })
  it('keeps only one identical decade practical point in My Life',()=>{
   const first='Practical point: Read the calculated start 2024-07-19 alongside actual changes in responsibility.'
   const second='Practical point: Read the calculated start 2034-07-19 alongside actual changes in responsibility.'

@@ -1,5 +1,5 @@
 /** Short customer appendix; the source report retains its full calculation evidence. */
-export function customerDeliveryText(text:string, simplifyMyLifeRepetition=false):string {
+export function customerDeliveryText(text:string, simplifyRepetition=false):string {
  let appendix=false
  let myLife=false, section=''
  const seen=new Set<string>()
@@ -8,7 +8,15 @@ export function customerDeliveryText(text:string, simplifyMyLifeRepetition=false
   // Never expose a label or quote that has no answer text.
   if (/^(?:Answer detail:\s*)?[”’"']+$/u.test(block.trim())) return false
   if(block==='Calculation notes'){appendix=true;myLife=false;return true}
-  if(/^THE FATE KEY · /.test(block)){appendix=false;myLife=simplifyMyLifeRepetition&&block==='THE FATE KEY · My Life';section='';seen.clear();return true}
+  if(/^THE FATE KEY · /.test(block)){appendix=false;myLife=simplifyRepetition&&(block==='THE FATE KEY · My Life'||block==='THE FATE KEY · Your Life, Your Destiny');section='';seen.clear();return true}
+  // The PDF retains the report-level method and limitations section. Repeating
+  // that note inside a buyer answer adds no answer and consumes reading space.
+  if(simplifyRepetition&&/^Answer detail: About this reading:/.test(block))return false
+  if(simplifyRepetition&&!myLife&&/^Answer detail: (?:Reading basis:|About this reading:)/.test(block)){
+   const note=block.replace(/^Answer detail: /,'').replace(/\s+/g,' ').trim()
+   if(seen.has(note))return false
+   seen.add(note)
+  }
   if(myLife&&/^\d{2} · /.test(block))section=block.slice(0,2)
   // Several My Life chapters already explain the same caution in their body.
   // Keep the practical point and the full source note, but avoid echoing it in a

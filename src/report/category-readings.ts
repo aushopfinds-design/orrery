@@ -1,9 +1,11 @@
 import { splitDeliveredReading, CALCULATION_NOTES } from './report-delivery.ts'
 import { bundleNarrative } from './purchase-narrative.ts'
+
 import { bundleInterpretationPlans } from './interpretation-plan.ts'
 import { buildTraditionalCompleteFromPlan, buildTraditionalCategory, buildTraditionalCategoryFromPlan } from './traditional-reading.ts'
 import type { ReportChapter } from './complete-reading.ts'
 import type { SajuResult } from '@orrery/core/types'
+
 import type { FocusCategory } from './category-catalog.ts'
 import { buildCompatibilityReading } from './compatibility-reading.ts'
 import { buildCareerReading, buildBusinessReading } from './work-focus-readings.ts'
@@ -12,6 +14,20 @@ import { buildBalanceReading } from './balance-reading.ts'
 import { plainReadingText } from './reading-text.ts'
 import { PERSONAL_PROFILES, RELATIONSHIP_PROFILES } from './reading-profiles.ts'
 import { WORKING_LANGUAGE as LANGUAGE } from './purchase-language.ts'
+
+/** The live collection's ten opening questions; keep QA and delivery aligned. */
+export const DESTINY_COLLECTION_QUESTIONS = [
+  'What kind of person are you at your core?',
+  'Which strengths help you most, and what can get in your way?',
+  'What kind of work is the best fit for you?',
+  'How are you most likely to earn and manage money?',
+  'What do you need from a close relationship?',
+  'How do you and your partner fit together?',
+  'What recurring challenge deserves your attention?',
+  'What should you know about the next 12 months?',
+  'When could a longer-term life or work shift deserve attention?',
+  'How do these parts of your life connect?',
+] as const
 
 export { buildCompatibilityReading, buildCareerReading, buildBusinessReading, buildYearAheadReading, buildBalanceReading }
 export function buildCategoryReading(kind: FocusCategory, first: SajuResult, options: { second?: SajuResult; year?: number; periodStart?: string; periodTimezone?: string } = {}) {
@@ -31,7 +47,9 @@ export function buildBundleReading(first: SajuResult, second: SajuResult, annual
   return buildBundleFromPlans(bundleInterpretationPlans(first, second, annualYear, referenceYear, periodStart, periodTimezone))
 }
 export function buildBundleFromPlans(plans: ReturnType<typeof bundleInterpretationPlans>) {
-  const complete = buildTraditionalCompleteFromPlan(plans.complete)
+  // Product 07 preserves the included Product 01 edition; targeted root-cause
+  // narrative changes are applied only to standalone Product 01 reports.
+  const complete = buildTraditionalCompleteFromPlan(plans.complete, true, false)
   const compatibility = buildTraditionalCategoryFromPlan(plans.compatibility)
   const annual = buildTraditionalCategoryFromPlan(plans.annual)
   const career = buildTraditionalCategoryFromPlan(plans.career)
@@ -141,18 +159,18 @@ export function buildBundleFromPlans(plans: ReturnType<typeof bundleInterpretati
   const collectionTiming = plans.annual.months.filter(point => ['day', 'month'].every(position => point.comparisons.some(item => item.position === position && item.patterns.some(pattern => ['沖', '刑', '害', '破'].includes(pattern.type)))))
   const integratedCollectionAnswer = `Your work pattern centres on ${workTheme}, and ${incomeSummary}. These connect through delivery: taking on more work only helps when the time and terms let you finish it and collect payment. In close relationships, you need ${privateNeed}. Across the fixed period from ${annualWindow}, the shared work-and-home comparison flags ${collectionTiming.length ? collectionTiming.map(point => point.date.slice(0, 7)).join(', ') : 'no overlapping pressure months'}; treat that as a timing check, not a prediction.`
   const collectionQuestions = [
-    answer(1, 'What kind of person are you at your core?', life, undefined, coreAnswer),
-    answer(2, 'Which strengths help you most, and what can get in your way?', strengthsOverview, undefined, strengthAnswer),
-    answer(3, 'What kind of work is the best fit for you?', careerFit, undefined, careerAnswer),
-    answer(4, 'How are you most likely to earn and manage money?', moneyFit, undefined, earningPattern),
-    answer(5, 'What do you need from a close relationship?', relationshipNeed, undefined, relationshipAnswer),
-    answer(6, 'How do you and your partner fit together?', relationshipFit, undefined, partnerAnswer),
-    answer(7, 'What recurring challenge deserves your attention?', challenge, undefined, challengeAnswer),
-    answer(8, 'What should you know about the next 12 months?', yearTheme, undefined, annualSummary),
-    answer(9, 'When could a longer-term life or work shift deserve attention?', longTerm, undefined, longerShift),
+    answer(1, DESTINY_COLLECTION_QUESTIONS[0], life, undefined, coreAnswer),
+    answer(2, DESTINY_COLLECTION_QUESTIONS[1], strengthsOverview, undefined, strengthAnswer),
+    answer(3, DESTINY_COLLECTION_QUESTIONS[2], careerFit, undefined, careerAnswer),
+    answer(4, DESTINY_COLLECTION_QUESTIONS[3], moneyFit, undefined, earningPattern),
+    answer(5, DESTINY_COLLECTION_QUESTIONS[4], relationshipNeed, undefined, relationshipAnswer),
+    answer(6, DESTINY_COLLECTION_QUESTIONS[5], relationshipFit, undefined, partnerAnswer),
+    answer(7, DESTINY_COLLECTION_QUESTIONS[6], challenge, undefined, challengeAnswer),
+    answer(8, DESTINY_COLLECTION_QUESTIONS[7], yearTheme, undefined, annualSummary),
+    answer(9, DESTINY_COLLECTION_QUESTIONS[8], longTerm, undefined, longerShift),
     [
       '10 · How Do Your Life, Love, Work and Timing Fit Together?',
-      'Question: How do these parts of your life connect?',
+      `Question: ${DESTINY_COLLECTION_QUESTIONS[9]}`,
       `Your Answer: ${plainReadingText(integratedCollectionAnswer)}`,
       'Practical Step: Compare the actual payment date and delivery hours before accepting more work.',
     ].join('\n\n'),

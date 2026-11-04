@@ -1,3 +1,6 @@
+Warning: truncated output (original token count: 12639)
+Total output lines: 540
+
 import type { CompleteReadingPeriod, ReportChapter } from './complete-reading.ts'
 import { deliveredChapter } from './report-delivery.ts'
 export const BUYER_OUTLINES = {
@@ -169,30 +172,46 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
       } else if (kind === 'year' && question.role === 'year-priority') {
         lead = byId.get('annual-theme')?.tryThis ?? chapter.tryThis
         paragraphs = []
-      } else if (kind === 'business' && question.role === 'financial-risk') {
-        const moneyPattern = chapter.lead.toLowerCase()
-        lead = moneyPattern.includes('combines repeat customers with new deals')
-          ? 'Your main financial risk is relying on new-deal income to cover ongoing delivery for repeat customers before payment is secure.'
-          : moneyPattern.includes('repeat sales and clearly priced ongoing work')
-            ? 'Your main financial risk is underpricing ongoing service: repeat sales can still require costs after payment.'
-            : moneyPattern.includes('finding buyers and making deals')
-              ? 'Your main financial risk is uneven cash flow: income depends on new buyers, so fees can vary between deals.'
-            : moneyPattern.includes('business money signs sit behind the main role')
-              ? 'Your main financial risk is setting business costs around sales before the less visible income route has been tested.'
-              : moneyPattern.includes('does not give a clear direct business money route')
-                ? 'Your main financial risk is taking on fixed costs before a direct business income route is clear.'
-                : 'Your main financial risk is counting a promising deal as income before payment arrives.'
-        paragraphs = chapter.paragraphs.filter(line => line !== chapter.lead).slice(0, 2)
-      } else if (kind === 'compatibility' && question.role === 'conflict-trigger') {
-        const friction = chapter.paragraphs.find(line => /^(?:Your likely friction is|The practical tension for Person A is)/.test(line))
-        lead = friction?.startsWith('Your likely friction is')
-          ? (() => {
-              const parts = friction.match(/^Your likely friction is (.*?); your partner’s is (.*?)\.$/)
-              return parts ? `Your friction point is ${parts[1]}. For your partner, tension may arise from ${parts[2]}.` : friction.replace(/^Your likely friction is /, 'The likely friction is ')
-            })()
-          : friction
-            ? `A likely friction point is ${friction.split('Person A is ')[1]?.split(';')[0] ?? 'a difference in private-life preferences'} for Person A, and ${friction.split('for Person B it is ')[1]?.split('.')[0] ?? 'a different reading of the same situation'} for Person B.`
-            : chapter.paragraphs.find(line => /^Your partner: /.test(line)) ?? chapter.paragraphs[3] ?? chapter.guidance.watchFor[0] ?? chapter.lead
+      } else if (kind === 'year' && question.role === 'career-theme') {
+        // Keep the yearly career conclusion, its annual work reason and the
+        // personal baseline. The separate timing question keeps its own date.
+        paragraphs = chapter.paragraphs.slice(0, 2)
+        chapter.paragraphs.forEach(line => used.add(line))
+      } else if (kind === 'year' && question.role === 'year-overview') {
+        paragraphs = []
+        chapter.paragraphs.forEach(line => used.add(line))
+      } else if (kind === 'year' && question.role === 'money-theme') {
+        const annualBasis = chapter.paragraphs[0]
+        const monthTheme = chapter.paragraphs[2]
+        paragraphs = annualBasis && monthTheme ? [`${annualBasis} ${monthTheme}`] : [annualBasis ?? monthTheme].filter((line): line is string => Boolean(line))
+        chapter.paragraphs.forEach(line => used.add(line))
+      } else if (kind === 'year' && question.role === 'relationship-theme') {
+        paragraphs = chapter.paragraphs.slice(0, 2)
+        chapter.paragraphs.forEach(line => used.add(line))
+      } else if (kind === 'year' && question.role === 'supportive-months') {
+        paragraphs = chapter.paragraphs.length ? [chapter.paragraphs.slice(0, 3).join(' ')] : []
+        chapter.paragraphs.forEach(line => used.add(line))
+      } else if (kind === 'business' && question.role === 'partner-fit') {
+        paragraphs = chapter.paragraphs.slice(0, 1)
+        chapter.paragraphs.forEach(line => used.add(line))
+      } else if (kind === 'business' && question.role === 'expansion-timing') {
+        paragraphs = chapter.paragraphs.slice(0, 1)
+        chapter.paragraphs.forEach(line => used.add(line))
+      } else if (kind === 'compatibility' && question.role === 'attraction') {
+        paragraphs = chapter.paragraphs.filter(line => /^From your partner's side:|^Your partner:|^One person may feel supported while the other feels challenged/.test(line)).slice(0, 2)
+        chapter.paragraphs.forEach(line => used.add(line))
+      } else if (kind === 'compatibility' && question.role === 'overall-fit') {
+        paragraphs = chapter.paragraphs.slice(0, 1)
+        chapter.paragraphs.forEach(line => used.add(line))
+      } else if (kind === 'wellbeing' && question.role === 'core-personality') {
+        paragraphs = chapter.paragraphs.slice(0, 2)
+        chapter.paragraphs.forEach(line => used.add(line))
+      } else if (kind === 'wellbeing' && question.role === 'distinctive-traits') {
+        const counts = chapter.paragraphs[1]
+        const missingNote = chapter.paragraphs[2]
+        paragraphs = counts && missingNote ? [`${counts} ${missingNote}`] : [counts, missingNote].filter((line): line is string => Boolean(line))
+        chapter.paragraphs.forEach(line => used.add(line))
+      } else if (kind ==…639 tokens truncated…] ?? chapter.guidance.watchFor[0] ?? chapter.lead
         paragraphs = []
         chapter.paragraphs.forEach(line => used.add(line))
       } else if (kind === 'compatibility' && question.role === 'care-expression') {
@@ -216,8 +235,11 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
         lead = finishing
           ? `Under pressure, attention to detail can turn into repeated edits after the work is ready, delaying completion. ${setting ?? ''}`.trim()
           : warning
-        paragraphs = setting ? [setting] : []
+        paragraphs = []
         chapter.paragraphs.slice(0, 2).forEach(line => used.add(line))
+      } else if (kind === 'wellbeing' && question.role === 'relationship-need') {
+        paragraphs = chapter.paragraphs[2] ? [chapter.paragraphs[2]] : []
+        chapter.paragraphs.forEach(line => used.add(line))
       } else if (kind === 'complete' && question.role === 'strengths-and-limits') {
         lead = chapter.lead
         paragraphs = chapter.paragraphs.slice(0, 2)
@@ -252,12 +274,17 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
         lead = index >= 0 ? chapter.paragraphs[index] : chapter.tryThis
         paragraphs = index >= 0 ? chapter.paragraphs.slice(index + 1, index + 2) : []
       } else if (question.part === 'turning-points') {
-        lead = chapter.lead
-        const next = periods[1]
-        paragraphs = [
-          ...chapter.paragraphs.filter(line => /\b20\d\d\b/.test(line)),
-          ...(set === 'standalone' && next ? [`Your next ten-year cycle is ${next.period} (${next.pillar}). ${next.paragraphs[1] ?? next.paragraphs[0]}`] : []),
-        ]
+        const selectedYears = chapter.paragraphs.filter(line => /^Why \d{4}/.test(line)).slice(0, kind === 'complete' ? 1 : 3)
+        if (set === 'standalone' && kind === 'complete') {
+          lead = chapter.lead
+          // Keep Q7 focused on its strongest annual comparison. Full cycle
+          // details remain in the report's dedicated timing chapters.
+          paragraphs = selectedYears
+        } else {
+          lead = chapter.lead
+          const nextCycle = periods[1]
+          paragraphs = [...chapter.paragraphs.filter(line => /\b20\d\d\b/.test(line)), ...(set === 'standalone' && nextCycle ? [`Your next ten-year cycle is ${nextCycle.period} (${nextCycle.pillar}). ${nextCycle.paragraphs[1] ?? nextCycle.paragraphs[0]}`] : [])]
+        }
       } else if (question.part === 'next-cycle') {
         const current = periods[0]
         const next = periods[1]
@@ -450,10 +477,23 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
       ...(kind === 'career' && set === 'standalone' ? [] : chapter.paragraphs.filter(line => !used.has(line) && !(kind === 'complete' && source === 'personality' && chapter.guidance.watchFor.includes(line)))),
     ]
     const answeredLines = [...firstLines, ...extraAnswers.flatMap(item => item.lines)]
-    const guidance = kind === 'career' && set === 'standalone' ? [] : chapter.showGuidance === false ? [] : [
-      ...(set === 'collection' ? (!extraAnswers.some(item => item.lines.includes(chapter.tryThis)) ? ['Practical point: ' + chapter.tryThis] : []) : (!answeredLines.includes(chapter.tryThis) ? ['Practical point: ' + chapter.tryThis] : [])),
-      ...(set === 'collection' ? (!extraAnswers.some(item => chapter.guidance.watchFor.includes(item.lines[0])) ? ['Main caution: ' + chapter.guidance.watchFor.join(' ')] : []) : (!answeredLines.some(line => chapter.guidance.watchFor.includes(line)) ? ['Main caution: ' + chapter.guidance.watchFor.join(' ')] : [])),
-    ]
+    const practicalOnly = (kind === 'business' && ['partner-fit', 'expansion-timing'].includes(questions[0].role))
+      || (kind === 'compatibility' && ['mutual-adjustment', 'overall-fit', 'closeness-vs-routine'].includes(questions[0].role))
+      || (kind === 'wellbeing' && ['pressure-response', 'relationship-need'].includes(questions.at(-1)?.role ?? ''))
+    const suppressAllGuidance = kind === 'compatibility' && ['attraction', 'overall-fit'].includes(questions[0].role)
+      || kind === 'compatibility' && questions[0].role === 'overall-fit'
+    const suppressGuidance = kind === 'year' && ['annual-work', 'annual-money', 'annual-connections', 'annual-cycle-context'].includes(source)
+      || kind === 'year' && questions.some(question => question.role === 'year-overview')
+      || kind === 'year' && source === 'annual-plan' && questions[0].role === 'caution-months'
+      || kind === 'business' && questions[0].role === 'financial-risk'
+      || kind === 'business' && questions[0].role === 'business-cycle'
+      || kind === 'business' && questions[0].role === 'business-caution'
+    const guidance = kind === 'career' && set === 'standalone' || suppressGuidance || suppressAllGuidance
+      || kind === 'wellbeing' && ['core-personality', 'distinctive-traits', 'pressure-trigger'].includes(questions[0].role)
+      ? [] : chapter.showGuidance === false ? [] : [
+        ...(set === 'collection' ? (!extraAnswers.some(item => item.lines.includes(chapter.tryThis)) ? ['Practical point: ' + chapter.tryThis] : []) : (!answeredLines.includes(chapter.tryThis) ? ['Practical point: ' + chapter.tryThis] : [])),
+        ...(!practicalOnly ? (set === 'collection' ? (!extraAnswers.some(item => chapter.guidance.watchFor.includes(item.lines[0])) ? ['Main caution: ' + chapter.guidance.watchFor.join(' ')] : []) : (!answeredLines.some(line => chapter.guidance.watchFor.includes(line)) ? ['Main caution: ' + chapter.guidance.watchFor.join(' ')] : [])) : []),
+      ]
     const qas = [
       `Question: ${questions[0].question}`,
       ...firstLines.map((line, index) => `${kind === 'career' && set === 'standalone' ? '' : index ? 'Answer detail: ' : 'Answer: '}${line}`),

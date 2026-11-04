@@ -15,7 +15,6 @@
 import type { BirthInput } from './types.ts';
 
 export const DEFAULT_TIMEZONE = 'Asia/Seoul';
-const DEFAULT_LONGITUDE = 127.0992;
 const KST_FIXED_OFFSET_MINUTES = 9 * 60;
 const ONE_DAY_MS = 24 * 60 * 60 * 1000;
 const DST_GAP_ERROR_PREFIX = 'DST gap';
@@ -224,7 +223,13 @@ export function adjustBirthInputToSolarTime(input: BirthInput): {
     input.year, input.month, input.day, input.hour, input.minute, timezone,
   );
   const equationOfTime = getEquationOfTimeMinutes(input.year, input.month, input.day);
-  const longitude = input.longitude ?? DEFAULT_LONGITUDE;
+  // The Seoul default is valid only for the Korea wall-clock path above. An
+  // international solar-time calculation without a known longitude must fail
+  // closed instead of silently shifting the birth chart to Seoul.
+  const longitude = input.longitude;
+  if (typeof longitude !== 'number' || !Number.isFinite(longitude) || longitude < -180 || longitude > 180) {
+    throw new RangeError('Longitude is required for local solar-time calculation outside Asia/Seoul');
+  }
   const solarDate = new Date(utcDate.getTime() + (longitude * 4 + equationOfTime) * 60_000);
 
   return {

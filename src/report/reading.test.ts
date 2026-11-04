@@ -104,11 +104,10 @@ describe('English reading integration', () => {
     expect(report.periods).toHaveLength(0)
   })
 
-  it('warns if an overseas birth chart has no longitude', () => {
-    const report = buildEnglishReading(calculateSaju({
+  it('rejects an overseas birth chart when longitude is unavailable', () => {
+    expect(() => calculateSaju({
       year: 1993, month: 3, day: 12, hour: 12, minute: 0,
       gender: 'F', timezone: 'Europe/London',
-    }), 2026)
-    expect(report.caveats.join(' ')).toContain('longitude was missing')
+    })).toThrow(/longitude is required/i)
   })
 })

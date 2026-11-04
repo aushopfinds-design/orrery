@@ -24,9 +24,9 @@ export interface BirthInput {
   unknownTime?: boolean;
   /** 자시법 (기본값: 'unified' 통자시) */
   jasiMethod?: JasiMethod;
-  /** 위도 (기본값: 37.5194 서울) */
+  /** 출생지 위도. 해외 출생 입력에서는 위치 확인용으로 제공한다. */
   latitude?: number;
-  /** 경도 (기본값: 127.0992 서울) */
+  /** 출생지 경도. 해외 진태양시 계산에는 필수다. */
   longitude?: number;
   /**
    * IANA 타임존 ID (예: 'Asia/Seoul', 'America/Los_Angeles').

@@ -84,3 +84,16 @@ State:
 The revision preserves the prior safeguards against invented chart evidence, unsupported timing, fabricated birth details, guaranteed predictions, test-only approval, and unnecessary changes to working calculation and payment systems.
 
 **Final principle:** The customer should understand the answer, recognize its connection to their own chart, and receive a distinct, meaningful response to each question.
+
+## Customer-facing concise-writing defaults
+
+Use **LESS SAJU. MORE ANSWERS.** as the editing default for new reports and previews, while preserving the twelve absolute rules above:
+
+- Put the direct answer in the first sentence.
+- Aim for two or three short paragraphs and roughly 100–150 words when the question needs that much explanation. A shorter complete answer is better than padding.
+- Explain the chart basis in one or two plain-English sentences. Keep technical evidence in the internal trace or optional source notes.
+- Prefer familiar English and remove repeated explanations or advice when they add no new answer.
+- Keep personal detail only when it follows from the customer's calculated chart. Remove advice unrelated to the question.
+- Treat future timing as a chart-based comparison, not a certain event or guaranteed result.
+
+Automated checks may flag missing answers, weak openings, length, paragraph count, exact repeated sentences, missing evidence traces, guaranteed outcomes, and unknown-time hour claims. These checks do not approve meaning or replace reading the generated PDF.

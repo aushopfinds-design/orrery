@@ -8,8 +8,8 @@ import type { BirthInput } from '@orrery/core/types'
 
 const profiles: { id: string; first: BirthInput; second: BirthInput }[] = [
   CATEGORY_SCENARIOS[0], CATEGORY_SCENARIOS[1], CATEGORY_SCENARIOS[2],
-  { id: 'sydney-1990', first: { year: 1990, month: 8, day: 14, hour: 8, minute: 30, gender: 'F' as const, timezone: 'Australia/Sydney' }, second: CATEGORY_SCENARIOS[1].second },
-  { id: 'la-1975', first: { year: 1975, month: 12, day: 2, hour: 22, minute: 15, gender: 'M' as const, timezone: 'America/Los_Angeles' }, second: CATEGORY_SCENARIOS[0].first },
+  { id: 'sydney-1990', first: { year: 1990, month: 8, day: 14, hour: 8, minute: 30, gender: 'F' as const, timezone: 'Australia/Sydney', latitude: -33.8688, longitude: 151.2093 }, second: CATEGORY_SCENARIOS[1].second },
+  { id: 'la-1975', first: { year: 1975, month: 12, day: 2, hour: 22, minute: 15, gender: 'M' as const, timezone: 'America/Los_Angeles', latitude: 34.0522, longitude: -118.2437 }, second: CATEGORY_SCENARIOS[0].first },
 ]
 const products = ['complete', 'compatibility', 'year', 'business', 'wellbeing', 'bundle'] as const
 const questions: Record<(typeof products)[number], number> = { complete: 7, compatibility: 7, year: 7, business: 7, wellbeing: 7, bundle: 10 }

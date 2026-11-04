@@ -7,6 +7,36 @@ export interface IndependentPillarAudit {
   independent: readonly (string | null)[]
 }
 
+export type CalculationVerification = {
+  status: 'verified' | 'partial' | 'mismatch' | 'unavailable'
+  matchedPillars: PillarKey[]
+  mismatchedPillars: PillarKey[]
+  unavailablePillars: PillarKey[]
+  excludedPillars: PillarKey[]
+}
+
+/** Summarize only the independent pillar comparison; this does not certify the interpretation. */
+export function summarizeCalculationVerification(audit: IndependentPillarAudit | undefined, unknownTime = false): CalculationVerification {
+  const keys: PillarKey[] = ['year', 'month', 'day', 'hour']
+  const excludedPillars: PillarKey[] = unknownTime ? ['hour'] : []
+  if (!audit) return { status: 'unavailable', matchedPillars: [], mismatchedPillars: [], unavailablePillars: unknownTime ? ['year', 'month', 'day'] : [...keys], excludedPillars }
+  const matchedPillars: PillarKey[] = []
+  const mismatchedPillars: PillarKey[] = []
+  const unavailablePillars: PillarKey[] = []
+  keys.forEach((key, index) => {
+    if (unknownTime && key === 'hour') return
+    const current = audit.current[index], independent = audit.independent[index]
+    if (!current || !independent) unavailablePillars.push(key)
+    else if (current === independent) matchedPillars.push(key)
+    else mismatchedPillars.push(key)
+  })
+  const status = mismatchedPillars.some(key => key !== 'hour') ? 'mismatch'
+    : mismatchedPillars.length ? 'partial'
+    : unavailablePillars.length ? matchedPillars.length ? 'partial' : 'unavailable'
+    : 'verified'
+  return { status, matchedPillars, mismatchedPillars, unavailablePillars, excludedPillars }
+}
+
 export type IndependentPillarCalculator = (input: unknown) => Promise<unknown> | unknown
 const PILLAR_AUDIT_TIMEOUT_MS = 500
 

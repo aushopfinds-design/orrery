@@ -1,34 +1,24 @@
 import { describe, expect, it } from 'vitest'
-import { calculateIndependentAudit, independentPersonalizationEligibility } from './independent-personalization'
+import { summarizeCalculationVerification, type IndependentPillarAudit } from './independent-personalization.ts'
 
-describe('independent personalization safety gate', () => {
-  it('allows only matching pillars and never independently inferred decade cycles', () => {
-    const result = independentPersonalizationEligibility({
-      current: ['甲子','乙丑','丙寅','丁卯'],
-      independent: ['甲子','乙丑','丙寅','戊辰'],
-    })
-    expect(result.confirmed).toEqual({ year:'甲子',month:'乙丑',day:'丙寅' })
-    expect(result.canUseYearMonthDay).toBe(true)
-    expect(result.canUseHour).toBe(false)
-    expect(result.canUseDaewoon).toBe(false)
+const chart: IndependentPillarAudit = {
+  current: ['甲子', '乙丑', '丙寅', '丁卯'],
+  independent: ['甲子', '乙丑', '丙寅', '丁卯'],
+}
+
+describe('independent calculation verification summary', () => {
+  it('requires every available pillar to agree', () => {
+    expect(summarizeCalculationVerification(chart).status).toBe('verified')
   })
-  it('rejects unknown or mismatched core pillars', () => {
-    const result = independentPersonalizationEligibility({
-      current: ['甲子',null,'丙寅','丁卯'],
-      independent: ['甲子','乙丑','丙寅','丁卯'],
-    })
-    expect(result.canUseYearMonthDay).toBe(false)
-    expect(result.canUseHour).toBe(true)
+  it('does not require an unknown birth hour', () => {
+    expect(summarizeCalculationVerification({ ...chart, independent: ['甲子', '乙丑', '丙寅', '戊辰'] }, true))
+      .toMatchObject({ status: 'verified', excludedPillars: ['hour'] })
   })
-  it('normalizes the independent response, falls back on failure or delay, and suppresses unknown hours', async () => {
-    const current = ['甲子', '乙丑', '丙寅', '丁卯']
-    const match = await calculateIndependentAudit({}, current, () => ({ year: { korean: '갑자' }, month: { hanja: '乙丑' }, day: { ganzi: '병인' }, hour: { hanja: '戊辰' } }))
-    expect(match?.independent).toEqual(['甲子', '乙丑', '丙寅', '戊辰'])
-    expect(independentPersonalizationEligibility(match!).confirmed).toEqual({ year: '甲子', month: '乙丑', day: '丙寅' })
-    expect(await calculateIndependentAudit({}, current, () => { throw new Error('engine unavailable') })).toBeUndefined()
-    expect(await calculateIndependentAudit({}, current, () => new Promise(resolve => setTimeout(() => resolve({}), 550)))).toBeUndefined()
-    const unknown = await calculateIndependentAudit({}, current, () => ({ year: { hanja: '甲子' }, month: { hanja: '乙丑' }, day: { hanja: '丙寅' }, hour: { hanja: '戊辰' } }), true)
-    expect(unknown?.current[3]).toBeNull()
-    expect(unknown?.independent[3]).toBeNull()
+  it('distinguishes an hour-only mismatch from a core-pillar mismatch', () => {
+    expect(summarizeCalculationVerification({ ...chart, independent: ['甲子', '乙丑', '丙寅', '戊辰'] }).status).toBe('partial')
+    expect(summarizeCalculationVerification({ ...chart, independent: ['甲子', '戊辰', '丙寅', '丁卯'] }).status).toBe('mismatch')
+  })
+  it('does not report an absent audit as verified', () => {
+    expect(summarizeCalculationVerification(undefined).status).toBe('unavailable')
   })
 })

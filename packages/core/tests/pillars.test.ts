@@ -179,6 +179,13 @@ describe('자시법 (JasiMethod)', () => {
 })
 
 describe('timezone handling', () => {
+  it('fails closed for an international solar-time input without longitude', () => {
+    expect(() => adjustBirthInputToSolarTime({
+      year: 1990, month: 8, day: 14, hour: 8, minute: 30,
+      gender: 'F', timezone: 'Australia/Sydney',
+    })).toThrow(/Longitude is required/)
+  })
+
   it('converts overseas births to local solar time before pillar calculation', () => {
     const solar = adjustBirthInputToSolarTime({
       year: 1990,
