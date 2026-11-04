@@ -103,3 +103,9 @@ The last recorded full run remains **912 passed, 6 failed out of 918**, with fai
 | 07 | All 10 integrated answers not re-read | Independent verification unavailable in prior record | Prior representative PDF generated; unavailable now for re-open |
 
 To complete Step 1, restore the lockfile-matched Bun dependency environment, rerun the six failing tests and fix only reproduced regressions, regenerate or restore the seven current PDFs, complete human review and Product 02 text comparison, and run the selected-city UI path through to PDF output. Until those checks pass, Step 1 is **NOT COMPLETE** and Step 2 remains on hold.
+
+### Documentation checkpoint deployment
+
+- The continuation record was committed to `feature/final-simple-reports` as `c2a980720c05385d27e5118e6678d4e90e2746a6` (commit: `최종 완료 점검과 미검증 항목 기록`).
+- Vercel Preview deployment `dpl_8SeG2TxP8yNPDeMXsTy2R3ogi1XW` for that commit reached **READY** at `https://saju-english-report-preview-evk51fn0x-shopping-shorts-ai.vercel.app`; direct fetch returned HTTP 200.
+- Vercel build logs show dependency verification, core package build, TypeScript project build, Vite build, and public-page generation completed. Vite reported the existing large-chunk warning. This Preview build did not run Vitest or generate the seven customer PDFs.
