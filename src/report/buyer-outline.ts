@@ -1,6 +1,3 @@
-Warning: truncated output (original token count: 12639)
-Total output lines: 540
-
 import type { CompleteReadingPeriod, ReportChapter } from './complete-reading.ts'
 import { deliveredChapter } from './report-delivery.ts'
 export const BUYER_OUTLINES = {
@@ -211,7 +208,33 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
         const missingNote = chapter.paragraphs[2]
         paragraphs = counts && missingNote ? [`${counts} ${missingNote}`] : [counts, missingNote].filter((line): line is string => Boolean(line))
         chapter.paragraphs.forEach(line => used.add(line))
-      } else if (kind ==…639 tokens truncated…] ?? chapter.guidance.watchFor[0] ?? chapter.lead
+      } else if (kind === 'wellbeing' && question.role === 'pressure-trigger') {
+        paragraphs = []
+        chapter.paragraphs.forEach(line => used.add(line))
+      } else if (kind === 'business' && question.role === 'financial-risk') {
+        const moneyPattern = chapter.lead.toLowerCase()
+        lead = moneyPattern.includes('combines repeat customers with new deals')
+          ? 'Your main financial risk is relying on new-deal income to cover ongoing delivery for repeat customers before payment is secure.'
+          : moneyPattern.includes('repeat sales and clearly priced ongoing work')
+            ? 'Your main financial risk is underpricing ongoing service: repeat sales can still require costs after payment.'
+            : moneyPattern.includes('finding buyers and making deals')
+              ? 'Your main financial risk is uneven cash flow: income depends on new buyers, so fees can vary between deals.'
+            : moneyPattern.includes('business money signs sit behind the main role')
+              ? 'Your main financial risk is setting business costs around sales before the less visible income route has been tested.'
+              : moneyPattern.includes('does not give a clear direct business money route')
+                ? 'Your main financial risk is taking on fixed costs before a direct business income route is clear.'
+                : 'Your main financial risk is counting a promising deal as income before payment arrives.'
+        paragraphs = chapter.paragraphs.filter(line => line !== chapter.lead).slice(0, 2)
+      } else if (kind === 'compatibility' && question.role === 'conflict-trigger') {
+        const friction = chapter.paragraphs.find(line => /^(?:Your likely friction is|The practical tension for Person A is)/.test(line))
+        lead = friction?.startsWith('Your likely friction is')
+          ? (() => {
+              const parts = friction.match(/^Your likely friction is (.*?); your partner’s is (.*?)\.$/)
+              return parts ? `Your friction point is ${parts[1]}. For your partner, tension may arise from ${parts[2]}.` : friction.replace(/^Your likely friction is /, 'The likely friction is ')
+            })()
+          : friction
+            ? `A likely friction point is ${friction.split('Person A is ')[1]?.split(';')[0] ?? 'a difference in private-life preferences'} for Person A, and ${friction.split('for Person B it is ')[1]?.split('.')[0] ?? 'a different reading of the same situation'} for Person B.`
+            : chapter.paragraphs.find(line => /^Your partner: /.test(line)) ?? chapter.paragraphs[3] ?? chapter.guidance.watchFor[0] ?? chapter.lead
         paragraphs = []
         chapter.paragraphs.forEach(line => used.add(line))
       } else if (kind === 'compatibility' && question.role === 'care-expression') {

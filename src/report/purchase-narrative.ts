@@ -1,6 +1,3 @@
-Warning: truncated output (original token count: 32885)
-Total output lines: 599
-
 import { roleChoice, businessDivision, relationshipRepair, personalBoundary, monthlyFit } from './personalised-choices.ts'
 import { sharedCareNeed } from './relationship-needs.ts'
 import { TEMPERAMENT_KO } from './temperament-ko.ts'
@@ -130,7 +127,363 @@ export function customerNarrative(plan:InterpretationPlan,targetedProduct01=true
  const moneyWatch=p.strength.tendency==='support-needed'?pair('More paid work can still leave you short of time or cash if you must carry the costs first.','유료 업무가 늘어도 비용을 먼저 감당하면 시간이나 현금이 부족해질 수 있습니다.'):pair('A new source of income can bring continuing costs and responsibilities with it.','새 수입 통로에는 계속 내야 할 비용과 책임도 따를 수 있습니다.')
  const relationshipWatch=pair('Being useful to each other can hide a difference in what each person wants emotionally.','서로에게 도움이 되어도 감정적으로 원하는 것이 다르다는 점은 가려질 수 있습니다.')
  const practicalMoney=pair('Write down the guaranteed pay, likely fees and costs you must cover. Judge the offer by what remains after those costs.','확정 급여와 예상 수수료, 직접 내야 할 비용을 적습니다. 그 비용을 빼고 남는 금액으로 제안을 판단합니다.')
- const noHealth=pair('A habit that helps on a quiet day can become tiring when every part of the day demands it.','조용한 날 도움이 되…20885 tokens truncated… 같은 역할에 머물 수 있습니다.'),
+ const noHealth=pair('A habit that helps on a quiet day can become tiring when every part of the day demands it.','조용한 날 도움이 되는 습관도 하루 종일 요구받으면 부담이 될 수 있습니다.')
+ if(plan.kind==='complete'||plan.kind==='wellbeing'){
+  put(plan.kind==='complete'?'personality':'everyday-pace',plan.kind==='complete'?targetedProduct01?[dayMasterAnswer,personalContrast(p,'life')]:[strength,personalContrast(p,'life'),pair(`Your personal style meets a practical demand for ${m.name.en}. That contrast is an important thread in this life reading.`,`개인의 성향 위에 ${m.name.ko}이라는 현실적 요구가 더해집니다. 그 만남을 인생 풀이의 중요한 줄기로 읽습니다.`),ownNeed,capacity,noOutcome]:[pair(`Your core personality is centred on ${personal.focus}. This is your usual starting style, not a rule for how you must act in every setting.`,`성격의 중심에는 ${pk.strength}이 있습니다. 주된 경향이지 모든 상황에서 이렇게 행동해야 한다는 뜻은 아닙니다.`),personalContrast(p),pair(personal.example,PERSONAL_SCENE_KO[p.dayStem].example),pair(personal.balance,PERSONAL_SCENE_KO[p.dayStem].balance),noOutcome],undefined,pressure)
+  if(targetedProduct01&&plan.kind==='complete'){out.personality.showGuidance=false;out.personality.lines=out.personality.lines.filter(line=>line.en!==noOutcome.en&&line.ko!==noOutcome.ko)}
+ }
+ if(plan.kind==='complete'){
+  put('money',earning,practicalMoney,moneyWatch)
+  const careerFit=pair(
+    `${lifeWork(p).en} ${publicRole.en} ${underneath.en}`,
+    `${lifeWork(p).ko} ${publicRole.ko} ${underneath.ko}`
+  )
+  const careerRisk=p.monthStemGod===p.monthBranchGod
+    ?pair(`Your birth month repeats ${m.name.en} in the public role and daily routine. The work risk is ${TEN_GODS[p.monthStemGod]?.caution??'taking on more duties than your role can support'}. Check priorities, workload and decision authority before accepting another responsibility.`,`태어난 달의 겉 역할과 일상 업무에 ${m.name.ko}이 반복됩니다. 우선순위와 업무량, 결정 권한을 확인한 뒤 새 책임을 맡습니다.`)
+    :pair(`Your visible work role centres on ${m.name.en}, while daily duties add ${inner.name.en}. The first layer can bring ${TEN_GODS[p.monthStemGod]?.caution??'unclear priorities'}; the daily layer adds ${TEN_GODS[p.monthBranchGod]?.caution??'work that exceeds the agreed scope'}. Ask how both parts of the job will be measured before accepting the role.`,`겉 업무는 ${m.name.ko}, 일상 업무는 ${inner.name.ko}을 중심으로 합니다. 겉 역할과 매일 맡을 일을 모두 어떤 기준으로 평가하는지 확인한 뒤 자리를 선택합니다.`)
+  const careerCaution=pair('Before accepting extra responsibility, confirm which decisions you control and what time, support and pay come with it.','추가 책임을 맡기 전에 직접 결정할 수 있는 범위와 함께 제공되는 시간, 지원, 급여를 확인합니다.')
+  put('career',targetedProduct01&&plan.kind==='complete'&&rootCauseFix?[roleChoice(p,true)]:targetedProduct01?[roleChoice(p)]:[lifeWork(p),roleChoice(p),publicRole,underneath],keepWork,careerCaution)
+  put('love',targetedProduct01?[relationshipConclusion,relationshipReason]:[relationshipConclusion,relationshipReason,privateStructure,relationshipTiming,relationshipExample],pair('Use this as a starting question, then judge the relationship by both people’s actual words, actions and consent.','이 내용을 대화의 출발점으로 삼고, 두 사람의 실제 말과 행동, 동의를 기준으로 관계를 살핍니다.'),relationshipWatch)
+  if(targetedProduct01){out.money.showGuidance=false;out.love.showGuidance=false;out.career.showGuidance=false}
+  const publicExperience=TEN_GODS[p.yearStemGod]?.lens??LANGUAGE[p.yearStemGod].name.en
+  const workContrast=p.monthStemGod===p.monthBranchGod
+   ? `Your birth month repeats ${m.name.en} in both the visible role and the hidden routine. That consistency can make this a reliable work strength. The related risk is ${TEN_GODS[p.monthStemGod]?.caution??'taking on more of this work than your time allows'}.`
+   : `Your visible work role points to ${m.name.en}, while the hidden month layer adds ${hiddenRoutine} to daily tasks. You are more likely to do well when a role makes room for both, instead of rewarding one and ignoring the other.`
+  const workContrastKo=p.monthStemGod===p.monthBranchGod
+   ? `태어난 달의 겉 역할과 지장간의 일상 업무에 ${m.name.ko}이 반복됩니다. 꾸준히 활용할 수 있는 강점이며, 관련 부담은 ${TEN_GODS[p.monthStemGod]?.caution??'업무량이 가용 시간을 넘어서는 것'}에서 나타날 수 있습니다.`
+   : `겉으로 드러난 업무는 ${m.name.ko}에 가깝고 지장간의 일상 업무에는 ${hiddenRoutineKo}이 더해집니다. 한쪽만 보상하는 자리보다 두 역할을 함께 맡을 수 있을 때 강점을 살리기 쉽습니다.`
+  void [careerFit, publicExperience, workContrast, workContrastKo]
+  put('social',targetedProduct01&&plan.kind==='complete'&&rootCauseFix?[
+   pair(`${personal.strength.replaceAll('**','')} This comes from your birth-day stem ${p.dayStem} (${dayStemName}); it describes a tendency, not your whole personality.`,`${pk.strength} ${p.dayStem}(${dayStemName}) 일간에서 읽은 성향이며, 성격 전체를 규정하지는 않습니다.`),
+   pair(`The pressure point is this: ${personal.pressure}`,`주의할 점은 이런 개인적 압박 습관입니다. ${pk.pressure}`),
+  ]:targetedProduct01?[
+   pair(`Your standout strength is ${personal.focus}. Your birth-day stem ${p.dayStem} (${dayStemName}) supports this reading; it describes a tendency, not your whole personality.`,`두드러지는 강점은 ${pk.strength}입니다. ${p.dayStem}(${dayStemName}) 일간에서 읽은 성향이며, 성격 전체를 규정하지는 않습니다.`),
+   pair(p.strength.tendency==='support-needed'?`What can hold you back is limited support: your chart shows both help and demands around this quality, so extra responsibility can be hard to sustain without enough time or backup.`:p.strength.tendency==='deferred'?`The chart does not support a firm overall strength judgement. Treat this as a possible quality, and do not assume a specific limit without more evidence.`:`What can hold you back is an unsustainable workload. Your chart supports this quality, but too many duties or too little authority can make it harder to use well.`,p.strength.tendency==='support-needed'?`발목을 잡을 수 있는 것은 부족한 지원입니다. 명식에는 이 성향을 돕는 점과 부담이 함께 있어 시간과 도움이 부족하면 추가 책임을 계속 감당하기 어렵습니다.`:p.strength.tendency==='deferred'?`명식만으로 강약을 단정하기 어렵습니다. 이 성향을 가능성으로 보고, 근거 없이 구체적인 한계를 정하지 않습니다.`:`감당하기 어려운 업무량이 발목을 잡을 수 있습니다. 명식은 이 성향을 뒷받침하지만, 책임이 지나치게 많거나 결정 권한이 부족하면 강점을 활용하기 어렵습니다.`),
+  ]:[pair(`The strength that helps you can also become your pressure point: ${m.balance.en}`,`도움이 되는 강점이 부담의 출발점이 될 수도 있습니다. ${m.balance.ko}`),pair(`Your birth day describes your personal style; the birth month shows how that style meets everyday demands. ${p.monthStemGod===p.monthBranchGod?'The same demand appears in both parts of the month, making it a recurring theme.':'The two parts of the month show different demands, so one role may not meet all your needs.'}`,`태어난 날에서는 개인 성향을, 태어난 달에서는 그 성향이 일상의 요구와 만나는 방식을 읽습니다. ${p.monthStemGod===p.monthBranchGod?'달의 두 부분에 같은 요구가 있어 반복되는 주제로 봅니다.':'달의 두 부분에 다른 요구가 있어 역할 하나가 필요한 것을 모두 채우지 못할 수 있습니다.'}`)],targetedProduct01?pair(personal.practice,PERSONAL_SCENE_KO[p.dayStem].balance):undefined,targetedProduct01?pair(personal.watchFor[1],pk.pressure):pressure)
+  if(targetedProduct01)out.social.showGuidance=false
+  if(targetedProduct01)put('life-challenges',[
+   ...(rootCauseFix?[pair(`Your main cross-life challenge is balancing ${CAREER_THEME_LABEL[p.monthStemGod]} at work with ${relationshipProfile.need} in close relationships. These needs come from separate chart areas, so meeting one does not automatically meet the other.`,`일에서 ${LANGUAGE[p.monthStemGod].name.ko}을 활용하는 일과 가까운 관계에서 ${NEED[p.dayBranch]}을 존중받는 일을 함께 살피는 것이 주요 과제입니다. 두 필요는 명식의 서로 다른 영역에서 나오므로, 하나를 충족해도 다른 하나가 자동으로 해결되지는 않습니다.`)]:[pair(`A recurring challenge is this pressure pattern: ${personal.pressure} It can affect life beyond work, while your career fit centres on ${m.name.en}.`,`반복될 수 있는 개인적인 과제는 ${pk.pressure}입니다. 부담을 받을 때의 반응이며, 직업 답변에서 설명한 ${m.name.ko} 중심의 업무 환경과는 다른 내용입니다.`)]),
+   pair(`In close relationships, the day sign ${p.dayBranch} points to ${relationshipProfile.need}. Friction can grow when the support offered differs from the support you actually want.`,`가까운 관계에서는 일지 ${p.dayBranch}가 ${NEED[p.dayBranch]}을 가리킵니다. 받고 싶은 도움과 상대가 건네는 도움이 다를 때 마찰이 커질 수 있습니다.`),
+  ],pair(`At work, check whether the ${m.name.en} role gives you time and authority for its daily demands. In a close relationship, name when you need ${relationshipProfile.need}.`,`일에서는 ${m.name.ko} 역할에 일상 업무를 감당할 시간과 권한이 있는지 살핍니다. 가까운 관계에서는 ${relationshipProfile.need}이 필요하다고 말합니다.`),rootCauseFix?pair('A work strength and a private need are different things; do not expect one to resolve the pressure in the other area.','일에서의 강점과 사적인 필요는 다릅니다. 한쪽의 해결이 다른 영역의 부담까지 풀어 줄 것으로 기대하지 않습니다.'):m.pressure)
+  put('balance',targetedProduct01?[
+   pair(`You are more likely to feel balanced when work built around ${m.name.en} still leaves room for ${personal.need}. This combines your birth-day style with the visible work role in your chart.`,`균형을 느끼려면 ${m.name.ko}을 활용하는 일과 ${pk.need}을 위한 여유가 함께 있어야 합니다. 태어난 날의 성향과 명식에 드러난 업무 역할을 연결한 결론입니다.`),
+   pair(`The hidden month layer adds ${hiddenRoutine} to daily work${p.monthStemGod===p.monthBranchGod?'; it repeats the visible theme rather than creating a separate demand.':`. ${inner.work.en}`} A job title can fit while its routine still drains you if it leaves no space for these skills.`,`태어난 달의 지장간은 일상 업무에 ${hiddenRoutineKo}을 더합니다${p.monthStemGod===p.monthBranchGod?' 겉의 주제가 반복되는 구조입니다.':`. ${inner.work.ko}`} 직함이 잘 맞아도 실제 업무가 이런 기술을 쓸 여지를 주지 않으면 지칠 수 있습니다.`),
+   pair(`In relationships, ${p.dayBranch} in your birth-day column points to ${relationshipProfile.need}. That is a private need, separate from the role you fill at work; notice whether your week gives both sides enough attention.`,`관계에서는 태어난 날의 ${p.dayBranch}가 ${NEED[p.dayBranch]}을 가리킵니다. 직장에서 맡는 역할과 별개의 사적인 필요이므로, 한 주에 두 영역 모두 살필 여유가 있는지 확인하세요.`),
+  ]:[pair(`A familiar strength can keep you in the same role even when you want something different: ${m.balance.en}`,`익숙한 강점 때문에 다른 것을 원해도 같은 역할에 머물 수 있습니다. ${m.balance.ko}`)],pair(`Compare the visible work role with the daily routine and protect time for the need named above. Do not use an element count as a health or lifestyle prescription.`,`겉으로 보이는 업무와 실제 일상을 비교하고, 위에 적힌 필요를 위한 시간을 확보합니다. 오행 개수는 건강이나 생활 처방이 아닙니다.`),m.pressure)
+  put('patterns',[],pair('Separate a possible work change from a private-life change before treating either as a verdict on your whole life.','일에서의 변화와 사적인 관계의 변화를 나누어 본 뒤 인생 전체에 대한 판단과 구분합니다.'),pair('A change signal identifies an area to examine, rather than an event that must happen.','변화 신호는 살펴볼 영역을 가리키며 반드시 일어날 사건을 정하지 않습니다.'))
+  const lifeYearRows=purchaseYears(plan.first,plan.referenceYear,'life',10,true)
+  const lifeYearReadings=lifeYearRows.map(row=>{
+   const year=row.date.slice(0,4),pillar=row.yearPillar,theme=LANGUAGE[row.god]
+   const line=(suffix:string)=>row.lines.find(item=>item.id.endsWith('.'+suffix))?.en
+   const dayChange=line('change-day'),monthChange=line('change-month'),opening=line('opening'),connection=line('connection'),background=line('background-pressure')
+   const natalLinks=row.comparisons.filter(item=>[1,2].includes(item.index)).flatMap(item=>item.found.map(pattern=>`${POSITION[item.index]} ${pattern.type}`))
+   const why=`The ${pillar} reference brings ${theme.name.en} through its stem and ${LANGUAGE[row.innerGod].name.en} underneath; ${natalLinks.length?`its checked links to your birth chart are ${[...new Set(natalLinks)].join(' and ')}.`:'no direct friction is recorded against your day or month pillar at this comparison.'}`
+   const main= `${year}: Main theme — ${theme.name.en}.`
+   const careerMoney=`Career & money — ${theme.work.en} ${theme.money.en}`
+   const love=`Love & relationships — ${theme.love.en}${dayChange?` ${dayChange}`:' No direct day-pillar friction is recorded at this annual comparison.'}`
+   const opportunity=`Opportunity — ${opening??connection??`No distinct paid-work opening is established here. A practical step that fits this theme is to ${PERIOD_VOICE[row.god].action.en[0].toLowerCase()+PERIOD_VOICE[row.god].action.en.slice(1)}`}`
+   const watch=`Caution — ${monthChange??background??theme.pressure.en}`
+   return pair(`${main} ${careerMoney} ${love} ${opportunity} ${watch} Why — ${why}`,`${year}년: 중심 주제 — ${theme.name.ko}. 직업·재물 — ${theme.work.ko} ${theme.money.ko} 연애·관계 — ${theme.love.ko}${dayChange?` ${row.lines.find(item=>item.en===dayChange)?.ko??''}`:' 이 연간 비교에서 일지와 직접적인 마찰은 확인되지 않습니다.'} 기회 — ${row.lines.find(item=>item.en===opening)?.ko??row.lines.find(item=>item.en===connection)?.ko??`분명한 유료 업무 통로가 확인되지 않아, 이 주제에 맞는 실천은 ${PERIOD_VOICE[row.god].action.ko}`} 주의 — ${row.lines.find(item=>item.en===monthChange)?.ko??row.lines.find(item=>item.en===background)?.ko??theme.pressure.ko} 근거 — ${pillar}의 천간은 ${theme.name.ko}, 지지 안쪽의 중심 기운은 ${LANGUAGE[row.innerGod].name.ko}이며 ${natalLinks.length?`출생 차트와 ${[...new Set(natalLinks)].join('·')} 관계가 확인됩니다.`:'일지·월지와 직접적인 마찰은 확인되지 않습니다.'}`)
+  })
+  put('next-moves',lifeYearReadings,pair('Choose one change from the yearly timeline, then check its work, money and home demands against the longer period.','연간 흐름에서 변화 하나를 고르고 그때의 일·돈·가정의 요구를 긴 흐름과 함께 확인합니다.'),moneyWatch)
+  const currentCycle=plan.selectedCycles[0]
+  const nextCycle=plan.selectedCycles[1]
+  const cycleDate=(cycle:typeof nextCycle)=>cycle?humanMonth(cycle.start):''
+  const currentCycleSummary=currentCycle?`Your current longer cycle began around ${cycleDate(currentCycle)} and emphasises ${LANGUAGE[currentCycle.stemGod].name.en}${currentCycle.stemGod!==currentCycle.branchGod?` with ${LANGUAGE[currentCycle.branchGod].name.en} in daily life`:''}.`:''
+  const nextCycleSummary=nextCycle?`Around ${cycleDate(nextCycle)}, the next cycle shifts that emphasis towards ${LANGUAGE[nextCycle.stemGod].name.en}${nextCycle.stemGod!==nextCycle.branchGod?` and ${LANGUAGE[nextCycle.branchGod].name.en} in daily life`:''}.`:'No next cycle start falls within the selected comparison range.'
+  const relationshipFocus=relationshipYears.length?`Distinct relationship themes appear in ${relationshipYears.slice(0,3).map(row=>row.year).join(', ')}; the chapter explains what connects each year to your chart.`:'The next-ten-year checks do not single out a relationship year; your birth-chart relationship pattern is the clearer guide.'
+  const relationshipFocusKo=relationshipYears.length?`관계 주제가 두드러지는 해는 ${relationshipYears.slice(0,3).map(row=>row.year).join(', ')}년이며, 각 해가 명식과 어떻게 연결되는지 연애 장에 설명했습니다.`:'앞으로 10년 비교에서 특정 관계 시기는 두드러지지 않으며 타고난 관계 구조를 중심으로 봅니다.'
+  const moneyGods=[...new Set([...p.visibleMoney.map(item=>item.god),...p.hiddenMoney.map(item=>item.god)])]
+  const moneyMarkers=moneyGods.map(god=>{const visible=p.visibleMoney.some(item=>item.god===god),hidden=p.hiddenMoney.some(item=>item.god===god);return `${LANGUAGE[god].name.en} ${visible&&hidden?'in visible and hidden positions':visible?'in visible positions':'in hidden positions'}`})
+  const moneyMarkersKo=moneyGods.map(god=>{const visible=p.visibleMoney.some(item=>item.god===god),hidden=p.hiddenMoney.some(item=>item.god===god);return `${LANGUAGE[god].name.ko}${visible&&hidden?'이 겉과 숨은 위치에':visible?'이 겉으로 드러난 위치에':'이 숨은 위치에'}`})
+  const moneyConclusion=moneyMarkers.length?moneyMarkers.join(' and '):'no direct money marker in the checked positions'
+  const pressureSummary=personal.pressure.replace(/\*\*/g,'').replace(/^([A-Z])/,(letter:string)=>letter.toLowerCase()).replace(/[.!?]$/,'')
+  const workConclusion=p.monthStemGod===p.monthBranchGod?`${m.name.en} in both the public role and daily work`:`${m.name.en} in the public role, with ${inner.name.en} shaping daily work`
+  const workConclusionKo=p.monthStemGod===p.monthBranchGod?`겉으로 드러난 역할과 일상 업무 모두 ${m.name.ko}이 중심입니다`:`겉으로 드러난 역할은 ${m.name.ko}, 일상 업무에는 ${inner.name.ko}이 더해집니다`
+  const moneyRouteSummary=regularRoute&&opportunityRoute
+   ? `Both steady-resource and opportunity-money signs are present, supporting a mixed route: a dependable base alongside customer, project or deal income.`
+   : regularRoute
+    ? `Steady-resource signs are clearer than opportunity-money signs, so repeat work or regular pay has the more direct chart support.`
+    : opportunityRoute
+     ? `Opportunity-money signs are clearer than steady-resource signs, so customer, project or deal income has the more direct chart support.`
+     : `The checked positions do not show a direct money route clearly enough to favour salary or business; the actual work and terms matter more than an invented chart verdict.`
+  const moneyRouteSummaryKo=regularRoute&&opportunityRoute
+   ? '안정적인 재물과 기회성 재물이 함께 있어 고정 기반에 고객·프로젝트·거래 수입을 더하는 방식으로 읽힙니다.'
+   : regularRoute
+    ? '기회성 재물보다 안정적인 재물의 근거가 분명해 반복 업무나 고정 수입 쪽에 더 직접적인 근거가 있습니다.'
+    : opportunityRoute
+     ? '안정적인 재물보다 기회성 재물의 근거가 분명해 고객·프로젝트·거래 수입 쪽에 더 직접적인 근거가 있습니다.'
+     : '확인한 위치에는 직접적인 재물 통로가 뚜렷하지 않아 급여와 사업 중 하나를 명식만으로 고르지 않습니다. 실제 업무와 계약 조건을 봐야 합니다.'
+  const currentCycleSummaryKo=currentCycle?`현재 대운은 ${cycleDate(currentCycle)} 무렵 시작했고 ${LANGUAGE[currentCycle.stemGod].name.ko}${currentCycle.stemGod!==currentCycle.branchGod?`과 일상의 ${LANGUAGE[currentCycle.branchGod].name.ko}`:''}을 강조합니다.`:''
+  const nextCycleSummaryKo=nextCycle?`${cycleDate(nextCycle)} 무렵에는 다음 대운으로 바뀌며 ${LANGUAGE[nextCycle.stemGod].name.ko}${nextCycle.stemGod!==nextCycle.branchGod?`과 일상의 ${LANGUAGE[nextCycle.branchGod].name.ko}`:''} 쪽으로 중심이 옮겨갑니다.`:'선택한 비교 범위 안에 다음 대운 시작은 없습니다.'
+  const finalSynthesis=targetedProduct01?pair(`Your chart keeps three questions separate: ${personal.focus} describes your personal starting point; ${p.monthStemGod===p.monthBranchGod?'the month repeats one theme in the public role and daily duties':`the public role centres on ${m.name.en}, while daily duties add ${inner.name.en}`}; and the money markers give a different answer. ${moneyRouteSummary} In close relationships, your ${p.dayBranch} day branch points to ${RELATIONSHIP_PROFILES[p.dayBranch].need}. ${currentCycleSummary} ${nextCycleSummary} Use the ten-year timeline to compare each year's work, money and relationship themes with this shift. These are chart comparisons, not promised events.`,`명식에서는 세 가지를 나누어 읽습니다. ${pk.strength}은 타고난 출발점을 보여주고, 일에서는 ${p.monthStemGod===p.monthBranchGod?'태어난 달의 한 주제가 겉의 역할과 일상 업무에 반복됩니다':`겉으로는 ${m.name.ko}, 일상 업무에는 ${inner.name.ko}이 더해집니다`}. 재물 흐름은 이와 별도로 봅니다. ${moneyRouteSummaryKo} 가까운 관계에서는 태어난 날의 지지 ${p.dayBranch}에 담긴 ${RELATIONSHIP_PROFILES[p.dayBranch].need}이 중요합니다. ${currentCycleSummaryKo} ${nextCycleSummaryKo} 10년 표에서 각 해의 직업·재물·관계 주제가 이 변화와 어떻게 만나는지 비교해 보세요. 이는 사주 비교이지 약속된 사건은 아닙니다.`):pair(`Taken together, your chart centres on ${personal.focus}. That is a strength to use; the pressure point is that ${pressureSummary}. At work, the chart emphasises ${workConclusion}. The checked money markers are ${moneyConclusion}, so judge opportunities by actual pay and costs. In close relationships, the chart's private-life branch is ${p.dayBranch}, with a need for ${RELATIONSHIP_PROFILES[p.dayBranch].need}. ${relationshipFocus} These are chart themes to compare with real choices, not fixed outcomes.`,`종합하면 ${pk.need}을 중요하게 여기는 성향입니다. 강점은 ${pk.strength} 부담은 ${pk.pressure}입니다. 일에서는 ${workConclusionKo}의 특징이 나타납니다. 확인된 재성은 ${moneyMarkersKo.length?moneyMarkersKo.join(' 및 '):'확인한 위치에서 직접 드러나지 않습니다'}; 실제 기회는 보수와 비용으로 판단해야 합니다. 관계에서는 사적인 관계를 읽는 지지 ${p.dayBranch}와 그에 담긴 필요가 중요하며, ${relationshipFocusKo} 이는 실제 선택과 비교할 사주 주제이지 정해진 결과가 아닙니다.`)
+  out['next-moves'].lines.push(clone(finalSynthesis))
+  if(targetedProduct01)out['next-moves'].lines=out['next-moves'].lines.filter(line=>line.en!==noOutcome.en&&line.ko!==noOutcome.ko)
+ }
+ if(plan.kind==='career'){
+  const moneyPositionNames:Record<string,[string,string]>={month:['day-to-day work','일상 업무'],year:['your wider network','주변 인맥'],day:['shared commitments','가까운 관계의 책임'],hour:['long-term plans','장기 계획']}
+  const groupedMoneyPositions=new Map<string,{en:Set<string>;ko:Set<string>}>()
+  for(const item of [...p.visibleMoney,...p.hiddenMoney]){
+   const type=item.god==='正財'?'regular pay':'customer and project income'
+   if(!groupedMoneyPositions.has(type))groupedMoneyPositions.set(type,{en:new Set(),ko:new Set()})
+   const names=moneyPositionNames[item.position]??['the available chart areas','확인된 사주 위치']
+   groupedMoneyPositions.get(type)!.en.add(names[0]);groupedMoneyPositions.get(type)!.ko.add(names[1])
+  }
+  const joinAreas=(areas:string[])=>areas.length===2?`${areas[0]} and ${areas[1]}`:areas.join(', ')
+  const careerMoneyEvidence=[...groupedMoneyPositions].map(([type,positions])=>({type,areas:joinAreas([...positions.en])}))
+  const careerMoneyEvidenceKo=[...groupedMoneyPositions].map(([type,positions])=>({type,areas:[...positions.ko].join('·')}))
+  const englishMoneyLinks=careerMoneyEvidence.map(item=>item.type==='regular pay'?`Steady pay is linked to ${item.areas}`:`Customer or project income is linked to ${item.areas}`).join('. ')
+  const koreanMoneyLinks=careerMoneyEvidenceKo.map(item=>`${item.areas}에서 ${item.type==='regular pay'?'정기 수입':'고객·프로젝트 수입'}의 표시가 확인됩니다`).join('. ')
+  const careerMoneyAnswer=pair(
+   careerMoneyEvidence.length?`${englishMoneyLinks}. These are possible earning routes, not expected pay.`:'The checked chart positions do not show a direct money route, so the report does not assign one.',
+   careerMoneyEvidence.length?`${koreanMoneyLinks}. 실제 수입액이 아니라 가능한 업무 통로를 보여 주는 사주 표시입니다.`:'확인한 사주 위치에 직접적인 재물 흐름이 나타나지 않아 특정 수입 방식을 정하지 않습니다.')
+  const moneyRiskCodes=new Set(p.resolution.risks.map(risk=>risk.code))
+  const financialBlock=moneyRiskCodes.has('money-versus-resource')
+   ? pair('Your chart places earning activity beside a need for training or support. If both draw on the same time or resources, financial progress may feel slower.','명식에서 수입 활동과 교육 또는 지원의 필요가 함께 나타납니다. 두 가지가 같은 시간이나 자원을 요구한다면 재정 진전이 더딜 수 있습니다.')
+   : moneyRiskCodes.has('money-adds-pressure')
+    ? pair('Your chart links money themes with demanding responsibilities. A larger paid task could add obligations before it adds money you keep.','명식에서 재물 주제와 부담이 큰 책임이 연결됩니다. 더 큰 유료 업무를 맡을 때 실제 남는 돈보다 책임이 먼저 늘 수 있습니다.')
+    : !p.visibleMoney.length&&p.hiddenMoney.length
+     ? pair('The chart does not identify a specific financial blocker. Less-visible money indicators alone do not explain a real slowdown.','명식은 구체적인 재정 장애를 짚지 않습니다. 덜 드러난 재물 표지만으로 실제 진전이 느린 이유를 설명할 수는 없습니다.')
+     : p.resolution.circuits.some(circuit=>circuit.code==='output-to-money')
+      ? pair('Your chart connects useful work with customers or pay, so it does not identify a broken earning route.','명식에서 유용한 업무가 고객이나 대가와 연결되어 돈벌이 통로가 끊겼다고 보기는 어렵습니다.')
+      : p.visibleMoney.length
+       ? pair('Your chart shows money indicators but no complete path from useful work to paid income. The chart cannot confirm this is a real financial setback.','명식에 재물 표시는 있지만 유용한 업무가 유료 수입으로 이어지는 전체 흐름은 보이지 않습니다. 이것이 실제 재정 문제라는 점은 사주로 확인할 수 없습니다.')
+       : pair('The checked chart positions do not show a direct money route, so they cannot identify a specific financial blockage.','확인한 사주 위치에는 직접적인 재물 통로가 나타나지 않아 구체적인 재정 장애를 짚을 수 없습니다.')
+  const financialScope=moneyRiskCodes.has('money-versus-resource')
+   ? pair('This is a possible overlap in demands; it cannot identify what caused a real financial problem.','이는 부담이 겹칠 수 있다는 사주상 가능성이며, 현실의 재정 문제 원인을 확인한 것은 아닙니다.')
+   : moneyRiskCodes.has('money-adds-pressure')
+    ? pair('This is a chart tendency, not evidence that added duties caused a real financial setback.','이는 사주상 경향이지, 추가 책임이 현실의 재정 문제를 일으켰다는 근거는 아닙니다.')
+    : !p.visibleMoney.length&&p.hiddenMoney.length
+     ? pair('Less-visible money signs cannot explain a real-world slowdown on their own.','덜 드러난 재물 표시만으로 현실의 재정 진전이 느린 이유를 설명할 수는 없습니다.')
+     : p.resolution.circuits.some(circuit=>circuit.code==='output-to-money')
+      ? pair('A chart link between work and payment does not establish your actual income or rule out other obstacles.','업무와 대가의 사주상 연결이 실제 수입을 확인하거나 다른 장애 요인을 배제하는 것은 아닙니다.')
+      : pair('The chart does not identify what caused a real financial change.','명식만으로 현실에서 재정 상황이 바뀐 원인을 확인할 수는 없습니다.')
+  put('working-style',[financialBlock],financialScope,m.pressure)
+  const careerFitLead: Record<string, Passage> = {
+   比肩: pair('Specialist work with control over your method is a stronger career fit than constant people management.','사람을 계속 관리하는 일보다 방법을 스스로 정할 수 있는 전문 업무가 더 잘 맞습니다.'),
+   劫財: pair('Negotiation, partnership sales or team work with clear credit suits your chart better than hidden competition.','공로가 분명한 협업이나 협상, 제휴 영업이 보이지 않는 경쟁보다 더 잘 맞습니다.'),
+   食神: pair('A career built on dependable products, teaching or repeatable service fits your stronger work style.','믿을 수 있는 상품과 교육, 반복 가능한 서비스를 만드는 일이 강한 업무 방식에 맞습니다.'),
+   傷官: pair('Product improvement, creative problem-solving or explaining new ideas gives your strongest work style room to contribute.','상품 개선과 창의적인 문제 해결, 새로운 생각을 설명하는 일이 강점을 발휘할 여지를 줍니다.'),
+   正財: pair('Operations, account management or resource coordination fits the value your chart places on reliable delivery.','운영과 고객 관리, 자원 조정 업무가 명식에서 강조하는 믿을 수 있는 결과와 맞습니다.'),
+   偏財: pair('Business development, sales or account growth matches your chart’s emphasis on finding customers and openings.','사업 개발과 영업, 고객 확대가 고객과 기회를 찾는다는 명식의 특징에 맞습니다.'),
+   正官: pair('Roles with defined responsibility, standards or team leadership fit your chart’s structured work style.','책임과 기준이 분명한 자리나 팀을 이끄는 일이 체계적인 업무 방식에 맞습니다.'),
+   偏官: pair('Technical problem-solving or response work with clear authority fits your ability to act under pressure.','권한이 분명한 기술 문제 해결이나 대응 업무가 압박 속에서 움직이는 강점에 맞습니다.'),
+   正印: pair('Training, research or knowledge-based service fits your chart’s emphasis on learning and guidance.','교육과 연구, 지식 기반 서비스가 배움과 안내를 중시하는 명식에 맞습니다.'),
+   偏印: pair('Specialist research, diagnosis or technical problem-solving fits your independent way of thinking.','전문 연구와 문제 분석, 기술 문제 해결이 독립적으로 생각하는 방식에 맞습니다.'),
+  }
+  const careerVerdict=careerFitLead[p.monthStemGod]?.en ?? BUYER_ANSWERS[p.monthStemGod].career.en.split(/(?<=\.)\s/)[0]
+  const careerVerdictKo=careerFitLead[p.monthStemGod]?.ko ?? BUYER_ANSWERS[p.monthStemGod].career.ko.split(/(?<=\.)\s/)[0]
+  put('two-work-layers',[pair(careerVerdict,careerVerdictKo),answer.workplace,roleChoice(p),p.monthStemGod===p.monthBranchGod?pair('The outward role and the everyday work repeat the same theme. A title that promises one kind of work but delivers another is therefore an important mismatch to notice.','겉으로 보이는 역할과 매일 하는 일이 같은 주제를 반복합니다. 직함이 약속한 일과 실제 업무가 다르면 특히 맞지 않는 부분이 될 수 있습니다.'):pair(`Your public role points to ${m.name.en}, but daily tasks add ${inner.name.en}. A suitable job needs room for both.`,`겉으로 보이는 역할은 ${m.name.ko}이고 매일의 업무에는 ${inner.name.ko}이 더해집니다. 맞는 직장은 두 요구를 함께 담을 수 있어야 합니다.`),...(p.monthStemGod!==p.monthBranchGod?[dailyAnswer.workplace]:[])],pair('Compare the advertised role with the tasks you would actually do each week.','채용 공고의 역할과 매주 실제로 할 일을 비교합니다.'),inner.pressure)
+  const chartGods=p.positions.flatMap(position=>[position.stemGod,position.principalGod]).filter((god):god is string=>!!god)
+  const employeeGods=[...new Set(chartGods.filter(god=>['正官','偏官','正印','偏印'].includes(god)))]
+  const employmentBasis=[...(chartGods.some(god=>['正官','偏官'].includes(god))?['clear responsibility']:[]),...(chartGods.some(god=>['正印','偏印'].includes(god))?['training or specialist support']:[])]
+  const independentBasis=[...(chartGods.some(god=>['食神','傷官'].includes(god))?['creating useful products or services']:[]),...(chartGods.some(god=>['正財','偏財'].includes(god))?['customer income']:[]),...(chartGods.some(god=>['比肩','劫財'].includes(god))?['independent or shared work']:[])]
+  const employmentBasisKo=[...(chartGods.some(god=>['正官','偏官'].includes(god))?['분명한 책임']:[]),...(chartGods.some(god=>['正印','偏印'].includes(god))?['교육 또는 전문 지원']:[])]
+  const independentBasisKo=[...(chartGods.some(god=>['食神','傷官'].includes(god))?['유용한 상품이나 서비스 만들기']:[]),...(chartGods.some(god=>['正財','偏財'].includes(god))?['고객 수입']:[]),...(chartGods.some(god=>['比肩','劫財'].includes(god))?['독립 업무나 협업']:[])]
+  const hasOutputToMoneyRoute=p.resolution.circuits.some(circuit=>circuit.code==='output-to-money')
+  const hasAuthoritySupport=employeeGods.length>0
+  const listSignals=(signals:string[],none:string)=>signals.length===1?signals[0]:signals.length===2?`${signals[0]} and ${signals[1]}`:signals.length?`${signals.slice(0,-1).join(', ')}, and ${signals.at(-1)}`:none
+  const employmentSignalsText=listSignals(employmentBasis,'few signs of structured-role support')
+  const employmentSignalsTextKo=listSignals(employmentBasisKo,'조직 업무를 뒷받침하는 신호가 적음')
+  const independentSignalsTextKo=listSignals(independentBasisKo,'독립 업무를 뒷받침하는 신호가 적음')
+  const employmentComparison=hasAuthoritySupport
+   ? `For a structured job, your chart shows ${employmentSignalsText}.`
+   : 'The checked positions show few signs of formal responsibility or specialist support.'
+  const hasIndependentOutput=independentBasis.includes('creating useful products or services')
+  const hasIndependentAutonomy=independentBasis.includes('independent or shared work')
+  const hasCustomerIncomeSign=independentBasis.includes('customer income')
+  const independentWorkSkills=[...(hasIndependentOutput?['making useful products or services']:[]),...(hasIndependentAutonomy?['working independently or with others']:[])]
+  const independentWorkSkillsText=listSignals(independentWorkSkills,'few independent-work skills')
+  const independentComparison=hasOutputToMoneyRoute
+   ? `For independent work, your chart links useful output to payment${independentBasis.includes('independent or shared work')?' and also shows independent or shared-work signals':''}.`
+   : independentWorkSkills.length
+    ? `For independent work, your chart supports ${independentWorkSkillsText}. ${hasCustomerIncomeSign?'It also shows a customer-income marker, but does not connect that sign to useful work and paid customers.':'It does not show a complete link from useful work to paid customers.'}`
+    : hasCustomerIncomeSign
+     ? 'For independent work, a customer-income marker appears, but the chart does not show a complete link from useful work to paid customers.'
+     : 'The chart shows few direct signs of independent work or a complete route to paid customers.'
+  const workVerdict=hasOutputToMoneyRoute&&hasAuthoritySupport
+   ? pair('Your chart supports both employment and independent work; it does not show a clear winner.','명식에는 조직 업무와 독립 업무의 근거가 모두 있지만, 어느 한쪽이 더 낫다고 뚜렷하게 나타나지는 않습니다.')
+   : hasOutputToMoneyRoute
+    ? pair('Independent work is better supported by the chart.','명식에서는 독립 업무 쪽에 더 직접적인 근거가 있습니다.')
+    : hasAuthoritySupport
+     ? pair('Structured employment is better supported by the chart.','명식에서는 조직 업무 쪽에 더 직접적인 근거가 있습니다.')
+     : pair('Your chart gives a clearer answer about the kind of work than about employment versus business. The setting itself remains an open question.','명식은 직장과 사업 중 하나를 고르기보다 어떤 업무가 맞는지를 더 분명히 보여줍니다. 일하는 환경은 아직 판단하기 어렵습니다.')
+  put('proof-of-skill',[workVerdict,pair(`${employmentComparison} ${independentComparison}`,`${hasAuthoritySupport?`조직 업무에는 ${employmentSignalsTextKo}의 근거가 있습니다.`:'확인한 위치에는 조직 업무를 뒷받침하는 신호가 적습니다.'} ${hasOutputToMoneyRoute?`유용한 결과물이 대가로 이어지는 흐름이 확인됩니다${independentBasisKo.includes('독립 업무나 협업')?'과 독립 업무나 협업 신호도 나타납니다.':'.'}`:`독립 업무 관련 근거는 ${independentSignalsTextKo}이며, 유용한 업무가 유료 고객으로 이어지는 전체 흐름은 확인되지 않습니다.`}`)],pair('The actual duties and payment terms decide which route fits a real offer.','실제 제안의 업무 내용과 대금 조건을 살펴 어느 쪽이 맞는지 판단해야 합니다.'),m.pressure)
+  put('feedback-and-boundaries',[m.pressure,m.balance],keepWork,m.pressure)
+  put('money-commitments',[moneyPassage(p,'career'),careerMoneyAnswer,moneyDepth(p,'career'),capacityBasis(p),pair('For an actual role, compare confirmed pay and expected hours with variable fees, necessary costs and extra duties. A larger role is not necessarily better paid.','실제 자리에서는 확정 급여와 예상 근무 시간을 변동 수수료와 필요한 비용, 추가 업무와 함께 비교합니다. 역할이 커진다고 보상이 반드시 좋아지는 것은 아닙니다.')],practicalMoney,moneyWatch)
+  put('work-chapters',[],pair('Compare a real opportunity with the specific year and the longer period it falls within.','실제 기회를 해당 연도와 그때의 긴 흐름에 함께 대조합니다.'),moneyWatch)
+  const careerThemeLabel=CAREER_THEME_LABEL[p.monthStemGod]??publicRoleLabel(p.monthStemGod).en
+  const chartMoneyMarkers=[...p.visibleMoney,...p.hiddenMoney]
+  const workAreaMoney=chartMoneyMarkers.filter(item=>item.position==='month')
+  const otherMoneyAreas=[...new Set(chartMoneyMarkers.filter(item=>item.position!=='month').map(item=>moneyPositionNames[item.position]?.[0]??'other checked chart areas'))]
+  const workAreaMoneyKinds=[...new Set(workAreaMoney.map(item=>item.god==='正財'?'regular-pay':'customer-and-project'))]
+  const workAreaMoneyText=workAreaMoneyKinds.length===2?'steady pay and income from customers or projects':workAreaMoneyKinds[0]==='regular-pay'?'steady pay':'income from customers or projects'
+  const otherMoneyAreaText=otherMoneyAreas.length===1?otherMoneyAreas[0]:otherMoneyAreas.length===2?`${otherMoneyAreas[0]} and ${otherMoneyAreas[1]}`:otherMoneyAreas.join(', ')
+  const integratedMoneyInsight=workAreaMoney.length
+   ? `Your chart places signs for ${workAreaMoneyText} in the same birth-month area that points to ${careerThemeLabel}. This links your work pattern and earning theme, but does not predict what a real role will pay.`
+   : chartMoneyMarkers.length
+    ? `Your work signature is ${careerThemeLabel}, while the chart places its money signs in ${otherMoneyAreaText}, away from the birth-month work area. This is the key distinction: work fit and earning signs do not automatically line up.`
+    : `Your chart points to ${careerThemeLabel} as a work strength, but no direct money sign appears in the checked positions. That makes your work direction clearer than a specific income route.`
+  const capacityInsight=p.strength.tendency==='support-needed'
+   ? 'Its caution is about carrying the workload: added duties may need more support before they improve your finances.'
+   : p.strength.tendency==='supported'
+    ? 'Support for handling work appears in the chart, but that does not establish the pay or profit of a real role.'
+    : 'The chart does not settle how much added work you can carry, so a larger role should not be treated as better-paid by default.'
+  const integratedMoneyInsightKo=workAreaMoney.length
+   ? `명식에서 ${workAreaMoneyKinds.length===1?(workAreaMoneyKinds[0]==='regular-pay'?'정기 수입':'고객·프로젝트 수입'):'정기 수입과 고객·프로젝트 수입'} 표시가 ${publicRoleLabel(p.monthStemGod).ko} 업무 특징을 나타내는 태어난 달의 위치에 함께 있습니다. 업무 방식과 수입 주제가 연결되지만 실제 보수까지 예측하지는 않습니다.`
+   : chartMoneyMarkers.length
+    ? `업무 특징은 ${publicRoleLabel(p.monthStemGod).ko}이고 재물 표시는 ${otherMoneyAreaText}에 있습니다. 직업 적합성과 수입 방식이 서로 다른 사주 위치에 나타나며, 한쪽이 다른 쪽을 보장하지 않습니다.`
+    : `명식은 ${publicRoleLabel(p.monthStemGod).ko}이라는 업무 강점을 보여 주지만, 확인한 위치에 직접적인 재물 표시는 없습니다. 직업 방향은 수입 통로보다 분명합니다.`
+  const capacityInsightKo=p.strength.tendency==='support-needed'
+   ? '주의할 점은 업무량을 감당하는 부분입니다. 일이 늘어 재정이 나아지기 전에 더 많은 도움이 필요할 수 있습니다.'
+   : p.strength.tendency==='supported'
+    ? '일을 맡아 수행할 기반은 보이지만, 실제 자리의 급여나 사업의 수익까지 계산해 주는 것은 아닙니다.'
+    : '추가 업무를 얼마나 감당할 수 있는지는 명식만으로 정해지지 않으므로, 일이 커진다고 보수가 좋아진다고 단정할 수 없습니다.'
+  const futureInsight=pair(integratedMoneyInsight,integratedMoneyInsightKo)
+  const futureInsightDetail=pair(capacityInsight,capacityInsightKo)
+  put('career-plan',[futureInsight,futureInsightDetail],pair('The key is to judge the work and its payment route together; one does not prove the other.','업무 적합성과 보수 방식을 함께 살펴야 하며, 한쪽이 맞는다고 다른 쪽까지 보장되는 것은 아닙니다.'),moneyWatch)
+ }
+ if(plan.kind==='love'){
+  const theme=LANGUAGE[p.dayBranchGod].love
+  const relationshipFriction=pair(RELATIONSHIP_PROFILES[p.dayBranch].friction,PRIVATE_FRICTION_KO[p.dayBranch])
+  put('love-style',[pair(`Your birth-day branch, ${p.dayBranch}, is the chart position used here for close relationships. Its traditional theme is ${day.name.en}: ${theme.en}`,`태어난 날의 지지 ${p.dayBranch}는 가까운 관계를 살펴보는 자리입니다. ${day.name.ko}의 관계 해석은 ${theme.ko}`),pair(`Your day-stem image is ${personal.focus}. In a relationship, this can shape how you approach closeness while your day-branch need remains ${RELATIONSHIP_PROFILES[p.dayBranch].need}.`,`일간의 중심 성향은 ${personal.focus}입니다. 가까워지는 방식에 영향을 줄 수 있으며, 사적인 관계에서 원하는 것은 ${NEED[p.dayBranch]}입니다.`)],undefined,relationshipFriction)
+  put('love-needs',[closeNeed,pair(`The form of care associated with this chart is ${RELATIONSHIP_PROFILES[p.dayBranch].need}. Treat it as a preference to check with the other person, not a rule they must follow.`,`이 명식의 관계 특징에 맞는 배려는 ${RELATIONSHIP_PROFILES[p.dayBranch].keepClose[0]}입니다. 상대와 확인할 선호이지 상대가 반드시 따라야 할 규칙은 아닙니다.`),ownNeed],pair('Name one specific action that would help you feel understood.','이해받는 느낌에 도움이 될 구체적인 행동 하나를 말합니다.'),relationshipFriction)
+  put('love-attraction',[pair(`Your day-stem image centres on ${personal.focus}; your private relationship layer values ${RELATIONSHIP_PROFILES[p.dayBranch].need}. A connection may feel more natural when it makes room for both.`,`일간은 ${personal.focus}에 중심을 두고, 사적인 관계에서는 ${NEED[p.dayBranch]}을 중요하게 봅니다. 두 가지를 모두 존중하는 관계가 더 편안할 수 있습니다.`),privateStructure],undefined,relationshipFriction)
+  put('love-friction',[closeFriction,relationshipFriction,privateStructure],undefined,relationshipFriction)
+  put('love-patterns',[privateStructure,pair(`Your birth-month theme is ${m.name.en}; the less visible month layer is ${inner.name.en}. These describe work and everyday responsibilities that may compete with time for a close relationship.`,`태어난 달의 바깥 주제는 ${m.name.ko}, 안쪽 일상에는 ${inner.name.ko}이 있습니다. 이는 가까운 관계에 쓸 시간과 경쟁할 수 있는 일·생활 책임을 설명합니다.`),capacity],undefined,relationshipFriction)
+  put('love-timing',[relationshipTiming, ...plan.annual.slice(0,5).map(item=>pair(`${item.date.slice(0,4)}: ${LANGUAGE[item.god].love.en} ${item.clashes.length?`A recorded clash touches the birth-${item.clashes.join(' and ')} pillar.`:'No birth-pillar clash is recorded at this annual comparison.'}`,`${item.date.slice(0,4)}년: ${LANGUAGE[item.god].love.ko} ${item.clashes.length?`태어난 ${item.clashes.join('·')} 기둥과 충이 확인됩니다.`:'이 연간 비교에서는 출생 기둥과의 충이 확인되지 않습니다.'}`))],undefined,relationshipFriction)
+  put('love-outlook',[pair(`The clearest personal relationship theme is ${RELATIONSHIP_PROFILES[p.dayBranch].need}; the tension to recognise is ${RELATIONSHIP_PROFILES[p.dayBranch].friction}.`,`가장 분명한 관계 주제는 ${NEED[p.dayBranch]}이며 살펴볼 마찰은 ${PRIVATE_FRICTION_KO[p.dayBranch]}입니다.`),relationshipTiming,noOutcome],pair('Keep the conclusion personal: name what supports you and what you need to discuss.','결론은 자신에게 맞춥니다. 도움이 되는 점과 대화가 필요한 점을 구체적으로 정리합니다.'),relationshipFriction)
+ }
+ if(plan.kind==='business'){
+  put('founder-style',[...business,capacityBasis(p)],pair('Compare the business model with who will buy, what they receive and what you can reliably deliver.','누가 구매하고 무엇을 받는지, 꾸준히 제공할 수 있는 것이 무엇인지와 사업 방식을 비교합니다.'),m.pressure)
+  const offerBasis=pair(p.monthStemGod===p.monthBranchGod
+    ?`Your chart repeats ${m.name.en} across the public work role and daily routine. That points to a consistent customer-facing work style. ${answer.launch.en}`
+    :`Your chart points to ${m.name.en} in the public work role and ${inner.name.en} in daily delivery. That gives you two distinct demands to plan for. ${answer.launch.en}`,
+    p.monthStemGod===p.monthBranchGod
+    ?`사주에서 겉 업무 역할과 일상 업무 모두 ${m.name.ko}이 반복됩니다. 고객과 만나는 업무 방식이 일관되게 나타납니다. ${answer.launch.ko}`
+    :`겉 업무 역할은 ${m.name.ko}, 일상적인 제공 방식은 ${inner.name.ko}에 가깝습니다. 서로 다른 두 요구를 계획에 반영해야 합니다. ${answer.launch.ko}`)
+  put('offer-test',[offerBasis],pair('Define what the first paying customer receives and the time, cost and support needed to deliver it.','첫 유료 고객에게 무엇을 제공하며 이를 위해 필요한 시간과 비용, 도움은 무엇인지 정합니다.'),m.pressure)
+  put('team-decisions',[partnerVerdict(p),businessDivision(p),LANGUAGE[p.yearStemGod].business,pair(`This brings your wider social connections together with your working style. It describes your side of a partnership; the other person needs a separate reading.`,`사주에서 주변 사람들과 연결해 읽는 부분을 자신의 ${m.name.ko} 사업 방식과 함께 본 풀이입니다. 자신이 동업에 가져가는 특징이며 상대방은 별도 풀이가 필요합니다.`)],pair('Separate ownership, decision rights, income and the work each partner actually carries.','소유권과 결정권, 수입, 각 동업자가 실제로 맡는 일을 나누어 정합니다.'),LANGUAGE[p.yearStemGod].pressure)
+  put('delivery-capacity',[moneyPassage(p,'business'),moneyBasis(p),moneyDepth(p,'business'),capacityBasis(p)],practicalMoney,moneyWatch)
+  put('customer-communication',[answer.grow,dailyAnswer.launch],pair('Before expanding, agree with the customer on the deadline, revision limits, payment terms and who handles follow-up.','확장하기 전에 고객과 기한과 수정 범위, 대금 조건, 후속 업무의 담당자를 정합니다.'),m.pressure)
+  put('business-chapters',[],pair('Read each commercial opening alongside the actual capacity, costs and longer-period background named for that year.','거래 기회를 그해에 설명한 역량과 비용, 긴 흐름의 배경과 함께 읽습니다.'),moneyWatch)
+  put('business-plan',[m.pressure,inner.pressure],pair('Before a larger commitment, identify which deadline, payment term or shared duty could make the named pressure harder to manage.','더 큰 약속을 하기 전에 어떤 기한과 대금 조건, 공동 의무가 설명한 부담을 키울 수 있는지 살핍니다.'),moneyWatch)
+ }
+ if(plan.kind==='complete'||plan.kind==='wellbeing'){
+  const elements=pair(`The visible chart contains ${p.elements.map(x=>`${x.count} ${x.element}`).join(', ')}. These are counts of signs, not strength, ability or health scores.`,`겉으로 드러난 글자의 개수는 ${p.elements.map(x=>`${ELEMENT[x.element]} ${x.count}`).join(', ')}입니다. 기운의 세기나 능력, 건강의 점수가 아닙니다.`)
+  const missing=p.elements.filter(x=>!x.count)
+  const absence=missing.length?pair(`${missing.map(x=>x.element).join(' and ')} ${missing.length===1?'does':'do'} not appear in this visible count. That does not mean you lack an ability or need to buy, eat or wear something to correct it.`,`${missing.map(x=>ELEMENT[x.element]).join('·')}이 이 개수에 나타나지 않습니다. 어떤 능력이 없거나 물건·음식·옷으로 고쳐야 한다는 뜻은 아닙니다.`):pair('All five appear in the visible count. That does not establish an evenly balanced life or good health.','다섯 가지가 모두 개수에 나타납니다. 생활이 고르게 균형 잡혔거나 건강이 좋다는 판정은 아닙니다.')
+  const elementReading=pair(
+    `Your standout strength is ${personal.focus}. The reading links it to your birth-day sign. Visible element counts describe chart symbols, not ability or health.`,
+    `태어난 날의 ${p.dayStem} 일간에서는 ${pk.strength} 강점이 드러납니다. 겉으로 보이는 오행 개수는 능력이나 건강 점수가 아니라 명식 글자의 분포입니다.`
+  )
+  const completeBalanceLines=plan.kind==='complete'&&targetedProduct01?[
+  pair(`Your most important life insight is that your focus on ${personal.focus} works best in a role built around ${m.name.en}, as long as that role leaves room for ${relationshipProfile.need}. Your public contribution and private relationship need are different parts of the same life pattern.`,`가장 중요한 통찰은 ${pk.strength}의 성향이 ${m.name.ko} 중심의 역할에서 잘 발휘되며, 그 역할 안에서도 ${NEED[p.dayBranch]}을 위한 자리를 남겨야 한다는 점입니다. 사회적 역할과 사적인 관계의 필요는 한 인생 패턴의 서로 다른 부분입니다.`),
+    ...out.balance.lines.slice(1),
+  ]:undefined
+  put(plan.kind==='complete'?'balance':'visible-elements',[...(plan.kind==='complete'?[]:[elementReading,pair(`Your public role draws on ${m.name.en}, while close relationships call for ${relationshipProfile.need}. These are different parts of your nature and may need different kinds of support.`,`${m.name.ko} 업무 역할과 ${NEED[p.dayBranch]}이라는 사적인 관계의 필요는 서로 다른 성격의 일부이며, 각기 다른 지원이 필요할 수 있습니다.`)]),...(plan.kind==='complete'? [elementReading] : []),...(plan.kind==='complete'&&targetedProduct01?[]:[elements,absence]),...(plan.kind==='wellbeing'?[capacityBasis(p),m.balance,...(p.monthStemGod!==p.monthBranchGod?[inner.balance]:[]),ownNeed]:[])],pair(`Use the visible count as a starting description, not as a shopping list or a score to improve.`,`겉으로 보이는 개수는 풀이의 시작점으로만 보고, 사야 할 물건의 목록이나 높여야 할 점수로 보지 않습니다.`),noHealth)
+  if(plan.kind==='complete'&&targetedProduct01){if(completeBalanceLines)out.balance.lines=completeBalanceLines;out.balance.showGuidance=false}
+ }
+ if(plan.kind==='wellbeing'){
+  put('workload-rhythm',[personalBoundary(p),pressure,pair(`The birth-month pattern emphasises ${m.name.en}${p.monthStemGod===p.monthBranchGod?' in both its outward and inner roles':`, and its daily role adds ${inner.name.en}`}. This is the setting in which the pressure is read, rather than a claim that you always behave this way.`,`태어난 달의 특징은 ${m.name.ko}${p.monthStemGod===p.monthBranchGod?'이 겉과 안에 반복됩니다':`이고 안쪽에는 ${inner.name.ko}이 더해집니다`}. 언제나 이렇게 행동한다는 뜻보다 부담이 드러나는 상황의 배경으로 읽습니다.`),...(p.monthStemGod!==p.monthBranchGod?[inner.balance]:[]),ownNeed],pair(`When asked to take on more, name the task already using your time: ${m.name.en}. Agree what moves before accepting the new duty.`,`추가 업무를 부탁받으면 이미 시간을 쓰는 ${m.name.ko}의 일을 구체적으로 말합니다. 새 책임을 받기 전에 무엇을 미룰지 정합니다.`),noHealth)
+  put('support-and-space',[closeNeed,day.love,closeFriction,pair(`The support that suits this side of you is specific: ${detail.people[0].toLowerCase()+detail.people.slice(1)} The setting matters too: ${detail.space[0].toLowerCase()+detail.space.slice(1)}`,`이 성향에 맞는 도움: ${dk[2]} 환경도 중요합니다. ${dk[3]}`)],pair('Name the kind of support you want and the choices you want to keep for yourself.','어떤 도움을 원하는지, 어떤 선택은 스스로 하고 싶은지 말합니다.'),relationshipWatch)
+  put('balance-week',[pair(`A strength others can rely on: ${detail.gift} The possible misunderstanding: ${detail.misread}`,`다른 사람이 의지할 강점: ${dk[0]} 오해받을 수 있는 모습: ${dk[1]}`),pair(`A strength becomes a blind spot when it crowds out your own needs. For you, that means leaving room for ${personal.need}.`,`강점 때문에 자신의 필요가 밀릴 때 약점으로 바뀝니다. 본인에게는 ${pk.need}을 지킬 여유가 중요합니다.`),pair(personal.balance,PERSONAL_SCENE_KO[p.dayStem].balance),pair(`The distinction is between choosing to make room for ${personal.need} and feeling unable to respond any other way. The first is a strength you can direct; the second narrows your choices.`,`${pk.need}을 스스로 선택하는 것과 다른 방식으로는 대응할 수 없다고 느끼는 것을 구분합니다. 전자는 스스로 방향을 정하는 강점이고 후자는 선택의 폭을 좁히는 모습입니다.`)],pair(`Use this boundary in the next request: “I can help with this part. I also need ${personal.need}.”`,`다음 부탁에는 이렇게 범위를 말할 수 있습니다. 이 부분은 도울 수 있지만 ${pk.need}을 위한 시간은 남겨 두어야 합니다.`),noHealth)
+ }
+ if(plan.kind==='year'){
+  const y=plan.annual[0],yg=LANGUAGE[y.god],yi=LANGUAGE[y.innerGod]
+  const windowLabel=plan.months.length?`${humanMonth(plan.months[0].date)} through ${humanMonth(plan.months.at(-1)!.date)}`:`the twelve months following ${plan.referenceYear}`
+  const annualWorkText=yg.work.en[0].toUpperCase()+yg.work.en.slice(1).replace(/[.!?]+$/u,'')
+  const annualWorkFocus=annualWorkText.split(/(?<=[.!?])\s/)[0]
+  const relationshipTheme=yi.love.en.charAt(0).toLowerCase()+yi.love.en.slice(1)
+  void relationshipTheme
+  const annualTheme=pair(`The clearest work theme for ${windowLabel} is this: ${annualWorkText}. Compared with your usual work pattern of ${m.name.en}, this ${y.god===p.monthStemGod?'repeats a familiar demand':'adds a different demand'}. In close relationships, the chart points to this theme: ${yi.love.en}`,`앞으로 12개월(${windowLabel})에 가장 뚜렷한 업무 주제는 ${yg.work.ko}입니다. 타고난 업무 특징인 ${m.name.ko}과 비교하면 ${y.god===p.monthStemGod?'익숙한 요구가 반복되거나':'다른 요구가 더해지며'}, 사적인 면에는 ${yi.love.ko}`)
+  put('annual-theme',[annualTheme],pair(`Focus on the chart-linked work theme for this year: ${annualWorkFocus} Check that roles define your duties and standards, while leaving time for close relationships.`,`올해 명식에 연결된 ${yg.work.ko} 업무 주제에 초점을 둡니다. 역할과 기준이 분명한지 살피고 가까운 관계를 위한 시간도 남깁니다.`),yg.pressure)
+  out['annual-theme'].showGuidance=false
+  put('annual-work',[pair(`${windowLabel} (annual reference ${plan.referenceYear}): ${BUYER_ANSWERS[y.god].career.en}`,`${windowLabel} (${plan.referenceYear}년 연간 기준): ${BUYER_ANSWERS[y.god].career.ko}`),yi.work,publicRole,answer.workplace,yg.pressure],keepWork,yi.pressure)
+  const moneyMonths=plan.months.filter(x=>[x.god,x.innerGod].some(g=>['正財','偏財'].includes(g)))
+  put('annual-money',[pair(`${windowLabel} (annual reference ${plan.referenceYear}): ${yg.money.en}`,`${windowLabel} (${plan.referenceYear}년 연간 기준): ${yg.money.ko}`),yi.money,moneyBasis(p),pair(moneyMonths.length?`The monthly comparisons with a direct earning-and-money theme are ${moneyMonths.map(x=>humanMonth(x.date)).join(', ')}. They identify financial activity, rather than profitable months.`:'None of the twelve monthly comparisons has a direct money theme. That does not predict no income or financial difficulty.',moneyMonths.length?`직접적인 재물 주제가 나타나는 월별 비교는 ${moneyMonths.map(x=>humanMonth(x.date)).join(', ')}입니다. 재정적인 활동을 가리키며 이익이 나는 달이라는 뜻은 아닙니다.`:'12개 월별 비교에 직접적인 재물 주제가 없습니다. 수입이 없거나 경제적으로 어렵다는 예측은 아닙니다.')],practicalMoney,moneyWatch)
+  put('annual-connections',[pair(`${windowLabel} (annual reference ${plan.referenceYear}): ${yg.love.en}`,`${windowLabel} (${plan.referenceYear}년 연간 기준): ${yg.love.ko}`),yi.love,closeNeed,closeFriction],undefined,relationshipWatch)
+  put('annual-cycle-context',[],undefined,moneyWatch);put('annual-plan',[],undefined,yg.pressure)
+  plan.months.forEach((month,i)=>{const g=LANGUAGE[month.god],inr=LANGUAGE[month.innerGod],action=PERIOD_VOICE[month.god].action;put('month-'+(i+1),[monthlyFit(p,month),pair('Money: '+g.money.en.split(/(?<=[.!?])\s/)[0]+(month.god!==month.innerGod?` The accompanying theme is ${inr.name.en}; include that demand in the same decision.`:''),'재물: '+g.money.ko+(month.god!==month.innerGod?` 함께 나타나는 ${inr.name.ko}의 요구도 같은 판단에 포함합니다.`:'')),pair('At home: '+inr.love.en.split(/(?<=[.!?])\s/)[0]+(month.god!==month.innerGod?` Make room for this while dealing with ${g.name.en}.`:''),'사적인 관계: '+inr.love.ko+(month.god!==month.innerGod?` ${g.name.ko}을 다루는 동안 이 필요도 지킵니다.`:''))],pair(`In ${humanMonth(month.date)}, ${action.en[0].toLowerCase()+action.en.slice(1)}`,`${Number(month.date.slice(5,7))}월에는 ${action.ko}`),g.pressure)})
+
+ }
+ if(plan.kind==='compatibility'){
+  const b=plan.partner!, ag=LANGUAGE[plan.directions!.aToB],bg=LANGUAGE[plan.directions!.bToA]
+  const needs=pair(`Your private-life need is ${RELATIONSHIP_PROFILES[p.dayBranch].need}. Your partner’s is ${RELATIONSHIP_PROFILES[b.dayBranch].need}. The same gesture may therefore feel different to each of you.`,`본인이 원하는 것은 ${NEED[p.dayBranch]}입니다. 상대방이 원하는 것은 ${NEED[b.dayBranch]}입니다. 같은 행동도 서로 다르게 받아들일 수 있습니다.`)
+  const aFriction=pair('You: '+LANGUAGE[p.dayBranchGod].love.en,'본인: '+LANGUAGE[p.dayBranchGod].love.ko),bFriction=pair('Your partner: '+LANGUAGE[b.dayBranchGod].love.en,'상대방: '+LANGUAGE[b.dayBranchGod].love.ko)
+  const meeting=(position:'day'|'month')=>{const found=plan.pairPatterns.find(c=>c.left===position&&c.right===position)!,clash=found.patterns.some(c=>c.type==='沖'),friction=found.patterns.some(c=>['刑','害','破'].includes(c.type)),combine=found.patterns.some(c=>c.type==='合');return pair(position==='day'?(clash?'Your private-life patterns pull in different directions. Closeness may need more room for separate choices.':friction?'Small differences in private expectations can become recurring irritations. Saying what a gesture means matters here.':combine?'Your private-life patterns link together, giving shared plans a clearer place in this match.':`Neither a direct bond nor a direct conflict stands out in the private-life comparison. Here, the relationship depends more on matching each other’s needs than on one strong linking pattern.`):(clash?'Your everyday routines may clash over pace, schedules or who does what.':friction?'The daily-routine comparison points to repeated small disagreements about tasks or expectations.':combine?'Your everyday patterns link together, which can help with shared routines when duties are agreed.':'The routine comparison has no clear linking or clashing pattern. Compare your actual habits rather than assuming they will match.'),position==='day'?(clash?'사적인 관계의 방식이 서로 다른 방향으로 움직입니다. 가까워져도 각자 선택할 여지가 더 필요할 수 있습니다.':friction?'사적인 기대의 작은 차이가 반복되는 서운함이 될 수 있습니다. 행동에 담은 뜻을 말하는 일이 중요합니다.':combine?'사적인 관계의 방식이 연결되어 함께할 계획을 정하는 주제가 두드러집니다.':'사적인 관계 비교에서 강하게 묶이거나 부딪히는 관계가 두드러지지 않습니다. 한 가지 강한 연결보다 서로의 필요를 맞추는 방식에 무게를 둡니다.'):(clash?'생활의 속도와 일정, 업무 분담에서 일상이 부딪힐 수 있습니다.':friction?'일상 업무와 기대의 작은 차이가 반복되는 다툼이 될 수 있습니다.':combine?'일상의 방식이 연결되어 담당을 정하면 함께하는 생활을 맞추는 데 도움이 될 수 있습니다.':'일상 비교에서 분명히 묶이거나 부딪히는 관계가 없습니다. 실제 습관을 비교해 맞는 부분을 살펴봅니다.'))}
+  const perspective:Record<string,Passage>={
+   比肩:pair('The attraction may be feeling like equals, with room to make your own choices.','동등하게 대우받고 스스로 선택할 여지가 끌림의 한 부분일 수 있습니다.'),
+   劫財:pair('The attraction may be a lively social world and the feeling of being on the same team.','활기 있는 사회생활과 같은 편이라는 느낌이 끌림의 한 부분일 수 있습니다.'),
+   食神:pair('The attraction may be ordinary care: being fed, helped or made comfortable without having to ask every time.','매번 부탁하지 않아도 음식과 도움, 편안함을 챙겨 주는 일상 배려가 끌림의 한 부분일 수 있습니다.'),
+   傷官:pair('The attraction may be fresh ideas and someone who says what they think. The same directness can feel critical during a disagreement.','새로운 생각과 솔직하게 말하는 모습이 끌림의 한 부분일 수 있습니다. 다툴 때는 같은 솔직함이 비판으로 느껴질 수 있습니다.'),
+   正財:pair('The attraction may be reliability: someone who keeps promises and takes practical commitments seriously.','약속을 지키고 현실적인 책임을 중요하게 보는 믿음직함이 끌림의 한 부분일 수 있습니다.'),
+   偏財:pair('The attraction may be generosity, shared experiences and being introduced to a wider world.','너그러움과 함께하는 경험, 더 넓은 세상을 만나는 일이 끌림의 한 부분일 수 있습니다.'),
+   正官:pair('The attraction may be respect and a clear place in the other person’s life.','존중받고 상대의 삶에서 자기 자리가 분명한 느낌이 끌림의 한 부분일 수 있습니다.'),
+   偏官:pair('The attraction may be intensity and decisiveness. The same force can feel pushy if there is too little room to disagree.','강한 몰입과 결단력이 끌림의 한 부분일 수 있습니다. 의견을 달리할 여지가 없으면 같은 힘이 압박으로 느껴질 수 있습니다.'),
+   正印:pair('The attraction may be reassurance, guidance and feeling understood.','안심할 수 있는 말과 안내, 이해받는 느낌이 끌림의 한 부분일 수 있습니다.'),
+   偏印:pair('The attraction may be feeling understood in a way that is hard to explain to everyone else.','다른 사람에게 설명하기 어려운 부분까지 이해받는 느낌이 끌림의 한 부분일 수 있습니다.'),
+  }
+  const dayPair=plan.pairPatterns.find(c=>c.left==='day'&&c.right==='day')!,routinePair=plan.pairPatterns.find(c=>c.left==='month'&&c.right==='month')!
+  const isFriction=(row:typeof dayPair)=>row.patterns.some(c=>['沖','刑','害','破'].includes(c.type)),isLink=(row:typeof dayPair)=>row.patterns.some(c=>c.type==='合')
+  const pairVerdict=isFriction(dayPair)?pair(isLink(routinePair)?'This is a match where sharing everyday tasks may come more easily than making private choices together. The day-branch friction and month-branch link point to different strengths, rather than one overall compatibility score.':'This relationship needs room for separate private choices. The day branches form a friction pattern, so closeness does not remove the difference in how you want to live.',isLink(routinePair)?'함께 일상을 운영하는 것보다 사적인 선택을 맞추는 데 더 조정이 필요한 궁합입니다. 일지의 마찰과 월지의 연결을 구분해 읽습니다.':'가까워져도 개인적으로 선택할 여지를 남겨야 하는 궁합입니다. 일지에 마찰이 있어 친밀함만으로 생활 방식의 차이가 없어지는 것은 아닙니다.'):isLink(dayPair)?pair(isFriction(routinePair)?'Private closeness is a clearer strength than sharing a daily routine. The day branches link, while the month branches show friction: feeling drawn together and agreeing who does what are separate questions.':'The private-life comparison gives a basis for shared plans: the day branches form a link. This describes a way the two charts connect, while each person’s needs still shape how it works.',isFriction(routinePair)?'사적인 친밀감이 일상 운영보다 더 분명한 강점인 궁합입니다. 일지는 연결되지만 월지에는 마찰이 있어 끌림과 업무 분담을 나누어 읽습니다.':'일지가 연결되어 함께할 계획을 살펴볼 근거가 있는 궁합입니다. 연결이 실제로 어떻게 이어질지는 서로 원하는 배려도 함께 봅니다.'):pair('Neither a strong private-life link nor a direct conflict appears between the day branches. The clearest answer comes from comparing each person’s needs below; this comparison alone cannot call the match easy or difficult.','일지끼리 강한 연결이나 직접적인 마찰이 나타나지 않습니다. 이 비교만으로 편하거나 어려운 궁합이라 정하지 않고 아래에서 각자가 원하는 배려의 차이를 중심으로 읽습니다.')
+  const directions=[pair('From your side: '+perspective[plan.directions!.aToB].en,'본인의 관점: '+perspective[plan.directions!.aToB].ko),pair('From your partner’s side: '+perspective[plan.directions!.bToA].en,'상대방의 관점: '+perspective[plan.directions!.bToA].ko),pair('The two day-of-birth signs are compared in both directions, which is why each person can experience this connection differently.','태어난 날의 두 글자를 양쪽 방향에서 비교하므로 같은 관계도 서로 다르게 경험하는 쪽으로 읽습니다.')]
+  const yourNeed=RELATIONSHIP_PROFILES[p.dayBranch].need,partnerNeed=RELATIONSHIP_PROFILES[b.dayBranch].need
+  const sameCareNeed=yourNeed===partnerNeed,similarCareNeed=sharedCareNeed(p.dayBranch,b.dayBranch)
+  const careMatch=pair(sameCareNeed
+   ?`You and your partner share a need for ${yourNeed}. That is common ground, though it does not mean you will show care in the same way.`
+   :similarCareNeed
+    ?`This match shares a similar need for care: you value ${yourNeed}; your partner values ${partnerNeed}. This is common ground, but both of you can end up waiting for the other to provide it.`
+    :`This match asks for different kinds of care: you value ${yourNeed}, while your partner values ${partnerNeed}. Both needs have to be heard for the connection to feel balanced.`,
+   sameCareNeed
+    ?`본인과 상대방은 모두 ${NEED[p.dayBranch]}을 원합니다. 관계의 공통점이지만 배려를 표현하는 방식까지 같다는 뜻은 아닙니다.`
+    :similarCareNeed
+     ?`비슷한 배려를 원하는 궁합입니다. 본인은 ${NEED[p.dayBranch]}, 상대방은 ${NEED[b.dayBranch]}을 원합니다. 공통점이 있지만 서로 먼저 챙겨 주기만을 기다릴 수 있습니다.`
+     :`서로 다른 배려를 원하는 궁합입니다. 본인에게 중요한 것은 ${NEED[p.dayBranch]}입니다. 상대방은 ${NEED[b.dayBranch]}입니다. 두 필요를 모두 들을 때 균형을 맞추기 쉽습니다.`)
+  put('two-styles',[careMatch,pairVerdict],undefined,relationshipWatch)
+  put('two-directions',[...directions,plan.directions!.aToB===plan.directions!.bToA?pair('Both directions have the same theme, but that does not establish equal feelings or equal effort.','양쪽의 주제가 같아도 감정과 노력의 양이 같다는 뜻은 아닙니다.'):pair('One person may feel supported while the other feels challenged. Neither perspective on its own describes the whole relationship.','한 사람은 도움으로 느끼는 것을 다른 사람은 도전으로 느낄 수 있습니다. 한쪽 관점만으로 관계 전체를 설명하지 않습니다.')],undefined,relationshipWatch)
+  put('close-conversation',[pair(sharedCareNeed(p.dayBranch,b.dayBranch)?'You can want the same care and still wait for the other person to offer it first.':'The difference is how each of you recognises care: the same helpful act can meet one person’s need while missing the other’s.',sharedCareNeed(p.dayBranch,b.dayBranch)?'같은 배려를 원하면서도 서로 상대가 먼저 해 주기를 기다릴 수 있습니다.':'차이는 배려를 받아들이는 방식에 있습니다. 같은 도움이 한 사람에게는 맞아도 다른 사람의 필요는 놓칠 수 있습니다.'),relationshipRepair(p,b),needs,aFriction,bFriction,meeting('day'),pair(`Your likely friction is ${RELATIONSHIP_PROFILES[p.dayBranch].friction}; your partner’s is ${RELATIONSHIP_PROFILES[b.dayBranch].friction}.`,`A가 살필 마찰은 ${PRIVATE_FRICTION_KO[p.dayBranch]}이며 B는 ${PRIVATE_FRICTION_KO[b.dayBranch]}입니다.`)],undefined,relationshipWatch)
+  put('shared-routine',[meeting('month'),pair('Your everyday pattern: '+LANGUAGE[p.monthBranchGod].balance.en,'본인의 일상: '+LANGUAGE[p.monthBranchGod].balance.ko),pair('Your partner’s everyday pattern: '+LANGUAGE[b.monthBranchGod].balance.en,'상대방의 일상: '+LANGUAGE[b.monthBranchGod].balance.ko)],pair('Give recurring tasks a clear owner and compare private preferences separately from running a day together.','반복 업무의 담당자를 분명히 하고 개인적 취향과 함께 일상을 운영하는 일을 나누어 비교합니다.'),relationshipWatch)
+  put('shared-money',[pair('Your earning style: '+moneyPassage(p).en,'A의 재물: '+moneyPassage(p).ko),pair('Your partner’s earning style: '+moneyPassage(b).en,'B의 재물: '+moneyPassage(b).ko),pair('From your side: '+ag.money.en,'A의 관점: '+ag.money.ko),pair('From your partner’s side: '+bg.money.en,'B의 관점: '+bg.money.ko)],pair('Decide whether money is a gift, a loan or a shared expense before committing it.','돈을 약속하기 전에 선물인지 대여인지 공동 비용인지 구분합니다.'),moneyWatch)
+  const closeness=meeting('day'),routine=meeting('month')
+  put('chart-patterns',[pair(`For emotional closeness, ${closeness.en[0].toLowerCase()+closeness.en.slice(1)} For everyday compatibility, ${routine.en[0].toLowerCase()+routine.en.slice(1)} The likely tension for you is ${ag.pressure.en.replace(/^The blind spot is /,'').replace(/\.$/,'')}; your partner’s pressure point is ${bg.pressure.en.replace(/^The blind spot is /,'').replace(/\.$/,'')}.`,`정서적 친밀감에서는 ${closeness.ko} 일상 궁합에서는 ${routine.ko} 본인이 살필 점은 ${ag.pressure.ko}, 상대방이 살필 점은 ${bg.pressure.ko}입니다.`),pair('Private closeness and a workable daily routine are separate comparisons. Neither a combination nor a clash is a score for the relationship or a prediction of its outcome.','사적인 친밀감과 일상을 맞추는 정도는 별개의 비교입니다. 합이나 충은 관계 점수나 결과의 예측이 아닙니다.')],undefined,relationshipWatch)
+  const aYears=purchaseYears(plan.first,plan.referenceYear,'love',5),bYears=purchaseYears(plan.second!,plan.referenceYear,'love',5)
+  const relationshipChanges=aYears.map((a,i)=>({year:a.date.slice(0,4),you:a.lines.find(line=>line.id.endsWith('change-day'))?.en,partner:bYears[i].lines.find(line=>line.id.endsWith('change-day'))?.en})).filter(row=>row.you||row.partner).slice(0,3)
+  const relationshipChangeAnswer=relationshipChanges.length
+   ? `The checked day-branch timing points to ${relationshipChanges.map(row=>`${row.year}${row.you?` for you: ${row.you}`:''}${row.partner?`${row.you?'; ':''}for your partner: ${row.partner}`:''}`).join(' ')} These are separate personal chart themes to discuss, not dates of shared events.`
+   : `No year in the five-year comparison has a checked day-branch change signal for either person. That does not predict an easy period; the calculation simply does not single out a year for relationship timing.`
+  put('support-each-other',[pair(relationshipChangeAnswer,relationshipChanges.length?'확인된 일지 시기 신호는 '+relationshipChanges.map(row=>`${row.year}년${row.you?` 본인: ${row.you}`:''}${row.partner?` 상대방: ${row.partner}`:''}`).join(' ')+'입니다. 각자의 사주 주제이며 두 사람에게 함께 일어날 사건 날짜를 예측하지 않습니다.':'5년 비교에서 어느 쪽에도 확인된 일지 변화 신호가 없습니다. 편한 시기를 예측하는 말이 아니라 관계 시기 기준에서 특정 연도를 가리키지 않는다는 뜻입니다.')],undefined,relationshipWatch)
+  put('shared-week',[pair(`This match asks you to make room for ${bg.name.en}, and your partner to make room for ${ag.name.en}. Understanding the difference is more useful than a compatibility percentage.`,`이 관계에서는 A가 ${bg.name.ko}, B가 ${ag.name.ko}을 받아들일 여지를 살핍니다. 궁합 점수보다 그 차이를 이해하는 데 의미가 있습니다.`),needs,ag.pressure,bg.pressure,meeting('day'),meeting('month')],undefined,relationshipWatch)
+ }
+ if(!plan.selectedCycles.length && ['career','business','complete'].includes(plan.kind)){const id=plan.kind==='career'?'work-chapters':plan.kind==='business'?'business-chapters':'next-moves';out[id].lines.unshift(pair(`No current or upcoming ten-year period is available for ${plan.referenceYear} in the calculated range. The yearly comparisons below do not invent a longer period.`,`${plan.referenceYear}년에 해당하거나 앞으로 시작할 긴 흐름이 계산 범위에 없습니다. 아래의 연간 비교로 없는 긴 시기를 만들어 넣지 않습니다.`))}
+ const scope=plan.kind==='wellbeing'?pair('This reading describes temperament, not a medical assessment.','기질을 설명하는 풀이이며 의학적 평가가 아닙니다.'):plan.kind==='compatibility'?pair('The relationship timeline compares each person’s own year; it does not identify a shared event date.','관계의 시기 풀이는 각자의 연간 흐름을 비교하며 두 사람의 사건 날짜를 정하지 않습니다.'):plan.kind==='year'?pair('The annual reading uses 15 July and monthly readings use the 15th; a calendar month can cross a seasonal boundary.','연간 풀이는 7월 15일, 월별 풀이는 매달 15일을 기준으로 하며 한 달 안에 계절 경계를 지날 수 있습니다.'):pair('The yearly timeline uses a mid-July comparison; ten-year chapters have their own calculated start dates.','연간 흐름은 7월 중순을 비교하며 긴 시기의 시작일은 별도로 계산합니다.')
+ const notice=pair(`About this reading: traditional birth-chart interpretation, not guaranteed outcomes. ${scope.en} Reference dates and source details are in your calculation sheet.`,`풀이 안내: 전통적인 출생 사주를 해석하며 결과를 보장하지 않습니다. ${scope.ko} 기준일과 상세 근거는 계산 자료에서 확인할 수 있습니다.`)
+ const firstSection=out[plan.sections[0].id]
+ if(['complete','wellbeing'].includes(plan.kind))firstSection.lines.push(pressure)
+ firstSection.lines=firstSection.lines.filter(l=>l.en!==noOutcome.en)
+ if(plan.includeReadingNotice&&!(plan.kind==='complete'&&targetedProduct01))firstSection.lines.push(notice)
+ const cautions:Record<string,Passage>={
+ social:pair('The pressure point is not having the strength; it is feeling required to use it in every situation.','강점이 있다는 것보다 모든 상황에서 그 강점을 써야 한다고 느끼는 점이 부담입니다.'),
+ 'offer-test':pair('A wide first offer can tie up delivery time before you know which part customers value.','첫 상품의 범위가 넓으면 고객이 무엇을 원하는지 알기 전에 납품 시간이 묶일 수 있습니다.'),
+ 'team-decisions':pair('A partner can add a useful skill while leaving decision-making or ownership unclear.','동업자가 필요한 기술을 더해도 결정권과 소유권은 불분명하게 남을 수 있습니다.'),
+ 'customer-communication':pair('More sales channels can multiply delivery promises before the business can repeat the same result.','같은 결과를 반복할 역량이 갖춰지기 전에 판매 경로만 늘면 납품 약속이 커질 수 있습니다.'),
+ 'two-work-layers':pair('A promising title can hide a daily routine that gives you too little control over the result.','좋아 보이는 직함 뒤에 결과를 조정할 권한이 부족한 일상이 있을 수 있습니다.'),
+ 'proof-of-skill':pair('A more respected title can add responsibility without changing pay or decision-making power.','인정받는 직함이 늘어도 급여와 결정권은 달라지지 않을 수 있습니다.'),
+ 'feedback-and-boundaries':pair('Moving employer may leave the same pressure in place if the duties and authority do not change.','직장이 바뀌어도 업무와 권한이 같다면 같은 부담이 남을 수 있습니다.'),
+ 'work-chapters':pair('Read each year for the named activity; a useful work opening can still be demanding in private life.','각 해의 설명은 해당 활동에 맞춰 읽습니다. 업무 기회가 있어도 사적인 생활에는 부담이 될 수 있습니다.'),
+ 'business-chapters':pair('An increase in orders can come before the cash or staffing needed to complete them.','주문이 늘어도 마칠 때 필요한 현금이나 인력은 나중에 마련될 수 있습니다.'),
+ 'business-plan':pair('Several commitments can fall due together even when each looks manageable on its own.','하나씩 감당할 수 있어 보여도 여러 약속의 기한이 겹칠 수 있습니다.'),
+ 'next-moves':pair('A turning point is a change of focus, not a promise that every part of life changes at once.','전환점은 중심 주제의 변화이며 인생의 모든 부분이 동시에 바뀐다는 약속이 아닙니다.'),
+ 'two-directions':pair('Feeling drawn to someone and wanting the same kind of relationship are different questions.','서로 끌리는 것과 같은 관계를 원하는 것은 다른 질문입니다.'),
+ 'close-conversation':pair('A gesture can be caring in intention but miss the kind of care the other person asked for.','배려하려는 행동도 상대가 원한 도움과는 다를 수 있습니다.'),
+ 'shared-routine':pair('Agreeing in a conversation does not settle who handles the recurring work.','대화에서 동의한 것만으로 반복 업무의 담당까지 정해지지는 않습니다.'),
+ 'shared-money':pair('A shared payment can mean different things to each person if ownership is never discussed.','소유권을 말하지 않으면 함께 낸 돈의 의미를 서로 다르게 여길 수 있습니다.'),
+ 'chart-patterns':pair('A strong point in closeness does not automatically resolve differences in everyday responsibilities.','친밀함의 강점이 일상 책임의 차이까지 자동으로 해결하지는 않습니다.'),
+ 'support-each-other':pair('One person’s busy year can reduce the support the other person expected to receive.','한 사람이 바쁜 해에는 다른 사람이 기대한 도움을 주기 어려울 수 있습니다.'),
+ 'shared-week':pair('An agreement that works for only one person can turn a small difference into a repeated dispute.','한 사람에게만 맞는 약속은 작은 차이를 반복되는 다툼으로 만들 수 있습니다.'),
+ 'visible-elements':pair('A missing visible element is not a missing ability; the rest of the chart still matters.','겉에 보이는 기운 하나가 없다고 능력이 없는 것은 아닙니다. 사주 전체를 함께 봅니다.'),
+ 'workload-rhythm':pair('Being capable of handling a demand can make it harder for others to notice its cost to you.','요구를 감당하는 능력이 있으면 다른 사람은 그 부담을 알아보기 어려울 수 있습니다.'),
+ 'balance-week':pair('A familiar strength can keep you in the same role even when you want something different.','익숙한 강점 때문에 다른 것을 원해도 같은 역할에 머물 수 있습니다.'),
  }
  for(const [id,caution]of Object.entries(cautions))if(out[id])out[id].caution=clone(caution)
  if(targetedProduct01&&plan.kind==='complete'&&out.social)out.social.caution=clone(pressure)
