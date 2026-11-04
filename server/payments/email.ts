@@ -28,8 +28,9 @@ export function resendTransport(env:NodeJS.ProcessEnv, fetcher:typeof fetch=fetc
 /** The immutable PDF and recovery code go only to the paid checkout email. */
 export function purchaseMail(config:PaymentConfig,id:string,email:string,report:BuyerReport,consent=false):ReportMail {
   const test=(config.mode??'test')==='test'
-  // Sandbox can never email an arbitrary checkout address.
-  const to=test?'delivered@resend.dev':email
+  // Sandbox defaults to Resend's sink. Only an explicit Preview config can route
+  // this test receipt to the operator's allowlisted inbox; live mode uses checkout email.
+  const to=test?(config.testEmailRecipient??'delivered@resend.dev'):email
   const title=report.title
   const recovery=`FK1.${id}.${orderAccessToken(config.accessKey,id)}`
   const url=config.origin+'/#purchase'
