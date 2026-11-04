@@ -42,7 +42,7 @@ The generation smoke test confirms the paid PDF code path and question counts, n
 
 - Focused tests: **45 passed / 45** across buyer outline, customer delivery, quality gate, personalization, and representative PDF generation.
 - `npx tsc --noEmit`: passed.
-- Full `npx vitest run`: started but the process ended without a final summary in this environment. The captured output contains failures in preview/report, relationship, personalization, quality sample, independent audit, and category topic suites; exact final failed-test count is unavailable. Full suite: **UNVERIFIED / NOT PASS**.
+- Full `npx vitest run --maxWorkers=2`: **912 passed, 6 failed, 918 total; 74/80 test files passed**. Failures: `server/payments/final-quality-sample.test.ts` (relationship timing answer does not match the existing concise lead contract), `server/payments/product01-buyer-answers.test.ts` (assertion expects an older Q6 phrase), `src/report/complete-reading.test.ts` (profile-variation threshold), `src/report/personal-examples.test.ts` (preview excerpt is not shorter for one chapter), `src/report/preview-flow.test.ts` (annual focus copy is absent from full text), and `src/report/report-extras.test.ts` (an expected report extra is absent). They remain unresolved; full suite is **FAIL**.
 - The Vercel build first exposed two TypeScript errors (an extra argument to `distinctChapters` and an unused `careerRisk` local). Both were fixed. Local `npx tsc -b && npx vite build && node scripts/build-public-pages.mjs` now passes; Vite reports an existing chunk-size warning. Local core `tsup` package build was not rerun separately.
 - Vercel Preview deployment `dpl_2wDnp2EJWL2jE9RujSWL2DH3FfD8` reached **READY** for remote commit `dd3cc7ef3e2020007c332e0011f82d693ecd2d82`. Its preview URL returned HTTP 200. This verifies delivery of the current client build, not every product interaction.
 - Payment/email behavior, actual city autocomplete selection, Product 02 content diff, and physical-device rendering: **NOT VERIFIED**.
@@ -61,7 +61,7 @@ The generation smoke test confirms the paid PDF code path and question counts, n
 
 ## Remaining work before Step 1 can pass
 
-1. Resolve the full-suite failures and rerun the suite to a final summary.
+1. Resolve the six full-suite failures based on their actual contracts and rerun the suite.
 2. Compare Product 02 buyer text byte-for-byte or by extracted answer text against the protected baseline.
 3. Audit 03–07 independent calculation verification before treating their timing or personal claims as verified.
 4. Review every buyer answer from the seven PDFs. Generation alone does not satisfy semantic review.
