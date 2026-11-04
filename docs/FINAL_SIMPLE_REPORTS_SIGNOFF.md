@@ -66,6 +66,6 @@ The generation smoke test confirms the paid PDF code path and question counts, n
 4. Review every buyer answer from the seven PDFs. Generation alone does not satisfy semantic review.
 5. Address long technical material appearing before some buyer-facing answers and improve mobile fit-width text legibility without redesigning the existing visual system.
 6. Test Sydney/Los Angeles coordinates and timezone through the actual selected-city order input, then verify the resulting calculations.
-7. Resolve and rerun the full test suite, then verify the new Vercel Preview build. GitHub is stored on `feature/final-simple-reports` at `315cf51798ad45f8a079b20cda82768b7bea8b44`; all 32 changed files were verified against local Git blob hashes before the two build fixes. The code fixes and this report update are being committed now; Preview must be rechecked against that latest commit.
+7. Resolve and rerun the full test suite, then verify the new Vercel Preview build. The original 32 changed-file contents were verified against the local Git blob hashes at `315cf51798ad45f8a079b20cda82768b7bea8b44`; the two build fixes are now stored in the next remote commit, `516d6c6eb753f0fba02b77577aaac7fa18ac2c47`. Preview must be rechecked against the latest branch head.
 
 **Step 2 payment/email work must remain on hold until Step 1 is completed and approved. Production and live payments were not changed.**
