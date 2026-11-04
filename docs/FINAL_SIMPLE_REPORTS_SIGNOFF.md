@@ -175,3 +175,9 @@ No replacement or new engine was added. The selected-city input, coordinate, tim
 - GitHub push and the resulting Vercel Preview deployment are recorded in the deployment section below after completion.
 
 **Step 1 status:** Report-content fixes, seven PDF generation/review, Product 02 regression, Sydney/Los Angeles customer-input path, test suite, type check, and build are complete for this continuation. Separate independent pillar-engine validation and physical-device PDF testing were not performed. Do not describe those two checks as passed. Production was not deployed; payment/email work remains untouched.
+
+#### GitHub and Preview result
+
+- Code and test changes were committed to `feature/final-simple-reports` as `d816edacdeae511431d196e0b001f794f1a4df7a` (`Finish final report review fixes`).
+- The Vercel Preview for that commit reached **READY**: `https://saju-english-report-preview-mhttt59p9-shopping-shorts-ai.vercel.app` (`dpl_4AxJjhrx23G4HmgT62LHAQ4fKnxX`). The deployment reports branch `feature/final-simple-reports` and commit `d816edacdeae511431d196e0b001f794f1a4df7a`; the Preview URL returned HTTP 200.
+- This was a Preview deployment only. Production, checkout, Stripe, and email configuration were not changed.
