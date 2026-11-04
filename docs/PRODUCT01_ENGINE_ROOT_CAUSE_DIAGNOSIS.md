@@ -46,7 +46,7 @@ The rules documents preserve the 12 master rules (answer first, grounded persona
 
 `calculateSaju` obtains four pillars from `getFourPillars`, then derives detailed pillar attributes, relations and daewoon. For an unknown birth time it sets a noon working time, then replaces the hour pillar with `??`/`?` before returning. Thus the hour pillar is not exposed as a customer fact; however, downstream cycle calculation is still performed from the normalized noon input. `traditional-reading.ts` explicitly says ten-year start dates remain approximate for unknown time, and the Product 01 cycle prose likewise labels dates approximate. This does not make all cycle-derived themes independently verified.
 
-The non-Seoul solar-time conversion uses timezone-aware local-time-to-UTC plus equation-of-time and longitude correction. `src/report/preview-draft.ts` rejects missing coordinates for validated drafts, while `packages/core/src/timezone.ts` itself falls back to Seoul longitude when an international `BirthInput` lacks it.
+The non-Seoul solar-time conversion uses timezone-aware local-time-to-UTC plus equation-of-time and longitude correction. `src/utils/preview-draft.ts` rejects missing coordinates for validated drafts, while `packages/core/src/timezone.ts` itself falls back to Seoul longitude when an international `BirthInput` lacks it.
 
 The five review profiles are defined in `server/payments/six-product-review-pdfs.test.ts`. Profiles 4 and 5 supply Sydney/Los Angeles timezones but omit latitude/longitude. Running the target-matching local core source on those fixture values and comparing with the city coordinates gives:
 
