@@ -90,7 +90,16 @@ The generation smoke test confirms the paid PDF code path and question counts, n
 
 ### Outstanding release checks
 
-The last recorded full run remains **912 passed, 6 failed out of 918**, with failures in `server/payments/final-quality-sample.test.ts`, `server/payments/product01-buyer-answers.test.ts`, `src/report/complete-reading.test.ts`, `src/report/personal-examples.test.ts`, `src/report/preview-flow.test.ts`, and `src/report/report-extras.test.ts`. The saved log records concise relationship timing copy, a stale Product 01 phrase assertion, profile variation, preview excerpt length, annual preview focus text, and a missing report extra as the respective failure descriptions. The exact assertions and root causes were not reproduced in this continuation; no test was deleted or disabled.
+The last recorded full run remains **912 passed, 6 failed out of 918**. The affected test cases are:
+
+1. `server/payments/final-quality-sample.test.ts` — `generates six readable PDFs and keeps relationship answers distinct` (recorded mismatch with the concise relationship timing lead contract).
+2. `server/payments/product01-buyer-answers.test.ts` — `generates readable PDFs with seven direct answers for varied charts and unknown birth time` (recorded assertion expects an older Product 01 phrase).
+3. `src/report/complete-reading.test.ts` — `has substantive variation beyond changing date labels, including profiles with the same day marker` (recorded profile-variation threshold failure).
+4. `src/report/personal-examples.test.ts` — `shows actual chapter excerpts in previews without the remaining paid prose` (recorded excerpt-length assertion failure).
+5. `src/report/preview-flow.test.ts` — `keeps both people in the relationship guide and updates the annual guide with its real chapter` (recorded annual focus copy missing from full text).
+6. `src/report/report-extras.test.ts` — `delivers all added content in the report and its plain-text export` (recorded expected report-extra assertion failure).
+
+These names are read from the current test source and paired with the prior run's failure descriptions; none could be rerun in this continuation, so the failing assertion and root cause remain **unreproduced**. No test was deleted or disabled.
 
 | Product | Answer review | Calculation check | PDF check |
 |---|---|---|---|
