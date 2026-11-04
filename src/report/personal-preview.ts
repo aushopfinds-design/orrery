@@ -4,6 +4,7 @@ import { buildBundleReading, buildCategoryReading } from './category-readings.ts
 import type { ReportChapter } from './complete-reading.ts'
 
 import { previewProduct } from './personal-products.ts'
+import { BUYER_QUESTIONS, COLLECTION_BUYER_QUESTIONS } from './buyer-outline.ts'
 import { nextTwelveMonthWindow, parseCalendarMonth } from './calendar-window.ts'
 import type { PreviewKind } from './personal-products.ts'
 import { normalizePreviewBirth } from '../utils/preview-draft.ts'
@@ -37,18 +38,15 @@ function excerpt(chapter: ReportChapter, paired = false) {
   return { id: chapter.id, title: chapter.title.replace(/^\d+ · /, ''), icon: chapter.icon ?? chapter.id, lead: content[0] ?? chapter.lead, paragraphs: chapter.example ? [] : content.slice(1, 1 + excerptParagraphCount), ...(chapter.example ? { example: chapter.example } : {}), evidence: chapter.evidence.slice(0, 2) }
 }
 
-function bundleContents(text: string) {
-  const startMarker = '\n\nYour Ten Questions\n\n'
-  const endMarker = '\n\nYour Included Reports\n\n'
-  const start = text.indexOf(startMarker)
-  const end = start < 0 ? -1 : text.indexOf(endMarker, start + startMarker.length)
-  if (start < 0 || end < 0) return []
-  return text.slice(start + startMarker.length, end).split('\n\n')
-    .filter(block => /^\d{2} · /.test(block))
-    .map((block, index) => ({ id: `question-${index + 1}`, title: block.split('\n', 1)[0].replace(/^\d{2} · /, '') }))
-}
 function extrasExcerpt(extras: ReportExtras) {
   return { question: extras.questions[0], symbols: extras.symbols }
+}
+function buyerQuestionContents(kind: Exclude<PreviewKind, 'bundle'>) {
+  const questionKind = kind === 'complete' ? 'complete' : kind
+  return BUYER_QUESTIONS[questionKind].map((question, index) => ({ id: `question-${index + 1}`, title: question.question }))
+}
+function collectionQuestionContents() {
+  return COLLECTION_BUYER_QUESTIONS.complete!.map((question, index) => ({ id: `question-${index + 1}`, title: question.question }))
 }
 /** A limited personal preview. No full text, purchase receipt or paid entitlement. */
 export function buildPersonalPreview(kind: PreviewKind, draft: PreviewDraft, independentAudit?: IndependentPillarAudit): PersonalPreview {
@@ -69,15 +67,15 @@ export function buildPersonalPreview(kind: PreviewKind, draft: PreviewDraft, ind
   if (!Number.isInteger(year) || year < first.year || year > 2100 || year < 1900) throw new Error('Choose a valid report year')
   if (kind === 'complete') {
     const full = buildCompleteReading(a, currentYear, independentAudit)
-    return { title: full.title, subjects: [subjectA], headline: full.headline, brief: buildReadingBrief(full.chapters.find(chapter => chapter.id === 'career')!, undefined, full.focus), summary: full.summary, applications: full.applications, excerpts: ['career', 'love', 'money'].map(id => excerpt(full.chapters.find(chapter => chapter.id === id)!)), contents: [...full.chapters, { id: 'timeline', title: '08 · Your Ten-Year Chapters' }, full.actionPlan].map(chapter => ({ id: chapter.id, title: chapter.title.replace(/^\d+ · /, '') })), monthly: [], needsPartner: false, extras: extrasExcerpt(full.extras) }
+    return { title: full.title, subjects: [subjectA], headline: full.headline, brief: buildReadingBrief(full.chapters.find(chapter => chapter.id === 'career')!, undefined, full.focus), summary: full.summary, applications: full.applications, excerpts: ['career', 'love', 'money'].map(id => excerpt(full.chapters.find(chapter => chapter.id === id)!)), contents: buyerQuestionContents('complete'), monthly: [], needsPartner: false, extras: extrasExcerpt(full.extras) }
   }
   const b = second ? calculateSaju(second) : undefined
   if (kind === 'bundle') {
     const bundle = buildBundleReading(a, b!, year, currentYear, annualWindow?.start, annualWindow?.timezone)
-    return { title: bundle.title, subjects: bundle.compatibility.subjects, headline: bundle.complete.headline, brief: buildReadingBrief(bundle.complete.chapters[0], 'Person A · Your Life, Your Destiny', bundle.complete.focus), summary: bundle.summary, applications: [], excerpts: [excerpt(bundle.complete.chapters[0]), excerpt(bundle.annual.chapters[0]), excerpt(bundle.compatibility.chapters[1], true), excerpt(bundle.career.chapters[0]), excerpt(bundle.love.chapters[0])], contents: bundleContents(bundle.fullText), monthly: [], needsPartner: false, extras: extrasExcerpt(bundle.compatibility.extras) }
+    return { title: bundle.title, subjects: bundle.compatibility.subjects, headline: bundle.complete.headline, brief: buildReadingBrief(bundle.complete.chapters[0], 'Person A · Your Life, Your Destiny', bundle.complete.focus), summary: bundle.summary, applications: [], excerpts: [excerpt(bundle.complete.chapters[0]), excerpt(bundle.annual.chapters[0]), excerpt(bundle.compatibility.chapters[1], true), excerpt(bundle.career.chapters[0]), excerpt(bundle.love.chapters[0])], contents: collectionQuestionContents(), monthly: [], needsPartner: false, extras: extrasExcerpt(bundle.compatibility.extras) }
   }
   const full = buildCategoryReading(kind, a, { second: b, year: kind === 'year' ? year : currentYear, ...(annualWindow ? { periodStart: annualWindow.start, periodTimezone: annualWindow.timezone } : {}) })
-  return { title: full.title, subjects: paired ? full.subjects : [subjectA], headline: full.headline, brief: buildReadingBrief(full.chapters[0], undefined, full.focus), summary: full.summary, applications: full.applications, excerpts: full.chapters.slice(0, 3).map(chapter => excerpt(chapter, paired)), contents: full.chapters.map(chapter => ({ id: chapter.id, title: chapter.title.replace(/^\d+ · /, '') })), monthly: full.months.map(month => ({ label: month.label, lead: month.lead })), needsPartner: false, extras: extrasExcerpt(full.extras) }
+  return { title: full.title, subjects: paired ? full.subjects : [subjectA], headline: full.headline, brief: buildReadingBrief(full.chapters[0], undefined, full.focus), summary: full.summary, applications: full.applications, excerpts: full.chapters.slice(0, 3).map(chapter => excerpt(chapter, paired)), contents: buyerQuestionContents(kind), monthly: full.months.map(month => ({ label: month.label, lead: month.lead })), needsPartner: false, extras: extrasExcerpt(full.extras) }
 }
 
 /** Export only what the visitor can read in the free preview. */

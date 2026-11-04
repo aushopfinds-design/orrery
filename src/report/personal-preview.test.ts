@@ -102,7 +102,8 @@ describe('Personal previews use the supplied people, not fictional samples', () 
         expect(section).not.toHaveProperty('guidance')
       }
       for (const name of ['fullText', 'periods', 'actionPlan', 'methods', 'paid', 'receipt']) expect(preview).not.toHaveProperty(name)
-      expect(preview.contents).toHaveLength(kind === 'bundle' ? 10 : previewProduct(kind).chapters)
+      expect(preview.contents).toHaveLength(previewProduct(kind).questions)
+      expect(preview.contents.every(item => item.title.trim().endsWith('?'))).toBe(true)
     }
     const full = buildCompleteReading(calculateSaju(a))
     const preview = buildPersonalPreview('complete', { first: a })

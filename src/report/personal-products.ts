@@ -3,6 +3,7 @@ import type { FocusCategory } from './category-catalog.ts'
 import { reportPrice } from './pricing.ts'
 import { ACTIVE_PRODUCT_KINDS } from './pricing.ts'
 import type { ActiveProductKind } from './pricing.ts'
+import { BUYER_QUESTIONS, COLLECTION_BUYER_QUESTIONS } from './buyer-outline.ts'
 
 export type PreviewKind = 'complete' | FocusCategory | 'bundle'
 export const PREVIEW_KINDS: ActiveProductKind[] = [...ACTIVE_PRODUCT_KINDS]
@@ -34,10 +35,10 @@ const DESCRIPTIONS: Record<PreviewKind, string> = {
   wellbeing: 'Notice everyday patterns in effort, boundaries and support.',
 }
 export function previewProduct(kind: PreviewKind) {
-  if (kind === 'complete') return { subtitle: PRODUCT_SUBTITLES[kind], title: 'Your Life, Your Destiny', description: DESCRIPTIONS[kind], price: reportPrice(kind), sample: '#sample-report', chapters: 10, icon: 'personality' }
-  if (kind === 'bundle') return { subtitle: PRODUCT_SUBTITLES[kind], title: 'Your Destiny Collection', description: DESCRIPTIONS[kind], price: reportPrice(kind), sample: '#complete-bundle-sample', chapters: 10, icon: 'patterns' }
+  if (kind === 'complete') return { subtitle: PRODUCT_SUBTITLES[kind], title: 'Your Life, Your Destiny', description: DESCRIPTIONS[kind], price: reportPrice(kind), sample: '#sample-report', chapters: 10, questions: BUYER_QUESTIONS.complete.length, icon: 'personality' }
+  if (kind === 'bundle') return { subtitle: PRODUCT_SUBTITLES[kind], title: 'Your Destiny Collection', description: DESCRIPTIONS[kind], price: reportPrice(kind), sample: '#complete-bundle-sample', chapters: 10, questions: COLLECTION_BUYER_QUESTIONS.complete!.length, icon: 'patterns' }
   const info = categoryInfo(kind)
-  return { subtitle: PRODUCT_SUBTITLES[kind], title: kind === 'year' ? 'Your Next 12 Months' : info.title, description: DESCRIPTIONS[kind], price: reportPrice(kind), sample: `#${info.slug}-sample`, chapters: { compatibility: 8, year: 6, career: 7, love: 7, business: 7, wellbeing: 5 }[kind], icon: info.icon }
+  return { subtitle: PRODUCT_SUBTITLES[kind], title: kind === 'year' ? 'Your Next 12 Months' : info.title, description: DESCRIPTIONS[kind], price: reportPrice(kind), sample: `#${info.slug}-sample`, chapters: { compatibility: 8, year: 6, career: 7, love: 7, business: 7, wellbeing: 5 }[kind], questions: BUYER_QUESTIONS[kind].length, icon: info.icon }
 }
 
 /** Localize the product card labels only; report content and checkout data stay unchanged. */
