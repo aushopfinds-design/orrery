@@ -383,7 +383,7 @@ export function buildTraditionalCompleteFromPlan(plan: InterpretationPlan, targe
   const { first: result, referenceYear: year } = plan
   validateYear(year, result)
   const snap = buildFreeReading(result), a = natalAnalysis(result)
-  const chapters = distinctChapters(withStructuralEvidence(withPurchaseTiming(buyerOutline('complete', buildSoloChapters('complete', result, year)), plan,targetedProduct01,rootCauseFix), plan),targetedProduct01).map((item, index) => ({ ...item, title: `${String(index + 1).padStart(2, '0')} · ${item.title}` }))
+  const chapters = distinctChapters(withStructuralEvidence(withPurchaseTiming(buyerOutline('complete', buildSoloChapters('complete', result, year)), plan,targetedProduct01,rootCauseFix), plan)).map((item, index) => ({ ...item, title: `${String(index + 1).padStart(2, '0')} · ${item.title}` }))
   const selected = selectedCycles(result, year)
   const periods = selected.map((cycle, index) => {
     const cycleIndex = result.daewoon.indexOf(cycle), next = result.daewoon[cycleIndex + 1]

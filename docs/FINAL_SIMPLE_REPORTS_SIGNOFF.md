@@ -42,8 +42,8 @@ The generation smoke test confirms the paid PDF code path and question counts, n
 
 - Focused tests: **45 passed / 45** across buyer outline, customer delivery, quality gate, personalization, and representative PDF generation.
 - `npx tsc --noEmit`: passed.
-- Full `npx vitest run`: started but the process ended without a final summary in this environment. The captured output contains failures in pre-existing preview/report, relationship, personalization, quality sample, independent audit, and category topic suites; exact final failed-test count is unavailable. Full suite: **UNVERIFIED / NOT PASS**.
-- Full build: **NOT RUN**. The package build script depends on Bun (`bun run --cwd packages/core build`); Bun is unavailable in this workspace.
+- Full `npx vitest run`: started but the process ended without a final summary in this environment. The captured output contains failures in preview/report, relationship, personalization, quality sample, independent audit, and category topic suites; exact final failed-test count is unavailable. Full suite: **UNVERIFIED / NOT PASS**.
+- The Vercel build first exposed two TypeScript errors (an extra argument to `distinctChapters` and an unused `careerRisk` local). Both were fixed. Local `npx tsc -b && npx vite build && node scripts/build-public-pages.mjs` now passes; Vite reports an existing chunk-size warning. Local core `tsup` package build was not rerun separately.
 - Payment/email behavior, actual city autocomplete selection, Product 02 content diff, and physical-device rendering: **NOT VERIFIED**.
 
 ## Product status
@@ -66,6 +66,6 @@ The generation smoke test confirms the paid PDF code path and question counts, n
 4. Review every buyer answer from the seven PDFs. Generation alone does not satisfy semantic review.
 5. Address long technical material appearing before some buyer-facing answers and improve mobile fit-width text legibility without redesigning the existing visual system.
 6. Test Sydney/Los Angeles coordinates and timezone through the actual selected-city order input, then verify the resulting calculations.
-7. Run the full build, resolve and rerun the full test suite, then deploy and verify Vercel Preview READY. GitHub is stored on `feature/final-simple-reports` at `de75d9da985efefe2525614fde265dde0bbaeb68`; all 32 changed files were verified against the local Git blob hashes. Preview deployment and READY status have not been verified.
+7. Resolve and rerun the full test suite, then verify the new Vercel Preview build. GitHub is stored on `feature/final-simple-reports` at `315cf51798ad45f8a079b20cda82768b7bea8b44`; all 32 changed files were verified against local Git blob hashes before the two build fixes. The code fixes and this report update are being committed now; Preview must be rechecked against that latest commit.
 
 **Step 2 payment/email work must remain on hold until Step 1 is completed and approved. Production and live payments were not changed.**
