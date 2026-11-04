@@ -10,7 +10,7 @@ export default function HomeLearning() {
       <p>{t('site.learn.text')}</p>
     </div>
     <div className="fate-learning-cards">{LEARNING_GUIDES.slice(0,3).map((guide,i)=><article key={guide.slug}>
-      <span className="fate-eyebrow">{String(i+1).padStart(2,'0')} · {guide.category}</span>
+      <span className="fate-eyebrow">{String(i+1).padStart(2,'0')} · {locale === 'ko' ? t(`site.learning.category.${guide.slug}`) : guide.category}</span>
       <h3><a href={learningPath(guide.slug)}>{locale === 'ko' ? t(`site.learning.${guide.slug}.title`) : guide.shortTitle}</a></h3>
       <p>{locale === 'ko' ? t(`site.learning.${guide.slug}.text`) : guide.description}</p>
     </article>)}</div>
