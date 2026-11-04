@@ -374,7 +374,7 @@ export function customerNarrative(plan:InterpretationPlan,targetedProduct01=true
   const missing=p.elements.filter(x=>!x.count)
   const absence=missing.length?pair(`${missing.map(x=>x.element).join(' and ')} ${missing.length===1?'does':'do'} not appear in this visible count. That does not mean you lack an ability or need to buy, eat or wear something to correct it.`,`${missing.map(x=>ELEMENT[x.element]).join('·')}이 이 개수에 나타나지 않습니다. 어떤 능력이 없거나 물건·음식·옷으로 고쳐야 한다는 뜻은 아닙니다.`):pair('All five appear in the visible count. That does not establish an evenly balanced life or good health.','다섯 가지가 모두 개수에 나타납니다. 생활이 고르게 균형 잡혔거나 건강이 좋다는 판정은 아닙니다.')
   const elementReading=pair(
-    `One strength your birth-day sign points to is this: ${plainReadingText(personal.strength)} Visible element counts describe chart symbols, not ability or health.`,
+    `One strength your birth-day sign points to is this: ${plainReadingText(personal.focus.startsWith('flexibility')?personal.strength.split(' You often notice a way forward')[0]:personal.strength)} Visible element counts describe chart symbols, not ability or health.`,
     `태어난 날의 ${p.dayStem} 일간에서는 ${pk.strength} 강점이 드러납니다. 겉으로 보이는 오행 개수는 능력이나 건강 점수가 아니라 명식 글자의 분포입니다.`
   )
   const completeBalanceLines=plan.kind==='complete'&&targetedProduct01?[
