@@ -1,6 +1,6 @@
 # Final Simple Reports — Step 1 Sign-off
 
-**Status: NOT COMPLETE / NOT APPROVED.** This checkpoint records the code and PDF checks that were completed. It does not approve the seven products for release: the full test run ended without a Vitest summary, generated pages still contain long technical sections, and mobile fit-width renders are too small for comfortable reading.
+**Historical checkpoint — superseded by the final continuation record at the end of this document.** The following status and test notes describe the earlier checkout, before the final continuation work.
 
 ## Scope and preservation
 
@@ -118,3 +118,60 @@ To complete Step 1, restore the lockfile-matched Bun dependency environment, rer
 - The continuation record was committed to `feature/final-simple-reports` as `c2a980720c05385d27e5118e6678d4e90e2746a6` (commit: `최종 완료 점검과 미검증 항목 기록`).
 - Vercel Preview deployment `dpl_8SeG2TxP8yNPDeMXsTy2R3ogi1XW` for that commit reached **READY** at `https://saju-english-report-preview-evk51fn0x-shopping-shorts-ai.vercel.app`; direct fetch returned HTTP 200.
 - Vercel build logs show dependency verification, core package build, TypeScript project build, Vite build, and public-page generation completed. Vite reported the existing large-chunk warning. This Preview build did not run Vitest or generate the seven customer PDFs.
+
+### Final continuation — 2026-11-04
+
+**Status: report and PDF checks completed; birthplace input path verified; independent pillar-engine comparison remains unverified.** This record supersedes the earlier “not complete” checkpoint above. No new report structure or engine was introduced. No payment, email, or Production source/settings were changed.
+
+#### Final source changes
+
+- `src/report/personal-preview.ts`: fixed the short-preview excerpt cap so a one-paragraph paid answer is not exposed in full as the free preview.
+- `src/report/purchase-narrative.ts`: rewrote the Product 03 relationship-timing lead in plain English and removed a redundant generic sentence from the chart-derived timing detail.
+- `src/report/purchase-timing-sections.ts`: made the Product 01 2032 turning-point sentence grammatical while preserving its existing calculated year and themes.
+- `src/report/buyer-outline.ts`: fixed an apostrophe mismatch that omitted the partner’s attraction perspective from Product 03’s buyer answer.
+- `src/report/category-readings.ts`: corrected the Product 07 integrated annual answer’s money sentence (“show that” clause).
+- Regression tests were updated in `server/payments/final-quality-sample.test.ts`, `server/payments/independent-audit.test.ts`, `server/payments/product01-buyer-answers.test.ts`, `src/components/BirthForm.test.tsx`, `src/report/buyer-outline.test.ts`, `src/report/category-readings.test.ts`, `src/report/complete-reading.test.ts`, `src/report/preview-flow.test.ts`, `src/report/purchase-narrative.test.ts`, and `src/report/report-extras.test.ts`. Tests were not deleted or disabled.
+
+Four buyer-facing answer passages were changed: Product 01’s turning-point wording; Product 03’s relationship timing wording and restored partner perspective; and Product 07’s integrated annual money sentence. The remaining source changes are preview protection or test updates.
+
+#### Product review and PDFs
+
+All buyer-question answers in the seven final representative PDFs were read from the generated output. Products 01–06 each have 7 buyer questions; Product 07 has 10 integrated questions. Product 07’s six included reports remain present. The PDFs were generated from the paid `issueReport()` path, and the same path is exercised by the real-order PDF tests. Output files are in `/workspace/scratch/eedeebd17983/fatekey-final-pdfs/`.
+
+| Product | Answer review | Calculation check | PDF check |
+|---|---|---|---|
+| 01 | 7/7 buyer answers reviewed; direct answers retained | Same engine and personal inputs; independent pillar comparison not performed | 32 pages; 5/5 internal links resolve; final summary and Destiny Card viewed |
+| 02 | 7/7 buyer answers reviewed; source content preserved | Same engine/input path; independent pillar comparison not performed | 22 pages; 5/5 internal links resolve; PDF issuance passed |
+| 03 | 7/7 buyer answers reviewed; both attraction perspectives now present | Sydney/LA city-to-timezone path covered; independent pillar comparison not performed | 28 pages; 5/5 internal links resolve; corrected answer and card viewed |
+| 04 | 7/7 buyer answers reviewed; fixed Nov 2026–Oct 2027 window | Same engine/input path; independent pillar comparison not performed | 31 pages; 5/5 internal links resolve; month chart/text and card viewed |
+| 05 | 7/7 buyer answers reviewed | Same engine/input path; independent pillar comparison not performed | 21 pages; 5/5 internal links resolve; PDF issuance passed |
+| 06 | 7/7 buyer answers reviewed | Same engine/input path; independent pillar comparison not performed | 16 pages; 5/5 internal links resolve; PDF issuance passed |
+| 07 | 10/10 integrated answers reviewed; included reports preserved | Same engine/input path; independent pillar comparison not performed | 103 pages; 25/25 internal links resolve; corrected Q8 and Destiny Card viewed |
+
+Each output PDF was opened and parsed. The selected sample pages show intact right margins, no clipped charts, and a working five-link overview. The Destiny Card appears in the closing pages. At phone-width fit-to-page, text is small; opening in a PDF reader and zooming is needed for comfortable reading. This was a rendered-size inspection, not a physical-device test. Existing ornament and page design were retained.
+
+#### Product 02 protection
+
+Compared with protected baseline commit `dcede87`, the Product 02 content sources are byte-for-byte identical:
+
+- `src/report/work-focus-readings.ts`: `5b61b27cdcac9960bcbe432a6ecada064079bb05a24e4a5ec66c1ec7971e67c5`
+- `src/report/buyer-answers.ts`: `18c1e457d7e56838c2681882d1cfe002c072e3b1056864ef07e8f1fa6165cf66`
+
+The current Product 02 PDF contains all 7 expected questions and answers; no Product 02 buyer-answer source was changed.
+
+#### Birthplace path and calculation status
+
+`BirthForm` integration regression tests select Sydney (`-33.8688, 151.2093`, `Australia/Sydney`) and Los Angeles (`34.0522, -118.2437`, `America/Los_Angeles`) through the actual city combobox, submit the form, and verify the exact coordinates and inferred timezone reach `BirthInput`. DST gap/overlap and seasonal tests passed in the full suite. Unknown birth time remains passed as unknown and suppresses the hour pillar. Existing report-generation tests issue the resulting city-based inputs through `issueReport()`.
+
+No replacement or new engine was added. The selected-city input, coordinate, timezone, DST, and PDF-delivery path is covered by source inspection and tests. **The resulting pillars were not compared against an independent calculation engine in this continuation, so this is not an independent engine accuracy certification.** The quality gate continued to identify unverified or partial calculations; those were not labelled verified here.
+
+#### Verification and status
+
+- Focused buyer-outline and collection tests: **33/33 passed**.
+- Full suite after the two customer-answer fixes: **80 files, 918/918 tests passed**. The two additional Sydney/Los Angeles form cases were then run in `BirthForm.test.tsx`: **3/3 tests passed** (including the existing unknown-time test). No failure was hidden; the total final tested cases are 918 full-suite tests plus the two newly added form cases.
+- TypeScript `tsc --noEmit`: passed. Core package build, `tsc -b`, Vite build, and public-page generation: passed. Vite retained its pre-existing large-chunk warning.
+- Seven final PDFs were generated with `issueReport()`; the structural/issuance test passed. Automated QA still flags some charts for unavailable calculation verification, some compatibility/business paragraphs for human review, and the Collection for length review. These flags were not represented as semantic approval.
+- Product names, question sets, Product 02 content, Destiny Card source, USD prices, and payment/email implementation were preserved.
+- GitHub push and the resulting Vercel Preview deployment are recorded in the deployment section below after completion.
+
+**Step 1 status:** Report-content fixes, seven PDF generation/review, Product 02 regression, Sydney/Los Angeles customer-input path, test suite, type check, and build are complete for this continuation. Separate independent pillar-engine validation and physical-device PDF testing were not performed. Do not describe those two checks as passed. Production was not deployed; payment/email work remains untouched.

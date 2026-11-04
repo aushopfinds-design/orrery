@@ -15,7 +15,7 @@ describe('My Life customer audit integration', () => {
     const preview = buildPersonalPreview('complete', { first }, audit)
     const excerpt = preview.excerpts.find(section => section.id === 'career')!
     const issued = await issueReport({ kind: 'complete', first }, '12345678-1234-4234-8234-123456789012', 2026)
-    const samePassage = plainReadingText(excerpt.paragraphs[0])
+    const samePassage = plainReadingText(excerpt.lead)
     expect(audit?.current.slice(0, 3)).toEqual(audit?.independent.slice(0, 3))
     expect(issued.text).toContain(samePassage)
     expect(Buffer.from(issued.pdf, 'base64').subarray(0, 5).toString()).toBe('%PDF-')

@@ -96,7 +96,7 @@ function buildSections(plan:InterpretationPlan,targetedProduct01=true,rootCauseF
     row.lines.some(line=>line.id.endsWith('.change-month'))?(locale==='en'?'work and daily responsibilities':'일과 일상 책임'):undefined,
     row.lines.some(line=>line.id.endsWith('.change-day'))?(locale==='en'?'close relationships and personal choices':'가까운 관계와 개인적 선택'):undefined,
    ].filter((area):area is string=>Boolean(area))
-   return locale==='en'?`${year}: ${theme} — ${areas.join('; ')}`:`${year}년: ${theme} — ${areas.join('·')}`
+   return locale==='en'?`${year}: a theme of ${theme} connects with ${areas.join(' and ')}`:`${year}년: ${theme} — ${areas.join('·')}`
   }).join(locale==='en'?'. ':'; ')
   const turningPointAnswer=highlights.length&&targetedProduct01&&rootCauseFix
    ?[`The clearest year to review a major change is ${turningPointSummary('en')}. This is a calculated timing signal for those areas, not a prediction that an event will happen.`,`큰 변화를 살펴볼 시기는 ${turningPointSummary('ko')}입니다. 계산에서 나온 시기 신호이지 특정 사건이 일어난다는 예측은 아닙니다.`]

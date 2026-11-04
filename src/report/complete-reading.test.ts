@@ -52,7 +52,8 @@ describe('Complete reading quality across 60 international profiles', () => {
     const grouped = new Map<string, string[]>()
     for (const { reading } of readings) {
       const values = grouped.get(reading.dayMaster) ?? []
-      values.push(reading.chapters.find(chapter => chapter.id === 'career')!.paragraphs.join(' '))
+      const career = reading.chapters.find(chapter => chapter.id === 'career')!
+      values.push([career.lead, ...career.paragraphs].join(' '))
       grouped.set(reading.dayMaster, values)
     }
     expect([...grouped.values()].some(values => values.length >= 3 && new Set(values).size >= 3)).toBe(true)

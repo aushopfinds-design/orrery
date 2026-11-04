@@ -152,7 +152,7 @@ export function buildBundleFromPlans(plans: ReturnType<typeof bundleInterpretati
   const annualInner = LANGUAGE[plans.annual.annual[0].innerGod]
   const annualWork = annualGod.work.en.split(/(?<=[.!?])\s/)[0].replace(/[.!?]+$/u, '').toLowerCase()
   const annualRelationship = annualInner.love.en.split(/(?<=[.!?])\s/)[0].replace(/[.!?]+$/u, '').toLowerCase()
-  const annualSummary = `For ${annualWindow}, the chart's main work theme is this: ${annualWork}. The money indicators point to ${incomeSummary}. In close relationships, ${annualRelationship}. Match extra work to its payment terms and the time it leaves for private life; these are chart themes, not promised events.`
+  const annualSummary = `For ${annualWindow}, the chart's main work theme is this: ${annualWork}. The money indicators show that ${incomeSummary}. In close relationships, ${annualRelationship}. Match extra work to its payment terms and the time it leaves for private life; these are chart themes, not promised events.`
   const longerShift = nextCycle
     ? `${nextCycle.period}. The longer-period emphasis moves toward ${nextCycle.headline.toLowerCase().replace(/ — repeated emphasis$/i, '')}.`
     : 'No further ten-year period is available in the supported calculation range, so this report does not add a later date.'

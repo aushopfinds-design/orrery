@@ -34,7 +34,7 @@ describe('Product 01 paid customer question answers', () => {
       const turningStart = report.text.indexOf('Question: When may my life change direction?')
       const challenge = report.text.slice(challengeStart, turningStart)
       expect(challenge).toMatch(/main cross-life challenge is balancing/i)
-      expect(challenge).toMatch(/work strength and a private need are different/i)
+      expect(challenge).toMatch(/These needs come from separate chart areas/i)
       const careerStart = report.text.indexOf('Question: What kind of career suits me?')
       const moneyStart = report.text.indexOf('Question: How does money work in my life?')
       const career = report.text.slice(careerStart, moneyStart)

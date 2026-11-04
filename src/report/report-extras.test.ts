@@ -44,7 +44,12 @@ describe('A distinct everyday guide in every full report', () => {
           const periods = 'periods' in report ? report.periods : []
           const delivered = applyBuyerQuestions(report.fullText, 'complete', report.chapters, periods)
           expect(delivered.split(text).length - 1).toBeLessThanOrEqual(1)
-        } else expect(report.fullText).toContain(text)
+        } else {
+          const intentionallySuppressed = report.chapters.some(chapter => chapter.showGuidance === false
+            && (chapter.tryThis === item.text || chapter.guidance.keepClose.includes(item.text) || chapter.guidance.watchFor.includes(item.text)))
+          if (report.fullText.includes(text)) expect(report.fullText).toContain(text)
+          else expect(intentionallySuppressed).toBe(true)
+        }
       }
       for (const item of focusedCareer ? [] : extras.symbols) {
         expect(report.fullText).toContain(item.colors[0].name)

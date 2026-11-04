@@ -33,7 +33,8 @@ export interface PersonalPreview {
 }
 function excerpt(chapter: ReportChapter, paired = false) {
   const content = [chapter.lead, ...chapter.paragraphs].filter(line => !/^(Reading basis:|About this reading:)/.test(line))
-  return { id: chapter.id, title: chapter.title.replace(/^\d+ · /, ''), icon: chapter.icon ?? chapter.id, lead: content[0] ?? chapter.lead, paragraphs: chapter.example ? [] : content.slice(1, 1 + Math.min(paired ? 2 : 1, Math.max(0, content.length - 1))), ...(chapter.example ? { example: chapter.example } : {}), evidence: chapter.evidence.slice(0, 2) }
+  const excerptParagraphCount = Math.min(paired ? 2 : 1, Math.max(0, chapter.paragraphs.length - 1), Math.max(0, content.length - 1))
+  return { id: chapter.id, title: chapter.title.replace(/^\d+ · /, ''), icon: chapter.icon ?? chapter.id, lead: content[0] ?? chapter.lead, paragraphs: chapter.example ? [] : content.slice(1, 1 + excerptParagraphCount), ...(chapter.example ? { example: chapter.example } : {}), evidence: chapter.evidence.slice(0, 2) }
 }
 
 function bundleContents(text: string) {

@@ -72,7 +72,7 @@ describe('Buyer questions, not a repeated six-part technical template', () => {
       guidance: { keepClose: ['Name what each person needs.'], watchFor: ['A generic caution.'] }, icon: 'personality',
     })
     const chapters = [
-      make('two-directions', 'The chart comparison points to a shared attraction theme.', ['Person A is drawn to direct conversation.', 'Person B is drawn to practical care.']),
+      make('two-directions', 'From your side: A direct conversation may feel exciting.', ['From your partner’s side: Practical care may feel reassuring.', 'One person may feel supported while the other feels challenged.']),
       make('two-styles', 'The two charts connect through complementary ways of offering care.', []),
       make('close-conversation', 'Person A needs listening; Person B needs practical help with listening.', [
         'Your private-life need is being heard before someone offers a solution. Your partner’s is practical help as well as listening. The same gesture may therefore feel different to each of you.',
@@ -92,6 +92,7 @@ describe('Buyer questions, not a repeated six-part technical template', () => {
     const source = chapters.map(chapter => deliveredChapter(chapter).join('\n\n')).join('\n\n')
     const report = applyBuyerQuestions(source, 'compatibility', chapters)
     expect((report.match(/^Question:/gm) ?? [])).toHaveLength(7)
+    expect(report).toMatch(/Question: Why are we attracted to each other\?[\s\S]*Answer: From your side: A direct conversation may feel exciting\.[\s\S]*Answer detail: From your partner’s side: Practical care may feel reassuring\./)
     expect(report).toContain('Question: How do we express love differently?\n\nAnswer: The chart suggests different care styles. You: Focused conversation is one way you may show care. Your partner: Reliable practical help is one way they may show care. These are chart-based tendencies, not proof of how either person behaves.')
     const sameStyleChapters = chapters.map(chapter => chapter.id === 'close-conversation'
       ? { ...chapter, paragraphs: [chapter.paragraphs[0], 'You: Keeping promises matters.', 'Your partner: Keeping promises matters.', ...chapter.paragraphs.slice(3)] }

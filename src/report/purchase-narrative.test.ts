@@ -23,7 +23,9 @@ describe('Complete customer narrative language coverage, rather than only select
     const authored=paragraph.replace(/^(?:Direct answer|What this means for you|Important timing|Bottom line):\s*/,'')
     if(kind==='career'&&c.id==='working-style')continue // Product 02 replaces this generic caution with its chart-specific blocker answer.
     const paidQuestionUsesPersonalPressure=kind==='wellbeing'&&c.id==='workload-rhythm'&&paragraph.startsWith('You may ')
-    expect(sentences.some(s=>s.includes(normal(authored)))||paragraph===original.action.en||paidQuestionUsesPersonalPressure, `unpaired ${kind}/${c.id}: ${paragraph}`).toBe(true)
+    const calculatedRelationshipTiming=kind==='compatibility'&&c.id==='support-each-other'&&paragraph.startsWith('The chart highlights these relationship themes:')
+    if(calculatedRelationshipTiming) expect(paragraph).toMatch(/\b20\d\d — for (?:you|your partner):/)
+    else expect(sentences.some(s=>s.includes(normal(authored)))||paragraph===original.action.en||paidQuestionUsesPersonalPressure, `unpaired ${kind}/${c.id}: ${paragraph}`).toBe(true)
    }
    expect(c.tryThis).toBe(original.action.en)
    expect(c.guidance.watchFor).toEqual([original.caution.en])
@@ -47,7 +49,7 @@ describe('Buyer review r14: direct answers without repeated warnings or lost dat
  it('explains the chart-linked meaning of the life turning-point years in the first answer',()=>{
   const answer=customerNarrative(buildInterpretationPlan('complete',a,2026)).patterns.lines[0].en
   expect(answer).toContain('The clearest year to review a major change is')
-  expect(answer).toMatch(/20\d\d: .+ — work and daily responsibilities/)
+  expect(answer).toMatch(/20\d\d: a theme of .+ connects with work and daily responsibilities/)
   expect(answer).toContain('not a prediction that an event will happen')
  })
  it('keeps every year visible in the actual delivered timelines after deduplication',()=>{

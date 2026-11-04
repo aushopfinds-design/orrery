@@ -217,6 +217,8 @@ describe('Bundle and public report navigation', () => {
     const integratedAnswer = bundle.fullText.slice(integratedStart, bundle.fullText.indexOf('Practical Step:', integratedStart))
     expect(integratedAnswer).toContain('Your work pattern centres on')
     expect(integratedAnswer).toContain('Across the fixed period from')
+    expect(bundle.fullText).toContain('The money indicators show that repeat income and new deals both appear in the visible chart')
+    expect(bundle.fullText).not.toContain('The money indicators point to repeat income and new deals both appear')
     expect(integratedAnswer).not.toContain('shared private-life need')
     const timingStart = bundle.fullText.indexOf('09 · When could a longer-term life or work shift deserve attention?')
     const timingAnswer = bundle.fullText.slice(timingStart, bundle.fullText.indexOf('Practical Step:', timingStart))

@@ -195,7 +195,7 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
         paragraphs = chapter.paragraphs.slice(0, 1)
         chapter.paragraphs.forEach(line => used.add(line))
       } else if (kind === 'compatibility' && question.role === 'attraction') {
-        paragraphs = chapter.paragraphs.filter(line => /^From your partner's side:|^Your partner:|^One person may feel supported while the other feels challenged/.test(line)).slice(0, 2)
+        paragraphs = chapter.paragraphs.filter(line => /^From your partner(?:'|’)s side:|^Your partner:|^One person may feel supported while the other feels challenged/.test(line)).slice(0, 2)
         chapter.paragraphs.forEach(line => used.add(line))
       } else if (kind === 'compatibility' && question.role === 'overall-fit') {
         paragraphs = chapter.paragraphs.slice(0, 1)

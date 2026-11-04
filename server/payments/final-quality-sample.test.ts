@@ -26,12 +26,14 @@ describe('final six-product representative PDF review', () => {
         expect(loveLanguage).toBeTruthy()
         expect(loveLanguage).not.toBe(conflict)
         expect(loveLanguage).not.toMatch(/useful first response is to listen to the full concern/i)
-        expect(report.text).toMatch(/Question: Which upcoming periods may affect our relationship themes\?\n\nAnswer: The relationship themes in your personal timelines shift across 2026–2030/)
+        expect(report.text).toMatch(/Question: Which upcoming periods may affect our relationship themes\?\n\nAnswer: The chart highlights these relationship themes:/)
+        expect(report.text).not.toMatch(/\b20\d\dfor your partner:|checked day-branch timing/)
+        expect(report.text).toMatch(/\b20\d\d — for (?:you|your partner):/)
       }
       if (kind === 'year') {
         expect(report.text).toMatch(/Question: What is the overall theme of my next 12 months\?\n\nAnswer: The clearest work theme for November 2026 through October 2027 is this:/)
-        expect(report.text).toContain('June 2027 appears in both lists')
-        expect(report.text).toContain('Extra-care note: Ask whether the authority and pay match the responsibility attached to a role.')
+        expect(report.text).toMatch(/(?:\w+ 20\d\d appears in both lists|None of these selected months also meets the extra-care check\.)/)
+        expect(report.text).toContain('June 2027: Ask whether the authority and pay match the responsibility attached to a role.')
       }
       if (output) await writeFile(`${output}/sample-${kind}.pdf`, bytes)
     }
