@@ -4,7 +4,7 @@
 
 ## Scope and preservation
 
-- Working branch: `feature/final-simple-reports`, based on `question-role-contract-20261104` (`d18bfa3d544833fe01e55681fc0dc83c92ab1068`). Existing work was retained; the report code was not rebuilt.
+- Working branch: `feature/final-simple-reports`, based on `question-role-contract-20261104` (`d18bfa3d544833fe01e55681fc0dc83c92ab1068`). Existing work was retained; the report code was not rebuilt. The local checkpoint was stored on GitHub; the current remote branch head and content verification are listed below.
 - No Stripe checkout, webhook, order, or email implementation was intentionally edited. `server/payments/report.ts` changes only report construction, provenance, and non-blocking report diagnostics.
 - Product 02 buyer-answer simplification is disabled. Its content needs a baseline text comparison before claiming a full regression pass.
 - The three already stored product question sets are preserved. The actual Product 07 ten-question wording is now shared with the collection generator to prevent the QA gate from checking a stale rubric.
@@ -66,6 +66,6 @@ The generation smoke test confirms the paid PDF code path and question counts, n
 4. Review every buyer answer from the seven PDFs. Generation alone does not satisfy semantic review.
 5. Address long technical material appearing before some buyer-facing answers and improve mobile fit-width text legibility without redesigning the existing visual system.
 6. Test Sydney/Los Angeles coordinates and timezone through the actual selected-city order input, then verify the resulting calculations.
-7. Run the full build, commit/push and verify remote contents, then deploy and verify Vercel Preview READY. These remote/deployment steps have not been completed in this checkpoint.
+7. Run the full build, resolve and rerun the full test suite, then deploy and verify Vercel Preview READY. GitHub is stored on `feature/final-simple-reports` at `de75d9da985efefe2525614fde265dde0bbaeb68`; all 32 changed files were verified against the local Git blob hashes. Preview deployment and READY status have not been verified.
 
 **Step 2 payment/email work must remain on hold until Step 1 is completed and approved. Production and live payments were not changed.**
