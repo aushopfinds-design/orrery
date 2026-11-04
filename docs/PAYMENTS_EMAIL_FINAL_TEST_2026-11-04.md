@@ -48,6 +48,10 @@ Verification:
 
 Test orders used synthetic birth profiles only. Sandbox recipient details and provider secrets were not committed or printed. The private test token is Preview-only and was rotated. No Production environment or payment/email configuration was modified.
 
+## One-off email receipt check (in progress)
+
+The operator authorized a single Test Mode delivery check to the provided inbox. The recipient override is stored as a sensitive Vercel Preview variable scoped only to `feature/final-simple-reports`; the sender still defaults to Resend's test sink when no Preview recipient is explicitly configured. It is not stored in source control and is not available in Production. The code and Preview setting are in place. A post-setting Preview deployment and one paid Test Mode order are still required before reporting delivery; actual receipt must be confirmed from the inbox.
+
 ## Remaining limitations
 
 Actual mailbox receipt, independent calculation verification, external duplicate-webhook replay, provider-side email failure/retry, and hosted Checkout cancellation UI remain unverified. The cancellation return URL itself denied unpaid report access, but its expected message was not displayed. These limitations should be resolved before treating the entire customer purchase-to-inbox experience as fully proven.
