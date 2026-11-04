@@ -50,7 +50,7 @@ Test orders used synthetic birth profiles only. Sandbox recipient details and pr
 
 ## One-off email receipt check (in progress)
 
-The operator authorized a single Test Mode delivery check to the provided inbox. The recipient override is stored as a sensitive Vercel Preview variable scoped only to `feature/final-simple-reports`; the sender still defaults to Resend's test sink when no Preview recipient is explicitly configured. It is not stored in source control and is not available in Production. The code and Preview setting are in place. A post-setting Preview deployment and one paid Test Mode order are still required before reporting delivery; actual receipt must be confirmed from the inbox.
+The operator authorized a single Test Mode delivery check to the provided inbox. The recipient override is stored as a sensitive Vercel Preview variable scoped only to `feature/final-simple-reports`; the sender still defaults to Resend's test sink when no Preview recipient is explicitly configured. It is not stored in source control and is not available in Production. The code and Preview setting are in place. The private Preview test token was rotated and remains out of source control. A post-setting Preview deployment and one paid Test Mode order are still required before reporting delivery; actual receipt must be confirmed from the inbox.
 
 ## Remaining limitations
 
