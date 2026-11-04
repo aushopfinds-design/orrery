@@ -2,40 +2,52 @@
 
 Date: 2026-11-04 (Australia/Sydney)
 
-## Current result
+## Final verified status
 
-No real-money charge was made. The Preview now reports `available:true, mode:test` and `emailDeliveryReady:true`. A Product 01 Test Mode payment completed and its order, PDF, and repeat download were verified. The other six product flows remain pending.
+All seven product flows were run in Stripe Test Mode on the Preview. No real-money charge was made. The deployed Preview is test-only; Production and Stripe Live Mode were not changed.
 
-## Checks completed
+The webhook endpoint initially targeted an old branch. A minimal fix now updates the configured endpoint to the active Preview origin and updates the stored URL without replacing its signing secret. A fresh Product 01 payment after deployment confirmed real Stripe `checkout.session.completed` delivery to the active Preview.
 
-- Reviewed the existing Stripe Checkout, signature-verified webhook, encrypted order store, PDF issuance, Resend delivery, recovery/download routes, and sandbox test route.
-- Ran `npx vitest run server/payments --maxWorkers=2`: **15 files, 81 tests passed**. These use local provider/database fixtures; they are not evidence of a real Stripe or Resend transaction.
-- Product 01 (`complete`) was checked through the deployed Preview: Stripe returned a successful Test Mode payment; the order was stored with `livemode=false` and `payment_state=paid`; PDF fulfillment reached `complete`; the report endpoint returned HTTP 200; two separate PDF downloads returned HTTP 200, `application/pdf`, and valid `%PDF-` files.
-- Read-only Neon verification for that test order found a saved PDF artifact and Resend delivery state `sent`, attempt 1. The provider uses the fixed Sandbox recipient `delivered@resend.dev`; this does not prove arrival in a real mailbox.
-- The configured Stripe Webhook endpoint still pointed to an older branch URL. The order database contained only `server.qa` and `server.reconciliation` events, not a Stripe event. A targeted source fix now makes the existing Test Mode endpoint update to the current Preview origin and persists that URL while retaining its signing secret.
-- The webhook source regression test passed (1 targeted test); `npx tsc -b --pretty false` passed. The source fix is not yet deployed at the time of this checkpoint.
-- Confirmed the GitHub branch was clean at baseline `7bca5a6015a5c3470f8327cdc0cbffbd0271d5ba`.
-- Test configuration variables had been scoped to the previous branch `feature/english-saju-report-20261013`. Their Preview branch scope was moved to `feature/final-simple-reports`; the Preview mode is explicitly `test`, and the private checkout token was rotated to a random Preview-only value. No Production setting was changed. No secret was printed or added to GitHub.
-- The latest deployed Preview at this checkpoint reached READY and returned HTTP 200. The webhook fix still needs a Preview redeploy and a fresh paid order to verify actual Stripe webhook delivery.
+## Results
 
-## Verification matrix
-
-| Item | Result | Evidence |
+| Check | Result | Evidence and limits |
 |---|---|---|
-| Stripe test payment | PASS for Product 01 | Stripe Test Mode returned confirmed; order shows `livemode=false` |
-| Webhook handling | FAIL, fix pending deployment | Current DB did not receive a Stripe event; old endpoint URL pointed to prior branch |
-| Order persistence | PASS for Product 01 | Preview database shows paid order |
-| Automatic PDF issuance | PASS for Product 01 | Fulfillment complete and artifact present |
-| Actual email receipt | UNVERIFIED | Resend state is `sent`; Sandbox routes to `delivered@resend.dev`, not a user mailbox |
-| Download and re-download | PASS for Product 01 | Two PDF downloads returned HTTP 200 and valid PDFs |
-| Seven-product provider flow | UNVERIFIED | Product 01 checked; Products 02–07 still pending |
-| Independent calculation verification | UNVERIFIED | No independent pillar-engine comparison was performed |
-| Personal-data access protection | UNVERIFIED for deployed flow | Local authorization/privacy tests pass; no Preview purchase credentials were issued |
-| GitHub save | UNVERIFIED | The source fix and updated report are pending commit/push |
-| Preview deployment | PASS, test mode open | Last deployed Preview was READY; webhook fix needs deployment |
+| Stripe Test Mode payment | PASS | Seven products paid in Test Mode; all orders report `livemode=false`. |
+| Webhook handling | PASS | Each of the seven successful orders has a Stripe `checkout.session.completed` event in the Preview database after endpoint refresh. |
+| Order persistence | PASS | Seven successful paid orders persisted; payment state is `paid`. |
+| Automatic PDF generation | PASS | Fulfillment completed and artifacts exist for all seven products; generated PDF endpoints returned valid PDFs. |
+| Email provider submission | PASS | All seven records show Resend state `sent`, one attempt each. |
+| Actual email arrival in a mailbox | UNVERIFIED | Test mode routes to Resend's fixed `delivered@resend.dev` sink. No real customer inbox was checked. |
+| Download and re-download | PASS / PARTIAL | PDFs downloaded successfully for all seven. Two separate successful downloads were confirmed for Product 01; repeat-download was not separately exercised for Products 02–07. |
+| Seven-product flow | PASS | Product mappings: 01 `complete`, 02 `career`, 03 `compatibility`, 04 `year`, 05 `business`, 06 `wellbeing`, 07 `bundle`. |
+| Declined payment | PASS | Test decline remained unpaid; report access returned HTTP 402; no artifact or email attempt was created. |
+| Expired checkout | PASS | Expiration event recorded; order expired; report access returned HTTP 402; no artifact or email attempt was created. |
+| Hosted Stripe cancellation UI | UNVERIFIED | Cancellation return URL responded HTTP 200 and report access was denied with HTTP 402. Expected cancellation copy was not found; hosted Checkout cancel-button behavior was not exercised. |
+| Duplicate webhook external replay | UNVERIFIED | Local idempotency coverage exists, but a duplicate Stripe delivery was not manually replayed against Preview. |
+| Email failure/retry against provider | UNVERIFIED | Local failure/retry tests are not an external Resend failure injection. |
+| Independent Saju calculation | UNVERIFIED | No independent calculation comparison was performed as part of this payment run. |
+| Personal-data access protection | PASS for checked route | A report request without the order access token returned 404. This is a route-level check, not a full security audit. |
+| GitHub save | PASS | Branch: `feature/final-simple-reports`; source fix commit: `15e125023c389fcec6aecef506ab40505ba7c05a`. This report update is committed separately. |
+| Preview deployment | PASS | READY deployment: https://saju-english-report-preview-95jqs9dng-shopping-shorts-ai.vercel.app . Preview HTTP checks returned 200. |
 
-## Required next step
+## Code and test record
 
-Commit and deploy the webhook URL refresh fix. Confirm the stored endpoint points at the current Preview, then run a new Test Mode order and verify Stripe's event reaches the Preview database. Test Products 02–07, decline/expiry, duplicate webhook, and unauthorized access. Actual mailbox receipt remains unverified because the Sandbox forces delivery to `delivered@resend.dev`; do not report it as received.
+Reviewed the existing Stripe Checkout, signature-verified webhook, encrypted order store, PDF fulfillment, Resend delivery, download/recovery routes, and sandbox test route.
 
-No checkout order, card details, birth data, email address, or provider secret was sent or stored by this test attempt.
+Source change in commit `15e1250`:
+- `server/payments/handler.ts`: use the active service origin when refreshing the webhook endpoint.
+- `server/payments/service.ts`: update an existing endpoint and persist its current URL while retaining the signing secret.
+- `server/payments/store.ts`: add an update path for the existing setting.
+- `server/payments/payments.test.ts`: regression test for endpoint URL refresh and secret retention.
+
+Verification:
+- Before the source fix: `npx vitest run server/payments --maxWorkers=2`: 15 files, 81 tests passed.
+- After the fix: targeted webhook regression test passed (1 passed, 35 skipped); `npx tsc -b --pretty false` passed.
+- No full test suite was rerun after the small source fix.
+- The full web build was not rerun after the source fix.
+
+Test orders used synthetic birth profiles only. Sandbox recipient details and provider secrets were not committed or printed. The private test token is Preview-only and was rotated. No Production environment or payment/email configuration was modified.
+
+## Remaining limitations
+
+Actual mailbox receipt, independent calculation verification, external duplicate-webhook replay, provider-side email failure/retry, and hosted Checkout cancellation UI remain unverified. The cancellation return URL itself denied unpaid report access, but its expected message was not displayed. These limitations should be resolved before treating the entire customer purchase-to-inbox experience as fully proven.
