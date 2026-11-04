@@ -4,7 +4,7 @@ export interface DestinyCardLabels { personal: string; element: string; numbers:
 import { cardTextLines } from '../../report/destiny-card.ts';
 import { CARD_BACKGROUND, CARD_KEY, CARD_STARS } from '../../report/card-motion.ts';
 /** Shared artwork for the site preview and verified purchaser PDF. */
-export default function DestinyCardArtwork({ card, id, labels, artworkHref = CARD_BACKGROUND, preview = true, showStem = true, animated = false, keyHref = CARD_KEY }: { card: DestinyCardData; id: string; labels: DestinyCardLabels; artworkHref?: string; preview?: boolean; showStem?: boolean; animated?: boolean; keyHref?: string }) {
+export default function DestinyCardArtwork({ card, id, labels, artworkHref = CARD_BACKGROUND, preview = true, showStem = true, animated = false, keyHref = CARD_KEY, fontFamily = 'Arial, Helvetica, sans-serif' }: { card: DestinyCardData; id: string; labels: DestinyCardLabels; artworkHref?: string; preview?: boolean; showStem?: boolean; animated?: boolean; keyHref?: string; fontFamily?: string }) {
     const lines = cardTextLines(card.sentence);
     return createElement("svg", { className: `fate-destiny-personal-card${animated ? " fate-card-is-animated" : ""}`, xmlns: "http://www.w3.org/2000/svg", width: "1080", height: "1350", viewBox: "0 0 1080 1350", role: "img", "aria-labelledby": `${id}-title ${id}-desc` },
         createElement("title", { id: `${id}-title` }, `${card.displayName} · ${card.title}`),
@@ -31,8 +31,8 @@ export default function DestinyCardArtwork({ card, id, labels, artworkHref = CAR
         createElement("g", { textAnchor: "middle", fill: "#f7e9c7" },
             createElement("text", { x: "540", y: "78", fontSize: "22", letterSpacing: "11" }, "THE FATE KEY"),
             createElement("text", { x: "540", y: "129", fontSize: "18", letterSpacing: "8" }, labels.personal),
-            createElement("text", { x: "540", y: "203", fontFamily: "Arial, Helvetica, sans-serif", fontSize: Array.from(card.displayName).length > 16 ? 49 : 65, textLength: Array.from(card.displayName).length > 16 ? 850 : undefined, lengthAdjust: "spacingAndGlyphs" }, card.displayName),
-            createElement("text", { x: "540", y: "252", fontFamily: "Arial, Helvetica, sans-serif", fontSize: "32", fill: "#e8c37c" }, card.title),
+            createElement("text", { x: "540", y: "203", fontFamily, fontSize: Array.from(card.displayName).length > 16 ? 49 : 65, textLength: Array.from(card.displayName).length > 16 ? 850 : undefined, lengthAdjust: "spacingAndGlyphs" }, card.displayName),
+            createElement("text", { x: "540", y: "252", fontFamily, fontSize: "32", fill: "#e8c37c" }, card.title),
             card.birthDate && createElement("text", { x: "540", y: "285", fontSize: "19", letterSpacing: "4" }, card.birthDate)),
         createElement("image", { href: artworkHref, x: "26", y: "70", width: "1028", height: "1285", clipPath: `url(#${id}-art)` }),
         createElement("rect", { x: "28", y: "290", width: "1024", height: "530", fill: `url(#${id}-fade)` }),
@@ -52,11 +52,11 @@ export default function DestinyCardArtwork({ card, id, labels, artworkHref = CAR
             createElement("text", { x: "205", y: "947", fontSize: "17", letterSpacing: "4" }, labels.element),
             createElement("text", { x: "540", y: "947", fontSize: "17", letterSpacing: "4" }, labels.numbers),
             createElement("text", { x: "875", y: "947", fontSize: "17", letterSpacing: "4" }, labels.colour),
-            createElement("text", { x: "205", y: "1007", fontSize: "40", fontFamily: "Georgia, serif", fill: "#fff4db" }, card.element.toUpperCase()),
-            createElement("text", { x: "540", y: "1011", fontSize: "66", fontFamily: "Georgia, serif" }, card.numbers.join(' · ')),
+            createElement("text", { x: "205", y: "1007", fontSize: "40", fontFamily, fill: "#fff4db" }, card.element.toUpperCase()),
+            createElement("text", { x: "540", y: "1011", fontSize: "66", fontFamily }, card.numbers.join(' · ')),
             createElement("circle", { cx: "875", cy: "988", r: "24", fill: card.colors[0].hex, stroke: "#efd194", strokeWidth: "3" }),
             createElement("text", { x: "875", y: "1054", fontSize: "21", fill: "#fff4db" }, card.colors[0].name)),
-        createElement("g", { textAnchor: "middle", fill: "#fff0cd", fontFamily: "Georgia, serif", fontSize: "37" }, lines.map((line, index) => createElement("text", { key: index, x: "540", y: 1127 + index * 45 }, line))),
+        createElement("g", { textAnchor: "middle", fill: "#fff0cd", fontFamily, fontSize: "37" }, lines.map((line, index) => createElement("text", { key: index, x: "540", y: 1127 + index * 45 }, line))),
         createElement("text", { x: "540", y: "1260", textAnchor: "middle", fill: "#e7bf72", fontSize: "26", letterSpacing: "5" }, "thefatekey.com"),
         createElement("text", { x: "540", y: "1300", textAnchor: "middle", fill: "#d1c4a6", fontSize: "15", letterSpacing: "3" }, labels.watermark),
         preview && createElement("g", { transform: "rotate(-25 540 590)", textAnchor: "middle" },

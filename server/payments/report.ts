@@ -180,6 +180,8 @@ async function reportPdf(report: BuyerReport, orderId: string, emphasis: string[
   const artwork = await pdf.embedJpg(await artworkBytes)
   const display = await pdf.embedFont(StandardFonts.TimesRoman)
   const italic = await pdf.embedFont(StandardFonts.TimesRomanItalic)
+  const cardFontBytes = await readFile(new URL('./assets/NotoSansSC-Report.ttf', import.meta.url))
+  const cardFontCss = `@font-face{font-family:FateCard;src:url(data:font/ttf;base64,${cardFontBytes.toString('base64')})}`
   pdf.setTitle(report.title + ' | THE FATE KEY')
   pdf.setAuthor('THE FATE KEY')
   pdf.setSubject((mode === 'test' ? 'Private Sandbox purchase report - ' : 'Purchased report - ') + report.edition + (report.reference ? ' | ' + report.reference : ''))
@@ -338,7 +340,32 @@ async function reportPdf(report: BuyerReport, orderId: string, emphasis: string[
   y -= 25; paragraph('Your reading follows on the next page.', 10, muted)
   addPage()
   let inAppendix = false
-  const blocks = report.text.split(/\n+/).map(block => block.trim()).filter(Boolean)
+  const shortPdfAppendix = (text: string) => {
+    const start = text.indexOf('Calculation notes')
+    const end = text.indexOf('How this reading is prepared', start < 0 ? 0 : start)
+    if (start < 0 || end < 0) return text
+    const unknownBirthTime = /birth time (?:was )?not (?:provided|known)|unknown birth time|birth time is unknown/i.test(text)
+    const summary = [
+      'Calculation notes',
+      'This reading uses your calculated birth-year, birth-month and birth-day signs. Technical chart terms and repeated calculation details are omitted here; your answers above explain the personal meaning.',
+    ].join('\n\n')
+    let prepared = text.slice(0, start) + summary + '\n\n' + text.slice(end)
+    const methodStart = prepared.indexOf('How this reading is prepared', start)
+    if (methodStart < 0) return prepared
+    // The source method notes are detailed for auditability. Buyers need only
+    // the input/timezone policy and the limits that change how their reading is read.
+    const limit = prepared.indexOf('\n\nTHE FATE KEY |', methodStart)
+    const methodEnd = limit < 0 ? prepared.length : limit
+    const method = [
+      'How this reading is prepared',
+      'Birthplace local time, including historical daylight saving, is used for the chart. Longitude adjustment is approximate.',
+      ...(unknownBirthTime ? ['Your birth time is unknown, so no hour sign is included or estimated. Ten-year cycle start dates are approximate.'] : ['Your recorded birth time is used; timing descriptions are comparisons, not guaranteed events.']),
+      'This is a traditional Saju interpretation, not a diagnosis or a validated prediction. Annual comparisons use a shared reference time and do not change your birthplace chart.',
+    ].join('\n\n')
+    return prepared.slice(0, methodStart) + method + prepared.slice(methodEnd)
+  }
+  const pdfText = shortPdfAppendix(report.text)
+  const blocks = pdfText.split(/\n+/).map(block => block.trim()).filter(Boolean)
   for (const [blockIndex, block] of blocks.entries()) {
     const value = block.trim()
     if (!value) continue
@@ -360,7 +387,7 @@ async function reportPdf(report: BuyerReport, orderId: string, emphasis: string[
     }
     const heading = /^(\d{2} [·-]|THE FATE KEY|Your Ten-Year|Your reading at a glance|Your Everyday Compass|Calculation notes|Symbolic colours & numbers|Chart terms in plain English|How this reading is prepared)/.test(value)
     const note = inAppendix || /^(From (your|the) chart:|Why this focus:|Report edition|Sources|Method|Calculated start:)/.test(value)
-    if (heading && !inAppendix && value !== 'Your reading at a glance' && y < 650) addPage()
+    if (heading && !inAppendix && value !== 'Your reading at a glance' && y < 350) addPage()
     if (heading) {
       if (/^\d{2} [·-]/.test(value)) {
         const destinationTitle = value.replace(/^\d{2} [·-]\s*/, '').trim()
@@ -428,9 +455,11 @@ async function reportPdf(report: BuyerReport, orderId: string, emphasis: string[
     centre('YOUR PERSONAL DESTINY CARD', 721, 12)
     const svg = renderToStaticMarkup(createElement(DestinyCardArtwork, {
       card, id: `issued-card-${index}`, artworkHref: await cardArtData, keyHref: await cardKeyData, preview: false, showStem: false,
+      fontFamily: 'FateCard, sans-serif',
       labels: { personal: 'MY PERSONAL KEY', element: 'ELEMENT', numbers: 'MY NUMBERS', colour: 'MY COLOUR', watermark: mode === 'test' ? 'SANDBOX EDITION' : 'PERSONAL EDITION' },
     }))
-    const raster = await sharp(Buffer.from(svg)).resize(1080, 1350)
+    const svgWithCardFont = Buffer.from(svg.toString().replace(/<svg([^>]*)>/, `<svg$1><style>${cardFontCss} text{font-family:FateCard,sans-serif}</style>`))
+    const raster = await sharp(svgWithCardFont).resize(1080, 1350)
       .flatten({ background: { r: 250, g: 245, b: 232 } }).jpeg({ quality: 94, chromaSubsampling: '4:4:4' }).toBuffer()
     const cardImage = await pdf.embedJpg(raster)
     page.drawImage(cardImage, { x: 72.64, y: 120, width: 450, height: 562.5 })
