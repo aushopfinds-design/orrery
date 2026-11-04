@@ -234,8 +234,10 @@ export class PaymentService {
     const existing = await this.store.setting('stripe-webhook')
     if (existing) {
       const value = openOrder(this.config.dataKey, 'stripe-webhook', existing) as { id: string; url: string }
-      if (this.stripe.updateWebhook) await this.stripe.updateWebhook(value.id, value.url)
-      return { id: value.id, url: value.url, configured: true }
+      if (value.url !== url && !this.stripe.updateWebhook) throw new PaymentError('webhook_setup_unavailable', 503)
+      if (this.stripe.updateWebhook) await this.stripe.updateWebhook(value.id, url)
+      if (value.url !== url) await this.store.replaceSetting('stripe-webhook', sealOrder(this.config.dataKey, 'stripe-webhook', { ...value, url }))
+      return { id: value.id, url, configured: true }
     }
     if (!this.stripe.setupWebhook) throw new PaymentError('webhook_setup_unavailable', 503)
     const endpoint = await this.stripe.setupWebhook(url, 'fate-key-sandbox-webhook-v1')

@@ -72,9 +72,7 @@ export function paymentHandler(getService: () => PaymentService) {
         return json(await service.createCheckout(input, request.headers.get('idempotency-key')))
       }
       if (action === 'webhook-setup') {
-        const branchHost = process.env.VERCEL_BRANCH_URL
-        const url = branchHost && /^saju-english-report-preview(?:-[a-z0-9-]+)?\.vercel\.app$/.test(branchHost)
-          ? `https://${branchHost}/api/payments?action=webhook` : service.config.origin + '/api/payments?action=webhook'
+        const url = service.config.origin + '/api/payments?action=webhook'
         return json(await service.setupWebhook(url))
       }
       const id = (input as { orderId?: unknown } | null)?.orderId

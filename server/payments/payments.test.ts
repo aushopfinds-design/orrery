@@ -512,12 +512,15 @@ describe('paid report email integration',()=>{
 })
 
 it('refreshes required events on an existing Sandbox endpoint without replacing its signing secret',async()=>{
-  const saved=sealOrder(config.dataKey,'stripe-webhook',{id:'we_existing',url:config.origin+'/api/payments?action=webhook',secret:'whsec_existing'})
+  const saved=sealOrder(config.dataKey,'stripe-webhook',{id:'we_existing',url:'https://old-preview.vercel.app/api/payments?action=webhook',secret:'whsec_existing'})
   await store.saveSetting('stripe-webhook',saved)
   const updateWebhook=vi.fn(async()=>{}),setupWebhook=vi.fn(async()=>({id:'we_new',secret:'whsec_new'}))
   const service=new PaymentService(config,store,{...gateway(),updateWebhook,setupWebhook})
-  await expect(service.setupWebhook(config.origin+'/api/payments?action=webhook')).resolves.toMatchObject({id:'we_existing',configured:true})
+  const url=config.origin+'/api/payments?action=webhook'
+  await expect(service.setupWebhook(url)).resolves.toMatchObject({id:'we_existing',url,configured:true})
   expect(updateWebhook).toHaveBeenCalledWith('we_existing',config.origin+'/api/payments?action=webhook')
   expect(setupWebhook).not.toHaveBeenCalled()
-  expect(await store.setting('stripe-webhook')).toBe(saved)
+  const refreshed=await store.setting('stripe-webhook')
+  expect(refreshed).not.toBe(saved)
+  expect(openOrder(config.dataKey,'stripe-webhook',refreshed!)).toEqual({id:'we_existing',url,secret:'whsec_existing'})
 })

@@ -82,6 +82,9 @@ export class OrderStore {
   async saveSetting(key: string, value: string) {
     await this.db.query('INSERT INTO fate_payment_settings (key,value_encrypted) VALUES ($1,$2) ON CONFLICT (key) DO NOTHING', [key, value])
   }
+  async replaceSetting(key: string, value: string) {
+    await this.db.query('UPDATE fate_payment_settings SET value_encrypted=$2 WHERE key=$1', [key, value])
+  }
   async create(order: Pick<Order, 'id' | 'request_key_hash' | 'input_hash' | 'kind' | 'amount' | 'currency' | 'input_encrypted' | 'expires_at'>): Promise<Order> {
     const result = await this.db.query<Order>(`INSERT INTO fate_payment_orders
       (id, request_key_hash, input_hash, kind, amount, currency, input_encrypted, expires_at)
