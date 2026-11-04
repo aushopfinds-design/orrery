@@ -70,3 +70,36 @@ The generation smoke test confirms the paid PDF code path and question counts, n
 7. Resolve and rerun the full test suite. The original 32 changed-file contents were verified against the local Git blob hashes at `315cf51798ad45f8a079b20cda82768b7bea8b44`; the two build fixes are stored in remote commit `516d6c6eb753f0fba02b77577aaac7fa18ac2c47`. Preview reached READY at `dd3cc7ef3e2020007c332e0011f82d693ecd2d82`; a documentation-only commit will follow this report update, so confirm the branch's newest automatic preview if it is needed for review.
 
 **Step 2 payment/email work must remain on hold until Step 1 is completed and approved. Production and live payments were not changed.**
+
+## Final completion attempt — 2026-11-04
+
+**Current decision: NOT COMPLETE.** This continuation preserved the existing implementation and did not change report content, payment code, email code, the calculation engine, or production settings.
+
+### Remote state and available files
+
+- Confirmed remote `feature/final-simple-reports` is still at `7d3d8db3c77fe108142fc1a61b317509d5d072c5`; the remote backup branch `backup/final-simple-reports-20261104` exists.
+- The seven PDFs described above were generated under `/tmp/thefatekey-final-simple/` during the prior run. That directory and PDF files are not present in this checkout now, and no PDFs are tracked in the repository. The old Library samples are from earlier report versions and were not substituted as current PDFs.
+- Dependency installation could not be completed in this environment: there is no `bun` executable or local `node_modules`; an offline npm install fails because `pako` is not cached. The online npm install did not complete in the available command window. Therefore the six failing test files, PDF generation, TypeScript check, and build could not be rerun here.
+
+### Checks possible without reinstalling dependencies
+
+- **Birthplace source path reviewed:** `BirthForm.handleCitySelect` stores the selected city's latitude and longitude; `buildBirthInput` infers the IANA timezone from those coordinates and passes both coordinates and timezone into `BirthInput`. A missing/invalid city selection is rejected. The default city is New York, not Seoul. Unknown time passes `unknownTime: true` and noon as a placeholder; `calculateSaju` suppresses the hour pillar. `issueReport` calculates from the same order input. This is a source-path review, not an end-to-end browser test of the place-search provider or final PDF.
+- **Core calculation spot check (not an independent-engine verification):** native Node TypeScript execution with the existing core source converted Sydney 1990-08-14 08:30 to UTC `1990-08-13T22:30:00Z`, and Los Angeles 1975-12-02 22:15 to UTC `1975-12-03T06:15:00Z`. The results used the supplied coordinates in solar-time adjustment. The Sydney unknown-time spot check returned `??` for the hour pillar. These checks do not verify the browser's coordinate lookup or all DST boundary cases.
+- **Product 02 code protection reviewed:** `src/report/work-focus-readings.ts` is unchanged from the task baseline; the paid report path calls `customerDeliveryText` with simplification disabled for `career`. This supports code-path protection, but it is not the required generated-answer comparison against the protected PDF baseline.
+- **Permanent quality gate reviewed:** `issueReport()` calls `inspectReport()` for all product kinds and supplies each product's expected question set and answer provenance where available. The gate marks unavailable/partial/mismatched calculation verification as blocking and separately reports when human review is required. This confirms wiring in source; it does not establish semantic approval.
+
+### Outstanding release checks
+
+The last recorded full run remains **912 passed, 6 failed out of 918**, with failures in `server/payments/final-quality-sample.test.ts`, `server/payments/product01-buyer-answers.test.ts`, `src/report/complete-reading.test.ts`, `src/report/personal-examples.test.ts`, `src/report/preview-flow.test.ts`, and `src/report/report-extras.test.ts`. The saved log records concise relationship timing copy, a stale Product 01 phrase assertion, profile variation, preview excerpt length, annual preview focus text, and a missing report extra as the respective failure descriptions. The exact assertions and root causes were not reproduced in this continuation; no test was deleted or disabled.
+
+| Product | Answer review | Calculation check | PDF check |
+|---|---|---|---|
+| 01 | Earlier targeted review only; all current answers not re-read | Partial; no independent confirmation | Prior representative PDF generated; unavailable now for re-open |
+| 02 | Current-versus-baseline answer comparison not run | Not independently rechecked | Prior representative PDF generated; unavailable now for re-open |
+| 03 | All current answers not re-read | Independent verification unavailable in prior record | Prior representative PDF generated; unavailable now for re-open |
+| 04 | All current answers not re-read | Independent verification unavailable in prior record | Prior representative PDF generated; unavailable now for re-open |
+| 05 | All current answers not re-read | Independent verification unavailable in prior record | Prior representative PDF generated; unavailable now for re-open |
+| 06 | All current answers not re-read | Independent verification unavailable in prior record | Prior representative PDF generated; unavailable now for re-open |
+| 07 | All 10 integrated answers not re-read | Independent verification unavailable in prior record | Prior representative PDF generated; unavailable now for re-open |
+
+To complete Step 1, restore the lockfile-matched Bun dependency environment, rerun the six failing tests and fix only reproduced regressions, regenerate or restore the seven current PDFs, complete human review and Product 02 text comparison, and run the selected-city UI path through to PDF output. Until those checks pass, Step 1 is **NOT COMPLETE** and Step 2 remains on hold.
