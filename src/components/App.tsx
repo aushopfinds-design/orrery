@@ -15,7 +15,7 @@ import BuyerJourney from './BuyerJourney.tsx'
 import { previewHash, resolvePreviewKind } from '../report/personal-products.ts'
 import { readPreviewDraft, updatePreviewDraft } from '../utils/preview-draft.ts'
 import { formStateFromBirth, matchesBirth, normalizeBirthFormState, readBirthFormState } from '../utils/birth-form-state.ts'
-import { previewProduct } from '../report/personal-products.ts'
+import { localizedPreviewProduct } from '../report/personal-products.ts'
 import ReportBoundary from './report/ReportBoundary.tsx'
 import HomeLearning from './HomeLearning.tsx'
 
@@ -40,7 +40,7 @@ const SAMPLE_BIRTH: BirthInput = {
 }
 
 export default function App() {
-  const { t } = useLocale()
+  const { t, locale } = useLocale()
   const hash = useReportHash()
   const route = resolveReportRoute(hash)
   const focusCategory = resolveFocusCategory(hash)
@@ -114,9 +114,9 @@ export default function App() {
   }, [hash, showingHome])
   useEffect(() => {
     if (route === 'personal-preview') return
-    const title = route === 'card-studio' ? t('destiny.studio.title') : route === 'help' ? t('site.help.title') : route === 'guide' ? t('site.guide.title') : route === 'privacy' ? t('site.privacy.title') : route === 'free' ? t('reading.free.title') : route === 'bundle-product' || route === 'bundle-sample' ? t('category.bundle.title') : focusCategory ? previewProduct(focusCategory).title : route === 'sample' || route === 'product' ? t('complete.title') : t('home.hero.title')
+    const title = route === 'card-studio' ? t('destiny.studio.title') : route === 'help' ? t('site.help.title') : route === 'guide' ? t('site.guide.title') : route === 'privacy' ? t('site.privacy.title') : route === 'free' ? t('reading.free.title') : route === 'bundle-product' || route === 'bundle-sample' ? t('site.product.bundle.title') : focusCategory ? localizedPreviewProduct(focusCategory, locale, t).title : route === 'sample' || route === 'product' ? t('complete.title') : t('home.hero.title')
     document.title = title + (route.includes('sample') ? ' — ' + t('site.title.sample') : '') + ' | The Fate Key'
-  }, [route, focusCategory, t])
+  }, [route, focusCategory, t, locale])
   return (
     <div className="fate-site" id="home">
       <a className="fate-skip-link" href="#main-content" onClick={event => { event.preventDefault(); const main = document.getElementById('main-content'); main?.focus(); main?.scrollIntoView({ block: 'start' }) }}>{t('site.skip')}</a>
@@ -124,7 +124,7 @@ export default function App() {
         <nav className="fate-nav" aria-label={t('home.nav.label')}>
           <a href="#home" className="fate-brand" aria-label="The Fate Key" onClick={navigateHomeSection}>
             <FateEmblem className="fate-brand-emblem" />
-            <span><strong>The Fate Key</strong><small>UNLOCK A BRIGHTER YOU</small></span>
+            <span><strong>The Fate Key</strong><small>{t('home.brand.tagline')}</small></span>
           </a>
           <div className="fate-desktop-links">{links.map(([href, key]) => <a key={href} href={href} aria-current={currentNav === (href.startsWith('#my-report') ? '#my-report' : href) ? 'page' : undefined} onClick={navigateHomeSection}>{t(key)}</a>)}</div>
           <div className="fate-nav-actions">

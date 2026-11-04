@@ -40,3 +40,16 @@ export function previewProduct(kind: PreviewKind) {
   return { subtitle: PRODUCT_SUBTITLES[kind], title: kind === 'year' ? 'Your Next 12 Months' : info.title, description: DESCRIPTIONS[kind], price: reportPrice(kind), sample: `#${info.slug}-sample`, chapters: { compatibility: 8, year: 6, career: 7, love: 7, business: 7, wellbeing: 5 }[kind], icon: info.icon }
 }
 
+/** Localize the product card labels only; report content and checkout data stay unchanged. */
+export function localizedPreviewProduct(kind: PreviewKind, locale: string, translate: (key: string) => string) {
+  const product = previewProduct(kind)
+  if (locale !== 'ko') return { ...product, scope: undefined as string | undefined }
+  return {
+    ...product,
+    title: translate(`site.product.${kind}.title`),
+    subtitle: translate(`site.product.${kind}.subtitle`),
+    description: translate(`site.product.${kind}.description`),
+    scope: translate(`site.product.${kind}.scope`),
+  }
+}
+

@@ -5,7 +5,7 @@ import { useLocale } from '../../i18n/index.ts'
 import BirthForm from '../BirthForm.tsx'
 import { FateEmblem } from '../HomeOverview.tsx'
 import { buildPersonalPreview, personalPreviewText } from '../../report/personal-preview.ts'
-import { PREVIEW_KINDS, checkoutHash, previewHash, previewProduct } from '../../report/personal-products.ts'
+import { PREVIEW_KINDS, checkoutHash, previewHash, localizedPreviewProduct } from '../../report/personal-products.ts'
 import { readPreviewDraft, updatePreviewDraft } from '../../utils/preview-draft.ts'
 import type { PreviewKind } from '../../report/personal-products.ts'
 import ReadingText from './ReadingText.tsx'
@@ -30,7 +30,7 @@ function focusSection(id: string) {
 }
 
 export default function PersonalPreviewPage({ kind, input, onFirstBirth }: { kind: PreviewKind; input: BirthInput | null; onFirstBirth: (input: BirthInput) => void }) {
-  const { t } = useLocale()
+  const { t, locale } = useLocale()
   const [draft] = useState(readPreviewDraft)
   const [second, setSecond] = useState(draft.second)
   const currentYear = new Date().getFullYear()
@@ -38,7 +38,7 @@ export default function PersonalPreviewPage({ kind, input, onFirstBirth }: { kin
   const [editing, setEditing] = useState<'first' | 'second' | null>(null)
   const focusAfterSubmit = useRef(false)
   const checkoutIntent = window.location.hash.endsWith('-checkout')
-  const product = previewProduct(kind)
+  const product = localizedPreviewProduct(kind, locale, t)
   const [auditResult, setAuditResult] = useState<{ input: BirthInput; audit?: IndependentPillarAudit } | null>(null)
   useEffect(() => {
     let cancelled = false
@@ -56,7 +56,7 @@ export default function PersonalPreviewPage({ kind, input, onFirstBirth }: { kin
   const paired = kind === 'compatibility' || kind === 'bundle'
   const needsPartner = Boolean(preview?.needsPartner)
   const ready = Boolean(preview && !needsPartner && !editing)
-  const pageTitle = preview?.title ?? product.title
+  const pageTitle = locale === 'ko' ? product.title : preview?.title ?? product.title
 
   useEffect(() => { document.title = pageTitle + ' | The Fate Key' }, [pageTitle])
   useEffect(() => {
@@ -95,7 +95,7 @@ export default function PersonalPreviewPage({ kind, input, onFirstBirth }: { kin
     </ol></nav>
     <a href="#reports" className="fate-product-back">← {t('complete.back')}</a>
     <header className="fate-personal-preview-heading"><FateKeyMark /><div><p className="fate-eyebrow">{t(checkoutIntent ? 'purchase.checkout' : 'buyer.preview.eyebrow')}</p><h1 id="personal-preview-title">{pageTitle}</h1>{!checkoutIntent && <p>{t('buyer.preview.intro')}</p>}</div></header>
-    <div className="fate-personal-preview-controls"><div><label htmlFor="personal-report-kind">{t('buyer.preview.kind')}</label><select id="personal-report-kind" value={kind} onChange={event => window.location.assign(checkoutIntent ? checkoutHash(event.target.value as PreviewKind) : previewHash(event.target.value as PreviewKind))}>{PREVIEW_KINDS.map(value => <option key={value} value={value}>{previewProduct(value).title}</option>)}</select></div></div>
+    <div className="fate-personal-preview-controls"><div><label htmlFor="personal-report-kind">{t('buyer.preview.kind')}</label><select id="personal-report-kind" value={kind} onChange={event => window.location.assign(checkoutIntent ? checkoutHash(event.target.value as PreviewKind) : previewHash(event.target.value as PreviewKind))}>{PREVIEW_KINDS.map(value => <option key={value} value={value}>{localizedPreviewProduct(value, locale, t).title}</option>)}</select></div></div>
     <section id="personal-checkout" className="fate-checkout-summary" tabIndex={-1} aria-labelledby="personal-checkout-title">
       <div><p className="fate-eyebrow">{t('purchase.heading')}</p><h2 id="personal-checkout-title">{product.title}</h2><ReportPrice kind={kind} /></div>
       {checkoutIntent ? ready && input ? <SandboxCheckout order={{ kind, first: input, ...(paired ? { second } : {}), ...((kind === 'year' || kind === 'bundle') ? { year } : {}) }} /> : <p role="status">{t('purchase.needDetails')}</p> : <BuyReportLink kind={kind} />}

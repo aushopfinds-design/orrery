@@ -3,12 +3,12 @@ import { useLocale } from '../i18n/index.ts'
 import { HomeFAQ } from './HomeOverview.tsx'
 import FateKeyMark from './report/FateKeyMark.tsx'
 import ReportIcon from './report/ReportIcon.tsx'
-import { PREVIEW_KINDS, previewHash, previewProduct } from '../report/personal-products.ts'
+import { PREVIEW_KINDS, localizedPreviewProduct, previewHash } from '../report/personal-products.ts'
 import { clearReadingData, readingDataSummary } from '../utils/reading-data.ts'
 
 type InfoPage = 'help' | 'guide' | 'privacy'
 export default function SiteInfoPage({ page, hash, onDataCleared, onOpenSaved }: { page: InfoPage; hash: string; onDataCleared: () => void; onOpenSaved: () => void }) {
-  const { t } = useLocale()
+  const { t, locale } = useLocale()
   const [clearStage, setClearStage] = useState<'idle' | 'confirm' | 'done' | 'error'>('idle')
   const summary = page === 'privacy' ? readingDataSummary() : { rememberedBirth: false, tabPreview: false, saved: 0 }
   const id = page === 'guide' ? 'reading-guide' : page === 'privacy' ? 'your-data' : 'help'
@@ -18,7 +18,7 @@ export default function SiteInfoPage({ page, hash, onDataCleared, onOpenSaved }:
     onDataCleared()
     setClearStage(success ? 'done' : 'error')
   }
-  return <article id={id} className="fate-info-page" lang="en" aria-labelledby="site-info-title">
+  return <article id={id} className="fate-info-page" lang={locale === 'ko' ? 'ko' : 'en'} aria-labelledby="site-info-title">
     <a href="#home" className="fate-product-back">← {t('site.backHome')}</a>
     <header className="fate-info-heading"><FateKeyMark /><p className="fate-eyebrow">{t('site.' + page + '.eyebrow')}</p><h1 id="site-info-title">{t('site.' + page + '.title')}</h1><p>{t('site.' + page + '.intro')}</p></header>
     <nav className="fate-info-nav" aria-label={t('site.infoNav')}><a href="#help" aria-current={page === 'help' ? 'page' : undefined}>{t('site.help.title')}</a><a href="#reading-guide" aria-current={page === 'guide' ? 'page' : undefined}>{t('site.guide.title')}</a><a href="#your-data" aria-current={page === 'privacy' ? 'page' : undefined}>{t('site.privacy.title')}</a></nav>
@@ -33,7 +33,7 @@ export default function SiteInfoPage({ page, hash, onDataCleared, onOpenSaved }:
     {page === 'guide' && <>
       <section id="reading-guide-details" className="fate-info-section"><p className="fate-eyebrow">01</p><h2>{t('site.guide.details.title')}</h2><ol className="fate-guide-steps">{['date', 'time', 'place', 'check'].map((key, index) => <li key={key}><span>{index + 1}</span><div><h3>{t('site.guide.' + key + '.title')}</h3><p>{t('site.guide.' + key + '.text')}</p></div></li>)}</ol><a href="#birth-details" className="fate-complete-primary">{t('home.form.title')}</a></section>
       <section id="reading-guide-reports" className="fate-info-section"><p className="fate-eyebrow">02</p><h2>{t('site.guide.reports.title')}</h2><p>{t('site.guide.reports.text')}</p><div className="fate-guide-reports">{PREVIEW_KINDS.map(kind => {
-        const product = previewProduct(kind)
+        const product = localizedPreviewProduct(kind, locale, t)
         return <section key={kind}><div className="fate-guide-report-mark"><ReportIcon kind={product.icon} /><span>{t(kind === 'compatibility' || kind === 'bundle' ? 'site.guide.twoPeople' : 'site.guide.onePerson')}</span></div><h3>{product.title}</h3><p>{t('site.report.' + kind)}</p><small>{product.chapters} {t(kind === 'bundle' ? 'site.guide.reportsUnit' : 'site.guide.chaptersUnit')}{kind === 'year' ? ' · ' + t('site.guide.monthsUnit') : ''}</small><div><a href={previewHash(kind)}>{t('buyer.preview.cta')} →</a><a href={product.sample}>{t('buyer.guide.sample')}</a></div></section>
       })}</div></section>
       <section className="fate-info-section"><p className="fate-eyebrow">03</p><h2>{t('site.guide.read.title')}</h2><div className="fate-guide-reading-tips">{['bold', 'habits', 'chart'].map(key => <div key={key}><h3>{t('site.guide.' + key + '.title')}</h3><p>{t('site.guide.' + key + '.text')}</p></div>)}</div></section>

@@ -1,5 +1,5 @@
 import { useLocale } from '../../i18n/index.ts'
-import { previewProduct } from '../../report/personal-products.ts'
+import { localizedPreviewProduct, previewProduct } from '../../report/personal-products.ts'
 import type { PreviewKind } from '../../report/personal-products.ts'
 import ReportIcon from './ReportIcon.tsx'
 import { destinyCardCount } from '../../report/destiny-card.ts'
@@ -11,8 +11,8 @@ export function reportScope(kind: PreviewKind, t: (key: string) => string) {
 }
 
 export default function ReportChoiceDetails({ kind }: { kind: PreviewKind }) {
-  const { t } = useLocale()
-  const product = previewProduct(kind)
+  const { t, locale } = useLocale()
+  const product = localizedPreviewProduct(kind, locale, t)
   return <section className="fate-choice-details" aria-label={t('buyer.choice.includes')}>
     <div className="fate-choice-question"><ReportIcon kind={product.icon} /><div><p className="fate-eyebrow">{t('buyer.choice.question')}</p><p className="fate-choice-prompt">{t(`buyer.choice.${kind}.question`)}</p></div></div>
     <ul>{[1, 2, 3].map(index => <li key={index}><span aria-hidden="true">✓</span>{t(`buyer.choice.${kind}.${index}`)}</li>)}</ul>

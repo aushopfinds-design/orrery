@@ -7,11 +7,12 @@ import ja from './locales/ja.ts'
 import en from './locales/en.ts'
 import de from './locales/de.ts'
 import es from './locales/es.ts'
+import { koWebsiteCopy } from './locales/ko-website.ts'
 
 export type { Locale }
 export { LOCALES, DEFAULT_LOCALE }
 
-export const messages: Record<Locale, Record<string, string>> = { ko, zh, ja, en, de, es }
+export const messages: Record<Locale, Record<string, string>> = { ko: { ...ko, ...koWebsiteCopy }, zh, ja, en, de, es }
 
 function lookup(locale: Locale, key: string): string {
   return messages[locale][key] ?? messages[DEFAULT_LOCALE][key] ?? key
