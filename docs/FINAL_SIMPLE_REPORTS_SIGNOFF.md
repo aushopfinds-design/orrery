@@ -44,6 +44,7 @@ The generation smoke test confirms the paid PDF code path and question counts, n
 - `npx tsc --noEmit`: passed.
 - Full `npx vitest run`: started but the process ended without a final summary in this environment. The captured output contains failures in preview/report, relationship, personalization, quality sample, independent audit, and category topic suites; exact final failed-test count is unavailable. Full suite: **UNVERIFIED / NOT PASS**.
 - The Vercel build first exposed two TypeScript errors (an extra argument to `distinctChapters` and an unused `careerRisk` local). Both were fixed. Local `npx tsc -b && npx vite build && node scripts/build-public-pages.mjs` now passes; Vite reports an existing chunk-size warning. Local core `tsup` package build was not rerun separately.
+- Vercel Preview deployment `dpl_2wDnp2EJWL2jE9RujSWL2DH3FfD8` reached **READY** for remote commit `dd3cc7ef3e2020007c332e0011f82d693ecd2d82`. Its preview URL returned HTTP 200. This verifies delivery of the current client build, not every product interaction.
 - Payment/email behavior, actual city autocomplete selection, Product 02 content diff, and physical-device rendering: **NOT VERIFIED**.
 
 ## Product status
@@ -66,6 +67,6 @@ The generation smoke test confirms the paid PDF code path and question counts, n
 4. Review every buyer answer from the seven PDFs. Generation alone does not satisfy semantic review.
 5. Address long technical material appearing before some buyer-facing answers and improve mobile fit-width text legibility without redesigning the existing visual system.
 6. Test Sydney/Los Angeles coordinates and timezone through the actual selected-city order input, then verify the resulting calculations.
-7. Resolve and rerun the full test suite, then verify the new Vercel Preview build. The original 32 changed-file contents were verified against the local Git blob hashes at `315cf51798ad45f8a079b20cda82768b7bea8b44`; the two build fixes are now stored in the next remote commit, `516d6c6eb753f0fba02b77577aaac7fa18ac2c47`. Preview must be rechecked against the latest branch head.
+7. Resolve and rerun the full test suite. The original 32 changed-file contents were verified against the local Git blob hashes at `315cf51798ad45f8a079b20cda82768b7bea8b44`; the two build fixes are stored in remote commit `516d6c6eb753f0fba02b77577aaac7fa18ac2c47`. Preview reached READY at `dd3cc7ef3e2020007c332e0011f82d693ecd2d82`; a documentation-only commit will follow this report update, so confirm the branch's newest automatic preview if it is needed for review.
 
 **Step 2 payment/email work must remain on hold until Step 1 is completed and approved. Production and live payments were not changed.**
