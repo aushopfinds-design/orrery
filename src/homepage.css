@@ -1100,3 +1100,9 @@
 .fate-site .fate-section-heading h2{color:#182642}
 .fate-site .fate-main{background:linear-gradient(180deg,#fffaf2,#fff7ec)}
 @media(max-width:600px){.fate-site .fate-hero{background:radial-gradient(circle at 83% 15%,#3b4e76,transparent 60%),#0b1430}.fate-site .fate-birth-panel{max-width:100%}}
+
+/* Celestial illustration for the full public sample cover. */
+.fate-full-sample .fate-reading-cover-complete{position:relative;text-align:left;padding-right:clamp(210px,30%,300px);min-height:550px}
+.fate-sample-cover-art{position:absolute;right:5%;top:50%;width:min(30%,280px);height:auto;transform:translateY(-50%);filter:drop-shadow(0 5px 18px #d1aa5c35)}
+@media(max-width:760px){.fate-full-sample .fate-reading-cover-complete{padding-right:clamp(150px,34%,220px);min-height:480px}.fate-sample-cover-art{right:2%;width:34%;opacity:.88}}
+@media(max-width:480px){.fate-full-sample .fate-reading-cover-complete{padding:38px 24px 150px;min-height:540px}.fate-full-sample .fate-report-cover-content{max-width:none}.fate-sample-cover-art{width:138px;right:15px;top:auto;bottom:5px;transform:none;opacity:.8}}
