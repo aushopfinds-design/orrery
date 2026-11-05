@@ -94,3 +94,11 @@
 .fate-free-question-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
 .fate-free-question-grid > a { display: flex; flex-direction: column; align-items: flex-start; gap: .75rem; text-align: left; }
 @media (max-width: 700px) { .fate-free-question-grid { grid-template-columns: 1fr; } }
+
+
+/* Celestial brand continuity for buyer flow; preserve form and Destiny Card geometry. */
+.fate-site{--fate-night:#0b1430;--fate-paper:#fff8ed;--fate-ink:#182642;--fate-gold:#c79a4c}
+.fate-site .fate-preview-access,.fate-site .fate-choice-details{border-color:#caa566}
+.fate-site .fate-preview-access{background:linear-gradient(145deg,#101b38,#253759);box-shadow:0 12px 30px #111b3633}
+.fate-site .fate-choice-details{box-shadow:0 8px 24px #1b274014}
+@media(prefers-reduced-motion:reduce){.fate-site .fate-preview-access{transition:none}}
