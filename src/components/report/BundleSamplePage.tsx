@@ -12,7 +12,7 @@ export default function BundleSamplePage() {
       </div>
     </header>
     <section className="fate-reading-chapter">
-      <h2>How Do Your Life, Love, Work and Year Themes Fit Together?</h2>
+      <h2>How Do Your Life, Love, Work and Year Connect?</h2>
       <p>The complete collection connects these areas in one personal reading. The overview brings the separate report themes together.</p>
     </section>
     <section className="fate-reading-chapter">
