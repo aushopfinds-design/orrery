@@ -146,16 +146,16 @@ describe('Situation guides provide choices that a reader can actually review', (
       const draft = { first: CATEGORY_SCENARIOS[0].first, second: CATEGORY_SCENARIOS[0].second, year: 2027 }
       const preview = buildPersonalPreview(kind, draft)
       const full = kind === 'complete' ? buildCompleteReading(first) : buildCategoryReading(kind, first, { second, year: 2027 })
-      expect(preview.applications).toEqual(full.applications)
+      expect(preview.applications).toEqual([])
       const text = personalPreviewText(preview)
-      for (const item of preview.applications) {
-        expect(text).toContain(applicationText(item))
+      for (const item of full.applications) {
+        expect(text).not.toContain(applicationText(item))
         expect(full.fullText).toContain(applicationText(item))
       }
     }
     const bundle = buildPersonalPreview('bundle', { first: CATEGORY_SCENARIOS[0].first, second: CATEGORY_SCENARIOS[0].second, year: 2028 })
     expect(bundle.applications).toEqual([])
-    expect(bundle.excerpts).toHaveLength(5)
+    expect(bundle.excerpts).toHaveLength(1)
     expect(buildPersonalPreview('bundle', { first: CATEGORY_SCENARIOS[0].first }).applications).toEqual([])
   })
 })

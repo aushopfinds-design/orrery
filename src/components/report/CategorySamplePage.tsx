@@ -1,19 +1,32 @@
-import { useMemo, useState } from 'react'
-import { calculateSaju } from '@orrery/core/saju'
-import { useLocale } from '../../i18n/index.ts'
-import { CATEGORY_SCENARIOS } from '../../report/category-catalog.ts'
 import type { FocusCategory } from '../../report/category-catalog.ts'
-import { buildCategoryReading } from '../../report/category-readings.ts'
-import CategoryReadingView from './CategoryReadingView.tsx'
+import { previewProduct, buyerQuestionTitles } from '../../report/personal-products.ts'
 
-export function SamplePicker({ scenarioIndex, onScenarioChange, year, onYearChange, paired = false }: { scenarioIndex: number; onScenarioChange: (value: number) => void; year?: number; onYearChange?: (value: number) => void; paired?: boolean }) {
-  const { t } = useLocale()
-  return <section className="fate-category-picker print:hidden" aria-label={t('category.examples.label')}><div><label htmlFor="category-example">{t('category.examples.choose')}</label><select id="category-example" value={scenarioIndex} onChange={event => onScenarioChange(Number(event.target.value))}>{CATEGORY_SCENARIOS.map((item, index) => <option key={item.id} value={index}>{paired || item.id === 'unknown-hour' ? item.label : item.label.split(' · ')[0]}</option>)}</select></div>{year != null && onYearChange && <div><label htmlFor="category-year">{t('category.examples.year')}</label><select id="category-year" value={year} onChange={event => onYearChange(Number(event.target.value))}>{Array.from({ length: 11 }, (_, index) => 2026 + index).map(value => <option key={value} value={value}>{value}</option>)}</select></div>}<p>{t('category.examples.note')}</p></section>
+const SAMPLE_WORDING: Record<FocusCategory, string> = {
+  compatibility: 'Example: “Your report looks at how two different communication styles can meet.”',
+  year: 'Example: “Your report explains how the year is organised and where to read each month.”',
+  career: 'Example: “Your report explores how your working style and money patterns fit together.”',
+  love: 'Example: “Your report explores relationship themes in clear, everyday language.”',
+  business: 'Example: “Your report explores the working conditions that may support your business style.”',
+  wellbeing: 'Example: “Your report describes personal patterns in clear, everyday language.”',
 }
+
+/** Public visual sample with product questions only; no fictional or customer reading data. */
 export default function CategorySamplePage({ kind }: { kind: FocusCategory }) {
-  const [scenarioIndex, setScenarioIndex] = useState(0)
-  const [year, setYear] = useState(2027)
-  const scenario = CATEGORY_SCENARIOS[scenarioIndex]
-  const report = useMemo(() => buildCategoryReading(kind, calculateSaju(scenario.first), { second: kind === 'compatibility' ? calculateSaju(scenario.second) : undefined, year: kind === 'year' ? year : new Date().getFullYear() }), [kind, scenario, year])
-  return <CategoryReadingView report={report} controls={<SamplePicker scenarioIndex={scenarioIndex} onScenarioChange={setScenarioIndex} paired={kind === 'compatibility'} year={kind === 'year' ? year : undefined} onYearChange={kind === 'year' ? setYear : undefined} />} />
+  const product = previewProduct(kind)
+  return <article id={`${kind}-sample`} className="fate-complete-reading fate-category-reading fate-preview-shell" lang="en">
+    <header className="fate-reading-cover fate-reading-cover-complete">
+      <div className="fate-report-cover-content">
+        <p className="fate-eyebrow">THE FATE KEY · DESIGN SAMPLE</p>
+        <h1>{product.title}</h1>
+        <p>{product.description}</p>
+        <p>{SAMPLE_WORDING[kind]}</p>
+      </div>
+    </header>
+    <section className="fate-reading-chapter">
+      <h2>Questions in the paid report</h2>
+      <ol>{buyerQuestionTitles(kind).map(title => <li key={title}>{title}</li>)}</ol>
+      <p>The paid report answers these questions with personal explanations and relevant timing in a premium letter-style PDF.</p>
+      <a className="fate-complete-primary" href={`#my-report-${kind}`}>View the personal preview →</a>
+    </section>
+  </article>
 }

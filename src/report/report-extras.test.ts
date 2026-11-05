@@ -128,15 +128,12 @@ describe('A distinct everyday guide in every full report', () => {
   })
 })
 
-describe('A limited extra in each personal preview', () => {
-  it('shares one question and the correct symbol cards without the full added guide', () => {
+describe('Personal preview keeps all private report extras out of free data', () => {
+  it('does not serialize insight answers, symbol cards or calculation basis', () => {
     for (const kind of PREVIEW_KINDS) {
       const preview = buildPersonalPreview(kind, { first, second, year: 2030 })
-      expect(preview.extras?.question.question).toBeTruthy()
-      expect(preview.extras?.symbols).toHaveLength(kind === 'compatibility' || kind === 'bundle' ? 2 : 1)
-      expect(Object.keys(preview.extras!)).toEqual(['question', 'symbols'])
-      expect(preview.extras).not.toHaveProperty('keepClose')
-      expect(preview.extras).not.toHaveProperty('stepBack')
+      expect(preview.extras).toBeNull()
+      expect(JSON.stringify(preview)).not.toContain('Chart note:')
     }
     expect(buildPersonalPreview('compatibility', { first }).extras).toBeNull()
     expect(buildPersonalPreview('bundle', { first }).extras).toBeNull()

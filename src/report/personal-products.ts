@@ -20,9 +20,9 @@ export function resolvePreviewKind(hash: string): PreviewKind | undefined {
   return hash.startsWith('#my-report-') && isPreviewKind(kind) ? kind : undefined
 }
 export const PRODUCT_SUBTITLES: Record<PreviewKind, string> = {
-  complete: 'Complete Life Reading', year: 'Next 12 Months Reading', compatibility: 'Relationship Reading',
-  career: 'Career & Money Reading', love: 'Personal Love Reading', bundle: 'Complete Reading Package',
-  business: 'Business & Entrepreneurship Reading', wellbeing: 'Personality & Five-Element Reading',
+  complete: 'Your Life, Your Destiny', year: 'Your Next 12 Months', compatibility: 'Are We Meant to Be?',
+  career: 'Your Career, Money & Success', love: 'Personal Love Reading', bundle: 'Your Complete Destiny',
+  business: 'Born to Build a Business?', wellbeing: 'The Real You: Strengths & Weaknesses',
 }
 const DESCRIPTIONS: Record<PreviewKind, string> = {
   complete: 'Discover your personality, strengths, and life path.',
@@ -39,6 +39,11 @@ export function previewProduct(kind: PreviewKind) {
   if (kind === 'bundle') return { subtitle: PRODUCT_SUBTITLES[kind], title: 'Your Complete Destiny', description: DESCRIPTIONS[kind], price: reportPrice(kind), sample: '#complete-bundle-sample', chapters: 10, questions: COLLECTION_BUYER_QUESTIONS.complete!.length, icon: 'patterns' }
   const info = categoryInfo(kind)
   return { subtitle: PRODUCT_SUBTITLES[kind], title: kind === 'year' ? 'Your Next 12 Months' : info.title, description: DESCRIPTIONS[kind], price: reportPrice(kind), sample: `#${info.slug}-sample`, chapters: { compatibility: 8, year: 6, career: 7, love: 7, business: 7, wellbeing: 5 }[kind], questions: BUYER_QUESTIONS[kind].length, icon: info.icon }
+}
+
+export function buyerQuestionTitles(kind: PreviewKind) {
+  const questions = kind === 'bundle' ? COLLECTION_BUYER_QUESTIONS.complete : BUYER_QUESTIONS[kind]
+  return (questions ?? []).map(question => question.question)
 }
 
 /** Localize the product card labels only; report content and checkout data stay unchanged. */

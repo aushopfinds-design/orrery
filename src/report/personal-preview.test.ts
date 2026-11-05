@@ -1,7 +1,5 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import { calculateSaju } from '@orrery/core/saju'
 import { CATEGORY_SCENARIOS } from './category-catalog.ts'
-import { buildCompleteReading } from './complete-reading.ts'
 import { buildPersonalPreview } from './personal-preview.ts'
 import { PREVIEW_KINDS, previewHash, previewProduct, resolvePreviewKind } from './personal-products.ts'
 import { normalizePreviewBirth, parsePreviewDraft, PREVIEW_STORAGE_KEY, readPreviewDraft, savePreviewDraft } from '../utils/preview-draft.ts'
@@ -55,15 +53,13 @@ describe('Personal preview input and draft integrity', () => {
 })
 
 describe('Personal previews use the supplied people, not fictional samples', () => {
-  it('changes substantive passages across birth profiles in all seven categories', () => {
+  it('keeps only generic example wording across all seven categories', () => {
     for (const kind of PREVIEW_KINDS) {
       const first = buildPersonalPreview(kind, { first: a, second: b, year: 2030 })
       const second = buildPersonalPreview(kind, { first: other.first, second: other.second, year: 2030 })
       expect(first.needsPartner).toBe(false)
-      expect(first.subjects[0].birthSummary).toContain('1998')
-      expect(second.subjects[0].birthSummary).toContain('1987')
-      expect(JSON.stringify(first.excerpts)).not.toBe(JSON.stringify(second.excerpts))
-      expect(first.subjects.every(subject => !subject.label.includes('Example'))).toBe(true)
+      expect(JSON.stringify(first.excerpts)).toBe(JSON.stringify(second.excerpts))
+      expect(first.subjects).toEqual([])
       expect(JSON.stringify(first)).not.toMatch(/undefined|NaN|\[object Object\]/)
     }
   })
@@ -72,18 +68,17 @@ describe('Personal previews use the supplied people, not fictional samples', () 
     for (const kind of ['compatibility', 'bundle'] as const) {
       const preview = buildPersonalPreview(kind, { first: a })
       expect(preview.needsPartner).toBe(true)
-      expect(preview.subjects).toHaveLength(1)
+      expect(preview.subjects).toHaveLength(0)
       expect(preview.excerpts).toEqual([])
       expect(preview.contents).toEqual([])
       const withPartner = buildPersonalPreview(kind, { first: a, second: b })
-      expect(withPartner.subjects).toHaveLength(2)
-      expect(withPartner.subjects[1].birthSummary).toContain('2000')
+      expect(withPartner.subjects).toHaveLength(0)
       const changedPartner = buildPersonalPreview(kind, { first: a, second: { ...b, day: b.day + 1 } })
-      expect(JSON.stringify(withPartner.excerpts)).not.toBe(JSON.stringify(changedPartner.excerpts))
+      expect(JSON.stringify(withPartner.excerpts)).toBe(JSON.stringify(changedPartner.excerpts))
     }
   })
 
-  it('does not let a guessed hour change an unknown-time interpretation', () => {
+  it('does not expose personal interpretations, regardless of entered birth time', () => {
     for (const kind of PREVIEW_KINDS) {
       const draft = { first: { ...a, unknownTime: true }, second: { ...b, unknownTime: true }, year: 2030 }
       const changed = { ...draft, first: { ...draft.first, hour: 21, minute: 57 }, second: { ...draft.second, hour: 5, minute: 11 } }
@@ -91,35 +86,32 @@ describe('Personal previews use the supplied people, not fictional samples', () 
     }
   })
 
-  it('exposes only limited passages and contents, without the full text or a paid entitlement', () => {
+  it('exposes only generic sample wording and question titles, without calculated paid text', () => {
     for (const kind of PREVIEW_KINDS) {
       const preview = buildPersonalPreview(kind, { first: a, second: b, year: 2030 })
-      expect(preview.excerpts).toHaveLength(kind === 'bundle' ? 5 : 3)
+      expect(preview.excerpts).toHaveLength(1)
       for (const section of preview.excerpts) {
-        expect(section.paragraphs.length).toBeLessThanOrEqual(kind === 'compatibility' || kind === 'bundle' ? 2 : 1)
-        expect(section.evidence.length).toBeLessThanOrEqual(2)
+        expect(section.paragraphs).toHaveLength(0)
+        expect(section.evidence).toHaveLength(0)
         expect(section).not.toHaveProperty('tryThis')
         expect(section).not.toHaveProperty('guidance')
+        expect(section.lead.length).toBeLessThanOrEqual(145)
       }
       for (const name of ['fullText', 'periods', 'actionPlan', 'methods', 'paid', 'receipt']) expect(preview).not.toHaveProperty(name)
       expect(preview.contents).toHaveLength(previewProduct(kind).questions)
       expect(preview.contents.every(item => item.title.trim().endsWith('?'))).toBe(true)
     }
-    const full = buildCompleteReading(calculateSaju(a))
     const preview = buildPersonalPreview('complete', { first: a })
-    expect(JSON.stringify(preview)).not.toContain(full.actionPlan.paragraphs[0])
-    expect(JSON.stringify(preview)).not.toContain(full.chapters.find(chapter => chapter.id === 'career')!.paragraphs[1])
+    expect(JSON.stringify(preview)).not.toMatch(/From the chart:|Your Answer:|Hidden insight|January|March/)
   })
 
-  it('uses the selected year and twelve limited monthly headings', () => {
+  it('does not include calculated month-by-month answers in the free preview', () => {
     const first = buildPersonalPreview('year', { first: a, year: 2030, periodStart: '2030-01' })
     const second = buildPersonalPreview('year', { first: a, year: 2031, periodStart: '2031-01' })
     expect(first.title).toBe('Your Next 12 Months')
-    expect(first.monthly).toHaveLength(12)
-    expect(first.monthly[0].label).toContain('January')
-    expect(first.monthly[11].label).toContain('December')
+    expect(first.monthly).toHaveLength(0)
     expect(first.monthly.some(month => 'paragraphs' in month)).toBe(false)
-    expect(first.monthly).not.toEqual(second.monthly)
+    expect(first.monthly).toEqual(second.monthly)
     expect(() => buildPersonalPreview('complete', {})).toThrow(/birth details/)
   })
 })

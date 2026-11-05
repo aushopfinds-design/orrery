@@ -87,13 +87,12 @@ describe('Concrete examples use several chart features', () => {
 describe('Direct interpretations replace supplementary fictional scenes', () => {
   it('shows actual chapter excerpts in previews without the remaining paid prose', () => {
     for (const kind of PREVIEW_KINDS) {
-      const full = fullReports(kind)
       const preview = buildPersonalPreview(kind, { first: a.input, second: b.input, year: 2030, periodStart: '2030-01', periodTimezone: 'UTC' })
       for (const excerpt of preview.excerpts) {
-        const chapter = full.flatMap(report => report.chapters).find(item => item.id === excerpt.id)!
-        expect(excerpt.example).toBeUndefined()
-        expect(excerpt.lead).toBe(chapter.lead)
-        expect(excerpt.paragraphs.length).toBeLessThan(chapter.paragraphs.length)
+        expect(excerpt.lead).toContain('Illustrative wording:')
+        expect(excerpt.lead.length).toBeLessThanOrEqual(145)
+        expect(excerpt.paragraphs).toEqual([])
+        expect(excerpt.evidence).toEqual([])
         expect(personalPreviewText(preview)).toContain(plainReadingText(excerpt.lead))
       }
     }

@@ -46,8 +46,8 @@ describe('A continuous preview before checkout', () => {
       expect(text).toContain('FREE PERSONAL PREVIEW')
       expect(text).toContain('This is not an issued paid report')
       expect(text).toContain(preview.title)
-      expect(text).toContain(preview.subjects[0].birthSummary)
-      expect(text).toContain(preview.extras!.question.question)
+      expect(text).not.toContain('birth details entered')
+      expect(preview.extras).toBeNull()
       for (const section of preview.excerpts) expect(text).toContain(section.title)
       for (const item of preview.contents) expect(text).toContain(item.title)
       expect(text).not.toMatch(/\*\*|undefined|NaN|\[object Object\]/)
@@ -64,45 +64,38 @@ describe('A continuous preview before checkout', () => {
   it('opens a visible passage from every short guide and includes the same guide in the saved preview', () => {
     for (const kind of PREVIEW_KINDS) {
       const preview = buildPersonalPreview(kind, { first, second, year: 2030 })
-      const brief = preview.brief!
-      expect(preview.excerpts.find(section => section.id === brief.chapterId)?.title).toBe(brief.chapterTitle)
+      expect(preview.brief).toBeNull()
       const text = personalPreviewText(preview)
-      const visible = brief.focus ? [brief.focus.headline, brief.focus.synthesis, brief.focus.firstStep, brief.focus.pauseIf, brief.focus.review] : [...brief.support, ...brief.watchFor, brief.action]
-      for (const line of visible) expect(text).toContain(plainReadingText(line))
-      expect((brief.focus?.firstStep ?? brief.action).split(/\s+/).length).toBeLessThanOrEqual(40)
+      expect(text).toContain('Illustrative wording:')
+      expect(preview.headline).toBe('')
     }
-    expect(buildPersonalPreview('bundle', { first, second, year: 2030 }).brief?.scope).toBe('Person A · Your Life, Your Destiny')
+    expect(buildPersonalPreview('bundle', { first, second, year: 2030 }).brief).toBeNull()
     expect(buildPersonalPreview('compatibility', { first }).brief).toBeNull()
   })
 
   it('keeps both people in the relationship guide and updates the annual guide with its real chapter', () => {
     const pair = buildPersonalPreview('compatibility', { first, second })
-    expect(pair.headline).toContain('match')
-    expect(pair.headline).toMatch(/care|needs/)
+    expect(pair.headline).toBe('')
     const changed = buildPersonalPreview('compatibility', { first, second: { ...second, day: second.day + 1 } })
-    expect(changed.headline).not.toBe(pair.headline)
+    expect(changed.excerpts).toEqual(pair.excerpts)
     for (const year of [2027, 2028]) {
       const periodStart = `${year}-01`
       const preview = buildPersonalPreview('year', { first, year, periodStart, periodTimezone: 'UTC' })
       const full = buildCategoryReading('year', calculateSaju(first), { year, periodStart, periodTimezone: 'UTC' })
-      expect(preview.brief!.support).toEqual(full.chapters[0].guidance.keepClose)
-      expect(preview.brief!.watchFor).toEqual(full.chapters[0].guidance.watchFor)
-      expect(preview.brief!.focus).toEqual(full.focus)
+      expect(preview.brief).toBeNull()
+      expect(preview.monthly).toEqual([])
       const customerReportText = applyBuyerQuestions(full.fullText, 'year', full.chapters)
-      expect(customerReportText).toContain(plainReadingText(preview.brief!.focus!.firstStep))
+      expect(personalPreviewText(preview)).not.toContain(plainReadingText(full.focus.headline))
     }
-    expect(buildPersonalPreview('year', { first, year: 2027, periodStart: '2027-01' }).brief?.focus).not.toEqual(buildPersonalPreview('year', { first, year: 2028, periodStart: '2028-01' }).brief?.focus)
+    expect(buildPersonalPreview('year', { first, year: 2027, periodStart: '2027-01' }).monthly).toEqual(buildPersonalPreview('year', { first, year: 2028, periodStart: '2028-01' }).monthly)
   })
 
   it('includes both real subjects and their own symbols for a two-person preview', () => {
     const preview = buildPersonalPreview('compatibility', { first, second })
     const text = personalPreviewText(preview)
     for (const subject of preview.subjects) expect(text).toContain(subject.birthSummary)
-    for (const symbol of preview.extras!.symbols) {
-      expect(text).toContain(symbol.person)
-      expect(text).toContain(symbol.basis)
-    }
-    expect(text).toContain('They do not change the odds')
+    expect(preview.extras).toBeNull()
+    expect(text).not.toContain('Chart note:')
     expect(() => personalPreviewText(buildPersonalPreview('compatibility', { first }))).toThrow(/birth details/)
   })
 
@@ -112,6 +105,6 @@ describe('A continuous preview before checkout', () => {
     const changedHour = personalPreviewText(buildPersonalPreview('year', { first: { ...unknown, hour: 22, minute: 59 }, year: 2030 }))
     expect(text).toBe(changedHour)
     const preview = buildPersonalPreview('year', { first, year: 2030 })
-    for (const month of preview.monthly) expect(personalPreviewText(preview)).toContain(month.label)
+    expect(preview.monthly).toEqual([])
   })
 })

@@ -1,100 +1,72 @@
-import { calculateSaju } from '@orrery/core/saju'
-import { buildCompleteReading, buildFreeReading } from './complete-reading.ts'
-import { buildBundleReading, buildCategoryReading } from './category-readings.ts'
-import type { ReportChapter } from './complete-reading.ts'
-
-import { previewProduct } from './personal-products.ts'
-import { BUYER_QUESTIONS, COLLECTION_BUYER_QUESTIONS } from './buyer-outline.ts'
-import { nextTwelveMonthWindow, parseCalendarMonth } from './calendar-window.ts'
 import type { PreviewKind } from './personal-products.ts'
+import { previewProduct, buyerQuestionTitles } from './personal-products.ts'
 import { normalizePreviewBirth } from '../utils/preview-draft.ts'
 import type { PreviewDraft } from '../utils/preview-draft.ts'
-import type { InsightQuestion, ReportExtras, SymbolCard } from './report-extras.ts'
-import { SYMBOL_NOTE } from './report-extras.ts'
 import { plainReadingText } from './reading-text.ts'
-import { everydayExampleText } from './personal-examples.ts'
-import { buildReadingBrief, readingBriefText } from './reading-brief.ts'
-import type { ReadingBrief } from './reading-brief.ts'
-import { applicationText } from './report-applications.ts'
-import type { ReportApplication } from './report-applications.ts'
-import type { IndependentPillarAudit } from './independent-personalization.ts'
 
+/** Browser-safe preview data: product copy and questions only, never a calculated report. */
 export interface PersonalPreview {
   title: string
   subjects: { label: string; birthSummary: string; dayMaster: string; pillarSummary: string[] }[]
-  headline: string
-  brief: ReadingBrief | null
-  applications: ReportApplication[]
-  summary: { label: string; text: string }[]
-  excerpts: Pick<ReportChapter, 'id' | 'title' | 'icon' | 'lead' | 'paragraphs' | 'evidence' | 'example'>[]
+  headline: ''
+  brief: null
+  applications: never[]
+  summary: never[]
+  excerpts: { id: string; title: string; icon: string; lead: string; paragraphs: never[]; evidence: never[] }[]
   contents: { id: string; title: string }[]
-  monthly: { label: string; lead: string }[]
+  monthly: never[]
   needsPartner: boolean
-  extras: { question: InsightQuestion; symbols: SymbolCard[] } | null
-}
-function excerpt(chapter: ReportChapter, paired = false) {
-  const content = [chapter.lead, ...chapter.paragraphs].filter(line => !/^(Reading basis:|About this reading:)/.test(line))
-  const excerptParagraphCount = Math.min(paired ? 2 : 1, Math.max(0, chapter.paragraphs.length - 1), Math.max(0, content.length - 1))
-  return { id: chapter.id, title: chapter.title.replace(/^\d+ · /, ''), icon: chapter.icon ?? chapter.id, lead: content[0] ?? chapter.lead, paragraphs: chapter.example ? [] : content.slice(1, 1 + excerptParagraphCount), ...(chapter.example ? { example: chapter.example } : {}), evidence: chapter.evidence.slice(0, 2) }
+  extras: null
 }
 
-function extrasExcerpt(extras: ReportExtras) {
-  return { question: extras.questions[0], symbols: extras.symbols }
+const SAMPLE_WORDING: Record<PreviewKind, string> = {
+  complete: 'Illustrative wording: “Your report connects a personal theme with the questions that matter in daily life.”',
+  career: 'Illustrative wording: “Your report explores how your working style and money patterns fit together.”',
+  compatibility: 'Illustrative wording: “Your report looks at how two different communication styles can meet.”',
+  year: 'Illustrative wording: “Your report explains how the year is organised and where to read each month.”',
+  business: 'Illustrative wording: “Your report explores the working conditions that may support your business style.”',
+  wellbeing: 'Illustrative wording: “Your report describes personal patterns in clear, everyday language.”',
+  love: 'Illustrative wording: “Your report explores relationship themes in clear, everyday language.”',
+  bundle: 'Illustrative wording: “Your report connects life, relationships, work, money and timing in one reading.”',
 }
-function buyerQuestionContents(kind: Exclude<PreviewKind, 'bundle'>) {
-  const questionKind = kind === 'complete' ? 'complete' : kind
-  return BUYER_QUESTIONS[questionKind].map((question, index) => ({ id: `question-${index + 1}`, title: question.question }))
-}
-function collectionQuestionContents() {
-  return COLLECTION_BUYER_QUESTIONS.complete!.map((question, index) => ({ id: `question-${index + 1}`, title: question.question }))
-}
-/** A limited personal preview. No full text, purchase receipt or paid entitlement. */
-export function buildPersonalPreview(kind: PreviewKind, draft: PreviewDraft, independentAudit?: IndependentPillarAudit): PersonalPreview {
+
+/** Validate required inputs, but do not calculate or return a personal interpretation. */
+export function buildPersonalPreview(kind: PreviewKind, draft: PreviewDraft): PersonalPreview {
   const first = normalizePreviewBirth(draft.first)
   if (!first) throw new Error('Valid birth details and a birthplace time zone are needed')
-  const a = calculateSaju(first)
-  const snapshot = buildFreeReading(a)
-  const subjectA = { label: kind === 'compatibility' || kind === 'bundle' ? 'Person A' : 'Your birth details', birthSummary: snapshot.birthSummary, dayMaster: snapshot.dayMaster, pillarSummary: snapshot.pillarSummary }
-  const second = normalizePreviewBirth(draft.second)
-  const paired = kind === 'compatibility' || kind === 'bundle'
-  if (paired && !second) return { title: previewProduct(kind).title, subjects: [subjectA], headline: snapshot.headline, brief: null, applications: [], summary: [], excerpts: [], contents: [], monthly: [], needsPartner: true, extras: null }
-  const currentYear = new Date().getFullYear()
-  const annualWindow = kind === 'year' || kind === 'bundle' ? (draft.periodStart
-    ? { start: draft.periodStart, end: draft.periodStart, timezone: draft.periodTimezone ?? 'UTC' }
-    : nextTwelveMonthWindow(new Date(), Intl.DateTimeFormat().resolvedOptions().timeZone)) : undefined
-  const annualStart = annualWindow ? parseCalendarMonth(annualWindow.start) : undefined
-  const year = annualStart?.year ?? draft.year ?? currentYear + 1
-  if (!Number.isInteger(year) || year < first.year || year > 2100 || year < 1900) throw new Error('Choose a valid report year')
-  if (kind === 'complete') {
-    const full = buildCompleteReading(a, currentYear, independentAudit)
-    return { title: full.title, subjects: [subjectA], headline: full.headline, brief: buildReadingBrief(full.chapters.find(chapter => chapter.id === 'career')!, undefined, full.focus), summary: full.summary, applications: full.applications, excerpts: ['career', 'love', 'money'].map(id => excerpt(full.chapters.find(chapter => chapter.id === id)!)), contents: buyerQuestionContents('complete'), monthly: [], needsPartner: false, extras: extrasExcerpt(full.extras) }
+  if (kind === 'compatibility' || kind === 'bundle') {
+    if (!normalizePreviewBirth(draft.second)) {
+      return { title: previewProduct(kind).title, subjects: [], headline: '', brief: null, applications: [], summary: [], excerpts: [], contents: [], monthly: [], needsPartner: true, extras: null }
+    }
   }
-  const b = second ? calculateSaju(second) : undefined
-  if (kind === 'bundle') {
-    const bundle = buildBundleReading(a, b!, year, currentYear, annualWindow?.start, annualWindow?.timezone)
-    return { title: bundle.title, subjects: bundle.compatibility.subjects, headline: bundle.complete.headline, brief: buildReadingBrief(bundle.complete.chapters[0], 'Person A · Your Life, Your Destiny', bundle.complete.focus), summary: bundle.summary, applications: [], excerpts: [excerpt(bundle.complete.chapters[0]), excerpt(bundle.annual.chapters[0]), excerpt(bundle.compatibility.chapters[1], true), excerpt(bundle.career.chapters[0]), excerpt(bundle.love.chapters[0])], contents: collectionQuestionContents(), monthly: [], needsPartner: false, extras: extrasExcerpt(bundle.compatibility.extras) }
+  if (kind === 'year' && draft.year != null && (!Number.isInteger(draft.year) || draft.year < first.year || draft.year > 2100)) {
+    throw new Error('Choose a valid report year')
   }
-  const full = buildCategoryReading(kind, a, { second: b, year: kind === 'year' ? year : currentYear, ...(annualWindow ? { periodStart: annualWindow.start, periodTimezone: annualWindow.timezone } : {}) })
-  return { title: full.title, subjects: paired ? full.subjects : [subjectA], headline: full.headline, brief: buildReadingBrief(full.chapters[0], undefined, full.focus), summary: full.summary, applications: full.applications, excerpts: full.chapters.slice(0, 3).map(chapter => excerpt(chapter, paired)), contents: buyerQuestionContents(kind), monthly: full.months.map(month => ({ label: month.label, lead: month.lead })), needsPartner: false, extras: extrasExcerpt(full.extras) }
+  const questions = buyerQuestionTitles(kind)
+  return {
+    title: previewProduct(kind).title,
+    subjects: [],
+    headline: '',
+    brief: null,
+    applications: [],
+    summary: [],
+    excerpts: [{ id: 'sample-wording', title: 'A short wording example', icon: 'sample', lead: SAMPLE_WORDING[kind], paragraphs: [], evidence: [] }],
+    contents: questions.map((title, index) => ({ id: `question-${index + 1}`, title })),
+    monthly: [],
+    needsPartner: false,
+    extras: null,
+  }
 }
 
-/** Export only what the visitor can read in the free preview. */
+/** Export only the safe product sample, question titles and generic wording. */
 export function personalPreviewText(preview: PersonalPreview): string {
   if (preview.needsPartner || preview.excerpts.length === 0) throw new Error('Complete the birth details before saving a preview')
   return plainReadingText([
     'THE FATE KEY · FREE PERSONAL PREVIEW', preview.title,
-    'Selected passages only. This is not an issued paid report.',
-    ...preview.subjects.flatMap(person => [person.label, person.birthSummary, person.dayMaster, person.pillarSummary.join(' · ')]),
-    preview.headline,
-    ...(preview.brief ? [readingBriefText(preview.brief)] : []),
-    ...(preview.applications.length ? ['Situations you can work through', ...preview.applications.map(applicationText)] : []),
-    ...preview.summary.map(theme => `${theme.label}\n${theme.text}`),
-    ...preview.excerpts.flatMap(section => [section.title, section.lead, ...(section.example ? everydayExampleText(section.example) : []), ...section.paragraphs, 'Chart notes: ' + section.evidence.join(' · ')]),
-    ...(preview.extras ? [preview.extras.question.question, preview.extras.question.answer, 'Chart note: ' + preview.extras.question.basis,
-      ...preview.extras.symbols.map(symbol => `${symbol.person} · ${symbol.element}\nColours: ${symbol.colors.map(color => color.name).join(', ')}\nNumbers: ${symbol.numbers.join(' · ')}\n${symbol.use}\n${symbol.basis}`), SYMBOL_NOTE] : []),
-    ...preview.monthly.map(month => `${month.label}\n${month.lead}`),
-    'Full report contents (the full chapters are not included in this preview)',
+    'This is not an issued paid report. It is a design and wording sample only; no personal reading or paid answer is included.',
+    ...preview.excerpts.flatMap(section => [section.title, section.lead]),
+    'Questions answered in the paid report',
     ...preview.contents.map((item, index) => `${index + 1}. ${item.title}`),
-    'Traditional Saju interpretation for personal reflection. These are not guaranteed outcomes.',
+    'Full interpretations and timing are provided with the paid report.',
   ].join('\n\n'))
 }

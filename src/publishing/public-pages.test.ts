@@ -1,10 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { JSDOM } from 'jsdom'
-import { calculateSaju } from '@orrery/core/saju'
-import { CATEGORY_SCENARIOS } from '../report/category-catalog.ts'
-import { buildCategoryReading } from '../report/category-readings.ts'
-import { buildCompleteReading } from '../report/complete-reading.ts'
-import { plainReadingText } from '../report/reading-text.ts'
+import { buyerQuestionTitles } from '../report/personal-products.ts'
 import { publicContent, renderDocument, sitemap } from './render-public.tsx'
 import { publishingIdentity, publicPaths, PUBLIC_SAMPLES } from './site-config.ts'
 
@@ -22,43 +18,28 @@ describe('public reading publication and AdSense preflight',()=>{
       expect(html.match(/<h1[ >]/g)).toHaveLength(1)
       expect(html).not.toContain('<script')
       // The contact utility page is checked for its real address and guidance below.
-      if(page.path!=='/contact/')expect(text(page.body).split(' ').length).toBeGreaterThan(200)
+      if(page.path!=='/contact/')expect(text(page.body).split(' ').length).toBeGreaterThan(100)
       expect(html).not.toMatch(/sky\.told\.me|ca-pub-|adsbygoogle|googlesyndication|under construction/i)
     }
   })
-  it('includes all situations, chapters, examples and source notes from the actual six sample models',()=>{
-    const first=calculateSaju(CATEGORY_SCENARIOS[0].first)
-    const second=calculateSaju(CATEGORY_SCENARIOS[0].second)
+  it('serves question titles and a short generic sample without private report content',()=>{
     for(const sample of PUBLIC_SAMPLES){
-      const report=sample.kind==='complete'?buildCompleteReading(first,2026):buildCategoryReading(sample.kind,first,{second:sample.kind==='compatibility'?second:undefined,year:sample.kind==='year'?2027:2026})
       const page=pages.find(p=>p.path===`/samples/${sample.slug}/`)!
       const rendered=text(page.body)
-      expect(rendered.split(' ').length).toBeGreaterThan(3000)
-      for(const ch of report.chapters){
-        expect(rendered).toContain(ch.title)
-        for(const paragraph of ch.paragraphs)expect(rendered).toContain(plainReadingText(paragraph).replace(/\s+/g,' '))
-        for(const fact of ch.evidence)expect(rendered).toContain(fact)
-      }
-      for(const item of report.applications){
-        expect(page.body).toContain(`id="${item.id}"`)
-        expect(rendered).toContain(item.title)
-        expect(rendered).toContain(item.doesNotFit)
-        for(const step of item.steps)expect(rendered).toContain(plainReadingText(step))
-      }
-      expect(rendered).toContain(report.extras.reminder)
-      for(const note of report.methodNotes)expect(rendered).toContain(note)
-      expect(rendered).toContain('No order or payment has been made')
+      expect(rendered.split(' ').length).toBeLessThan(350)
+      for(const question of buyerQuestionTitles(sample.kind))expect(rendered).toContain(question)
+      expect(rendered).toContain('general writing sample')
+      expect(page.body).not.toMatch(/Your Answer:|Chart note:|An everyday example|personalised\s+to/i)
       expect(rendered).not.toContain('**')
     }
   })
-  it('keeps both people and all twelve calculated monthly references in their appropriate examples',()=>{
+  it('does not reveal partner birth details or calculated monthly references in public samples',()=>{
     const pair=text(pages.find(p=>p.path==='/samples/love-compatibility/')!.body)
-    expect(pair).toContain('25 March 1998 · 03:00 · America/New_York')
-    expect(pair).toContain('18 August 2000 · 14:30 · Europe/London')
+    expect(pair).not.toContain('25 March 1998')
+    expect(pair).not.toContain('18 August 2000')
     const year=text(pages.find(p=>p.path==='/samples/year-ahead/')!.body)
-    for(const month of ['January','February','March','April','May','June','July','August','September','October','November','December'])expect(year).toContain(month+' 2027')
-    expect(year).toContain('2027-07-15')
-    expect(year.toLowerCase()).toContain('solar-term boundaries')
+    expect(year).not.toContain('2027-07-15')
+    expect(year).not.toContain('January 2027')
   })
   it('keeps ownership verification separate from serving advertising',()=>{
     const configured=publishingIdentity({FATE_ADSENSE_PUBLISHER_ID:'pub-1234567890123456'})
@@ -104,26 +85,26 @@ describe('public reading publication and AdSense preflight',()=>{
 })
 
 
-describe('r14 actual public reading layout',()=>{
- it('shows all twelve months in the overview and links each to its full reading',()=>{
-  const dom=new JSDOM(pages.find(p=>p.path==='/samples/year-ahead/')!.body)
-  const table=dom.window.document.querySelector('.public-month-overview')!
-  expect(table.querySelectorAll('tbody tr')).toHaveLength(12)
-  for(let month=1;month<=12;month++){
-   expect(table.querySelector(`a[href="#month-${month}"]`)).not.toBeNull()
-   expect(dom.window.document.getElementById('month-'+month)).not.toBeNull()
+describe('public preview data protection',()=>{
+ it('never serializes generated report text into static public sample pages',()=>{
+  for(const sample of PUBLIC_SAMPLES){
+   const page=pages.find(p=>p.path===`/samples/${sample.slug}/`)!
+   expect(page.body).not.toMatch(/<button|<details|Your Answer:|Reading basis:|Chart evidence|Hidden insight/i)
   }
-  dom.window.close()
  })
- it('prints a chapter practical point once, including short summary chapters',()=>{
-  const report=buildCategoryReading('year',calculateSaju(CATEGORY_SCENARIOS[0].first),{year:2027})
-  const dom=new JSDOM(pages.find(p=>p.path==='/samples/year-ahead/')!.body)
-  for(const chapter of [...report.chapters,...report.months]){
-   const node=dom.window.document.getElementById(chapter.id)!
-   const copies=[...node.querySelectorAll('p,li')].filter(p=>p.textContent===plainReadingText(chapter.tryThis))
-   expect(copies,chapter.id).toHaveLength(chapter.showGuidance===false?0:1)
-  }
-  dom.window.close()
+  it('keeps all 7 sold preview question counts aligned with the current buyer question contract',()=>{
+    const sold = [
+      ['complete', 'complete-life-reading', 7], ['career', 'career-money', 7],
+      ['compatibility', 'love-compatibility', 7], ['year', 'year-ahead', 7],
+      ['business', 'business-reading', 7], ['wellbeing', 'everyday-balance', 7],
+    ] as const
+    for (const [kind, slug, expected] of sold) {
+      expect(buyerQuestionTitles(kind)).toHaveLength(expected)
+      const page = pages.find(item => item.path === `/samples/${slug}/`)!
+      expect((page.body.match(/<li>/g) ?? []).length).toBe(expected)
+    }
+    expect(buyerQuestionTitles('bundle')).toHaveLength(10)
+    expect(buyerQuestionTitles('bundle').every(question => pages.find(item => item.path === '/samples/')!.body.includes('ten-question'))).toBe(true)
  })
 })
 
