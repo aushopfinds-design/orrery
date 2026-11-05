@@ -23,3 +23,18 @@
 
 /* Keep the light label readable over the dark sample CTA despite the site-wide link colour. */
 .fate-public a.public-button,.fate-public .public-button a{color:#fff3d6}
+
+
+/* Celestial gold website refresh — public reading, sample and information pages. */
+.fate-public{--public-navy:#101a34;--public-gold:#a8772d;--public-line:#d7b77b;--public-paper:#fff8ed;background:linear-gradient(180deg,#0b1430 0,#1a2544 210px,#fff8ed 510px);color:#263047}
+.fate-public .public-header{background:radial-gradient(circle at 50% -30%,#9b6a32 0,transparent 33%),radial-gradient(circle at 15% 38%,#f3d68a 0 1px,transparent 2px),radial-gradient(circle at 82% 22%,#f3d68a 0 1px,transparent 2px),linear-gradient(110deg,#091229,#172447 55%,#0b1430);border-bottom:2px solid #c59a4e;box-shadow:0 8px 25px #0a102230}
+.fate-public .public-brand{color:#f3d18b}.fate-public .public-brand svg{filter:drop-shadow(0 0 7px #e1ac55a0)}
+.fate-public main{background:linear-gradient(155deg,#fffaf1,#fff6e9 55%,#f7ebd9);border:1px solid #dfc38e;box-shadow:0 14px 48px #09142b22;min-height:60vh}
+.fate-public .public-home-intro,.fate-public .public-sample-cover{position:relative;border:1px solid #caa35c;border-radius:18px;padding:clamp(24px,5vw,48px);background:radial-gradient(circle at 12% 15%,#fff3ce 0 1px,transparent 3px),radial-gradient(circle at 85% 23%,#fff0c6 0 2px,transparent 4px),linear-gradient(160deg,#111c39,#243454 72%,#101b37);color:#fff4df;box-shadow:inset 0 0 0 5px #1b2946,inset 0 0 0 6px #c9a05a,0 12px 28px #17203a2a}
+.fate-public .public-home-intro h1,.fate-public .public-sample-cover h2{color:#fff5dc;text-shadow:0 2px 18px #d3a25866}
+.fate-public .public-home-intro p,.fate-public .public-sample-cover p{color:#f6e8d2}
+.fate-public .public-home-intro .public-eyebrow,.fate-public .public-sample-cover .public-eyebrow{color:#f3cc82}
+.fate-public .public-button{background:linear-gradient(135deg,#29395a,#0c1631);border:1px solid #d7aa57;color:#fff7e5;box-shadow:0 4px 18px #121a3033}
+.fate-public .public-cards article,.fate-public .public-learning-grid article,.fate-public .public-guidance>section,.fate-public .public-options>section{border:1px solid #d3b16f;background:linear-gradient(155deg,#fffdf7,#fff5e7);box-shadow:0 7px 20px #2d244011}
+.fate-public .public-toc,.fate-public .public-notice,.fate-public .public-overview,.fate-public .public-chart{border:1px solid #cba96c;background:linear-gradient(150deg,#fffaf1,#f4e6d0)}
+@media(max-width:760px){.fate-public{background:#fff8ed}.fate-public main{border-left:0;border-right:0;box-shadow:none}.fate-public .public-home-intro,.fate-public .public-sample-cover{padding:24px 19px}}
