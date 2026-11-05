@@ -61,7 +61,7 @@ async function main() {
             // A gradient CTA has a transparent computed backgroundColor even
             // though its visible background is opaque. Compare against its
             // darkest declared gradient stop instead of the cream page behind it.
-            const gradientStops = style.backgroundImage.match(/#[\da-f]{3,8}\b/gi) || []
+            const gradientStops = style.backgroundImage.match(/#[\da-f]{3,8}\b|rgba?\([^)]*\)/gi) || []
             if (gradientStops.length) {
               const darkest = gradientStops.map(color => ({ color, light: luminance(color) })).sort((a, b) => a.light - b.light)[0]
               if (darkest) background = darkest.color
