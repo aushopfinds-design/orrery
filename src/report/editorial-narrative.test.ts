@@ -88,7 +88,9 @@ describe('Calculated interpretation before optional advice', () => {
     expect(bundle.fullText).not.toContain('**')
     const html = renderToStaticMarkup(createElement(BundleSamplePage))
     expect(html).toContain(bundle.overview.title)
-    expect(html.indexOf(bundle.overview.title)).toBeLessThan(html.indexOf('fate-bundle-tabs'))
+    expect(html.indexOf(bundle.overview.title)).toBeLessThan(html.indexOf('Questions in the paid collection'))
+    expect(html).toContain('SHORT EXAMPLE · NOT A CUSTOMER READING')
+    expect(html).toContain('not personalised, calculated from a birth chart, or a complete paid answer')
     for (const report of [bundle.complete, bundle.compatibility, bundle.annual]) {
       expect(report.fullText).toContain('Report edition ' + REPORT_EDITION)
       expect(bundle.fullText).toContain(splitDeliveredReading(report.fullText).body)
