@@ -23,6 +23,14 @@ export default function ReadingView({ prefix = 'sample-report' }: { input: Birth
         <p>This demonstration uses a fictional reader named Avery. No birth details or chart calculations are used. It is not a personal reading.</p>
         <span className="fate-sample-ribbon">FICTIONAL EXAMPLE · NOT A CUSTOMER REPORT</span>
       </div>
+      <svg className="fate-sample-cover-art" viewBox="0 0 300 260" aria-hidden="true">
+        <circle cx="165" cy="126" r="92" fill="none" stroke="#d0aa67" strokeWidth="1" opacity=".62" />
+        <circle cx="165" cy="126" r="70" fill="none" stroke="#d0aa67" strokeWidth="1" strokeDasharray="2 8" opacity=".72" />
+        <path d="M207 44a64 64 0 1 0 48 95 57 57 0 0 1-48-95Z" fill="#d8b778" opacity=".92" />
+        <circle cx="66" cy="70" r="3" fill="#f0d69f" /><path d="m66 57 3 10 10 3-10 3-3 10-3-10-10-3 10-3Z" fill="#f0d69f" />
+        <circle cx="236" cy="204" r="3" fill="#f0d69f" />
+        <path d="M105 160a31 31 0 1 1 22 30l-17 17 10 10-9 9-10-10-12 12-10-10 29-29a31 31 0 0 1-3-29Zm31-19a10 10 0 1 0 0 20 10 10 0 0 0 0-20Z" fill="none" stroke="#e5c47e" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
     </header>
 
     <section className="fate-reading-chapter fate-sample-introduction">
