@@ -104,7 +104,13 @@ describe('public preview data protection',()=>{
       expect((page.body.match(/<li>/g) ?? []).length).toBe(expected)
     }
     expect(buyerQuestionTitles('bundle')).toHaveLength(10)
-    expect(buyerQuestionTitles('bundle').every(question => pages.find(item => item.path === '/samples/')!.body.includes('ten-question'))).toBe(true)
+    expect(pages.find(item => item.path === '/samples/complete-destiny/')!.body.match(/<li>/g)).toHaveLength(10)
+    expect(PUBLIC_SAMPLES).toHaveLength(7)
+    expect(pages.find(item => item.path === '/samples/')!.body).not.toContain('Legacy: My Love')
+    expect(buyerQuestionTitles('compatibility')[0]).toBe('What makes us compatible?')
+    expect(buyerQuestionTitles('year')[1]).toBe('What should I focus on most this year?')
+    expect(buyerQuestionTitles('business')[3]).toBe('What financial risks should I understand?')
+    expect(buyerQuestionTitles('bundle')[0]).toBe('What kind of person are you at your core?')
  })
 })
 

@@ -56,6 +56,35 @@ export function buyerQuestionTitles(kind: PreviewKind) {
     'When could a longer-term life or work shift deserve attention?',
     'How do these parts of your life connect?',
   ]
+  // The category PDF pages have a buyer-led order that differs from the
+  // source chapter order. This display-only list mirrors the printed PDFs.
+  if (kind === 'compatibility') return [
+    'What makes us compatible?',
+    'Why are we attracted to each other?',
+    'What tends to cause friction between us?',
+    'How do we express love differently?',
+    'How do emotional closeness and everyday compatibility differ?',
+    'Which upcoming periods may affect our relationship themes?',
+    'What does this connection ask of each of us?',
+  ]
+  if (kind === 'year') return [
+    'What is the overall theme of my next 12 months?',
+    'What should I focus on most this year?',
+    'What does it suggest for money?',
+    'What does this period suggest for my career?',
+    'What does it suggest for love?',
+    'Which months have more supportive chart relationships?',
+    'Which months require closer attention?',
+  ]
+  if (kind === 'business') return [
+    'Does my chart support business-oriented traits?',
+    'What kind of business work suits me?',
+    'Am I better suited to working alone or with partners?',
+    'What financial risks should I understand?',
+    'When might expansion deserve a closer look?',
+    'What do my upcoming cycles suggest about business activity?',
+    'What should I be careful about in business?',
+  ]
   return BUYER_QUESTIONS[kind].map(question => question.question)
 }
 
