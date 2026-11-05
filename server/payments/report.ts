@@ -253,16 +253,8 @@ async function reportPdf(report: BuyerReport, orderId: string, emphasis: string[
           page.drawCircle({ x, y: yy + 26, size: .65, color: gold, opacity: .48 })
         }
       }
-      // A quiet celestial medallion, visible through the parchment rather than over it.
-      for (const radius of [113, 121, 148]) page.drawCircle({ x: W / 2, y: H / 2, size: radius, borderColor: gold, borderWidth: .7, borderOpacity: .28 })
-      for (let i = 0; i < 12; i++) {
-        const angle = i * Math.PI / 6
-        const x = W / 2 + Math.cos(angle) * 135, yy = H / 2 + Math.sin(angle) * 135
-        star(x, yy, i % 3 === 0 ? 8 : 3, .28)
-      }
-      page.drawCircle({ x: W / 2, y: H / 2 + 24, size: 32, borderColor: gold, borderWidth: 1, borderOpacity: .28 })
-      page.drawLine({ start: { x: W / 2, y: H / 2 - 8 }, end: { x: W / 2, y: H / 2 - 83 }, color: gold, thickness: 1, opacity: .28 })
-      for (const offset of [60, 75]) page.drawLine({ start: { x: W / 2, y: H / 2 - offset }, end: { x: W / 2 + 18, y: H / 2 - offset }, color: gold, thickness: 1, opacity: .28 })
+      // Celestial detail stays in the outer margins; a central medallion
+      // crossed body copy in narrow and mobile PDF viewers.
     }
   }
   const addPage = () => {
@@ -316,31 +308,35 @@ async function reportPdf(report: BuyerReport, orderId: string, emphasis: string[
   }
   // A private letter, with honest Sandbox labelling kept separate from the story.
   frame(true)
-  centre('THE FATE KEY', 744, 17)
-  centre('A PRIVATE LETTER OF DESTINY', 708, 10, moonlight)
-  // Luminous crescent over a translucent envelope silhouette.
-  page.drawCircle({ x: W / 2, y: 620, size: 37, color: moonlight, opacity: .92 })
-  page.drawCircle({ x: W / 2 + 17, y: 629, size: 34, color: night })
-  page.drawRectangle({ x: 130, y: 423, width: W - 260, height: 136, color: moonlight, opacity: .055, borderColor: gold, borderWidth: .6, borderOpacity: .6 })
-  page.drawLine({ start: { x: 130, y: 559 }, end: { x: W / 2, y: 459 }, color: moonlight, thickness: .65, opacity: .32 })
-  page.drawLine({ start: { x: W - 130, y: 559 }, end: { x: W / 2, y: 459 }, color: moonlight, thickness: .65, opacity: .32 })
-  key(W / 2, 538, .72)
-  for (const [x, yy] of [[130, 625], [443, 580], [168, 475], [412, 690]]) {
-    page.drawLine({ start: { x: x - 4, y: yy }, end: { x: x + 4, y: yy }, color: gold, thickness: .6 })
-    page.drawLine({ start: { x, y: yy - 4 }, end: { x, y: yy + 4 }, color: gold, thickness: .6 })
+  const coverBorder = 48
+  page.drawRectangle({ x: coverBorder, y: coverBorder, width: W - coverBorder * 2, height: H - coverBorder * 2, borderColor: gold, borderWidth: .8 })
+  page.drawRectangle({ x: coverBorder + 5, y: coverBorder + 5, width: W - (coverBorder + 5) * 2, height: H - (coverBorder + 5) * 2, borderColor: gold, borderWidth: .25, borderOpacity: .65 })
+  for (const [x, yy, size] of [[86, 735, 2.5], [W - 86, 735, 2.5], [86, 105, 2.5], [W - 86, 105, 2.5], [130, 664, 1.8], [W - 130, 664, 1.8], [130, 170, 1.8], [W - 130, 170, 1.8]] as const) {
+    page.drawLine({ start: { x: x - size * 2, y: yy }, end: { x: x + size * 2, y: yy }, color: gold, thickness: .65, opacity: .75 })
+    page.drawLine({ start: { x, y: yy - size * 2 }, end: { x, y: yy + size * 2 }, color: gold, thickness: .65, opacity: .75 })
+    page.drawCircle({ x, y: yy, size: .9, color: gold })
   }
-  const words = report.title.split(' '); let titleLine = '', titleY = 367
+  // Ivory stationery inset, matching the approved celestial letter direction.
+  page.drawRectangle({ x: 77, y: 168, width: W - 154, height: 492, color: paper, borderColor: gold, borderWidth: 1.1 })
+  page.drawRectangle({ x: 84, y: 175, width: W - 168, height: 478, borderColor: parchmentEdge, borderWidth: .45 })
+  page.drawCircle({ x: W / 2, y: 602, size: 30, color: moonlight, opacity: .95 })
+  page.drawCircle({ x: W / 2 + 13, y: 610, size: 27, color: paper })
+  key(W / 2, 575, .28)
+  centre('THE FATE KEY', 526, 13, night, font)
+  page.drawLine({ start: { x: 145, y: 499 }, end: { x: W - 145, y: 499 }, color: gold, thickness: .55, opacity: .8 })
+  centre('A PRIVATE LETTER OF DESTINY', 474, 9, muted, font)
+  const words = report.title.split(' '); let titleLine = '', titleY = 416
   for (const word of words) {
     const candidate = titleLine ? titleLine + ' ' + word : word
-    if (display.widthOfTextAtSize(candidate, 29) > W - 120 && titleLine) { centre(titleLine, titleY, 29, paper); titleY -= 37; titleLine = word }
+    if (font.widthOfTextAtSize(candidate, 25) > W - 190 && titleLine) { centre(titleLine, titleY, 25, night, font); titleY -= 34; titleLine = word }
     else titleLine = candidate
   }
-  centre(titleLine, titleY, 29, paper)
-  centre('A letter written beneath the moonlight.', 245, 16, paper, italic)
-  centre('Prepared from the birth details inside', 194, 10, paper, display)
-  centre('Edition ' + report.edition + ' / ' + report.issuedAt.slice(0, 10), 163, 9)
-  if (report.reference) centre(report.reference, 135, 8, gold, font)
-  centre(mode === 'test' ? 'SANDBOX TEST / No real payment charged' : 'YOUR PRIVATE READING', 83, 9, paper, display)
+  centre(titleLine, titleY, 25, night, font)
+  centre('A letter written beneath the moonlight.', 350, 12, muted, italic)
+  centre('Prepared from the birth details inside', 311, 9, muted, font)
+  centre('Edition ' + report.edition + ' / ' + report.issuedAt.slice(0, 10), 283, 8, gold, font)
+  if (report.reference) centre(report.reference, 256, 7, muted, font)
+  centre(mode === 'test' ? 'SANDBOX TEST / No real payment charged' : 'YOUR PRIVATE READING', 202, 8, night, font)
   addPage()
   const greeting = report.recipientName ? clean(`Dear ${report.recipientName},`) : 'Dear reader,'
   const greetingSize = Math.min(27, (W - 108) / font.widthOfTextAtSize(greeting, 1))
