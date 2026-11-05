@@ -1,23 +1,25 @@
 import { describe, expect, it } from 'vitest'
 import { calculateSaju } from '../../packages/core/src/saju.ts'
 import { CATEGORY_SCENARIOS } from '../../src/report/category-catalog.ts'
-import { buildPersonalPreview } from '../../src/report/personal-preview.ts'
-import { plainReadingText } from '../../src/report/reading-text.ts'
+import { buildPersonalPreview, personalPreviewText } from '../../src/report/personal-preview.ts'
 import { auditBirthInput } from './independent-audit.ts'
 import { issueReport } from './report.ts'
 
 describe('My Life customer audit integration', () => {
-  it('uses the same verified passage in personal preview, issued report, and its generated PDF', async () => {
+  it('keeps the personal preview generic while the purchased report retains verified calculation notes', async () => {
     const first = CATEGORY_SCENARIOS[0].first
     const current = calculateSaju(first)
     const audit = await auditBirthInput(first, current)
     expect(audit).toBeDefined()
-    const preview = buildPersonalPreview('complete', { first }, audit)
-    const excerpt = preview.excerpts.find(section => section.id === 'career')!
+    const preview = buildPersonalPreview('complete', { first })
+    const previewText = personalPreviewText(preview)
     const issued = await issueReport({ kind: 'complete', first }, '12345678-1234-4234-8234-123456789012', 2026)
-    const samePassage = plainReadingText(excerpt.lead)
-    expect(audit?.current.slice(0, 3)).toEqual(audit?.independent.slice(0, 3))
-    expect(issued.text).toContain(samePassage)
+    expect(preview.excerpts).toHaveLength(1)
+    expect(previewText).toContain('Illustrative wording:')
+    expect(previewText).not.toContain('Reading basis:')
+    expect(previewText).not.toContain('From the chart:')
+    expect(previewText).not.toContain('25 March 1998')
+    expect(previewText).not.toContain(audit!.current.join(' '))
     expect(Buffer.from(issued.pdf, 'base64').subarray(0, 5).toString()).toBe('%PDF-')
     expect(issued.text).toContain('Independent calculation cross-check:')
   })
