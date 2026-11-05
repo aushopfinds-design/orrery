@@ -59,3 +59,29 @@
 .fate-decision-evidence summary { min-height: 44px; cursor: pointer; padding-block: 10px; color: #75562e; }
 .fate-decision-evidence li { margin-block: 7px; overflow-wrap: anywhere; }
 @media(max-width:740px) { .fate-decision-steps { grid-template-columns: minmax(0,1fr); } }
+
+/* Complete public design sample; sample answers are clearly fictional and separate from paid readings. */
+.fate-full-sample{max-width:920px;margin-inline:auto}
+.fate-sample-ribbon{display:inline-flex;margin-top:15px;padding:8px 13px;border:1px solid #c5a46a;border-radius:999px;color:#f4dfb0;font-size:11px;font-weight:700;letter-spacing:.1em}
+.fate-sample-introduction,.fate-sample-summary,.fate-sample-paid-difference{padding:clamp(22px,4vw,38px);border:1px solid #d8c5a2;border-radius:18px;background:linear-gradient(145deg,#fffdf8,#f7efdf);box-shadow:0 8px 22px #142b3d12}
+.fate-sample-at-glance{margin-top:22px;padding:18px 21px;border-left:3px solid #b38c4b;background:#f0e3ca80}
+.fate-sample-at-glance h3{margin:0 0 10px;font:700 20px/1.35 Georgia,serif;color:#173146}
+.fate-sample-at-glance ul{margin:0;padding-left:21px}
+.fate-sample-contents{margin:28px 0;padding:clamp(22px,4vw,36px);border:1px solid #d5c09a;border-radius:18px;background:#f4ead7}
+.fate-sample-contents h2{margin-top:0}
+.fate-sample-contents ol{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 24px;padding-left:24px}
+.fate-sample-contents a{color:#654b25;text-underline-offset:3px}
+.fate-sample-contents>a{display:inline-flex;align-items:center;min-height:44px;margin-top:8px;font-weight:700}
+.fate-sample-answer-list{border-top:1px solid #d8c5a2}
+.fate-sample-answer{scroll-margin-top:100px;padding:clamp(22px,4vw,36px);margin:0;border-bottom:1px solid #d8c5a2}
+.fate-sample-answer h2{margin:.3em 0 .7em}
+.fate-sample-direct-answer{font-size:17px;line-height:1.85}
+.fate-sample-answer aside{margin-top:19px;padding:17px 20px;border:1px solid #e0d1b6;border-radius:12px;background:#fbf5e9;color:#4f514c}
+.fate-sample-answer aside>strong{color:#765a2e}
+.fate-sample-answer aside p{margin:7px 0 0;font-size:14px;line-height:1.75}
+.fate-sample-summary{margin-top:32px;border-color:#c5a46a}
+.fate-sample-paid-difference{margin:26px 0 50px}
+.fate-sample-paid-difference .fate-complete-primary{margin:10px 12px 8px 0}
+.fate-sample-paid-difference .fate-buyer-sample-link{display:inline-flex;align-items:center;min-height:44px}
+@media(max-width:640px){.fate-sample-contents ol{grid-template-columns:minmax(0,1fr);gap:2px}.fate-sample-answer{padding:23px 18px}.fate-sample-direct-answer{font-size:16px}.fate-sample-answer aside{padding:15px}.fate-sample-introduction,.fate-sample-summary,.fate-sample-paid-difference{padding:22px 18px}}
+@media print{.fate-sample-contents a,.fate-sample-paid-difference .fate-complete-primary,.fate-sample-paid-difference .fate-buyer-sample-link{display:none}.fate-sample-answer{break-inside:avoid}.fate-sample-introduction,.fate-sample-summary,.fate-sample-paid-difference{box-shadow:none}}
