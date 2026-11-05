@@ -47,7 +47,10 @@ async function main() {
           const outOfBounds = [...document.querySelectorAll('img,svg,canvas,table,button,a[role="button"]')].filter(element => visible(element) && element.getBoundingClientRect().right > viewportWidth + 1).map(rectData).slice(0, 20)
           const actions = [...document.querySelectorAll('button,a.public-button,a[role="button"]')].filter(visible).map(element => ({ element, rect: element.getBoundingClientRect(), data: rectData(element) }))
           const luminance = color => {
-            const channels = color.match(/[\d.]+/g)?.slice(0, 3).map(Number) || [0, 0, 0]
+            const hex = color.match(/^#([\da-f]{3}|[\da-f]{6})$/i)?.[1]
+            const channels = hex
+              ? (hex.length === 3 ? [...hex].map(value => parseInt(value + value, 16)) : hex.match(/../g).map(value => parseInt(value, 16)))
+              : color.match(/[\d.]+/g)?.slice(0, 3).map(Number) || [0, 0, 0]
             const linear = channels.map(channel => { const value = channel / 255; return value <= 0.04045 ? value / 12.92 : ((value + 0.055) / 1.055) ** 2.4 })
             return 0.2126 * linear[0] + 0.7152 * linear[1] + 0.0722 * linear[2]
           }
@@ -55,7 +58,15 @@ async function main() {
             const style = getComputedStyle(element)
             const foreground = style.color
             let background = style.backgroundColor
-            for (let parent = element.parentElement; parent && (background === 'rgba(0, 0, 0, 0)' || background === 'transparent'); parent = parent.parentElement) background = getComputedStyle(parent).backgroundColor
+            // A gradient CTA has a transparent computed backgroundColor even
+            // though its visible background is opaque. Compare against its
+            // darkest declared gradient stop instead of the cream page behind it.
+            const gradientStops = style.backgroundImage.match(/#[\da-f]{3,8}\b/gi) || []
+            if (gradientStops.length) {
+              const darkest = gradientStops.map(color => ({ color, light: luminance(color) })).sort((a, b) => a.light - b.light)[0]
+              if (darkest) background = darkest.color
+            }
+            for (let parent = element.parentElement; !gradientStops.length && parent && (background === 'rgba(0, 0, 0, 0)' || background === 'transparent'); parent = parent.parentElement) background = getComputedStyle(parent).backgroundColor
             const values = [luminance(foreground), luminance(background)].sort((a, b) => b - a)
             return { text: (element.innerText || '').trim().replace(/\s+/g, ' ').slice(0, 80), foreground, background, ratio: Number(((values[0] + 0.05) / (values[1] + 0.05)).toFixed(2)) }
           })
