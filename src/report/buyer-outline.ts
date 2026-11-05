@@ -208,6 +208,11 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
         const missingNote = chapter.paragraphs[2]
         paragraphs = counts && missingNote ? [`${counts} ${missingNote}`] : [counts, missingNote].filter((line): line is string => Boolean(line))
         chapter.paragraphs.forEach(line => used.add(line))
+      } else if (kind === 'wellbeing' && question.role === 'daily-boundary') {
+        const pressure = byId.get('workload-rhythm')?.paragraphs.find(line => line.startsWith('The pressure to watch is '))
+        lead = `Set a limit on new requests: agree what will wait before accepting added work. ${pressure ?? 'Your chart points to a specific work pattern to watch as demands build.'}`
+        paragraphs = []
+        chapter.paragraphs.forEach(line => used.add(line))
       } else if (kind === 'wellbeing' && question.role === 'pressure-trigger') {
         paragraphs = []
         chapter.paragraphs.forEach(line => used.add(line))
