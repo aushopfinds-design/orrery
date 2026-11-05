@@ -1,8 +1,10 @@
 import { describe, expect, it } from 'vitest'
 import { LOCALES, messages } from './index.ts'
 import en from './locales/en.ts'
+import { koWebsiteCopy } from './locales/ko-website.ts'
 
 const REFERENCE_KEYS = Object.keys(en).sort()
+const KOREAN_APPROVED_KEYS = [...new Set([...REFERENCE_KEYS, ...Object.keys(koWebsiteCopy)])].sort()
 /** Keys whose value is legitimately empty in some languages (CJK-only unit suffixes). */
 const MAY_BE_EMPTY = /Suffix$/
 
@@ -21,10 +23,11 @@ describe('i18n locale parity', () => {
   })
 
   for (const { code } of LOCALES) {
-    it(`'${code}' has exactly the same key set as 'en'`, () => {
+    it(`'${code}' has the expected key set`, () => {
       const keys = Object.keys(messages[code]).sort()
-      const missing = REFERENCE_KEYS.filter(k => !keys.includes(k))
-      const extra = keys.filter(k => !REFERENCE_KEYS.includes(k))
+      const referenceKeys = code === 'ko' ? KOREAN_APPROVED_KEYS : REFERENCE_KEYS
+      const missing = referenceKeys.filter(k => !keys.includes(k))
+      const extra = keys.filter(k => !referenceKeys.includes(k))
       expect(missing, `missing in '${code}'`).toEqual([])
       expect(extra, `extra in '${code}'`).toEqual([])
     })
