@@ -22,4 +22,4 @@
 .fate-public .public-month-overview{min-width:0;table-layout:fixed}.public-month-overview th:first-child{width:24%}.public-month-overview a{display:inline-block;min-height:44px;padding:5px 0}.public-month-overview td{line-height:1.65}
 
 /* Keep the light label readable over the dark sample CTA despite the site-wide link colour. */
-.fate-public a.public-button{color:#fff3d6}
+.fate-public a.public-button,.fate-public .public-button a{color:#fff3d6}

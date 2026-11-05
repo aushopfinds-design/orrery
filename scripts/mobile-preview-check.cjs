@@ -51,9 +51,11 @@ async function main() {
             const linear = channels.map(channel => { const value = channel / 255; return value <= 0.04045 ? value / 12.92 : ((value + 0.055) / 1.055) ** 2.4 })
             return 0.2126 * linear[0] + 0.7152 * linear[1] + 0.0722 * linear[2]
           }
-          const buttonContrast = [...document.querySelectorAll('a.public-button,button')].filter(visible).map(element => {
+          const buttonContrast = [...document.querySelectorAll('.public-button a,a.public-button,button')].filter(visible).map(element => {
             const style = getComputedStyle(element)
-            const foreground = style.color, background = style.backgroundColor
+            const foreground = style.color
+            let background = style.backgroundColor
+            for (let parent = element.parentElement; parent && (background === 'rgba(0, 0, 0, 0)' || background === 'transparent'); parent = parent.parentElement) background = getComputedStyle(parent).backgroundColor
             const values = [luminance(foreground), luminance(background)].sort((a, b) => b - a)
             return { text: (element.innerText || '').trim().replace(/\s+/g, ' ').slice(0, 80), foreground, background, ratio: Number(((values[0] + 0.05) / (values[1] + 0.05)).toFixed(2)) }
           })
@@ -93,7 +95,7 @@ async function main() {
     await browser.close()
   }
   fs.writeFileSync(path.join(outputDir, 'results.json'), JSON.stringify(results, null, 2))
-  const failures = results.filter(result => result.status !== 200 || result.documentWidth > result.viewportWidth + 1 || result.bodyWidth > result.viewportWidth + 1 || !result.main || result.main.right > result.viewportWidth + 1 || result.main.left < -1 || result.clipped.length || result.outOfBounds.length || result.overlaps.length || result.pageErrors.length || result.buttonContrast.some(button => button.ratio < 4.5))
+  const failures = results.filter(result => result.status !== 200 || result.documentWidth > result.viewportWidth + 1 || result.bodyWidth > result.viewportWidth + 1 || !result.main || result.main.right > result.viewportWidth + 1 || result.main.left < -1 || result.clipped.length || result.outOfBounds.length || result.overlaps.length || result.pageErrors.length || !result.buttonContrast.length || result.buttonContrast.some(button => button.ratio < 4.5))
   for (const result of results) {
     console.log(`${failures.includes(result) ? 'FAIL' : 'PASS'} Product ${result.product} @ ${result.width}px: HTTP ${result.status}, viewport ${result.viewportWidth}px, document ${result.documentWidth}px, main ${JSON.stringify(result.main)}, clipped ${result.clipped.length}, out-of-bounds ${result.outOfBounds.length}, overlaps ${result.overlaps.length}, CTA contrast ${result.buttonContrast.map(button => button.ratio).join(',')}, page errors ${result.pageErrors.length}`)
   }
