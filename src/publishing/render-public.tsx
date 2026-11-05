@@ -13,7 +13,7 @@ const mail = (email: string) => `mailto:${encodeURIComponent(email).replace('%40
 const key = '<svg viewBox="0 0 60 124" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="30" cy="33" r="22"/><circle cx="30" cy="33" r="16"/><path d="m30 20 3 10 10 3-10 3-3 10-3-10-10-3 10-3Z M27 55v59l3 6 3-6V55 M33 88h13v6H33 M33 104h13v6H33"/></svg>'
 
 function cards() {
-  return `<div class="public-cards">${PUBLIC_SAMPLES.map(item => `<article><a href="/samples/${item.slug}/"><img src="/images/reports/${item.kind}-v1-640.webp" alt="" width="640" height="427" loading="lazy"/><div><h2>${escape(item.title)}</h2><p>${escape(item.description)}</p><span>View the design and question preview →</span></div></a></article>`).join('')}</div>`
+  return `<div class="public-cards">${PUBLIC_SAMPLES.map(item => `<article><a href="/samples/${item.slug}/"><img src="/images/reports/${'imageKind' in item ? item.imageKind : item.kind}-v1-640.webp" alt="" width="640" height="427" loading="lazy"/><div><h2>${escape(item.title)}</h2><p>${escape(item.description)}</p><span>View the design and question preview →</span></div></a></article>`).join('')}</div>`
 }
 
 function home() {
@@ -121,7 +121,8 @@ export function publicContent(identity: Identity) {
   ]
   for (const sample of PUBLIC_SAMPLES) {
     const title = sample.title
-    pages.push({path:`/samples/${sample.slug}/`,title:`${title} — Preview`,description:sample.description,image:`/images/reports/${sample.kind}-v1-1200.webp`,body:safeSampleBody(sample.kind, title)})
+    const imageKind = 'imageKind' in sample ? sample.imageKind : sample.kind
+    pages.push({path:`/samples/${sample.slug}/`,title:`${title} — Preview`,description:sample.description,image:`/images/reports/${imageKind}-v1-1200.webp`,body:safeSampleBody(sample.kind, title)})
   }
   if(identity.contactEmail)pages.push({path:'/contact/',title:'Contact The Fate Key',description:'Questions, corrections and privacy enquiries about this website.',body:contact(identity)})
   if (identity.liveSales) {

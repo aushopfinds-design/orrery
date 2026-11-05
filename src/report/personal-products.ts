@@ -42,8 +42,21 @@ export function previewProduct(kind: PreviewKind) {
 }
 
 export function buyerQuestionTitles(kind: PreviewKind) {
-  const questions = kind === 'bundle' ? COLLECTION_BUYER_QUESTIONS.complete : BUYER_QUESTIONS[kind]
-  return (questions ?? []).map(question => question.question)
+  // These are the printed headings in the integrated collection PDF. Keep this
+  // display-only list aligned with the PDF without changing report generation.
+  if (kind === 'bundle') return [
+    'What kind of person are you at your core?',
+    'Which strengths help you most, and what can get in your way?',
+    'What kind of work is the best fit for you?',
+    'How are you most likely to earn and manage money?',
+    'What do you need from a close relationship?',
+    'How do you and your partner fit together?',
+    'What recurring challenge deserves your attention?',
+    'What should you know about the next 12 months?',
+    'When could a longer-term life or work shift deserve attention?',
+    'How do these parts of your life connect?',
+  ]
+  return BUYER_QUESTIONS[kind].map(question => question.question)
 }
 
 /** Localize the product card labels only; report content and checkout data stay unchanged. */
