@@ -22,14 +22,17 @@ describe('public reading publication and AdSense preflight',()=>{
       expect(html).not.toMatch(/sky\.told\.me|ca-pub-|adsbygoogle|googlesyndication|under construction/i)
     }
   })
-  it('serves question titles and a short generic sample without private report content',()=>{
+  it('serves all report questions and one clearly labelled illustrative answer excerpt per product',()=>{
     for(const sample of PUBLIC_SAMPLES){
       const page=pages.find(p=>p.path===`/samples/${sample.slug}/`)!
       const rendered=text(page.body)
-      expect(rendered.split(' ').length).toBeLessThan(350)
+      expect(rendered.split(' ').length).toBeLessThan(450)
       for(const question of buyerQuestionTitles(sample.kind))expect(rendered).toContain(question)
-      expect(rendered).toContain('general writing sample')
-      expect(page.body).not.toMatch(/Your Answer:|Chart note:|An everyday example|personalised\s+to/i)
+      expect(rendered).toContain('SHORT EXAMPLE')
+      expect(rendered).toContain('NOT A CUSTOMER READING')
+      expect(rendered).toContain('not personalised, calculated from a birth chart, or a complete paid answer')
+      expect(rendered).toContain(`answers all ${buyerQuestionTitles(sample.kind).length} questions`)
+      expect(page.body).not.toMatch(/Your Answer:|Chart note:|An everyday example|personalised\\s+to/i)
       expect(rendered).not.toContain('**')
     }
   })
