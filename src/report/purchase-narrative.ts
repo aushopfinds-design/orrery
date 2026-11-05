@@ -1,6 +1,3 @@
-Warning: truncated output (original token count: 32898)
-Total output lines: 605
-
 import { roleChoice, businessDivision, relationshipRepair, personalBoundary, monthlyFit } from './personalised-choices.ts'
 import { sharedCareNeed } from './relationship-needs.ts'
 import { TEMPERAMENT_KO } from './temperament-ko.ts'
