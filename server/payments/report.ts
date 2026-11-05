@@ -211,6 +211,18 @@ async function reportPdf(report: BuyerReport, orderId: string, emphasis: string[
   }
   const frame = (dark = false) => {
     page.drawRectangle({ x: 0, y: 0, width: W, height: H, color: dark ? night : paper })
+    // Celestial navy-and-gold stationery: ornaments stay outside the text safe area.
+    if (!dark) {
+      page.drawRectangle({ x: 0, y: H - 25, width: W, height: 25, color: night })
+      page.drawRectangle({ x: 0, y: 0, width: W, height: 25, color: night })
+      for (const [sx, sy, radius] of [[52, H - 12, 3], [W - 52, H - 12, 3], [W / 2, H - 13, 4], [65, 13, 2.5], [W - 65, 13, 2.5], [W / 2, 13, 4]] as const) {
+        page.drawLine({ start: { x: sx - radius * 2, y: sy }, end: { x: sx + radius * 2, y: sy }, color: gold, thickness: .75 })
+        page.drawLine({ start: { x: sx, y: sy - radius * 2 }, end: { x: sx, y: sy + radius * 2 }, color: gold, thickness: .75 })
+        page.drawCircle({ x: sx, y: sy, size: 1.2, color: gold })
+      }
+      page.drawLine({ start: { x: 42, y: H - 46 }, end: { x: W - 42, y: H - 46 }, color: gold, thickness: .45, opacity: .6 })
+      page.drawLine({ start: { x: 42, y: 46 }, end: { x: W - 42, y: 46 }, color: gold, thickness: .45, opacity: .6 })
+    }
     page.drawRectangle({ x: 28, y: 28, width: W - 56, height: H - 56, borderColor: gold, borderWidth: .6 })
     page.drawRectangle({ x: 33, y: 33, width: W - 66, height: H - 66, borderColor: gold, borderWidth: .2 })
     if (!dark) {
