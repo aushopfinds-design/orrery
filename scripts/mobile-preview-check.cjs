@@ -46,6 +46,17 @@ async function main() {
           }).map(rectData).slice(0, 20)
           const outOfBounds = [...document.querySelectorAll('img,svg,canvas,table,button,a[role="button"]')].filter(element => visible(element) && element.getBoundingClientRect().right > viewportWidth + 1).map(rectData).slice(0, 20)
           const actions = [...document.querySelectorAll('button,a.public-button,a[role="button"]')].filter(visible).map(element => ({ element, rect: element.getBoundingClientRect(), data: rectData(element) }))
+          const luminance = color => {
+            const channels = color.match(/[\d.]+/g)?.slice(0, 3).map(Number) || [0, 0, 0]
+            const linear = channels.map(channel => { const value = channel / 255; return value <= 0.04045 ? value / 12.92 : ((value + 0.055) / 1.055) ** 2.4 })
+            return 0.2126 * linear[0] + 0.7152 * linear[1] + 0.0722 * linear[2]
+          }
+          const buttonContrast = [...document.querySelectorAll('a.public-button,button')].filter(visible).map(element => {
+            const style = getComputedStyle(element)
+            const foreground = style.color, background = style.backgroundColor
+            const values = [luminance(foreground), luminance(background)].sort((a, b) => b - a)
+            return { text: (element.innerText || '').trim().replace(/\s+/g, ' ').slice(0, 80), foreground, background, ratio: Number(((values[0] + 0.05) / (values[1] + 0.05)).toFixed(2)) }
+          })
           const overlaps = []
           for (let i = 0; i < actions.length; i++) for (let j = i + 1; j < actions.length; j++) {
             const a = actions[i].rect, b = actions[j].rect
@@ -68,6 +79,7 @@ async function main() {
             clipped,
             outOfBounds,
             overlaps,
+            buttonContrast,
           }
         })
         const screenshotPath = path.join(outputDir, `${number}-${slug}-${width}.png`)
@@ -81,9 +93,9 @@ async function main() {
     await browser.close()
   }
   fs.writeFileSync(path.join(outputDir, 'results.json'), JSON.stringify(results, null, 2))
-  const failures = results.filter(result => result.status !== 200 || result.documentWidth > result.viewportWidth + 1 || result.bodyWidth > result.viewportWidth + 1 || !result.main || result.main.right > result.viewportWidth + 1 || result.main.left < -1 || result.clipped.length || result.outOfBounds.length || result.overlaps.length || result.pageErrors.length)
+  const failures = results.filter(result => result.status !== 200 || result.documentWidth > result.viewportWidth + 1 || result.bodyWidth > result.viewportWidth + 1 || !result.main || result.main.right > result.viewportWidth + 1 || result.main.left < -1 || result.clipped.length || result.outOfBounds.length || result.overlaps.length || result.pageErrors.length || result.buttonContrast.some(button => button.ratio < 4.5))
   for (const result of results) {
-    console.log(`${failures.includes(result) ? 'FAIL' : 'PASS'} Product ${result.product} @ ${result.width}px: HTTP ${result.status}, viewport ${result.viewportWidth}px, document ${result.documentWidth}px, main ${JSON.stringify(result.main)}, clipped ${result.clipped.length}, out-of-bounds ${result.outOfBounds.length}, overlaps ${result.overlaps.length}, page errors ${result.pageErrors.length}`)
+    console.log(`${failures.includes(result) ? 'FAIL' : 'PASS'} Product ${result.product} @ ${result.width}px: HTTP ${result.status}, viewport ${result.viewportWidth}px, document ${result.documentWidth}px, main ${JSON.stringify(result.main)}, clipped ${result.clipped.length}, out-of-bounds ${result.outOfBounds.length}, overlaps ${result.overlaps.length}, CTA contrast ${result.buttonContrast.map(button => button.ratio).join(',')}, page errors ${result.pageErrors.length}`)
   }
   if (failures.length) {
     console.error(`Mobile preview check failed for ${failures.length} of ${results.length} renderings. See ${path.join(outputDir, 'results.json')} and screenshots.`)
