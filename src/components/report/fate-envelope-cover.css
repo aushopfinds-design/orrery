@@ -9,3 +9,9 @@
 @media(max-width:760px){.fate-reading-cover.fate-envelope-cover{width:100%}.fate-envelope-cover .fate-report-cover-content{top:29%;left:8%;width:84%}}
 @media(max-width:480px){.fate-envelope-cover .fate-report-cover-content{top:30%;left:7%;width:86%}.fate-envelope-cover .fate-report-cover-content h1{font-size:clamp(23px,7vw,32px)}}
 @media print{.fate-reading-cover.fate-envelope-cover{width:100%;break-after:page}.fate-reading-cover.fate-envelope-cover > .fate-envelope-cover-art{print-color-adjust:exact;-webkit-print-color-adjust:exact}}
+.fate-envelope-cover .fate-report-cover-content { top: 20%; }
+.fate-envelope-cover .fate-report-cover-content > p:not(.fate-eyebrow):not(.fate-reading-cover-tagline) { display: none; }
+.fate-envelope-cover .fate-report-cover-content .fate-reading-cover-tagline { margin-top: 12px; font-size: 15px; }
+.fate-envelope-cover .fate-sample-ribbon { display: none; }
+.fate-reading-cover.fate-envelope-cover::after { content: 'FICTIONAL EXAMPLE · NOT A CUSTOMER REPORT'; position: absolute; left: 50%; bottom: 12%; transform: translateX(-50%); padding: 8px 14px; border: 1px solid #d4ae68; border-radius: 99px; background: #fff4d8e8; color: #263047; font-size: 9px; font-weight: 700; letter-spacing: .1em; text-align: center; white-space: nowrap; }
+@media(max-width:760px){.fate-envelope-cover .fate-report-cover-content{top:20%}}
