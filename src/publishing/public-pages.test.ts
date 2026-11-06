@@ -22,17 +22,24 @@ describe('public reading publication and AdSense preflight',()=>{
       expect(html).not.toMatch(/sky\.told\.me|ca-pub-|adsbygoogle|googlesyndication|under construction/i)
     }
   })
-  it('serves all report questions and one clearly labelled illustrative answer excerpt per product',()=>{
+  it('publishes a complete fictional question-and-answer example for every product',()=>{
     for(const sample of PUBLIC_SAMPLES){
       const page=pages.find(p=>p.path===`/samples/${sample.slug}/`)!
       const rendered=text(page.body)
-      expect(rendered.split(' ').length).toBeLessThan(450)
-      for(const question of buyerQuestionTitles(sample.kind))expect(rendered).toContain(question)
-      expect(rendered).toContain('SHORT EXAMPLE')
-      expect(rendered).toContain('NOT A CUSTOMER READING')
-      expect(rendered).toContain('not personalised, calculated from a birth chart, or a complete paid answer')
-      expect(rendered).toContain(`answers all ${buyerQuestionTitles(sample.kind).length} questions`)
-      expect(page.body).not.toMatch(/Your Answer:|Chart note:|An everyday example|personalised\\s+to/i)
+      const questions=buyerQuestionTitles(sample.kind)
+      expect(rendered.split(' ').length).toBeGreaterThan(450)
+      expect(rendered.split(' ').length).toBeLessThan(3000)
+      for(const question of questions)expect(rendered).toContain(question)
+      expect((page.body.match(/class="public-chapter public-sample-answer"/g) ?? [])).toHaveLength(questions.length)
+      expect((rendered.match(/Example answer:/g) ?? [])).toHaveLength(questions.length)
+      expect((rendered.match(/QUESTION [0-9]+ · FICTIONAL EXAMPLE/g) ?? [])).toHaveLength(questions.length)
+      expect(rendered).toContain(`follows all ${questions.length} questions`)
+      expect(rendered).toContain('Fictional reader: Avery')
+      expect(rendered).toContain('SAMPLE ONLY')
+      expect(rendered).toContain('CLOSING SUMMARY')
+      expect(rendered).toContain('What the complete paid report adds')
+      expect(rendered).toContain('not calculated from Saju')
+      expect(page.body).not.toMatch(/Your Answer:|Chart note:|An everyday example|Hidden insight/i)
       expect(rendered).not.toContain('**')
     }
   })
