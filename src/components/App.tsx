@@ -28,8 +28,7 @@ const ReadingView = lazy(() => import('./report/ReadingView.tsx'))
 const FreeReadingView = lazy(() => import('./report/FreeReadingView.tsx'))
 const CompleteReportPage = lazy(() => import('./CompleteReportPage.tsx'))
 const CategoryReportPage = lazy(() => import('./CategoryReportPage.tsx'))
-const CategorySamplePage = lazy(() => import('./report/CategorySamplePage.tsx'))
-const BundleSamplePage = lazy(() => import('./report/BundleSamplePage.tsx'))
+const FullReportSamplePage = lazy(() => import('./report/FullReportSamplePage.tsx'))
 const BuyerReportPanel = lazy(() => import('./report/BuyerReportPanel.tsx'))
 const PersonalPreviewPage = lazy(() => import('./report/PersonalPreviewPage.tsx'))
 const HomeReportPreview = lazy(() => import('./HomeReportPreview.tsx'))
@@ -173,8 +172,8 @@ export default function App() {
         {showingSample && <div ref={resultsRef}><ReadingView input={SAMPLE_BIRTH} /></div>}
         {route === 'category-product' && focusCategory && <CategoryReportPage key={focusCategory} kind={focusCategory} />}
         {route === 'bundle-product' && <CategoryReportPage kind="bundle" />}
-        {route === 'category-sample' && focusCategory && <CategorySamplePage key={focusCategory} kind={focusCategory} />}
-        {route === 'bundle-sample' && <BundleSamplePage />}
+        {route === 'category-sample' && focusCategory && <FullReportSamplePage key={focusCategory} kind={focusCategory} />}
+        {route === 'bundle-sample' && <FullReportSamplePage kind="bundle" />}
         {route === 'card-studio' && <DestinyCardStudio input={birthInput} />}
         {(route === 'help' || route === 'guide' || route === 'privacy') && <SiteInfoPage key={route} page={route} hash={hash} onDataCleared={handleDataCleared} onOpenSaved={() => setProfileModalOpen(true)} />}
         {(hash === '#purchase' || new URLSearchParams(window.location.search).get('checkout') === 'cancelled') && <BuyerReportPanel />}
