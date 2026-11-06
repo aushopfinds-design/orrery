@@ -281,12 +281,13 @@ async function reportPdf(report: BuyerReport, orderId: string, emphasis: string[
         // Keep emphasis in the same embedded font as body copy. Mixing the
         // embedded CJK-capable face with PDF standard Helvetica caused visible
         // tracking changes in bold phrases on some mobile PDF viewers.
-        page.drawText(run.text, { x, y, size, font, color })
+        const runColor = run.bold ? rgb(.47, .30, .12) : color
+        page.drawText(run.text, { x, y, size, font, color: runColor })
         const runWidth = font.widthOfTextAtSize(run.text, size)
-        if (run.bold) page.drawText(run.text, { x: x + .22, y, size, font, color })
+        if (run.bold) page.drawText(run.text, { x: x + .34, y, size, font, color: runColor })
         x += runWidth
       }
-      y -= size * (size === 12.4 ? 1.72 : 1.65); runs = []; width = 0
+      y -= size * 1.65; runs = []; width = 0
     }
     for (const part of parts) {
       for (const token of part.text.match(/\S+|\s+/g) ?? []) {
@@ -394,7 +395,7 @@ async function reportPdf(report: BuyerReport, orderId: string, emphasis: string[
       const top = y + 14
       const tocLabel = toc ? value.split(' — ', 1)[0].trim() : ''
       const tocPage = page
-      paragraph(value, note ? 10.2 : 12.4, note ? muted : ink, !note)
+      paragraph(value, note ? 10.2 : 13.4, note ? muted : ink, !note)
       if (toc) { tocRows.push({ label: tocLabel, page: tocPage, bottom: y + 2, top }); tocRowsRemaining-- }
     }
   }
