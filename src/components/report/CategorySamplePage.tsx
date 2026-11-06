@@ -1,4 +1,6 @@
 import './fate-envelope-cover.css'
+import { useEffect } from 'react'
+import { categoryInfo } from '../../report/category-catalog.ts'
 import type { FocusCategory } from '../../report/category-catalog.ts'
 import { previewProduct, buyerQuestionTitles } from '../../report/personal-products.ts'
 
@@ -14,7 +16,15 @@ const SAMPLE_ANSWERS: Record<FocusCategory, string> = {
 /** Public visual sample with product questions only; no fictional or customer reading data. */
 export default function CategorySamplePage({ kind }: { kind: FocusCategory }) {
   const product = previewProduct(kind)
-  return <article id={`${kind}-sample`} className="fate-complete-reading fate-category-reading fate-preview-shell" lang="en">
+  // The catalog links use the public product slug (for example, #career-money-sample).
+  // Match that exact id and scroll after the lazy-loaded page mounts; the browser's
+  // first anchor attempt happens before this component exists.
+  const sampleId = `${categoryInfo(kind).slug}-sample`
+  useEffect(() => {
+    const frame = requestAnimationFrame(() => document.getElementById(sampleId)?.scrollIntoView({ block: 'start' }))
+    return () => cancelAnimationFrame(frame)
+  }, [sampleId])
+  return <article id={sampleId} className="fate-complete-reading fate-category-reading fate-preview-shell" lang="en">
     <header className="fate-reading-cover fate-reading-cover-complete fate-envelope-cover">
       <img className="fate-envelope-cover-art" src="/images/reports/fate-letter-envelope-cover.jpg" alt="" aria-hidden="true" />
       <div className="fate-report-cover-content">
