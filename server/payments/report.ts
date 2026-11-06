@@ -207,8 +207,11 @@ async function reportPdf(report: BuyerReport, orderId: string, emphasis: string[
   }
   const frame = (dark = false) => {
     page.drawRectangle({ x: 0, y: 0, width: W, height: H, color: dark ? night : paper })
-    if (!dark) page.drawImage(letterStationery, { x: 0, y: 0, width: W, height: H })
-    // Celestial navy-and-gold stationery: ornaments stay outside the text safe area.
+    if (!dark) {
+      page.drawImage(letterStationery, { x: 0, y: 0, width: W, height: H })
+      return
+    }
+    // The dark cover is rendered from the supplied artwork below.
     if (!dark) {
       page.drawRectangle({ x: 0, y: H - 25, width: W, height: 25, color: night })
       page.drawRectangle({ x: 0, y: 0, width: W, height: 25, color: night })
@@ -255,9 +258,7 @@ async function reportPdf(report: BuyerReport, orderId: string, emphasis: string[
     }
   }
   const addPage = () => {
-    page = pdf.addPage([W, H]); y = 748; frame()
-    page.drawText('THE FATE KEY', { x: 54, y: 786, size: 9, font: display, color: gold })
-    page.drawLine({ start: { x: 54, y: 774 }, end: { x: W - 54, y: 774 }, thickness: .4, color: gold })
+    page = pdf.addPage([W, H]); y = 620; frame()
   }
   const paragraph = (text: string, size = 12.4, color = ink, emphasise = false) => {
     const value = clean(text)
@@ -323,7 +324,7 @@ async function reportPdf(report: BuyerReport, orderId: string, emphasis: string[
   addPage()
   const greeting = report.recipientName ? clean(`Dear ${report.recipientName},`) : 'Dear reader,'
   const greetingSize = Math.min(27, (W - 108) / font.widthOfTextAtSize(greeting, 1))
-  centre(greeting, 720, greetingSize, ink, report.recipientName ? font : italic); y = 668
+  centre(greeting, 620, greetingSize, ink, report.recipientName ? font : italic); y = 568
   paragraph('Some parts of your story may feel familiar. Others may give you a new way to look at a choice, a relationship or the work you do every day.', 12)
   paragraph('This letter follows the patterns in your Saju chart. Read slowly, notice what feels relevant, and leave room for the life you know better than any report can.', 12)
   paragraph('The chart notes explain where each interpretation begins. You can return to them whenever you want to look more closely.', 12)
