@@ -1,3 +1,4 @@
+import './fate-envelope-cover.css'
 import type { FocusCategory } from '../../report/category-catalog.ts'
 import { previewProduct, buyerQuestionTitles } from '../../report/personal-products.ts'
 
@@ -14,7 +15,8 @@ const SAMPLE_ANSWERS: Record<FocusCategory, string> = {
 export default function CategorySamplePage({ kind }: { kind: FocusCategory }) {
   const product = previewProduct(kind)
   return <article id={`${kind}-sample`} className="fate-complete-reading fate-category-reading fate-preview-shell" lang="en">
-    <header className="fate-reading-cover fate-reading-cover-complete">
+    <header className="fate-reading-cover fate-reading-cover-complete fate-envelope-cover">
+      <img className="fate-envelope-cover-art" src="/images/reports/fate-letter-envelope-cover.jpg" alt="" aria-hidden="true" />
       <div className="fate-report-cover-content">
         <p className="fate-eyebrow">THE FATE KEY · DESIGN SAMPLE</p>
         <h1>{product.title}</h1>

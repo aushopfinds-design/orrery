@@ -178,6 +178,8 @@ async function reportPdf(report: BuyerReport, orderId: string, emphasis: string[
   const font = await pdf.embedFont(await fontBytes, { subset: true })
   artworkBytes ??= readFile(new URL('./assets/HomepageArtwork.jpg', import.meta.url))
   const artwork = await pdf.embedJpg(await artworkBytes)
+  const letterStationery = await pdf.embedJpg(await readFile(new URL('./assets/fate-letter-stationery.jpg', import.meta.url)))
+  const envelopeCover = await pdf.embedJpg(await readFile(new URL('./assets/fate-letter-envelope-cover.jpg', import.meta.url)))
   const display = await pdf.embedFont(StandardFonts.TimesRoman)
   const italic = await pdf.embedFont(StandardFonts.TimesRomanItalic)
   const cardFontBytes = await readFile(new URL('./assets/NotoSansSC-Report.ttf', import.meta.url))
@@ -194,7 +196,7 @@ async function reportPdf(report: BuyerReport, orderId: string, emphasis: string[
   // Moonlit Envelope (70%) + Antique Scroll Letter (30%): shared by every paid PDF.
   const night = rgb(.065, .092, .155), gold = rgb(.68, .54, .32), paper = rgb(.982, .963, .925)
   const ink = rgb(.17, .20, .25), muted = rgb(.36, .38, .41)
-  const moonlight = rgb(.79, .85, .91), parchmentEdge = rgb(.85, .79, .68)
+  const parchmentEdge = rgb(.85, .79, .68)
   let page = pdf.addPage([W, H]), y = 748
   const tocRows: { label: string; page: ReturnType<typeof pdf.addPage>; bottom: number; top: number }[] = []
   const tocDestinations = new Map<string, { page: ReturnType<typeof pdf.addPage>; y: number }>()
@@ -203,14 +205,9 @@ async function reportPdf(report: BuyerReport, orderId: string, emphasis: string[
   const centre = (text: string, yy: number, size: number, color = gold, face = display) => {
     page.drawText(text, { x: (W - face.widthOfTextAtSize(text, size)) / 2, y: yy, size, font: face, color })
   }
-  const key = (x: number, yy: number, scale = 1) => {
-    page.drawCircle({ x, y: yy, size: 17 * scale, borderColor: gold, borderWidth: 1.6 })
-    page.drawCircle({ x, y: yy, size: 9 * scale, borderColor: gold, borderWidth: .6 })
-    page.drawLine({ start: { x, y: yy - 17 * scale }, end: { x, y: yy - 89 * scale }, color: gold, thickness: 2 })
-    for (const d of [65, 80]) page.drawLine({ start: { x, y: yy - d * scale }, end: { x: x + 15 * scale, y: yy - d * scale }, color: gold, thickness: 2 })
-  }
   const frame = (dark = false) => {
     page.drawRectangle({ x: 0, y: 0, width: W, height: H, color: dark ? night : paper })
+    if (!dark) page.drawImage(letterStationery, { x: 0, y: 0, width: W, height: H })
     // Celestial navy-and-gold stationery: ornaments stay outside the text safe area.
     if (!dark) {
       page.drawRectangle({ x: 0, y: H - 25, width: W, height: 25, color: night })
@@ -306,37 +303,23 @@ async function reportPdf(report: BuyerReport, orderId: string, emphasis: string[
     }
     flush(); y -= 9
   }
-  // A private letter, with honest Sandbox labelling kept separate from the story.
+  // The supplied envelope artwork is the shared cover; text remains product-specific and selectable.
   frame(true)
-  const coverBorder = 48
-  page.drawRectangle({ x: coverBorder, y: coverBorder, width: W - coverBorder * 2, height: H - coverBorder * 2, borderColor: gold, borderWidth: .8 })
-  page.drawRectangle({ x: coverBorder + 5, y: coverBorder + 5, width: W - (coverBorder + 5) * 2, height: H - (coverBorder + 5) * 2, borderColor: gold, borderWidth: .25, borderOpacity: .65 })
-  for (const [x, yy, size] of [[86, 735, 2.5], [W - 86, 735, 2.5], [86, 105, 2.5], [W - 86, 105, 2.5], [130, 664, 1.8], [W - 130, 664, 1.8], [130, 170, 1.8], [W - 130, 170, 1.8]] as const) {
-    page.drawLine({ start: { x: x - size * 2, y: yy }, end: { x: x + size * 2, y: yy }, color: gold, thickness: .65, opacity: .75 })
-    page.drawLine({ start: { x, y: yy - size * 2 }, end: { x, y: yy + size * 2 }, color: gold, thickness: .65, opacity: .75 })
-    page.drawCircle({ x, y: yy, size: .9, color: gold })
+  page.drawImage(envelopeCover, { x: 0, y: 0, width: W, height: H })
+  const coverTitleLines: string[] = []
+  let coverLine = ''
+  for (const word of report.title.split(' ')) {
+    const candidate = coverLine ? coverLine + ' ' + word : word
+    if (font.widthOfTextAtSize(candidate, 24) > W - 130 && coverLine) { coverTitleLines.push(coverLine); coverLine = word }
+    else coverLine = candidate
   }
-  // Ivory stationery inset, matching the approved celestial letter direction.
-  page.drawRectangle({ x: 77, y: 168, width: W - 154, height: 492, color: paper, borderColor: gold, borderWidth: 1.1 })
-  page.drawRectangle({ x: 84, y: 175, width: W - 168, height: 478, borderColor: parchmentEdge, borderWidth: .45 })
-  page.drawCircle({ x: W / 2, y: 602, size: 30, color: moonlight, opacity: .95 })
-  page.drawCircle({ x: W / 2 + 13, y: 610, size: 27, color: paper })
-  key(W / 2, 575, .28)
-  centre('THE FATE KEY', 526, 13, night, font)
-  page.drawLine({ start: { x: 145, y: 499 }, end: { x: W - 145, y: 499 }, color: gold, thickness: .55, opacity: .8 })
-  centre('A PRIVATE LETTER OF DESTINY', 474, 9, muted, font)
-  const words = report.title.split(' '); let titleLine = '', titleY = 416
-  for (const word of words) {
-    const candidate = titleLine ? titleLine + ' ' + word : word
-    if (font.widthOfTextAtSize(candidate, 25) > W - 190 && titleLine) { centre(titleLine, titleY, 25, night, font); titleY -= 34; titleLine = word }
-    else titleLine = candidate
-  }
-  centre(titleLine, titleY, 25, night, font)
-  centre('A letter written beneath the moonlight.', 350, 12, muted, italic)
-  centre('Prepared from the birth details inside', 311, 9, muted, font)
-  centre('Edition ' + report.edition + ' / ' + report.issuedAt.slice(0, 10), 283, 8, gold, font)
-  if (report.reference) centre(report.reference, 256, 7, muted, font)
-  centre(mode === 'test' ? 'SANDBOX TEST / No real payment charged' : 'YOUR PRIVATE READING', 202, 8, night, font)
+  if (coverLine) coverTitleLines.push(coverLine)
+  const titleGold = rgb(.98, .90, .72)
+  let coverY = 566 + (coverTitleLines.length - 1) * 28
+  for (const line of coverTitleLines) { centre(line, coverY, 24, titleGold, font); coverY -= 30 }
+  centre('A PERSONAL SAJU READING', coverY - 6, 8.5, titleGold, font)
+  centre(report.kind === 'bundle' ? '10 PERSONAL ANSWERS' : '7 PERSONAL ANSWERS', 92, 7.5, muted, font)
+  centre(mode === 'test' ? 'SANDBOX TEST / No real payment charged' : 'YOUR PRIVATE READING', 81, 6.5, muted, font)
   addPage()
   const greeting = report.recipientName ? clean(`Dear ${report.recipientName},`) : 'Dear reader,'
   const greetingSize = Math.min(27, (W - 108) / font.widthOfTextAtSize(greeting, 1))
@@ -357,7 +340,7 @@ async function reportPdf(report: BuyerReport, orderId: string, emphasis: string[
       'Calculation notes',
       'This reading uses your calculated birth-year, birth-month and birth-day signs. Technical chart terms and repeated calculation details are omitted here; your answers above explain the personal meaning.',
     ].join('\n\n')
-    let prepared = text.slice(0, start) + summary + '\n\n' + text.slice(end)
+    const prepared = text.slice(0, start) + summary + '\n\n' + text.slice(end)
     const methodStart = prepared.indexOf('How this reading is prepared', start)
     if (methodStart < 0) return prepared
     // The source method notes are detailed for auditability. Buyers need only

@@ -1,9 +1,11 @@
+import './fate-envelope-cover.css'
 import { buyerQuestionTitles } from '../../report/personal-products.ts'
 
 /** Static public bundle preview. Never calculates or embeds the paid collection. */
 export default function BundleSamplePage() {
   return <article id="complete-bundle-sample" className="fate-complete-reading fate-bundle-reading fate-preview-shell" lang="en">
-    <header className="fate-reading-cover fate-reading-cover-complete">
+    <header className="fate-reading-cover fate-reading-cover-complete fate-envelope-cover">
+      <img className="fate-envelope-cover-art" src="/images/reports/fate-letter-envelope-cover.jpg" alt="" aria-hidden="true" />
       <div className="fate-report-cover-content">
         <p className="fate-eyebrow">THE FATE KEY · DESIGN SAMPLE</p>
         <h1>Your Complete Destiny</h1>
