@@ -381,7 +381,7 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
           const themeList = importantThemes.length < 2 ? importantThemes.join('')
             : importantThemes.length === 2 ? `${importantThemes[0]} and ${importantThemes[1]}`
               : `${importantThemes.slice(0, -1).join(', ')}, and ${importantThemes.at(-1)}`
-          const conclusion = `The ${yearRange} comparisons show changing work themes, including ${themeList.toLowerCase() || 'different work demands'}. They do not show a steady rise in income.`
+          const conclusion = `Your ${yearRange} outlook is mixed: work themes change, but the comparisons do not show a steady rise in income. The main themes include ${themeList.toLowerCase() || 'different work demands'}.`
           const importantTiming = changedYears.length
             ? `Work may feel more demanding in ${changedYears.join(', ')}. Treat these as review points, not predicted setbacks.`
             : 'No year stands out for a stronger work challenge in the checked comparisons.'

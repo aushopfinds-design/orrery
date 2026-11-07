@@ -70,6 +70,8 @@ describe('Concrete examples use several chart features', () => {
       const annual = buildCategoryReading('year', chart, { year: 2027 })
       expect(annual.chapters[0].example).toBeUndefined()
       expect(annual.chapters.find(x => x.id === 'annual-connections')!.lead).toContain('2027')
+      expect(annual.chapters.find(x => x.id === 'annual-money')!.lead).toMatch(/^For /)
+      expect(annual.chapters.find(x => x.id === 'annual-connections')!.lead).toMatch(/^For /)
     }
   })
 

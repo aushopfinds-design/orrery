@@ -32,8 +32,8 @@ describe('My Money & Career customer-first delivery', () => {
       expect(buyerSection.match(/^What This Means for You:/gm)?.length).toBeGreaterThanOrEqual(3)
       expect(buyerSection.match(/^Bottom Line:/gm)?.length).toBeGreaterThanOrEqual(1)
       expect(buyerSection).toMatch(/possible periods of career support|clear period of extra support/i)
-      expect(buyerSection).toMatch(/The 2026–2035 comparisons show changing work themes/i)
-      expect(buyerSection).toMatch(/They do not show a steady rise in income/i)
+      expect(buyerSection).toMatch(/Your 2026–2035 outlook is mixed: work themes change/i)
+      expect(buyerSection).toMatch(/do not show a steady rise in income/i)
       expect(buyerSection).not.toMatch(/added work friction/i)
       const q1 = buyerSection.match(/Question: Which careers suit me best\?\n\nYour Answer: ([^\n]+)/)?.[1]
       const q7 = buyerSection.match(/Question: What is the most important insight for my future\?\n\nYour Answer: ([^\n]+)/)?.[1]
