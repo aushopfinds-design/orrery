@@ -23,7 +23,7 @@ describe('My Money & Career customer-first delivery', () => {
       expect(report.text).toContain('What Tends to Block My Financial Progress?')
       expect(report.text).toContain('When Might My Career or Money Situation Improve?')
       expect(report.text).toContain('What Do the Next Ten Years Suggest for My Work and Money?')
-      expect(report.text).toContain('What Is the Most Important Insight for My Future?')
+      expect(report.text).toContain('Question: What is my most important career and money insight?')
       expect(report.qualityAudit?.score).toBe(100)
       expect(report.qualityAudit?.passed).toBe(true)
       const buyerSection = report.text.slice(report.text.indexOf('Question: Which careers suit me best?'), report.text.indexOf('Calculation notes'))
@@ -36,7 +36,7 @@ describe('My Money & Career customer-first delivery', () => {
       expect(buyerSection).toMatch(/do not show a steady rise in income/i)
       expect(buyerSection).not.toMatch(/added work friction/i)
       const q1 = buyerSection.match(/Question: Which careers suit me best\?\n\nYour Answer: ([^\n]+)/)?.[1]
-      const q7 = buyerSection.match(/Question: What is the most important insight for my future\?\n\nYour Answer: ([^\n]+)/)?.[1]
+      const q7 = buyerSection.match(/Question: What is my most important career and money insight\?\n\nYour Answer: ([^\n]+)/)?.[1]
       expect(q1).toBeTruthy()
       expect(q7).toBeTruthy()
       expect(q7).not.toBe(q1)

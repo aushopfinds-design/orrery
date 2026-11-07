@@ -148,7 +148,7 @@ export const COLLECTION_BUYER_QUESTIONS: Partial<Record<BuyerOutlineKind, BuyerQ
 }
 
 type CareerYearEvidence = { year: number; direction: string; workTension: boolean; work: string; money: string; stemGod: string }
-export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapters: ReportChapter[], periods: CompleteReadingPeriod[] = [], set: 'standalone' | 'collection' = 'standalone', careerYears: CareerYearEvidence[] = []): string {
+export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapters: ReportChapter[], periods: CompleteReadingPeriod[] = [], set: 'standalone' | 'collection' = 'standalone', careerYears: CareerYearEvidence[] = [], questionTitles: Record<string, string> = {}): string {
   const byId = new Map(chapters.map(chapter => [chapter.id, chapter]))
   const buyerQuestions = set === 'collection' ? COLLECTION_BUYER_QUESTIONS[kind] ?? BUYER_QUESTIONS[kind] : BUYER_QUESTIONS[kind]
   const questionsBySource = new Map<string, BuyerQuestion[]>()
@@ -552,9 +552,9 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
         ...(!practicalOnly ? (set === 'collection' ? (!extraAnswers.some(item => chapter.guidance.watchFor.includes(item.lines[0])) ? ['Main caution: ' + chapter.guidance.watchFor.join(' ')] : []) : (!answeredLines.some(line => chapter.guidance.watchFor.includes(line)) ? ['Main caution: ' + chapter.guidance.watchFor.join(' ')] : [])) : []),
       ]
     const qas = [
-      `Question: ${questions[0].question}`,
+      `Question: ${questionTitles[questions[0].id] ?? questions[0].question}`,
       ...firstLines.map((line, index) => `${kind === 'career' && set === 'standalone' ? '' : index ? 'Answer detail: ' : 'Answer: '}${line}`),
-      ...extraAnswers.flatMap(({ question, lines }) => [`Question: ${question.question}`, ...lines.map((line, index) => `${kind === 'career' && set === 'standalone' ? '' : index ? 'Answer detail: ' : 'Answer: '}${line}`)]),
+      ...extraAnswers.flatMap(({ question, lines }) => [`Question: ${questionTitles[question.id] ?? question.question}`, ...lines.map((line, index) => `${kind === 'career' && set === 'standalone' ? '' : index ? 'Answer detail: ' : 'Answer: '}${line}`)]),
     ]
     const replacement = [chapter.title, ...qas, ...guidance].join('\n\n')
     const original = deliveredChapter(chapter).join('\n\n')

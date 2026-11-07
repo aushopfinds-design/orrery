@@ -7,6 +7,7 @@ export type ReportQualityInput = {
   productId: string;
   questions: Array<{ question: string; answer: string; questionId?: string }>;
   expectedQuestions: string[];
+  expectedQuestionIds?: string[];
   birthTimeKnown: boolean;
   usesHourPillar: boolean;
   calculationVerified: boolean;
@@ -36,6 +37,13 @@ export function inspectReport(input: ReportQualityInput): QualityResult {
   }
   if (input.questions.length !== input.expectedQuestions.length)
     flag("QUESTION_COUNT", "Question count does not match the product rubric", 10, true);
+  if (input.questions.length === input.expectedQuestions.length &&
+      input.questions.some((question, index) => NORMALIZE(question.question) !== NORMALIZE(input.expectedQuestions[index])))
+    flag("QUESTION_ORDER", "Question titles do not match the product rubric order", 10, true);
+  if (input.expectedQuestionIds && (
+      input.questions.length !== input.expectedQuestionIds.length ||
+      input.questions.some((question, index) => question.questionId !== input.expectedQuestionIds?.[index])))
+    flag("QUESTION_ID_ORDER", "Question IDs do not match the product rubric order", 10, true);
   const answers = input.questions.map(x => x.answer.trim());
   const seenSentences = new Map<string, number>();
   answers.forEach((answer, i) => {

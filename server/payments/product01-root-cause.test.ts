@@ -2,7 +2,7 @@ import { mkdir, writeFile } from 'node:fs/promises'
 import { PDFArray, PDFDict, PDFDocument, PDFName } from 'pdf-lib'
 import { describe, expect, it } from 'vitest'
 import { CATEGORY_SCENARIOS } from '../../src/report/category-catalog.ts'
-import { BUYER_QUESTIONS } from '../../src/report/buyer-outline.ts'
+import { productQuestions } from '../../src/report/product-questions.ts'
 import type { BirthInput } from '@orrery/core/types'
 import { issueReport } from './report.ts'
 import { calculateSaju } from '../../packages/core/src/saju.ts'
@@ -56,7 +56,7 @@ describe('Product 01 root-cause recovery', () => {
       expect(report.answerProvenance).toHaveLength(7)
       expect(report.answerProvenance?.every(trace => trace.ruleIds.length === 2 && trace.evidence.length > 0)).toBe(true)
       expect(report.calculationVerification?.status).toMatch(/^(verified|partial|mismatch|unavailable)$/)
-      for (const question of BUYER_QUESTIONS.complete) expect(report.text).toContain(`Question: ${question.question}`)
+      for (const question of productQuestions('complete')) expect(report.text).toContain(`Question: ${question.title}`)
       const q7Start = report.text.indexOf('Question: When may my life change direction?')
       const q7End = report.text.indexOf('Your most important life insight is that', q7Start)
       const q7 = report.text.slice(q7Start, q7End > -1 ? q7End : undefined)
@@ -71,8 +71,8 @@ describe('Product 01 root-cause recovery', () => {
     const q3Start = first.indexOf('Question: What kind of career suits me?')
     const q2Start = first.indexOf('Question: What helps me thrive, and what can hold me back?')
     const q2 = first.slice(q2Start, q3Start)
-    const q4Start = first.indexOf('Question: How does money work in my life?')
-    const q5Start = first.indexOf('Question: What is my pattern in love?')
+    const q4Start = first.indexOf('Question: What is my natural pattern for earning money?')
+    const q5Start = first.indexOf('Question: What do I need most in a close relationship?')
     const q3 = first.slice(q3Start, q4Start)
     const q4 = first.slice(q4Start, q5Start)
     expect(q3).toMatch(/career fit includes work/i)

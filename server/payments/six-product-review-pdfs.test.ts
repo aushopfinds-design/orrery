@@ -3,7 +3,7 @@ import { PDFDocument } from 'pdf-lib'
 import { describe, expect, it } from 'vitest'
 import { CATEGORY_SCENARIOS } from '../../src/report/category-catalog.ts'
 import { issueReport } from './report.ts'
-import { BUYER_QUESTIONS, type BuyerOutlineKind } from '../../src/report/buyer-outline.ts'
+import { productQuestions } from '../../src/report/product-questions.ts'
 import type { BirthInput } from '@orrery/core/types'
 
 const profiles: { id: string; first: BirthInput; second: BirthInput }[] = [
@@ -36,7 +36,7 @@ describe('six final English product reports', () => {
         expect(report.text).not.toMatch(/undefined|NaN|\[object Object\]/)
         expect(report.text.match(/Question: /g)?.length).toBe(questions[kind])
         if (kind === 'bundle') expect(report.text.match(/Your Answer: /g)?.length).toBe(10)
-        else for (const item of BUYER_QUESTIONS[kind as BuyerOutlineKind]) expect(report.text).toContain(`Question: ${item.question}`)
+        else for (const item of productQuestions(kind)) expect(report.text).toContain(`Question: ${item.title}`)
         if (kind === 'business') {
           const risk = /Question: What financial risks should I understand\?\s+Answer: ([^.]+\.)/.exec(report.text)
           expect(risk, `profile ${profileIndex + 1} business risk answer`).not.toBeNull()

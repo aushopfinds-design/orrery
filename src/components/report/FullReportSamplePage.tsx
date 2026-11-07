@@ -5,7 +5,8 @@ import { CATEGORY_SCENARIOS, categoryInfo } from '../../report/category-catalog.
 import type { FocusCategory } from '../../report/category-catalog.ts'
 import { buildBundleReading, buildCategoryReading } from '../../report/category-readings.ts'
 import { buyerQuestionTitles } from '../../report/personal-products.ts'
-import { applyBuyerQuestions, BUYER_QUESTIONS } from '../../report/buyer-outline.ts'
+import { applyBuyerQuestions } from '../../report/buyer-outline.ts'
+import { productQuestions } from '../../report/product-questions.ts'
 import { careerMoneyChartData } from '../../report/career-money-charts.ts'
 import ReadingText from './ReadingText.tsx'
 
@@ -31,6 +32,7 @@ export default function FullReportSamplePage({ kind }: { kind: FocusCategory | '
       [],
       'standalone',
       kind === 'career' ? careerMoneyChartData(calculateSaju(sample.first), referenceYear).years : [],
+      Object.fromEntries(productQuestions(kind).map(question => [question.id, question.title])),
     )
   const paragraphs = fullText.split(/\n{2,}/).map(block => block.trim()).filter(Boolean)
 
@@ -62,7 +64,7 @@ export default function FullReportSamplePage({ kind }: { kind: FocusCategory | '
     <nav className="fate-sample-contents" aria-label="Full sample contents">
       <h2>Answers in this full example</h2>
       <ol>{questions.map((question, index) => {
-        const source = kind === 'bundle' ? undefined : BUYER_QUESTIONS[kind][index]?.source
+        const source = kind === 'bundle' ? undefined : productQuestions(kind)[index]?.answerSource
         const sourceTitle = kind !== 'bundle' && source ? (report as ReturnType<typeof buildCategoryReading>).chapters.find(chapter => chapter.id === source)?.title : undefined
         const blockIndex = paragraphs.findIndex(block => block.toLowerCase().includes(question.toLowerCase()) || Boolean(sourceTitle && block.toLowerCase().includes(sourceTitle.toLowerCase())))
         return <li key={question}><a href={`#${slug}-block-${blockIndex >= 0 ? blockIndex + 1 : 1}`}>{question}</a></li>

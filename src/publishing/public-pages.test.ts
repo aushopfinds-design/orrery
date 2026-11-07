@@ -120,7 +120,7 @@ describe('public preview data protection',()=>{
     expect(buyerQuestionTitles('compatibility')[0]).toBe('What makes us compatible?')
     expect(buyerQuestionTitles('year')[1]).toBe('What should I focus on most this year?')
     expect(buyerQuestionTitles('business')[3]).toBe('What financial risks should I understand?')
-    expect(buyerQuestionTitles('bundle')[0]).toBe('What kind of person are you at your core?')
+    expect(buyerQuestionTitles('bundle')[0]).toBe('What are the three most important things about my destiny?')
  })
 })
 

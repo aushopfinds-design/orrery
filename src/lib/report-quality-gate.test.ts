@@ -23,6 +23,13 @@ describe("report quality gate", () => {
   });
   it("blocks unknown-hour claims", () => expect(inspectReport({...base, usesHourPillar:true}).passed).toBe(false));
   it("blocks missing questions", () => expect(inspectReport({...base, questions:base.questions.slice(0,1)}).passed).toBe(false));
+  it("blocks questions printed out of order or attached to the wrong ID", () => {
+    const shuffled = { ...base, expectedQuestionIds: ['q1', 'q2'], questions: [...base.questions].reverse().map(item => ({ ...item, questionId: item.question === questions[0] ? 'q1' : 'q2' })) }
+    const result = inspectReport(shuffled)
+    expect(result.passed).toBe(false)
+    expect(result.findings.map(item => item.code)).toContain('QUESTION_ORDER')
+    expect(result.findings.map(item => item.code)).toContain('QUESTION_ID_ORDER')
+  });
   it("blocks unverified calculations", () => expect(inspectReport({...base, calculationVerified:false}).passed).toBe(false));
   it("keeps partial independent checks distinct from full verification", () => {
     const result = inspectReport({ ...base, calculationVerified: false, calculationVerification: 'partial' })

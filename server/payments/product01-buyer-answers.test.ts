@@ -2,7 +2,7 @@ import { mkdir, writeFile } from 'node:fs/promises'
 import { PDFDocument } from 'pdf-lib'
 import { describe, expect, it } from 'vitest'
 import { issueReport } from './report.ts'
-import { BUYER_QUESTIONS } from '../../src/report/buyer-outline.ts'
+import { productQuestions } from '../../src/report/product-questions.ts'
 import type { BirthInput } from '@orrery/core/types'
 
 const profiles: BirthInput[] = [
@@ -25,7 +25,7 @@ describe('Product 01 paid customer question answers', () => {
       expect(report.text.match(/Question: /g)).toHaveLength(7)
       expect(report.text.match(/Answer: /g)).toHaveLength(7)
       expect(report.text).not.toMatch(/\[object Object\]|\bundefined\b|\bNaN\b/)
-      for (const question of BUYER_QUESTIONS.complete) expect(report.text).toContain(`Question: ${question.question}`)
+      for (const question of productQuestions('complete')) expect(report.text).toContain(`Question: ${question.title}`)
       expect(report.text).toContain('What Challenges Keep Returning in Your Life?')
       expect(report.text).toContain('Your most important life insight is that')
       const turningPoints = report.text.slice(report.text.indexOf('Question: When may my life change direction?'))
@@ -36,11 +36,11 @@ describe('Product 01 paid customer question answers', () => {
       expect(challenge).toMatch(/main cross-life challenge is balancing/i)
       expect(challenge).toMatch(/These needs come from separate chart areas/i)
       const careerStart = report.text.indexOf('Question: What kind of career suits me?')
-      const moneyStart = report.text.indexOf('Question: How does money work in my life?')
+      const moneyStart = report.text.indexOf(`Question: ${productQuestions('complete')[3].title}`)
       const career = report.text.slice(careerStart, moneyStart)
       expect(career).not.toMatch(/count a promising deal as income|payment arrives/i)
       careerAnswers.push(career)
-      const loveStart = report.text.indexOf('Question: What is my pattern in love?')
+      const loveStart = report.text.indexOf(`Question: ${productQuestions('complete')[4].title}`)
       const love = report.text.slice(loveStart, challengeStart)
       expect((love.match(/birth-hour marker/g) ?? []).length).toBeLessThanOrEqual(1)
       if (first.unknownTime) {

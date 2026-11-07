@@ -1,7 +1,7 @@
 import { homepageCopy as copy } from '../i18n/homepage.ts'
 import { SITE_ORIGIN, PUBLISHING_UPDATED, PUBLIC_SAMPLES, publicPaths, publishingIdentity } from './site-config.ts'
 import { learningPages, learningCards } from './learning-pages.ts'
-import { buyerQuestionTitles } from '../report/personal-products.ts'
+import { productQuestions } from '../report/product-questions.ts'
 
 type Identity = ReturnType<typeof publishingIdentity>
 type Page = { path: string; title: string; description: string; body: string; image?: string; noindex?: boolean; article?: boolean }
@@ -90,12 +90,40 @@ const SAMPLE_ANSWERS: Record<string, string[]> = {
 }
 
 function safeSampleBody(kind: string, title: string) {
-  const questions = buyerQuestionTitles(kind as Parameters<typeof buyerQuestionTitles>[0])
-  const answers = SAMPLE_ANSWERS[kind]
-  if (!answers || answers.length !== questions.length) throw new Error('Sample answer count must match the paid report questions for ' + kind)
+  const definitions = productQuestions(kind as Parameters<typeof productQuestions>[0])
+  const questions = definitions.map(question => question.title)
+  // Bind each fictional answer to a stable question ID. The ID lists describe
+  // the legacy sample prose's intended subjects; question order is never used
+  // to select an answer at render time.
+  const sampleQuestionIds: Record<string, readonly string[]> = {
+    complete: ['personality','social','career','money','love','patterns','q-turning-points'],
+    career: ['two-work-layers','proof-of-skill','money-commitments','working-style','feedback-and-boundaries','work-chapters','career-plan'],
+    compatibility: ['two-styles','two-directions','q-conflict','q-love-language','chart-patterns','support-each-other','shared-week'],
+    year: ['annual-theme','q-year-focus','annual-money','annual-work','annual-connections','annual-cycle-context','annual-plan'],
+    business: ['founder-style','offer-test','team-decisions','delivery-capacity','customer-communication','business-chapters','business-plan'],
+    wellbeing: ['everyday-pace','visible-elements','workload-rhythm','q-pressure','support-and-space','balance-week','q-balance-action'],
+    bundle: ['collection-q1','collection-q2','collection-q3','collection-q4','collection-q5','collection-q6','collection-q7','collection-q8','collection-q9','collection-q10'],
+  }
+  const legacyAnswers = SAMPLE_ANSWERS[kind]
+  const ids = sampleQuestionIds[kind]
+  if (!legacyAnswers || !ids || legacyAnswers.length !== ids.length) throw new Error('Sample answer mapping must match the approved question IDs for ' + kind)
+  const answersById = Object.fromEntries(ids.map((id, index) => [id, legacyAnswers[index]]))
+  if (kind === 'bundle') Object.assign(answersById, {
+    'collection-q1': 'In this fictional example, three themes stand out: thoughtful observation, steady skill-building and a need for clear, dependable relationships. They are separate parts of Avery’s story, not predictions.',
+    'collection-q2': 'Avery’s clearest fictional opportunity is to turn careful observation into a practical skill others can use. A real reading would connect this to the buyer’s verified chart and circumstances.',
+    'collection-q3': 'The main challenge in this example is delaying action while trying to make every detail certain. That can reduce stress in the short term but also postpone useful choices.',
+    'collection-q4': 'Avery’s careful nature supports reliable work and considered spending, while close relationships work best with clear, honest communication. These areas connect through a shared preference for trust and consistency.',
+    'collection-q5': 'Avery repeatedly takes responsibility early, then reviews the details again before asking what is truly needed. This is a behavioural loop, separate from the challenge of delaying a decision.',
+    'collection-q6': 'This fictional sample cannot identify important years because it has no verified chart timing calculation. A personal report should name years only when its calculation supports them.',
+    'collection-q7': 'For the three years following a purchase, this fictional example cannot rank specific years without verified timing calculations. It should not invent dates or imply a forecast.',
+    'collection-q8': 'A strength Avery may overlook is noticing small practical problems before they grow. In this example, that attention can help a team improve a process.',
+    'collection-q9': 'Avery’s fictional life feels more fulfilling when work has a clear purpose, money choices feel manageable and close relationships allow honest, dependable support.',
+    'collection-q10': 'Avery’s personal closing insight is to trust careful observation, then let a clear next step be enough. The example leaves room for the person’s own choices and experience.',
+  })
+  if (definitions.some(question => !answersById[question.id])) throw new Error('Missing fictional answer for a question ID in ' + kind)
   const items = questions.map(question => '<li>' + escape(question) + '</li>').join('')
-  const samplePages = questions.map((question, index) =>
-    '<section class="public-chapter public-sample-answer"><p class="public-eyebrow">QUESTION ' + String(index + 1).padStart(2, '0') + ' · FICTIONAL EXAMPLE</p><h2>' + escape(question) + '</h2><p><strong>Example answer:</strong> ' + escape(answers[index]) + '</p><aside class="public-sample-note"><strong>What a personal report adds</strong><p>It uses the buyer’s own verified birth chart to explain whether this theme applies, what supports the interpretation and any relevant timing. This sample contains no customer data or personal chart result.</p></aside></section>'
+  const samplePages = definitions.map(question =>
+    '<section class="public-chapter public-sample-answer" data-question-id="' + escape(question.id) + '"><p class="public-eyebrow">QUESTION ' + String(question.order).padStart(2, '0') + ' · FICTIONAL EXAMPLE</p><h2>' + escape(question.title) + '</h2><p><strong>Example answer:</strong> ' + escape(answersById[question.id]) + '</p><aside class="public-sample-note"><strong>What a personal report adds</strong><p>It uses the buyer’s own verified birth chart to explain whether this theme applies, what supports the interpretation and any relevant timing. This sample contains no customer data or personal chart result.</p></aside></section>'
   ).join('')
   return '<article class="public-reading public-preview-only public-sample-report">' +
     '<header class="public-sample-cover"><div class="public-cover-copy"><p class="public-eyebrow">THE FATE KEY · COMPLETE FICTIONAL SAMPLE</p><h2>' + escape(title) + '</h2><p>A full example of the report’s question-by-question structure and writing style.</p><p class="public-small">Fictional reader: Avery · No customer birth details or personal chart calculations are used.</p><p class="public-eyebrow">SAMPLE ONLY · NOT A PERSONAL READING</p></div><svg class="public-cover-art" viewBox="0 0 300 250" role="img" aria-label="Decorative golden key, crescent moon and orbit illustration"><circle cx="165" cy="125" r="87" fill="none" stroke="#d2af72" stroke-width="1" opacity=".65"/><circle cx="165" cy="125" r="67" fill="none" stroke="#d2af72" stroke-width="1" stroke-dasharray="2 7" opacity=".7"/><path d="M201 46a61 61 0 1 0 47 91 55 55 0 0 1-47-91Z" fill="#d8b778" opacity=".94"/><circle cx="68" cy="69" r="3" fill="#f0d69f"/><path d="m68 57 3 9 9 3-9 3-3 9-3-9-9-3 9-3Z" fill="#f0d69f"/><circle cx="237" cy="203" r="3" fill="#f0d69f"/><path d="M104 161a30 30 0 1 1 21 29l-17 17 10 10-9 9-10-10-12 12-10-10 29-29a30 30 0 0 1-2-28Zm30-18a10 10 0 1 0 0 20 10 10 0 0 0 0-20Z" fill="none" stroke="#e5c47e" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg></header>' +

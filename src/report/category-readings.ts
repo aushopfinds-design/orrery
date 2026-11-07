@@ -14,20 +14,9 @@ import { buildBalanceReading } from './balance-reading.ts'
 import { plainReadingText } from './reading-text.ts'
 import { PERSONAL_PROFILES, RELATIONSHIP_PROFILES } from './reading-profiles.ts'
 import { WORKING_LANGUAGE as LANGUAGE } from './purchase-language.ts'
+import { DESTINY_COLLECTION_QUESTIONS } from './product-questions.ts'
 
-/** The live collection's ten opening questions; keep QA and delivery aligned. */
-export const DESTINY_COLLECTION_QUESTIONS = [
-  'What kind of person are you at your core?',
-  'Which strengths help you most, and what can get in your way?',
-  'What kind of work is the best fit for you?',
-  'How are you most likely to earn and manage money?',
-  'What do you need from a close relationship?',
-  'How do you and your partner fit together?',
-  'What recurring challenge deserves your attention?',
-  'What should you know about the next 12 months?',
-  'When could a longer-term life or work shift deserve attention?',
-  'How do these parts of your life connect?',
-] as const
+export { DESTINY_COLLECTION_QUESTIONS } from './product-questions.ts'
 
 export { buildCompatibilityReading, buildCareerReading, buildBusinessReading, buildYearAheadReading, buildBalanceReading }
 export function buildCategoryReading(kind: FocusCategory, first: SajuResult, options: { second?: SajuResult; year?: number; periodStart?: string; periodTimezone?: string } = {}) {
@@ -91,11 +80,9 @@ export function buildBundleFromPlans(plans: ReturnType<typeof bundleInterpretati
   const careerFit = chapter(career, 'two-work-layers')
   const moneyFit = chapter(career, 'money-commitments')
   const relationshipNeed = chapter(love, 'love-needs')
-  const relationshipFit = chapter(compatibility, 'two-styles')
   const challenge = chapter(complete, 'life-challenges')
   const yearTheme = chapter(annual, 'annual-theme')
   const longTerm = chapter(complete, 'patterns')
-  const nextCycle = complete.periods[1]
   const lifeTimeline = complete.periods.length
     ? complete.periods.map(period => `${period.period} · ${period.pillar}: ${period.paragraphs.join(' ')}`)
     : ['No ten-year cycle falls within the available calculated range.']
@@ -135,47 +122,25 @@ export function buildBundleFromPlans(plans: ReturnType<typeof bundleInterpretati
               : 'the chart gives clearer work-fit clues than direct income clues'
   const earningPattern = collectionMoneyAnswer
   const annualWindow = `${annual.months[0]?.label ?? 'the next twelve months'} through ${annual.months.at(-1)?.label ?? ''}`
-  const careerAnswer = `Your strongest work fit is a role centred on ${workTheme}. Look for a position where this is a regular task, not an occasional side responsibility.`
-  const relationshipAnswer = `Your relationship needs include ${privateNeed}.`
-  const partnerNeed = RELATIONSHIP_PROFILES[plans.compatibility.partner!.dayBranch].need
-  const dayPair = plans.compatibility.pairPatterns.find(row => row.left === 'day' && row.right === 'day')!
-  const dayFriction = dayPair.patterns.some(pattern => ['沖', '刑', '害', '破'].includes(pattern.type))
-  const dayLink = dayPair.patterns.some(pattern => pattern.type === '合')
-  const sharedNeed = privateNeed === partnerNeed
-  const pairFit = dayFriction
-    ? 'Your private styles can pull in different directions, so each person needs room for independent choices.'
-    : dayLink
-      ? sharedNeed ? 'The chart comparison supports shared plans, which builds on that common need.' : 'Your private styles support shared plans, while each person still needs a different kind of care.'
-      : 'The chart shows no strong private-life link or clash; your stated needs are the clearest guide to how you fit.'
-  const partnerAnswer = `${sharedNeed ? `You share a need for ${privateNeed}.` : `Your needs differ: you value ${privateNeed}, while your partner values ${partnerNeed}.`} ${pairFit}`
-  const annualGod = LANGUAGE[plans.annual.annual[0].god]
-  const annualInner = LANGUAGE[plans.annual.annual[0].innerGod]
-  const annualWork = annualGod.work.en.split(/(?<=[.!?])\s/)[0].replace(/ fit this pattern\.?$/i, '').replace(/[.!?]+$/u, '').toLowerCase()
-  const annualRelationship = annualInner.love.en.split(/(?<=[.!?])\s/)[0].replace(/[.!?]+$/u, '').toLowerCase()
-  const annualSummary = `For ${annualWindow}, your chart's clearest work direction is: ${annualWork}. The money indicators show that ${incomeSummary}. In close relationships, ${annualRelationship}. Treat these as chart themes to plan around, not promised events.`
-  const longerShift = nextCycle
-    ? `Your next calculated ten-year period runs ${nextCycle.period.replace(/^Around\s+/i, 'from around ').replace(/\s–\saround\s+/i, ' to around ')}. Its main theme is ${nextCycle.headline.toLowerCase().replace(/ — repeated emphasis$/i, '')}. Use that theme as a prompt for reflection, not as a prediction of a specific event; both dates are approximate.`
-    : 'No further ten-year period is available in the supported calculation range, so this report does not add a later date.'
-  const collectionTiming = plans.annual.months.filter(point => ['day', 'month'].every(position => point.comparisons.some(item => item.position === position && item.patterns.some(pattern => ['沖', '刑', '害', '破'].includes(pattern.type)))))
-  const timingLink = collectionTiming.length
-    ? `For ${annualWindow}, the shared work-and-home comparison flags ${collectionTiming.map(point => point.date.slice(0, 7)).join(', ')} for review; this is a timing signal, not an event prediction.`
-    : `For ${annualWindow}, no shared work-and-home pressure month stands out in this comparison.`
-  const integratedCollectionAnswer = `Your work pattern centres on ${workTheme}, while ${incomeSummary}. They connect through delivery: opportunities help only when you can complete the work and collect payment. Your close relationships have a separate need: ${privateNeed}. ${timingLink} The chart links these themes but does not show that one causes another or guarantee an event.`
+  const integratedCollectionAnswer = `Your work pattern centres on ${workTheme}, while ${incomeSummary}. They connect through delivery: opportunities help only when you can complete the work and collect payment. Your close relationships have a separate need: ${privateNeed}. These are related parts of your life, but the chart does not show that one causes another or guarantee an event.`
+  const timingUnavailable = 'This report does not have an independently verified calculation for specific years, so it cannot name a reliable year or month.'
+  const threeInsights = `Three chart-linked themes stand out: your core style is ${coreProfile.focus}; your work fit centres on ${workTheme}; and close relationships work best when your need for ${privateNeed} is understood.`
+  const repeatingPattern = `A pattern that may repeat is ${plainReadingText(coreProfile.watchFor.at(-1) ?? coreProfile.watchFor[0])} Your chart links this tendency to your ${workTheme}-centred work style; it is a pattern to notice, not a fixed outcome.`
+  const finalMessage = `Your chart points to a clear theme: your ${workTheme}-centred work and need for ${privateNeed} both matter in the life you build. Treat this as a personal pattern to weigh alongside your real circumstances, not as a fixed outcome.`
   const collectionQuestions = [
-    answer(1, DESTINY_COLLECTION_QUESTIONS[0], life, undefined, coreAnswer),
-    answer(2, DESTINY_COLLECTION_QUESTIONS[1], strengthsOverview, undefined, strengthAnswer),
-    answer(3, DESTINY_COLLECTION_QUESTIONS[2], careerFit, undefined, careerAnswer),
-    answer(4, DESTINY_COLLECTION_QUESTIONS[3], moneyFit, undefined, earningPattern),
-    answer(5, DESTINY_COLLECTION_QUESTIONS[4], relationshipNeed, undefined, relationshipAnswer),
-    answer(6, DESTINY_COLLECTION_QUESTIONS[5], relationshipFit, undefined, partnerAnswer),
-    answer(7, DESTINY_COLLECTION_QUESTIONS[6], challenge, undefined, challengeAnswer),
-    answer(8, DESTINY_COLLECTION_QUESTIONS[7], yearTheme, undefined, annualSummary),
-    answer(9, DESTINY_COLLECTION_QUESTIONS[8], longTerm, undefined, longerShift),
+    answer(1, DESTINY_COLLECTION_QUESTIONS[0], life, undefined, threeInsights),
+    answer(2, DESTINY_COLLECTION_QUESTIONS[1], careerFit, undefined, `Your clearest opportunity is to use ${workTheme} as a regular part of your work, where it can shape the value you offer.`),
+    answer(3, DESTINY_COLLECTION_QUESTIONS[2], challenge, undefined, challengeAnswer),
+    answer(4, DESTINY_COLLECTION_QUESTIONS[3], moneyFit, undefined, integratedCollectionAnswer),
+    answer(5, DESTINY_COLLECTION_QUESTIONS[4], life, undefined, repeatingPattern),
+    answer(6, DESTINY_COLLECTION_QUESTIONS[5], longTerm, undefined, `Across the lifetime timing question, no independently verified year calculation is available here. ${timingUnavailable}`),
+    answer(7, DESTINY_COLLECTION_QUESTIONS[6], yearTheme, undefined, `For the three years following the order reference date, no independently verified three-year timing calculation is available here. ${timingUnavailable}`),
+    answer(8, DESTINY_COLLECTION_QUESTIONS[7], strengthsOverview, undefined, `A strength you may overlook is this: ${plainReadingText(coreProfile.strength)} The chart links this trait to your natural way of approaching work and close relationships.`),
+    answer(9, DESTINY_COLLECTION_QUESTIONS[8], life, undefined, `A more fulfilling life is supported when your ${workTheme}-centred work leaves room for the close relationships that meet your need for ${privateNeed}. Your chart describes tendencies; your choices and circumstances still matter.`),
     [
-      '10 · How Do Your Life, Love, Work and Timing Fit Together?',
+      `10 · ${DESTINY_COLLECTION_QUESTIONS[9]}`,
       `Question: ${DESTINY_COLLECTION_QUESTIONS[9]}`,
-      `Your Answer: ${plainReadingText(integratedCollectionAnswer)}`,
-      'Practical Step: Compare the actual payment date and delivery hours before accepting more work.',
+      `Your Answer: ${plainReadingText(finalMessage)}`,
     ].join('\n\n'),
   ]
   const includedReports = [complete, compatibility, career, annual, love]

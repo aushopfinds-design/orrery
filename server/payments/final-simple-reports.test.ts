@@ -2,19 +2,17 @@ import { mkdir, writeFile } from 'node:fs/promises'
 import { PDFDocument } from 'pdf-lib'
 import { describe, expect, it } from 'vitest'
 import { CATEGORY_SCENARIOS } from '../../src/report/category-catalog.ts'
-import { BUYER_QUESTIONS, type BuyerOutlineKind } from '../../src/report/buyer-outline.ts'
-import { DESTINY_COLLECTION_QUESTIONS } from '../../src/report/category-readings.ts'
+import { productQuestions } from '../../src/report/product-questions.ts'
 import { issueReport } from './report.ts'
 
 const products = ['complete', 'career', 'compatibility', 'year', 'business', 'wellbeing', 'bundle'] as const
-const questionCount = { complete: 7, career: 7, compatibility: 7, year: 7, business: 7, wellbeing: 7, bundle: 10 }
 
 describe('seven simplified report products use the paid PDF path', () => {
   it('generates one representative PDF per product with its questions and navigation intact', async () => {
     const output = process.env.FATE_SIMPLE_REPORT_PDF_DIR
     if (output) await mkdir(output, { recursive: true })
-    const profile = CATEGORY_SCENARIOS[2] // unknown-time international profile
-    for (const kind of products) {
+    const profiles = [CATEGORY_SCENARIOS[0], CATEGORY_SCENARIOS[2]] // known-time and unknown-time international profiles
+    for (const profile of profiles) for (const kind of products) {
       const paired = kind === 'compatibility' || kind === 'bundle'
       const report = await issueReport({
         kind,
@@ -23,12 +21,21 @@ describe('seven simplified report products use the paid PDF path', () => {
         ...(kind === 'year' || kind === 'bundle' ? { year: 2026, periodStart: '2026-11', periodEnd: '2027-10', periodTimezone: 'America/New_York' } : {}),
       }, '12345678-1234-4234-8234-123456789099', 2026, 'test')
 
-      const questions = kind === 'bundle' ? DESTINY_COLLECTION_QUESTIONS : BUYER_QUESTIONS[kind as BuyerOutlineKind].map(item => item.question)
-      expect(report.text.match(/Question: /g)?.length, `${kind} question count`).toBe(questionCount[kind])
-      for (const question of questions) expect(report.text, `${kind}/${question}`).toContain(`Question: ${question}`)
+      const definitions = productQuestions(kind)
+      const questions = [...report.text.matchAll(/(?:^|\n)Question: ([^\n]+)\n/g)].map(match => match[1].trim())
+      expect(questions, `${kind} question titles and order`).toEqual(definitions.map(item => item.title))
+      expect(report.answerProvenance.map(item => item.questionId), `${kind} question IDs and order`).toEqual(definitions.map(item => item.id))
+      expect(questions.length, `${kind} question count`).toBe(kind === 'bundle' ? 10 : 7)
       expect(report.text).not.toMatch(/undefined|NaN|\[object Object\]/)
       if (kind === 'year') expect(report.text).toContain('Analysis window: November 2026 through October 2027.')
-      expect(report.answerProvenance).toHaveLength(questionCount[kind])
+      expect(report.answerProvenance).toHaveLength(definitions.length)
+      const questionMatches = [...report.text.matchAll(/(?:^|\n)Question: ([^\n]+)\n/g)]
+      for (const [index, question] of definitions.entries()) {
+        expect(questionMatches[index]?.[1].trim(), `${kind}/${question.id} body heading`).toBe(question.title)
+        const sectionStart = questionMatches[index]!.index! + questionMatches[index]![0].length
+        const sectionEnd = questionMatches[index + 1]?.index ?? report.text.length
+        expect(report.text.slice(sectionStart, sectionEnd).trim(), `${kind}/${question.id} answer`).not.toMatch(/^$/)
+      }
       if (profile.first.unknownTime) {
         expect(report.text).toContain('Hour: Unknown')
         expect(report.text).not.toMatch(/Hour (?:pillar|stem|branch) [甲乙丙丁戊己庚辛壬癸]/)
@@ -40,7 +47,7 @@ describe('seven simplified report products use the paid PDF path', () => {
       expect(pdf.getPageCount()).toBeGreaterThan(1)
       const links = pdf.getPages().flatMap(page => page.node.Annots()?.asArray() ?? [])
       expect(links.length, `${kind} internal navigation`).toBeGreaterThan(0)
-      if (output) await writeFile(`${output}/${kind}.pdf`, bytes)
+      if (output) await writeFile(`${output}/${kind}-${profile.id}.pdf`, bytes)
     }
   }, 180_000)
 })

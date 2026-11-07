@@ -1,5 +1,6 @@
 import type { ReportChapter } from './complete-reading.ts'
 import { BUYER_QUESTIONS, type BuyerOutlineKind, type BuyerQuestion } from './buyer-outline.ts'
+import { productQuestions } from './product-questions.ts'
 
 /** Internal, deterministic answer trace. Never place this object in customer text or PDF. */
 export interface AnswerProvenance {
@@ -56,9 +57,13 @@ function traceCompleteQuestion(question: BuyerQuestion, chapter: ReportChapter):
 /** The shipped career product is intentionally kept at its existing seven questions. */
 export function buildAnswerProvenance(kind: BuyerOutlineKind, chapters: ReportChapter[]): AnswerProvenance[] {
   const byId = new Map(chapters.map(chapter => [chapter.id, chapter]))
-  return BUYER_QUESTIONS[kind].map(question => {
-    const chapter = byId.get(question.source)
-    if (!chapter) throw new Error(`Missing answer provenance source: ${kind}/${question.source}`)
-    return kind === 'complete' ? traceCompleteQuestion(question, chapter) : traceQuestion(kind, question, chapter)
+  const sourceQuestions = new Map(BUYER_QUESTIONS[kind].map(question => [question.id, question]))
+  return productQuestions(kind).map(definition => {
+    const question = sourceQuestions.get(definition.id)
+    if (!question) throw new Error(`Missing answer provenance question: ${kind}/${definition.id}`)
+    const chapter = byId.get(definition.answerSource)
+    if (!chapter) throw new Error(`Missing answer provenance source: ${kind}/${definition.answerSource}`)
+    const trace = kind === 'complete' ? traceCompleteQuestion(question, chapter) : traceQuestion(kind, question, chapter)
+    return { ...trace, answerType: definition.answerRole }
   })
 }

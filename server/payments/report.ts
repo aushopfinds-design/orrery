@@ -10,14 +10,15 @@ import { PDFDocument, PDFName, PDFNumber, PDFNull, rgb, StandardFonts, pushGraph
 import fontkit from '@pdf-lib/fontkit'
 import { calculateSaju } from '../../packages/core/src/saju.ts'
 import { buildCompleteReading, REPORT_EDITION } from '../../src/report/complete-reading.ts'
-import { buildBundleReading, buildCategoryReading, DESTINY_COLLECTION_QUESTIONS } from '../../src/report/category-readings.ts'
+import { buildBundleReading, buildCategoryReading } from '../../src/report/category-readings.ts'
 import { buildDestinyCard } from '../../src/report/destiny-card.ts'
 import { plainReadingText, readingTextParts } from '../../src/report/reading-text.ts'
 import { previewProduct } from '../../src/report/personal-products.ts'
 import { careerMoneyChartData } from '../../src/report/career-money-charts.ts'
 import type { OrderInput } from './input.ts'
 import { auditBirthInput } from './independent-audit.ts'
-import { applyBuyerQuestions, BUYER_QUESTIONS } from '../../src/report/buyer-outline.ts'
+import { applyBuyerQuestions } from '../../src/report/buyer-outline.ts'
+import { productQuestions } from '../../src/report/product-questions.ts'
 import { inspectReport } from '../../src/lib/report-quality-gate.ts'
 import { buildAnswerProvenance, buildCollectionAnswerProvenance, type AnswerProvenance } from '../../src/report/answer-provenance.ts'
 import { summarizeCalculationVerification, type CalculationVerification } from '../../src/report/independent-personalization.ts'
@@ -83,7 +84,7 @@ export async function issueReport(input: OrderInput, orderId: string, referenceY
     calculationVerification = summarizeCalculationVerification(independentAudit, Boolean(input.first.unknownTime))
     const reading = buildCompleteReading(a, referenceYear, independentAudit)
     answerProvenance = buildAnswerProvenance('complete', reading.chapters)
-    source = reading; documents = [previewProduct('complete').title]; text = applyBuyerQuestions(reading.fullText.replace('THE FATE KEY · ' + reading.title + '\n\n', 'THE FATE KEY · ' + documents[0] + '\n\n'), 'complete', reading.chapters, reading.periods)
+    source = reading; documents = [previewProduct('complete').title]; text = applyBuyerQuestions(reading.fullText.replace('THE FATE KEY · ' + reading.title + '\n\n', 'THE FATE KEY · ' + documents[0] + '\n\n'), 'complete', reading.chapters, reading.periods, 'standalone', [], Object.fromEntries(productQuestions('complete').map(question => [question.id, question.title])))
   } else if (input.kind === 'bundle') {
     if (!b) throw new Error('Missing second chart')
     const reading = buildBundleReading(a, b, Number(input.periodStart?.slice(0, 4) ?? input.year!), referenceYear, input.periodStart, input.periodTimezone)
@@ -93,20 +94,21 @@ export async function issueReport(input: OrderInput, orderId: string, referenceY
       return found
     }
     answerProvenance = buildCollectionAnswerProvenance([
-      { questionId: 'collection-q1', sourceChapterId: 'complete.personality', ruleId: 'category-readings.buildBundleReading.q1.v1', chapters: [chapter(reading.complete.chapters, 'personality')] },
-      { questionId: 'collection-q2', sourceChapterId: 'complete.social', ruleId: 'category-readings.buildBundleReading.q2.v1', chapters: [chapter(reading.complete.chapters, 'social')] },
-      { questionId: 'collection-q3', sourceChapterId: 'career.two-work-layers', ruleId: 'category-readings.buildBundleReading.q3.v1', chapters: [chapter(reading.career.chapters, 'two-work-layers')] },
-      { questionId: 'collection-q4', sourceChapterId: 'career.money-commitments', ruleId: 'category-readings.buildBundleReading.q4.v1', chapters: [chapter(reading.career.chapters, 'money-commitments')] },
-      { questionId: 'collection-q5', sourceChapterId: 'love.love-needs', ruleId: 'category-readings.buildBundleReading.q5.v1', chapters: [chapter(reading.love.chapters, 'love-needs')] },
-      { questionId: 'collection-q6', sourceChapterId: 'compatibility.two-styles', ruleId: 'category-readings.buildBundleReading.q6.v1', chapters: [chapter(reading.compatibility.chapters, 'two-styles')] },
-      { questionId: 'collection-q7', sourceChapterId: 'complete.life-challenges', ruleId: 'category-readings.buildBundleReading.q7.v1', chapters: [chapter(reading.complete.chapters, 'life-challenges')] },
-      { questionId: 'collection-q8', sourceChapterId: 'annual.annual-theme', ruleId: 'category-readings.buildBundleReading.q8.v1', chapters: [chapter(reading.annual.chapters, 'annual-theme')] },
-      { questionId: 'collection-q9', sourceChapterId: 'complete.patterns', ruleId: 'category-readings.buildBundleReading.q9.v1', chapters: [chapter(reading.complete.chapters, 'patterns')] },
-      { questionId: 'collection-q10', sourceChapterId: 'collection.integration', ruleId: 'category-readings.buildBundleReading.q10.v1', chapters: [
-        chapter(reading.career.chapters, 'two-work-layers'), chapter(reading.career.chapters, 'money-commitments'),
-        chapter(reading.love.chapters, 'love-needs'), chapter(reading.annual.chapters, 'annual-theme'),
-      ] },
-    ])
+      { questionId: 'collection-q1', sourceChapterId: 'complete.personality', ruleId: 'product07.three-core-destiny-insights.v1', chapters: [chapter(reading.complete.chapters, 'personality'), chapter(reading.career.chapters, 'two-work-layers'), chapter(reading.love.chapters, 'love-needs')] },
+      { questionId: 'collection-q2', sourceChapterId: 'career.two-work-layers', ruleId: 'product07.principal-life-opportunity.v1', chapters: [chapter(reading.career.chapters, 'two-work-layers')] },
+      { questionId: 'collection-q3', sourceChapterId: 'complete.life-challenges', ruleId: 'product07.main-personal-challenge.v1', chapters: [chapter(reading.complete.chapters, 'life-challenges')] },
+      { questionId: 'collection-q4', sourceChapterId: 'career.money-commitments', ruleId: 'product07.cross-domain-life-connection.v1', chapters: [chapter(reading.career.chapters, 'two-work-layers'), chapter(reading.career.chapters, 'money-commitments'), chapter(reading.love.chapters, 'love-needs')] },
+      { questionId: 'collection-q5', sourceChapterId: 'complete.personality', ruleId: 'product07.recurring-life-pattern.v1', chapters: [chapter(reading.complete.chapters, 'personality')] },
+      { questionId: 'collection-q6', sourceChapterId: 'complete.patterns', ruleId: 'product07.verified-important-years.v1', chapters: [chapter(reading.complete.chapters, 'patterns')] },
+      { questionId: 'collection-q7', sourceChapterId: 'annual.annual-theme', ruleId: 'product07.verified-three-year-priority.v1', chapters: [chapter(reading.annual.chapters, 'annual-theme')] },
+      { questionId: 'collection-q8', sourceChapterId: 'complete.social', ruleId: 'product07.underrecognized-potential.v1', chapters: [chapter(reading.complete.chapters, 'social')] },
+      { questionId: 'collection-q9', sourceChapterId: 'complete.personality', ruleId: 'product07.fulfillment-conditions.v1', chapters: [chapter(reading.complete.chapters, 'personality'), chapter(reading.career.chapters, 'two-work-layers'), chapter(reading.love.chapters, 'love-needs')] },
+      { questionId: 'collection-q10', sourceChapterId: 'complete.personality', ruleId: 'product07.personal-final-message.v1', chapters: [chapter(reading.complete.chapters, 'personality'), chapter(reading.career.chapters, 'two-work-layers'), chapter(reading.love.chapters, 'love-needs')] },
+    ]).map(trace => {
+      const definition = productQuestions('bundle').find(question => question.id === trace.questionId)
+      if (!definition) throw new Error(`Missing Product 07 answer role for ${trace.questionId}`)
+      return { ...trace, answerType: definition.answerRole }
+    })
     source = reading
     documents = [previewProduct('bundle').title]
     text = reading.fullText.replace('THE FATE KEY · ' + reading.title + '\n\n', 'THE FATE KEY · ' + documents[0] + '\n\n')
@@ -118,7 +120,7 @@ export async function issueReport(input: OrderInput, orderId: string, referenceY
       careerCalculationVerified = Boolean(audit && audit.current.slice(0, 3).every((pillar, index) => pillar && pillar === audit.independent[index]))
     }
     answerProvenance = buildAnswerProvenance(input.kind, reading.chapters)
-    source = reading; documents = [previewProduct(input.kind).title]; text = applyBuyerQuestions(reading.fullText.replace('THE FATE KEY · ' + reading.title + '\n\n', 'THE FATE KEY · ' + documents[0] + '\n\n'), input.kind, reading.chapters, [], 'standalone', careerCharts?.years)
+    source = reading; documents = [previewProduct(input.kind).title]; text = applyBuyerQuestions(reading.fullText.replace('THE FATE KEY · ' + reading.title + '\n\n', 'THE FATE KEY · ' + documents[0] + '\n\n'), input.kind, reading.chapters, [], 'standalone', careerCharts?.years, Object.fromEntries(productQuestions(input.kind).map(question => [question.id, question.title])))
   }
   const certificates = documents.map((title,index) => ({ title, number: reportReference(orderId, referenceYear, input.kind === 'bundle' ? 5 : index + 1) }))
   const reference = input.kind === 'bundle' ? reportReference(orderId, referenceYear, 0) : certificates[0].number
@@ -139,7 +141,8 @@ export async function issueReport(input: OrderInput, orderId: string, referenceY
   // Sandbox reports remain renderable for QA. Paid live delivery fails closed
   // until the structural gate reaches 95 and no human-review flag remains.
   try {
-    const questionTexts = input.kind === 'bundle' ? DESTINY_COLLECTION_QUESTIONS : BUYER_QUESTIONS[input.kind].map(item => item.question)
+    const questionDefinitions = productQuestions(input.kind)
+    const questionTexts = questionDefinitions.map(question => question.title)
     const expected = [...questionTexts]
     const matches = [...report.text.matchAll(/(?:^|\n)Question: ([^\n]+)\n/g)]
     const answerLabel = /^(?:Your Answer|Answer|Answer detail|What This Means for You|Important Timing|Bottom Line|Practical point|Main caution):\s*/i
@@ -154,9 +157,11 @@ export async function issueReport(input: OrderInput, orderId: string, referenceY
     })
     const audit = inspectReport({
       productId: input.kind, expectedQuestions: expected,
-      questions: sections.map((section, index) => ({ ...section, questionId: input.kind === 'bundle'
-        ? `collection-q${index + 1}`
-        : BUYER_QUESTIONS[input.kind].find(question => question.question === section.question)?.id ?? section.question })),
+      expectedQuestionIds: questionDefinitions.map(question => question.id),
+      questions: sections.map(section => ({
+        ...section,
+        questionId: questionDefinitions.find(question => question.title === section.question)?.id ?? section.question,
+      })),
       birthTimeKnown: !input.first.unknownTime && (!input.second || !input.second.unknownTime),
       usesHourPillar: (Boolean(input.first.unknownTime) || Boolean(input.second?.unknownTime)) && sections.some(section =>
         /\b(?:hour pillar|hour stem|hour branch|birth-hour marker|hour sign)\b/i.test(section.answer)),

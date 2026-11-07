@@ -4,7 +4,7 @@ import { describe, expect, it } from 'vitest'
 import { CATEGORY_SCENARIOS } from '../../src/report/category-catalog.ts'
 import type { PreviewKind } from '../../src/report/personal-products.ts'
 import { issueReport } from './report.ts'
-import { BUYER_QUESTIONS, type BuyerOutlineKind } from '../../src/report/buyer-outline.ts'
+import { productQuestions } from '../../src/report/product-questions.ts'
 
 const samples = [
   CATEGORY_SCENARIOS[0].first,
@@ -36,14 +36,13 @@ describe('seven purchased report PDF generation', () => {
           expect(report.documents).toHaveLength(1)
           expect(report.text.match(/Question: /g)?.length, `${kind} question count`).toBe(10)
           expect(report.text.match(/Answer: /g)?.length, `${kind} answer count`).toBe(10)
-          expect(report.text).toContain('Question: What kind of person are you at your core?')
-          expect(report.text).toContain('Question: How do you and your partner fit together?')
+          expect(report.text).toContain(`Question: ${productQuestions('bundle')[0].title}`)
+          expect(report.text).not.toContain('Question: How do you and your partner fit together?')
         } else {
-        const questionKinds: BuyerOutlineKind[] = [kind]
-        const expectedQuestions = questionKinds.flatMap(questionKind => BUYER_QUESTIONS[questionKind])
+        const expectedQuestions = productQuestions(kind)
         expect(report.text.match(/Question: /g)?.length, `${kind} question count`).toBe(expectedQuestions.length)
         expect(report.text.match(/Answer: /g)?.length, `${kind} answer count`).toBe(expectedQuestions.length)
-        for (const question of expectedQuestions) expect(report.text).toContain(`Question: ${question.question}`)
+        for (const question of expectedQuestions) expect(report.text).toContain(`Question: ${question.title}`)
         }
         if (kind === 'year') {
           expect(report.title).toBe('Your Next 12 Months')
