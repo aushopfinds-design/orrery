@@ -121,7 +121,7 @@ describe('r15 paid-content review fixes',()=>{
   expect(s['month-1'].action.en).toContain('In January 2027')
   expect(s['annual-cycle-context'].lines[0].en).not.toContain('The clearest conditional activity openings are May 2027, June 2027, July 2027')
   expect(s['annual-cycle-context'].lines[0].en).toContain('extra-care list separately checks friction and competing demands')
-  expect(s['annual-theme'].lines[0].en).toContain('For January 2027 through December 2027, your chart highlights two main themes.')
+  expect(s['annual-theme'].lines[0].en).toMatch(/^For January 2027 through December 2027, the chart points to .+ at work; in close relationships, .+/)
   expect(s['annual-cycle-context'].lines[0].en).toContain('not a ranking of lucky months')
   expect(s['month-7'].lines[0].en).toContain('Opening —')
   expect(text).not.toContain('manage..')

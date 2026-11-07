@@ -14,7 +14,7 @@
 | 01 — Your Life, Your Destiny | `complete.pdf` | 7 | **93.4/100** | 미달 |
 | 02 — Success, Money & Your Future | `career.pdf` | 7 | **92.0/100** | 미달 |
 | 03 — Are We Meant to Be? | `compatibility.pdf` | 7 | **93.1/100** | 미달 |
-| 04 — Your Next 12 Months | `year.pdf` | 7 | **91.7/100** | 미달 |
+| 04 — Your Next 12 Months | `year.pdf` | 7 | **92.0/100** | 미달 |
 | 05 — Born to Build a Business? | `business.pdf` | 7 | **91.6/100** | 미달 |
 | 06 — The Real You: Strengths & Weaknesses | `wellbeing.pdf` | 7 | **93.0/100** | 미달 |
 | 07 — Your Destiny Collection | `bundle.pdf` | 10 | **92.4/100** | 미달 |
@@ -65,11 +65,11 @@ PDF: `compatibility.pdf` · 평균 **93.1/100** · 질문 7개
 
 ## 04 — Your Next 12 Months
 
-PDF: `year.pdf` · 평균 **91.7/100** · 질문 7개
+PDF: `year.pdf` · 평균 **92.0/100** · 질문 7개
 
 | # | 고객 질문 | 점수 | 감점 근거 / 다음 수정 방향 |
 |---:|---|---:|---|
-| 1 | What is the overall theme of my next 12 months? | 91 | 업무와 관계의 연간 주제를 한 문장으로 직접 종합하도록 고쳤다. 쉬운 말이지만 업무 유형 목록은 길고, 중요도 순위가 더 분명하면 좋다. |
+| 1 | What is the overall theme of my next 12 months? | 93 | 첫 문장에서 업무의 구체적 방향과 관계 주제를 함께 말하도록 수정했다. 최신 PDF에서 두 핵심 주제가 답의 시작부터 확인된다. 업무 유형 목록은 여전히 길어 더 압축할 여지가 있다. |
 | 2 | What should I focus on most this year? | 93 | Q1의 테마를 반복하지 않고, 역할·기준·권한이 분명한 일을 우선하라고 별도 행동 초점을 준다. |
 | 3 | What does it suggest for money? | 90 | 연간 기간, 책임에 따른 재정 압박, 직접적인 재물 주제의 달을 구분한다. 핵심 재정 포인트를 더 앞세울 수 있다. |
 | 4 | What does this period suggest for my career? | 92 | 올해의 직무 성향과 권한·자원 조건을 설명한다. 장기 직업 답변과 일부 해석을 공유하지만 연간 맥락이 별도 가치를 준다. |
@@ -161,6 +161,15 @@ PDF: `bundle.pdf` · 평균 **92.4/100** · 질문 10개
 - 자동 품질 진단 결과: 01 **100, 통과**; 02 **100, 통과**; 03 **70, 실패**(문단 검토·계산 미검증); 04 **70, 실패**(계산 미검증); 05 **70, 실패**(문단 검토·계산 미검증); 06 **70, 실패**(계산 미검증); 07 **70, 실패**(길이 검토·계산 미검증). 이 진단 점수는 내용 점수와 다른 자동 게이트다. 자동 진단이 100인 상품도 위 편집자 점수 기준으로는 95점 미달이다.
 - 이 프로필의 미상 출생시간과 질문 수/PDF 생성은 자동 검증했으나, 이번에 생성한 7개 PDF를 각각 전 페이지 육안 검수하거나 질문별로 새 편집 점수를 부여하지 않았다. 상품별 현재 표시 점수는 위의 마지막 실제 편집 검수 결과로 유지한다.
 - PDF 원본과 로그는 재현 가능하도록 `tmp/rescore-2026-11-07/`에 생성했으나 `tmp/`는 임시 작업 폴더이며 저장소 커밋 대상이 아니다. 영구 점수 이력은 이 문서에 기록한다.
+
+## 답변 개선 반복 — Product 04 전체 주제 문장
+
+- Product 04 Q1의 첫 문장에서 “두 가지 주제가 있다”는 도입을 빼고, 업무·관계 주제를 직접 제시했다. 확인한 실제 PDF 답변은 “For November 2026 through October 2027, the chart points to management, regulated work, public service and structured organisations at work; in close relationships, intensity and decisiveness can be attractive.”로 시작한다.
+- 새 문장으로 생성한 미상 출생시간 프로필 PDF에서 해당 답변을 확인해 91→93점으로 조정했다. Product 04 평균은 **92.0/100**으로 재계산했다. 다른 여섯 상품의 편집 점수는 기존 완전 검수 결과 그대로다. 이번 수정으로도 95점 목표에는 미달이다.
+- 변경 파일: `src/report/purchase-narrative.ts`, `src/report/purchase-narrative.test.ts`, `src/report/buyer-outline.test.ts`.
+- 해당 연간 서술·구매자 답변 테스트 **48/48 통과**, TypeScript 검사 통과, `git diff --check` 통과. 유료 PDF 통합 테스트 **1/1 통과**; 새 PDF 7개의 질문 수, PDF 로딩, 내비게이션 링크, 미상 출생시간 억제 검증이 통과했다. 자동 진단은 01·02만 100 통과, 03–07은 각각 70 미통과였다.
+- 전체 저장소 테스트는 **934/936 통과, 2개 실패**했다. 실패는 `server/payments/final-quality-sample.test.ts`의 관계 시기 문구 기대값과 `server/payments/product01-root-cause.test.ts`의 Product 01 PDF 링크 대상 페이지 순서 기대값이다. 전체 테스트 통과로 보고하지 않으며, 이 두 검증은 후속 확인이 필요하다.
+- 95점 이상 상품은 여전히 **0/7**이다. 새 수정은 Product 04의 첫 답변만 개선했으며, 전체 질문 재채점·전 페이지 PDF 시각 검수·Destiny Card 검수·고객 주문 검증은 완료하지 않았다.
 
 ## 결론 / 미완료 항목
 
