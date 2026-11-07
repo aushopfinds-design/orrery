@@ -48,6 +48,13 @@ describe('r23 customer review regressions',()=>{
    expect(html).toContain('Traditional colors and number pairs')
   }
  })
+ it('shows both partners in the compatibility answer overview',()=>{
+  const report=buildCategoryReading('compatibility',a,{second:b,year:2027})
+  const attraction=reportOverview(report.chapters).find(item=>item.label==='Why Are You Drawn to Each Other?')!
+  expect(attraction.text).toContain('You may be drawn to')
+  expect(attraction.text).toContain('while your partner may be drawn to')
+  expect(attraction.text).not.toContain('From your side:')
+ })
  it('selects at most three explained monthly highlights while retaining all twelve labels',()=>{
   const plan=buildInterpretationPlan('year',a,2027),sections=customerNarrative(plan)
   const highlights=sections['annual-cycle-context'].lines

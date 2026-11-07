@@ -164,8 +164,8 @@ function buildSections(plan:InterpretationPlan,targetedProduct01=true,rootCauseF
    : good.length
     ? `The full activity check identifies ${labels(good)}, but each also meets the separate extra-care check. The opening and the added demands should be considered together. ${overlapNotes.join(' ')}`
    : selected.length
-    ? `No month meets the full activity-opening check. Quieter work-and-relationship themes appear in ${labels(selected)}; they are not supportive openings. The extra-care list separately identifies months with friction or competing demands.`
-    : 'No month meets the full activity-opening check, and no quieter comparison stands out. Use the full monthly reading to identify the specific commitments needing adjustment.'
+    ? `The chart does not show a month meeting the combined conditions for a clear opening. This does not mean no opportunities will arise. Quieter work-and-relationship themes appear in ${labels(selected)}; they are separate from the months with a checked friction or added-demand signal.`
+    : 'The chart does not show a month meeting the combined conditions for a clear opening, and no quieter comparison stands out. This is not a forecast of no opportunities; use the monthly readings to identify the specific commitments to adjust.'
   const supportiveLeadKo=cleanGood.length
    ? `${koLabels(selected)}월은 조건부 활동 기회입니다. 행운 순위가 아닙니다. ${overlap.length?`${koLabels(overlap)}월은 두 목록에 모두 있습니다. 활동의 기회와 별도의 부담을 함께 살핍니다.`:'주의 목록은 마찰과 겹치는 부담을 별도 기준으로 확인합니다.'}`
    : good.length

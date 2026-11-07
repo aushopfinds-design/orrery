@@ -23,8 +23,8 @@ describe('Complete customer narrative language coverage, rather than only select
     const authored=paragraph.replace(/^(?:Direct answer|What this means for you|Important timing|Bottom line):\s*/,'')
     if(kind==='career'&&c.id==='working-style')continue // Product 02 replaces this generic caution with its chart-specific blocker answer.
     const paidQuestionUsesPersonalPressure=kind==='wellbeing'&&c.id==='workload-rhythm'&&paragraph.startsWith('You may ')
-    const calculatedRelationshipTiming=kind==='compatibility'&&c.id==='support-each-other'&&paragraph.startsWith('The chart highlights these relationship themes:')
-    if(calculatedRelationshipTiming) expect(paragraph).toMatch(/\b20\d\d — for (?:you|your partner):/)
+    const calculatedRelationshipTiming=kind==='compatibility'&&c.id==='support-each-other'&&paragraph.startsWith('The only period flagged in this five-year comparison is')
+    if(calculatedRelationshipTiming) expect(paragraph).toMatch(/\b20\d\d: for (?:you|your partner),/)
     else expect(sentences.some(s=>s.includes(normal(authored)))||paragraph===original.action.en||paidQuestionUsesPersonalPressure, `unpaired ${kind}/${c.id}: ${paragraph}`).toBe(true)
    }
    expect(c.tryThis).toBe(original.action.en)
@@ -42,6 +42,17 @@ describe('Complete customer narrative language coverage, rather than only select
   expect(report.overview.paragraphs).toEqual(bundleNarrative(plans).map(l=>l.en))
   expect(report.annual.referenceYear).toBe(2028);expect(report.complete.referenceYear).toBe(2026)
   expect(report.compatibility.subjects[1].input).toEqual(b.input)
+ })
+})
+
+describe('Targeted customer-answer revisions',()=>{
+ it('explains the chart-linked income and support conflict without claiming a real setback',()=>{
+  const answers=CATEGORY_SCENARIOS.map(profile=>customerNarrative(buildInterpretationPlan('career',calculateSaju(profile.first),2026))['working-style'].lines.map(line=>line.en))
+  const answer=answers.flat().find(line=>line.includes('training or support'))!
+  expect(answer).toBeDefined()
+  expect(answer).toContain('less left from earnings after that support is covered')
+  expect((answer.match(/training or support/gi) ?? [])).toHaveLength(1)
+  expect(answer).not.toContain('This is a possible overlap in demands')
  })
 })
 
@@ -110,7 +121,7 @@ describe('r15 paid-content review fixes',()=>{
   expect(s['month-1'].action.en).toContain('In January 2027')
   expect(s['annual-cycle-context'].lines[0].en).not.toContain('The clearest conditional activity openings are May 2027, June 2027, July 2027')
   expect(s['annual-cycle-context'].lines[0].en).toContain('extra-care list separately checks friction and competing demands')
-  expect(s['annual-theme'].lines[0].en).toContain('The clearest work theme for January 2027 through December 2027 is this:')
+  expect(s['annual-theme'].lines[0].en).toContain('For January 2027 through December 2027, your chart highlights two main themes.')
   expect(s['annual-cycle-context'].lines[0].en).toContain('not a ranking of lucky months')
   expect(s['month-7'].lines[0].en).toContain('Opening —')
   expect(text).not.toContain('manage..')

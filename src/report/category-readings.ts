@@ -150,14 +150,17 @@ export function buildBundleFromPlans(plans: ReturnType<typeof bundleInterpretati
   const partnerAnswer = `${sharedNeed ? `You share a need for ${privateNeed}.` : `Your needs differ: you value ${privateNeed}, while your partner values ${partnerNeed}.`} ${pairFit}`
   const annualGod = LANGUAGE[plans.annual.annual[0].god]
   const annualInner = LANGUAGE[plans.annual.annual[0].innerGod]
-  const annualWork = annualGod.work.en.split(/(?<=[.!?])\s/)[0].replace(/[.!?]+$/u, '').toLowerCase()
+  const annualWork = annualGod.work.en.split(/(?<=[.!?])\s/)[0].replace(/ fit this pattern\.?$/i, '').replace(/[.!?]+$/u, '').toLowerCase()
   const annualRelationship = annualInner.love.en.split(/(?<=[.!?])\s/)[0].replace(/[.!?]+$/u, '').toLowerCase()
-  const annualSummary = `For ${annualWindow}, the chart's main work theme is this: ${annualWork}. The money indicators show that ${incomeSummary}. In close relationships, ${annualRelationship}. Match extra work to its payment terms and the time it leaves for private life; these are chart themes, not promised events.`
+  const annualSummary = `For ${annualWindow}, your chart's clearest work direction is: ${annualWork}. The money indicators show that ${incomeSummary}. In close relationships, ${annualRelationship}. Treat these as chart themes to plan around, not promised events.`
   const longerShift = nextCycle
-    ? `${nextCycle.period}. The longer-period emphasis moves toward ${nextCycle.headline.toLowerCase().replace(/ — repeated emphasis$/i, '')}.`
+    ? `Your next calculated ten-year period runs ${nextCycle.period.replace(/^Around\s+/i, 'from around ').replace(/\s–\saround\s+/i, ' to around ')}. Its main theme is ${nextCycle.headline.toLowerCase().replace(/ — repeated emphasis$/i, '')}. Use that theme as a prompt for reflection, not as a prediction of a specific event; both dates are approximate.`
     : 'No further ten-year period is available in the supported calculation range, so this report does not add a later date.'
   const collectionTiming = plans.annual.months.filter(point => ['day', 'month'].every(position => point.comparisons.some(item => item.position === position && item.patterns.some(pattern => ['沖', '刑', '害', '破'].includes(pattern.type)))))
-  const integratedCollectionAnswer = `Your work pattern centres on ${workTheme}, and ${incomeSummary}. These connect through delivery: taking on more work only helps when the time and terms let you finish it and collect payment. In close relationships, you need ${privateNeed}. Across the fixed period from ${annualWindow}, the shared work-and-home comparison flags ${collectionTiming.length ? collectionTiming.map(point => point.date.slice(0, 7)).join(', ') : 'no overlapping pressure months'}; treat that as a timing check, not a prediction.`
+  const timingLink = collectionTiming.length
+    ? `For ${annualWindow}, the shared work-and-home comparison flags ${collectionTiming.map(point => point.date.slice(0, 7)).join(', ')} for review; this is a timing signal, not an event prediction.`
+    : `For ${annualWindow}, no shared work-and-home pressure month stands out in this comparison.`
+  const integratedCollectionAnswer = `Your work pattern centres on ${workTheme}, while ${incomeSummary}. They connect through delivery: opportunities help only when you can complete the work and collect payment. Your close relationships have a separate need: ${privateNeed}. ${timingLink} The chart links these themes but does not show that one causes another or guarantee an event.`
   const collectionQuestions = [
     answer(1, DESTINY_COLLECTION_QUESTIONS[0], life, undefined, coreAnswer),
     answer(2, DESTINY_COLLECTION_QUESTIONS[1], strengthsOverview, undefined, strengthAnswer),
