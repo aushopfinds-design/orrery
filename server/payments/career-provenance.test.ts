@@ -39,6 +39,7 @@ describe('Product 02 deterministic, evidence-linked answers', () => {
     const profile = CATEGORY_SCENARIOS[0].first
     const report = await issueReport({ kind: 'career', first: profile }, '12345678-1234-4234-8234-123456789012', 2026, 'live')
     expect(report.answerProvenance).toHaveLength(7)
+    expect(report.qualityAudit).toBeUndefined()
     expect(report.text).not.toContain('answerProvenance')
     expect(report.text).not.toContain('career.employment_vs_independent.v1')
     expect(Buffer.from(report.pdf, 'base64').subarray(0, 5).toString()).toBe('%PDF-')

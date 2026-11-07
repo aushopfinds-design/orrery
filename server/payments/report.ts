@@ -36,7 +36,7 @@ export interface BuyerReport {
   cards: ReturnType<typeof buildDestinyCard>[]
   pdf: string
   careerCharts?: ReturnType<typeof careerMoneyChartData>
-  /** Internal sandbox audit only; never presented as an objective accuracy guarantee. */
+  /** Internal delivery audit only; never presented as an objective accuracy guarantee. */
   qualityAudit?: ReturnType<typeof inspectReport>
   /** Internal structured provenance, encrypted with the stored order artifact; never sent to customers. */
   answerProvenance?: AnswerProvenance[]
@@ -47,6 +47,15 @@ let fontBytes: Promise<Buffer> | undefined
 let artworkBytes: Promise<Buffer> | undefined
 let cardArtData: Promise<string> | undefined
 let cardKeyData: Promise<string> | undefined
+
+export class ReportQualityGateError extends Error {
+  readonly code: 'report_quality_gate_failed' | 'report_quality_gate_unavailable'
+  constructor(code: 'report_quality_gate_failed' | 'report_quality_gate_unavailable') {
+    super(code)
+    this.name = 'ReportQualityGateError'
+    this.code = code
+  }
+}
 
 /** Keep authored emphasis even though the saved plain-text report omits Markdown. */
 export function reportEmphasis(source: unknown): string[] {
@@ -127,8 +136,8 @@ export async function issueReport(input: OrderInput, orderId: string, referenceY
     ...(answerProvenance ? { answerProvenance } : {}),
     ...(calculationVerification ? { calculationVerification } : {}),
   }
-  // Run non-blocking diagnostics for both sandbox and live orders.
-  // Never delay fulfillment because a heuristic score is low or QA throws.
+  // Sandbox reports remain renderable for QA. Paid live delivery fails closed
+  // until the structural gate reaches 95 and no human-review flag remains.
   try {
     const questionTexts = input.kind === 'bundle' ? DESTINY_COLLECTION_QUESTIONS : BUYER_QUESTIONS[input.kind].map(item => item.question)
     const expected = [...questionTexts]
@@ -163,8 +172,13 @@ export async function issueReport(input: OrderInput, orderId: string, referenceY
       findingCodes: [...new Set(audit.findings.map(finding => finding.code))],
       ...(input.kind === 'complete' ? { calculationVerification: calculationVerification?.status ?? 'unavailable' } : {}),
     })
-  } catch {
+    if (mode === 'live' && (!audit.passed || audit.requiresHumanReview)) {
+      throw new ReportQualityGateError('report_quality_gate_failed')
+    }
+  } catch (error) {
+    if (error instanceof ReportQualityGateError) throw error
     console.warn('report_quality_diagnostic_unavailable', { orderId, kind: input.kind, mode })
+    if (mode === 'live') throw new ReportQualityGateError('report_quality_gate_unavailable')
   }
   const pdf = await reportPdf(report, orderId, reportEmphasis(source), mode)
   report.pdf = Buffer.from(pdf).toString('base64')

@@ -382,16 +382,21 @@ describe('seven products: paid reports, PDFs and access isolation', () => {
     expect(await count('fate_order_artifacts')).toBe(1)
     expect(await count('fate_payment_orders')).toBe(1)
   }, 120000)
-  it('retries PDF generation failure without charging again or exposing a partial report', async () => {
-    const { service, session, order, provider } = await prepare()
+  it('keeps a quality-gate failure queued without emailing a PDF, then allows reprocessing', async () => {
+    const { session, order, provider } = await prepare()
+    const send = vi.fn(async () => 'resend-quality-gate-fixture')
+    const service = new PaymentService(config, store, provider, { send })
+    session.customer_email = 'buyer@example.com'
     session.status = 'complete'; session.payment_status = 'paid'; session.payment_intent = 'pi_' + randomUUID()
-    const render = vi.spyOn(reportIssuer, 'issueReport').mockRejectedValueOnce(new Error('PDF renderer unavailable'))
+    const render = vi.spyOn(reportIssuer, 'issueReport').mockRejectedValueOnce(new reportIssuer.ReportQualityGateError('report_quality_gate_failed'))
     try {
-      await expect(service.report(order.id)).rejects.toThrow('PDF renderer unavailable')
+      await expect(service.report(order.id)).rejects.toMatchObject({ code: 'report_quality_gate_failed' })
       expect(await store.artifact(order.id)).toBeUndefined()
       expect((await store.status(order.id))?.fulfillment_state).toBe('queued')
+      expect(send).not.toHaveBeenCalled()
       const report = await service.report(order.id)
       expect(Buffer.from(report.pdf, 'base64').subarray(0, 5).toString()).toBe('%PDF-')
+      expect(send).toHaveBeenCalledTimes(1)
       expect(provider.createSession).toHaveBeenCalledTimes(1)
       expect(await count('fate_payment_orders')).toBe(1)
       expect(await count('fate_order_artifacts')).toBe(1)
