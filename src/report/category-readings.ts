@@ -79,7 +79,6 @@ export function buildBundleFromPlans(plans: ReturnType<typeof bundleInterpretati
   }
   const careerFit = chapter(career, 'two-work-layers')
   const moneyFit = chapter(career, 'money-commitments')
-  const relationshipNeed = chapter(love, 'love-needs')
   const challenge = chapter(complete, 'life-challenges')
   const yearTheme = chapter(annual, 'annual-theme')
   const longTerm = chapter(complete, 'patterns')
@@ -89,9 +88,6 @@ export function buildBundleFromPlans(plans: ReturnType<typeof bundleInterpretati
   const coreProfile = PERSONAL_PROFILES[plans.complete.primary.dayStem]
   const privateNeed = RELATIONSHIP_PROFILES[plans.complete.primary.dayBranch].need
   const workTheme = LANGUAGE[plans.complete.primary.monthStemGod].name.en
-  const coreAnswer = `At your core, you tend to lead with ${coreProfile.focus}. Your ${plans.complete.primary.dayStem} day-stem pattern is the basis for this personal style; it describes a tendency, not every part of who you are.`
-  const blindSpot = plainReadingText(coreProfile.watchFor.at(-1) ?? coreProfile.watchFor[0])
-  const strengthAnswer = `Your clearest strength is this: ${plainReadingText(coreProfile.strength)} A blind spot to watch for is ${blindSpot.charAt(0).toLowerCase()}${blindSpot.slice(1)}`
   const pressurePattern = plainReadingText(coreProfile.pressure).replace(/[.!?]+$/u, '').replace(/^[A-Z]/u, letter => letter.toLowerCase())
   const challengeAnswer = `A recurring challenge is that ${pressurePattern}. It can crowd out your need for ${privateNeed}, linking your chart's work and private-life themes. This is a pattern to notice, not a fixed outcome.`
   const primaryMoney = plans.complete.primary
@@ -99,19 +95,6 @@ export function buildBundleFromPlans(plans: ReturnType<typeof bundleInterpretati
   const hasVariableIncome = (items: { god: string }[]) => items.some(item => item.god === '偏財')
   const visibleSteady = hasSteadyIncome(primaryMoney.visibleMoney), visibleVariable = hasVariableIncome(primaryMoney.visibleMoney)
   const hiddenSteady = hasSteadyIncome(primaryMoney.hiddenMoney), hiddenVariable = hasVariableIncome(primaryMoney.hiddenMoney)
-  const collectionMoneyAnswer = visibleSteady && visibleVariable
-    ? 'Your visible chart shows both repeat income and new customer or project income. Use repeat receipts to plan ongoing costs; keep deal-based income separate until it is collected, because the chart does not show when or how much a deal will pay.'
-    : visibleSteady
-      ? 'Regular pay or repeat work is the clearer income route in your visible chart.'
-      : visibleVariable
-        ? 'New customers or project fees stand out more than a fixed pay route in your visible chart.'
-        : hiddenSteady && hiddenVariable
-          ? 'Both repeat pay and project income appear in less visible chart signs; neither indicates how much you will earn.'
-          : hiddenSteady
-            ? 'A possible regular-pay route appears in less visible chart signs; the chart does not estimate its amount.'
-            : hiddenVariable
-              ? 'A possible customer or project income route appears in less visible chart signs; it is not a promise of sales.'
-              : 'The chart gives clearer clues about your work fit than about a direct source of income.'
   const incomeSummary = visibleSteady && visibleVariable
     ? 'repeat income and new deals both appear in the visible chart, so cash planning needs to account for both'
     : visibleSteady ? 'repeat income is the clearer visible route'
@@ -120,8 +103,6 @@ export function buildBundleFromPlans(plans: ReturnType<typeof bundleInterpretati
           : hiddenSteady ? 'a possible repeat-pay route appears in less visible signs'
             : hiddenVariable ? 'a possible project-income route appears in less visible signs'
               : 'the chart gives clearer work-fit clues than direct income clues'
-  const earningPattern = collectionMoneyAnswer
-  const annualWindow = `${annual.months[0]?.label ?? 'the next twelve months'} through ${annual.months.at(-1)?.label ?? ''}`
   const integratedCollectionAnswer = `Your work pattern centres on ${workTheme}, while ${incomeSummary}. They connect through delivery: opportunities help only when you can complete the work and collect payment. Your close relationships have a separate need: ${privateNeed}. These are related parts of your life, but the chart does not show that one causes another or guarantee an event.`
   const timingUnavailable = 'This report does not have an independently verified calculation for specific years, so it cannot name a reliable year or month.'
   const threeInsights = `Three chart-linked themes stand out: your core style is ${coreProfile.focus}; your work fit centres on ${workTheme}; and close relationships work best when your need for ${privateNeed} is understood.`

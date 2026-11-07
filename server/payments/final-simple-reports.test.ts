@@ -24,7 +24,7 @@ describe('seven simplified report products use the paid PDF path', () => {
       const definitions = productQuestions(kind)
       const questions = [...report.text.matchAll(/(?:^|\n)Question: ([^\n]+)\n/g)].map(match => match[1].trim())
       expect(questions, `${kind} question titles and order`).toEqual(definitions.map(item => item.title))
-      expect(report.answerProvenance.map(item => item.questionId), `${kind} question IDs and order`).toEqual(definitions.map(item => item.id))
+      expect(report.answerProvenance?.map(item => item.questionId), `${kind} question IDs and order`).toEqual(definitions.map(item => item.id))
       expect(questions.length, `${kind} question count`).toBe(kind === 'bundle' ? 10 : 7)
       expect(report.text).not.toMatch(/undefined|NaN|\[object Object\]/)
       if (kind === 'year') expect(report.text).toContain('Analysis window: November 2026 through October 2027.')
