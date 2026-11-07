@@ -5,7 +5,8 @@ import { CATEGORY_SCENARIOS, categoryInfo } from '../../report/category-catalog.
 import type { FocusCategory } from '../../report/category-catalog.ts'
 import { buildBundleReading, buildCategoryReading } from '../../report/category-readings.ts'
 import { buyerQuestionTitles } from '../../report/personal-products.ts'
-import { BUYER_QUESTIONS } from '../../report/buyer-outline.ts'
+import { applyBuyerQuestions, BUYER_QUESTIONS } from '../../report/buyer-outline.ts'
+import { careerMoneyChartData } from '../../report/career-money-charts.ts'
 import ReadingText from './ReadingText.tsx'
 
 /** Full public example built from a fixed fictional profile using the same report generator as paid reports. */
@@ -20,7 +21,17 @@ export default function FullReportSamplePage({ kind }: { kind: FocusCategory | '
   const slug = kind === 'bundle' ? 'complete-bundle' : categoryInfo(kind).slug
   const title = kind === 'bundle' ? 'Your Destiny Collection' : categoryInfo(kind).title
   const questions = buyerQuestionTitles(kind)
-  const fullText = report.fullText
+  const referenceYear = kind === 'year' ? 2027 : 2026
+  const fullText = kind === 'bundle' || !('chapters' in report)
+    ? report.fullText
+    : applyBuyerQuestions(
+      report.fullText,
+      kind,
+      report.chapters,
+      [],
+      'standalone',
+      kind === 'career' ? careerMoneyChartData(calculateSaju(sample.first), referenceYear).years : [],
+    )
   const paragraphs = fullText.split(/\n{2,}/).map(block => block.trim()).filter(Boolean)
 
   useEffect(() => {
