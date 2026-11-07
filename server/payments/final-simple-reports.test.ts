@@ -1,5 +1,5 @@
 import { mkdir, writeFile } from 'node:fs/promises'
-import { PDFDocument } from 'pdf-lib'
+import { PDFArray, PDFDict, PDFDocument, PDFName } from 'pdf-lib'
 import { describe, expect, it } from 'vitest'
 import { CATEGORY_SCENARIOS } from '../../src/report/category-catalog.ts'
 import { productQuestions } from '../../src/report/product-questions.ts'
@@ -47,6 +47,34 @@ describe('seven simplified report products use the paid PDF path', () => {
       expect(pdf.getPageCount()).toBeGreaterThan(1)
       const links = pdf.getPages().flatMap(page => page.node.Annots()?.asArray() ?? [])
       expect(links.length, `${kind} internal navigation`).toBeGreaterThan(0)
+      const contentsPage = pdf.getPages()[2]
+      const contentsLinks = (contentsPage.node.Annots()?.asArray() ?? []).filter(annotation => {
+        const dictionary = pdf.context.lookup(annotation, PDFDict)
+        return dictionary.get(PDFName.of('Subtype'))?.toString() === '/Link'
+      })
+      expect(contentsLinks, `${kind} official question contents entries`).toHaveLength(definitions.length)
+      const linkRects = contentsLinks.map(annotation => {
+        const dictionary = pdf.context.lookup(annotation, PDFDict)
+        return pdf.context.lookup(dictionary.get(PDFName.of('Rect'))!, PDFArray).asArray().map(value => Number(value.toString()))
+      }).sort((a, b) => b[3] - a[3])
+      for (let index = 1; index < linkRects.length; index++) {
+        expect(linkRects[index][3], `${kind} question links do not overlap`).toBeLessThanOrEqual(linkRects[index - 1][1])
+      }
+      const destinations = contentsLinks.map(annotation => {
+        const dictionary = pdf.context.lookup(annotation, PDFDict)
+        const destination = pdf.context.lookup(dictionary.get(PDFName.of('Dest'))!, PDFArray)
+        const pageIndex = pdf.getPages().findIndex(page => page.ref.toString() === destination.get(0).toString())
+        expect(pageIndex, `${kind} question link destination`).toBeGreaterThanOrEqual(0)
+        return { pageIndex, y: Number(destination.get(3).toString()) }
+      })
+      for (let index = 1; index < destinations.length; index++) {
+        const previous = destinations[index - 1]
+        const current = destinations[index]
+        expect(current.pageIndex, `${kind} question destinations follow answer order`).toBeGreaterThanOrEqual(previous.pageIndex)
+        if (current.pageIndex === previous.pageIndex) {
+          expect(current.y, `${kind} same-page answer destinations follow reading order`).toBeLessThanOrEqual(previous.y)
+        }
+      }
       if (output) await writeFile(`${output}/${kind}-${profile.id}.pdf`, bytes)
     }
   }, 180_000)

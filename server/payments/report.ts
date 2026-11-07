@@ -58,6 +58,56 @@ export class ReportQualityGateError extends Error {
   }
 }
 
+type PdfAnswerSummary = { id: string; title: string; answer: string }
+
+/** Extract only first-answer text that already exists in the paid report. */
+function pdfAnswerSummaries(report: BuyerReport): PdfAnswerSummary[] {
+  const definitions = productQuestions(report.kind)
+  const byTitle = new Map(definitions.map(question => [question.title, question]))
+  const blocks = report.text.split(/\n\s*\n/).map(block => block.trim()).filter(Boolean)
+  const found = new Map<string, PdfAnswerSummary>()
+  const answerLabels = /^(?:Your Answer|Answer|Answer detail|What This Means for You|Important Timing|Bottom Line|Practical point|Main caution):\s*/i
+  for (let index = 0; index < blocks.length; index++) {
+    const match = /^Question:\s*(.+)$/i.exec(blocks[index])
+    if (!match) continue
+    const definition = byTitle.get(match[1].trim())
+    if (!definition) continue
+    for (let next = index + 1; next < blocks.length; next++) {
+      const block = blocks[next]
+      if (/^(?:Question:|\d{2} [·-]|THE FATE KEY · |Your Included Reports$|Calculation notes$|Chart evidence for these answers$)/.test(block)) break
+      const answer = answerLabels.exec(block)
+      if (!answer) continue
+      const text = block.slice(answer[0].length).replace(/\*\*/g, '').trim()
+      const sentence = text.match(/^.*?[.!?](?=\s|$)/)?.[0] ?? text
+      if (sentence) found.set(definition.id, { id: definition.id, title: definition.title, answer: sentence })
+      break
+    }
+  }
+  return definitions.flatMap(question => found.has(question.id) ? [found.get(question.id)!] : [])
+}
+
+const SUMMARY_ROLES: Record<BuyerReport['kind'], { challenge: string; insight: string; glance: string[] }> = {
+  complete: { challenge: 'patterns', insight: 'q-turning-points', glance: ['personality', 'career', 'money', 'love'] },
+  career: { challenge: 'working-style', insight: 'career-plan', glance: ['two-work-layers', 'proof-of-skill', 'money-commitments', 'work-chapters'] },
+  compatibility: { challenge: 'q-conflict', insight: 'shared-week', glance: ['two-directions', 'q-love-language', 'chart-patterns', 'support-each-other'] },
+  year: { challenge: 'annual-plan', insight: 'q-year-focus', glance: ['annual-theme', 'annual-work', 'annual-money', 'annual-connections'] },
+  business: { challenge: 'delivery-capacity', insight: 'business-plan', glance: ['founder-style', 'offer-test', 'team-decisions', 'business-chapters'] },
+  wellbeing: { challenge: 'q-pressure', insight: 'q-balance-action', glance: ['everyday-pace', 'visible-elements', 'support-and-space', 'balance-week'] },
+  love: { challenge: 'love-friction', insight: 'love-outlook', glance: ['love-style', 'love-needs', 'love-attraction', 'love-patterns'] },
+  bundle: { challenge: 'collection-q3', insight: 'collection-q10', glance: ['collection-q1', 'collection-q4', 'collection-q7'] },
+}
+
+function firstSentence(value: string): string {
+  return value.match(/^.*?[.!?](?=\s|$)/)?.[0] ?? value
+}
+
+function collectionFinalInsight(value: string): string {
+  const sentence = firstSentence(value)
+  const match = /^Your chart points to a clear theme: your (.+?)-centred work and need for (.+?) both matter in the life you build\./i.exec(sentence)
+  if (!match) return sentence
+  return `Your path is shaped by two personal themes: ${match[1]} at work, and the need for ${match[2]} in close relationships.`
+}
+
 /** Keep authored emphasis even though the saved plain-text report omits Markdown. */
 export function reportEmphasis(source: unknown): string[] {
   const phrases = new Set<string>()
@@ -185,12 +235,12 @@ export async function issueReport(input: OrderInput, orderId: string, referenceY
     console.warn('report_quality_diagnostic_unavailable', { orderId, kind: input.kind, mode })
     if (mode === 'live') throw new ReportQualityGateError('report_quality_gate_unavailable')
   }
-  const pdf = await reportPdf(report, orderId, reportEmphasis(source), mode)
+  const pdf = await reportPdf(report, reportEmphasis(source), mode)
   report.pdf = Buffer.from(pdf).toString('base64')
   return report
 }
 
-async function reportPdf(report: BuyerReport, orderId: string, emphasis: string[], mode: 'test' | 'live') {
+async function reportPdf(report: BuyerReport, emphasis: string[], mode: 'test' | 'live') {
   const pdf = await PDFDocument.create()
   pdf.registerFontkit(fontkit)
   fontBytes ??= readFile(new URL('./assets/NotoSansSC-Report.ttf', import.meta.url))
@@ -219,6 +269,9 @@ async function reportPdf(report: BuyerReport, orderId: string, emphasis: string[
   let page = pdf.addPage([W, H]), y = 748
   const tocRows: { label: string; page: ReturnType<typeof pdf.addPage>; bottom: number; top: number }[] = []
   const tocDestinations = new Map<string, { page: ReturnType<typeof pdf.addPage>; y: number }>()
+  const questionTocRows: { id: string; page: ReturnType<typeof pdf.addPage>; bottom: number; top: number }[] = []
+  const questionDestinations = new Map<string, { page: ReturnType<typeof pdf.addPage>; y: number }>()
+  const questionDefinitions = productQuestions(report.kind)
   let tocRowsRemaining = 0
   const textX = 54, textWidth = W - 108
   const centre = (text: string, yy: number, size: number, color = gold, face = display) => {
@@ -279,7 +332,7 @@ async function reportPdf(report: BuyerReport, orderId: string, emphasis: string[
   const addPage = () => {
     page = pdf.addPage([W, H]); y = 620; frame()
   }
-  const paragraph = (text: string, size = 12.4, color = ink, emphasise = false) => {
+  const paragraph = (text: string, size = 12.4, color = ink, emphasise = false, compact = false) => {
     const value = clean(text)
     const parts: { text: string; bold: boolean }[] = []
     let last = 0
@@ -306,7 +359,7 @@ async function reportPdf(report: BuyerReport, orderId: string, emphasis: string[
         if (run.bold) page.drawText(run.text, { x: x + .34, y, size, font, color: runColor })
         x += runWidth
       }
-      y -= size * 1.65; runs = []; width = 0
+      y -= size * (compact ? 1.35 : 1.65); runs = []; width = 0
     }
     for (const part of parts) {
       for (const token of part.text.match(/\S+|\s+/g) ?? []) {
@@ -322,7 +375,7 @@ async function reportPdf(report: BuyerReport, orderId: string, emphasis: string[
         width += tokenWidth
       }
     }
-    flush(); y -= 9
+    flush(); y -= compact ? 3 : 9
   }
   // The supplied envelope artwork is the shared cover; text remains product-specific and selectable.
   frame(true)
@@ -350,6 +403,16 @@ async function reportPdf(report: BuyerReport, orderId: string, emphasis: string[
   paragraph('The chart notes explain where each interpretation begins. You can return to them whenever you want to look more closely.', 12)
   y -= 25; paragraph('With care,', 13); paragraph('THE FATE KEY', 16, gold)
   y -= 25; paragraph('Your reading follows on the next page.', 10, muted)
+  addPage()
+  centre('Your Questions', 610, 23, gold, display)
+  centre('Tap a question to go straight to its answer.', 584, 10, muted, font)
+  y = 548
+  for (const question of questionDefinitions) {
+    const rowPage = page
+    const top = y + 10
+    paragraph(`${String(question.order).padStart(2, '0')}  ${question.title}`, 11.5, ink)
+    questionTocRows.push({ id: question.id, page: rowPage, bottom: y + 24, top })
+  }
   addPage()
   let inAppendix = false
   const shortPdfAppendix = (text: string) => {
@@ -381,6 +444,10 @@ async function reportPdf(report: BuyerReport, orderId: string, emphasis: string[
   for (const [blockIndex, block] of blocks.entries()) {
     const value = block.trim()
     if (!value) continue
+    if (value.startsWith('Question: ')) {
+      const definition = questionDefinitions.find(question => question.title === value.slice('Question: '.length).trim())
+      if (definition && !questionDestinations.has(definition.id)) questionDestinations.set(definition.id, { page, y: y - 2 })
+    }
     if (/^THE FATE KEY · /.test(value)) inAppendix = false
     if (value === 'Calculation notes') { inAppendix = true; if (y < 650) addPage() }
     // A two-person header must not consume the space reserved for five key answers.
@@ -411,11 +478,12 @@ async function reportPdf(report: BuyerReport, orderId: string, emphasis: string[
       y -= 10; paragraph(value, 16, gold); y -= 5
     } else {
       const toc = tocRowsRemaining > 0 && value.includes(' — ')
-      const top = y + 14
+      const rowBaseline = y
+      const top = rowBaseline + 11
       const tocLabel = toc ? value.split(' — ', 1)[0].trim() : ''
       const tocPage = page
       paragraph(value, note ? 10.2 : 13.4, note ? muted : ink, !note)
-      if (toc) { tocRows.push({ label: tocLabel, page: tocPage, bottom: y + 2, top }); tocRowsRemaining-- }
+      if (toc) { tocRows.push({ label: tocLabel, page: tocPage, bottom: rowBaseline - 4, top }); tocRowsRemaining-- }
     }
   }
   if (report.kind === 'career' && report.careerCharts) {
@@ -464,7 +532,6 @@ async function reportPdf(report: BuyerReport, orderId: string, emphasis: string[
     .then(bytes => 'data:image/png;base64,' + bytes.toString('base64'))
   for (const [index, card] of report.cards.entries()) {
     addPage()
-    centre('YOUR PERSONAL DESTINY CARD', 721, 12)
     const svg = renderToStaticMarkup(createElement(DestinyCardArtwork, {
       card, id: `issued-card-${index}`, artworkHref: await cardArtData, keyHref: await cardKeyData, preview: false, showStem: false,
       fontFamily: 'FateCard, sans-serif',
@@ -481,51 +548,66 @@ async function reportPdf(report: BuyerReport, orderId: string, emphasis: string[
     paragraph('A personal keepsake. Symbolic colours and numbers are cultural associations.', 9, muted)
   }
   addPage()
-  centre('The letter ends. Your story continues.', 685, 25, ink, italic)
+  const answerSummaries = pdfAnswerSummaries(report)
+  if (answerSummaries.length !== questionDefinitions.length) {
+    throw new Error(`PDF summary needs an answer for every official question: ${report.kind} ${answerSummaries.length}/${questionDefinitions.length}`)
+  }
+  const answerById = new Map(answerSummaries.map(answer => [answer.id, answer]))
+  const summaryRoles = SUMMARY_ROLES[report.kind]
+  const glanceAnswers = summaryRoles.glance.flatMap(id => answerById.has(id) ? [answerById.get(id)!] : []).slice(0, 3)
+  if (glanceAnswers.length < 3) throw new Error(`PDF summary needs at least three distinct answers: ${report.kind}`)
+  centre(report.kind === 'bundle' ? 'Your Life in One View' : 'Your Personal Summary', 615, 23, ink, display)
+  y = 578
+  paragraph('Your Answers at a Glance', 13, gold, false, true)
+  for (const answer of glanceAnswers) paragraph(`${String(questionDefinitions.find(question => question.id === answer.id)?.order ?? '').padStart(2, '0')}  ${answer.title}  ${firstSentence(answer.answer)}`, 10.4, ink, true, true)
+  paragraph('Your Biggest Strength', 13, gold, false, true)
+  paragraph(report.cards[0].sentence, 10.4, ink, true, true)
+  const challenge = answerById.get(summaryRoles.challenge)
+  const insight = answerById.get(summaryRoles.insight)
+  if (!challenge || !insight) throw new Error(`PDF summary role is not mapped to a generated answer: ${report.kind}`)
+  const insightText = report.kind === 'bundle'
+    ? collectionFinalInsight(insight.answer)
+    : firstSentence(insight.answer)
+  paragraph('Your Main Challenge', 13, gold, false, true)
+  paragraph(firstSentence(challenge.answer), 10.4, ink, true, true)
+  paragraph('Your Most Important Insight', 13, gold, false, true)
+  paragraph(insightText, 10.4, ink, true, true)
+  paragraph('How Your Destiny Card Connects', 13, gold, false, true)
+  paragraph(`The card's ${report.cards[0].title.replace(/^The\s+/i, '')} theme uses ${report.cards[0].element}. Its line, “${report.cards[0].sentence},” echoes a personal theme explored in the answers above; it adds no separate prediction.`, 10.2, ink, false, true)
   // The closing seal rests on an antique stationery ribbon.
-  page.drawLine({ start: { x: 108, y: 370 }, end: { x: W - 108, y: 370 }, color: gold, thickness: .8, opacity: .48 })
-  y = 618
-  paragraph('You do not have to act on every page. Keep the passage that helped you understand yourself a little more clearly, and come back when another part of life asks for your attention.', 12)
-  paragraph('With care, THE FATE KEY', 12, gold)
-  const sealY = 370
+  const sealY = 112
   const wax = rgb(.35, .12, .16), lightGold = rgb(.88, .72, .43)
   // Scalloped wax edge, engraved rays and a beaded double rim.
-  page.drawCircle({ x: W / 2 + 2, y: sealY - 3, size: 84, color: rgb(.20, .10, .12), opacity: .12 })
+  page.drawCircle({ x: W / 2 + 1, y: sealY - 1.5, size: 42, color: rgb(.20, .10, .12), opacity: .12 })
   for (let i = 0; i < 32; i++) {
     const angle = i * Math.PI / 16
-    page.drawCircle({ x: W / 2 + Math.cos(angle) * 76, y: sealY + Math.sin(angle) * 76, size: 7, color: wax, borderColor: gold, borderWidth: .55 })
+    page.drawCircle({ x: W / 2 + Math.cos(angle) * 38, y: sealY + Math.sin(angle) * 38, size: 3.5, color: wax, borderColor: gold, borderWidth: .4 })
   }
-  page.drawCircle({ x: W / 2, y: sealY, size: 76, color: wax, borderColor: lightGold, borderWidth: 1.3 })
+  page.drawCircle({ x: W / 2, y: sealY, size: 38, color: wax, borderColor: lightGold, borderWidth: .8 })
   for (let i = 0; i < 64; i++) {
     const angle = i * Math.PI / 32
-    page.drawCircle({ x: W / 2 + Math.cos(angle) * 70, y: sealY + Math.sin(angle) * 70, size: .9, color: lightGold })
+    page.drawCircle({ x: W / 2 + Math.cos(angle) * 35, y: sealY + Math.sin(angle) * 35, size: .45, color: lightGold })
   }
-  page.drawCircle({ x: W / 2, y: sealY, size: 65, borderColor: gold, borderWidth: .7 })
-  page.drawCircle({ x: W / 2, y: sealY, size: 60, borderColor: gold, borderWidth: .3 })
+  page.drawCircle({ x: W / 2, y: sealY, size: 32.5, borderColor: gold, borderWidth: .45 })
+  page.drawCircle({ x: W / 2, y: sealY, size: 30, borderColor: gold, borderWidth: .25 })
   for (const side of [-1, 1]) {
     for (let i = 0; i < 7; i++) {
       const angle = side === 1 ? -.5 + i / 6 : Math.PI + .5 - i / 6
-      const x = W / 2 + Math.cos(angle) * 49, yy = sealY + Math.sin(angle) * 49
-      page.drawEllipse({ x, y: yy, xScale: 2.2, yScale: 4.0, color: gold, opacity: .8 })
+      const x = W / 2 + Math.cos(angle) * 24.5, yy = sealY + Math.sin(angle) * 24.5
+      page.drawEllipse({ x, y: yy, xScale: 1.1, yScale: 2.0, color: gold, opacity: .8 })
     }
   }
-  for (const dx of [-27, 27]) {
-    page.drawLine({ start: { x: W / 2 + dx - 3, y: sealY + 4 }, end: { x: W / 2 + dx + 3, y: sealY + 4 }, color: lightGold, thickness: .7 })
-    page.drawLine({ start: { x: W / 2 + dx, y: sealY + 1 }, end: { x: W / 2 + dx, y: sealY + 7 }, color: lightGold, thickness: .7 })
+  for (const dx of [-13.5, 13.5]) {
+    page.drawLine({ start: { x: W / 2 + dx - 1.5, y: sealY + 2 }, end: { x: W / 2 + dx + 1.5, y: sealY + 2 }, color: lightGold, thickness: .5 })
+    page.drawLine({ start: { x: W / 2 + dx, y: sealY + .5 }, end: { x: W / 2 + dx, y: sealY + 3.5 }, color: lightGold, thickness: .5 })
   }
-  centre('THE FATE KEY', sealY + 47, 11, paper)
-  const markSize = 66, markScale = markSize / 105
+  centre('THE FATE KEY', sealY + 23.5, 5.5, paper)
+  const markSize = 33, markScale = markSize / 105
   const markX = W / 2 - markSize / 2, markY = sealY - 30
   page.pushOperators(pushGraphicsState(), rectangle(markX, markY, markSize, 108 * markScale), clip(), endPath())
   page.drawImage(artwork, { x: markX - 62 * markScale, y: markY - (979 - 6 - 108) * markScale, width: 1606 * markScale, height: 979 * markScale })
   page.pushOperators(popGraphicsState())
-  centre('PRIVATE EDITION', sealY - 44, 9, paper)
-  centre('Issued by THE FATE KEY', 248, 12, ink)
-  y = 207
-  paragraph('Report reference: ' + (report.reference ?? orderId), 9, muted)
-  paragraph('Edition ' + report.edition + ' | Issued ' + report.issuedAt.slice(0, 10), 9, muted)
-  paragraph('The seal identifies the publisher; it is not an external certification.', 9, muted)
-  paragraph(mode === 'test' ? 'SANDBOX PURCHASE - Test payment only. No real money charged.' : 'Your private purchase. Keep this report and recovery code safe.', 9, muted)
+  centre('PRIVATE EDITION', sealY - 22, 4.5, paper)
   const pages = pdf.getPages()
   pages.forEach((p, i) => {
     if (i === 0) return
@@ -539,6 +621,17 @@ async function reportPdf(report: BuyerReport, orderId: string, emphasis: string[
   for (const row of tocRows) {
     const destination = [...tocDestinations.entries()].find(([title]) => title === row.label || title.startsWith(row.label) || row.label.startsWith(title))?.[1]
     if (!destination) continue
+    const annotation = pdf.context.obj({
+      Type: PDFName.of('Annot'), Subtype: PDFName.of('Link'),
+      Rect: pdf.context.obj([PDFNumber.of(textX), PDFNumber.of(row.bottom), PDFNumber.of(W - 54), PDFNumber.of(row.top)]),
+      Border: pdf.context.obj([PDFNumber.of(0), PDFNumber.of(0), PDFNumber.of(0)]),
+      Dest: pdf.context.obj([destination.page.ref, PDFName.of('XYZ'), PDFNull, PDFNumber.of(destination.y), PDFNull]),
+    })
+    row.page.node.addAnnot(pdf.context.register(annotation))
+  }
+  for (const row of questionTocRows) {
+    const destination = questionDestinations.get(row.id)
+    if (!destination) throw new Error(`PDF question contents has no answer destination: ${report.kind}/${row.id}`)
     const annotation = pdf.context.obj({
       Type: PDFName.of('Annot'), Subtype: PDFName.of('Link'),
       Rect: pdf.context.obj([PDFNumber.of(textX), PDFNumber.of(row.bottom), PDFNumber.of(W - 54), PDFNumber.of(row.top)]),
