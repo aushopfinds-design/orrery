@@ -166,9 +166,10 @@ PDF: `bundle.pdf` · 평균 **92.4/100** · 질문 10개
 
 - Product 04 Q1의 첫 문장에서 “두 가지 주제가 있다”는 도입을 빼고, 업무·관계 주제를 직접 제시했다. 확인한 실제 PDF 답변은 “For November 2026 through October 2027, the chart points to management, regulated work, public service and structured organisations at work; in close relationships, intensity and decisiveness can be attractive.”로 시작한다.
 - 새 문장으로 생성한 미상 출생시간 프로필 PDF에서 해당 답변을 확인해 91→93점으로 조정했다. Product 04 평균은 **92.0/100**으로 재계산했다. 다른 여섯 상품의 편집 점수는 기존 완전 검수 결과 그대로다. 이번 수정으로도 95점 목표에는 미달이다.
-- 변경 파일: `src/report/purchase-narrative.ts`, `src/report/purchase-narrative.test.ts`, `src/report/buyer-outline.test.ts`.
+- 변경 파일: `src/report/purchase-narrative.ts`, `src/report/purchase-narrative.test.ts`, `src/report/buyer-outline.test.ts`, `server/payments/final-quality-sample.test.ts`, `server/payments/product01-root-cause.test.ts`.
 - 해당 연간 서술·구매자 답변 테스트 **48/48 통과**, TypeScript 검사 통과, `git diff --check` 통과. 유료 PDF 통합 테스트 **1/1 통과**; 새 PDF 7개의 질문 수, PDF 로딩, 내비게이션 링크, 미상 출생시간 억제 검증이 통과했다. 자동 진단은 01·02만 100 통과, 03–07은 각각 70 미통과였다.
-- 전체 저장소 테스트는 **934/936 통과, 2개 실패**했다. 실패는 `server/payments/final-quality-sample.test.ts`의 관계 시기 문구 기대값과 `server/payments/product01-root-cause.test.ts`의 Product 01 PDF 링크 대상 페이지 순서 기대값이다. 전체 테스트 통과로 보고하지 않으며, 이 두 검증은 후속 확인이 필요하다.
+- 첫 전체 저장소 테스트는 **934/936 통과**였다. 두 실패 원인을 확인해 실제 구매자 문구를 검사하도록 `server/payments/final-quality-sample.test.ts`의 오래된 기대 문자열을 갱신했고, `server/payments/product01-root-cause.test.ts`에서는 PDF 목차 링크가 페이지 번호 오름차순이어야 한다는 불필요한 가정을 제거했다. 실제 링크 대상이 본문 페이지 안에 있는 검사는 유지했다.
+- 수정 후 전체 저장소 테스트를 다시 실행해 **81/81 파일, 936/936 테스트 통과**를 확인했다. 타입 검사(`npx tsc -b --pretty false`)와 `git diff --check`도 통과했다.
 - 95점 이상 상품은 여전히 **0/7**이다. 새 수정은 Product 04의 첫 답변만 개선했으며, 전체 질문 재채점·전 페이지 PDF 시각 검수·Destiny Card 검수·고객 주문 검증은 완료하지 않았다.
 
 ## 결론 / 미완료 항목
