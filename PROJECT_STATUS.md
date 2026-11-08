@@ -40,7 +40,7 @@ Products 03–07 lose 30 points because `server/payments/report.ts` supplies `ca
 - Real Stripe Test Mode checkout, webhook delivery, persisted order, customer email receipt, PDF download, payment failure and duplicate-webhook end-to-end checks. The public production checkout is closed, and no isolated authenticated test checkout flow was available in this run. Mocked/unit coverage is not a substitute.
 - Independent answer-by-answer content scoring for every question across five profiles per product. No product is approved at 95/100 on this basis.
 - Full-page visual review for all 35 PDFs, and mobile PDF viewer testing.
-- Vercel Preview `dpl_bPr2W2iEpyPwK1VVXzdieK2WKac4` is READY for documentation commit 1ebea064186ceccab3d2c65f076aca914a932d05; homepage and `/samples/` returned HTTP 200. This commit only updates project status, not application code. Production remains on `dpl_ANDdUkvMn6zMjukCyxfNC2EYcSdt` because no application code changed.
+- Vercel Preview `dpl_EG2YrcnNXhjdTtWF9jQBGr3TQZQZ` is READY for application commit `687875f3015665b0b5a6d7cf1bc87d812652092d`; homepage and `/samples/` returned HTTP 200. Status-document commit `24fdafec7cd6bfd1117b55180af6986e6ce36c85` also has Preview `dpl_4DRQ4uMaTCAJjUQGMARxxBH2HT1r` READY. Production remains on `dpl_ANDdUkvMn6zMjukCyxfNC2EYcSdt`; no Production deployment was made.
 
 ## Release status and next steps
 - Sales remain closed; no Stripe Live changes.
