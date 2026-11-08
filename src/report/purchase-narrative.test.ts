@@ -80,9 +80,9 @@ describe('Targeted customer-answer revisions',()=>{
 describe('Buyer review r14: direct answers without repeated warnings or lost dates',()=>{
  it('explains the chart-linked meaning of the life turning-point years in the first answer',()=>{
   const answer=customerNarrative(buildInterpretationPlan('complete',a,2026)).patterns.lines[0].en
-  expect(answer).toContain('The clearest year to review how work and close relationships fit together is')
+  expect(answer).toContain('The clearest chart-supported year to reconsider your direction is')
   expect(answer).toMatch(/20\d\d: a theme of .+ connects with work and daily responsibilities/)
-  expect(answer).toContain('not a promise of a major event')
+  expect(answer).toContain('not as a promise of a major event')
  })
  it('keeps every year visible in the actual delivered timelines after deduplication',()=>{
   for(const kind of ['complete','career','business'] as const){

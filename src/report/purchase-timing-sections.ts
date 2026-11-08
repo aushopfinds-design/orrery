@@ -99,7 +99,7 @@ function buildSections(plan:InterpretationPlan,targetedProduct01=true,rootCauseF
    return locale==='en'?`${year}: a theme of ${theme} connects with ${areas.join(' and ')}`:`${year}년: ${theme} — ${areas.join('·')}`
   }).join(locale==='en'?'. ':'; ')
   const turningPointAnswer=highlights.length&&targetedProduct01&&rootCauseFix&&plan.kind==='complete'
-   ?[`The clearest year to review how work and close relationships fit together is ${turningPointSummary('en')}. Treat it as a time to reassess these areas, not a promise of a major event.`,`일과 가까운 관계가 어떻게 맞물리는지 살펴볼 시기는 ${turningPointSummary('ko')}입니다. 특정 사건이 생긴다는 약속이 아니라 두 영역을 다시 살펴볼 때로 봅니다.`]
+   ?[`The clearest chart-supported year to reconsider your direction is ${turningPointSummary('en')}. Use it as a time to review the areas named here, not as a promise of a major event.`,`방향을 다시 생각해 볼 가장 뚜렷한 차트상 시기는 ${turningPointSummary('ko')}입니다. 여기에 적힌 영역을 살펴볼 때로 보며, 큰 사건이 생긴다는 약속은 아닙니다.`]
    :highlights.length&&targetedProduct01
     ?[`The clearest periods to review a major change are ${turningPointSummary('en')}. These years mark chart contacts with work or close relationships; they do not guarantee an event.`,`큰 변화를 살펴볼 시기는 ${turningPointSummary('ko')}입니다. 일이나 가까운 관계에 닿는 명식의 시기이며, 특정 사건을 보장하지 않습니다.`]
    :highlights.length

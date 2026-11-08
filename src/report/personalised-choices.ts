@@ -15,8 +15,17 @@ const TASKS:Record<string,Passage>={
  正印:pair('training others, documenting a method or giving dependable guidance','교육과 방법의 문서화, 믿을 수 있는 안내를 제공하는 일'),
  偏印:pair('researching a narrow problem or developing a specialist solution','좁은 문제를 연구하거나 전문적인 해결책을 만드는 일'),
 }
+const LIFE_CAREER_DIRECTIONS:Record<string,string>={
+ 比肩:'specialist or technical roles',劫財:'partnerships, negotiation or project coordination',食神:'craft, teaching or production',傷官:'design, product improvement or problem-solving',正財:'operations, account service or resource planning',偏財:'sales, business development or client growth',正官:'team leadership or standards-focused roles',偏官:'technical operations or deadline-led project roles',正印:'training, education or research',偏印:'specialist research, analysis or advisory work',
+}
 export function roleChoice(p:Subject, simpleEnglish=false, lifeReading=false):Passage{
  const visible=TASKS[p.monthStemGod],daily=TASKS[p.monthBranchGod]
+ if(lifeReading){
+  const direction=LIFE_CAREER_DIRECTIONS[p.monthStemGod]
+  return p.monthStemGod===p.monthBranchGod
+   ?pair(`Your chart points toward ${direction}, especially work such as ${visible.en}. This theme appears in both parts of your work chart, so a role with clear duties and ownership should fit better than an unrelated catch-all job.`,`명식은 ${direction} 쪽을 가리키며, 특히 ${visible.ko} 같은 업무가 어울립니다. 업무 차트의 두 부분에 이 주제가 반복되므로 관련 없는 일을 모두 맡는 자리보다 담당과 권한이 분명한 역할이 더 잘 맞습니다.`)
+   :pair(`Your strongest fit combines ${direction}, especially work such as ${visible.en}, with daily duties such as ${daily.en}. Look for roles that give both areas real time; if one takes over your week, the job may not use your full range.`,`가장 잘 맞는 방향은 ${direction} 쪽의 ${visible.ko} 업무와 일상의 ${daily.ko} 업무를 함께 쓰는 일입니다. 두 업무 모두에 시간을 쓸 수 있는 역할을 찾으세요. 한쪽이 주중 대부분을 차지하면 전체 업무 성향을 쓰기 어렵습니다.`)
+ }
  return p.monthStemGod===p.monthBranchGod
  ?pair(`A good career fit includes work such as ${visible.en}. Both sides of your birth-month pattern repeat this preference, so ${simpleEnglish?'a clear role with defined duties':'a clear remit'} fits better than a title that spreads you across unrelated tasks. These are examples of work, not a fixed list of careers.`,`잘 맞는 직업에는 ${visible.ko} 같은 업무가 포함됩니다. 태어난 달의 겉과 안이 같은 특징을 반복하므로 관련 없는 일을 넓게 맡는 직함보다 담당 범위가 분명한 쪽에 맞습니다. 정해진 직업 목록이 아니라 업무의 예시입니다.`)
  :lifeReading

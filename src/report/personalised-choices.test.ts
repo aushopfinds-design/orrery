@@ -17,6 +17,9 @@ describe('r24 chart-specific customer choices',()=>{
   expect(roleChoice(other).en).not.toContain('being hired for the first')
   expect(roleChoice(same).en).not.toBe(roleChoice(other).en)
   expect(roleChoice(same).ko).not.toBe(roleChoice(other).ko)
+  expect(roleChoice(other,true,true).en).toContain('Your strongest fit combines')
+  expect(roleChoice(other,true,true).en).not.toContain('most of your week is spent on')
+  expect(roleChoice(same,true,true).en).toContain('Your chart points toward')
   expect(customerNarrative(buildInterpretationPlan('career',a,2026))['two-work-layers'].lines.some(l=>l.en===roleChoice(p).en)).toBe(true)
  })
  it('distinguishes an observed skill-to-sales link from absent outward money',()=>{
