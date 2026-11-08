@@ -45,7 +45,7 @@ Products 03–07 lose 30 points because `server/payments/report.ts` supplies `ca
 ## Latest local QA checkpoint (2026-11-08)
 - Targeted tests for Product 01 PDF generation, purchase narratives, and bundle reading passed: 37/37.
 - Five Product 01 PDFs were regenerated through the test path. Their question counts, PDF signatures, and TOC links passed the assertions. These output files and the uncommitted working diff are not saved on the remote branch.
-- Current remote branch head after documentation update: `97af7b3703f27109302380bb801ae2fcafe1bded` (documentation only). The 95+ independent audit is incomplete; production and sales remain unchanged.
+- The audit and status updates were committed through the connected GitHub service. The 95+ independent audit is incomplete; application code and Production remain unchanged.
 
 ## Release status and next steps
 - Sales remain closed; no Stripe Live changes.
