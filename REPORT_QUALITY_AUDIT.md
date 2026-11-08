@@ -614,3 +614,23 @@ Five PDFs were generated from code SHA `1888b3bd3bf9b2aec7b5e9d5ca2db890f136227f
 | 5 | 93.3 | 94.4 | 93 | FAIL |
 
 The Q4 duplication was removed, and Q5 now gives checked, profile-specific work themes while saying clearly that they are not evidence of higher pay. This raised the five means, but the Product 02 gate is still not met. Remaining review targets are Q3's limited-money profiles 2–3 and the Q2/Q7 overlap between work-setting evidence and the final career/money insight. Product 02 remains open; Products 03–07 have not started.
+
+## Product 02 — actual-PDF independent review, code revision 3aa9cf0 (2026-11-09)
+
+The review used five newly generated PDFs from the official branch after remote code SHA `1ebd5a8ab60d13ef9ba3cf53783377e6ebd5968c` (the next commit `3aa9cf05676cbf07a6833ee801a46f6f122700a9` adds the regression test for the Q3 wording). Each PDF was text-extracted and all 7 answers were read. Twenty-eight answer blocks were confirmed identical to the prior reviewed PDF; their rubric scores were retained after direct text comparison. Seven changed blocks were re-scored: Q3 for profiles 2 and 3, and Q5 for all five profiles. The automatic report diagnostic was not used for content scoring.
+
+| Profile | Seven answer scores | Mean | Minimum answer | Result |
+|---|---|---:|---:|---|
+| 1 | 95, 94, 97, 95, 94, 96, 94 | 95.0 | 94 | Profile average meets target; individual-answer target does not |
+| 2 | 95, 94, 95, 94, 95, 96, 95 | 94.9 | 94 | FAIL |
+| 3 | 95, 94, 95, 94, 94, 96, 94 | 94.6 | 94 | FAIL |
+| 4 | 95, 95, 95, 95, 94, 96, 93 | 94.7 | 93 | FAIL |
+| 5 | 95, 94, 95, 95, 94, 96, 93 | 94.6 | 93 | FAIL |
+
+Changed-answer deductions:
+
+- Q3, P2 and P3: adding actual salary, hours, and work-cost comparison made the limited regular-pay clue more useful. Remaining deduction: the chart's earning clue is still limited, so it cannot establish the best-paying route.
+- Q5, P1/P3/P4/P5: a direct statement now names that no reliable improvement year can be identified within 2026–2035 and preserves each profile's actual work-theme clues. Remaining deduction: the checked themes do not establish a real-world improvement.
+- Q5, P2: the answer names 2031, 2032, 2034 and 2035 as possible work-support periods, while explicitly saying they do not promise a raise or job change. Remaining deduction: support for work effort is not the same as confirmed financial improvement.
+
+The complete 35-row evidence set (actual answer text, all six rubric components, deduction, code location and PASS/FIX) is `docs/audits/PRODUCT02-INDEPENDENT-REVIEW-3aa9cf0.json`. Overall Product 02 remains FAIL; no score was raised to meet a threshold without a corresponding text improvement.
