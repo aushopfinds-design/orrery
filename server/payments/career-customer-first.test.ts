@@ -50,7 +50,10 @@ describe('My Money & Career customer-first delivery', () => {
       expect(q4).toMatch(/Your Answer: /)
       expect(q4).not.toMatch(/What This Means for You:|Bottom Line:/)
       const q5 = buyerSection.split('Question: When might my career or money situation improve?')[1].split('\n\nQuestion:')[0]
-      if (!q5.includes('Important Timing:')) expect(q5).toMatch(/annual comparisons instead emphasize .+work signals, not evidence of a pay rise/)
+      if (!q5.includes('Important Timing:')) {
+        expect(q5).toMatch(/annual comparisons instead emphasize .+work signals, not evidence of a pay rise/)
+        expect(q5).not.toMatch(/What This Means for You:/)
+      }
       expect(pdf.subarray(0, 5).toString()).toBe('%PDF-')
       reports.push(report)
       if (process.env.CAREER_PDF_DIR) {

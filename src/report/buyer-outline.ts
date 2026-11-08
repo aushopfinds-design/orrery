@@ -404,9 +404,7 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
               : `No checked year stands out as a clear period for career or money improvement. The annual comparisons instead emphasize ${otherThemes.join(' and ') || 'work themes that need review'}. These are work signals, not evidence of a pay rise.`}`,
             ...(supportYears.length ? [
               `Important Timing: ${supportYears.join(', ')} are the checked work-support periods; they do not promise a raise or job change.`,
-            ] : [
-              `What This Means for You: The checked years include ${otherThemes.join(' and ') || 'other work themes'}, but none stands out as a clear period of extra support.`,
-            ]),
+            ] : []),
           ]
         }
         const details = question.id === 'q-risk'
