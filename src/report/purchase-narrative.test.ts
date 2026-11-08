@@ -59,6 +59,7 @@ describe('Targeted customer-answer revisions',()=>{
   expect(sections['shared-week'].action.en).toContain('At the next shared decision, ask what')
   expect(sections['shared-week'].lines).toHaveLength(1)
   expect(sections['close-conversation'].action.en).toContain('did you feel cared for through')
+  expect(sections['close-conversation'].action.ko).toContain('최근 배려를 느낀 순간')
   expect(sections['close-conversation'].action.en).toContain(sections['close-conversation'].lines[2].en.match(/Your private-life need is (.*)\. Your partner’s is/)?.[1] ?? 'chart')
   expect(sections['close-conversation'].caution.en).toContain('your partner’s need for')
   expect(sections['chart-patterns'].action.en).toContain('daily routine')
