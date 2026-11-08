@@ -76,11 +76,11 @@ export function customerNarrative(plan:InterpretationPlan,targetedProduct01=true
     :opportunityRoute?`확인한 명식에서는 고정 급여보다 고객·프로젝트·거래를 통한 수입에 더 직접적인 근거가 있습니다. 영업성 업무나 독립 업무와 연결될 수 있지만 현실에서는 안정적인 기반과 대금 조건을 먼저 갖춰야 합니다.`
     :`확인한 위치에는 고정 수입이나 기회성 재물의 통로가 뚜렷하지 않습니다. 업무 방식은 읽을 수 있어도 재물 글자가 없으므로 직장과 사업 중 하나를 정해 말할 수 없습니다.`)
   const moneyAnswer=pair(regularRoute&&opportunityRoute
-    ?`Your chart supports both regular income and more variable earnings from customers, projects or deals. This fits a dependable base with selected paid work on the side; which one becomes larger depends on your actual work and agreements.`
-    :regularRoute?`Regular work or repeat fees have the clearest chart support. Variable projects may add income, but the chart gives less direct support to depending on them as your only route.`
-    :opportunityRoute?`Project, customer or deal-based income has the clearest chart support; a fixed-pay route is less directly marked. This can suit commercial work, but income is easier to keep steady when payment terms and delivery are settled first.`
+    ?`Your natural earning pattern combines dependable pay with selected customer, project or deal work. Your chart marks both routes, but actual earnings depend on the work and agreements.`
+    :regularRoute?`Regular work or repeat fees are the clearer route in your chart. The chart gives less support to relying on projects alone, so judge those offers by their actual pay and costs.`
+    :opportunityRoute?`Customer, project or deal income is the clearer route in your chart. The regular-pay signal is less direct, so confirm payment terms and keep a dependable base before relying on variable income.`
     :`Your chart does not establish whether salaried or deal-based work is your natural income route. Use your work skills and real contract terms to judge that choice.`,
-    regularRoute&&opportunityRoute?`명식에는 정기 수입과 고객·프로젝트·거래의 변동 수입이 함께 나타납니다. 안정적인 기반에 선택한 유료 업무를 더하는 방식과 맞지만, 어느 쪽이 더 커질지는 실제 일과 계약에 달려 있습니다.`
+    regularRoute&&opportunityRoute?`자연스러운 수입 흐름은 안정적인 급여와 선택한 고객·프로젝트·거래 업무를 함께 두는 방식입니다. 명식에 두 통로가 모두 나타나지만 실제 수입은 업무와 계약에 달려 있습니다.`
     :regularRoute?`정기 업무와 반복 수수료에 더 직접적인 근거가 있습니다. 프로젝트 수입을 더할 수는 있어도 그것만을 유일한 통로로 삼는 데는 근거가 약합니다.`
     :opportunityRoute?`프로젝트와 거래를 통한 수입에 더 직접적인 근거가 있으며 고정 급여는 덜 뚜렷합니다. 영업성 업무나 독립 업무와 연결될 수 있지만 조건과 납품, 대금 지급을 먼저 정할수록 수입을 안정시키기 쉽습니다.`
     :`확인한 명식만으로 급여와 거래형 수입 중 어느 쪽이 자연스러운 통로인지 정하기 어렵습니다. 실제 업무 능력과 계약 조건을 기준으로 판단해야 합니다.`)
@@ -155,7 +155,7 @@ export function customerNarrative(plan:InterpretationPlan,targetedProduct01=true
    pair(`The hidden month layer adds ${hiddenRoutine} to daily work${p.monthStemGod===p.monthBranchGod?'; it repeats the visible theme rather than creating a separate demand.':`. ${inner.work.en}`} A job title can fit while its routine still drains you if it leaves no space for these skills.`,`태어난 달의 지장간은 일상 업무에 ${hiddenRoutineKo}을 더합니다${p.monthStemGod===p.monthBranchGod?' 겉의 주제가 반복되는 구조입니다.':`. ${inner.work.ko}`} 직함이 잘 맞아도 실제 업무가 이런 기술을 쓸 여지를 주지 않으면 지칠 수 있습니다.`),
    pair(`In relationships, ${p.dayBranch} in your birth-day column points to ${relationshipProfile.need}. That is a private need, separate from the role you fill at work; notice whether your week gives both sides enough attention.`,`관계에서는 태어난 날의 ${p.dayBranch}가 ${NEED[p.dayBranch]}을 가리킵니다. 직장에서 맡는 역할과 별개의 사적인 필요이므로, 한 주에 두 영역 모두 살필 여유가 있는지 확인하세요.`),
   ]:[pair(`A familiar strength can keep you in the same role even when you want something different: ${m.balance.en}`,`익숙한 강점 때문에 다른 것을 원해도 같은 역할에 머물 수 있습니다. ${m.balance.ko}`)],pair(`Compare the visible work role with the daily routine and protect time for the need named above. Do not use an element count as a health or lifestyle prescription.`,`겉으로 보이는 업무와 실제 일상을 비교하고, 위에 적힌 필요를 위한 시간을 확보합니다. 오행 개수는 건강이나 생활 처방이 아닙니다.`),m.pressure)
-  put('patterns',[],pair('Separate a possible work change from a private-life change before treating either as a verdict on your whole life.','일에서의 변화와 사적인 관계의 변화를 나누어 본 뒤 인생 전체에 대한 판단과 구분합니다.'),pair('A change signal identifies an area to examine, rather than an event that must happen.','변화 신호는 살펴볼 영역을 가리키며 반드시 일어날 사건을 정하지 않습니다.'))
+  put('patterns',[],pair('Before making a major choice, compare the specific work or relationship theme for that year with the options you actually have.','큰 선택을 하기 전에 그해의 직업 또는 관계 주제를 실제로 선택할 수 있는 조건과 비교합니다.'),pair('A change signal identifies an area to examine, rather than an event that must happen.','변화 신호는 살펴볼 영역을 가리키며 반드시 일어날 사건을 정하지 않습니다.'))
   const lifeYearRows=purchaseYears(plan.first,plan.referenceYear,'life',10,true)
   const lifeYearReadings=lifeYearRows.map(row=>{
    const year=row.date.slice(0,4),pillar=row.yearPillar,theme=LANGUAGE[row.god]

@@ -81,7 +81,7 @@ describe('Product 01 root-cause recovery', () => {
     expect(q3).not.toMatch(/Before accepting a role, ask for a normal week's task split/i)
     expect(q2).toMatch(/sharp eye for small details/i)
     expect(q2).not.toMatch(/Your standout strength is quality and attention to detail/i)
-    expect(q4).toMatch(/chart supports|chart does not show a direct money/i)
+    expect(q4).toMatch(/Your natural earning pattern combines|Regular work or repeat fees are the clearer route|Customer, project or deal income is the clearer route|does not establish whether salaried or deal-based work/i)
     expect(q4).not.toMatch(/The work pattern is .*linking the variable route/i)
     expect(q4).not.toMatch(/The work position speaks to daily duties/i)
     expect(q4).not.toMatch(/Earning signs appear alongside learning and support/i)

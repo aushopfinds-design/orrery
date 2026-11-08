@@ -23,7 +23,7 @@ export function roleChoice(p:Subject, simpleEnglish=false, lifeReading=false):Pa
  if(lifeReading){
   const direction=LIFE_CAREER_DIRECTIONS[p.monthStemGod]
   return p.monthStemGod===p.monthBranchGod
-   ?pair(`Your chart points toward ${direction}, especially work such as ${visible.en}. This theme appears in both parts of your work chart, so a role with clear duties and ownership should fit better than an unrelated catch-all job.`,`명식은 ${direction} 쪽을 가리키며, 특히 ${visible.ko} 같은 업무가 어울립니다. 업무 차트의 두 부분에 이 주제가 반복되므로 관련 없는 일을 모두 맡는 자리보다 담당과 권한이 분명한 역할이 더 잘 맞습니다.`)
+   ?pair(`Your chart points toward ${direction}, especially work such as ${visible.en}. Because this work theme repeats in your chart, a role with clear duties and ownership should fit better than an unrelated catch-all job.`,`명식은 ${direction} 쪽을 가리키며, 특히 ${visible.ko} 같은 업무가 어울립니다. 같은 업무 주제가 반복되므로 관련 없는 일을 모두 맡는 자리보다 담당과 권한이 분명한 역할이 더 잘 맞습니다.`)
    :pair(`Your strongest fit combines ${direction}, especially work such as ${visible.en}, with daily duties such as ${daily.en}. Look for roles that give both areas real time; if one takes over your week, the job may not use your full range.`,`가장 잘 맞는 방향은 ${direction} 쪽의 ${visible.ko} 업무와 일상의 ${daily.ko} 업무를 함께 쓰는 일입니다. 두 업무 모두에 시간을 쓸 수 있는 역할을 찾으세요. 한쪽이 주중 대부분을 차지하면 전체 업무 성향을 쓰기 어렵습니다.`)
  }
  return p.monthStemGod===p.monthBranchGod
