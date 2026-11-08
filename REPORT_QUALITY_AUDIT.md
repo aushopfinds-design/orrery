@@ -557,3 +557,14 @@ Verification after this source change: four focused test files passed, 35/35 tes
 
 ### Product 01 Preview confirmation (2026-11-08)
 The application-code Preview `dpl_FveA6uP699R9jtbFPqDoryGEpdkF` is READY at exact code SHA `eec3511f527fce48a5bca4d5f29f6b1035114b34`; homepage and `/samples/` both return HTTP 200. Audit/status commit `1a5db0bdbed53afa47f7ed6a39e145d42541c6bb` separately has READY Preview `dpl_546W4rGB7JTp7fDX6ozVbrDuHKTG`. Product 01 PDF generation was validated through the test path; no public purchase or Production deployment was performed.
+
+## Product 01 follow-up: final review of the two 94-point answers (2026-11-09)
+
+The immediate pre-revision Product 01 profile means supplied for this review were 95.3, 95.0, 95.3, 95.1, 95.1; each profile had a minimum answer of 94. The two answer roles below were the identified 94-point cases. The previous post-fix review above records those 35 scores and should be read as the prior revision, not as the latest result.
+
+- **Q3 `career`**: the weak point was a long pair of work-family labels with examples that did not clearly explain how the two duties fit together. `src/report/personalised-choices.ts` now separates the two chart-linked job functions into short examples and states the role condition (time and clear responsibility). Scores for profiles 1–5: **95, 96, 96, 96, 96**.
+- **Q6 `life-challenges`**: the prior answer named overlapping work pressures but did not connect the work pattern to a distinct personal need. `src/report/purchase-narrative.ts` now pairs main-role/daily-duty evidence with a private-life priority derived from the calculated day branch; it keeps the conclusion cautious and makes the practical step concrete. Scores for profiles 1–5: **95, 95, 95, 95, 95**.
+
+All 35 actual answer blocks in five PDFs generated from code SHA `b45554af77b89d3f8d5219b788fabbe86d16ac96` were reviewed. The full answer text, six criterion scores, deductions, and source code targets are in `docs/audits/PRODUCT01-FULL-INDEPENDENT-REVIEW-eec3511.json`. Profile means are **95.4, 95.4, 95.4, 95.6, 95.6**; minimum individual answer is **95**. Product 01 therefore passes the requested average gate and has no answer below 95 in this batch. The score method uses unchanged Q1/Q2/Q4/Q5/Q7 text from the previous review and rescored the changed Q3/Q6 text from the current PDFs; the exact extraction is recorded in JSON. P2 calculation-verification diagnostic remains partial and is reported separately.
+
+PDF question counts, TOC link counts, page counts, replacement glyphs, black-square glyphs, and final-page summary/card presence are summarized in the JSON. Visual inspection sampled representative pages only, not all pages. Product 02–07 have not yet received independent answer-by-answer scores. This update does not claim all seven products are complete.
