@@ -568,3 +568,19 @@ The immediate pre-revision Product 01 profile means supplied for this review wer
 All 35 actual answer blocks in five PDFs generated from code SHA `b45554af77b89d3f8d5219b788fabbe86d16ac96` were reviewed. The full answer text, six criterion scores, deductions, and source code targets are in `docs/audits/PRODUCT01-FULL-INDEPENDENT-REVIEW-eec3511.json`. Profile means are **95.4, 95.4, 95.4, 95.6, 95.6**; minimum individual answer is **95**. Product 01 therefore passes the requested average gate and has no answer below 95 in this batch. The score method uses unchanged Q1/Q2/Q4/Q5/Q7 text from the previous review and rescored the changed Q3/Q6 text from the current PDFs; the exact extraction is recorded in JSON. P2 calculation-verification diagnostic remains partial and is reported separately.
 
 PDF question counts, TOC link counts, page counts, replacement glyphs, black-square glyphs, and final-page summary/card presence are summarized in the JSON. Visual inspection sampled representative pages only, not all pages. Product 02–07 have not yet received independent answer-by-answer scores. This update does not claim all seven products are complete.
+
+## Product 02 pre-fix independent review (2026-11-09)
+
+Five actual Product 02 PDFs were generated from `issueReport()` at source SHA `b45554af77b89d3f8d5219b788fabbe86d16ac96`. All 35 answer blocks (seven official questions × five profiles) were read. Full PDF answer text, criterion-by-criterion scores, deductions and code targets are recorded in `docs/audits/PRODUCT02-PREFIX-INDEPENDENT-REVIEW-b45554a.json`. Automated quality diagnostics are excluded from these scores.
+
+| Profile | Seven-answer mean | Lowest individual answer | Verdict |
+| --- | ---: | ---: | --- |
+| 1 | 92.4 | 82 | FAIL |
+| 2 | 92.3 | 83 | FAIL |
+| 3 | 91.9 | 83 | FAIL |
+| 4 | 93.1 | 89 | FAIL |
+| 5 | 92.0 | 82 | FAIL |
+
+Q3 (`How do I naturally make money?`) is cautious, but for profiles 2–3 the answer names only a limited possible earning route and does not explain how it fits the person's work pattern. Q4 (`What tends to block my financial progress?`) is internally unclear in profiles 1 and 5: the answer suggests a possible training/support cost pressure, then concludes that no specific blocker is identified. Q5 correctly avoids inventing a year, but four profiles use nearly the same broad no-clear-period explanation and overlap with the ten-year outlook. These are real answer-level deductions, not diagnostic flags.
+
+The baseline review is saved before code edits. Product 02 still fails; no Product 02 code change has yet been committed at this checkpoint. The next source change is limited to Q3's hidden-money phrasing and Q4's distinction between a possible chart pressure and a verified real-world financial cause. Q5 remains unchanged unless a distinct, calculation-backed timing answer is supported.
