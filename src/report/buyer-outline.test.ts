@@ -399,6 +399,15 @@ describe('Buyer questions, not a repeated six-part technical template', () => {
     )
     expect(sharedDirectionReport).toContain('Answer: Both chart directions point to a shared draw toward reassurance and feeling understood.')
     expect(sharedDirectionReport).not.toContain('two different possible draws')
+
+    const frictionContextChapters = chapters.map(chapter => chapter.id === 'two-directions'
+      ? { ...chapter, paragraphs: [...chapter.paragraphs, 'The day signs also form a friction pattern: a possible attraction can exist alongside different instincts about private choices.'] }
+      : chapter)
+    const frictionContextReport = applyBuyerQuestions(
+      frictionContextChapters.map(chapter => deliveredChapter(chapter).join('\n\n')).join('\n\n'),
+      'compatibility', frictionContextChapters,
+    )
+    expect(frictionContextReport).toContain('a possible attraction can exist alongside different instincts about private choices.')
     expect(report.match(/^Question:/gm)).toHaveLength(7)
   })
 
