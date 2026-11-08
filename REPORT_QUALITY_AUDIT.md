@@ -673,3 +673,21 @@ Main deductions:
 - Q7 uses abstract chart labels, repeats substantially for profiles 1, 3, 4 and 5, and does not yet translate the themes into a concrete shared decision.
 
 The full evidence file `docs/audits/PRODUCT03-INDEPENDENT-REVIEW-3654807.json` records each PDF answer, all six category scores, deduction reason, code location and FIX verdict. PDF structural checks: seven question blocks per PDF; pages 18, 18, 18, 19, 19; zero replacement/black-square glyphs; 12 internal links per PDF. Every page was not visually reviewed. Product 03 remains below the 95-point profile mean requirement and individual-answer target; continue targeted code revision and repeat the same rubric.
+
+## Product 03 — follow-up actual-PDF review (code SHA `e4cd18e37de34abd572c499676aceafbad9e7d3e`)
+
+The five Product 03 PDFs from this iteration were read and all 35 answer blocks checked. Twenty-four answer texts matched the prior reviewed batch exactly; eleven changed answers were rescored. The same six-part 100-point rubric was used. Profile means were P1 86.6 (minimum 78), P2 87.4 (minimum 83), P3 86.6 (minimum 78), P4 86.7 (minimum 78), and P5 87.7 (minimum 78). Product 03 remained FAIL. Complete answer text and deductions are in `docs/audits/PRODUCT03-INDEPENDENT-REVIEW-e4cd18e.json`.
+
+## Product 03 — actual-PDF follow-up review (code SHA `ef37d8cc14ea2935188fb83a99167736d79a6fd0`)
+
+Five new PDFs were generated after verifying that this exact code SHA was saved on the official branch. Each has seven official questions (35 answer blocks total); page counts are 18, 18, 18, 19, 19, and extracted text has no replacement glyphs. Comparison with the immediately previous PDF batch found exactly five changed answer blocks: Q2, one per profile. The other 30 answer texts matched and retain their reviewed scores. The five Q2 blocks were read and rescored. The same category weights were kept; automated diagnostic scores were excluded.
+
+| Profile | Q1–Q7 scores | Mean | Minimum answer | Result |
+|---|---|---:|---:|---|
+| 1 | 88, 81, 89, 90, 85, 88, 88 | 87.0 | 81 | FAIL |
+| 2 | 89, 87, 90, 86, 87, 85, 92 | 88.0 | 85 | FAIL |
+| 3 | 88, 81, 89, 90, 85, 88, 88 | 87.0 | 81 | FAIL |
+| 4 | 90, 81, 88, 90, 85, 88, 88 | 87.1 | 81 | FAIL |
+| 5 | 90, 83, 88, 90, 91, 89, 88 | 88.4 | 83 | FAIL |
+
+Q2 now includes the calculated day-sign comparison: no direct connection or friction for Profiles 1, 3 and 4; a friction pattern for Profile 2; and a direct link for Profile 5. This improves chart specificity, but the remaining attraction answer is still hypothetical and lacks a concrete interaction. The answer remains below 95 in every profile. Full actual answer text, all criterion scores, deductions, code locations and verdicts are in `docs/audits/PRODUCT03-INDEPENDENT-REVIEW-ef37d8c.json`.
