@@ -232,6 +232,7 @@ export function customerNarrative(plan:InterpretationPlan,targetedProduct01=true
   const joinAreas=(areas:string[])=>areas.length===2?`${areas[0]} and ${areas[1]}`:areas.join(', ')
   const careerMoneyEvidence=[...groupedMoneyPositions].map(([type,positions])=>({type,areas:joinAreas([...positions.en])}))
   const careerMoneyEvidenceKo=[...groupedMoneyPositions].map(([type,positions])=>({type,areas:[...positions.ko].join('·')}))
+  const hiddenMoneyAreas=[...new Set(p.hiddenMoney.map(item=>moneyPositionNames[item.position]?.[0]).filter((area):area is string=>Boolean(area)))]
   const englishMoneyLinks=careerMoneyEvidence.map(item=>item.type==='regular pay'?`Steady pay is linked to ${item.areas}`:`Customer or project income is linked to ${item.areas}`).join('. ')
   const koreanMoneyLinks=careerMoneyEvidenceKo.map(item=>`${item.areas}에서 ${item.type==='regular pay'?'정기 수입':'고객·프로젝트 수입'}의 표시가 확인됩니다`).join('. ')
   const careerMoneyAnswer=pair(
@@ -251,7 +252,7 @@ export function customerNarrative(plan:InterpretationPlan,targetedProduct01=true
    : moneyRiskCodes.has('money-adds-pressure')
     ? pair('Your chart links money themes with demanding responsibilities. A larger paid task could add obligations before it adds money you keep.','명식에서 재물 주제와 부담이 큰 책임이 연결됩니다. 더 큰 유료 업무를 맡을 때 실제 남는 돈보다 책임이 먼저 늘 수 있습니다.')
     : !p.visibleMoney.length&&p.hiddenMoney.length
-     ? pair('The chart cannot identify why your financial progress may have slowed; its less-visible money signs do not show a real-world cause.','명식만으로 재정 진전이 느려진 이유를 알 수 없습니다. 덜 드러난 재물 표시가 현실의 원인을 보여 주지는 않습니다.')
+     ? pair(`Your limited money signs sit in less visible areas linked to ${hiddenMoneyAreas.join(' and ') || 'other chart areas'}. This makes the earning route less direct, but it cannot show why progress slowed in real life.`,`제한적인 재물 표시는 ${hiddenMoneyAreas.join('과 ') || '덜 드러나는 위치'}에 있습니다. 수입 경로가 덜 직접적으로 보인다는 뜻이지, 현실에서 진전이 느린 원인을 확인해 주지는 않습니다.`)
      : p.resolution.circuits.some(circuit=>circuit.code==='output-to-money')
       ? pair('Your chart connects useful work with customers or pay, so it does not point to a broken earning route. That link cannot explain your actual income or rule out other obstacles.','명식에서 유용한 업무가 고객이나 대가와 연결되어 돈벌이 통로가 끊겼다고 보기는 어렵습니다. 이 연결만으로 실제 수입이나 다른 장애 요인을 알 수는 없습니다.')
       : p.visibleMoney.length
@@ -332,11 +333,11 @@ export function customerNarrative(plan:InterpretationPlan,targetedProduct01=true
    : chartMoneyMarkers.length
     ? `Your work signature is ${careerThemeLabel}, while the chart places its money signs in ${otherMoneyAreaText}, away from the birth-month work area. This is the key distinction: work fit and earning signs do not automatically line up.`
     : `Your chart points to ${careerThemeLabel} as a work strength, but no direct money sign appears in the checked positions. That makes your work direction clearer than a specific income route.`
-  const capacityInsight=p.strength.tendency==='support-needed'
-   ? 'Its caution is about carrying the workload: added duties may need more support before they improve your finances.'
-   : p.strength.tendency==='supported'
-    ? 'Support for handling work appears in the chart, but that does not establish the pay or profit of a real role.'
-    : 'The chart does not settle how much added work you can carry, so a larger role should not be treated as better-paid by default.'
+  const capacityInsight=workAreaMoney.length
+   ? 'The chart links your work and income signs, but it cannot estimate a real role’s pay. Compare added hours and duties with the confirmed compensation.'
+   : chartMoneyMarkers.length
+    ? 'Your work fit and earning signs sit in different chart areas. Do not assume the best-fitting work will pay more; compare actual duties and confirmed compensation.'
+    : 'Your chart describes work fit, not a pay level. Use it to shortlist roles, then compare real offers by duties, hours and confirmed compensation.'
   const integratedMoneyInsightKo=workAreaMoney.length
    ? `명식에서 ${workAreaMoneyKinds.length===1?(workAreaMoneyKinds[0]==='regular-pay'?'정기 수입':'고객·프로젝트 수입'):'정기 수입과 고객·프로젝트 수입'} 표시가 ${publicRoleLabel(p.monthStemGod).ko} 업무 특징을 나타내는 태어난 달의 위치에 함께 있습니다. 업무 방식과 수입 주제가 연결되지만 실제 보수까지 예측하지는 않습니다.`
    : chartMoneyMarkers.length

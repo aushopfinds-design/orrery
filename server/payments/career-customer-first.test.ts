@@ -50,11 +50,17 @@ describe('My Money & Career customer-first delivery', () => {
       const q4 = buyerSection.split('Question: What tends to block my financial progress?')[1].split('\n\nQuestion:')[0]
       expect(q4).toMatch(/Your Answer: /)
       expect(q4).not.toMatch(/What This Means for You:|Bottom Line:/)
+      if ([1, 2].includes(index)) expect(q4).toMatch(/less visible areas linked to (?:long-term plans|day-to-day work)/i)
       const q5 = buyerSection.split('Question: When might my career or money situation improve?')[1].split('\n\nQuestion:')[0]
       expect(q5).toMatch(/Your Answer: I cannot (?:confirm a date|identify a reliable improvement year)/)
       expect(q5).toMatch(/2026–2035/)
       expect(q5).toMatch(/not a promised raise or job change|do not establish a pay rise/i)
       expect(q5).not.toMatch(/What This Means for You:/)
+      const q2 = buyerSection.split('Question: Am I better suited to employment or independent work?')[1].split('\\n\\nQuestion:')[0]
+      expect(q2).toMatch(/Practical Check: For a real choice, compare confirmed salary, hours and support/i)
+      expect(q2).toMatch(/paying customers, costs and payment terms/i)
+      const q7Section = buyerSection.split('Question: What is my most important career and money insight?')[1].split('\\n\\nQuestion:')[0]
+      expect(q7Section).toMatch(/Compare added hours and duties with the confirmed compensation|compare actual duties and confirmed compensation|compare real offers by duties, hours and confirmed compensation/i)
       expect(pdf.subarray(0, 5).toString()).toBe('%PDF-')
       reports.push(report)
       if (process.env.CAREER_PDF_DIR) {

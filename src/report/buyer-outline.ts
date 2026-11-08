@@ -501,6 +501,9 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
         const practicalAction = question.id === 'q-risk'
           ? 'When progress feels blocked, check whether your target, daily workload, authority and pay fit together before taking on more.'
           : ''
+        const workSettingCheck = question.id === 'proof-of-skill'
+          ? 'For a real choice, compare confirmed salary, hours and support in a job with paying customers, costs and payment terms in independent work.'
+          : undefined
         const answerText = question.id === 'feedback-and-boundaries'
           ? supportYears.length
             ? 'The chart shows possible periods of work support, but it cannot identify a guaranteed improvement date.'
@@ -517,6 +520,7 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
         const lines = [
           `Your Answer: ${answerText}`,
           ...(!repeatFinancialAnswer&&!limitedIncomeAnswer&&explanation && clean(explanation) !== answerText ? [`What This Means for You: ${clean(explanation)}`] : !repeatFinancialAnswer&&!limitedIncomeAnswer ? [`What This Means for You: Your chart's ${sourceChapter.id === 'feedback-and-boundaries' ? 'calculated work-period comparisons' : 'work pattern'} is the basis for this reading.`] : []),
+          ...(workSettingCheck ? [`Practical Check: ${workSettingCheck}`] : []),
           ...(questionTiming ? [questionTiming] : readableTiming.map(line => `Important Timing: ${line}`)),
           ...(!omitBottomLine ? [`Bottom Line: ${conclusions[question.id] ?? 'Compare the chart theme with the actual work, terms and costs.'}`] : []),
         ]
