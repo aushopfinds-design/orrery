@@ -155,7 +155,17 @@ export function customerNarrative(plan:InterpretationPlan,targetedProduct01=true
    pair(`The hidden month layer adds ${hiddenRoutine} to daily work${p.monthStemGod===p.monthBranchGod?'; it repeats the visible theme rather than creating a separate demand.':`. ${inner.work.en}`} A job title can fit while its routine still drains you if it leaves no space for these skills.`,`태어난 달의 지장간은 일상 업무에 ${hiddenRoutineKo}을 더합니다${p.monthStemGod===p.monthBranchGod?' 겉의 주제가 반복되는 구조입니다.':`. ${inner.work.ko}`} 직함이 잘 맞아도 실제 업무가 이런 기술을 쓸 여지를 주지 않으면 지칠 수 있습니다.`),
    pair(`In relationships, ${p.dayBranch} in your birth-day column points to ${relationshipProfile.need}. That is a private need, separate from the role you fill at work; notice whether your week gives both sides enough attention.`,`관계에서는 태어난 날의 ${p.dayBranch}가 ${NEED[p.dayBranch]}을 가리킵니다. 직장에서 맡는 역할과 별개의 사적인 필요이므로, 한 주에 두 영역 모두 살필 여유가 있는지 확인하세요.`),
   ]:[pair(`A familiar strength can keep you in the same role even when you want something different: ${m.balance.en}`,`익숙한 강점 때문에 다른 것을 원해도 같은 역할에 머물 수 있습니다. ${m.balance.ko}`)],pair(`Compare the visible work role with the daily routine and protect time for the need named above. Do not use an element count as a health or lifestyle prescription.`,`겉으로 보이는 업무와 실제 일상을 비교하고, 위에 적힌 필요를 위한 시간을 확보합니다. 오행 개수는 건강이나 생활 처방이 아닙니다.`),m.pressure)
-  put('patterns',[],pair('Before making a major choice, compare the specific work or relationship theme for that year with the options you actually have.','큰 선택을 하기 전에 그해의 직업 또는 관계 주제를 실제로 선택할 수 있는 조건과 비교합니다.'),pair('A change signal identifies an area to examine, rather than an event that must happen.','변화 신호는 살펴볼 영역을 가리키며 반드시 일어날 사건을 정하지 않습니다.'))
+  const turningPointText=timing.patterns?.lines[0]?.en??''
+  const turningPointAction=targetedProduct01&&plan.kind==='complete'
+   ?turningPointText.includes('work')&&turningPointText.includes('close relationships')
+    ?pair('List the work change and relationship choice separately; the chart does not say both must happen.','일의 변화와 관계에서의 선택을 나누어 적으세요. 차트가 두 가지 모두 일어난다고 말하는 것은 아닙니다.')
+    :turningPointText.includes('work')
+     ?pair('Use the year-by-year work notes to review duties, schedule and decision authority before making a change.','변화 전에 연간 직업 풀이를 보고 업무, 일정, 결정 권한을 살펴보세요.')
+     :turningPointText.includes('close relationships')
+      ?pair('Use the year-by-year relationship notes to review shared time and personal choices before making a change.','변화 전에 연간 관계 풀이를 보고 함께하는 시간과 개인의 선택을 살펴보세요.')
+      :pair('Use the full timeline to check the specific area linked to this year before making a change.','변화 전에 전체 흐름에서 이 해와 연결된 구체적인 영역을 확인하세요.')
+   :pair('Before making a major choice, compare the specific work or relationship theme for that year with the options you actually have.','큰 선택을 하기 전에 그해의 직업 또는 관계 주제를 실제로 선택할 수 있는 조건과 비교합니다.')
+  put('patterns',[],turningPointAction,pair('A change signal identifies an area to examine, rather than an event that must happen.','변화 신호는 살펴볼 영역을 가리키며 반드시 일어날 사건을 정하지 않습니다.'))
   const lifeYearRows=purchaseYears(plan.first,plan.referenceYear,'life',10,true)
   const lifeYearReadings=lifeYearRows.map(row=>{
    const year=row.date.slice(0,4),pillar=row.yearPillar,theme=LANGUAGE[row.god]

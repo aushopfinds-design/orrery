@@ -83,6 +83,13 @@ describe('Buyer review r14: direct answers without repeated warnings or lost dat
   expect(answer).toContain('The strongest chart signal for reconsidering your direction appears in')
   expect(answer).toMatch(/20\d\d: .+ connects with work and close relationships/)
   expect(answer).toContain('not as a promise of a major event')
+  expect(customerNarrative(buildInterpretationPlan('complete',a,2026)).patterns.action.en).toContain('List the work change and relationship choice separately')
+ })
+ it('tailors the Product 01 timing action when the calculated highlight concerns relationships only',()=>{
+  const profile=calculateSaju(CATEGORY_SCENARIOS[1].first)
+  const section=customerNarrative(buildInterpretationPlan('complete',profile,2026)).patterns
+  expect(section.lines[0].en).toContain('connects with close relationships')
+  expect(section.action.en).toContain('year-by-year relationship notes')
  })
  it('keeps every year visible in the actual delivered timelines after deduplication',()=>{
   for(const kind of ['complete','career','business'] as const){
