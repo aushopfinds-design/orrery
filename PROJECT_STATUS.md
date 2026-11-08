@@ -88,5 +88,5 @@ Products 03–07 lose 30 points because `server/payments/report.ts` supplies `ca
 ### Latest Product 01 code save (2026-11-08)
 - Latest code and audit commit: `c76b4163e351b7b1dd0a727493b22e420e76b91c` (branch `fix/question-data-consolidation-20261107`).
 - TypeScript `tsc -b --pretty false` passed after the latest code edits. Focused narrative/chart/role tests passed 32/32; the actual Product 01 `issueReport()` PDF test passed 1/1 and emitted five test PDFs with seven valid TOC links.
-- Preview for this commit: `dpl_J5W3K43yzFi3xbWQm2LX5PL9qvK3`, currently BUILDING at last check. Previous code Preview `dpl_GFQhAFH3um7EdE54rwKsw8HtafAg` was READY and its homepage returned HTTP 200; that does not validate this newest build or its PDFs.
+- Preview for this commit: `dpl_J5W3K43yzFi3xbWQm2LX5PL9qvK3` reached READY; its homepage returned HTTP 200. The current Preview verification was a homepage HTTP 200 smoke check only; product screens, visual rendering and refreshed PDF text were not browser-checked on Preview.
 - Product 01 has targeted Q4/Q6 scores only (Q4 84–89, Q6 92–93); no complete post-fix profile score is available. Products 02–07 are unscored. Production remains unchanged and sales remain closed.
