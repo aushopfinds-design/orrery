@@ -634,3 +634,19 @@ Changed-answer deductions:
 - Q5, P2: the answer names 2031, 2032, 2034 and 2035 as possible work-support periods, while explicitly saying they do not promise a raise or job change. Remaining deduction: support for work effort is not the same as confirmed financial improvement.
 
 The complete 35-row evidence set (actual answer text, all six rubric components, deduction, code location and PASS/FIX) is `docs/audits/PRODUCT02-INDEPENDENT-REVIEW-3aa9cf0.json`. Overall Product 02 remains FAIL; no score was raised to meet a threshold without a corresponding text improvement.
+
+## Product 02 — profile-average gate reached, actual PDF review 9fc5d32 (2026-11-09)
+
+Five new PDFs were generated after the Product 02 runtime code commit `c67239d958285c99439b79c1706a3f4308889f77` and test commit `9fc5d32b22a8c67b6b3a06f5ead95135fae481cd`. All 35 answer blocks were read. Twenty-three answer blocks matched the prior review exactly and retain the earlier independent scores; twelve changed blocks were re-scored. No automated diagnostic score was used.
+
+| Profile | Seven answer scores | Mean | Minimum answer | Average gate |
+|---|---|---:|---:|---|
+| 1 | 95, 95, 97, 95, 94, 96, 96 | 95.4 | 94 | PASS |
+| 2 | 95, 95, 95, 96, 95, 96, 96 | 95.4 | 95 | PASS |
+| 3 | 95, 95, 95, 96, 94, 96, 95 | 95.1 | 94 | PASS |
+| 4 | 95, 95, 95, 95, 94, 96, 95 | 95.0 | 94 | PASS |
+| 5 | 95, 95, 95, 95, 94, 96, 95 | 95.0 | 94 | PASS |
+
+Twelve re-scored answers: Q2 for all five profiles; Q4 for profiles 2 and 3; Q7 for all five profiles. Q2 gained a concrete comparison of salary, hours, support, customers, costs and payment terms. Q4 now names the actual less-visible money area for profiles 2 and 3 while avoiding a claim about a real financial cause. Q7 now ties the work/money chart relationship to a concrete pay-and-hours check. Four Q5 answers remain at 94 because the calculation does not establish a reliable improvement year; this limitation was not turned into a prediction to increase the score.
+
+Product 02 meets the required five-profile mean threshold. Four profiles still have one 94-point individual answer, so the additional individual-answer 95 target is not fully met. The detailed 35-row evidence file is `docs/audits/PRODUCT02-INDEPENDENT-REVIEW-9fc5d32.json`.
