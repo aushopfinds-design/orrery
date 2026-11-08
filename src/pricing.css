@@ -1,0 +1,39 @@
+/* Launch plans and an explicit comparison with the bundle's real components. */
+@media screen {
+  .fate-site .fate-launch-offer { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 22px; margin: 0 0 26px; padding: 25px 28px; border: 1px solid #b4935e; border-radius: 15px; background: linear-gradient(130deg,#27465a,#102a3e 55%,#081c2d); color: #f6e2bd; box-shadow: inset 0 1px 0 #ebd3a761, 0 4px 0 #041321, 0 13px 23px -12px #2f3f4d70; }
+  .fate-site .fate-launch-offer > div { flex: 1 1 260px; min-width: 0; }
+  .fate-site .fate-launch-offer .fate-eyebrow { color: #d6b47c; font-size: 9px; margin-bottom: 9px; }
+  .fate-site .fate-launch-offer > div > strong { display: block; font: 400 clamp(23px,2.5vw,30px)/1.3 Georgia,serif; color: #fff0d1; }
+  .fate-site .fate-launch-offer > div > span { display: block; font-size: 10px; line-height: 1.7; color: #d4c8b4; margin-top: 9px; }
+  .fate-site .fate-launch-offer > a { display: flex; flex-direction: column; align-items: flex-start; gap: 7px; min-width: 0; padding: 16px 20px; border: 1px solid #dbbc87; border-radius: 11px; background: linear-gradient(140deg,#fff0c4,#d9b16e); color: #24384a; box-shadow: inset 0 1px 0 #fff9df, 0 3px 0 #95713d, 0 7px 12px #020d173d; }
+  .fate-site .fate-launch-offer > a > strong { font-size: 17px; line-height: 1.5; }
+  .fate-site .fate-launch-offer > a > span { font-size: 11px; line-height: 1.7; color: #55452e; }
+  .fate-site .fate-launch-offer > a > small { font-size: 10px; font-weight: 600; color: #364c58; }
+  .fate-site .fate-launch-offer > a:active { box-shadow: inset 0 2px 4px #70502730, 0 1px 0 #95713d; }
+
+  .fate-site .fate-price-display { display: inline-flex; flex-direction: column; align-items: flex-start; gap: 7px; margin: 0; max-width: 100%; font-size: 14px; line-height: 1.4; font-weight: 400; color: #70502b; vertical-align: top; }
+  .fate-site .fate-price-caption { display: block; margin: 0; font-size: 10px; line-height: 1.5; font-weight: 600; letter-spacing: .05em; color: #856336; }
+  .fate-site .fate-price-display > .fate-price-amount { display: block; margin: 0; font: 400 31px/1.2 Georgia,serif; color: #805a2e; letter-spacing: -.02em; white-space: nowrap; }
+  .fate-site .fate-price-comparison { display: flex; flex-wrap: wrap; gap: 4px 7px; margin: 0; font-size: 11px; line-height: 1.5; color: #786b59; }
+  .fate-site .fate-price-comparison > span { display: inline; margin: 0; font-size: inherit; color: inherit; }
+  .fate-site .fate-price-comparison s { text-decoration-color: #8d7251; text-decoration-thickness: 1px; }
+  .fate-site .fate-price-badge { display: inline-flex; align-items: center; min-height: 24px; margin: 0; padding: 3px 9px; border: 1px solid #c29c62; border-radius: 999px; font-size: 10px; font-weight: 700; line-height: 1.5; color: #58401f; background: linear-gradient(155deg,#fff1bc,#e1b56f); box-shadow: inset 0 1px 0 #fff7d2, 0 2px 0 #bc975f; }
+  .fate-site .fate-price-basis { display: block; max-width: 230px; margin: 0; font-size: 10px; line-height: 1.65; color: #72624b; }
+  .fate-site .fate-bundle-action > .fate-price-display { align-items: center; text-align: center; width: 100%; margin: 0 0 18px; }
+  .fate-site .fate-complete-price .fate-price-amount { font-size: 37px; }
+  .fate-site .fate-buyer-price > .fate-price-display { margin: 0; }
+  .fate-site .fate-product-price .fate-price-amount { font-size: 28px; }
+  .fate-site .fate-personal-price .fate-price-amount { font-size: 34px; }
+
+  .fate-site .fate-catalog-shortcuts a > .fate-price-compact { flex: 0 0 auto; align-items: flex-end; gap: 4px; padding: 6px 8px; max-width: 110px; border-radius: 8px; background: linear-gradient(150deg,#f4e8d3,#fffbf2); box-shadow: inset 0 1px 3px #73502221, 0 1px 0 #fff; text-align: right; }
+  .fate-site .fate-price-compact > .fate-price-amount { font-family: inherit; font-size: 12px; font-weight: 700; line-height: 1.4; letter-spacing: 0; }
+  .fate-site .fate-price-compact > .fate-price-badge { font-size: 9px; min-height: 19px; padding: 1px 6px; box-shadow: inset 0 1px 0 #fff7d2; }
+
+  @media (max-width: 600px) {
+    .fate-site .fate-launch-offer { padding: 23px 20px; gap: 18px; }
+    .fate-site .fate-launch-offer > a { width: 100%; padding: 15px 17px; }
+    .fate-site .fate-launch-offer > a > strong { font-size: 17px; }
+    .fate-site .fate-catalog-shortcuts a > .fate-price-compact { padding: 5px 6px; max-width: 98px; }
+    .fate-site .fate-price-compact > .fate-price-amount { font-size: 11px; }
+  }
+}

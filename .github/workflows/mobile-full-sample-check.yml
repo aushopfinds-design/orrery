@@ -1,0 +1,38 @@
+name: Full sample report mobile check
+
+on:
+  push:
+    branches:
+      - feature/final-simple-reports
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  sample-report-mobile:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install Playwright and Chromium
+        run: |
+          npm install --prefix /tmp/mobile-playwright playwright
+          node /tmp/mobile-playwright/node_modules/playwright/cli.js install --with-deps chromium
+      - name: Render the production full sample at mobile widths
+        env:
+          FATE_SAMPLE_URL: https://thefatekey.com/#sample-report
+          MOBILE_SCREENSHOT_DIR: artifacts/mobile-full-sample
+          NODE_PATH: /tmp/mobile-playwright/node_modules
+        run: node scripts/mobile-full-sample-check.cjs
+      - name: Upload mobile screenshots and measurements
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: fate-key-full-sample-mobile
+          path: artifacts/mobile-full-sample/
+          if-no-files-found: error
+          retention-days: 14

@@ -1,0 +1,17 @@
+/* Shared moonlit envelope artwork for the seven public report samples. */
+.fate-reading-cover.fate-envelope-cover { position: relative; isolation: isolate; overflow: hidden; width: min(100%, 720px); min-height: 0 !important; aspect-ratio: 2/3; margin: 0 auto; display: flex; align-items: flex-start; justify-content: center; padding: 0 !important; background: #07172d !important; border-radius: 12px; }
+.fate-reading-cover.fate-envelope-cover > .fate-envelope-cover-art { position: absolute; inset: 0; z-index: -1; display: block; width: 100% !important; max-width: none; height: 100% !important; margin: 0; object-fit: cover; }
+.fate-envelope-cover .fate-report-cover-content { position: absolute; top: 28%; left: 10%; width: 80%; max-width: 520px; text-align: center; color: #f5e9d4; }
+.fate-envelope-cover .fate-report-cover-content h1 { color: #fff1d2; font-size: clamp(27px, 4vw, 42px); line-height: 1.18; text-shadow: 0 2px 10px #000a; }
+.fate-envelope-cover .fate-report-cover-content p { color: #f1dfc2; text-shadow: 0 1px 6px #0009; }
+.fate-envelope-cover .fate-report-cover-content .fate-eyebrow { color: #f2ce89; }
+.fate-envelope-cover .fate-sample-ribbon { display: inline-block; margin-top: 12px; color: #f7e7c8; border-color: #d4ae68; background: #07172dcc; }
+@media(max-width:760px){.fate-reading-cover.fate-envelope-cover{width:100%}.fate-envelope-cover .fate-report-cover-content{top:29%;left:8%;width:84%}}
+@media(max-width:480px){.fate-envelope-cover .fate-report-cover-content{top:30%;left:7%;width:86%}.fate-envelope-cover .fate-report-cover-content h1{font-size:clamp(23px,7vw,32px)}}
+@media print{.fate-reading-cover.fate-envelope-cover{width:100%;break-after:page}.fate-reading-cover.fate-envelope-cover > .fate-envelope-cover-art{print-color-adjust:exact;-webkit-print-color-adjust:exact}}
+.fate-envelope-cover .fate-report-cover-content { top: 20%; }
+.fate-envelope-cover .fate-report-cover-content > p:not(.fate-eyebrow):not(.fate-reading-cover-tagline) { display: none; }
+.fate-envelope-cover .fate-report-cover-content .fate-reading-cover-tagline { margin-top: 12px; font-size: 15px; }
+.fate-envelope-cover .fate-sample-ribbon { display: none; }
+.fate-reading-cover.fate-envelope-cover::after { content: 'FICTIONAL EXAMPLE · NOT A CUSTOMER REPORT'; position: absolute; left: 50%; bottom: 12%; transform: translateX(-50%); padding: 8px 14px; border: 1px solid #d4ae68; border-radius: 99px; background: #fff4d8e8; color: #263047; font-size: 9px; font-weight: 700; letter-spacing: .1em; text-align: center; white-space: nowrap; }
+@media(max-width:760px){.fate-envelope-cover .fate-report-cover-content{top:20%}}

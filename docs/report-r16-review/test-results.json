@@ -1,0 +1,16 @@
+{
+  "numTotalTests": 760,
+  "numPassedTests": 760,
+  "numFailedTests": 0,
+  "success": true,
+  "edition": "2026.10-r16",
+  "typeCheck": "passed",
+  "lint": "passed",
+  "build": "passed",
+  "distinctBirthInputs": 24,
+  "productOutputs": 168,
+  "productionChanged": false,
+  "pricingChanged": false,
+  "realPaymentRun": false,
+  "scope": "Reproducible internal checks, not independent expert certification or customer satisfaction."
+}

@@ -1,0 +1,19 @@
+{
+  "name": "The Fate Key | Your Story Holds the Key",
+  "short_name": "The Fate Key",
+  "description": "Personalised traditional birth-chart insights in everyday English.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "theme_color": "#071b33",
+  "background_color": "#071b33",
+  "lang": "en",
+  "icons": [
+    {
+      "src": "/destiny-code-emblem.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

@@ -1,0 +1,125 @@
+{
+  "edition": "2026.10-r10",
+  "sourceMode": "parallel-analysis",
+  "first": {
+    "year": 1998,
+    "month": 3,
+    "day": 25,
+    "hour": 3,
+    "minute": 0,
+    "gender": "M",
+    "timezone": "America/New_York",
+    "latitude": 40.7128,
+    "longitude": -74.006
+  },
+  "second": {
+    "year": 2000,
+    "month": 8,
+    "day": 18,
+    "hour": 14,
+    "minute": 30,
+    "gender": "F",
+    "timezone": "Europe/London",
+    "latitude": 51.5074,
+    "longitude": -0.1278
+  },
+  "referenceYear": 2026,
+  "annualYear": 2027,
+  "products": [
+    {
+      "kind": "complete",
+      "documents": [
+        {
+          "title": "Your Life, Your Destiny",
+          "analysisId": "70fa9e79b876987fbd336495186c426ece8d6b762958d127217e416c540141bf",
+          "englishCharacters": 45532,
+          "koreanCharacters": 4487
+        }
+      ]
+    },
+    {
+      "kind": "compatibility",
+      "documents": [
+        {
+          "title": "Are We Meant to Be?",
+          "analysisId": "2a957da8ccc5171e5fc8351ed5fb70cf26860235d946dd51f1f8150b9c386e60",
+          "englishCharacters": 46668,
+          "koreanCharacters": 4773
+        }
+      ]
+    },
+    {
+      "kind": "year",
+      "documents": [
+        {
+          "title": "What Awaits You This Year? — 2027",
+          "analysisId": "346fde047eec4b72bc4052282e58a7f2db375dd09e7f493fddbf0a68f65bc418",
+          "englishCharacters": 67734,
+          "koreanCharacters": 7553
+        }
+      ]
+    },
+    {
+      "kind": "career",
+      "documents": [
+        {
+          "title": "Success, Money & Your Future",
+          "analysisId": "04891d179c60c314bf2daadacac1034cebb027b7fe4ebfd3fd2dca5e7fa7cb41",
+          "englishCharacters": 40389,
+          "koreanCharacters": 2947
+        }
+      ]
+    },
+    {
+      "kind": "business",
+      "documents": [
+        {
+          "title": "Born to Build a Business?",
+          "analysisId": "c16bafb263cd2a888093ab255cc8f598c407dc93bf6a78cfae8915259cd8800a",
+          "englishCharacters": 45016,
+          "koreanCharacters": 2917
+        }
+      ]
+    },
+    {
+      "kind": "wellbeing",
+      "documents": [
+        {
+          "title": "The Real You: Strengths & Weaknesses",
+          "analysisId": "01d75429b582b4be2a6422849d1e5ad119b3e63037061abb35393e7039a88f2c",
+          "englishCharacters": 21894,
+          "koreanCharacters": 1853
+        }
+      ]
+    },
+    {
+      "kind": "bundle",
+      "documents": [
+        {
+          "title": "How Do Your Life, Love and Year Connect?",
+          "analysisId": "31f5b5a4fb376e88fdae89edfa0ea8ba64cfbca2ed4cb11514e179d30d7d4c9b",
+          "englishCharacters": 1671,
+          "koreanCharacters": 1069
+        },
+        {
+          "title": "Your Life, Your Destiny",
+          "analysisId": "70fa9e79b876987fbd336495186c426ece8d6b762958d127217e416c540141bf",
+          "englishCharacters": 45532,
+          "koreanCharacters": 4487
+        },
+        {
+          "title": "Are We Meant to Be?",
+          "analysisId": "2a957da8ccc5171e5fc8351ed5fb70cf26860235d946dd51f1f8150b9c386e60",
+          "englishCharacters": 36438,
+          "koreanCharacters": 4773
+        },
+        {
+          "title": "What Awaits You This Year? — 2027",
+          "analysisId": "346fde047eec4b72bc4052282e58a7f2db375dd09e7f493fddbf0a68f65bc418",
+          "englishCharacters": 59071,
+          "koreanCharacters": 7553
+        }
+      ]
+    }
+  ]
+}

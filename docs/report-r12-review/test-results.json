@@ -1,0 +1,23 @@
+{
+  "review": {
+    "numTotalTests": 709,
+    "numPassedTests": 709,
+    "numFailedTests": 0,
+    "success": true
+  },
+  "production": {
+    "targetedChecksPassed": 31,
+    "preservation": {
+      "products": 7,
+      "pricesUnchanged": true,
+      "chapterEvidenceUnchanged": true,
+      "periodsUnchanged": true,
+      "monthlyDatesAndPillarsUnchanged": true
+    }
+  },
+  "limits": [
+    "Content assessment does not certify paid checkout or delivery.",
+    "No external customer reading study has been completed.",
+    "Korean review text is not a complete sentence-by-sentence translation."
+  ]
+}

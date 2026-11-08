@@ -1,0 +1,820 @@
+{
+  "title": "Product 02 pre-fix independent PDF content review",
+  "product": 2,
+  "sourceCommit": "b45554af77b89d3f8d5219b788fabbe86d16ac96",
+  "branch": "fix/question-data-consolidation-20261107",
+  "source": "Five actual Product 02 PDFs generated with issueReport() at the recorded source SHA; 35 question-answer blocks extracted from the PDF text.",
+  "rubric": {
+    "directAnswer": 35,
+    "personalization": 25,
+    "specificityUsefulness": 15,
+    "repetitionGenericAdvice": 10,
+    "easyEnglish": 10,
+    "calculationConsistency": 5
+  },
+  "method": "Manual review by the six fixed rubric dimensions. Each profile score is the arithmetic mean of its seven answer totals rounded to one decimal. Content scores were assigned only after reading extracted answer text from each actual PDF; automated diagnostics were excluded.",
+  "profileResults": [
+    {
+      "profile": 1,
+      "pdf": "profile-1.pdf",
+      "scoresByQuestion": [
+        95,
+        94,
+        97,
+        82,
+        89,
+        96,
+        94
+      ],
+      "profileMean": 92.4,
+      "minimumAnswer": 82,
+      "verdict": "FAIL"
+    },
+    {
+      "profile": 2,
+      "pdf": "profile-2.pdf",
+      "scoresByQuestion": [
+        95,
+        94,
+        83,
+        92,
+        91,
+        96,
+        95
+      ],
+      "profileMean": 92.3,
+      "minimumAnswer": 83,
+      "verdict": "FAIL"
+    },
+    {
+      "profile": 3,
+      "pdf": "profile-3.pdf",
+      "scoresByQuestion": [
+        95,
+        94,
+        83,
+        92,
+        89,
+        96,
+        94
+      ],
+      "profileMean": 91.9,
+      "minimumAnswer": 83,
+      "verdict": "FAIL"
+    },
+    {
+      "profile": 4,
+      "pdf": "profile-4.pdf",
+      "scoresByQuestion": [
+        95,
+        95,
+        95,
+        89,
+        89,
+        96,
+        93
+      ],
+      "profileMean": 93.1,
+      "minimumAnswer": 89,
+      "verdict": "FAIL"
+    },
+    {
+      "profile": 5,
+      "pdf": "profile-5.pdf",
+      "scoresByQuestion": [
+        95,
+        94,
+        95,
+        82,
+        89,
+        96,
+        93
+      ],
+      "profileMean": 92.0,
+      "minimumAnswer": 82,
+      "verdict": "FAIL"
+    }
+  ],
+  "answerRecords": [
+    {
+      "product": 2,
+      "profile": 1,
+      "pdf": "profile-1.pdf",
+      "questionId": "career-fit",
+      "questionTitle": "Which careers suit me best?",
+      "answerFromPdf": "Your Answer: Business development, sales or account growth matches your chart's emphasis on finding customers and openings. What This Means for You: A role with room to build relationships and act on an opportunity fits you. A system that adds sales targets without control over delivery creates a sharper mismatch. Bottom Line: Customer growth fits best when delivery stays within your control.",
+      "scores": {
+        "directAnswer": 35,
+        "personalization": 23,
+        "specificityUsefulness": 14,
+        "repetitionGenericAdvice": 9,
+        "easyEnglish": 9,
+        "calculationConsistency": 5
+      },
+      "total": 95,
+      "deductionReason": "Strong direct role fit and useful job-condition detail; the examples are still role families rather than a tailored occupation, and some practical wording is shared with later answers.",
+      "codeLocation": "src/report/purchase-narrative.ts — two-work-layers/careerFitLead",
+      "verdict": "PASS"
+    },
+    {
+      "product": 2,
+      "profile": 1,
+      "pdf": "profile-1.pdf",
+      "questionId": "employment-vs-independent",
+      "questionTitle": "Am I better suited to employment or independent work?",
+      "answerFromPdf": "Your Answer: Structured employment is better supported by the chart. What This Means for You: For a structured job, your chart shows training or specialist support. For independent work, a customer-income marker appears, but the chart does not show a complete link from useful work to paid customers.",
+      "scores": {
+        "directAnswer": 34,
+        "personalization": 23,
+        "specificityUsefulness": 14,
+        "repetitionGenericAdvice": 8,
+        "easyEnglish": 10,
+        "calculationConsistency": 5
+      },
+      "total": 94,
+      "deductionReason": "The employment-versus-independent conclusion is clear and chart-supported, but the explanation repeats the same job-setting evidence and does not compare actual pay or work conditions.",
+      "codeLocation": "src/report/purchase-narrative.ts — proof-of-skill/workVerdict",
+      "verdict": "FIX"
+    },
+    {
+      "product": 2,
+      "profile": 1,
+      "pdf": "profile-1.pdf",
+      "questionId": "income-pattern",
+      "questionTitle": "How do I naturally make money?",
+      "answerFromPdf": "Your Answer: Your income pattern has two routes: regular pay or repeat work, and additional income from projects or new customers. Both appear in your chart, rather than a single fixed earning style. What This Means for You: Customer or project income is linked to day-to-day work and shared commitments. Steady pay is linked to your wider network and day-to-day work. These are possible earning routes, not expected pay. Bottom Line: Your chart supports a dependable base plus a second route through projects or customers.",
+      "scores": {
+        "directAnswer": 35,
+        "personalization": 24,
+        "specificityUsefulness": 14,
+        "repetitionGenericAdvice": 9,
+        "easyEnglish": 10,
+        "calculationConsistency": 5
+      },
+      "total": 97,
+      "deductionReason": "The text accurately states the money route and limits. Where the chart only has a limited, hidden sign, it names a possible route but gives little usable explanation of how that route relates to the customer’s work pattern.",
+      "codeLocation": "src/report/purchase-narrative.ts — moneyPassage(area=career), careerMoneyAnswer",
+      "verdict": "PASS"
+    },
+    {
+      "product": 2,
+      "profile": 1,
+      "pdf": "profile-1.pdf",
+      "questionId": "financial-blocker",
+      "questionTitle": "What tends to block my financial progress?",
+      "answerFromPdf": "Your Answer: Your chart links income work with a need for training or support. When both use the same time or money, there may be less left from earnings after that support is covered. What This Means for You: The chart points to a possible squeeze between paid work and the preparation or help needed to do it well; it cannot establish the cause of a real setback. Bottom Line: The chart does not identify a specific financial blockage.",
+      "scores": {
+        "directAnswer": 30,
+        "personalization": 19,
+        "specificityUsefulness": 11,
+        "repetitionGenericAdvice": 8,
+        "easyEnglish": 9,
+        "calculationConsistency": 5
+      },
+      "total": 82,
+      "deductionReason": "The lead suggests that training/support costs may reduce what remains, but the bottom line says no specific financial blockage is identified. The answer needs to separate a possible chart pressure from a real-world cause.",
+      "codeLocation": "src/report/purchase-narrative.ts — financialBlock/financialScope; src/report/buyer-outline.ts — working-style conclusion",
+      "verdict": "PASS"
+    },
+    {
+      "product": 2,
+      "profile": 1,
+      "pdf": "profile-1.pdf",
+      "questionId": "career-money-timing",
+      "questionTitle": "When might my career or money situation improve?",
+      "answerFromPdf": "Your Answer: The calculations do not identify a year when career or financial progress is likely to improve. What This Means for You: The checked years include defined responsibilities and demanding assignments, but none stands out as a clear period of extra support. Money?",
+      "scores": {
+        "directAnswer": 33,
+        "personalization": 20,
+        "specificityUsefulness": 12,
+        "repetitionGenericAdvice": 9,
+        "easyEnglish": 10,
+        "calculationConsistency": 5
+      },
+      "total": 89,
+      "deductionReason": "It honestly says no clear improvement period is found, but the follow-up is broad and overlaps with the decade outlook rather than offering a distinct answer about timing.",
+      "codeLocation": "src/report/purchase-timing-sections.ts; src/report/buyer-outline.ts — feedback-and-boundaries",
+      "verdict": "FIX"
+    },
+    {
+      "product": 2,
+      "profile": 1,
+      "pdf": "profile-1.pdf",
+      "questionId": "ten-year-outlook",
+      "questionTitle": "What do the next ten years suggest for my work and money?",
+      "answerFromPdf": "Your Answer: Your 2026-2035 outlook is mixed: work themes change, but the comparisons do not show a steady rise in income. The main themes include defined responsibilities, demanding assignments, and training and guidance. Important Timing: Work may feel more demanding in 2026, 2029, 2031, 2032. Treat these as review points, not predicted setbacks.",
+      "scores": {
+        "directAnswer": 35,
+        "personalization": 24,
+        "specificityUsefulness": 14,
+        "repetitionGenericAdvice": 9,
+        "easyEnglish": 9,
+        "calculationConsistency": 5
+      },
+      "total": 96,
+      "deductionReason": "Clear decade-level answer, chart themes and profile-specific years. Minor deduction for dense lists and similar framing across profiles.",
+      "codeLocation": "src/report/purchase-timing-sections.ts — decade comparison",
+      "verdict": "PASS"
+    },
+    {
+      "product": 2,
+      "profile": 1,
+      "pdf": "profile-1.pdf",
+      "questionId": "career-money-insight",
+      "questionTitle": "What is my most important career and money insight?",
+      "answerFromPdf": "Your Answer: Your chart places signs for steady pay and income from customers or projects in the same birth-month area that points to customer growth and business development. This links your work pattern and earning theme, but does not predict what a real role will pay. What This Means for You: The chart does not settle how much added work you can carry, so a larger role should not be treated as better-paid by default. Calculation notes This reading uses your calculated birth-year, birth-month and birth-day signs. Technical chart terms and repeated calculation details are omitted here; your answers above explain the personal meaning. How this reading is prepared Birthplace local time, including historical daylight saving, is used for the chart. Longitude adjustment is approximate. Your recorded birth time is used; timing descriptions are comparisons, not guaranteed events. This is a traditional Saju interpretation, not a diagnosis or a validated prediction. Annual comparisons use a shared reference time and do not change your birthplace chart. Four Pillars & Five Elements Calculated birth-chart symbols. The bars count visible markers only; they do not measure strength or fortune. Hour: 己丑 | stem Specialist insight | branch Specialist insight | hidden Steady output, Independence, Specialist insight Day: 辛未 | stem Day Master | branch Specialist insight | hidden Decisive pressure, Commercial openings, Specialist insight Month: 乙卯 | stem Commercial openings | branch Commercial openings | hidden Regular income, Commercial openings Year: 戊寅 | stem Learning and support | branch Regular income | hidden Learning and support, Formal responsibility, Regular income Day Master: 辛 | strength: mixed Strength basis: The month's principal hidden stem does not support the Day Master element. Same-element roots are present in hour branch 丑. Support also appears among exposed stems. Visible Five Elements · exposed stems and branches Wood 3 · Fire 0 · Earth 4 · Metal 1 · Water 0 | 8 counted markers Wood 3 Fire 0 Earth 4 Metal 1 Water 0 Ten Gods · visible: Regular income 1 · Commercial openings 2 · Learning and support 1 · Specialist insight 3; hidden: Independence 1 · Steady output 1 · Regular income 2 · Commercial openings 2 · Formal responsibility 1 · Decisive pressure 1 · Learning and support 1 · Specialist insight 2. These are placement counts, not weights. Career & Money Structure The indicators below name chart features; the reading above explains what they mean for you. Visible money markers: Commercial openings · month stem 乙; Commercial openings · month branch 卯 (principal stem); Regular income · year branch 寅 (principal stem). Hidden money markers: Commercial openings · day branch 未; Regular income · month branch 卯; Commercial openings · month branch 卯; Regular income · year branch 寅. Income routes Skills and output → Money and customers: not found in checked positions. Money and resources → Formal responsibility: not found in checked positions. Responsibility → Learning and support: not found in checked positions. No single balancing preference is assigned because the checked signals do not point to one route. Employment vs independent work Structured roles: not prominent - No authority relationship appears in the checked principal positions. Training and expertise: present - Learning, documentation or specialist support appears in the checked Ten Gods. Making and selling work: not prominent - The complete output-to-money route is not both visible in the checked principal positions. Autonomy and shared resources: not prominent - No peer relationship appears in the checked principal positions. Ten-year cycle timeline Ten-year cycle dates follow the supplied birth details and the engine's stated time convention. 2021-12-22 to 2031-12-22 · 戊午 · Learning and support / Decisive pressure · work: Education, research, documentation, professional training and advisory support are examples · money: The connection is indirect: qualifications, support or preparation can make paid work possible 2031-12-22 to 2041-12-22 · 己未 · Specialist insight / Specialist insight · work: Specialist research, analysis, strategy and work requiring an uncommon perspective are examples · money: This is a knowledge symbol rather than a direct money symbol Year-by-Year Outlook Annual comparison points show the calculated pillar, active cycle and whether a checked relationship needs review. No luck score is assigned. 2026 · 丙午 · Formal responsibility / Decisive pressure · cycle 戊午 · a checked pair relationship is present. 2027 · 丁未 · Decisive pressure / Specialist insight · cycle 戊午 · a checked pair relationship is present. 2028 · 戊申 · Learning and support / Shared resources · cycle 戊午 · a checked pair relationship is present. 2029 · 己酉 · Specialist insight / Independence · cycle 戊午 · a checked pair relationship is present. 2030 · 庚戌 · Shared resources / Learning and support · cycle 戊午 · a checked pair relationship is present. 2031 · 辛亥 · Independence / Expression · cycle 戊午 · a checked pair relationship is present. 2032 · 壬子 · Expression / Steady output · cycle 己未 · a checked pair relationship is present. 2033 · 癸丑 · Steady output / Specialist insight · cycle 己未 · a checked pair relationship is present. 2034 · 甲寅 · Regular income / Regular income · cycle 己未 · no checked friction pattern at this reference. 2035 · 乙卯 · Commercial openings / Commercial openings · cycle 己未 · a checked pair relationship is present. Use the chapter text for the personal meaning of these markers. A recorded relationship signals a question to examine; it does not predict a specific event. 辛 · YIN METAL A personal keepsake. Symbolic colours and numbers are cultural associations. Your Personal Summary Your Answers at a Glance 01 Which careers suit me best? Business development, sales or account growth matches your chart's emphasis on finding customers and openings. 02 Am I better suited to employment or independent work? Structured employment is better supported by the chart. 03 How do I naturally make money? Your income pattern has two routes: regular pay or repeat work, and additional income from projects or new customers. Your Biggest Strength Notice the details, without waiting for perfection Your Main Challenge Your chart links income work with a need for training or support. Your Most Important Insight Your chart places signs for steady pay and income from customers or projects in the same birth-month area that points to customer growth and business development. How Your Destiny Card Connects The card's Careful Refiner theme uses Metal. Its line, “Notice the details, without waiting for perfection,” echoes a personal theme explored in the answers above; it adds no separate prediction. PRIVATE EDITION",
+      "scores": {
+        "directAnswer": 34,
+        "personalization": 23,
+        "specificityUsefulness": 13,
+        "repetitionGenericAdvice": 9,
+        "easyEnglish": 10,
+        "calculationConsistency": 5
+      },
+      "total": 94,
+      "deductionReason": "Connects work-fit and income markers without predicting pay. Some profiles repeat the preceding money answer and the capacity caution is broad rather than profile-specific.",
+      "codeLocation": "src/report/purchase-narrative.ts — integratedMoneyInsight/capacityInsight",
+      "verdict": "FIX"
+    },
+    {
+      "product": 2,
+      "profile": 2,
+      "pdf": "profile-2.pdf",
+      "questionId": "career-fit",
+      "questionTitle": "Which careers suit me best?",
+      "answerFromPdf": "Your Answer: A career built on dependable products, teaching or repeatable service fits your stronger work style. What This Means for You: A job with enough time to do the work properly fits better than one built around constant last-minute changes. Bottom Line: Protect the time needed to deliver reliable work.",
+      "scores": {
+        "directAnswer": 35,
+        "personalization": 23,
+        "specificityUsefulness": 14,
+        "repetitionGenericAdvice": 9,
+        "easyEnglish": 9,
+        "calculationConsistency": 5
+      },
+      "total": 95,
+      "deductionReason": "Strong direct role fit and useful job-condition detail; the examples are still role families rather than a tailored occupation, and some practical wording is shared with later answers.",
+      "codeLocation": "src/report/purchase-narrative.ts — two-work-layers/careerFitLead",
+      "verdict": "PASS"
+    },
+    {
+      "product": 2,
+      "profile": 2,
+      "pdf": "profile-2.pdf",
+      "questionId": "employment-vs-independent",
+      "questionTitle": "Am I better suited to employment or independent work?",
+      "answerFromPdf": "Your Answer: Structured employment is better supported by the chart. What This Means for You: For a structured job, your chart shows clear responsibility and training or specialist support. For independent work, your chart supports making useful products or services and working independently or with others. It does not show a complete link from useful work to paid customers.",
+      "scores": {
+        "directAnswer": 34,
+        "personalization": 23,
+        "specificityUsefulness": 14,
+        "repetitionGenericAdvice": 8,
+        "easyEnglish": 10,
+        "calculationConsistency": 5
+      },
+      "total": 94,
+      "deductionReason": "The employment-versus-independent conclusion is clear and chart-supported, but the explanation repeats the same job-setting evidence and does not compare actual pay or work conditions.",
+      "codeLocation": "src/report/purchase-narrative.ts — proof-of-skill/workVerdict",
+      "verdict": "FIX"
+    },
+    {
+      "product": 2,
+      "profile": 2,
+      "pdf": "profile-2.pdf",
+      "questionId": "income-pattern",
+      "questionTitle": "How do I naturally make money?",
+      "answerFromPdf": "Your Answer: Your chart has a limited sign for regular pay, linked to long-term plans. This points to a possible earning route, not how much you would earn or whether a job pays more than a business.",
+      "scores": {
+        "directAnswer": 30,
+        "personalization": 19,
+        "specificityUsefulness": 11,
+        "repetitionGenericAdvice": 8,
+        "easyEnglish": 10,
+        "calculationConsistency": 5
+      },
+      "total": 83,
+      "deductionReason": "The text accurately states the money route and limits. Where the chart only has a limited, hidden sign, it names a possible route but gives little usable explanation of how that route relates to the customer’s work pattern.",
+      "codeLocation": "src/report/purchase-narrative.ts — moneyPassage(area=career), careerMoneyAnswer",
+      "verdict": "FIX"
+    },
+    {
+      "product": 2,
+      "profile": 2,
+      "pdf": "profile-2.pdf",
+      "questionId": "financial-blocker",
+      "questionTitle": "What tends to block my financial progress?",
+      "answerFromPdf": "Your Answer: The chart does not identify a specific financial blocker. Less-visible money indicators alone do not explain a real slowdown.",
+      "scores": {
+        "directAnswer": 34,
+        "personalization": 21,
+        "specificityUsefulness": 12,
+        "repetitionGenericAdvice": 10,
+        "easyEnglish": 10,
+        "calculationConsistency": 5
+      },
+      "total": 92,
+      "deductionReason": "Some profiles state a possible work/support cost pressure, then end by saying no specific financial blocker is identified. That distinction is not clean enough in the direct answer and bottom line.",
+      "codeLocation": "src/report/purchase-narrative.ts — financialBlock/financialScope; src/report/buyer-outline.ts — working-style conclusion",
+      "verdict": "FIX"
+    },
+    {
+      "product": 2,
+      "profile": 2,
+      "pdf": "profile-2.pdf",
+      "questionId": "career-money-timing",
+      "questionTitle": "When might my career or money situation improve?",
+      "answerFromPdf": "Your Answer: The calculations identify possible periods of career support, but not a guaranteed date for financial improvement. Important Timing: 2031, 2032, 2034, 2035 are the checked work-support periods; they do not promise a raise or job change. Money?",
+      "scores": {
+        "directAnswer": 34,
+        "personalization": 22,
+        "specificityUsefulness": 13,
+        "repetitionGenericAdvice": 8,
+        "easyEnglish": 9,
+        "calculationConsistency": 5
+      },
+      "total": 91,
+      "deductionReason": "The answer is cautious and does not invent years. Four profiles repeat essentially the same no-clear-period conclusion; the work-support details are broad and some overlap with the decade outlook.",
+      "codeLocation": "src/report/purchase-timing-sections.ts; src/report/buyer-outline.ts — feedback-and-boundaries",
+      "verdict": "FIX"
+    },
+    {
+      "product": 2,
+      "profile": 2,
+      "pdf": "profile-2.pdf",
+      "questionId": "ten-year-outlook",
+      "questionTitle": "What do the next ten years suggest for my work and money?",
+      "answerFromPdf": "Your Answer: Your 2026-2035 outlook is mixed: work themes change, but the comparisons do not show a steady rise in income. The main themes include independent problem-solving, training and guidance, and independent work. Important Timing: Work may feel more demanding in 2027, 2029, 2034. Treat these as review points, not predicted setbacks.",
+      "scores": {
+        "directAnswer": 35,
+        "personalization": 24,
+        "specificityUsefulness": 14,
+        "repetitionGenericAdvice": 9,
+        "easyEnglish": 9,
+        "calculationConsistency": 5
+      },
+      "total": 96,
+      "deductionReason": "Clear decade-level answer, chart themes and profile-specific years. Minor deduction for dense lists and similar framing across profiles.",
+      "codeLocation": "src/report/purchase-timing-sections.ts — decade comparison",
+      "verdict": "PASS"
+    },
+    {
+      "product": 2,
+      "profile": 2,
+      "pdf": "profile-2.pdf",
+      "questionId": "career-money-insight",
+      "questionTitle": "What is my most important career and money insight?",
+      "answerFromPdf": "Your Answer: Your work signature is reliable products and repeatable service, while the chart places its money signs in long-term plans, away from the birth-month work area. This is the key distinction: work fit and earning signs do not automatically line up. What This Means for You: Support for handling work appears in the chart, but that does not establish the pay or profit of a real role. Calculation notes This reading uses your calculated birth-year, birth-month and birth-day signs. Technical chart terms and repeated calculation details are omitted here; your answers above explain the personal meaning. How this reading is prepared Birthplace local time, including historical daylight saving, is used for the chart. Longitude adjustment is approximate. Your recorded birth time is used; timing descriptions are comparisons, not guaranteed events. This is a traditional Saju interpretation, not a diagnosis or a validated prediction. Annual comparisons use a shared reference time and do not change your birthplace chart. Four Pillars & Five Elements Calculated birth-chart symbols. The bars count visible markers only; they do not measure strength or fortune. Hour: 丙辰 | stem Specialist insight | branch Independence | hidden Formal responsibility, Regular income, Independence Day: 戊午 | stem Day Master | branch Learning and support | hidden Specialist insight, Shared resources, Learning and support Month: 庚戌 | stem Steady output | branch Independence | hidden Expression, Learning and support, Independence Year: 丁卯 | stem Learning and support | branch Formal responsibility | hidden Decisive pressure, Formal responsibility Day Master: 戊 | strength: supported Strength basis: The month's principal hidden stem supports the Day Master element. Same-element roots are present in hour branch 辰, day branch 午, month branch 戌. Support also appears among exposed stems. Visible Five Elements · exposed stems and branches Wood 1 · Fire 3 · Earth 3 · Metal 1 · Water 0 | 8 counted markers Wood 1 Fire 3 Earth 3 Metal 1 Water 0 Ten Gods · visible: Independence 2 · Steady output 1 · Formal responsibility 1 · Learning and support 2 · Specialist insight 1; hidden: Independence 2 · Shared resources 1 · Expression 1 · Regular income 1 · Formal responsibility 2 · Decisive pressure 1 · Learning and support 2 · Specialist insight 1. These are placement counts, not weights. Career & Money Structure The indicators below name chart features; the reading above explains what they mean for you. Visible money markers: none. Hidden money markers: Regular income · hour branch 辰. Income routes Skills and output → Money and customers: not found in checked positions. Money and resources → Formal responsibility: not found in checked positions. Responsibility → Learning and support: present (Specialist insight, Learning and support, Formal responsibility). No single balancing preference is assigned because the checked signals do not point to one route. Employment vs independent work Structured roles: present - Formal responsibility or demanding targets appear in the checked Ten Gods. Training and expertise: present - Learning, documentation or specialist support appears in the checked Ten Gods. Making and selling work: not prominent - The complete output-to-money route is not both visible in the checked principal positions. Autonomy and shared resources: present - Peer relationships are present; ownership, credit and shared costs deserve clear terms. Ten-year cycle timeline Ten-year cycle dates follow the supplied birth details and the engine's stated time convention. 2018-10-29 to 2028-10-29 · 甲寅 · Decisive pressure / Decisive pressure · work: Crisis handling, high-responsibility operations, competitive sales and demanding technical delivery are examples · money: Financial pressure can come through targets, penalties or a large commitment 2028-10-29 to 2038-10-29 · 乙卯 · Formal responsibility / Formal responsibility · work: Regulated work, management, governance, public service and structured organisations are examples · money: The financial connection is indirect: dependable work, recognised responsibility and formal terms Year-by-Year Outlook Annual comparison points show the calculated pillar, active cycle and whether a checked relationship needs review. No luck score is assigned. 2026 · 丙午 · Specialist insight / Learning and support · cycle 甲寅 · a checked pair relationship is present. 2027 · 丁未 · Learning and support / Shared resources · cycle 甲寅 · a checked pair relationship is present. 2028 · 戊申 · Independence / Steady output · cycle 甲寅 · a checked pair relationship is present. 2029 · 己酉 · Shared resources / Expression · cycle 乙卯 · a checked pair relationship is present. 2030 · 庚戌 · Steady output / Independence · cycle 乙卯 · a checked pair relationship is present. 2031 · 辛亥 · Expression / Commercial openings · cycle 乙卯 · a checked pair relationship is present. 2032 · 壬子 · Commercial openings / Regular income · cycle 乙卯 · a checked pair relationship is present. 2033 · 癸丑 · Regular income / Shared resources · cycle 乙卯 · a checked pair relationship is present. 2034 · 甲寅 · Decisive pressure / Decisive pressure · cycle 乙卯 · a checked pair relationship is present. 2035 · 乙卯 · Formal responsibility / Formal responsibility · cycle 乙卯 · a checked pair relationship is present. Use the chapter text for the personal meaning of these markers. A recorded relationship signals a question to examine; it does not predict a specific event. 戊 · YANG EARTH A personal keepsake. Symbolic colours and numbers are cultural associations. Your Personal Summary Your Answers at a Glance 01 Which careers suit me best? A career built on dependable products, teaching or repeatable service fits your stronger work style. 02 Am I better suited to employment or independent work? Structured employment is better supported by the chart. 03 How do I naturally make money? Your chart has a limited sign for regular pay, linked to long-term plans. Your Biggest Strength Be dependable, without carrying everything alone Your Main Challenge The chart does not identify a specific financial blocker. Your Most Important Insight Your work signature is reliable products and repeatable service, while the chart places its money signs in long-term plans, away from the birth-month work area. How Your Destiny Card Connects The card's Steady Anchor theme uses Earth. Its line, “Be dependable, without carrying everything alone,” echoes a personal theme explored in the answers above; it adds no separate prediction. PRIVATE EDITION",
+      "scores": {
+        "directAnswer": 35,
+        "personalization": 24,
+        "specificityUsefulness": 14,
+        "repetitionGenericAdvice": 8,
+        "easyEnglish": 9,
+        "calculationConsistency": 5
+      },
+      "total": 95,
+      "deductionReason": "Connects work-fit and income markers without predicting pay. Some profiles repeat the preceding money answer and the capacity caution is broad rather than profile-specific.",
+      "codeLocation": "src/report/purchase-narrative.ts — integratedMoneyInsight/capacityInsight",
+      "verdict": "PASS"
+    },
+    {
+      "product": 2,
+      "profile": 3,
+      "pdf": "profile-3.pdf",
+      "questionId": "career-fit",
+      "questionTitle": "Which careers suit me best?",
+      "answerFromPdf": "Your Answer: Specialist research, diagnosis or technical problem-solving fits your independent way of thinking. What This Means for You: Protected thinking time and a clear question help you work well. Too many interruptions can leave complex work unfinished even on a busy day. Bottom Line: Choose a role whose daily tasks use the strength named above.",
+      "scores": {
+        "directAnswer": 35,
+        "personalization": 23,
+        "specificityUsefulness": 14,
+        "repetitionGenericAdvice": 9,
+        "easyEnglish": 9,
+        "calculationConsistency": 5
+      },
+      "total": 95,
+      "deductionReason": "Strong direct role fit and useful job-condition detail; the examples are still role families rather than a tailored occupation, and some practical wording is shared with later answers.",
+      "codeLocation": "src/report/purchase-narrative.ts — two-work-layers/careerFitLead",
+      "verdict": "PASS"
+    },
+    {
+      "product": 2,
+      "profile": 3,
+      "pdf": "profile-3.pdf",
+      "questionId": "employment-vs-independent",
+      "questionTitle": "Am I better suited to employment or independent work?",
+      "answerFromPdf": "Your Answer: Structured employment is better supported by the chart. What This Means for You: For a structured job, your chart shows clear responsibility and training or specialist support. For independent work, your chart supports making useful products or services and working independently or with others. It does not show a complete link from useful work to paid customers.",
+      "scores": {
+        "directAnswer": 34,
+        "personalization": 23,
+        "specificityUsefulness": 14,
+        "repetitionGenericAdvice": 8,
+        "easyEnglish": 10,
+        "calculationConsistency": 5
+      },
+      "total": 94,
+      "deductionReason": "The employment-versus-independent conclusion is clear and chart-supported, but the explanation repeats the same job-setting evidence and does not compare actual pay or work conditions.",
+      "codeLocation": "src/report/purchase-narrative.ts — proof-of-skill/workVerdict",
+      "verdict": "FIX"
+    },
+    {
+      "product": 2,
+      "profile": 3,
+      "pdf": "profile-3.pdf",
+      "questionId": "income-pattern",
+      "questionTitle": "How do I naturally make money?",
+      "answerFromPdf": "Your Answer: Your chart has a limited sign for regular pay, linked to day-to-day work. This points to a possible earning route, not how much you would earn or whether a job pays more than a business.",
+      "scores": {
+        "directAnswer": 30,
+        "personalization": 19,
+        "specificityUsefulness": 11,
+        "repetitionGenericAdvice": 8,
+        "easyEnglish": 10,
+        "calculationConsistency": 5
+      },
+      "total": 83,
+      "deductionReason": "The text accurately states the money route and limits. Where the chart only has a limited, hidden sign, it names a possible route but gives little usable explanation of how that route relates to the customer’s work pattern.",
+      "codeLocation": "src/report/purchase-narrative.ts — moneyPassage(area=career), careerMoneyAnswer",
+      "verdict": "FIX"
+    },
+    {
+      "product": 2,
+      "profile": 3,
+      "pdf": "profile-3.pdf",
+      "questionId": "financial-blocker",
+      "questionTitle": "What tends to block my financial progress?",
+      "answerFromPdf": "Your Answer: The chart does not identify a specific financial blocker. Less-visible money indicators alone do not explain a real slowdown.",
+      "scores": {
+        "directAnswer": 34,
+        "personalization": 21,
+        "specificityUsefulness": 12,
+        "repetitionGenericAdvice": 10,
+        "easyEnglish": 10,
+        "calculationConsistency": 5
+      },
+      "total": 92,
+      "deductionReason": "Some profiles state a possible work/support cost pressure, then end by saying no specific financial blocker is identified. That distinction is not clean enough in the direct answer and bottom line.",
+      "codeLocation": "src/report/purchase-narrative.ts — financialBlock/financialScope; src/report/buyer-outline.ts — working-style conclusion",
+      "verdict": "FIX"
+    },
+    {
+      "product": 2,
+      "profile": 3,
+      "pdf": "profile-3.pdf",
+      "questionId": "career-money-timing",
+      "questionTitle": "When might my career or money situation improve?",
+      "answerFromPdf": "Your Answer: The calculations do not identify a year when career or financial progress is likely to improve. What This Means for You: The checked years include defined responsibilities and demanding assignments, but none stands out as a clear period of extra support. Money?",
+      "scores": {
+        "directAnswer": 33,
+        "personalization": 20,
+        "specificityUsefulness": 12,
+        "repetitionGenericAdvice": 9,
+        "easyEnglish": 10,
+        "calculationConsistency": 5
+      },
+      "total": 89,
+      "deductionReason": "The answer is cautious and does not invent years. Four profiles repeat essentially the same no-clear-period conclusion; the work-support details are broad and some overlap with the decade outlook.",
+      "codeLocation": "src/report/purchase-timing-sections.ts; src/report/buyer-outline.ts — feedback-and-boundaries",
+      "verdict": "FIX"
+    },
+    {
+      "product": 2,
+      "profile": 3,
+      "pdf": "profile-3.pdf",
+      "questionId": "ten-year-outlook",
+      "questionTitle": "What do the next ten years suggest for my work and money?",
+      "answerFromPdf": "Your Answer: Your 2026-2035 outlook is mixed: work themes change, but the comparisons do not show a steady rise in income. The main themes include defined responsibilities, demanding assignments, and training and guidance. Important Timing: Work may feel more demanding in 2028, 2031, 2034. Treat these as review points, not predicted setbacks.",
+      "scores": {
+        "directAnswer": 35,
+        "personalization": 24,
+        "specificityUsefulness": 14,
+        "repetitionGenericAdvice": 9,
+        "easyEnglish": 9,
+        "calculationConsistency": 5
+      },
+      "total": 96,
+      "deductionReason": "Clear decade-level answer, chart themes and profile-specific years. Minor deduction for dense lists and similar framing across profiles.",
+      "codeLocation": "src/report/purchase-timing-sections.ts — decade comparison",
+      "verdict": "PASS"
+    },
+    {
+      "product": 2,
+      "profile": 3,
+      "pdf": "profile-3.pdf",
+      "questionId": "career-money-insight",
+      "questionTitle": "What is my most important career and money insight?",
+      "answerFromPdf": "Your Answer: Your chart places signs for steady pay in the same birth-month area that points to specialist research and independent problem-solving. This links your work pattern and earning theme, but does not predict what a real role will pay. What This Means for You: The chart does not settle how much added work you can carry, so a larger role should not be treated as better-paid by default. Calculation notes This reading uses your calculated birth-year, birth-month and birth-day signs. Technical chart terms and repeated calculation details are omitted here; your answers above explain the personal meaning. How this reading is prepared Birthplace local time, including historical daylight saving, is used for the chart. Longitude adjustment is approximate. Your recorded birth time is used; timing descriptions are comparisons, not guaranteed events. This is a traditional Saju interpretation, not a diagnosis or a validated prediction. Annual comparisons use a shared reference time and do not change your birthplace chart. Four Pillars & Five Elements Calculated birth-chart symbols. The bars count visible markers only; they do not measure strength or fortune. Day: 辛丑 | stem Day Master | branch Specialist insight | hidden Steady output, Independence, Specialist insight Month: 己亥 | stem Specialist insight | branch Expression | hidden Learning and support, Regular income, Expression Year: 辛巳 | stem Independence | branch Formal responsibility | hidden Learning and support, Shared resources, Formal responsibility Day Master: 辛 | strength: deferred Strength basis: The month's principal hidden stem does not support the Day Master element. Same-element roots are present in day branch 丑, year branch 巳. Support also appears among exposed stems. Birth time is unknown; strength is deferred and the hour is excluded. Visible Five Elements · exposed stems and branches Wood 0 · Fire 1 · Earth 2 · Metal 2 · Water 1 | 6 counted markers Wood 0 Fire 1 Earth 2 Metal 2 Water 1 Ten Gods · visible: Independence 1 · Expression 1 · Formal responsibility 1 · Specialist insight 2; hidden: Independence 1 · Shared resources 1 · Steady output 1 · Expression 1 · Regular income 1 · Formal responsibility 1 · Learning and support 2 · Specialist insight 1. These are placement counts, not weights. Career & Money Structure The indicators below name chart features; the reading above explains what they mean for you. Visible money markers: none. Hidden money markers: Regular income · month branch 亥. Income routes Skills and output → Money and customers: not found in checked positions. Money and resources → Formal responsibility: not found in checked positions. Responsibility → Learning and support: present (Specialist insight, Formal responsibility). No single balancing preference is assigned because the checked signals do not point to one route. Employment vs independent work Structured roles: present - Formal responsibility or demanding targets appear in the checked Ten Gods. Training and expertise: present - Learning, documentation or specialist support appears in the checked Ten Gods. Making and selling work: not prominent - The complete output-to-money route is not both visible in the checked principal positions. Autonomy and shared resources: present - Peer relationships are present; ownership, credit and shared costs deserve clear terms. Ten-year cycle timeline The hour pillar is excluded. Starting dates for ten-year cycles are approximate without a birth time. 2022-11-25 to 2032-11-25 · 壬寅 · Expression / Regular income · work: Creative work, writing, design, consulting and improving a flawed process suit this symbol · money: Income themes come through distinctive work, visibility or a persuasive explanation 2032-11-25 to 2042-11-25 · 癸卯 · Steady output / Commercial openings · work: Craft, teaching, food, design and repeatable technical work are examples · money: This is an output symbol, not a money symbol Year-by-Year Outlook Annual comparison points show the calculated pillar, active cycle and whether a checked relationship needs review. No luck score is assigned. 2026 · 丙午 · Formal responsibility / Decisive pressure · cycle 壬寅 · a checked pair relationship is present. 2027 · 丁未 · Decisive pressure / Specialist insight · cycle 壬寅 · a checked pair relationship is present. 2028 · 戊申 · Learning and support / Shared resources · cycle 壬寅 · a checked pair relationship is present. 2029 · 己酉 · Specialist insight / Independence · cycle 壬寅 · no checked friction pattern at this reference. 2030 · 庚戌 · Shared resources / Learning and support · cycle 壬寅 · no checked friction pattern at this reference. 2031 · 辛亥 · Independence / Expression · cycle 壬寅 · a checked pair relationship is present. 2032 · 壬子 · Expression / Steady output · cycle 壬寅 · no checked friction pattern at this reference. 2033 · 癸丑 · Steady output / Specialist insight · cycle 癸卯 · no checked friction pattern at this reference. 2034 · 甲寅 · Regular income / Regular income · cycle 癸卯 · a checked pair relationship is present. 2035 · 乙卯 · Commercial openings / Commercial openings · cycle 癸卯 · a checked pair relationship is present. Use the chapter text for the personal meaning of these markers. A recorded relationship signals a question to examine; it does not predict a specific event. 辛 · YIN METAL A personal keepsake. Symbolic colours and numbers are cultural associations. Your Personal Summary Your Answers at a Glance 01 Which careers suit me best? Specialist research, diagnosis or technical problem-solving fits your independent way of thinking. 02 Am I better suited to employment or independent work? Structured employment is better supported by the chart. 03 How do I naturally make money? Your chart has a limited sign for regular pay, linked to day-to-day work. Your Biggest Strength Notice the details, without waiting for perfection Your Main Challenge The chart does not identify a specific financial blocker. Your Most Important Insight Your chart places signs for steady pay in the same birth-month area that points to specialist research and independent problem-solving. How Your Destiny Card Connects The card's Careful Refiner theme uses Metal. Its line, “Notice the details, without waiting for perfection,” echoes a personal theme explored in the answers above; it adds no separate prediction. PRIVATE EDITION",
+      "scores": {
+        "directAnswer": 34,
+        "personalization": 22,
+        "specificityUsefulness": 13,
+        "repetitionGenericAdvice": 10,
+        "easyEnglish": 10,
+        "calculationConsistency": 5
+      },
+      "total": 94,
+      "deductionReason": "Connects work-fit and income markers without predicting pay. Some profiles repeat the preceding money answer and the capacity caution is broad rather than profile-specific.",
+      "codeLocation": "src/report/purchase-narrative.ts — integratedMoneyInsight/capacityInsight",
+      "verdict": "FIX"
+    },
+    {
+      "product": 2,
+      "profile": 4,
+      "pdf": "profile-4.pdf",
+      "questionId": "career-fit",
+      "questionTitle": "Which careers suit me best?",
+      "answerFromPdf": "Your Answer: Operations, account management or resource coordination fits the value your chart places on reliable delivery. What This Means for You: Duties, hours and pay need to be clear together. An organised workplace can suit you, but being the reliable person should not mean carrying every unfinished task. Bottom Line: Clear duties, hours and pay belong together in your best fit.",
+      "scores": {
+        "directAnswer": 35,
+        "personalization": 23,
+        "specificityUsefulness": 14,
+        "repetitionGenericAdvice": 9,
+        "easyEnglish": 9,
+        "calculationConsistency": 5
+      },
+      "total": 95,
+      "deductionReason": "Strong direct role fit and useful job-condition detail; the examples are still role families rather than a tailored occupation, and some practical wording is shared with later answers.",
+      "codeLocation": "src/report/purchase-narrative.ts — two-work-layers/careerFitLead",
+      "verdict": "PASS"
+    },
+    {
+      "product": 2,
+      "profile": 4,
+      "pdf": "profile-4.pdf",
+      "questionId": "employment-vs-independent",
+      "questionTitle": "Am I better suited to employment or independent work?",
+      "answerFromPdf": "Your Answer: Your chart supports both employment and independent work; it does not show a clear winner. What This Means for You: For a structured job, your chart shows clear responsibility and training or specialist support. For independent work, your chart links useful output to payment and also shows independent or shared-work signals.",
+      "scores": {
+        "directAnswer": 35,
+        "personalization": 24,
+        "specificityUsefulness": 14,
+        "repetitionGenericAdvice": 8,
+        "easyEnglish": 9,
+        "calculationConsistency": 5
+      },
+      "total": 95,
+      "deductionReason": "The employment-versus-independent conclusion is clear and chart-supported, but the explanation repeats the same job-setting evidence and does not compare actual pay or work conditions.",
+      "codeLocation": "src/report/purchase-narrative.ts — proof-of-skill/workVerdict",
+      "verdict": "PASS"
+    },
+    {
+      "product": 2,
+      "profile": 4,
+      "pdf": "profile-4.pdf",
+      "questionId": "income-pattern",
+      "questionTitle": "How do I naturally make money?",
+      "answerFromPdf": "Your Answer: Regular pay and dependable repeat work are your clearer income pattern. A role with defined hours and duties makes that pattern easier to evaluate. What This Means for You: Steady pay is linked to day-to-day work and shared commitments. Customer or project income is linked to long-term plans. These are possible earning routes, not expected pay. Bottom Line: Repeatable paid work has clearer support than relying on a single large deal.",
+      "scores": {
+        "directAnswer": 35,
+        "personalization": 24,
+        "specificityUsefulness": 14,
+        "repetitionGenericAdvice": 8,
+        "easyEnglish": 9,
+        "calculationConsistency": 5
+      },
+      "total": 95,
+      "deductionReason": "The text accurately states the money route and limits. Where the chart only has a limited, hidden sign, it names a possible route but gives little usable explanation of how that route relates to the customer’s work pattern.",
+      "codeLocation": "src/report/purchase-narrative.ts — moneyPassage(area=career), careerMoneyAnswer",
+      "verdict": "PASS"
+    },
+    {
+      "product": 2,
+      "profile": 4,
+      "pdf": "profile-4.pdf",
+      "questionId": "financial-blocker",
+      "questionTitle": "What tends to block my financial progress?",
+      "answerFromPdf": "Your Answer: Your chart connects useful work with customers or pay, so it does not identify a broken earning route. What This Means for You: A chart link between work and payment does not establish your actual income or rule out other obstacles. Bottom Line: The checked signs do not point to a broken income route.",
+      "scores": {
+        "directAnswer": 32,
+        "personalization": 20,
+        "specificityUsefulness": 12,
+        "repetitionGenericAdvice": 10,
+        "easyEnglish": 10,
+        "calculationConsistency": 5
+      },
+      "total": 89,
+      "deductionReason": "Some profiles state a possible work/support cost pressure, then end by saying no specific financial blocker is identified. That distinction is not clean enough in the direct answer and bottom line.",
+      "codeLocation": "src/report/purchase-narrative.ts — financialBlock/financialScope; src/report/buyer-outline.ts — working-style conclusion",
+      "verdict": "FIX"
+    },
+    {
+      "product": 2,
+      "profile": 4,
+      "pdf": "profile-4.pdf",
+      "questionId": "career-money-timing",
+      "questionTitle": "When might my career or money situation improve?",
+      "answerFromPdf": "Your Answer: The calculations do not identify a year when career or financial progress is likely to improve. What This Means for You: The checked years include defined responsibilities and demanding assignments, but none stands out as a clear period of extra support. Money?",
+      "scores": {
+        "directAnswer": 33,
+        "personalization": 20,
+        "specificityUsefulness": 12,
+        "repetitionGenericAdvice": 9,
+        "easyEnglish": 10,
+        "calculationConsistency": 5
+      },
+      "total": 89,
+      "deductionReason": "The answer is cautious and does not invent years. Four profiles repeat essentially the same no-clear-period conclusion; the work-support details are broad and some overlap with the decade outlook.",
+      "codeLocation": "src/report/purchase-timing-sections.ts; src/report/buyer-outline.ts — feedback-and-boundaries",
+      "verdict": "FIX"
+    },
+    {
+      "product": 2,
+      "profile": 4,
+      "pdf": "profile-4.pdf",
+      "questionId": "ten-year-outlook",
+      "questionTitle": "What do the next ten years suggest for my work and money?",
+      "answerFromPdf": "Your Answer: Your 2026-2035 outlook is mixed: work themes change, but the comparisons do not show a steady rise in income. The main themes include defined responsibilities, demanding assignments, and training and guidance. Important Timing: Work may feel more demanding in 2030, 2031, 2034. Treat these as review points, not predicted setbacks.",
+      "scores": {
+        "directAnswer": 35,
+        "personalization": 24,
+        "specificityUsefulness": 14,
+        "repetitionGenericAdvice": 9,
+        "easyEnglish": 9,
+        "calculationConsistency": 5
+      },
+      "total": 96,
+      "deductionReason": "Clear decade-level answer, chart themes and profile-specific years. Minor deduction for dense lists and similar framing across profiles.",
+      "codeLocation": "src/report/purchase-timing-sections.ts — decade comparison",
+      "verdict": "PASS"
+    },
+    {
+      "product": 2,
+      "profile": 4,
+      "pdf": "profile-4.pdf",
+      "questionId": "career-money-insight",
+      "questionTitle": "What is my most important career and money insight?",
+      "answerFromPdf": "Your Answer: Your chart places signs for steady pay in the same birth-month area that points to operations and resource management. This links your work pattern and earning theme, but does not predict what a real role will pay. What This Means for You: Support for handling work appears in the chart, but that does not establish the pay or profit of a real role. Calculation notes This reading uses your calculated birth-year, birth-month and birth-day signs. Technical chart terms and repeated calculation details are omitted here; your answers above explain the personal meaning. How this reading is prepared Birthplace local time, including historical daylight saving, is used for the chart. Longitude adjustment is approximate. Your recorded birth time is used; timing descriptions are comparisons, not guaranteed events. This is a traditional Saju interpretation, not a diagnosis or a validated prediction. Annual comparisons use a shared reference time and do not change your birthplace chart. Four Pillars & Five Elements Calculated birth-chart symbols. The bars count visible markers only; they do not measure strength or fortune. Hour: 壬辰 | stem Expression | branch Learning and support | hidden Commercial openings, Steady output, Learning and support Day: 辛亥 | stem Day Master | branch Expression | hidden Learning and support, Regular income, Expression Month: 甲申 | stem Regular income | branch Shared resources | hidden Learning and support, Expression, Shared resources Year: 庚午 | stem Shared resources | branch Decisive pressure | hidden Formal responsibility, Specialist insight, Decisive pressure Day Master: 辛 | strength: supported Strength basis: The month's principal hidden stem supports the Day Master element. Same-element roots are present in month branch 申. Support also appears among exposed stems. Visible Five Elements · exposed stems and branches Wood 1 · Fire 1 · Earth 1 · Metal 3 · Water 2 | 8 counted markers Wood 1 Fire 1 Earth 1 Metal 3 Water 2 Ten Gods · visible: Shared resources 2 · Expression 2 · Regular income 1 · Decisive pressure 1 · Learning and support 1; hidden: Shared resources 1 · Steady output 1 · Expression 2 · Regular income 1 · Commercial openings 1 · Formal responsibility 1 · Decisive pressure 1 · Learning and support 3 · Specialist insight 1. These are placement counts, not weights. Career & Money Structure The indicators below name chart features; the reading above explains what they mean for you. Visible money markers: Regular income · month stem 甲. Hidden money markers: Commercial openings · hour branch 辰; Regular income · day branch 亥. Income routes Skills and output → Money and customers: present (Expression, Regular income). Money and resources → Formal responsibility: not found in checked positions. Responsibility → Learning and support: present (Learning and support, Decisive pressure). No single balancing preference is assigned because the checked signals do not point to one route. Employment vs independent work Structured roles: present - Formal responsibility or demanding targets appear in the checked Ten Gods. Training and expertise: present - Learning, documentation or specialist support appears in the checked Ten Gods. Making and selling work: present - Output and a money relationship both appear in the checked principal positions. Autonomy and shared resources: present - Peer relationships are present; ownership, credit and shared costs deserve clear terms. Ten-year cycle timeline Ten-year cycle dates follow the supplied birth details and the engine's stated time convention. 2022-09-06 to 2032-09-06 · 庚辰 · Shared resources / Learning and support · work: Fast-moving teams, negotiation and competitive projects fit this theme · money: The money issue is division: shared costs, commissions, lending or money committed through friends 2032-09-06 to 2042-09-06 · 己卯 · Specialist insight / Commercial openings · work: Specialist research, analysis, strategy and work requiring an uncommon perspective are examples · money: This is a knowledge symbol rather than a direct money symbol Year-by-Year Outlook Annual comparison points show the calculated pillar, active cycle and whether a checked relationship needs review. No luck score is assigned. 2026 · 丙午 · Formal responsibility / Decisive pressure · cycle 庚辰 · a checked pair relationship is present. 2027 · 丁未 · Decisive pressure / Specialist insight · cycle 庚辰 · no checked friction pattern at this reference. 2028 · 戊申 · Learning and support / Shared resources · cycle 庚辰 · a checked pair relationship is present. 2029 · 己酉 · Specialist insight / Independence · cycle 庚辰 · no checked friction pattern at this reference. 2030 · 庚戌 · Shared resources / Learning and support · cycle 庚辰 · a checked pair relationship is present. 2031 · 辛亥 · Independence / Expression · cycle 庚辰 · a checked pair relationship is present. 2032 · 壬子 · Expression / Steady output · cycle 庚辰 · a checked pair relationship is present. 2033 · 癸丑 · Steady output / Specialist insight · cycle 己卯 · a checked pair relationship is present. 2034 · 甲寅 · Regular income / Regular income · cycle 己卯 · a checked pair relationship is present. 2035 · 乙卯 · Commercial openings / Commercial openings · cycle 己卯 · a checked pair relationship is present. Use the chapter text for the personal meaning of these markers. A recorded relationship signals a question to examine; it does not predict a specific event. 辛 · YIN METAL A personal keepsake. Symbolic colours and numbers are cultural associations. Your Personal Summary Your Answers at a Glance 01 Which careers suit me best? Operations, account management or resource coordination fits the value your chart places on reliable delivery. 02 Am I better suited to employment or independent work? Your chart supports both employment and independent work; it does not show a clear winner. 03 How do I naturally make money? Regular pay and dependable repeat work are your clearer income pattern. Your Biggest Strength Notice the details, without waiting for perfection Your Main Challenge Your chart connects useful work with customers or pay, so it does not identify a broken earning route. Your Most Important Insight Your chart places signs for steady pay in the same birth-month area that points to operations and resource management. How Your Destiny Card Connects The card's Careful Refiner theme uses Metal. Its line, “Notice the details, without waiting for perfection,” echoes a personal theme explored in the answers above; it adds no separate prediction. PRIVATE EDITION",
+      "scores": {
+        "directAnswer": 34,
+        "personalization": 22,
+        "specificityUsefulness": 13,
+        "repetitionGenericAdvice": 9,
+        "easyEnglish": 10,
+        "calculationConsistency": 5
+      },
+      "total": 93,
+      "deductionReason": "Connects work-fit and income markers without predicting pay. Some profiles repeat the preceding money answer and the capacity caution is broad rather than profile-specific.",
+      "codeLocation": "src/report/purchase-narrative.ts — integratedMoneyInsight/capacityInsight",
+      "verdict": "FIX"
+    },
+    {
+      "product": 2,
+      "profile": 5,
+      "pdf": "profile-5.pdf",
+      "questionId": "career-fit",
+      "questionTitle": "Which careers suit me best?",
+      "answerFromPdf": "Your Answer: Operations, account management or resource coordination fits the value your chart places on reliable delivery. What This Means for You: Duties, hours and pay need to be clear together. An organised workplace can suit you, but being the reliable person should not mean carrying every unfinished task. Bottom Line: Clear duties, hours and pay belong together in your best fit.",
+      "scores": {
+        "directAnswer": 35,
+        "personalization": 23,
+        "specificityUsefulness": 14,
+        "repetitionGenericAdvice": 9,
+        "easyEnglish": 9,
+        "calculationConsistency": 5
+      },
+      "total": 95,
+      "deductionReason": "Strong direct role fit and useful job-condition detail; the examples are still role families rather than a tailored occupation, and some practical wording is shared with later answers.",
+      "codeLocation": "src/report/purchase-narrative.ts — two-work-layers/careerFitLead",
+      "verdict": "PASS"
+    },
+    {
+      "product": 2,
+      "profile": 5,
+      "pdf": "profile-5.pdf",
+      "questionId": "employment-vs-independent",
+      "questionTitle": "Am I better suited to employment or independent work?",
+      "answerFromPdf": "Your Answer: Your chart supports both employment and independent work; it does not show a clear winner. What This Means for You: For a structured job, your chart shows training or specialist support. For independent work, your chart links useful output to payment and also shows independent or shared-work signals.",
+      "scores": {
+        "directAnswer": 34,
+        "personalization": 23,
+        "specificityUsefulness": 14,
+        "repetitionGenericAdvice": 8,
+        "easyEnglish": 10,
+        "calculationConsistency": 5
+      },
+      "total": 94,
+      "deductionReason": "The employment-versus-independent conclusion is clear and chart-supported, but the explanation repeats the same job-setting evidence and does not compare actual pay or work conditions.",
+      "codeLocation": "src/report/purchase-narrative.ts — proof-of-skill/workVerdict",
+      "verdict": "FIX"
+    },
+    {
+      "product": 2,
+      "profile": 5,
+      "pdf": "profile-5.pdf",
+      "questionId": "income-pattern",
+      "questionTitle": "How do I naturally make money?",
+      "answerFromPdf": "Your Answer: Regular pay and dependable repeat work are your clearer income pattern. A role with defined hours and duties makes that pattern easier to evaluate. What This Means for You: Steady pay is linked to shared commitments and day-to-day work. Customer or project income is linked to shared commitments. These are possible earning routes, not expected pay. Bottom Line: Repeatable paid work has clearer support than relying on a single large deal.",
+      "scores": {
+        "directAnswer": 35,
+        "personalization": 24,
+        "specificityUsefulness": 14,
+        "repetitionGenericAdvice": 8,
+        "easyEnglish": 9,
+        "calculationConsistency": 5
+      },
+      "total": 95,
+      "deductionReason": "The text accurately states the money route and limits. Where the chart only has a limited, hidden sign, it names a possible route but gives little usable explanation of how that route relates to the customer’s work pattern.",
+      "codeLocation": "src/report/purchase-narrative.ts — moneyPassage(area=career), careerMoneyAnswer",
+      "verdict": "PASS"
+    },
+    {
+      "product": 2,
+      "profile": 5,
+      "pdf": "profile-5.pdf",
+      "questionId": "financial-blocker",
+      "questionTitle": "What tends to block my financial progress?",
+      "answerFromPdf": "Your Answer: Your chart links income work with a need for training or support. When both use the same time or money, there may be less left from earnings after that support is covered. What This Means for You: The chart points to a possible squeeze between paid work and the preparation or help needed to do it well; it cannot establish the cause of a real setback. Bottom Line: The chart does not identify a specific financial blockage.",
+      "scores": {
+        "directAnswer": 30,
+        "personalization": 19,
+        "specificityUsefulness": 11,
+        "repetitionGenericAdvice": 8,
+        "easyEnglish": 9,
+        "calculationConsistency": 5
+      },
+      "total": 82,
+      "deductionReason": "Some profiles state a possible work/support cost pressure, then end by saying no specific financial blocker is identified. That distinction is not clean enough in the direct answer and bottom line.",
+      "codeLocation": "src/report/purchase-narrative.ts — financialBlock/financialScope; src/report/buyer-outline.ts — working-style conclusion",
+      "verdict": "FIX"
+    },
+    {
+      "product": 2,
+      "profile": 5,
+      "pdf": "profile-5.pdf",
+      "questionId": "career-money-timing",
+      "questionTitle": "When might my career or money situation improve?",
+      "answerFromPdf": "Your Answer: The calculations do not identify a year when career or financial progress is likely to improve. What This Means for You: The checked years include new customers and deals and predictable pay, but none stands out as a clear period of extra support. Money?",
+      "scores": {
+        "directAnswer": 33,
+        "personalization": 20,
+        "specificityUsefulness": 12,
+        "repetitionGenericAdvice": 9,
+        "easyEnglish": 10,
+        "calculationConsistency": 5
+      },
+      "total": 89,
+      "deductionReason": "The answer is cautious and does not invent years. Four profiles repeat essentially the same no-clear-period conclusion; the work-support details are broad and some overlap with the decade outlook.",
+      "codeLocation": "src/report/purchase-timing-sections.ts; src/report/buyer-outline.ts — feedback-and-boundaries",
+      "verdict": "FIX"
+    },
+    {
+      "product": 2,
+      "profile": 5,
+      "pdf": "profile-5.pdf",
+      "questionId": "ten-year-outlook",
+      "questionTitle": "What do the next ten years suggest for my work and money?",
+      "answerFromPdf": "Your Answer: Your 2026-2035 outlook is mixed: work themes change, but the comparisons do not show a steady rise in income. The main themes include new customers and deals, predictable pay, and demanding assignments. Important Timing: Work may feel more demanding in 2028, 2031, 2033, 2034. Treat these as review points, not predicted setbacks.",
+      "scores": {
+        "directAnswer": 35,
+        "personalization": 24,
+        "specificityUsefulness": 14,
+        "repetitionGenericAdvice": 9,
+        "easyEnglish": 9,
+        "calculationConsistency": 5
+      },
+      "total": 96,
+      "deductionReason": "Clear decade-level answer, chart themes and profile-specific years. Minor deduction for dense lists and similar framing across profiles.",
+      "codeLocation": "src/report/purchase-timing-sections.ts — decade comparison",
+      "verdict": "PASS"
+    },
+    {
+      "product": 2,
+      "profile": 5,
+      "pdf": "profile-5.pdf",
+      "questionId": "career-money-insight",
+      "questionTitle": "What is my most important career and money insight?",
+      "answerFromPdf": "Your Answer: Your chart places signs for steady pay in the same birth-month area that points to operations and resource management. This links your work pattern and earning theme, but does not predict what a real role will pay. What This Means for You: Support for handling work appears in the chart, but that does not establish the pay or profit of a real role. Calculation notes This reading uses your calculated birth-year, birth-month and birth-day signs. Technical chart terms and repeated calculation details are omitted here; your answers above explain the personal meaning. How this reading is prepared Birthplace local time, including historical daylight saving, is used for the chart. Longitude adjustment is approximate. Your recorded birth time is used; timing descriptions are comparisons, not guaranteed events. This is a traditional Saju interpretation, not a diagnosis or a validated prediction. Annual comparisons use a shared reference time and do not change your birthplace chart. Four Pillars & Five Elements Calculated birth-chart symbols. The bars count visible markers only; they do not measure strength or fortune. Hour: 辛亥 | stem Learning and support | branch Independence | hidden Decisive pressure, Steady output, Independence Day: 壬午 | stem Day Master | branch Regular income | hidden Commercial openings, Formal responsibility, Regular income Month: 丁亥 | stem Regular income | branch Independence | hidden Decisive pressure, Steady output, Independence Year: 乙卯 | stem Expression | branch Expression | hidden Steady output, Expression Day Master: 壬 | strength: supported Strength basis: The month's principal hidden stem supports the Day Master element. Same-element roots are present in hour branch 亥, month branch 亥. Support also appears among exposed stems. Visible Five Elements · exposed stems and branches Wood 2 · Fire 2 · Earth 0 · Metal 1 · Water 3 | 8 counted markers Wood 2 Fire 2 Earth 0 Metal 1 Water 3 Ten Gods · visible: Independence 2 · Expression 2 · Regular income 2 · Learning and support 1; hidden: Independence 2 · Steady output 3 · Expression 1 · Regular income 1 · Commercial openings 1 · Formal responsibility 1 · Decisive pressure 2. These are placement counts, not weights. Career & Money Structure The indicators below name chart features; the reading above explains what they mean for you. Visible money markers: Regular income · day branch 午 (principal stem); Regular income · month stem 丁. Hidden money markers: Commercial openings · day branch 午; Regular income · day branch 午. Income routes Skills and output → Money and customers: present (Regular income, Expression). Money and resources → Formal responsibility: not found in checked positions. Responsibility → Learning and support: not found in checked positions. No single balancing preference is assigned because the checked signals do not point to one route. Employment vs independent work Structured roles: not prominent - No authority relationship appears in the checked principal positions. Training and expertise: present - Learning, documentation or specialist support appears in the checked Ten Gods. Making and selling work: present - Output and a money relationship both appear in the checked principal positions. Autonomy and shared resources: present - Peer relationships are present; ownership, credit and shared costs deserve clear terms. Ten-year cycle timeline Ten-year cycle dates follow the supplied birth details and the engine's stated time convention. 2024-02-03 to 2034-02-03 · 壬午 · Independence / Regular income · work: Work with clear ownership suits this symbol better than constant approval · money: Income is linked here with your own labour and bargaining position 2034-02-03 to 2044-02-03 · 辛巳 · Learning and support / Commercial openings · work: Education, research, documentation, professional training and advisory support are examples · money: The connection is indirect: qualifications, support or preparation can make paid work possible Year-by-Year Outlook Annual comparison points show the calculated pillar, active cycle and whether a checked relationship needs review. No luck score is assigned. 2026 · 丙午 · Commercial openings / Regular income · cycle 壬午 · a checked pair relationship is present. 2027 · 丁未 · Regular income / Formal responsibility · cycle 壬午 · no checked friction pattern at this reference. 2028 · 戊申 · Decisive pressure / Specialist insight · cycle 壬午 · a checked pair relationship is present. 2029 · 己酉 · Formal responsibility / Learning and support · cycle 壬午 · a checked pair relationship is present. 2030 · 庚戌 · Specialist insight / Decisive pressure · cycle 壬午 · no checked friction pattern at this reference. 2031 · 辛亥 · Learning and support / Independence · cycle 壬午 · a checked pair relationship is present. 2032 · 壬子 · Independence / Shared resources · cycle 壬午 · a checked pair relationship is present. 2033 · 癸丑 · Shared resources / Formal responsibility · cycle 壬午 · a checked pair relationship is present. 2034 · 甲寅 · Steady output / Steady output · cycle 辛巳 · a checked pair relationship is present. 2035 · 乙卯 · Expression / Expression · cycle 辛巳 · a checked pair relationship is present. Use the chapter text for the personal meaning of these markers. A recorded relationship signals a question to examine; it does not predict a specific event. 壬 · YANG WATER A personal keepsake. Symbolic colours and numbers are cultural associations. Your Personal Summary Your Answers at a Glance 01 Which careers suit me best? Operations, account management or resource coordination fits the value your chart places on reliable delivery. 02 Am I better suited to employment or independent work? Your chart supports both employment and independent work; it does not show a clear winner. 03 How do I naturally make money? Regular pay and dependable repeat work are your clearer income pattern. Your Biggest Strength Explore your options, then choose one next step Your Main Challenge Your chart links income work with a need for training or support. Your Most Important Insight Your chart places signs for steady pay in the same birth-month area that points to operations and resource management. How Your Destiny Card Connects The card's Open Explorer theme uses Water. Its line, “Explore your options, then choose one next step,” echoes a personal theme explored in the answers above; it adds no separate prediction. PRIVATE EDITION",
+      "scores": {
+        "directAnswer": 34,
+        "personalization": 22,
+        "specificityUsefulness": 13,
+        "repetitionGenericAdvice": 9,
+        "easyEnglish": 10,
+        "calculationConsistency": 5
+      },
+      "total": 93,
+      "deductionReason": "Connects work-fit and income markers without predicting pay. Some profiles repeat the preceding money answer and the capacity caution is broad rather than profile-specific.",
+      "codeLocation": "src/report/purchase-narrative.ts — integratedMoneyInsight/capacityInsight",
+      "verdict": "FIX"
+    }
+  ],
+  "pdfChecks": {
+    "pdfCount": 5,
+    "answersReviewed": 35,
+    "officialQuestionsPerPdf": 7,
+    "pageCounts": [
+      17,
+      17,
+      16,
+      17,
+      16
+    ],
+    "pdfFiles": [
+      "profile-1.pdf",
+      "profile-2.pdf",
+      "profile-3.pdf",
+      "profile-4.pdf",
+      "profile-5.pdf"
+    ]
+  },
+  "qualityOutcome": "FAIL — four of five profile means are below 95; profile 1 averages exactly 95.0 but has an 82-point individual answer. Product 02 does not meet the all-profile average gate or the additional 95-point individual-answer goal."
+}

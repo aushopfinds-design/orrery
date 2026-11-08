@@ -1,0 +1,1687 @@
+{
+  "buyers": 24,
+  "products": 7,
+  "checks": [
+    {
+      "buyer": 1,
+      "unknownTime": true,
+      "timezone": "America/New_York",
+      "work": {
+        "conditional-opening": 0,
+        "opening-with-caution": 0,
+        "conditional-support": 0,
+        "extra-care": 6,
+        "topic-only": 4
+      },
+      "business": {
+        "conditional-opening": 0,
+        "opening-with-caution": 0,
+        "conditional-support": 0,
+        "extra-care": 6,
+        "topic-only": 4
+      },
+      "months": {
+        "conditional-opening": 0,
+        "opening-with-caution": 0,
+        "conditional-support": 0,
+        "extra-care": 8,
+        "topic-only": 4
+      },
+      "reports": [
+        {
+          "kind": "complete",
+          "documents": 1,
+          "pairedPassages": 66,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "compatibility",
+          "documents": 1,
+          "pairedPassages": 56,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "year",
+          "documents": 1,
+          "pairedPassages": 114,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "career",
+          "documents": 1,
+          "pairedPassages": 45,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "business",
+          "documents": 1,
+          "pairedPassages": 43,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "wellbeing",
+          "documents": 1,
+          "pairedPassages": 27,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "bundle",
+          "documents": 4,
+          "pairedPassages": 239,
+          "allSourcesPresent": true
+        }
+      ]
+    },
+    {
+      "buyer": 2,
+      "unknownTime": false,
+      "timezone": "Europe/London",
+      "work": {
+        "conditional-opening": 0,
+        "opening-with-caution": 0,
+        "conditional-support": 0,
+        "extra-care": 4,
+        "topic-only": 6
+      },
+      "business": {
+        "conditional-opening": 0,
+        "opening-with-caution": 0,
+        "conditional-support": 0,
+        "extra-care": 4,
+        "topic-only": 6
+      },
+      "months": {
+        "conditional-opening": 0,
+        "opening-with-caution": 0,
+        "conditional-support": 0,
+        "extra-care": 9,
+        "topic-only": 3
+      },
+      "reports": [
+        {
+          "kind": "complete",
+          "documents": 1,
+          "pairedPassages": 64,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "compatibility",
+          "documents": 1,
+          "pairedPassages": 53,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "year",
+          "documents": 1,
+          "pairedPassages": 116,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "career",
+          "documents": 1,
+          "pairedPassages": 44,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "business",
+          "documents": 1,
+          "pairedPassages": 41,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "wellbeing",
+          "documents": 1,
+          "pairedPassages": 25,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "bundle",
+          "documents": 4,
+          "pairedPassages": 236,
+          "allSourcesPresent": true
+        }
+      ]
+    },
+    {
+      "buyer": 3,
+      "unknownTime": false,
+      "timezone": "Australia/Sydney",
+      "work": {
+        "conditional-opening": 0,
+        "opening-with-caution": 0,
+        "conditional-support": 0,
+        "extra-care": 6,
+        "topic-only": 4
+      },
+      "business": {
+        "conditional-opening": 0,
+        "opening-with-caution": 0,
+        "conditional-support": 0,
+        "extra-care": 6,
+        "topic-only": 4
+      },
+      "months": {
+        "conditional-opening": 0,
+        "opening-with-caution": 0,
+        "conditional-support": 0,
+        "extra-care": 9,
+        "topic-only": 3
+      },
+      "reports": [
+        {
+          "kind": "complete",
+          "documents": 1,
+          "pairedPassages": 65,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "compatibility",
+          "documents": 1,
+          "pairedPassages": 55,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "year",
+          "documents": 1,
+          "pairedPassages": 117,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "career",
+          "documents": 1,
+          "pairedPassages": 45,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "business",
+          "documents": 1,
+          "pairedPassages": 43,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "wellbeing",
+          "documents": 1,
+          "pairedPassages": 27,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "bundle",
+          "documents": 4,
+          "pairedPassages": 240,
+          "allSourcesPresent": true
+        }
+      ]
+    },
+    {
+      "buyer": 4,
+      "unknownTime": false,
+      "timezone": "Asia/Seoul",
+      "work": {
+        "conditional-opening": 0,
+        "opening-with-caution": 9,
+        "conditional-support": 0,
+        "extra-care": 1,
+        "topic-only": 0
+      },
+      "business": {
+        "conditional-opening": 0,
+        "opening-with-caution": 4,
+        "conditional-support": 0,
+        "extra-care": 4,
+        "topic-only": 2
+      },
+      "months": {
+        "conditional-opening": 1,
+        "opening-with-caution": 10,
+        "conditional-support": 0,
+        "extra-care": 1,
+        "topic-only": 0
+      },
+      "reports": [
+        {
+          "kind": "complete",
+          "documents": 1,
+          "pairedPassages": 65,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "compatibility",
+          "documents": 1,
+          "pairedPassages": 56,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "year",
+          "documents": 1,
+          "pairedPassages": 142,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "career",
+          "documents": 1,
+          "pairedPassages": 45,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "business",
+          "documents": 1,
+          "pairedPassages": 43,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "wellbeing",
+          "documents": 1,
+          "pairedPassages": 27,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "bundle",
+          "documents": 4,
+          "pairedPassages": 266,
+          "allSourcesPresent": true
+        }
+      ]
+    },
+    {
+      "buyer": 5,
+      "unknownTime": true,
+      "timezone": "Asia/Kolkata",
+      "work": {
+        "conditional-opening": 0,
+        "opening-with-caution": 0,
+        "conditional-support": 0,
+        "extra-care": 4,
+        "topic-only": 6
+      },
+      "business": {
+        "conditional-opening": 0,
+        "opening-with-caution": 0,
+        "conditional-support": 0,
+        "extra-care": 4,
+        "topic-only": 6
+      },
+      "months": {
+        "conditional-opening": 0,
+        "opening-with-caution": 0,
+        "conditional-support": 0,
+        "extra-care": 10,
+        "topic-only": 2
+      },
+      "reports": [
+        {
+          "kind": "complete",
+          "documents": 1,
+          "pairedPassages": 65,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "compatibility",
+          "documents": 1,
+          "pairedPassages": 55,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "year",
+          "documents": 1,
+          "pairedPassages": 113,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "career",
+          "documents": 1,
+          "pairedPassages": 45,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "business",
+          "documents": 1,
+          "pairedPassages": 43,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "wellbeing",
+          "documents": 1,
+          "pairedPassages": 27,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "bundle",
+          "documents": 4,
+          "pairedPassages": 236,
+          "allSourcesPresent": true
+        }
+      ]
+    },
+    {
+      "buyer": 6,
+      "unknownTime": false,
+      "timezone": "America/Sao_Paulo",
+      "work": {
+        "conditional-opening": 0,
+        "opening-with-caution": 0,
+        "conditional-support": 0,
+        "extra-care": 6,
+        "topic-only": 4
+      },
+      "business": {
+        "conditional-opening": 0,
+        "opening-with-caution": 0,
+        "conditional-support": 0,
+        "extra-care": 6,
+        "topic-only": 4
+      },
+      "months": {
+        "conditional-opening": 0,
+        "opening-with-caution": 0,
+        "conditional-support": 0,
+        "extra-care": 10,
+        "topic-only": 2
+      },
+      "reports": [
+        {
+          "kind": "complete",
+          "documents": 1,
+          "pairedPassages": 66,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "compatibility",
+          "documents": 1,
+          "pairedPassages": 54,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "year",
+          "documents": 1,
+          "pairedPassages": 114,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "career",
+          "documents": 1,
+          "pairedPassages": 45,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "business",
+          "documents": 1,
+          "pairedPassages": 43,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "wellbeing",
+          "documents": 1,
+          "pairedPassages": 27,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "bundle",
+          "documents": 4,
+          "pairedPassages": 237,
+          "allSourcesPresent": true
+        }
+      ]
+    },
+    {
+      "buyer": 7,
+      "unknownTime": false,
+      "timezone": "America/New_York",
+      "work": {
+        "conditional-opening": 2,
+        "opening-with-caution": 7,
+        "conditional-support": 0,
+        "extra-care": 1,
+        "topic-only": 0
+      },
+      "business": {
+        "conditional-opening": 0,
+        "opening-with-caution": 4,
+        "conditional-support": 0,
+        "extra-care": 4,
+        "topic-only": 2
+      },
+      "months": {
+        "conditional-opening": 1,
+        "opening-with-caution": 8,
+        "conditional-support": 0,
+        "extra-care": 2,
+        "topic-only": 1
+      },
+      "reports": [
+        {
+          "kind": "complete",
+          "documents": 1,
+          "pairedPassages": 67,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "compatibility",
+          "documents": 1,
+          "pairedPassages": 54,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "year",
+          "documents": 1,
+          "pairedPassages": 132,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "career",
+          "documents": 1,
+          "pairedPassages": 44,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "business",
+          "documents": 1,
+          "pairedPassages": 41,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "wellbeing",
+          "documents": 1,
+          "pairedPassages": 25,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "bundle",
+          "documents": 4,
+          "pairedPassages": 256,
+          "allSourcesPresent": true
+        }
+      ]
+    },
+    {
+      "buyer": 8,
+      "unknownTime": false,
+      "timezone": "Europe/London",
+      "work": {
+        "conditional-opening": 0,
+        "opening-with-caution": 2,
+        "conditional-support": 0,
+        "extra-care": 4,
+        "topic-only": 4
+      },
+      "business": {
+        "conditional-opening": 0,
+        "opening-with-caution": 0,
+        "conditional-support": 0,
+        "extra-care": 5,
+        "topic-only": 5
+      },
+      "months": {
+        "conditional-opening": 0,
+        "opening-with-caution": 4,
+        "conditional-support": 0,
+        "extra-care": 6,
+        "topic-only": 2
+      },
+      "reports": [
+        {
+          "kind": "complete",
+          "documents": 1,
+          "pairedPassages": 65,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "compatibility",
+          "documents": 1,
+          "pairedPassages": 54,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "year",
+          "documents": 1,
+          "pairedPassages": 122,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "career",
+          "documents": 1,
+          "pairedPassages": 45,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "business",
+          "documents": 1,
+          "pairedPassages": 43,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "wellbeing",
+          "documents": 1,
+          "pairedPassages": 27,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "bundle",
+          "documents": 4,
+          "pairedPassages": 244,
+          "allSourcesPresent": true
+        }
+      ]
+    },
+    {
+      "buyer": 9,
+      "unknownTime": true,
+      "timezone": "Australia/Sydney",
+      "work": {
+        "conditional-opening": 0,
+        "opening-with-caution": 0,
+        "conditional-support": 0,
+        "extra-care": 6,
+        "topic-only": 4
+      },
+      "business": {
+        "conditional-opening": 0,
+        "opening-with-caution": 0,
+        "conditional-support": 0,
+        "extra-care": 6,
+        "topic-only": 4
+      },
+      "months": {
+        "conditional-opening": 0,
+        "opening-with-caution": 0,
+        "conditional-support": 0,
+        "extra-care": 10,
+        "topic-only": 2
+      },
+      "reports": [
+        {
+          "kind": "complete",
+          "documents": 1,
+          "pairedPassages": 66,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "compatibility",
+          "documents": 1,
+          "pairedPassages": 52,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "year",
+          "documents": 1,
+          "pairedPassages": 113,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "career",
+          "documents": 1,
+          "pairedPassages": 45,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "business",
+          "documents": 1,
+          "pairedPassages": 43,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "wellbeing",
+          "documents": 1,
+          "pairedPassages": 27,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "bundle",
+          "documents": 4,
+          "pairedPassages": 234,
+          "allSourcesPresent": true
+        }
+      ]
+    },
+    {
+      "buyer": 10,
+      "unknownTime": false,
+      "timezone": "Asia/Seoul",
+      "work": {
+        "conditional-opening": 0,
+        "opening-with-caution": 5,
+        "conditional-support": 0,
+        "extra-care": 3,
+        "topic-only": 2
+      },
+      "business": {
+        "conditional-opening": 0,
+        "opening-with-caution": 2,
+        "conditional-support": 0,
+        "extra-care": 5,
+        "topic-only": 3
+      },
+      "months": {
+        "conditional-opening": 0,
+        "opening-with-caution": 4,
+        "conditional-support": 0,
+        "extra-care": 7,
+        "topic-only": 1
+      },
+      "reports": [
+        {
+          "kind": "complete",
+          "documents": 1,
+          "pairedPassages": 64,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "compatibility",
+          "documents": 1,
+          "pairedPassages": 54,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "year",
+          "documents": 1,
+          "pairedPassages": 123,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "career",
+          "documents": 1,
+          "pairedPassages": 44,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "business",
+          "documents": 1,
+          "pairedPassages": 41,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "wellbeing",
+          "documents": 1,
+          "pairedPassages": 25,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "bundle",
+          "documents": 4,
+          "pairedPassages": 244,
+          "allSourcesPresent": true
+        }
+      ]
+    },
+    {
+      "buyer": 11,
+      "unknownTime": false,
+      "timezone": "Asia/Kolkata",
+      "work": {
+        "conditional-opening": 0,
+        "opening-with-caution": 2,
+        "conditional-support": 0,
+        "extra-care": 5,
+        "topic-only": 3
+      },
+      "business": {
+        "conditional-opening": 0,
+        "opening-with-caution": 0,
+        "conditional-support": 0,
+        "extra-care": 5,
+        "topic-only": 5
+      },
+      "months": {
+        "conditional-opening": 0,
+        "opening-with-caution": 3,
+        "conditional-support": 0,
+        "extra-care": 9,
+        "topic-only": 0
+      },
+      "reports": [
+        {
+          "kind": "complete",
+          "documents": 1,
+          "pairedPassages": 65,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "compatibility",
+          "documents": 1,
+          "pairedPassages": 53,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "year",
+          "documents": 1,
+          "pairedPassages": 119,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "career",
+          "documents": 1,
+          "pairedPassages": 45,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "business",
+          "documents": 1,
+          "pairedPassages": 43,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "wellbeing",
+          "documents": 1,
+          "pairedPassages": 27,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "bundle",
+          "documents": 4,
+          "pairedPassages": 240,
+          "allSourcesPresent": true
+        }
+      ]
+    },
+    {
+      "buyer": 12,
+      "unknownTime": false,
+      "timezone": "America/Sao_Paulo",
+      "work": {
+        "conditional-opening": 0,
+        "opening-with-caution": 4,
+        "conditional-support": 0,
+        "extra-care": 6,
+        "topic-only": 0
+      },
+      "business": {
+        "conditional-opening": 0,
+        "opening-with-caution": 4,
+        "conditional-support": 0,
+        "extra-care": 6,
+        "topic-only": 0
+      },
+      "months": {
+        "conditional-opening": 0,
+        "opening-with-caution": 5,
+        "conditional-support": 0,
+        "extra-care": 6,
+        "topic-only": 1
+      },
+      "reports": [
+        {
+          "kind": "complete",
+          "documents": 1,
+          "pairedPassages": 66,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "compatibility",
+          "documents": 1,
+          "pairedPassages": 55,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "year",
+          "documents": 1,
+          "pairedPassages": 127,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "career",
+          "documents": 1,
+          "pairedPassages": 45,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "business",
+          "documents": 1,
+          "pairedPassages": 43,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "wellbeing",
+          "documents": 1,
+          "pairedPassages": 27,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "bundle",
+          "documents": 4,
+          "pairedPassages": 251,
+          "allSourcesPresent": true
+        }
+      ]
+    },
+    {
+      "buyer": 13,
+      "unknownTime": true,
+      "timezone": "America/New_York",
+      "work": {
+        "conditional-opening": 0,
+        "opening-with-caution": 0,
+        "conditional-support": 0,
+        "extra-care": 6,
+        "topic-only": 4
+      },
+      "business": {
+        "conditional-opening": 0,
+        "opening-with-caution": 0,
+        "conditional-support": 0,
+        "extra-care": 6,
+        "topic-only": 4
+      },
+      "months": {
+        "conditional-opening": 0,
+        "opening-with-caution": 0,
+        "conditional-support": 0,
+        "extra-care": 10,
+        "topic-only": 2
+      },
+      "reports": [
+        {
+          "kind": "complete",
+          "documents": 1,
+          "pairedPassages": 66,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "compatibility",
+          "documents": 1,
+          "pairedPassages": 56,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "year",
+          "documents": 1,
+          "pairedPassages": 111,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "career",
+          "documents": 1,
+          "pairedPassages": 45,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "business",
+          "documents": 1,
+          "pairedPassages": 43,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "wellbeing",
+          "documents": 1,
+          "pairedPassages": 27,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "bundle",
+          "documents": 4,
+          "pairedPassages": 236,
+          "allSourcesPresent": true
+        }
+      ]
+    },
+    {
+      "buyer": 14,
+      "unknownTime": false,
+      "timezone": "Europe/London",
+      "work": {
+        "conditional-opening": 0,
+        "opening-with-caution": 5,
+        "conditional-support": 0,
+        "extra-care": 3,
+        "topic-only": 2
+      },
+      "business": {
+        "conditional-opening": 0,
+        "opening-with-caution": 2,
+        "conditional-support": 0,
+        "extra-care": 4,
+        "topic-only": 4
+      },
+      "months": {
+        "conditional-opening": 0,
+        "opening-with-caution": 7,
+        "conditional-support": 0,
+        "extra-care": 3,
+        "topic-only": 2
+      },
+      "reports": [
+        {
+          "kind": "complete",
+          "documents": 1,
+          "pairedPassages": 64,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "compatibility",
+          "documents": 1,
+          "pairedPassages": 54,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "year",
+          "documents": 1,
+          "pairedPassages": 128,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "career",
+          "documents": 1,
+          "pairedPassages": 45,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "business",
+          "documents": 1,
+          "pairedPassages": 43,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "wellbeing",
+          "documents": 1,
+          "pairedPassages": 27,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "bundle",
+          "documents": 4,
+          "pairedPassages": 249,
+          "allSourcesPresent": true
+        }
+      ]
+    },
+    {
+      "buyer": 15,
+      "unknownTime": false,
+      "timezone": "Australia/Sydney",
+      "work": {
+        "conditional-opening": 2,
+        "opening-with-caution": 4,
+        "conditional-support": 0,
+        "extra-care": 3,
+        "topic-only": 1
+      },
+      "business": {
+        "conditional-opening": 0,
+        "opening-with-caution": 0,
+        "conditional-support": 0,
+        "extra-care": 6,
+        "topic-only": 4
+      },
+      "months": {
+        "conditional-opening": 2,
+        "opening-with-caution": 6,
+        "conditional-support": 0,
+        "extra-care": 4,
+        "topic-only": 0
+      },
+      "reports": [
+        {
+          "kind": "complete",
+          "documents": 1,
+          "pairedPassages": 64,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "compatibility",
+          "documents": 1,
+          "pairedPassages": 54,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "year",
+          "documents": 1,
+          "pairedPassages": 134,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "career",
+          "documents": 1,
+          "pairedPassages": 45,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "business",
+          "documents": 1,
+          "pairedPassages": 43,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "wellbeing",
+          "documents": 1,
+          "pairedPassages": 27,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "bundle",
+          "documents": 4,
+          "pairedPassages": 255,
+          "allSourcesPresent": true
+        }
+      ]
+    },
+    {
+      "buyer": 16,
+      "unknownTime": false,
+      "timezone": "Asia/Seoul",
+      "work": {
+        "conditional-opening": 1,
+        "opening-with-caution": 5,
+        "conditional-support": 0,
+        "extra-care": 2,
+        "topic-only": 2
+      },
+      "business": {
+        "conditional-opening": 1,
+        "opening-with-caution": 5,
+        "conditional-support": 0,
+        "extra-care": 2,
+        "topic-only": 2
+      },
+      "months": {
+        "conditional-opening": 1,
+        "opening-with-caution": 6,
+        "conditional-support": 0,
+        "extra-care": 2,
+        "topic-only": 3
+      },
+      "reports": [
+        {
+          "kind": "complete",
+          "documents": 1,
+          "pairedPassages": 65,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "compatibility",
+          "documents": 1,
+          "pairedPassages": 54,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "year",
+          "documents": 1,
+          "pairedPassages": 128,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "career",
+          "documents": 1,
+          "pairedPassages": 45,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "business",
+          "documents": 1,
+          "pairedPassages": 43,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "wellbeing",
+          "documents": 1,
+          "pairedPassages": 27,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "bundle",
+          "documents": 4,
+          "pairedPassages": 250,
+          "allSourcesPresent": true
+        }
+      ]
+    },
+    {
+      "buyer": 17,
+      "unknownTime": true,
+      "timezone": "Asia/Kolkata",
+      "work": {
+        "conditional-opening": 0,
+        "opening-with-caution": 0,
+        "conditional-support": 0,
+        "extra-care": 7,
+        "topic-only": 3
+      },
+      "business": {
+        "conditional-opening": 0,
+        "opening-with-caution": 0,
+        "conditional-support": 0,
+        "extra-care": 7,
+        "topic-only": 3
+      },
+      "months": {
+        "conditional-opening": 0,
+        "opening-with-caution": 0,
+        "conditional-support": 0,
+        "extra-care": 11,
+        "topic-only": 1
+      },
+      "reports": [
+        {
+          "kind": "complete",
+          "documents": 1,
+          "pairedPassages": 66,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "compatibility",
+          "documents": 1,
+          "pairedPassages": 55,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "year",
+          "documents": 1,
+          "pairedPassages": 112,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "career",
+          "documents": 1,
+          "pairedPassages": 45,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "business",
+          "documents": 1,
+          "pairedPassages": 43,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "wellbeing",
+          "documents": 1,
+          "pairedPassages": 27,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "bundle",
+          "documents": 4,
+          "pairedPassages": 236,
+          "allSourcesPresent": true
+        }
+      ]
+    },
+    {
+      "buyer": 18,
+      "unknownTime": false,
+      "timezone": "America/Sao_Paulo",
+      "work": {
+        "conditional-opening": 0,
+        "opening-with-caution": 3,
+        "conditional-support": 0,
+        "extra-care": 4,
+        "topic-only": 3
+      },
+      "business": {
+        "conditional-opening": 0,
+        "opening-with-caution": 3,
+        "conditional-support": 0,
+        "extra-care": 4,
+        "topic-only": 3
+      },
+      "months": {
+        "conditional-opening": 0,
+        "opening-with-caution": 4,
+        "conditional-support": 0,
+        "extra-care": 6,
+        "topic-only": 2
+      },
+      "reports": [
+        {
+          "kind": "complete",
+          "documents": 1,
+          "pairedPassages": 66,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "compatibility",
+          "documents": 1,
+          "pairedPassages": 55,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "year",
+          "documents": 1,
+          "pairedPassages": 123,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "career",
+          "documents": 1,
+          "pairedPassages": 45,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "business",
+          "documents": 1,
+          "pairedPassages": 43,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "wellbeing",
+          "documents": 1,
+          "pairedPassages": 27,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "bundle",
+          "documents": 4,
+          "pairedPassages": 247,
+          "allSourcesPresent": true
+        }
+      ]
+    },
+    {
+      "buyer": 19,
+      "unknownTime": false,
+      "timezone": "America/New_York",
+      "work": {
+        "conditional-opening": 0,
+        "opening-with-caution": 9,
+        "conditional-support": 0,
+        "extra-care": 1,
+        "topic-only": 0
+      },
+      "business": {
+        "conditional-opening": 0,
+        "opening-with-caution": 6,
+        "conditional-support": 0,
+        "extra-care": 3,
+        "topic-only": 1
+      },
+      "months": {
+        "conditional-opening": 0,
+        "opening-with-caution": 11,
+        "conditional-support": 0,
+        "extra-care": 1,
+        "topic-only": 0
+      },
+      "reports": [
+        {
+          "kind": "complete",
+          "documents": 1,
+          "pairedPassages": 66,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "compatibility",
+          "documents": 1,
+          "pairedPassages": 55,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "year",
+          "documents": 1,
+          "pairedPassages": 138,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "career",
+          "documents": 1,
+          "pairedPassages": 45,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "business",
+          "documents": 1,
+          "pairedPassages": 43,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "wellbeing",
+          "documents": 1,
+          "pairedPassages": 27,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "bundle",
+          "documents": 4,
+          "pairedPassages": 262,
+          "allSourcesPresent": true
+        }
+      ]
+    },
+    {
+      "buyer": 20,
+      "unknownTime": false,
+      "timezone": "Europe/London",
+      "work": {
+        "conditional-opening": 0,
+        "opening-with-caution": 0,
+        "conditional-support": 0,
+        "extra-care": 6,
+        "topic-only": 4
+      },
+      "business": {
+        "conditional-opening": 0,
+        "opening-with-caution": 0,
+        "conditional-support": 0,
+        "extra-care": 6,
+        "topic-only": 4
+      },
+      "months": {
+        "conditional-opening": 0,
+        "opening-with-caution": 0,
+        "conditional-support": 0,
+        "extra-care": 11,
+        "topic-only": 1
+      },
+      "reports": [
+        {
+          "kind": "complete",
+          "documents": 1,
+          "pairedPassages": 64,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "compatibility",
+          "documents": 1,
+          "pairedPassages": 56,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "year",
+          "documents": 1,
+          "pairedPassages": 116,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "career",
+          "documents": 1,
+          "pairedPassages": 45,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "business",
+          "documents": 1,
+          "pairedPassages": 43,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "wellbeing",
+          "documents": 1,
+          "pairedPassages": 27,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "bundle",
+          "documents": 4,
+          "pairedPassages": 239,
+          "allSourcesPresent": true
+        }
+      ]
+    },
+    {
+      "buyer": 21,
+      "unknownTime": true,
+      "timezone": "Australia/Sydney",
+      "work": {
+        "conditional-opening": 0,
+        "opening-with-caution": 0,
+        "conditional-support": 0,
+        "extra-care": 7,
+        "topic-only": 3
+      },
+      "business": {
+        "conditional-opening": 0,
+        "opening-with-caution": 0,
+        "conditional-support": 0,
+        "extra-care": 7,
+        "topic-only": 3
+      },
+      "months": {
+        "conditional-opening": 0,
+        "opening-with-caution": 0,
+        "conditional-support": 0,
+        "extra-care": 9,
+        "topic-only": 3
+      },
+      "reports": [
+        {
+          "kind": "complete",
+          "documents": 1,
+          "pairedPassages": 66,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "compatibility",
+          "documents": 1,
+          "pairedPassages": 55,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "year",
+          "documents": 1,
+          "pairedPassages": 112,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "career",
+          "documents": 1,
+          "pairedPassages": 45,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "business",
+          "documents": 1,
+          "pairedPassages": 43,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "wellbeing",
+          "documents": 1,
+          "pairedPassages": 27,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "bundle",
+          "documents": 4,
+          "pairedPassages": 236,
+          "allSourcesPresent": true
+        }
+      ]
+    },
+    {
+      "buyer": 22,
+      "unknownTime": false,
+      "timezone": "Asia/Seoul",
+      "work": {
+        "conditional-opening": 0,
+        "opening-with-caution": 5,
+        "conditional-support": 0,
+        "extra-care": 3,
+        "topic-only": 2
+      },
+      "business": {
+        "conditional-opening": 0,
+        "opening-with-caution": 0,
+        "conditional-support": 0,
+        "extra-care": 6,
+        "topic-only": 4
+      },
+      "months": {
+        "conditional-opening": 0,
+        "opening-with-caution": 6,
+        "conditional-support": 0,
+        "extra-care": 4,
+        "topic-only": 2
+      },
+      "reports": [
+        {
+          "kind": "complete",
+          "documents": 1,
+          "pairedPassages": 63,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "compatibility",
+          "documents": 1,
+          "pairedPassages": 54,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "year",
+          "documents": 1,
+          "pairedPassages": 134,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "career",
+          "documents": 1,
+          "pairedPassages": 44,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "business",
+          "documents": 1,
+          "pairedPassages": 41,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "wellbeing",
+          "documents": 1,
+          "pairedPassages": 25,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "bundle",
+          "documents": 4,
+          "pairedPassages": 254,
+          "allSourcesPresent": true
+        }
+      ]
+    },
+    {
+      "buyer": 23,
+      "unknownTime": false,
+      "timezone": "Asia/Kolkata",
+      "work": {
+        "conditional-opening": 0,
+        "opening-with-caution": 6,
+        "conditional-support": 0,
+        "extra-care": 2,
+        "topic-only": 2
+      },
+      "business": {
+        "conditional-opening": 0,
+        "opening-with-caution": 6,
+        "conditional-support": 0,
+        "extra-care": 2,
+        "topic-only": 2
+      },
+      "months": {
+        "conditional-opening": 1,
+        "opening-with-caution": 7,
+        "conditional-support": 0,
+        "extra-care": 2,
+        "topic-only": 2
+      },
+      "reports": [
+        {
+          "kind": "complete",
+          "documents": 1,
+          "pairedPassages": 66,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "compatibility",
+          "documents": 1,
+          "pairedPassages": 53,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "year",
+          "documents": 1,
+          "pairedPassages": 130,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "career",
+          "documents": 1,
+          "pairedPassages": 45,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "business",
+          "documents": 1,
+          "pairedPassages": 43,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "wellbeing",
+          "documents": 1,
+          "pairedPassages": 27,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "bundle",
+          "documents": 4,
+          "pairedPassages": 252,
+          "allSourcesPresent": true
+        }
+      ]
+    },
+    {
+      "buyer": 24,
+      "unknownTime": false,
+      "timezone": "America/Sao_Paulo",
+      "work": {
+        "conditional-opening": 2,
+        "opening-with-caution": 8,
+        "conditional-support": 0,
+        "extra-care": 0,
+        "topic-only": 0
+      },
+      "business": {
+        "conditional-opening": 1,
+        "opening-with-caution": 4,
+        "conditional-support": 0,
+        "extra-care": 3,
+        "topic-only": 2
+      },
+      "months": {
+        "conditional-opening": 1,
+        "opening-with-caution": 11,
+        "conditional-support": 0,
+        "extra-care": 0,
+        "topic-only": 0
+      },
+      "reports": [
+        {
+          "kind": "complete",
+          "documents": 1,
+          "pairedPassages": 66,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "compatibility",
+          "documents": 1,
+          "pairedPassages": 54,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "year",
+          "documents": 1,
+          "pairedPassages": 140,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "career",
+          "documents": 1,
+          "pairedPassages": 45,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "business",
+          "documents": 1,
+          "pairedPassages": 43,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "wellbeing",
+          "documents": 1,
+          "pairedPassages": 27,
+          "allSourcesPresent": true
+        },
+        {
+          "kind": "bundle",
+          "documents": 4,
+          "pairedPassages": 263,
+          "allSourcesPresent": true
+        }
+      ]
+    }
+  ],
+  "scope": "Authored customer chapter passages, actions, cautions, months, longer periods and bundle overview. No external reader study or universal expert certification."
+}

@@ -1,0 +1,51 @@
+name: Mobile preview visual check
+
+on:
+  push:
+    branches:
+      - feature/final-simple-reports
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  mobile-preview:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install Playwright and Chromium
+        run: |
+          npm install --prefix /tmp/mobile-playwright playwright
+          node /tmp/mobile-playwright/node_modules/playwright/cli.js install --with-deps chromium
+      - name: Wait for the updated branch Preview
+        env:
+          FATE_PREVIEW_ORIGIN: https://saju-english-report-preview-git-featu-b90c37-shopping-shorts-ai.vercel.app
+        run: |
+          for attempt in $(seq 1 36); do
+            if curl --fail --silent "$FATE_PREVIEW_ORIGIN/public-pages.css" | grep --fixed-strings --quiet '.fate-public .public-button a'; then
+              echo "Updated branch Preview is serving the mobile CTA fix."
+              exit 0
+            fi
+            sleep 10
+          done
+          echo "Timed out waiting for the updated branch Preview." >&2
+          exit 1
+      - name: Render and inspect all sample pages at mobile widths
+        env:
+          FATE_PREVIEW_ORIGIN: https://saju-english-report-preview-git-featu-b90c37-shopping-shorts-ai.vercel.app
+          MOBILE_SCREENSHOT_DIR: artifacts/mobile-preview
+          NODE_PATH: /tmp/mobile-playwright/node_modules
+        run: node scripts/mobile-preview-check.cjs
+      - name: Upload mobile screenshots and measurements
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: fate-key-mobile-preview-check
+          path: artifacts/mobile-preview/
+          if-no-files-found: warn
+          retention-days: 14
