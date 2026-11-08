@@ -38,9 +38,14 @@ Products 03–07 lose 30 points because `server/payments/report.ts` supplies `ca
 ## Not completed
 - Mobile visual verification at 360px, 390px, and 430px. The page was only observed at a 1363px browser viewport. Local Chromium could not launch because the environment denied socket creation; the cloud browser API does not expose viewport resizing.
 - Real Stripe Test Mode checkout, webhook delivery, persisted order, customer email receipt, PDF download, payment failure and duplicate-webhook end-to-end checks. The public production checkout is closed, and no isolated authenticated test checkout flow was available in this run. Mocked/unit coverage is not a substitute.
-- Independent PDF answer scoring completed for Product 01 only: 35/245 answers. Product 01 profile means are 76.9, 81.9, 81.9, 81.7, 76.6 (minimum 76.6, mean 79.8); it fails the 95 threshold. Products 02–07 remain unscored, so no product is approved at 95/100.
+- Independent baseline PDF answer scoring completed for Product 01 only: 35/260 answers. Product 01 profile means are 76.9, 81.9, 81.9, 81.7, 76.6 (minimum 76.6, mean 79.8); those baseline PDFs fail the 95 threshold. Products 02–07 remain unscored. The official total is 260 answers (six products × 7 questions × 5 profiles, plus Product 07 × 10 × 5); 245 omits Product 07's additional 15 answers. Five newer local Product 01 PDFs were generated after edits, but are not independently scored.
 - Full-page visual review for all 35 PDFs, and mobile PDF viewer testing.
 - Vercel Preview `dpl_EG2YrcnNXhjdTtWF9jQBGr3TQZQZ` is READY for application commit `687875f3015665b0b5a6d7cf1bc87d812652092d`; homepage and `/samples/` returned HTTP 200. Status-document commit `24fdafec7cd6bfd1117b55180af6986e6ce36c85` also has Preview `dpl_4DRQ4uMaTCAJjUQGMARxxBH2HT1r` READY. Production remains on `dpl_ANDdUkvMn6zMjukCyxfNC2EYcSdt`; no Production deployment was made.
+
+## Latest local QA checkpoint (2026-11-08)
+- Targeted tests for Product 01 PDF generation, purchase narratives, and bundle reading passed: 37/37.
+- Five Product 01 PDFs were regenerated through the test path. Their question counts, PDF signatures, and TOC links passed the assertions. These output files and the uncommitted working diff are not saved on the remote branch.
+- Current remote branch head after documentation update: `97af7b3703f27109302380bb801ae2fcafe1bded` (documentation only). The 95+ independent audit is incomplete; production and sales remain unchanged.
 
 ## Release status and next steps
 - Sales remain closed; no Stripe Live changes.
