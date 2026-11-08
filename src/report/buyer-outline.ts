@@ -392,6 +392,8 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
         }
         if (question.id === 'feedback-and-boundaries') {
           const supportYears = [...new Set(careerYears.filter(item => item.direction === 'Potential support / outlet under the stated rule').map(item => item.year))]
+          const checkedYears = [...new Set(careerYears.map(item => item.year).filter(year => year >= 1900))].sort((a, b) => a - b)
+          const checkedRange = checkedYears.length ? `${checkedYears[0]}–${checkedYears.at(-1)}` : ''
           const themeLanguage: Record<string, string> = {
             Independence: 'independent work', 'Shared resources': 'shared work', 'Steady output': 'reliable production', Expression: 'improving methods',
             'Regular income': 'predictable pay', 'Commercial openings': 'new customers and deals', 'Formal responsibility': 'defined responsibilities',
@@ -400,11 +402,8 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
           const otherThemes = [...new Set(careerYears.map(item => themeLanguage[item.stemGod]).filter(Boolean))].slice(0, 2)
           return [
             `Your Answer: ${supportYears.length
-              ? 'The calculations show possible periods of career support, but not a guaranteed date for better finances.'
-              : `No checked year stands out as a clear period for career or money improvement. The annual comparisons instead emphasize ${otherThemes.join(' and ') || 'work themes that need review'}. These are work signals, not evidence of a pay rise.`}`,
-            ...(supportYears.length ? [
-              `Important Timing: ${supportYears.join(', ')} are the checked work-support periods; they do not promise a raise or job change.`,
-            ] : []),
+              ? `I cannot confirm a date when your career or finances will improve. Within the checked years${checkedRange ? ` (${checkedRange})` : ''}, ${supportYears.join(', ')} show possible support for work efforts, not a promised raise or job change.`
+              : `I cannot identify a reliable improvement year${checkedRange ? ` within ${checkedRange}` : ''}. No checked year stands out; the annual comparisons emphasize ${otherThemes.join(' and ') || 'work themes to review'}, which do not establish a pay rise.`}`,
           ]
         }
         const details = question.id === 'q-risk'
@@ -434,7 +433,7 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
           : question.id === 'q-risk'
             ? sourceChapter.paragraphs.at(-1) ?? 'Your chart does not establish the cause of a real financial setback; compare its work pattern with your actual terms and workload.'
           : question.id === 'feedback-and-boundaries'
-            ? 'A chart cannot establish when your situation will improve. These annual comparisons only identify work themes to review; they do not predict higher income.'
+            ? 'Use the named years to review real work options and their pay terms; the chart cannot establish that circumstances or income will improve.'
             : explanationCandidates.find(line => clean(line) !== leadText) ?? sourceChapter.paragraphs.find(line => clean(line) !== leadText && !timing.includes(line) && !/^(?:About this reading|Reading basis):/i.test(line)) ?? sourceChapter.lead
         const conclusions: Record<string, string> = {
           'two-work-layers': leadText.includes('finding customers')
