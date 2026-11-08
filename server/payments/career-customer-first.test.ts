@@ -43,6 +43,7 @@ describe('My Money & Career customer-first delivery', () => {
       expect(q7).toMatch(/money|income|earning/i)
       if ([1, 2].includes(index)) {
         expect(buyerSection).toMatch(/Your Answer: The chart offers a limited clue toward regular pay, tied to/i)
+        expect(buyerSection).toMatch(/compare actual salary, hours and work costs with independent work/i)
         expect(buyerSection).not.toMatch(/What This Means for You: Steady pay is linked/i)
         expect(buyerSection).not.toMatch(/Bottom Line: The chart does not settle an income route/i)
       }
