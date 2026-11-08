@@ -557,6 +557,7 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
     const answeredLines = [...firstLines, ...extraAnswers.flatMap(item => item.lines)]
     const practicalOnly = (kind === 'business' && ['partner-fit', 'expansion-timing'].includes(questions[0].role))
       || (kind === 'compatibility' && ['mutual-adjustment', 'overall-fit', 'closeness-vs-routine', 'relationship-timing', 'care-expression'].includes(questions[0].role))
+      || kind === 'compatibility' && questions.some(question => question.role === 'care-expression')
       || (kind === 'wellbeing' && ['pressure-response', 'relationship-need'].includes(questions.at(-1)?.role ?? ''))
     const suppressAllGuidance = kind === 'compatibility' && ['attraction', 'overall-fit'].includes(questions[0].role)
       || kind === 'compatibility' && questions[0].role === 'overall-fit'
