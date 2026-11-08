@@ -205,7 +205,7 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
         const yours = perspectives.find(line => /^From your side:|^You:/.test(line))
         const theirs = perspectives.find(line => /^From your partner(?:'|’)s side:|^Your partner:/.test(line))
         const privateConnection = chapter.paragraphs.find(line => /^The day signs (?:also|show)/.test(line))
-        const cleanPerspective = (line: string | undefined, prefix: RegExp) => line?.replace(prefix, '').replace(/^(?:The )?attraction may be\s*/i, '').replace(/\s+stand out[.!?]*$/i, '').replace(/[.!?]+$/u, '').trim().replace(/^(.+?) may feel (.+)$/i, '$1 that feels $2').replace(/^./u, char => char.toLowerCase())
+        const cleanPerspective = (line: string | undefined, prefix: RegExp) => line?.replace(prefix, '').replace(/^(?:The )?attraction may be\s*/i, '').replace(/\.\s+[\s\S]*$/u, '').replace(/\s+stand out[.!?]*$/i, '').replace(/[.!?]+$/u, '').trim().replace(/^(.+?) may feel (.+)$/i, '$1 that feels $2').replace(/^./u, char => char.toLowerCase())
         if (yours && theirs) {
           const yourDraw = cleanPerspective(yours, /^(?:From your side:|You:)\s*/)
           const partnerDraw = cleanPerspective(theirs, /^(?:From your partner(?:'|’)s side:|Your partner:)\s*/)
