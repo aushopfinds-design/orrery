@@ -600,3 +600,17 @@ The second five-PDF batch was generated from saved code SHA `f54d94b11e1a8489f8d
 The limited-money answer in profiles 2 and 3 is clearer and no longer repeats the same chart-location explanation. The possible training/support pressure in profiles 1 and 5 is now explicitly distinguished from a verified financial cause. However, Q4 still repeats the same caution across its lead, explanation and bottom line, and its chart basis could be more useful. Q5 still has a broad no-clear-period response across four profiles. The revised product does **not** pass; all profile averages remain below 95.
 
 Revision 2 should keep Q4 concise and answer-first, and make Q5's no-improvement-period result more informative using only each profile's checked annual work themes. No unverified timing may be added. Product 03–07 are not started yet.
+
+## Product 02 revision 2 — independent re-review (2026-11-09)
+
+Five PDFs were generated from code SHA `1888b3bd3bf9b2aec7b5e9d5ca2db890f136227f`. Q4 and Q5 were read and rescored in every PDF. The other 25 answer blocks were text-compared with the prior scored batch; their actual answer text is unchanged, so their earlier manual rubric scores remain. All 35 answers are listed in `docs/audits/PRODUCT02-REV2-INDEPENDENT-REVIEW-1888b3b.json`.
+
+| Profile | Revision 1 mean | Revision 2 mean | Lowest answer | Verdict |
+| --- | ---: | ---: | ---: | --- |
+| 1 | 93.7 | 94.9 | 93 | FAIL |
+| 2 | 93.6 | 94.3 | 92 | FAIL |
+| 3 | 93.1 | 94.0 | 92 | FAIL |
+| 4 | 93.1 | 94.6 | 93 | FAIL |
+| 5 | 93.3 | 94.4 | 93 | FAIL |
+
+The Q4 duplication was removed, and Q5 now gives checked, profile-specific work themes while saying clearly that they are not evidence of higher pay. This raised the five means, but the Product 02 gate is still not met. Remaining review targets are Q3's limited-money profiles 2–3 and the Q2/Q7 overlap between work-setting evidence and the final career/money insight. Product 02 remains open; Products 03–07 have not started.
