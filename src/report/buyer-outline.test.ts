@@ -8,6 +8,12 @@ import { BUYER_OUTLINES, BUYER_QUESTIONS, COLLECTION_BUYER_QUESTIONS, applyBuyer
 import { deliveredChapter } from './report-delivery.ts'
 const a = calculateSaju(CATEGORY_SCENARIOS[0].first), b = calculateSaju(CATEGORY_SCENARIOS[0].second)
 describe('Buyer questions, not a repeated six-part technical template', () => {
+  it('keeps the calculated day-sign attraction context in the delivered compatibility answer', () => {
+    const reading = buildCategoryReading('compatibility', a, { second: b, year: 2026 })
+    const report = applyBuyerQuestions(reading.fullText, 'compatibility', reading.chapters, [], 'standalone')
+    expect(report).toContain('The day signs show neither a direct link nor a friction pattern')
+    expect(report).toMatch(/Question: Why are we attracted to each other\?[\s\S]*Answer: The chart points to two different possible draws:/)
+  })
   it('gives every question a distinct answer role within its product', () => {
     for (const [kind, questions] of Object.entries(BUYER_QUESTIONS)) {
       expect(questions.every(question => question.role.trim().length > 0), `${kind} missing role`).toBe(true)
