@@ -12,7 +12,7 @@ Updated: 2026-11-08 (Australia/Sydney)
 
 ## Environment recovery and verified work (2026-11-08)
 - Found the requested repository checkout in the existing `orrery-preview-qa` directory and preserved the separate `orrery` worktree, which has unrelated uncommitted edits.
-- Fetched remote branch `fix/question-data-consolidation-20261107` at commit 85a372d3d8a418dd60a24b635e9d75ed713fec0e and merged it into the existing branch without discarding its prior commits.
+- Fetched remote branch `fix/question-data-consolidation-20261107` at commit 85a372d3d8a418dd60a24b635e9d75ed713fec0e and merged it into the existing local branch without discarding prior commits. A direct local Git push was unavailable because this runtime has no GitHub credentials; the updated status file was saved through GitHub at commit 1ebea064186ceccab3d2c65f076aca914a932d05.
 - TypeScript project check `tsc -b --pretty false`: PASS.
 - Targeted PDF and payment suites: 37/37 tests PASS.
 - Full build (`bun run build`) on the fetched source: PASS after installing dependencies in an isolated worktree from the frozen Bun lockfile. Existing dependency files in the other worktree were not changed.
@@ -40,7 +40,7 @@ Products 03–07 lose 30 points because `server/payments/report.ts` supplies `ca
 - Real Stripe Test Mode checkout, webhook delivery, persisted order, customer email receipt, PDF download, payment failure and duplicate-webhook end-to-end checks. The public production checkout is closed, and no isolated authenticated test checkout flow was available in this run. Mocked/unit coverage is not a substitute.
 - Independent answer-by-answer content scoring for every question across five profiles per product. No product is approved at 95/100 on this basis.
 - Full-page visual review for all 35 PDFs, and mobile PDF viewer testing.
-- Preview deployment from the latest working-branch commit. No source-code changes were made in this QA run, so Production was not redeployed.
+- Vercel Preview `dpl_bPr2W2iEpyPwK1VVXzdieK2WKac4` is READY for documentation commit 1ebea064186ceccab3d2c65f076aca914a932d05; homepage and `/samples/` returned HTTP 200. This commit only updates project status, not application code. Production remains on `dpl_ANDdUkvMn6zMjukCyxfNC2EYcSdt` because no application code changed.
 
 ## Release status and next steps
 - Sales remain closed; no Stripe Live changes.
