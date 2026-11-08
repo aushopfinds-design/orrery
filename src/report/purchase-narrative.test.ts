@@ -65,12 +65,13 @@ describe('Targeted customer-answer revisions',()=>{
   expect(income).toContain('does not establish whether salaried or deal-based work is your natural income route')
   expect(income).not.toContain('No direct money sign appears')
   expect(income).not.toContain('There is no direct money sign in the checked')
-  expect((income.match(/income amount/g) ?? [])).toHaveLength(1)
+  expect(income).toContain('These chart clues do not show an amount or guarantee')
+  expect(income).not.toMatch(/incomes? amount/i)
   const challenge=sections['life-challenges'].lines.map(line=>line.en).join(' ')
-  expect(challenge).toContain('Your main challenge is balancing')
-  expect(sections['life-challenges'].action.en).toContain('Before accepting another')
+  expect(challenge).toMatch(/Your recurring challenge is (?:that |balancing )/)
+  expect(sections['life-challenges'].action.en).toContain('Before adding a duty')
   expect(challenge).not.toContain('In close relationships, the day sign')
-  expect((challenge.match(/being heard before someone offers a solution/g) ?? [])).toHaveLength(1)
+  expect((challenge.match(/being heard before someone offers a solution/g) ?? [])).toHaveLength(0)
   expect(challenge).not.toMatch(/your private life\. The chart places these in separate areas.*When work or private commitments increase/)
  })
 })
@@ -78,9 +79,9 @@ describe('Targeted customer-answer revisions',()=>{
 describe('Buyer review r14: direct answers without repeated warnings or lost dates',()=>{
  it('explains the chart-linked meaning of the life turning-point years in the first answer',()=>{
   const answer=customerNarrative(buildInterpretationPlan('complete',a,2026)).patterns.lines[0].en
-  expect(answer).toContain('The clearest year to review a major change is')
+  expect(answer).toContain('The clearest year to review how work and close relationships fit together is')
   expect(answer).toMatch(/20\d\d: a theme of .+ connects with work and daily responsibilities/)
-  expect(answer).toContain('not a prediction that an event will happen')
+  expect(answer).toContain('not a promise of a major event')
  })
  it('keeps every year visible in the actual delivered timelines after deduplication',()=>{
   for(const kind of ['complete','career','business'] as const){
@@ -201,7 +202,8 @@ describe('Customer conclusions before planning advice',()=>{
   const samplePlan=buildInterpretationPlan('complete',customerSample,2026)
   const first=customerNarrative(samplePlan),other=customerNarrative(buildInterpretationPlan('complete',a,2026))
   const love=first.love.lines.map(line=>line.en).join(' ')
-  expect(love).toContain(`to ${samplePlan.primary.dayBranch}, the day sign used to read close relationships`)
+  expect(love).toContain(RELATIONSHIP_PROFILES[samplePlan.primary.dayBranch].friction)
+  expect(love).not.toContain('the day sign used to read close relationships')
   const collection=buildBundleFromPlans(bundleInterpretationPlans(customerSample,a,2027,2026))
   expect(collection.love.fullText).toContain(`The form of care associated with this chart is ${RELATIONSHIP_PROFILES[samplePlan.primary.dayBranch].need}.`)
   expect(love).not.toMatch(/years that most clearly touch relationship priorities/)
