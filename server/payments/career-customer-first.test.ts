@@ -31,7 +31,7 @@ describe('My Money & Career customer-first delivery', () => {
       expect(buyerSection.match(/^Your Answer:/gm)?.length).toBe(7)
       expect(buyerSection.match(/^What This Means for You:/gm)?.length).toBeGreaterThanOrEqual(3)
       expect(buyerSection.match(/^Bottom Line:/gm)?.length).toBeGreaterThanOrEqual(1)
-      expect(buyerSection).toMatch(/possible periods of career support|clear period of extra support/i)
+      expect(buyerSection).toMatch(/possible periods of career support|No checked year stands out as a clear period/i)
       expect(buyerSection).toMatch(/Your 2026–2035 outlook is mixed: work themes change/i)
       expect(buyerSection).toMatch(/do not show a steady rise in income/i)
       expect(buyerSection).not.toMatch(/added work friction/i)
@@ -46,10 +46,11 @@ describe('My Money & Career customer-first delivery', () => {
         expect(buyerSection).not.toMatch(/What This Means for You: Steady pay is linked/i)
         expect(buyerSection).not.toMatch(/Bottom Line: The chart does not settle an income route/i)
       }
-      expect(buyerSection).toMatch(/A possible pressure is the time or cost of training and support|does not identify a specific financial blocker|connects useful work with customers or pay/i)
-      if ([0, 4].includes(index)) {
-        expect(buyerSection).toMatch(/Bottom Line: A possible work\/support cost pressure appears, but the chart cannot confirm it is a real financial blocker/i)
-      }
+      const q4 = buyerSection.split('Question: What tends to block my financial progress?')[1].split('\n\nQuestion:')[0]
+      expect(q4).toMatch(/Your Answer: /)
+      expect(q4).not.toMatch(/What This Means for You:|Bottom Line:/)
+      const q5 = buyerSection.split('Question: When might my career or money situation improve?')[1].split('\n\nQuestion:')[0]
+      if (!q5.includes('Important Timing:')) expect(q5).toMatch(/annual comparisons instead emphasize .+work signals, not evidence of a pay rise/)
       expect(pdf.subarray(0, 5).toString()).toBe('%PDF-')
       reports.push(report)
       if (process.env.CAREER_PDF_DIR) {

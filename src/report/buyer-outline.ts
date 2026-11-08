@@ -400,8 +400,8 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
           const otherThemes = [...new Set(careerYears.map(item => themeLanguage[item.stemGod]).filter(Boolean))].slice(0, 2)
           return [
             `Your Answer: ${supportYears.length
-              ? 'The calculations identify possible periods of career support, but not a guaranteed date for financial improvement.'
-              : 'The calculations do not identify a year when career or financial progress is likely to improve.'}`,
+              ? 'The calculations show possible periods of career support, but not a guaranteed date for better finances.'
+              : `No checked year stands out as a clear period for career or money improvement. The annual comparisons instead emphasize ${otherThemes.join(' and ') || 'work themes that need review'}. These are work signals, not evidence of a pay rise.`}`,
             ...(supportYears.length ? [
               `Important Timing: ${supportYears.join(', ')} are the checked work-support periods; they do not promise a raise or job change.`,
             ] : [
@@ -514,7 +514,7 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
             ? `Important Timing: The annual comparison flags ${supportYears.join(', ')} for possible support or useful output; this is not a promise of higher pay.`
             : undefined
           : undefined
-        const repeatFinancialAnswer=question.id==='working-style'&&/specific financial blocker|Less-visible money indicators alone/i.test(leadText)
+        const repeatFinancialAnswer=question.id==='working-style'
         const limitedIncomeAnswer=question.id==='money-commitments'&&/limited (?:sign|clue)(?: for| toward) (?:regular pay|customer or project income)/i.test(leadText)
         const omitBottomLine=question.id==='proof-of-skill'||question.id==='career-plan'||repeatFinancialAnswer||limitedIncomeAnswer
         const lines = [
