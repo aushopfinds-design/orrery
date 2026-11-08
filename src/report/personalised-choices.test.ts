@@ -12,7 +12,9 @@ describe('r24 chart-specific customer choices',()=>{
   const other={...same,monthBranchGod:p.monthStemGod==='食神'?'偏印':'食神'}
   expect(roleChoice(same).en).toContain('clear remit')
   expect(roleChoice(same,true).en).toContain('clear role with defined duties')
-  expect(roleChoice(other).en).toContain('whole week')
+  expect(roleChoice(other).en).toContain('most of your week is spent on')
+  expect(roleChoice(other).en).toContain('Even a role that uses')
+  expect(roleChoice(other).en).not.toContain('being hired for the first')
   expect(roleChoice(same).en).not.toBe(roleChoice(other).en)
   expect(roleChoice(same).ko).not.toBe(roleChoice(other).ko)
   expect(customerNarrative(buildInterpretationPlan('career',a,2026))['two-work-layers'].lines.some(l=>l.en===roleChoice(p).en)).toBe(true)

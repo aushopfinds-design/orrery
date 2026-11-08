@@ -58,14 +58,18 @@ describe('Targeted customer-answer revisions',()=>{
   const plan=buildInterpretationPlan('complete',a,2026)
   plan.primary.visibleMoney.length=0
   plan.primary.hiddenMoney.length=0
+  plan.primary.resolution.risks.length=0
+  plan.primary.resolution.circuits.length=0
   const sections=customerNarrative(plan)
   const income=sections.money.lines.map(line=>line.en).join(' ')
   expect(income).toContain('does not establish whether salaried or deal-based work is your natural income route')
   expect(income).not.toContain('No direct money sign appears')
   expect(income).not.toContain('There is no direct money sign in the checked')
+  expect((income.match(/income amount/g) ?? [])).toHaveLength(1)
   const challenge=sections['life-challenges'].lines.map(line=>line.en).join(' ')
   expect(challenge).toContain('Your main life challenge is keeping the demands of')
   expect(challenge).not.toContain('In close relationships, the day sign')
+  expect((challenge.match(/being heard before someone offers a solution/g) ?? [])).toHaveLength(1)
   expect(challenge).not.toMatch(/your private life\. The chart places these in separate areas.*When work or private commitments increase/)
  })
 })

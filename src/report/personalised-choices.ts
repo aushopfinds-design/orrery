@@ -19,7 +19,7 @@ export function roleChoice(p:Subject, simpleEnglish=false):Passage{
  const visible=TASKS[p.monthStemGod],daily=TASKS[p.monthBranchGod]
  return p.monthStemGod===p.monthBranchGod
  ?pair(`A good career fit includes work such as ${visible.en}. Both sides of your birth-month pattern repeat this preference, so ${simpleEnglish?'a clear role with defined duties':'a clear remit'} fits better than a title that spreads you across unrelated tasks. These are examples of work, not a fixed list of careers.`,`잘 맞는 직업에는 ${visible.ko} 같은 업무가 포함됩니다. 태어난 달의 겉과 안이 같은 특징을 반복하므로 관련 없는 일을 넓게 맡는 직함보다 담당 범위가 분명한 쪽에 맞습니다. 정해진 직업 목록이 아니라 업무의 예시입니다.`)
- :pair(`Your best fit combines ${visible.en} with enough time for ${daily.en}. For example, being hired for the first while your whole week is consumed by the second would leave the role poorly matched. This comes from comparing the two different roles in your birth month, not from your job title.`,`본인에게 가장 잘 맞는 일은 ${visible.ko}과 ${daily.ko}을 위한 시간을 함께 담습니다. 앞의 역할로 채용됐는데 한 주를 뒤의 업무에만 쓰게 된다면 맞지 않는 부분이 생길 수 있습니다. 직업명보다 태어난 달의 서로 다른 두 역할을 비교한 풀이입니다.`)
+ :pair(`Your best fit combines ${visible.en} with enough time for ${daily.en}. Even a role that uses ${visible.en} can be a poor fit if most of your week is spent on ${daily.en}. This comes from comparing the two different roles in your birth month, not from your job title.`,`본인에게 가장 잘 맞는 일은 ${visible.ko}과 ${daily.ko}을 위한 시간을 함께 담습니다. 겉으로 드러난 역할을 활용하는 직업이라도 한 주 대부분을 일상의 다른 업무에 쓴다면 잘 맞지 않을 수 있습니다. 직업명보다 태어난 달의 서로 다른 두 역할을 비교한 풀이입니다.`)
 }
 export function businessDivision(p:Subject):Passage{
  const delivery=TASKS[p.monthBranchGod],front=TASKS[p.monthStemGod]

@@ -428,3 +428,22 @@ All 10 targeted answers remain below 95. Q4 is more direct, but its supporting e
 > Answer: Your main life challenge is keeping the demands of operations and resource management work from crowding out warm attention and time for your own interests in your private life. The chart places these in separate areas, so success in one does not automatically meet the other need.  Answer detail: When work or private commitments increase, check whether your week still has room for warm attention and time for your own interests. 
 
 **Finding:** Direct and individualized life challenge; the practical line repeats the named private need and this still overlaps the relationship answer's underlying need.
+
+
+## Product 01 second targeted revision and re-review (2026-11-08)
+
+Three targeted improvements were applied after the previous 10-answer re-review: (1) the career-fit example now names the visible and daily tasks instead of saying “the first” and “the second”; (2) the income-marker sentence no longer repeats the income-amount caveat; (3) the Q6 practical line now protects a specific weekly private-life time block without repeating the stated relationship need.
+
+The following scores come from reading the five final regenerated `issueReport()` PDFs. They cover Q4 and Q6 only, not the other five answers in each profile. Breakdown order: D/P/U/R/E/C.
+
+| Test profile | Q4 money score | Q6 life challenge score |
+|---|---:|---:|
+| 1 — New York, known time | 89 (32/23/12/8/9/5) | 93 (34/23/13/9/9/5) |
+| 2 — Seoul, known time | 84 (31/20/11/8/9/5) | 93 (34/23/13/9/9/5) |
+| 3 — New York, unknown time | 89 (32/23/12/8/9/5) | 93 (34/23/13/9/9/5) |
+| 4 — Sydney, known time | 88 (32/22/12/8/9/5) | 92 (34/22/13/9/9/5) |
+| 5 — Los Angeles, known time | 87 (32/21/12/8/9/5) | 92 (34/22/13/9/9/5) |
+
+**Finding:** the language and role separation improved, but every targeted answer is still below 95. Q4's supporting paragraph still returns to the difference between money coming in and money retained. Q6's practical step is distinct and readable but remains a fairly general time-protection action. These are targeted answer scores only; a complete post-fix seven-answer profile mean has not been measured. Product 01 remains **FAIL**.
+
+The latest test run passed the focused narrative/chart/role suites (32/32) and the real paid `issueReport()` Product 01 generator (1/1; five PDFs, seven titles/answers, seven valid contents links). TypeScript verification is recorded separately in the project status. Structural diagnostic values are not these content scores.

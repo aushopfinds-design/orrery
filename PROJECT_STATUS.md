@@ -76,3 +76,10 @@ Products 03–07 lose 30 points because `server/payments/report.ts` supplies `ca
 - Independently read and scored Q4 and Q6 in five actual `issueReport()` PDFs: 10 targeted answer observations. Results: Q4 87/84/87/87/85; Q6 90/90/90/89/89. Each remains below 95. This is not a complete seven-question re-score or a post-fix product profile score; the five test profiles differ from the baseline audit profiles.
 - The Q4 income answer is more direct but still repeats the income/retention distinction in its supporting paragraph. Q6 has a clearer life-challenge conclusion but its practical line repeats the private need and partly overlaps Q5. Product 01 remains FAIL.
 - Audit file now records the actual text, six-part score breakdown, and findings for these 10 targeted answers. Baseline Product 01 remains 35/245 fully audited; products 02–07 remain unscored.
+
+
+### Product 01 second targeted revision
+- Changed `src/report/personalised-choices.ts` to replace the unnatural “being hired for the first … the second” career example with clear task wording.
+- Changed `src/report/purchase-narrative.ts` to avoid repeating the income-amount caveat in the money-marker line and to make Q6's practical step distinct from its private-life conclusion.
+- Added regressions in `src/report/personalised-choices.test.ts` and `src/report/purchase-narrative.test.ts`. Focused suites passed 32/32; actual `issueReport()` Product 01 PDF generation passed 1/1 with five PDFs and all seven TOC links valid.
+- Read and re-scored Q4 and Q6 in all five regenerated PDFs: Q4 89/84/89/88/87; Q6 93/93/93/92/92. These ten targeted answer scores are below 95 and do not constitute a complete profile mean. Product 01 remains FAIL. Full post-fix review of all seven answers in these profiles is still outstanding; products 02–07 remain unscored.
