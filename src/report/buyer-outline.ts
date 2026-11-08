@@ -210,8 +210,8 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
           const yourDraw = cleanPerspective(yours, /^(?:From your side:|You:)\s*/)
           const partnerDraw = cleanPerspective(theirs, /^(?:From your partner(?:'|’)s side:|Your partner:)\s*/)
           lead = yourDraw === partnerDraw
-            ? `Both chart directions point to a shared draw toward ${yourDraw}. This may be part of the attraction, but the chart cannot confirm either person’s actual feelings.`
-            : `The chart points to two different possible draws: you may value ${yourDraw}; your partner may value ${partnerDraw}. This describes chart themes, not proof of either person’s actual feelings.`
+            ? `Both chart directions point to the same possible draw: each of you may be drawn to ${yourDraw}. The chart cannot confirm either person’s actual feelings.`
+            : `The chart suggests a reciprocal pull: you may be drawn to ${yourDraw} in your partner, while your partner may be drawn to ${partnerDraw} in you. The chart cannot confirm either person’s actual feelings.`
           if (privateConnection) lead += ` ${privateConnection}`
         }
         paragraphs = []
