@@ -56,10 +56,10 @@ describe('My Money & Career customer-first delivery', () => {
       expect(q5).toMatch(/2026–2035/)
       expect(q5).toMatch(/not a promised raise or job change|do not establish a pay rise/i)
       expect(q5).not.toMatch(/What This Means for You:/)
-      const q2 = buyerSection.split('Question: Am I better suited to employment or independent work?')[1].split('\\n\\nQuestion:')[0]
+      const q2 = buyerSection.split('Question: Am I better suited to employment or independent work?')[1].split('\n\nQuestion:')[0]
       expect(q2).toMatch(/Practical Check: For a real choice, compare confirmed salary, hours and support/i)
       expect(q2).toMatch(/paying customers, costs and payment terms/i)
-      const q7Section = buyerSection.split('Question: What is my most important career and money insight?')[1].split('\\n\\nQuestion:')[0]
+      const q7Section = buyerSection.split('Question: What is my most important career and money insight?')[1].split('\n\nQuestion:')[0]
       expect(q7Section).toMatch(/Compare added hours and duties with the confirmed compensation|compare actual duties and confirmed compensation|compare real offers by duties, hours and confirmed compensation/i)
       expect(pdf.subarray(0, 5).toString()).toBe('%PDF-')
       reports.push(report)
