@@ -265,7 +265,9 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
         lead = friction?.startsWith('Your likely friction is')
           ? (() => {
               const parts = friction.match(/^Your likely friction is (.*?); your partner’s is (.*?)\.$/)
-              return parts ? `Your friction point is ${parts[1]}. For your partner, tension may arise from ${parts[2]}.` : friction.replace(/^Your likely friction is /, 'The likely friction is ')
+              if (!parts) return friction.replace(/^Your likely friction is /, 'The likely friction is ')
+              if (parts[1].toLowerCase() === parts[2].toLowerCase()) return `You may both react to tension by ${parts[1]}. Because this pattern is shared, say what help you want before either of you tries to solve the problem.`
+              return `Your friction point is ${parts[1]}. For your partner, tension may arise from ${parts[2]}.`
             })()
           : friction
             ? `A likely friction point is ${friction.split('Person A is ')[1]?.split(';')[0] ?? 'a difference in private-life preferences'} for Person A, and ${friction.split('for Person B it is ')[1]?.split('.')[0] ?? 'a different reading of the same situation'} for Person B.`
@@ -554,7 +556,7 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
     ]
     const answeredLines = [...firstLines, ...extraAnswers.flatMap(item => item.lines)]
     const practicalOnly = (kind === 'business' && ['partner-fit', 'expansion-timing'].includes(questions[0].role))
-      || (kind === 'compatibility' && ['mutual-adjustment', 'overall-fit', 'closeness-vs-routine', 'relationship-timing'].includes(questions[0].role))
+      || (kind === 'compatibility' && ['mutual-adjustment', 'overall-fit', 'closeness-vs-routine', 'relationship-timing', 'care-expression'].includes(questions[0].role))
       || (kind === 'wellbeing' && ['pressure-response', 'relationship-need'].includes(questions.at(-1)?.role ?? ''))
     const suppressAllGuidance = kind === 'compatibility' && ['attraction', 'overall-fit'].includes(questions[0].role)
       || kind === 'compatibility' && questions[0].role === 'overall-fit'
