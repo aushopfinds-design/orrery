@@ -1,0 +1,876 @@
+diff --git a/PROJECT_STATUS.md b/PROJECT_STATUS.md
+index 23ab1c7..718d036 100644
+--- a/PROJECT_STATUS.md
++++ b/PROJECT_STATUS.md
+@@ -12,7 +12,7 @@ Updated: 2026-11-08 (Australia/Sydney)
+ 
+ ## Environment recovery and verified work (2026-11-08)
+ - Found the requested repository checkout in the existing `orrery-preview-qa` directory and preserved the separate `orrery` worktree, which has unrelated uncommitted edits.
+-- Fetched remote branch `fix/question-data-consolidation-20261107` at commit 85a372d3d8a418dd60a24b635e9d75ed713fec0e and merged it into the existing local branch without discarding prior commits. A direct local Git push was unavailable because this runtime has no GitHub credentials; the updated status file was saved through GitHub at commit 1ebea064186ceccab3d2c65f076aca914a932d05.
++- Fetched remote branch `fix/question-data-consolidation-20261107` at commit 85a372d3d8a418dd60a24b635e9d75ed713fec0e and merged it into the existing branch without discarding its prior commits.
+ - TypeScript project check `tsc -b --pretty false`: PASS.
+ - Targeted PDF and payment suites: 37/37 tests PASS.
+ - Full build (`bun run build`) on the fetched source: PASS after installing dependencies in an isolated worktree from the frozen Bun lockfile. Existing dependency files in the other worktree were not changed.
+@@ -38,80 +38,11 @@ Products 03–07 lose 30 points because `server/payments/report.ts` supplies `ca
+ ## Not completed
+ - Mobile visual verification at 360px, 390px, and 430px. The page was only observed at a 1363px browser viewport. Local Chromium could not launch because the environment denied socket creation; the cloud browser API does not expose viewport resizing.
+ - Real Stripe Test Mode checkout, webhook delivery, persisted order, customer email receipt, PDF download, payment failure and duplicate-webhook end-to-end checks. The public production checkout is closed, and no isolated authenticated test checkout flow was available in this run. Mocked/unit coverage is not a substitute.
+-- Independent baseline PDF answer scoring completed for Product 01 only: 35/260 answers. Product 01 profile means are 76.9, 81.9, 81.9, 81.7, 76.6 (minimum 76.6, mean 79.8); those baseline PDFs fail the 95 threshold. Products 02–07 remain unscored. The official total is 260 answers (six products × 7 questions × 5 profiles, plus Product 07 × 10 × 5); 245 omits Product 07's additional 15 answers. Five newer local Product 01 PDFs were generated after edits, but are not independently scored.
++- Independent answer-by-answer content scoring for every question across five profiles per product. No product is approved at 95/100 on this basis.
+ - Full-page visual review for all 35 PDFs, and mobile PDF viewer testing.
+-- Vercel Preview `dpl_EG2YrcnNXhjdTtWF9jQBGr3TQZQZ` is READY for application commit `687875f3015665b0b5a6d7cf1bc87d812652092d`; homepage and `/samples/` returned HTTP 200. Status-document commit `24fdafec7cd6bfd1117b55180af6986e6ce36c85` also has Preview `dpl_4DRQ4uMaTCAJjUQGMARxxBH2HT1r` READY. Production remains on `dpl_ANDdUkvMn6zMjukCyxfNC2EYcSdt`; no Production deployment was made.
+-
+-## Latest local QA checkpoint (2026-11-08)
+-- Targeted tests for Product 01 PDF generation, purchase narratives, and bundle reading passed: 37/37.
+-- Five Product 01 PDFs were regenerated through the test path. Their question counts, PDF signatures, and TOC links passed the assertions. These output files and the uncommitted working diff are not saved on the remote branch.
+-- The audit and status updates were committed through the connected GitHub service. The 95+ independent audit is incomplete; application code and Production remain unchanged.
++- Preview deployment from the latest working-branch commit. No source-code changes were made in this QA run, so Production was not redeployed.
+ 
+ ## Release status and next steps
+ - Sales remain closed; no Stripe Live changes.
+ - Do not mark the seven products sales-ready until the three outstanding gates above are completed.
+ - Next: resolve independent pillar-audit wiring and review flags without reducing the rubric; complete independent question-by-question content review; perform 360/390/430 browser checks and isolated Stripe Test Mode end-to-end verification; then save code, deploy Preview, and validate before any later Production update.
+-
+-## PDF content audit follow-up (2026-11-08)
+-- Reopened the preserved 35-PDF test batch and diagnostics. The PDFs are present locally at `qa-artifacts/final-five-profile-pdfs/` (35 PDFs plus `diagnostics.json`); this is a local QA artifact set, not a GitHub-saved deliverable.
+-- Product 01's seven-question contents page is followed by an additional life-insight synthesis section without a `Question:` record; it is a summary, not an eighth official question. Direct content inspection found repeated phrasing in its money answer, so it does not qualify for 95+ sign-off.
+-- Product 07's opening section contains the approved ten question titles and ten answers. The current product also includes component reports and partner-specific material because its order flow explicitly requires a second chart. This is a scope item for the product contract, not an extra official question; do not label it a proven mismatch without reviewing the purchase scope.
+-- Follow-up code change: Product 07 answers 6 and 7 now state the absence of verified timing once, separately for lifetime standout years and the next three years. The wording does not invent dates or change question content.
+-- Verification after the change: `src/report/category-readings.test.ts` plus `server/payments/final-simple-reports.test.ts`: 14/14 tests passed; the real `issueReport()` test generated 14 fresh PDFs (two test profiles × seven products), and the Product 07 PDF text was inspected for the updated Q6/Q7 answers. `bun run build` passed; existing Vite chunk/import warnings remain.
+-- Product 01 now has independent question-by-question scores for all 35 of its answers in `REPORT_QUALITY_AUDIT.md`; the PDF text, rubric breakdown, issue notes and code targets are recorded there. Products 02–07 (210 answers) remain unscored. Prior 70/100 diagnostics are structural checks only. Mobile and real Stripe Test Mode E2E remain unverified. Sales stay closed and Production is unchanged.
+-
+-## Final 245-answer audit progress (2026-11-08)
+-- Audit artifact saved remotely: `REPORT_QUALITY_AUDIT.md` (GitHub commit 3df45e4d4c8ad3f6b9f31ea15cca02668bf32579). It contains the full extracted answer text, itemized rubric points, score, findings and code targets for all five Product 01 PDFs (35/245 answers).
+-- Product 01 profile means: 76.9, 81.9, 81.9, 81.7, 76.6; minimum 76.6, average 79.8. Result: FAIL. The main repeated failure is Product 01 Q4 for profiles 1 and 5, where the same missing-money-signal limitation is stated several times; Q6 also overlaps Q3 and Q5.
+-- Product 01 source fixes are now present in a later work unit; see the revision record below. The independent post-fix 35-answer re-score is still pending, so earlier scores remain baseline scores and Product 01 remains FAIL.
+-- Overall independent audit progress: 35/245 answers. Remaining: 210. No overall product reaches PASS until all five profile means for that product are at least 95.
+-
+-
+-## Product 01 targeted revision (2026-11-08)
+-- Updated `src/report/purchase-narrative.ts`: the no-money-marker case now states once that the chart cannot establish salaried vs deal-based income; it no longer repeats the missing-sign rationale in the same answer. Product 01 Q6 now separates the work-demand/private-need tension from the standalone relationship answer and removes repeated relationship advice from its body.
+-- Updated `src/report/chart-depth.ts`: when neither visible nor hidden money markers are present, the follow-up now limits the claim to income amount/capacity instead of repeating the missing-marker statement.
+-- Updated `server/payments/product01-root-cause.test.ts`: fixed a stale assertion expecting five TOC links; Product 01 has seven official questions and the test now verifies all seven links resolve to report pages. This is an assertion correction to the approved structure, not a reduced criterion.
+-- Added a focused regression in `src/report/purchase-narrative.test.ts` for the no-money-marker answer and Q6 role separation.
+-- Verification on the clean remote-branch worktree at `1b3995c`: targeted narrative/chart-depth tests passed 26/26; actual paid `issueReport()` Product 01 test generated five PDFs and passed 1/1, including seven question titles/answers and seven valid TOC links; TypeScript `tsc -b --pretty false` passed. Structural diagnostic output was 4×100 and 1×70; these are not content scores.
+-- The newly generated five PDFs use the test fixture profiles `new-york-known`, `seoul-known`, `new-york-unknown`, `sydney-known`, and `los-angeles-known`, which differ from the five original audit profiles. The original 35/245 answer scores have not been recomputed from post-fix PDFs; do not treat them as a post-fix score. Re-score all five original audit profiles with complete birth inputs before changing the Product 01 score.
+-- Product 01 remains FAIL; products 02–07 remain unscored. Preview `dpl_GFQhAFH3um7EdE54rwKsw8HtafAg` is READY for code commit `6780a3270457362d4584598b9f2b88e276408653`; homepage returned HTTP 200. This was not full mobile/payment release QA. Production remains `dpl_ANDdUkvMn6zMjukCyxfNC2EYcSdt`. Sales remain closed; Stripe Live remains unchanged.
+-
+-
+-### Product 01 targeted post-fix re-review
+-- Independently read and scored Q4 and Q6 in five actual `issueReport()` PDFs: 10 targeted answer observations. Results: Q4 87/84/87/87/85; Q6 90/90/90/89/89. Each remains below 95. This is not a complete seven-question re-score or a post-fix product profile score; the five test profiles differ from the baseline audit profiles.
+-- The Q4 income answer is more direct but still repeats the income/retention distinction in its supporting paragraph. Q6 has a clearer life-challenge conclusion but its practical line repeats the private need and partly overlaps Q5. Product 01 remains FAIL.
+-- Audit file now records the actual text, six-part score breakdown, and findings for these 10 targeted answers. Baseline Product 01 remains 35/245 fully audited; products 02–07 remain unscored.
+-
+-
+-### Product 01 second targeted revision
+-- Changed `src/report/personalised-choices.ts` to replace the unnatural “being hired for the first … the second” career example with clear task wording.
+-- Changed `src/report/purchase-narrative.ts` to avoid repeating the income-amount caveat in the money-marker line and to make Q6's practical step distinct from its private-life conclusion.
+-- Added regressions in `src/report/personalised-choices.test.ts` and `src/report/purchase-narrative.test.ts`. Focused suites passed 32/32; actual `issueReport()` Product 01 PDF generation passed 1/1 with five PDFs and all seven TOC links valid.
+-- Read and re-scored Q4 and Q6 in all five regenerated PDFs: Q4 89/84/89/88/87; Q6 93/93/93/92/92. These ten targeted answer scores are below 95 and do not constitute a complete profile mean. Product 01 remains FAIL. Full post-fix review of all seven answers in these profiles is still outstanding; products 02–07 remain unscored.
+-
+-
+-### Latest Product 01 code save (2026-11-08)
+-- Latest code and audit commit: `c76b4163e351b7b1dd0a727493b22e420e76b91c` (branch `fix/question-data-consolidation-20261107`).
+-- TypeScript `tsc -b --pretty false` passed after the latest code edits. Focused narrative/chart/role tests passed 32/32; the actual Product 01 `issueReport()` PDF test passed 1/1 and emitted five test PDFs with seven valid TOC links.
+-- Preview for this commit: `dpl_J5W3K43yzFi3xbWQm2LX5PL9qvK3` reached READY; its homepage returned HTTP 200. The current Preview verification was a homepage HTTP 200 smoke check only; product screens, visual rendering and refreshed PDF text were not browser-checked on Preview.
+-- Product 01 has targeted Q4/Q6 scores only (Q4 84–89, Q6 92–93); no complete post-fix profile score is available. Products 02–07 are unscored. Production remains unchanged and sales remain closed.
+-
+-
+-### Product 01 third revision and re-review
+-- Removed duplicated money-marker placement language from the Q4 lead and moved the evidence explanation to the support paragraph. For the life reading's money/support overlap, the detail now explains the practical link to skills, tools and help. Q6's practical point now refers to the customer's chart-linked work theme and a protected private commitment.
+-- Focused suites passed 33/33; the actual Product 01 `issueReport()` test passed 1/1 and generated five PDFs with seven valid TOC links. `tsc -b --pretty false` passed. Structural diagnostic scores (4×100, 1×70) are not content-quality scores.
+-- Re-read Q4 and Q6 in the five regenerated PDFs: Q4 93/90/93/89/93; Q6 94/94/94/93/93. These ten targeted answer scores improved from the prior pass but are all below 95 and are not complete product profile means. Product 01 remains FAIL; products 02–07 remain unscored.
+-
+-## Product 01 fifth revision checkpoint (2026-11-08)
+-- Continued from remote `c96e7f83c41d3a230acf6da452dc3b033958785d`; no unrelated worktree was reset or overwritten.
+-- Read Q4 and Q6 in five newly generated actual `issueReport()` PDFs. The 10 targeted scores are recorded with breakdowns and answer evidence in `REPORT_QUALITY_AUDIT.md`: Q4 87–91/100; Q6 92–94/100. These are not complete profile means. Product 01 still fails the 95 gate; Products 02–07 remain unscored independently.
+-- Source update: shortened Product 01 Q4's earning/support explanation; made Q6's conclusion more direct and changed its action to a concrete workload substitution/coverage decision. Official questions and calculation engine were not changed.
+-- Verification on this source revision: focused suites 35/35 passed; `npx tsc -b --pretty false` passed; actual `issueReport()` test regenerated five Product 01 PDFs, all with seven question entries and seven valid TOC destinations. Structural diagnostic values included one 70 for partial calculation verification; they are not independent content scores.
+-- Source and audit changes were saved and verified on the remote branch at commit `0e9fff62480b7a97e2e96f5d858455eb8fe85b0b`. Production is unchanged at `dpl_ANDdUkvMn6zMjukCyxfNC2EYcSdt`; sales remain closed and Stripe Live unchanged. The earlier Preview does not include this revision.
+-- Next: independently score all 35 answers from these five current PDFs, then proceed with Products 02–07. Do not treat the 10 targeted scores as complete Product 01 profile scores or 95+ sign-off.
+-
+-## Preview build recovery (2026-11-08)
+-- The Preview for `219c68c016a0f3680a8476d4bdbcf33364fe0d86` failed because the large `src/report/purchase-narrative.ts` blob upload was truncated, producing TypeScript parse errors. The broken preview is `dpl_9LY4xGkLoKxJdepfdYSsDgyoGfML`; Production was not affected.
+-- Restored the complete file from the preserved local source and verified its GitHub blob SHA matches the uploaded full file: `09e00d7abf6c7b64f7d88abd21a218abcda9d9af`. Recovery code commit: `0e833059442a68500aa423a79949cb9e36e91d3d`.
+-- Local focused tests and TypeScript passed before this recovery commit. Preview build for `0e833059442a68500aa423a79949cb9e36e91d3d` is being checked; do not treat Preview as verified until it reaches READY and returns HTTP 200.
+-- Production remains `dpl_ANDdUkvMn6zMjukCyxfNC2EYcSdt`, sales closed, Stripe Live unchanged.
+diff --git a/REPORT_QUALITY_AUDIT.md b/REPORT_QUALITY_AUDIT.md
+deleted file mode 100644
+index 88a40eb..0000000
+--- a/REPORT_QUALITY_AUDIT.md
++++ /dev/null
+@@ -1,545 +0,0 @@
+-# THE FATE KEY — Independent PDF Answer Audit
+-
+-Updated: 2026-11-08 (Australia/Sydney)
+-
+-## Scope and method
+-
+-- Source: existing five-profile Product 01 PDF set generated through the paid `issueReport()` path; no automated diagnostic score was used as an answer-quality score.
+-- Baseline completed: 35/260 answers (Product 01, five profiles × seven official questions), from the previously generated Product 01 PDF snapshot. Remaining: 225 answers across Products 02–07. The 260 total follows the official question counts: Products 01–06 have 7 each and Product 07 has 10, across five profiles. The request's 245 denominator omits 15 Product 07 answers.
+-- Each answer was read from its PDF and scored independently against the requested rubric: direct answer 35, personalization 25, usefulness/specificity 15, repetition/generalities 10, easy English 10, consistency 5. Scores are one reviewer’s content judgment, not an objective truth claim.
+-- Profile score = arithmetic mean of its seven answer scores, rounded to one decimal. Product pass requires all five profile means ≥95.
+-- Scores are shown as D/P/U/R/E/C; their sum is the answer score.
+-
+-## Latest checkpoint — 2026-11-08
+-
+-- Focused edits present only in the local working diff were checked with the three relevant suites: 37/37 tests passed (Product 01 PDF/root-cause, purchase narrative, and bundle reading tests).
+-- Five updated Product 01 PDFs were generated from that local working diff. Their questions and TOC links passed structural assertions. The updated PDFs have not yet received an independent answer-by-answer score, so the baseline scores below do not apply to them.
+-- Local working diff is not part of the current remote branch tip (`0e833059442a68500aa423a79949cb9e36e91d3d`). No updated code was represented as remotely saved.
+-- Independent baseline scoring remains 35/260; 225 answers have no answer-level independent score. No product passes the 95-point requirement on current-version PDFs.
+-
+-## Product 01 — Your Life, Your Destiny
+-
+-| Profile | Birth details used in test PDF | Seven answer scores | Mean | Result |
+-|---|---|---|---:|---|
+-| 1 | 1987-11-05; known time; America/New_York | 85, 85, 87, 48, 80, 74, 79 | 76.9 | FAIL (<95) |
+-| 2 | 1991-04-12; known time; Europe/London | 84, 85, 87, 85, 80, 74, 78 | 81.9 | FAIL (<95) |
+-| 3 | 1978-07-19; known time; Australia/Sydney | 84, 85, 87, 85, 80, 74, 78 | 81.9 | FAIL (<95) |
+-| 4 | 2001-02-08; known time; Asia/Seoul | 84, 85, 87, 84, 80, 74, 78 | 81.7 | FAIL (<95) |
+-| 5 | 1969-12-03; unknown time; Asia/Kolkata | 84, 85, 87, 48, 80, 74, 78 | 76.6 | FAIL (<95) |
+-
+-**Product 01 result:** minimum profile mean **76.6**; average across five profile means **79.8**. All five profiles fail the 95-point threshold.
+-
+-### Answer-level evidence and ratings
+-
+-Each score row uses: **D** directness /35, **P** personalization /25, **U** usefulness /15, **R** repetition /10 (higher is cleaner), **E** easy English /10, **C** consistency /5.
+-
+-#### Profile 1 — 1987-11-05 (known birth time), America/New_York
+-
+-Source PDF: `01-complete.pdf`. Profile score: **76.9/100**.
+-
+-**personality — What kind of person am I?** — FIX: **85/100** (D/P/U/R/E/C: 30/22/12/7/9/5)
+-
+-> Your core style is stability and keeping promises. Your birth-day sign is 戊 (Yang Earth); it points to this tendency, not a complete definition of you. Answer detail: A recurring life theme is the difference between what others rely on you for and what restores you privately. The public work position carries steady output and practiced skill; the private-life position adds training and dependable support. The two areas call for different responses, so professional achievement alone may not meet a private need.
+-
+-**Finding:** Direct identity conclusion is present and tied to the day stem. Supporting paragraph shifts into a broad work/private-life pattern that partly repeats across profiles; explain the personality link more clearly.
+-
+-**Code target:** `src/report/chart-depth.ts — life-area depth paragraph`
+-
+-**social — What helps me thrive, and what can hold me back?** — FIX: **85/100** (D/P/U/R/E/C: 31/20/12/8/9/5)
+-
+-> You may help others feel secure by keeping your promises. You can stay practical when a situation gets difficult. This comes from your birth-day sign 戊 (Yang Earth); it describes a tendency, not your whole personality. Answer detail: The pressure point is this: Being dependable can turn into doing everything. You may wait for someone to notice that you need help.
+-
+-**Finding:** Names a personal strength and limit in plain language. Profiles 2–5 repeat nearly identical day-stem wording, so personalization is weaker when other chart differences do not affect this answer.
+-
+-**Code target:** `src/report/purchase-narrative.ts — complete personality/strength narrative`
+-
+-**career — What kind of career suits me?** — FIX: **87/100** (D/P/U/R/E/C: 32/22/13/7/8/5)
+-
+-> Your best fit combines making, teaching or delivering something to a dependable standard with enough time for owning a specialist assignment from start to finish. For example, being hired for the first while your whole week is consumed by the second would leave the role poorly matched. This comes from comparing the two different roles in your birth month, not from your job title. Answer detail: Before changing jobs, ask what you will do each week, which decisions you control and what you will be paid. Move when those terms improve the part of work that is causing pressure.
+-
+-**Finding:** Gives a chart-specific work fit. The phrase “being hired for the first” is awkward, and the same job-change advice appears across profiles instead of adding individual evidence.
+-
+-**Code target:** `src/report/purchase-narrative.ts — career answer and repeated keep-work advice`
+-
+-**money — What is my natural pattern for earning money?** — FIX: **48/100** (D/P/U/R/E/C: 16/9/7/2/9/5)
+-
+-> Your chart does not show a direct money sign in the checked placements. It therefore cannot choose a salary or business route for you; work skills and real contract terms carry more weight. No direct money sign appears in the checked positions, so the reading does not assign you a fixed-pay or deal-based route. Answer detail: There is no direct money sign in the checked outward or inner roles. Your work pattern is still readable, but a claim about strong wealth luck would go beyond these facts.
+-
+-**Finding:** P1 and P5 say the chart cannot choose an earning route, then repeat that same absence in the same answer and again in the detail. P2–P4 give a route, but the detail partly restates the evidence without adding much usefulness.
+-
+-**Code target:** `src/report/purchase-narrative.ts — moneyAnswer/visibleMoneyExplanation; src/report/chart-depth.ts — moneyDepth`
+-
+-**love — What do I need most in a close relationship?** — FIX: **80/100** (D/P/U/R/E/C: 31/20/12/6/8/3)
+-
+-> You are most likely to feel secure with someone who makes room for warm attention and time for your own interests. In everyday life, look for people who make time for you and respect your interests. This describes what helps you; it does not predict another person's character. Answer detail: Conflict can develop when taking a request for space as a lack of love. Your chart links this pattern to 午, the day sign used to read close relationships. It also points to a need for clear responsibilities and people who share the work; that is separate from what helps you feel secure with a partner.
+-
+-**Finding:** Names a concrete relationship need and a likely friction point. The second sentence restates the need as advice; Q6 repeats much of the same need. “Day sign” and the Han character are not explained in everyday English.
+-
+-**Code target:** `src/report/purchase-narrative.ts — relationship answer; src/report/chart-depth.ts — relationship detail`
+-
+-**patterns — What are my biggest life challenges?** — FIX: **74/100** (D/P/U/R/E/C: 29/19/11/5/7/3)
+-
+-> Your main cross-life challenge is balancing reliable products and repeatable service at work with warm attention and time for your own interests in close relationships. These needs come from separate chart areas, so meeting one does not automatically meet the other. Answer detail: In close relationships, the day sign 午 points to warm attention and time for your own interests. Friction can grow when the support offered differs from the support you actually want. Practical point: At work, check whether the practised skills and dependable results role gives you time and authority for its daily demands. In a close relationship, name when you need warm attention and time for your own interests.
+-
+-**Finding:** Directly names a life challenge, but overlaps with career and relationship content already used in Q3 and Q5. Practical advice repeats those topics instead of identifying a distinct recurring pressure pattern.
+-
+-**Code target:** `src/report/purchase-narrative.ts — life-challenges answer and practical point`
+-
+-**q-turning-points — When may my life change direction?** — FIX: **79/100** (D/P/U/R/E/C: 29/18/12/7/9/4)
+-
+-> The clearest year to review a major change is 2032: a theme of finding new customers connects with close relationships and personal choices. This is a calculated timing signal for those areas, not a prediction that an event will happen. Answer detail: Pay attention to shared time, personal choices and expectations in close relationships. Practical point: Separate a possible work change from a private-life change before treating either as a verdict on your whole life.
+-
+-**Finding:** Provides a specific calculated year and caveats that it is not an event prediction. It is framed as a time to review rather than a clear directional answer, and supporting text repeats earlier work/relationship themes.
+-
+-**Code target:** `src/report/purchase-timing-sections.ts — turning-point answer and follow-up`
+-
+-#### Profile 2 — 1991-04-12 (known birth time), Europe/London
+-
+-Source PDF: `02-complete.pdf`. Profile score: **81.9/100**.
+-
+-**personality — What kind of person am I?** — FIX: **84/100** (D/P/U/R/E/C: 30/21/12/7/9/5)
+-
+-> Your core style is seeing connections and exploring options. Your birth-day sign is 壬 (Yang Water); it points to this tendency, not a complete definition of you. Answer detail: A recurring life theme is the difference between what others rely on you for and what restores you privately. The public work position carries independent judgement; the private-life position adds contacts, competition and shared resources. The two areas call for different responses, so professional achievement alone may not meet a private need.
+-
+-**Finding:** Direct identity conclusion is present and tied to the day stem. Supporting paragraph shifts into a broad work/private-life pattern that partly repeats across profiles; explain the personality link more clearly.
+-
+-**Code target:** `src/report/chart-depth.ts — life-area depth paragraph`
+-
+-**social — What helps me thrive, and what can hold me back?** — FIX: **85/100** (D/P/U/R/E/C: 31/20/12/8/9/5)
+-
+-> You may be good at connecting ideas. When one route is blocked, you can often see another. This comes from your birth-day sign 壬 (Yang Water); it describes a tendency, not your whole personality. Answer detail: The pressure point is this: Every new option can look worth trying. You may keep exploring without choosing what to do today.
+-
+-**Finding:** Names a personal strength and limit in plain language. Profiles 2–5 repeat nearly identical day-stem wording, so personalization is weaker when other chart differences do not affect this answer.
+-
+-**Code target:** `src/report/purchase-narrative.ts — complete personality/strength narrative`
+-
+-**career — What kind of career suits me?** — FIX: **87/100** (D/P/U/R/E/C: 32/22/13/7/8/5)
+-
+-> Your best fit combines owning a specialist assignment from start to finish with enough time for taking charge of a difficult deadline or resolving an urgent problem. For example, being hired for the first while your whole week is consumed by the second would leave the role poorly matched. This comes from comparing the two different roles in your birth month, not from your job title. Answer detail: Before changing jobs, ask what you will do each week, which decisions you control and what you will be paid. Move when those terms improve the part of work that is causing pressure.
+-
+-**Finding:** Gives a chart-specific work fit. The phrase “being hired for the first” is awkward, and the same job-change advice appears across profiles instead of adding individual evidence.
+-
+-**Code target:** `src/report/purchase-narrative.ts — career answer and repeated keep-work advice`
+-
+-**money — What is my natural pattern for earning money?** — FIX: **85/100** (D/P/U/R/E/C: 30/20/12/8/10/5)
+-
+-> Regular work or repeat fees have the clearest chart support. Variable projects may add income, but the chart gives less direct support to depending on them as your only route. In your chart, steady-income signs appear in longer-term plans and wider contacts. This shows where the income markers appear, not how much you will earn. Answer detail: The earning signs are present inside the branches, rather than in the main outward roles. The money reading therefore follows the less visible work behind your role; it does not treat the absence of an outward sign as an absence of income.
+-
+-**Finding:** P1 and P5 say the chart cannot choose an earning route, then repeat that same absence in the same answer and again in the detail. P2–P4 give a route, but the detail partly restates the evidence without adding much usefulness.
+-
+-**Code target:** `src/report/purchase-narrative.ts — moneyAnswer/visibleMoneyExplanation; src/report/chart-depth.ts — moneyDepth`
+-
+-**love — What do I need most in a close relationship?** — FIX: **80/100** (D/P/U/R/E/C: 31/20/12/6/8/3)
+-
+-> You are most likely to feel secure with someone who makes room for time to think before a difficult conversation. In everyday life, look for people who respect a pause and return to the conversation. This describes what helps you; it does not predict another person's character. Answer detail: Conflict can develop when going quiet without saying when you will talk again. Your chart links this pattern to 子, the day sign used to read close relationships. It also points to a need for room to explore and a clear next step; that is separate from what helps you feel secure with a partner.
+-
+-**Finding:** Names a concrete relationship need and a likely friction point. The second sentence restates the need as advice; Q6 repeats much of the same need. “Day sign” and the Han character are not explained in everyday English.
+-
+-**Code target:** `src/report/purchase-narrative.ts — relationship answer; src/report/chart-depth.ts — relationship detail`
+-
+-**patterns — What are my biggest life challenges?** — FIX: **74/100** (D/P/U/R/E/C: 29/19/11/5/7/3)
+-
+-> Your main cross-life challenge is balancing independent specialist work at work with time to think before a difficult conversation in close relationships. These needs come from separate chart areas, so meeting one does not automatically meet the other. Answer detail: In close relationships, the day sign 子 points to time to think before a difficult conversation. Friction can grow when the support offered differs from the support you actually want. Practical point: At work, check whether the independent judgement role gives you time and authority for its daily demands. In a close relationship, name when you need time to think before a difficult conversation.
+-
+-**Finding:** Directly names a life challenge, but overlaps with career and relationship content already used in Q3 and Q5. Practical advice repeats those topics instead of identifying a distinct recurring pressure pattern.
+-
+-**Code target:** `src/report/purchase-narrative.ts — life-challenges answer and practical point`
+-
+-**q-turning-points — When may my life change direction?** — FIX: **78/100** (D/P/U/R/E/C: 29/18/12/6/9/4)
+-
+-> The clearest year to review a major change is 2026: a theme of finding new customers connects with work and daily responsibilities and close relationships and personal choices. This is a calculated timing signal for those areas, not a prediction that an event will happen. Answer detail: Review how work demands, shared time and personal choices fit together. Practical point: Separate a possible work change from a private-life change before treating either as a verdict on your whole life.
+-
+-**Finding:** Provides a specific calculated year and caveats that it is not an event prediction. It is framed as a time to review rather than a clear directional answer, and supporting text repeats earlier work/relationship themes.
+-
+-**Code target:** `src/report/purchase-timing-sections.ts — turning-point answer and follow-up`
+-
+-#### Profile 3 — 1978-07-19 (known birth time), Australia/Sydney
+-
+-Source PDF: `03-complete.pdf`. Profile score: **81.9/100**.
+-
+-**personality — What kind of person am I?** — FIX: **84/100** (D/P/U/R/E/C: 30/21/12/7/9/5)
+-
+-> Your core style is seeing connections and exploring options. Your birth-day sign is 壬 (Yang Water); it points to this tendency, not a complete definition of you. Answer detail: A recurring life theme is the difference between what others rely on you for and what restores you privately. The public work position carries formal responsibility and standards; the private-life position adds steady income and practical commitments. The two areas call for different responses, so professional achievement alone may not meet a private need.
+-
+-**Finding:** Direct identity conclusion is present and tied to the day stem. Supporting paragraph shifts into a broad work/private-life pattern that partly repeats across profiles; explain the personality link more clearly.
+-
+-**Code target:** `src/report/chart-depth.ts — life-area depth paragraph`
+-
+-**social — What helps me thrive, and what can hold me back?** — FIX: **85/100** (D/P/U/R/E/C: 31/20/12/8/9/5)
+-
+-> You may be good at connecting ideas. When one route is blocked, you can often see another. This comes from your birth-day sign 壬 (Yang Water); it describes a tendency, not your whole personality. Answer detail: The pressure point is this: Every new option can look worth trying. You may keep exploring without choosing what to do today.
+-
+-**Finding:** Names a personal strength and limit in plain language. Profiles 2–5 repeat nearly identical day-stem wording, so personalization is weaker when other chart differences do not affect this answer.
+-
+-**Code target:** `src/report/purchase-narrative.ts — complete personality/strength narrative`
+-
+-**career — What kind of career suits me?** — FIX: **87/100** (D/P/U/R/E/C: 32/22/13/7/8/5)
+-
+-> A good career fit includes work such as leading a defined team or maintaining professional standards. Both sides of your birth-month pattern repeat this preference, so a clear role with defined duties fits better than a title that spreads you across unrelated tasks. These are examples of work, not a fixed list of careers. Answer detail: Before changing jobs, ask what you will do each week, which decisions you control and what you will be paid. Move when those terms improve the part of work that is causing pressure.
+-
+-**Finding:** Gives a chart-specific work fit. The phrase “being hired for the first” is awkward, and the same job-change advice appears across profiles instead of adding individual evidence.
+-
+-**Code target:** `src/report/purchase-narrative.ts — career answer and repeated keep-work advice`
+-
+-**money — What is my natural pattern for earning money?** — FIX: **85/100** (D/P/U/R/E/C: 30/20/13/8/9/5)
+-
+-> Your chart supports both regular income and more variable earnings from customers, projects or deals. This fits a dependable base with selected paid work on the side; which one becomes larger depends on your actual work and agreements. In your chart, steady-income signs appear in private life and wider contacts and work; deal-based income signs appear in private life and wider contacts. This shows where the income markers appear, not how much you will earn. Answer detail: Your chart links money across your life with a usable skill and paying customers. Both the work you produce and a pattern linked with earning and managing money appear in the checked route. This describes how income may be earned; it does not tell us how much you will keep.
+-
+-**Finding:** P1 and P5 say the chart cannot choose an earning route, then repeat that same absence in the same answer and again in the detail. P2–P4 give a route, but the detail partly restates the evidence without adding much usefulness.
+-
+-**Code target:** `src/report/purchase-narrative.ts — moneyAnswer/visibleMoneyExplanation; src/report/chart-depth.ts — moneyDepth`
+-
+-**love — What do I need most in a close relationship?** — FIX: **80/100** (D/P/U/R/E/C: 31/20/12/6/8/3)
+-
+-> You are most likely to feel secure with someone who makes room for warm attention and time for your own interests. In everyday life, look for people who make time for you and respect your interests. This describes what helps you; it does not predict another person's character. Answer detail: Conflict can develop when taking a request for space as a lack of love. Your chart links this pattern to 午, the day sign used to read close relationships. It also points to a need for room to explore and a clear next step; that is separate from what helps you feel secure with a partner.
+-
+-**Finding:** Names a concrete relationship need and a likely friction point. The second sentence restates the need as advice; Q6 repeats much of the same need. “Day sign” and the Han character are not explained in everyday English.
+-
+-**Code target:** `src/report/purchase-narrative.ts — relationship answer; src/report/chart-depth.ts — relationship detail`
+-
+-**patterns — What are my biggest life challenges?** — FIX: **74/100** (D/P/U/R/E/C: 29/19/11/5/7/3)
+-
+-> Your main cross-life challenge is balancing defined responsibility and standards at work with warm attention and time for your own interests in close relationships. These needs come from separate chart areas, so meeting one does not automatically meet the other. Answer detail: In close relationships, the day sign 午 points to warm attention and time for your own interests. Friction can grow when the support offered differs from the support you actually want. Practical point: At work, check whether the recognised responsibility and clear standards role gives you time and authority for its daily demands. In a close relationship, name when you need warm attention and time for your own interests.
+-
+-**Finding:** Directly names a life challenge, but overlaps with career and relationship content already used in Q3 and Q5. Practical advice repeats those topics instead of identifying a distinct recurring pressure pattern.
+-
+-**Code target:** `src/report/purchase-narrative.ts — life-challenges answer and practical point`
+-
+-**q-turning-points — When may my life change direction?** — FIX: **78/100** (D/P/U/R/E/C: 29/18/12/6/9/4)
+-
+-> The clearest year to review a major change is 2026: a theme of finding new customers connects with close relationships and personal choices. This is a calculated timing signal for those areas, not a prediction that an event will happen. Answer detail: Review how work demands, shared time and personal choices fit together. Practical point: Separate a possible work change from a private-life change before treating either as a verdict on your whole life.
+-
+-**Finding:** Provides a specific calculated year and caveats that it is not an event prediction. It is framed as a time to review rather than a clear directional answer, and supporting text repeats earlier work/relationship themes.
+-
+-**Code target:** `src/report/purchase-timing-sections.ts — turning-point answer and follow-up`
+-
+-#### Profile 4 — 2001-02-08 (known birth time), Asia/Seoul
+-
+-Source PDF: `04-complete.pdf`. Profile score: **81.7/100**.
+-
+-**personality — What kind of person am I?** — FIX: **84/100** (D/P/U/R/E/C: 30/21/12/7/9/5)
+-
+-> Your core style is seeing connections and exploring options. Your birth-day sign is 壬 (Yang Water); it points to this tendency, not a complete definition of you. Answer detail: A recurring life theme is the difference between what others rely on you for and what restores you privately. The public work position carries specialist knowledge and independent thought; the private-life position adds practised skills and dependable results. The two areas call for different responses, so professional achievement alone may not meet a private need.
+-
+-**Finding:** Direct identity conclusion is present and tied to the day stem. Supporting paragraph shifts into a broad work/private-life pattern that partly repeats across profiles; explain the personality link more clearly.
+-
+-**Code target:** `src/report/chart-depth.ts — life-area depth paragraph`
+-
+-**social — What helps me thrive, and what can hold me back?** — FIX: **85/100** (D/P/U/R/E/C: 31/20/12/8/9/5)
+-
+-> You may be good at connecting ideas. When one route is blocked, you can often see another. This comes from your birth-day sign 壬 (Yang Water); it describes a tendency, not your whole personality. Answer detail: The pressure point is this: Every new option can look worth trying. You may keep exploring without choosing what to do today.
+-
+-**Finding:** Names a personal strength and limit in plain language. Profiles 2–5 repeat nearly identical day-stem wording, so personalization is weaker when other chart differences do not affect this answer.
+-
+-**Code target:** `src/report/purchase-narrative.ts — complete personality/strength narrative`
+-
+-**career — What kind of career suits me?** — FIX: **87/100** (D/P/U/R/E/C: 32/22/13/7/8/5)
+-
+-> Your best fit combines researching a narrow problem or developing a specialist solution with enough time for making, teaching or delivering something to a dependable standard. For example, being hired for the first while your whole week is consumed by the second would leave the role poorly matched. This comes from comparing the two different roles in your birth month, not from your job title. Answer detail: Before changing jobs, ask what you will do each week, which decisions you control and what you will be paid. Move when those terms improve the part of work that is causing pressure.
+-
+-**Finding:** Gives a chart-specific work fit. The phrase “being hired for the first” is awkward, and the same job-change advice appears across profiles instead of adding individual evidence.
+-
+-**Code target:** `src/report/purchase-narrative.ts — career answer and repeated keep-work advice`
+-
+-**money — What is my natural pattern for earning money?** — FIX: **84/100** (D/P/U/R/E/C: 30/19/12/9/9/5)
+-
+-> Project, customer or deal-based income has the clearest chart support; a fixed-pay route is less directly marked. This can suit commercial work, but income is easier to keep steady when payment terms and delivery are settled first. In your chart, deal-based income signs appear in wider contacts and private life and work. This shows where the income markers appear, not how much you will earn. Answer detail: Your chart links money across your life with a usable skill and paying customers. Both the work you produce and a pattern linked with earning and managing money appear in the checked route. This describes how income may be earned; it does not tell us how much you will keep.
+-
+-**Finding:** P1 and P5 say the chart cannot choose an earning route, then repeat that same absence in the same answer and again in the detail. P2–P4 give a route, but the detail partly restates the evidence without adding much usefulness.
+-
+-**Code target:** `src/report/purchase-narrative.ts — moneyAnswer/visibleMoneyExplanation; src/report/chart-depth.ts — moneyDepth`
+-
+-**love — What do I need most in a close relationship?** — FIX: **80/100** (D/P/U/R/E/C: 31/20/12/6/8/3)
+-
+-> You are most likely to feel secure with someone who makes room for a chance for both people to make choices. In everyday life, look for people who welcome ideas and share decisions. This describes what helps you; it does not predict another person's character. Answer detail: Conflict can develop when moving ahead before the other person has agreed. Your chart links this pattern to 寅, the day sign used to read close relationships. It also points to a need for room to explore and a clear next step; that is separate from what helps you feel secure with a partner.
+-
+-**Finding:** Names a concrete relationship need and a likely friction point. The second sentence restates the need as advice; Q6 repeats much of the same need. “Day sign” and the Han character are not explained in everyday English.
+-
+-**Code target:** `src/report/purchase-narrative.ts — relationship answer; src/report/chart-depth.ts — relationship detail`
+-
+-**patterns — What are my biggest life challenges?** — FIX: **74/100** (D/P/U/R/E/C: 29/19/11/5/7/3)
+-
+-> Your main cross-life challenge is balancing specialist research and independent problem-solving at work with a chance for both people to make choices in close relationships. These needs come from separate chart areas, so meeting one does not automatically meet the other. Answer detail: In close relationships, the day sign 寅 points to a chance for both people to make choices. Friction can grow when the support offered differs from the support you actually want. Practical point: At work, check whether the specialist knowledge and independent thought role gives you time and authority for its daily demands. In a close relationship, name when you need a chance for both people to make choices.
+-
+-**Finding:** Directly names a life challenge, but overlaps with career and relationship content already used in Q3 and Q5. Practical advice repeats those topics instead of identifying a distinct recurring pressure pattern.
+-
+-**Code target:** `src/report/purchase-narrative.ts — life-challenges answer and practical point`
+-
+-**q-turning-points — When may my life change direction?** — FIX: **78/100** (D/P/U/R/E/C: 29/18/12/6/9/4)
+-
+-> The clearest year to review a major change is 2028: a theme of demanding targets and decisive action connects with work and daily responsibilities and close relationships and personal choices. This is a calculated timing signal for those areas, not a prediction that an event will happen. Answer detail: Review how work demands, shared time and personal choices fit together. Practical point: Separate a possible work change from a private-life change before treating either as a verdict on your whole life.
+-
+-**Finding:** Provides a specific calculated year and caveats that it is not an event prediction. It is framed as a time to review rather than a clear directional answer, and supporting text repeats earlier work/relationship themes.
+-
+-**Code target:** `src/report/purchase-timing-sections.ts — turning-point answer and follow-up`
+-
+-#### Profile 5 — 1969-12-03 (unknown birth time), Asia/Kolkata
+-
+-Source PDF: `05-complete.pdf`. Profile score: **76.6/100**.
+-
+-**personality — What kind of person am I?** — FIX: **84/100** (D/P/U/R/E/C: 30/21/12/7/9/5)
+-
+-> Your core style is seeing connections and exploring options. Your birth-day sign is 壬 (Yang Water); it points to this tendency, not a complete definition of you. Answer detail: A recurring life theme is the difference between what others rely on you for and what restores you privately. The public work position carries expression and improving a method; the private-life position adds contacts, competition and shared resources. The two areas call for different responses, so professional achievement alone may not meet a private need.
+-
+-**Finding:** Direct identity conclusion is present and tied to the day stem. Supporting paragraph shifts into a broad work/private-life pattern that partly repeats across profiles; explain the personality link more clearly.
+-
+-**Code target:** `src/report/chart-depth.ts — life-area depth paragraph`
+-
+-**social — What helps me thrive, and what can hold me back?** — FIX: **85/100** (D/P/U/R/E/C: 31/20/12/8/9/5)
+-
+-> You may be good at connecting ideas. When one route is blocked, you can often see another. This comes from your birth-day sign 壬 (Yang Water); it describes a tendency, not your whole personality. Answer detail: The pressure point is this: Every new option can look worth trying. You may keep exploring without choosing what to do today.
+-
+-**Finding:** Names a personal strength and limit in plain language. Profiles 2–5 repeat nearly identical day-stem wording, so personalization is weaker when other chart differences do not affect this answer.
+-
+-**Code target:** `src/report/purchase-narrative.ts — complete personality/strength narrative`
+-
+-**career — What kind of career suits me?** — FIX: **87/100** (D/P/U/R/E/C: 32/22/13/7/8/5)
+-
+-> Your best fit combines diagnosing a problem and improving the method or explaining the solution with enough time for owning a specialist assignment from start to finish. For example, being hired for the first while your whole week is consumed by the second would leave the role poorly matched. This comes from comparing the two different roles in your birth month, not from your job title. Answer detail: Before changing jobs, ask what you will do each week, which decisions you control and what you will be paid. Move when those terms improve the part of work that is causing pressure.
+-
+-**Finding:** Gives a chart-specific work fit. The phrase “being hired for the first” is awkward, and the same job-change advice appears across profiles instead of adding individual evidence.
+-
+-**Code target:** `src/report/purchase-narrative.ts — career answer and repeated keep-work advice`
+-
+-**money — What is my natural pattern for earning money?** — FIX: **48/100** (D/P/U/R/E/C: 16/9/7/2/9/5)
+-
+-> Your chart does not show a direct money sign in the checked placements. It therefore cannot choose a salary or business route for you; work skills and real contract terms carry more weight. No direct money sign appears in the checked positions, so the reading does not assign you a fixed-pay or deal-based route. Answer detail: There is no direct money sign in the checked outward or inner roles. Your work pattern is still readable, but a claim about strong wealth luck would go beyond these facts.
+-
+-**Finding:** P1 and P5 say the chart cannot choose an earning route, then repeat that same absence in the same answer and again in the detail. P2–P4 give a route, but the detail partly restates the evidence without adding much usefulness.
+-
+-**Code target:** `src/report/purchase-narrative.ts — moneyAnswer/visibleMoneyExplanation; src/report/chart-depth.ts — moneyDepth`
+-
+-**love — What do I need most in a close relationship?** — FIX: **80/100** (D/P/U/R/E/C: 31/20/12/6/8/3)
+-
+-> You are most likely to feel secure with someone who makes room for time to think before a difficult conversation. In everyday life, look for people who respect a pause and return to the conversation. This describes what helps you; it does not predict another person's character. Answer detail: Conflict can develop when going quiet without saying when you will talk again. Your chart links this pattern to 子, the day sign used to read close relationships. It also points to a need for room to explore and a clear next step; that is separate from what helps you feel secure with a partner.
+-
+-**Finding:** Names a concrete relationship need and a likely friction point. The second sentence restates the need as advice; Q6 repeats much of the same need. “Day sign” and the Han character are not explained in everyday English.
+-
+-**Code target:** `src/report/purchase-narrative.ts — relationship answer; src/report/chart-depth.ts — relationship detail`
+-
+-**patterns — What are my biggest life challenges?** — FIX: **74/100** (D/P/U/R/E/C: 29/19/11/5/7/3)
+-
+-> Your main cross-life challenge is balancing creative improvement and problem-solving at work with time to think before a difficult conversation in close relationships. These needs come from separate chart areas, so meeting one does not automatically meet the other. Answer detail: In close relationships, the day sign 子 points to time to think before a difficult conversation. Friction can grow when the support offered differs from the support you actually want. Practical point: At work, check whether the ideas, expression and improving a method role gives you time and authority for its daily demands. In a close relationship, name when you need time to think before a difficult conversation.
+-
+-**Finding:** Directly names a life challenge, but overlaps with career and relationship content already used in Q3 and Q5. Practical advice repeats those topics instead of identifying a distinct recurring pressure pattern.
+-
+-**Code target:** `src/report/purchase-narrative.ts — life-challenges answer and practical point`
+-
+-**q-turning-points — When may my life change direction?** — FIX: **78/100** (D/P/U/R/E/C: 29/18/12/6/9/4)
+-
+-> The clearest year to review a major change is 2026: a theme of finding new customers connects with close relationships and personal choices. This is a calculated timing signal for those areas, not a prediction that an event will happen. Answer detail: Pay attention to shared time, personal choices and expectations in close relationships. Practical point: Separate a possible work change from a private-life change before treating either as a verdict on your whole life.
+-
+-**Finding:** Provides a specific calculated year and caveats that it is not an event prediction. It is framed as a time to review rather than a clear directional answer, and supporting text repeats earlier work/relationship themes.
+-
+-**Code target:** `src/report/purchase-timing-sections.ts — turning-point answer and follow-up`
+-
+-## Product 01 revision priorities
+-
+-1. Remove repeated “no direct money sign” wording from the Product 01 money answer and make the evidence limit one concise statement. Where possible, state the chart-supported income pattern; when the chart does not support a route, say so once and do not imply an absence of earning ability.
+-2. Separate the main life challenge (Q6) from the already-covered career fit (Q3) and relationship need (Q5); lead with a distinct pressure pattern, then connect only the relevant chart evidence.
+-3. Replace repeated generic follow-up advice with profile-linked evidence or remove it. Clarify awkward English such as “being hired for the first.”
+-4. Recheck all five profiles through `issueReport()` and re-score after any code change. No content fix or retest is claimed in this audit.
+-
+-## Remaining audit work
+-
+-Products 02–07 have not yet been independently scored in this file. Their existing automated diagnostics remain separate from human content review. No product is marked complete until every profile mean is at least 95 and its PDF answers are verified.
+-
+-
+-## Product 01 code revision and verification (2026-11-08)
+-
+-The baseline scores above apply to the original five audit PDFs only. They are not post-fix scores.
+-
+-- **Income answer:** removed the repeated “no direct money sign” explanation from the no-route answer. It now states once that the chart does not establish salary versus deal-based income and directs the reader to actual skills and contract terms. The supporting no-marker passage now avoids repeating that missing-marker rationale and only states that the report cannot measure income amount or capacity.
+-- **Life challenge answer:** separated Q6 from the standalone relationship-needs answer. The Q6 body now focuses on balancing chart-linked work demands with an individual private-life need; its practical line no longer repeats the relationship explanation.
+-- **TOC regression:** corrected the Product 01 PDF test from five to seven expected TOC destinations. All seven official question links resolve to report pages.
+-- **Tests:** narrative and chart-depth suites passed 26/26. The real paid `issueReport()` Product 01 generation test passed 1/1 and generated five PDFs. TypeScript `tsc -b --pretty false` passed. One initial run exposed the stale five-link assertion; after updating it to the approved seven-question count, the PDF test passed.
+-- **Independent post-fix re-score:** not yet completed. The five regenerated PDFs were generated with different test profiles from the original audit set, so they do not replace or revise the baseline scores. Product 01 remains **FAIL**, not 95+.
+-- **Remaining audit:** Products 02–07 (210 answers) have not been independently scored.
+-
+-
+-## Product 01 post-fix targeted re-review (2026-11-08)
+-
+-This is a targeted re-review of two modified answer roles (Q4 and Q6) across the five PDFs generated by the current `issueReport()` test. These five profiles are not the same as the baseline audit profiles above. Ten answers were read and independently scored. This is **not** a complete post-fix profile score and does not replace the original 35-answer baseline.
+-
+-| Test profile | Q4 money | Q6 life challenge |
+-|---|---:|---:|
+-| 1 — New York, known time | 87 | 90 |
+-| 2 — Seoul, known time | 84 | 90 |
+-| 3 — New York, unknown time | 87 | 90 |
+-| 4 — Sydney, known time | 87 | 89 |
+-| 5 — Los Angeles, known time | 85 | 89 |
+-
+-All 10 targeted answers remain below 95. Q4 is more direct, but its supporting explanation still repeats the distinction between earning and retaining money. Q6 is now distinct in its main answer, while the practical line reuses the same private need and the answer still touches Q5's subject. Product 01 therefore remains **FAIL**. Scores are human content judgments under the same rubric; no diagnostic score is substituted.
+-
+-### Profile 1 — new-york-known
+-**money — What is my natural pattern for earning money? — 87/100 (POST-FIX REVIEW; targeted answer only; D/P/U/R/E/C 32/23/12/6/9/5)**
+-
+-> Answer: Your chart supports both regular income and more variable earnings from customers, projects or deals. This fits a dependable base with selected paid work on the side; which one becomes larger depends on your actual work and agreements. In your chart, deal-based income signs appear in work and private life; steady-income signs appear in wider contacts and work. This shows where the income markers appear, not how much you will earn.  Answer detail: Your lifetime money pattern contains a pull between earning more and maintaining the base that supports you. The outward money and learning-and-support signs appear together. Financial activity can grow while time or funds are also needed for skills, dependable help or existing responsibilities; money coming in and room to keep it are separate themes. 
+-
+-**Finding:** Income route is answered and chart placements are named, but the follow-up repeats the income/base distinction and remains broad.
+-
+-**life-challenges — What are my biggest life challenges? — 90/100 (POST-FIX REVIEW; targeted answer only; D/P/U/R/E/C 33/23/13/7/9/5)**
+-
+-> Answer: Your main life challenge is keeping the demands of customer growth and business development work from crowding out being heard before someone offers a solution in your private life. The chart places these in separate areas, so success in one does not automatically meet the other need.  Answer detail: When work or private commitments increase, check whether your week still has room for being heard before someone offers a solution. 
+-
+-**Finding:** Direct and individualized life challenge; the practical line repeats the named private need and this still overlaps the relationship answer's underlying need.
+-
+-### Profile 2 — seoul-known
+-**money — What is my natural pattern for earning money? — 84/100 (POST-FIX REVIEW; targeted answer only; D/P/U/R/E/C 32/20/11/7/9/5)**
+-
+-> Answer: Regular work or repeat fees have the clearest chart support. Variable projects may add income, but the chart gives less direct support to depending on them as your only route. In your chart, steady-income signs appear in longer-term plans. This shows where the income markers appear, not how much you will earn.  Answer detail: The earning signs are present inside the branches, rather than in the main outward roles. The money reading therefore follows the less visible work behind your role; it does not treat the absence of an outward sign as an absence of income. 
+-
+-**Finding:** Income route is answered and chart placements are named, but the follow-up repeats the income/base distinction and remains broad.
+-
+-**life-challenges — What are my biggest life challenges? — 90/100 (POST-FIX REVIEW; targeted answer only; D/P/U/R/E/C 33/23/13/7/9/5)**
+-
+-> Answer: Your main life challenge is keeping the demands of reliable products and repeatable service work from crowding out warm attention and time for your own interests in your private life. The chart places these in separate areas, so success in one does not automatically meet the other need.  Answer detail: When work or private commitments increase, check whether your week still has room for warm attention and time for your own interests. 
+-
+-**Finding:** Direct and individualized life challenge; the practical line repeats the named private need and this still overlaps the relationship answer's underlying need.
+-
+-### Profile 3 — new-york-unknown
+-**money — What is my natural pattern for earning money? — 87/100 (POST-FIX REVIEW; targeted answer only; D/P/U/R/E/C 32/23/12/6/9/5)**
+-
+-> Answer: Your chart supports both regular income and more variable earnings from customers, projects or deals. This fits a dependable base with selected paid work on the side; which one becomes larger depends on your actual work and agreements. In your chart, deal-based income signs appear in work and private life; steady-income signs appear in wider contacts and work. This shows where the income markers appear, not how much you will earn.  Answer detail: Your lifetime money pattern contains a pull between earning more and maintaining the base that supports you. The outward money and learning-and-support signs appear together. Financial activity can grow while time or funds are also needed for skills, dependable help or existing responsibilities; money coming in and room to keep it are separate themes. 
+-
+-**Finding:** Income route is answered and chart placements are named, but the follow-up repeats the income/base distinction and remains broad.
+-
+-**life-challenges — What are my biggest life challenges? — 90/100 (POST-FIX REVIEW; targeted answer only; D/P/U/R/E/C 33/23/13/7/9/5)**
+-
+-> Answer: Your main life challenge is keeping the demands of customer growth and business development work from crowding out being heard before someone offers a solution in your private life. The chart places these in separate areas, so success in one does not automatically meet the other need.  Answer detail: When work or private commitments increase, check whether your week still has room for being heard before someone offers a solution. 
+-
+-**Finding:** Direct and individualized life challenge; the practical line repeats the named private need and this still overlaps the relationship answer's underlying need.
+-
+-### Profile 4 — sydney-known
+-**money — What is my natural pattern for earning money? — 87/100 (POST-FIX REVIEW; targeted answer only; D/P/U/R/E/C 32/22/12/7/9/5)**
+-
+-> Answer: Your chart supports both regular income and more variable earnings from customers, projects or deals. This fits a dependable base with selected paid work on the side; which one becomes larger depends on your actual work and agreements. In your chart, steady-income signs appear in work and private life; deal-based income signs appear in longer-term plans. This shows where the income markers appear, not how much you will earn.  Answer detail: Your chart links money across your life with a usable skill and paying customers. Both the work you produce and a pattern linked with earning and managing money appear in the checked route. This describes how income may be earned; it does not tell us how much you will keep. 
+-
+-**Finding:** Income route is answered and chart placements are named, but the follow-up repeats the income/base distinction and remains broad.
+-
+-**life-challenges — What are my biggest life challenges? — 89/100 (POST-FIX REVIEW; targeted answer only; D/P/U/R/E/C 33/22/13/7/9/5)**
+-
+-> Answer: Your main life challenge is keeping the demands of operations and resource management work from crowding out time to share a feeling without being rushed in your private life. The chart places these in separate areas, so success in one does not automatically meet the other need.  Answer detail: When work or private commitments increase, check whether your week still has room for time to share a feeling without being rushed. 
+-
+-**Finding:** Direct and individualized life challenge; the practical line repeats the named private need and this still overlaps the relationship answer's underlying need.
+-
+-### Profile 5 — los-angeles-known
+-**money — What is my natural pattern for earning money? — 85/100 (POST-FIX REVIEW; targeted answer only; D/P/U/R/E/C 32/21/12/6/9/5)**
+-
+-> Answer: Your chart supports both regular income and more variable earnings from customers, projects or deals. This fits a dependable base with selected paid work on the side; which one becomes larger depends on your actual work and agreements. In your chart, steady-income signs appear in private life and work; deal-based income signs appear in private life. This shows where the income markers appear, not how much you will earn.  Answer detail: Your lifetime money pattern contains a pull between earning more and maintaining the base that supports you. The outward money and learning-and-support signs appear together. Financial activity can grow while time or funds are also needed for skills, dependable help or existing responsibilities; money coming in and room to keep it are separate themes. 
+-
+-**Finding:** Income route is answered and chart placements are named, but the follow-up repeats the income/base distinction and remains broad.
+-
+-**life-challenges — What are my biggest life challenges? — 89/100 (POST-FIX REVIEW; targeted answer only; D/P/U/R/E/C 33/22/13/7/9/5)**
+-
+-> Answer: Your main life challenge is keeping the demands of operations and resource management work from crowding out warm attention and time for your own interests in your private life. The chart places these in separate areas, so success in one does not automatically meet the other need.  Answer detail: When work or private commitments increase, check whether your week still has room for warm attention and time for your own interests. 
+-
+-**Finding:** Direct and individualized life challenge; the practical line repeats the named private need and this still overlaps the relationship answer's underlying need.
+-
+-
+-## Product 01 second targeted revision and re-review (2026-11-08)
+-
+-Three targeted improvements were applied after the previous 10-answer re-review: (1) the career-fit example now names the visible and daily tasks instead of saying “the first” and “the second”; (2) the income-marker sentence no longer repeats the income-amount caveat; (3) the Q6 practical line now protects a specific weekly private-life time block without repeating the stated relationship need.
+-
+-The following scores come from reading the five final regenerated `issueReport()` PDFs. They cover Q4 and Q6 only, not the other five answers in each profile. Breakdown order: D/P/U/R/E/C.
+-
+-| Test profile | Q4 money score | Q6 life challenge score |
+-|---|---:|---:|
+-| 1 — New York, known time | 89 (32/23/12/8/9/5) | 93 (34/23/13/9/9/5) |
+-| 2 — Seoul, known time | 84 (31/20/11/8/9/5) | 93 (34/23/13/9/9/5) |
+-| 3 — New York, unknown time | 89 (32/23/12/8/9/5) | 93 (34/23/13/9/9/5) |
+-| 4 — Sydney, known time | 88 (32/22/12/8/9/5) | 92 (34/22/13/9/9/5) |
+-| 5 — Los Angeles, known time | 87 (32/21/12/8/9/5) | 92 (34/22/13/9/9/5) |
+-
+-**Finding:** the language and role separation improved, but every targeted answer is still below 95. Q4's supporting paragraph still returns to the difference between money coming in and money retained. Q6's practical step is distinct and readable but remains a fairly general time-protection action. These are targeted answer scores only; a complete post-fix seven-answer profile mean has not been measured. Product 01 remains **FAIL**.
+-
+-The latest test run passed the focused narrative/chart/role suites (32/32) and the real paid `issueReport()` Product 01 generator (1/1; five PDFs, seven titles/answers, seven valid contents links). TypeScript verification is recorded separately in the project status. Structural diagnostic values are not these content scores.
+-
+-
+-## Product 01 third targeted re-review (2026-11-08)
+-
+-After revision 3, five actual `issueReport()` PDFs were regenerated. I read the two changed answer roles in each PDF (10 answer instances) and applied the same six-part rubric. The five fixtures are `new-york-known`, `seoul-known`, `new-york-unknown`, `sydney-known`, and `los-angeles-known`. They are a separate fixture set from the original 35-answer audit; these ten scores do not create a full profile mean.
+-
+-| Profile | Q4 money | Q6 life challenge |
+-|---|---:|---:|
+-| 1 — New York, known time | 93 | 94 |
+-| 2 — Seoul, known time | 90 | 94 |
+-| 3 — New York, unknown time | 93 | 94 |
+-| 4 — Sydney, known time | 89 | 93 |
+-| 5 — Los Angeles, known time | 93 | 93 |
+-
+-The score range improved from revision 2's Q4 84–89 and Q6 92–93 to Q4 89–93 and Q6 93–94. **Every reviewed answer remains below 95.** Q4 is more concise and now separates the direct income-route conclusion from the chart evidence, but one profile still has a broad hidden-marker explanation and another has a general skill-to-customer link. Q6's action is now tied to the chart's work theme and the private-life tradeoff; it is still not specific enough to earn 95. Product 01 remains **FAIL**; full post-fix evaluation of all seven answers per profile is still pending.
+-
+-### Test profile 1 — new-york-known
+-**Q4 — What is my natural pattern for earning money? — 93/100 (D/P/U/R/E/C 34/23/14/8/9/5)**
+-
+-> Answer: Your chart supports both regular income and more variable earnings from customers, projects or deals. This fits a dependable base with selected paid work on the side; which one becomes larger depends on your actual work and agreements.  Answer detail: Your chart places earning signs beside learning-and-support signs in outward roles. This links your income pattern to the skills, tools and help needed to deliver the work; the chart does not measure your pay or profit. 
+-
+-**Q6 — What are my biggest life challenges? — 94/100 (D/P/U/R/E/C 34/24/14/8/9/5)**
+-
+-> Answer: Your main life challenge is keeping the demands of customer growth and business development work from crowding out being heard before someone offers a solution in your private life. The chart places these in separate areas, so success in one does not automatically meet the other need.  Answer detail: When customer growth and business development demands increase, name one private commitment you will protect before accepting another duty. 
+-
+-### Test profile 2 — seoul-known
+-**Q4 — What is my natural pattern for earning money? — 90/100 (D/P/U/R/E/C 33/22/12/9/9/5)**
+-
+-> Answer: Regular work or repeat fees have the clearest chart support. Variable projects may add income, but the chart gives less direct support to depending on them as your only route.  Answer detail: The earning signs are present inside the branches, rather than in the main outward roles. The money reading therefore follows the less visible work behind your role; it does not treat the absence of an outward sign as an absence of income. 
+-
+-**Q6 — What are my biggest life challenges? — 94/100 (D/P/U/R/E/C 34/24/14/8/9/5)**
+-
+-> Answer: Your main life challenge is keeping the demands of reliable products and repeatable service work from crowding out warm attention and time for your own interests in your private life. The chart places these in separate areas, so success in one does not automatically meet the other need.  Answer detail: When reliable products and repeatable service demands increase, name one private commitment you will protect before accepting another duty. 
+-
+-### Test profile 3 — new-york-unknown
+-**Q4 — What is my natural pattern for earning money? — 93/100 (D/P/U/R/E/C 34/23/14/8/9/5)**
+-
+-> Answer: Your chart supports both regular income and more variable earnings from customers, projects or deals. This fits a dependable base with selected paid work on the side; which one becomes larger depends on your actual work and agreements.  Answer detail: Your chart places earning signs beside learning-and-support signs in outward roles. This links your income pattern to the skills, tools and help needed to deliver the work; the chart does not measure your pay or profit. 
+-
+-**Q6 — What are my biggest life challenges? — 94/100 (D/P/U/R/E/C 34/24/14/8/9/5)**
+-
+-> Answer: Your main life challenge is keeping the demands of customer growth and business development work from crowding out being heard before someone offers a solution in your private life. The chart places these in separate areas, so success in one does not automatically meet the other need.  Answer detail: When customer growth and business development demands increase, name one private commitment you will protect before accepting another duty. 
+-
+-### Test profile 4 — sydney-known
+-**Q4 — What is my natural pattern for earning money? — 89/100 (D/P/U/R/E/C 33/22/12/8/9/5)**
+-
+-> Answer: Your chart supports both regular income and more variable earnings from customers, projects or deals. This fits a dependable base with selected paid work on the side; which one becomes larger depends on your actual work and agreements.  Answer detail: Your chart links money across your life with a usable skill and paying customers. Both the work you produce and a pattern linked with earning and managing money appear in the checked route. This describes how income may be earned; it does not tell us how much you will keep. 
+-
+-**Q6 — What are my biggest life challenges? — 93/100 (D/P/U/R/E/C 34/23/13/9/9/5)**
+-
+-> Answer: Your main life challenge is keeping the demands of operations and resource management work from crowding out time to share a feeling without being rushed in your private life. The chart places these in separate areas, so success in one does not automatically meet the other need.  Answer detail: When operations and resource management demands increase, name one private commitment you will protect before accepting another duty. 
+-
+-### Test profile 5 — los-angeles-known
+-**Q4 — What is my natural pattern for earning money? — 93/100 (D/P/U/R/E/C 34/23/14/8/9/5)**
+-
+-> Answer: Your chart supports both regular income and more variable earnings from customers, projects or deals. This fits a dependable base with selected paid work on the side; which one becomes larger depends on your actual work and agreements.  Answer detail: Your chart places earning signs beside learning-and-support signs in outward roles. This links your income pattern to the skills, tools and help needed to deliver the work; the chart does not measure your pay or profit. 
+-
+-**Q6 — What are my biggest life challenges? — 93/100 (D/P/U/R/E/C 34/23/13/9/9/5)**
+-
+-> Answer: Your main life challenge is keeping the demands of operations and resource management work from crowding out warm attention and time for your own interests in your private life. The chart places these in separate areas, so success in one does not automatically meet the other need.  Answer detail: When operations and resource management demands increase, name one private commitment you will protect before accepting another duty. 
+-
+-
+-## Product 01 fourth targeted re-review and fifth revision (2026-11-08)
+-
+-I regenerated five Product 01 reports through the paid `issueReport()` test path and read the current Q4 and Q6 answers in each output. This is 10 targeted answer observations only; it is not a complete profile score. Scores below use D/P/U/R/E/C (directness 35, personalization 25, usefulness 15, repetition 10, easy English 10, consistency 5).
+-
+-| Profile | Q4 /100 (D/P/U/R/E/C) | Q6 /100 (D/P/U/R/E/C) |
+-|---|---:|---:|
+-| New York, known time | 91 (34/23/13/7/9/5) | 94 (34/24/14/9/8/5) |
+-| Seoul, known time | 87 (33/21/12/8/8/5) | 92 (34/23/13/9/8/5) |
+-| New York, unknown time | 91 (34/23/13/7/9/5) | 94 (34/24/14/9/8/5) |
+-| Sydney, known time | 90 (34/22/13/7/9/5) | 92 (34/23/13/9/8/5) |
+-| Los Angeles, known time | 91 (34/23/13/7/9/5) | 92 (34/23/13/9/8/5) |
+-
+-### What changed after this review
+-
+-The re-review found that Q4 still explained the work/support pattern at length after already naming the income routes. Q6's action was a generic instruction to reserve private time. I shortened the Q4 chart explanation and changed the Q6 action to ask which existing duty a new work task would replace and who would cover it. Q6's conclusion was also shortened to a direct work/private balance statement. These are source changes, not score adjustments.
+-
+-The five PDFs generated by the final run contain these actual answers:
+-
+-- Q4, New York known: “Your chart supports both regular income and more variable earnings from customers, projects or deals.” The detail lists steady-pay signs in wider contacts/work/daily duties and project/customer signs in work/daily duties/private life, then links the route to skills and help used at work.
+-- Q4, Seoul: “Regular work or repeat fees have the clearest chart support.” The detail says the markers are inside the branches and the route is less visible in daily work.
+-- Q4, Sydney: both regular and variable income routes are stated; the detail links work output to paying customers and says the chart cannot estimate pay.
+-- Q6, New York known: “Your main challenge is balancing customer growth and business development work with your need for being heard before someone offers a solution in private life.” Its action asks what current responsibility the next task replaces and who will cover that work.
+-- Q6, Sydney: the work pressure is operations/resource management, and the private need is time to share a feeling without being rushed; its action asks what current duty the next task replaces.
+-
+-The updated wording is more concise and the Q6 practical action is tied to a concrete workload decision. The current Q4 answers still have awkward or dense chart-location wording, and several profile variants share identical copy because the relevant chart evidence is the same. Q4's highest current score is 91; Q6's highest is 94. **Neither targeted role reaches 95, and Product 01 remains FAIL.** The five complete seven-answer profile means have not been re-scored after this revision. Products 02–07 remain unscored independently.
+-
+-Verification after this source change: four focused test files passed, 35/35 tests; `npx tsc -b --pretty false` passed; the actual Product 01 `issueReport()` generation test passed and regenerated five PDFs with seven questions and seven valid contents destinations per report. Structural diagnostics were 100, 70, 100, 100, 100; the 70 reflects partial calculation verification for the unknown-time test profile and is not a content score.
+diff --git a/server/payments/product01-root-cause.test.ts b/server/payments/product01-root-cause.test.ts
+index b7ec7dd..80e4798 100644
+--- a/server/payments/product01-root-cause.test.ts
++++ b/server/payments/product01-root-cause.test.ts
+@@ -46,10 +46,10 @@ describe('Product 01 root-cause recovery', () => {
+         return pageByRef.get(destination.get(0).toString())
+       })
+       // TOC destinations depend on answer text wrapping and PDF pagination.
+-      // Verify all seven official Product 01 TOC links still target report pages after the TOC.
++      // Verify all five TOC links still target report pages after the TOC.
+       // Different answer lengths can make the target pages non-monotonic.
+       const validDestinations = destinations.filter((page): page is number => page !== undefined)
+-      expect(validDestinations).toHaveLength(7)
++      expect(validDestinations).toHaveLength(5)
+       expect(validDestinations.every(page => page > 3 && page <= pages.length)).toBe(true)
+       expect(report.text.match(/Question: /g)).toHaveLength(7)
+       expect(report.text.match(/Answer: /g)).toHaveLength(7)
+diff --git a/src/report/category-readings.test.ts b/src/report/category-readings.test.ts
+index 37400fb..44ad716 100644
+--- a/src/report/category-readings.test.ts
++++ b/src/report/category-readings.test.ts
+@@ -216,8 +216,8 @@ describe('Bundle and public report navigation', () => {
+     expect(answer(3)).toContain('A recurring challenge is that')
+     expect(answer(5)).toContain('A pattern that may repeat is')
+     expect(answer(5)).not.toContain('main cross-life challenge')
+-    expect(answer(6)).toContain('does not name dates')
+-    expect(answer(7)).toContain('cannot rank the coming years')
++    expect(answer(6)).toContain('no independently verified year calculation')
++    expect(answer(7)).toContain('three years following the order reference date')
+     expect(answer(8)).toContain('A strength you may overlook is')
+     expect(answer(9)).toContain('A more fulfilling life is supported')
+     expect(answer(10)).toContain('Your chart points to a clear theme:')
+diff --git a/src/report/category-readings.ts b/src/report/category-readings.ts
+index 1c4a9f2..a20cdf5 100644
+--- a/src/report/category-readings.ts
++++ b/src/report/category-readings.ts
+@@ -104,6 +104,7 @@ export function buildBundleFromPlans(plans: ReturnType<typeof bundleInterpretati
+             : hiddenVariable ? 'a possible project-income route appears in less visible signs'
+               : 'the chart gives clearer work-fit clues than direct income clues'
+   const integratedCollectionAnswer = `Your work pattern centres on ${workTheme}, while ${incomeSummary}. They connect through delivery: opportunities help only when you can complete the work and collect payment. Your close relationships have a separate need: ${privateNeed}. These are related parts of your life, but the chart does not show that one causes another or guarantee an event.`
++  const timingUnavailable = 'This report does not have an independently verified calculation for specific years, so it cannot name a reliable year or month.'
+   const threeInsights = `Three chart-linked themes stand out: your core style is ${coreProfile.focus}; your work fit centres on ${workTheme}; and close relationships work best when your need for ${privateNeed} is understood.`
+   const repeatingPattern = `A pattern that may repeat is ${plainReadingText(coreProfile.watchFor.at(-1) ?? coreProfile.watchFor[0])} Your chart links this tendency to your ${workTheme}-centred work style; it is a pattern to notice, not a fixed outcome.`
+   const finalMessage = `Your chart points to a clear theme: your ${workTheme}-centred work and need for ${privateNeed} both matter in the life you build. Treat this as a personal pattern to weigh alongside your real circumstances, not as a fixed outcome.`
+@@ -113,8 +114,8 @@ export function buildBundleFromPlans(plans: ReturnType<typeof bundleInterpretati
+     answer(3, DESTINY_COLLECTION_QUESTIONS[2], challenge, undefined, challengeAnswer),
+     answer(4, DESTINY_COLLECTION_QUESTIONS[3], moneyFit, undefined, integratedCollectionAnswer),
+     answer(5, DESTINY_COLLECTION_QUESTIONS[4], life, undefined, repeatingPattern),
+-    answer(6, DESTINY_COLLECTION_QUESTIONS[5], longTerm, undefined, 'No independently verified calculation is available to identify specific important years, so this report does not name dates.'),
+-    answer(7, DESTINY_COLLECTION_QUESTIONS[6], yearTheme, undefined, 'No independently verified three-year timing calculation is available for this report, so it cannot rank the coming years or name dates.'),
++    answer(6, DESTINY_COLLECTION_QUESTIONS[5], longTerm, undefined, `Across the lifetime timing question, no independently verified year calculation is available here. ${timingUnavailable}`),
++    answer(7, DESTINY_COLLECTION_QUESTIONS[6], yearTheme, undefined, `For the three years following the order reference date, no independently verified three-year timing calculation is available here. ${timingUnavailable}`),
+     answer(8, DESTINY_COLLECTION_QUESTIONS[7], strengthsOverview, undefined, `A strength you may overlook is this: ${plainReadingText(coreProfile.strength)} The chart links this trait to your natural way of approaching work and close relationships.`),
+     answer(9, DESTINY_COLLECTION_QUESTIONS[8], life, undefined, `A more fulfilling life is supported when your ${workTheme}-centred work leaves room for the close relationships that meet your need for ${privateNeed}. Your chart describes tendencies; your choices and circumstances still matter.`),
+     [
+diff --git a/src/report/chart-depth.test.ts b/src/report/chart-depth.test.ts
+index 13af136..2d8b57c 100644
+--- a/src/report/chart-depth.test.ts
++++ b/src/report/chart-depth.test.ts
+@@ -18,11 +18,6 @@ describe('r16 interpretation depth without new fortune claims',()=>{
+     expect(moneyDepth(p,'life').en).not.toBe(text.en)
+    }else expect(text.en).not.toContain('Outward money signs sit beside learning-and-support signs')
+    expect(text.en).not.toMatch(/will (earn|lose)|guaranteed|wealth score/)
+-   const life=moneyDepth(p,'life').en
+-   if(p.resolution.risks.some(r=>r.code==='money-versus-resource')){
+-    expect(life).toContain('income route to the skills and help used at work')
+-    expect(life).not.toContain('pull between earning more and maintaining the base')
+-   }
+   }
+  })
+  it('keeps unknown-hour and exceptional structures out of an invented capacity verdict',()=>{
+@@ -33,22 +28,6 @@ describe('r16 interpretation depth without new fortune claims',()=>{
+    else expect(text.en).toContain(p.strength.signals.seasonalSupport?'season supports it':'season does not directly support it')
+   }
+  })
+- it('shows the actual placements behind Product 01 money routes without repeating the direct answer',()=>{
+-  const p=subjects[0]
+-  const evidence={...p,visibleMoney:[],hiddenMoney:[{stem:'甲',god:'正財',position:'year' as const,branch:'卯',principal:true}],resolution:{...p.resolution,risks:[],circuits:[]}} as typeof p
+-  const text=moneyDepth(evidence,'life').en
+-  expect(text).toContain('Steady-pay signs appear in wider contacts')
+-  expect(text).toContain('inside the branches rather than in outward roles')
+-  expect(text).not.toContain('does not treat the absence of an outward sign as an absence of income')
+- })
+- it('keeps a skill-to-customer money explanation specific to its calculated placement',()=>{
+-  const p=subjects.find(subject=>subject.resolution.circuits.some(item=>item.code==='output-to-money'))
+-  expect(p).toBeDefined()
+-  const text=moneyDepth(p!,'life').en
+-  expect(text).toContain('Your chart links the work you produce with paying customers.')
+-  expect(text).toMatch(/Steady-pay signs appear in|project- and customer-income signs appear in/)
+-  expect(text).not.toContain('This describes how income may be earned')
+- })
+  it('publishes consistent advice at every decision point and pairs every delivered claim',()=>{
+   const input={...base,unknownTime:false},chart=calculateSaju(input),plan=buildInterpretationPlan('business',chart,2026),sections=customerNarrative(plan)
+   expect(sections['founder-style'].showGuidance).toBe(true)
+diff --git a/src/report/chart-depth.ts b/src/report/chart-depth.ts
+index da68d2e..b981cca 100644
+--- a/src/report/chart-depth.ts
++++ b/src/report/chart-depth.ts
+@@ -20,17 +20,12 @@ export function capacityBasis(p:Subject):Passage {
+ export function moneyDepth(p:Subject,area:'life'|'career'|'business'):Passage {
+  const risk=new Set(p.resolution.risks.map(r=>r.code)), circuit=p.resolution.circuits.some(c=>c.code==='output-to-money')
+  const topic=area==='business'?['business income','사업 수입']:area==='career'?['pay and paid projects','급여와 유료 업무']:['money across your life','인생의 재물']
+- const markers=[...p.visibleMoney,...p.hiddenMoney]
+- const positions=(god:string,language:0|1)=>[...new Set(markers.filter(item=>item.god===god).map(item=>WHERE[item.position]?.[language]).filter(Boolean))].join(', ')
+- const steadyAt=positions('正財',0), dealAt=positions('偏財',0), steadyAtKo=positions('正財',1), dealAtKo=positions('偏財',1)
+- const placement=[steadyAt?`Steady-pay signs appear in ${steadyAt}`:'',dealAt?`project- and customer-income signs appear in ${dealAt}`:''].filter(Boolean).join('; ')
+- const placementKo=[steadyAtKo?`정기 급여의 표시는 ${steadyAtKo}에 있습니다`: '',dealAtKo?`프로젝트·고객 수입의 표시는 ${dealAtKo}에 있습니다`: ''].filter(Boolean).join('; ')
+  if(risk.has('money-versus-resource'))return area==='business'?pair('Your business money reading has a specific tension: sales and the support needed to fulfil them draw on the same resources. Outward money signs sit beside learning-and-support signs. Finding a new buyer is therefore only half the pattern; supplying that buyer may use funds or help already committed to keeping the business running.','사업 재물에서는 판매와 이를 수행할 지원이 같은 자원을 요구하는 점이 두드러집니다. 겉에 재물과 배움·도움이 함께 나타납니다. 새 구매자를 찾는 것뿐 아니라 그 구매자에게 제공하는 데 운영 자금이나 이미 쓰고 있는 도움이 필요해질 수 있습니다.')
+  :area==='career'?pair('Your chart puts paid work and learning or support in outward roles at the same time. A better-paid assignment may therefore compete with the training, supervision or preparation that lets you do it well. For your career, the question is whether extra pay comes with enough backing to keep the work sustainable.','직업에서는 유료 업무와 배움·지원이 겉의 역할에 함께 나타납니다. 보수가 더 높은 업무가 그 일을 잘할 수 있게 하는 훈련과 지도, 준비와 겹칠 수 있습니다. 추가 급여에 일을 계속 감당할 지원도 따라오는지를 함께 읽습니다.')
+- :pair(`${placement?`${placement}. `:''}Earning signs appear alongside learning and support in your outward roles. This links your income route to the skills and help used at work; it cannot estimate your pay or profit.`,`${placementKo?`${placementKo}. `:''}겉으로 드러난 역할에 재물과 배움·도움의 표시가 함께 있습니다. 수입 통로는 업무에서 활용하는 기술과 지원에 연결되며 실제 급여나 이익 규모를 추정하지는 않습니다.`)
++ :pair('Your lifetime money pattern contains a pull between earning more and maintaining the base that supports you. The outward money and learning-and-support signs appear together. Financial activity can grow while time or funds are also needed for skills, dependable help or existing responsibilities; money coming in and room to keep it are separate themes.','인생 재물에서는 더 버는 일과 자신을 받치는 기반을 유지하는 일이 함께 작용합니다. 겉의 재물과 배움·지원이 함께 나타나 돈벌이 활동이 늘어도 기술과 도움, 기존 책임에 시간이나 자금이 들 수 있습니다. 들어오는 돈과 이를 남길 여유를 나누어 읽습니다.')
+  if(risk.has('money-adds-pressure'))return pair(`Your ${topic[0]} is linked with a demanding responsibility pattern. Both money and urgent targets appear in outward roles, so a larger contract can mean a heavier obligation before it means more money kept. The reading separates winning the work from carrying its conditions.`,`${topic[1]}은 부담이 큰 책임과 연결됩니다. 겉의 역할에 재물과 강한 목표가 함께 나타나 큰 계약을 따는 일과 그 조건을 감당하는 일을 나누어 읽습니다. 계약 규모보다 먼저 의무가 커질 수 있는 구조입니다.`)
+- if(circuit)return pair(`${placement?`${placement}. `:''}Your chart links the work you produce with paying customers. That is the evidence behind the income route above; it does not estimate how much you will keep.`,`${placementKo?`${placementKo}. `:''}명식은 결과물을 만드는 특징과 유료 고객을 연결합니다. 이것이 앞서 설명한 수입 통로의 근거이며 실제로 남길 금액을 추정하지는 않습니다.`)
+- if(!p.visibleMoney.length)return pair(p.hiddenMoney.length?`${placement?`${placement}. `:''}The earning signs sit inside the branches rather than in outward roles, so the route is less visible in your daily work pattern. They still count as chart evidence; they do not establish a pay amount.`:'This reading cannot estimate an income amount. Its work-style clues describe fit, not measured earning capacity.',p.hiddenMoney.length?`${placementKo?`${placementKo}. `:''}재물 표시는 겉으로 드러난 역할보다 지지 안에 있어 일상 업무에서는 수입 통로가 덜 보입니다. 그래도 명식의 근거이며 실제 급여 규모를 정하지는 않습니다.`:'이 리포트는 수입 규모를 추정하지 않습니다. 업무 방식은 적합성을 설명하며 실제 소득 능력을 측정하지 않습니다.')
++ if(circuit)return pair(`Your chart links ${topic[0]} with a usable skill and paying customers. Both the work you produce and a money relationship appear in the checked route. This describes how income may be earned; it does not tell us how much you will keep.`,`${topic[1]}은 쓸 수 있는 기술 및 유료 고객과 연결됩니다. 확인한 흐름에서 결과물을 만드는 특징과 재물 관계가 함께 나타납니다. 이는 수입을 얻는 방식에 대한 풀이이지 실제로 남는 금액을 알려 주지는 않습니다.`)
++ if(!p.visibleMoney.length)return pair(p.hiddenMoney.length?'The earning signs are present inside the branches, rather than in the main outward roles. The money reading therefore follows the less visible work behind your role; it does not treat the absence of an outward sign as an absence of income.':'There is no direct money sign in the checked outward or inner roles. Your work pattern is still readable, but a claim about strong wealth luck would go beyond these facts.',p.hiddenMoney.length?'재물 글자가 겉의 주된 역할보다 지지 안에 있습니다. 겉으로 보이는 역할 뒤의 업무를 따라 수입을 풀이하며 겉에 없다고 수입이 없다고 판단하지 않습니다.':'확인한 겉과 안의 역할에 직접적인 재물 글자가 없습니다. 업무 방식은 읽을 수 있지만 강한 재물운이라고 말할 근거는 부족합니다.')
+  return pair(p.strength.tendency==='supported'?`For ${topic[0]}, the money signs sit alongside a supported personal base. This gives a reason to read earning activity as something you may be able to use; it still does not measure savings, assets or the size of a return.`:p.strength.tendency==='support-needed'?`For ${topic[0]}, the earning signs are clearer than the support for carrying them. More work may increase what you manage before it increases what you retain.`:`For ${topic[0]}, the chart identifies an earning route but does not settle how easily you retain the proceeds. The season, roots and outward support do not agree on capacity; this is why the reading names the money pattern without calling it strong wealth luck.`,`${topic[1]}에서는 ${p.strength.tendency==='supported'?'재물 글자와 이를 감당할 개인의 바탕이 함께 있어 수입 활동을 활용할 여지로 읽습니다. 저축과 자산, 수익의 규모를 측정하는 것은 아닙니다.':p.strength.tendency==='support-needed'?'재물 활동보다 이를 감당할 도움이 부족한 쪽으로 읽습니다. 남기는 돈보다 관리하는 일이 먼저 늘어날 수 있습니다.':'돈 버는 통로는 나타나지만 계절과 뿌리, 겉의 도움이 감당할 힘을 한 방향으로 정하지 않습니다. 그래서 재물 방식은 설명하되 강한 재물운이라고 단정하지 않습니다.'}`)
+ }
+ export function personalContrast(p:Subject,area:'life'|'temperament'='temperament'):Passage {
+diff --git a/src/report/personalised-choices.test.ts b/src/report/personalised-choices.test.ts
+index 16cb9ec..c9c65c2 100644
+--- a/src/report/personalised-choices.test.ts
++++ b/src/report/personalised-choices.test.ts
+@@ -12,9 +12,7 @@ describe('r24 chart-specific customer choices',()=>{
+   const other={...same,monthBranchGod:p.monthStemGod==='食神'?'偏印':'食神'}
+   expect(roleChoice(same).en).toContain('clear remit')
+   expect(roleChoice(same,true).en).toContain('clear role with defined duties')
+-  expect(roleChoice(other).en).toContain('most of your week is spent on')
+-  expect(roleChoice(other).en).toContain('Even a role that uses')
+-  expect(roleChoice(other).en).not.toContain('being hired for the first')
++  expect(roleChoice(other).en).toContain('whole week')
+   expect(roleChoice(same).en).not.toBe(roleChoice(other).en)
+   expect(roleChoice(same).ko).not.toBe(roleChoice(other).ko)
+   expect(customerNarrative(buildInterpretationPlan('career',a,2026))['two-work-layers'].lines.some(l=>l.en===roleChoice(p).en)).toBe(true)
+diff --git a/src/report/personalised-choices.ts b/src/report/personalised-choices.ts
+index bddcf4c..8942d38 100644
+--- a/src/report/personalised-choices.ts
++++ b/src/report/personalised-choices.ts
+@@ -19,7 +19,7 @@ export function roleChoice(p:Subject, simpleEnglish=false):Passage{
+  const visible=TASKS[p.monthStemGod],daily=TASKS[p.monthBranchGod]
+  return p.monthStemGod===p.monthBranchGod
+  ?pair(`A good career fit includes work such as ${visible.en}. Both sides of your birth-month pattern repeat this preference, so ${simpleEnglish?'a clear role with defined duties':'a clear remit'} fits better than a title that spreads you across unrelated tasks. These are examples of work, not a fixed list of careers.`,`잘 맞는 직업에는 ${visible.ko} 같은 업무가 포함됩니다. 태어난 달의 겉과 안이 같은 특징을 반복하므로 관련 없는 일을 넓게 맡는 직함보다 담당 범위가 분명한 쪽에 맞습니다. 정해진 직업 목록이 아니라 업무의 예시입니다.`)
+- :pair(`Your best fit combines ${visible.en} with enough time for ${daily.en}. Even a role that uses ${visible.en} can be a poor fit if most of your week is spent on ${daily.en}. This comes from comparing the two different roles in your birth month, not from your job title.`,`본인에게 가장 잘 맞는 일은 ${visible.ko}과 ${daily.ko}을 위한 시간을 함께 담습니다. 겉으로 드러난 역할을 활용하는 직업이라도 한 주 대부분을 일상의 다른 업무에 쓴다면 잘 맞지 않을 수 있습니다. 직업명보다 태어난 달의 서로 다른 두 역할을 비교한 풀이입니다.`)
++ :pair(`Your best fit combines ${visible.en} with enough time for ${daily.en}. For example, being hired for the first while your whole week is consumed by the second would leave the role poorly matched. This comes from comparing the two different roles in your birth month, not from your job title.`,`본인에게 가장 잘 맞는 일은 ${visible.ko}과 ${daily.ko}을 위한 시간을 함께 담습니다. 앞의 역할로 채용됐는데 한 주를 뒤의 업무에만 쓰게 된다면 맞지 않는 부분이 생길 수 있습니다. 직업명보다 태어난 달의 서로 다른 두 역할을 비교한 풀이입니다.`)
+ }
+ export function businessDivision(p:Subject):Passage{
+  const delivery=TASKS[p.monthBranchGod],front=TASKS[p.monthStemGod]
+diff --git a/src/report/purchase-narrative.test.ts b/src/report/purchase-narrative.test.ts
+index c0d186c..66f3291 100644
+--- a/src/report/purchase-narrative.test.ts
++++ b/src/report/purchase-narrative.test.ts
+@@ -54,25 +54,6 @@ describe('Targeted customer-answer revisions',()=>{
+   expect((answer.match(/training or support/gi) ?? [])).toHaveLength(1)
+   expect(answer).not.toContain('This is a possible overlap in demands')
+  })
+- it('keeps Product 01 income limits concise and separates its life-challenge answer from the relationship answer',()=>{
+-  const plan=buildInterpretationPlan('complete',a,2026)
+-  plan.primary.visibleMoney.length=0
+-  plan.primary.hiddenMoney.length=0
+-  plan.primary.resolution.risks.length=0
+-  plan.primary.resolution.circuits.length=0
+-  const sections=customerNarrative(plan)
+-  const income=sections.money.lines.map(line=>line.en).join(' ')
+-  expect(income).toContain('does not establish whether salaried or deal-based work is your natural income route')
+-  expect(income).not.toContain('No direct money sign appears')
+-  expect(income).not.toContain('There is no direct money sign in the checked')
+-  expect((income.match(/income amount/g) ?? [])).toHaveLength(1)
+-  const challenge=sections['life-challenges'].lines.map(line=>line.en).join(' ')
+-  expect(challenge).toContain('Your main challenge is balancing')
+-  expect(sections['life-challenges'].action.en).toContain('Before accepting another')
+-  expect(challenge).not.toContain('In close relationships, the day sign')
+-  expect((challenge.match(/being heard before someone offers a solution/g) ?? [])).toHaveLength(1)
+-  expect(challenge).not.toMatch(/your private life\. The chart places these in separate areas.*When work or private commitments increase/)
+- })
+ })
+ 
+ describe('Buyer review r14: direct answers without repeated warnings or lost dates',()=>{
+diff --git a/src/report/purchase-narrative.ts b/src/report/purchase-narrative.ts
+index 09e00d7..94b5470 100644
+--- a/src/report/purchase-narrative.ts
++++ b/src/report/purchase-narrative.ts
+@@ -75,15 +75,26 @@ export function customerNarrative(plan:InterpretationPlan,targetedProduct01=true
+     :regularRoute?`확인한 명식에서는 변동성 있는 고객·거래 수입보다 안정적인 수입과 지속적인 책임에 더 직접적인 근거가 있습니다. 고정된 역할이나 반복 서비스가 겉에 드러난 재물 글자와 더 잘 맞으며, 독립 업무는 반복 가능한 상품을 먼저 분명히 해야 합니다.`
+     :opportunityRoute?`확인한 명식에서는 고정 급여보다 고객·프로젝트·거래를 통한 수입에 더 직접적인 근거가 있습니다. 영업성 업무나 독립 업무와 연결될 수 있지만 현실에서는 안정적인 기반과 대금 조건을 먼저 갖춰야 합니다.`
+     :`확인한 위치에는 고정 수입이나 기회성 재물의 통로가 뚜렷하지 않습니다. 업무 방식은 읽을 수 있어도 재물 글자가 없으므로 직장과 사업 중 하나를 정해 말할 수 없습니다.`)
++  const positionName:Record<string,string>={month:'work',year:'wider contacts',day:'private life',hour:'longer-term plans'}
++  const moneyGroups=new Map<string,Set<string>>()
++  for(const item of [...p.visibleMoney,...p.hiddenMoney]){
++    const kind=item.god==='正財'?'steady-income':'deal-based income'
++    const key=`${kind} signs`
++    const where=positionName[item.position]
++    if(!moneyGroups.has(key))moneyGroups.set(key,new Set())
++    moneyGroups.get(key)!.add(where)
++  }
++  const moneyEvidence=[...moneyGroups].map(([kind,places])=>`${kind} appear in ${[...places].join(' and ')}`)
++  const visibleMoneyExplanation=moneyEvidence.length?`In your chart, ${moneyEvidence.join('; ')}. This shows where the income markers appear, not how much you will earn.`:'No direct money sign appears in the checked positions, so the reading does not assign you a fixed-pay or deal-based route.'
+   const moneyAnswer=pair(regularRoute&&opportunityRoute
+-    ?`Your chart supports both regular income and more variable earnings from customers, projects or deals. This fits a dependable base with selected paid work on the side; which one becomes larger depends on your actual work and agreements.`
+-    :regularRoute?`Regular work or repeat fees have the clearest chart support. Variable projects may add income, but the chart gives less direct support to depending on them as your only route.`
+-    :opportunityRoute?`Project, customer or deal-based income has the clearest chart support; a fixed-pay route is less directly marked. This can suit commercial work, but income is easier to keep steady when payment terms and delivery are settled first.`
+-    :`Your chart does not establish whether salaried or deal-based work is your natural income route. Use your work skills and real contract terms to judge that choice.`,
+-    regularRoute&&opportunityRoute?`명식에는 정기 수입과 고객·프로젝트·거래의 변동 수입이 함께 나타납니다. 안정적인 기반에 선택한 유료 업무를 더하는 방식과 맞지만, 어느 쪽이 더 커질지는 실제 일과 계약에 달려 있습니다.`
+-    :regularRoute?`정기 업무와 반복 수수료에 더 직접적인 근거가 있습니다. 프로젝트 수입을 더할 수는 있어도 그것만을 유일한 통로로 삼는 데는 근거가 약합니다.`
+-    :opportunityRoute?`프로젝트와 거래를 통한 수입에 더 직접적인 근거가 있으며 고정 급여는 덜 뚜렷합니다. 영업성 업무나 독립 업무와 연결될 수 있지만 조건과 납품, 대금 지급을 먼저 정할수록 수입을 안정시키기 쉽습니다.`
+-    :`확인한 명식만으로 급여와 거래형 수입 중 어느 쪽이 자연스러운 통로인지 정하기 어렵습니다. 실제 업무 능력과 계약 조건을 기준으로 판단해야 합니다.`)
++    ?`Your chart supports both regular income and more variable earnings from customers, projects or deals. This fits a dependable base with selected paid work on the side; which one becomes larger depends on your actual work and agreements. ${visibleMoneyExplanation}`
++    :regularRoute?`Regular work or repeat fees have the clearest chart support. Variable projects may add income, but the chart gives less direct support to depending on them as your only route. ${visibleMoneyExplanation}`
++    :opportunityRoute?`Project, customer or deal-based income has the clearest chart support; a fixed-pay route is less directly marked. This can suit commercial work, but income is easier to keep steady when payment terms and delivery are settled first. ${visibleMoneyExplanation}`
++    :`Your chart does not show a direct money sign in the checked placements. It therefore cannot choose a salary or business route for you; work skills and real contract terms carry more weight. ${visibleMoneyExplanation}`,
++    regularRoute&&opportunityRoute?`명식에는 정기 수입과 고객·프로젝트·거래의 변동 수입이 함께 나타납니다. 안정적인 기반에 선택한 유료 업무를 더하는 방식과 맞지만, 어느 쪽이 더 커질지는 실제 일과 계약에 달려 있습니다. ${visibleMoneyExplanation}`
++    :regularRoute?`정기 업무와 반복 수수료에 더 직접적인 근거가 있습니다. 프로젝트 수입을 더할 수는 있어도 그것만을 유일한 통로로 삼는 데는 근거가 약합니다. ${visibleMoneyExplanation}`
++    :opportunityRoute?`프로젝트와 거래를 통한 수입에 더 직접적인 근거가 있으며 고정 급여는 덜 뚜렷합니다. 영업성 업무와 연결될 수 있지만 조건과 납품, 대금 지급을 먼저 정할수록 수입을 안정시키기 쉽습니다. ${visibleMoneyExplanation}`
++    :`확인한 위치에 직접 재물 글자가 없어 급여와 사업 중 하나를 정해 말할 수 없습니다. 실제 업무 능력과 계약 조건을 더 중요하게 살펴야 합니다. ${visibleMoneyExplanation}`)
+  const monthHidden=[...new Set(p.strength.hidden.filter(item=>item.position==='month').map(item=>LANGUAGE[item.god]?.name.en).filter(Boolean))]
+  const monthHiddenKo=[...new Set(p.strength.hidden.filter(item=>item.position==='month').map(item=>LANGUAGE[item.god]?.name.ko).filter(Boolean))]
+  const hiddenRoutine=monthHidden.filter(name=>name!==m.name.en).join(' and ')||inner.name.en
+@@ -148,9 +159,9 @@ export function customerNarrative(plan:InterpretationPlan,targetedProduct01=true
+   ]:[pair(`The strength that helps you can also become your pressure point: ${m.balance.en}`,`도움이 되는 강점이 부담의 출발점이 될 수도 있습니다. ${m.balance.ko}`),pair(`Your birth day describes your personal style; the birth month shows how that style meets everyday demands. ${p.monthStemGod===p.monthBranchGod?'The same demand appears in both parts of the month, making it a recurring theme.':'The two parts of the month show different demands, so one role may not meet all your needs.'}`,`태어난 날에서는 개인 성향을, 태어난 달에서는 그 성향이 일상의 요구와 만나는 방식을 읽습니다. ${p.monthStemGod===p.monthBranchGod?'달의 두 부분에 같은 요구가 있어 반복되는 주제로 봅니다.':'달의 두 부분에 다른 요구가 있어 역할 하나가 필요한 것을 모두 채우지 못할 수 있습니다.'}`)],targetedProduct01?pair(personal.practice,PERSONAL_SCENE_KO[p.dayStem].balance):undefined,targetedProduct01?pair(personal.watchFor[1],pk.pressure):pressure)
+   if(targetedProduct01)out.social.showGuidance=false
+   if(targetedProduct01)put('life-challenges',[
+-   ...(rootCauseFix?[pair(`Your main challenge is balancing ${CAREER_THEME_LABEL[p.monthStemGod]} work with your need for ${relationshipProfile.need} in private life. Your chart places these in separate areas, so success in one does not automatically meet the other need.`,`가장 큰 과제는 ${CAREER_THEME_LABEL[p.monthStemGod]} 업무와 사적인 생활에서 필요한 ${NEED[p.dayBranch]}의 균형을 맞추는 것입니다. 명식에서 두 필요는 서로 다른 영역에 있어, 한쪽의 성취가 다른 쪽을 자동으로 채우지는 않습니다.`)]:[pair(`A recurring challenge is this pressure pattern: ${personal.pressure} It can affect life beyond work, while your career fit centres on ${m.name.en}.`,`반복될 수 있는 개인적인 과제는 ${pk.pressure}입니다. 부담을 받을 때의 반응이며, 직업 답변에서 설명한 ${m.name.ko} 중심의 업무 환경과는 다른 내용입니다.`)]),
+-   ...(rootCauseFix?[]:[pair(`In close relationships, the day sign ${p.dayBranch} points to ${relationshipProfile.need}. Friction can grow when the support offered differs from the support you actually want.`,`가까운 관계에서는 일지 ${p.dayBranch}가 ${NEED[p.dayBranch]}을 가리킵니다. 받고 싶은 도움과 상대가 건네는 도움이 다를 때 마찰이 커질 수 있습니다.`)]),
+-  ],rootCauseFix?pair(`Before accepting another ${CAREER_THEME_LABEL[p.monthStemGod]} task, decide which current responsibility it will replace and who will cover that work.`,`새로운 ${CAREER_THEME_LABEL[p.monthStemGod]} 업무를 맡기 전에 기존 책임 중 무엇을 내려놓을지, 그 업무를 누가 맡을지 정합니다.`):pair(`At work, check whether the ${m.name.en} role gives you time and authority for its daily demands. In a close relationship, name when you need ${relationshipProfile.need}.`,`일에서는 ${m.name.ko} 역할에 일상 업무를 감당할 시간과 권한이 있는지 살핍니다. 가까운 관계에서는 ${relationshipProfile.need}이 필요하다고 말합니다.`),rootCauseFix?pair('This is a balance to manage, not a prediction of conflict or failure.','이는 조정해야 하는 균형이지 갈등이나 실패에 대한 예측은 아닙니다.'):m.pressure)
++   ...(rootCauseFix?[pair(`Your main cross-life challenge is balancing ${CAREER_THEME_LABEL[p.monthStemGod]} at work with ${relationshipProfile.need} in close relationships. These needs come from separate chart areas, so meeting one does not automatically meet the other.`,`일에서 ${LANGUAGE[p.monthStemGod].name.ko}을 활용하는 일과 가까운 관계에서 ${NEED[p.dayBranch]}을 존중받는 일을 함께 살피는 것이 주요 과제입니다. 두 필요는 명식의 서로 다른 영역에서 나오므로, 하나를 충족해도 다른 하나가 자동으로 해결되지는 않습니다.`)]:[pair(`A recurring challenge is this pressure pattern: ${personal.pressure} It can affect life beyond work, while your career fit centres on ${m.name.en}.`,`반복될 수 있는 개인적인 과제는 ${pk.pressure}입니다. 부담을 받을 때의 반응이며, 직업 답변에서 설명한 ${m.name.ko} 중심의 업무 환경과는 다른 내용입니다.`)]),
++   pair(`In close relationships, the day sign ${p.dayBranch} points to ${relationshipProfile.need}. Friction can grow when the support offered differs from the support you actually want.`,`가까운 관계에서는 일지 ${p.dayBranch}가 ${NEED[p.dayBranch]}을 가리킵니다. 받고 싶은 도움과 상대가 건네는 도움이 다를 때 마찰이 커질 수 있습니다.`),
++  ],pair(`At work, check whether the ${m.name.en} role gives you time and authority for its daily demands. In a close relationship, name when you need ${relationshipProfile.need}.`,`일에서는 ${m.name.ko} 역할에 일상 업무를 감당할 시간과 권한이 있는지 살핍니다. 가까운 관계에서는 ${relationshipProfile.need}이 필요하다고 말합니다.`),rootCauseFix?pair('A work strength and a private need are different things; do not expect one to resolve the pressure in the other area.','일에서의 강점과 사적인 필요는 다릅니다. 한쪽의 해결이 다른 영역의 부담까지 풀어 줄 것으로 기대하지 않습니다.'):m.pressure)
+   put('balance',targetedProduct01?[
+    pair(`You are more likely to feel balanced when work built around ${m.name.en} still leaves room for ${personal.need}. This combines your birth-day style with the visible work role in your chart.`,`균형을 느끼려면 ${m.name.ko}을 활용하는 일과 ${pk.need}을 위한 여유가 함께 있어야 합니다. 태어난 날의 성향과 명식에 드러난 업무 역할을 연결한 결론입니다.`),
+    pair(`The hidden month layer adds ${hiddenRoutine} to daily work${p.monthStemGod===p.monthBranchGod?'; it repeats the visible theme rather than creating a separate demand.':`. ${inner.work.en}`} A job title can fit while its routine still drains you if it leaves no space for these skills.`,`태어난 달의 지장간은 일상 업무에 ${hiddenRoutineKo}을 더합니다${p.monthStemGod===p.monthBranchGod?' 겉의 주제가 반복되는 구조입니다.':`. ${inner.work.ko}`} 직함이 잘 맞아도 실제 업무가 이런 기술을 쓸 여지를 주지 않으면 지칠 수 있습니다.`),
