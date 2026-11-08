@@ -114,7 +114,8 @@ describe('Buyer questions, not a repeated six-part technical template', () => {
     const report = applyBuyerQuestions(source, 'compatibility', chapters)
     expect((report.match(/^Question:/gm) ?? [])).toHaveLength(7)
     expect(report).toMatch(/Question: Why are we attracted to each other\?[\s\S]*Answer: The chart points to two different possible draws: you may value a direct conversation that feels exciting; your partner may value practical care that feels reassuring\./)
-    expect(report).toContain('Question: How do we express love differently?\n\nAnswer: The chart suggests different care styles. You: Focused conversation is one way you may show care. Your partner: Reliable practical help is one way they may show care. These are chart-based tendencies, not proof of how either person behaves.')
+    expect(report).toContain('Question: How do we express love differently?\n\nAnswer: The chart suggests different care styles. You: Focused conversation is one way you may show care. Your partner: Reliable practical help is one way they may show care.')
+    expect(report).not.toContain('These are chart-based tendencies, not proof of how either person behaves.')
     const sameStyleChapters = chapters.map(chapter => chapter.id === 'close-conversation'
       ? { ...chapter, paragraphs: [chapter.paragraphs[0], 'You: Keeping promises matters.', 'Your partner: Keeping promises matters.', ...chapter.paragraphs.slice(3)] }
       : chapter)
@@ -125,6 +126,10 @@ describe('Buyer questions, not a repeated six-part technical template', () => {
     const adjustment = report.slice(report.indexOf('Question: What does this connection ask of each of us?'))
     expect(adjustment).not.toContain('Answer detail: The day comparison shows a private-life difference.')
     expect(adjustment).not.toContain('Answer detail: The main challenge is agreeing on time, duties and who follows through.')
+    const timing = report.slice(report.indexOf('Question: Which upcoming periods may affect our relationship themes?'))
+    expect(timing).toContain('Practical point: Make one clear agreement.')
+    expect(timing).not.toContain('Answer detail:')
+    expect(timing).not.toContain('Main caution:')
     expect(report).toContain('Question: How do emotional closeness and everyday compatibility differ?\n\nAnswer: Private closeness is stronger than sharing a daily routine; attraction and practical agreements are different kinds of fit.')
     const closeness = report.slice(report.indexOf('Question: How do emotional closeness and everyday compatibility differ?')).split('\n\nQuestion: ')[0]
     expect(closeness).not.toContain('likely tension')
@@ -371,7 +376,9 @@ describe('Buyer questions, not a repeated six-part technical template', () => {
     const fit = answerFor('What makes us compatible?')
     const attraction = answerFor('Why are we attracted to each other?')
     expect(fit).toContain('Answer: This match has shared care needs.')
-    expect(fit).toContain('Answer detail: Neither a strong private-life link nor a direct conflict appears')
+    expect(fit).not.toContain('Neither a strong private-life link nor a direct conflict appears')
+    expect(answerFor('How do emotional closeness and everyday compatibility differ?')).toContain('Answer: Direct answer for chart-patterns.')
+    expect(answerFor('How do emotional closeness and everyday compatibility differ?')).not.toContain('Neither a strong private-life link nor a direct conflict appears')
     expect(fit).not.toContain('Main caution: Generic caution.')
     expect(attraction).toContain('Answer: The chart points to two different possible draws: you may value reassurance and feeling understood; your partner may value fresh ideas and direct speech.')
     expect(attraction).not.toContain('One person may feel supported while the other feels challenged.')

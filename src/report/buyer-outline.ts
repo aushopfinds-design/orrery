@@ -215,7 +215,9 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
         paragraphs = []
         chapter.paragraphs.forEach(line => used.add(line))
       } else if (kind === 'compatibility' && question.role === 'overall-fit') {
-        paragraphs = chapter.paragraphs.slice(0, 1)
+        // The opening answer gives the overall fit; the detailed private-life
+        // comparison belongs in Q5 and should not be repeated here.
+        paragraphs = []
         chapter.paragraphs.forEach(line => used.add(line))
       } else if (kind === 'compatibility' && question.role === 'closeness-vs-routine' && set === 'standalone') {
         // This question asks for a comparison of two kinds of fit. Keep the
@@ -270,6 +272,11 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
             : chapter.paragraphs.find(line => /^Your partner: /.test(line)) ?? chapter.paragraphs[3] ?? chapter.guidance.watchFor[0] ?? chapter.lead
         paragraphs = []
         chapter.paragraphs.forEach(line => used.add(line))
+      } else if (kind === 'compatibility' && question.role === 'relationship-timing' && set === 'standalone') {
+        // The year comparison is the answer; keep its tailored action below,
+        // without repeating another general relationship explanation.
+        paragraphs = []
+        chapter.paragraphs.forEach(line => used.add(line))
       } else if (kind === 'compatibility' && question.role === 'care-expression') {
         const firstCare = chapter.paragraphs.find(line => /^You: /.test(line))
         const secondCare = chapter.paragraphs.find(line => /^Your partner: /.test(line))
@@ -278,8 +285,8 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
         const partnerCare = secondCare ? careStyle(secondCare, /^Your partner: /) : ''
         lead = firstCare && secondCare
           ? yourCare === partnerCare
-            ? `The chart points to a shared care style. You: ${yourCare} Your partner: ${partnerCare} These are chart-based tendencies, not proof of how either person behaves.`
-            : `The chart suggests different care styles. You: ${yourCare} Your partner: ${partnerCare} These are chart-based tendencies, not proof of how either person behaves.`
+            ? `The chart points to a shared care style. You: ${yourCare} Your partner: ${partnerCare}`
+            : `The chart suggests different care styles. You: ${yourCare} Your partner: ${partnerCare}`
           : `${chapter.paragraphs[0] ?? 'Your chart gives one clue about how care may be recognised.'} ${chapter.paragraphs[1] ?? 'Your partner’s chart gives a separate clue.'}`
         paragraphs = []
         chapter.paragraphs.forEach(line => used.add(line))
@@ -547,7 +554,7 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
     ]
     const answeredLines = [...firstLines, ...extraAnswers.flatMap(item => item.lines)]
     const practicalOnly = (kind === 'business' && ['partner-fit', 'expansion-timing'].includes(questions[0].role))
-      || (kind === 'compatibility' && ['mutual-adjustment', 'overall-fit', 'closeness-vs-routine'].includes(questions[0].role))
+      || (kind === 'compatibility' && ['mutual-adjustment', 'overall-fit', 'closeness-vs-routine', 'relationship-timing'].includes(questions[0].role))
       || (kind === 'wellbeing' && ['pressure-response', 'relationship-need'].includes(questions.at(-1)?.role ?? ''))
     const suppressAllGuidance = kind === 'compatibility' && ['attraction', 'overall-fit'].includes(questions[0].role)
       || kind === 'compatibility' && questions[0].role === 'overall-fit'
