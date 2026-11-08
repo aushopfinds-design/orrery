@@ -206,7 +206,11 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
         const theirs = perspectives.find(line => /^From your partner(?:'|’)s side:|^Your partner:/.test(line))
         const cleanPerspective = (line: string | undefined, prefix: RegExp) => line?.replace(prefix, '').replace(/^(?:The )?attraction may be\s*/i, '').replace(/\s+stand out[.!?]*$/i, '').replace(/[.!?]+$/u, '').trim().replace(/^(.+?) may feel (.+)$/i, '$1 that feels $2').replace(/^./u, char => char.toLowerCase())
         if (yours && theirs) {
-          lead = `Attraction may come from two different draws: you may be drawn to ${cleanPerspective(yours, /^(?:From your side:|You:)\s*/)}; your partner may be drawn to ${cleanPerspective(theirs, /^(?:From your partner(?:'|’)s side:|Your partner:)\s*/)}. These are chart-based tendencies, not proof of either person’s feelings.`
+          const yourDraw = cleanPerspective(yours, /^(?:From your side:|You:)\s*/)
+          const partnerDraw = cleanPerspective(theirs, /^(?:From your partner(?:'|’)s side:|Your partner:)\s*/)
+          lead = yourDraw === partnerDraw
+            ? `Both chart directions point to a shared draw toward ${yourDraw}. This may be part of the attraction, but the chart cannot confirm either person’s actual feelings.`
+            : `The chart points to two different possible draws: you may value ${yourDraw}; your partner may value ${partnerDraw}. This describes chart themes, not proof of either person’s actual feelings.`
         }
         paragraphs = []
         chapter.paragraphs.forEach(line => used.add(line))

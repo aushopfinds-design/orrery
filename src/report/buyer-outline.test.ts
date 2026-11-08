@@ -113,7 +113,7 @@ describe('Buyer questions, not a repeated six-part technical template', () => {
     const source = chapters.map(chapter => deliveredChapter(chapter).join('\n\n')).join('\n\n')
     const report = applyBuyerQuestions(source, 'compatibility', chapters)
     expect((report.match(/^Question:/gm) ?? [])).toHaveLength(7)
-    expect(report).toMatch(/Question: Why are we attracted to each other\?[\s\S]*Answer: Attraction may come from two different draws: you may be drawn to a direct conversation that feels exciting; your partner may be drawn to practical care that feels reassuring\./)
+    expect(report).toMatch(/Question: Why are we attracted to each other\?[\s\S]*Answer: The chart points to two different possible draws: you may value a direct conversation that feels exciting; your partner may value practical care that feels reassuring\./)
     expect(report).toContain('Question: How do we express love differently?\n\nAnswer: The chart suggests different care styles. You: Focused conversation is one way you may show care. Your partner: Reliable practical help is one way they may show care. These are chart-based tendencies, not proof of how either person behaves.')
     const sameStyleChapters = chapters.map(chapter => chapter.id === 'close-conversation'
       ? { ...chapter, paragraphs: [chapter.paragraphs[0], 'You: Keeping promises matters.', 'Your partner: Keeping promises matters.', ...chapter.paragraphs.slice(3)] }
@@ -370,10 +370,20 @@ describe('Buyer questions, not a repeated six-part technical template', () => {
     expect(fit).toContain('Answer: This match has shared care needs.')
     expect(fit).toContain('Answer detail: Neither a strong private-life link nor a direct conflict appears')
     expect(fit).not.toContain('Main caution: Generic caution.')
-    expect(attraction).toContain('Answer: Attraction may come from two different draws: you may be drawn to reassurance and feeling understood; your partner may be drawn to fresh ideas and direct speech.')
+    expect(attraction).toContain('Answer: The chart points to two different possible draws: you may value reassurance and feeling understood; your partner may value fresh ideas and direct speech.')
     expect(attraction).not.toContain('One person may feel supported while the other feels challenged.')
     expect(attraction).not.toContain('comparison is made in both directions')
     expect(attraction).not.toContain('Practical point: Ask one clear question.')
+
+    const sharedDirectionChapters = chapters.map(chapter => chapter.id === 'two-directions'
+      ? { ...chapter, lead: 'From your side: Reassurance and feeling understood stand out.', paragraphs: ["From your partner’s side: Reassurance and feeling understood stand out."] }
+      : chapter)
+    const sharedDirectionReport = applyBuyerQuestions(
+      sharedDirectionChapters.map(chapter => deliveredChapter(chapter).join('\n\n')).join('\n\n'),
+      'compatibility', sharedDirectionChapters,
+    )
+    expect(sharedDirectionReport).toContain('Answer: Both chart directions point to a shared draw toward reassurance and feeling understood.')
+    expect(sharedDirectionReport).not.toContain('two different possible draws')
     expect(report.match(/^Question:/gm)).toHaveLength(7)
   })
 

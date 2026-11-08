@@ -46,6 +46,18 @@ describe('Complete customer narrative language coverage, rather than only select
 })
 
 describe('Targeted customer-answer revisions',()=>{
+ it('keeps compatibility answers distinct and ties each conclusion to the two charts',()=>{
+  const sections=customerNarrative(buildInterpretationPlan('compatibility',a,2026,b))
+  const closeness=sections['chart-patterns'].lines[0].en
+  const adjustment=sections['shared-week'].lines[0].en
+  expect(closeness).toContain('These are two separate parts of your match.')
+  expect(closeness).toContain('For emotional closeness,')
+  expect(closeness).toContain('For everyday compatibility,')
+  expect(closeness).not.toContain('You share a need for')
+  expect(adjustment).toContain('This connection asks you to make room for')
+  expect(adjustment).toContain('Choose one small action in your week')
+  expect(adjustment).toContain('chart-based prompt')
+ })
  it('explains the chart-linked income and support conflict without claiming a real setback',()=>{
   const answers=CATEGORY_SCENARIOS.map(profile=>customerNarrative(buildInterpretationPlan('career',calculateSaju(profile.first),2026))['working-style'].lines.map(line=>line.en))
   const answer=answers.flat().find(line=>/learning or support/i.test(line))!
