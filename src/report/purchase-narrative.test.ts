@@ -57,6 +57,15 @@ describe('Targeted customer-answer revisions',()=>{
   expect(adjustment).toContain('This connection asks you to make room for')
   expect(adjustment).toContain('Choose one small action in your week')
   expect(adjustment).toContain('chart-based prompt')
+  expect(sections['shared-week'].lines).toHaveLength(1)
+  expect(sections['chart-patterns'].action.en).toContain('one recent moment of closeness')
+ })
+ it('keeps unknown birth-time notes relevant to the report topic',()=>{
+  const unknown=calculateSaju({...CATEGORY_SCENARIOS[0].first,unknownTime:true})
+  const sections=customerNarrative(buildInterpretationPlan('compatibility',unknown,2026,b))
+  const note=sections['two-styles'].lines.find(line=>line.en.includes('birth time is unknown'))?.en
+  expect(note).toContain('Your birth time is unknown, so this reading uses your year, month and day signs only. It does not guess an hour.')
+  expect(note).not.toMatch(/Opening marks|Adjustment marks|money, responsibility or learning/)
  })
  it('explains the chart-linked income and support conflict without claiming a real setback',()=>{
   const answers=CATEGORY_SCENARIOS.map(profile=>customerNarrative(buildInterpretationPlan('career',calculateSaju(profile.first),2026))['working-style'].lines.map(line=>line.en))
