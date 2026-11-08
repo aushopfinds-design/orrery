@@ -104,3 +104,9 @@ Products 03–07 lose 30 points because `server/payments/report.ts` supplies `ca
 - Verification on this source revision: focused suites 35/35 passed; `npx tsc -b --pretty false` passed; actual `issueReport()` test regenerated five Product 01 PDFs, all with seven question entries and seven valid TOC destinations. Structural diagnostic values included one 70 for partial calculation verification; they are not independent content scores.
 - Source and audit changes were saved and verified on the remote branch at commit `0e9fff62480b7a97e2e96f5d858455eb8fe85b0b`. Production is unchanged at `dpl_ANDdUkvMn6zMjukCyxfNC2EYcSdt`; sales remain closed and Stripe Live unchanged. The earlier Preview does not include this revision.
 - Next: independently score all 35 answers from these five current PDFs, then proceed with Products 02–07. Do not treat the 10 targeted scores as complete Product 01 profile scores or 95+ sign-off.
+
+## Preview build recovery (2026-11-08)
+- The Preview for `219c68c016a0f3680a8476d4bdbcf33364fe0d86` failed because the large `src/report/purchase-narrative.ts` blob upload was truncated, producing TypeScript parse errors. The broken preview is `dpl_9LY4xGkLoKxJdepfdYSsDgyoGfML`; Production was not affected.
+- Restored the complete file from the preserved local source and verified its GitHub blob SHA matches the uploaded full file: `09e00d7abf6c7b64f7d88abd21a218abcda9d9af`. Recovery code commit: `0e833059442a68500aa423a79949cb9e36e91d3d`.
+- Local focused tests and TypeScript passed before this recovery commit. Preview build for `0e833059442a68500aa423a79949cb9e36e91d3d` is being checked; do not treat Preview as verified until it reaches READY and returns HTTP 200.
+- Production remains `dpl_ANDdUkvMn6zMjukCyxfNC2EYcSdt`, sales closed, Stripe Live unchanged.
