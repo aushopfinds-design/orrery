@@ -5,10 +5,17 @@ Updated: 2026-11-08 (Australia/Sydney)
 ## Scope and method
 
 - Source: existing five-profile Product 01 PDF set generated through the paid `issueReport()` path; no automated diagnostic score was used as an answer-quality score.
-- Completed: 35/245 answers (Product 01, five profiles × seven official questions). Remaining: 210 answers across Products 02–07.
+- Baseline completed: 35/260 answers (Product 01, five profiles × seven official questions), from the previously generated Product 01 PDF snapshot. Remaining: 225 answers across Products 02–07. The 260 total follows the official question counts: Products 01–06 have 7 each and Product 07 has 10, across five profiles. The request's 245 denominator omits 15 Product 07 answers.
 - Each answer was read from its PDF and scored independently against the requested rubric: direct answer 35, personalization 25, usefulness/specificity 15, repetition/generalities 10, easy English 10, consistency 5. Scores are one reviewer’s content judgment, not an objective truth claim.
 - Profile score = arithmetic mean of its seven answer scores, rounded to one decimal. Product pass requires all five profile means ≥95.
 - Scores are shown as D/P/U/R/E/C; their sum is the answer score.
+
+## Latest checkpoint — 2026-11-08
+
+- Focused edits present only in the local working diff were checked with the three relevant suites: 37/37 tests passed (Product 01 PDF/root-cause, purchase narrative, and bundle reading tests).
+- Five updated Product 01 PDFs were generated from that local working diff. Their questions and TOC links passed structural assertions. The updated PDFs have not yet received an independent answer-by-answer score, so the baseline scores below do not apply to them.
+- Local working diff is not part of the current remote branch tip (`0e833059442a68500aa423a79949cb9e36e91d3d`). No updated code was represented as remotely saved.
+- Independent baseline scoring remains 35/260; 225 answers have no answer-level independent score. No product passes the 95-point requirement on current-version PDFs.
 
 ## Product 01 — Your Life, Your Destiny
 
