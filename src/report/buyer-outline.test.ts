@@ -122,6 +122,9 @@ describe('Buyer questions, not a repeated six-part technical template', () => {
     expect(sameStyleReport).toContain('Answer: The chart points to a shared care style. You: Keeping promises matters. Your partner: Keeping promises matters.')
     expect(report).toContain('Question: What tends to cause friction between us?\n\nAnswer: Your friction point is advice arriving before listening. For your partner, tension may arise from practical help arriving without checking what was asked for.')
     expect(report).toContain('Question: What does this connection ask of each of us?\n\nAnswer: This connection asks each person to make room for the other’s different needs.')
+    const adjustment = report.slice(report.indexOf('Question: What does this connection ask of each of us?'))
+    expect(adjustment).not.toContain('Answer detail: The day comparison shows a private-life difference.')
+    expect(adjustment).not.toContain('Answer detail: The main challenge is agreeing on time, duties and who follows through.')
     expect(report).toContain('Question: How do emotional closeness and everyday compatibility differ?\n\nAnswer: Private closeness is stronger than sharing a daily routine; attraction and practical agreements are different kinds of fit.')
     const closeness = report.slice(report.indexOf('Question: How do emotional closeness and everyday compatibility differ?')).split('\n\nQuestion: ')[0]
     expect(closeness).not.toContain('likely tension')

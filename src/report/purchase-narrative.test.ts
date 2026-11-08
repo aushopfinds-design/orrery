@@ -55,9 +55,10 @@ describe('Targeted customer-answer revisions',()=>{
   expect(closeness).toContain('For everyday compatibility,')
   expect(closeness).not.toContain('You share a need for')
   expect(adjustment).toContain('This connection asks you to make room for')
-  expect(adjustment).toContain('Choose one small action in your week')
-  expect(adjustment).toContain('chart-based prompt')
+  expect(adjustment).toContain('These are different chart themes')
+  expect(sections['shared-week'].action.en).toContain('At your next shared decision')
   expect(sections['shared-week'].lines).toHaveLength(1)
+  expect(sections['close-conversation'].action.en).toContain('one action that helps you feel cared for')
   expect(sections['chart-patterns'].action.en).toContain('one recent moment of closeness')
  })
  it('keeps unknown birth-time notes relevant to the report topic',()=>{

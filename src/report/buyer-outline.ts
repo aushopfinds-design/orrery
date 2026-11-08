@@ -222,6 +222,11 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
         // source's direct comparison and leave friction in its own answer.
         paragraphs = []
         chapter.paragraphs.forEach(line => used.add(line))
+      } else if (kind === 'compatibility' && question.role === 'mutual-adjustment' && set === 'standalone') {
+        // Keep the final answer focused on what each person can adjust; earlier
+        // answers already cover needs, pressure patterns and day/routine links.
+        paragraphs = []
+        chapter.paragraphs.forEach(line => used.add(line))
       } else if (kind === 'wellbeing' && question.role === 'core-personality') {
         paragraphs = chapter.paragraphs.slice(0, 2)
         chapter.paragraphs.forEach(line => used.add(line))
