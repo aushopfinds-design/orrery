@@ -70,7 +70,7 @@ describe('Targeted customer-answer revisions',()=>{
   const challenge=sections['life-challenges'].lines.map(line=>line.en).join(' ')
     expect(challenge).toMatch(/Your main life challenge may be (?:keeping|balancing)/)
     expect(challenge).toContain('what your private life needs:')
-    expect(challenge).toContain('being heard before advice')
+    expect(challenge).toContain('space to be heard before anyone gives advice')
     expect(challenge).toContain('This is a pattern to manage, not a fixed outcome.')
     expect(sections['life-challenges'].action.en).toContain('Before taking on more work, decide which duty you can drop')
     expect(sections['life-challenges'].action.en).toContain('Keep room for that personal priority outside work')
