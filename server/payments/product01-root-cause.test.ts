@@ -86,7 +86,7 @@ describe('Product 01 root-cause recovery', () => {
     expect(q4).not.toMatch(/The work position speaks to daily duties/i)
     expect(q4).not.toMatch(/Earning signs appear alongside learning and support/i)
     expect(q4).not.toMatch(/less visible parts of the chart; additional signs are less visible/i)
-    expect(first.slice(first.indexOf('Question: When may my life change direction?'))).toMatch(/The clearest chart-supported year to reconsider your direction is/i)
+    expect(first.slice(first.indexOf('Question: When may my life change direction?'))).toMatch(/The strongest chart signal for reconsidering your direction appears in/i)
     expect(first).not.toMatch(/birth-day sign is [甲乙丙丁戊己庚辛壬癸]/)
     expect(first).not.toMatch(/A recurring life theme is the difference between what others rely on you for/i)
     expect(first).not.toMatch(/Your best fit needs both .* even a role that uses/i)

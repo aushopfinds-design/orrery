@@ -4,6 +4,9 @@ import type { TimingSentence } from './purchase-timing.ts'
 import { pair, WORKING_LANGUAGE } from './purchase-language.ts'
 export interface PurchaseTimingSection { lines: TimingSentence[]; evidence: string[] }
 const cache = new WeakMap<InterpretationPlan, Record<string, PurchaseTimingSection>>()
+const LIFE_DIRECTION_THEME:Record<string,string>={
+ 比肩:'independent choices',劫財:'contacts and shared work',食神:'practical skills and reliable results',傷官:'new ideas and better methods',正財:'steady earnings and responsibilities',偏財:'finding new customers',正官:'clear duties and standards',偏官:'urgent goals and decisive action',正印:'training and dependable support',偏印:'specialist knowledge and independent ideas',
+}
 export function purchaseTimingSections(plan: InterpretationPlan, targetedProduct01=true, rootCauseFix=true): Record<string, PurchaseTimingSection> {
  if(targetedProduct01&&rootCauseFix){const existing=cache.get(plan);if(existing)return existing}
  const made=buildSections(plan,targetedProduct01,rootCauseFix)
@@ -91,21 +94,21 @@ function buildSections(plan:InterpretationPlan,targetedProduct01=true,rootCauseF
     .reduce((sum,pattern)=>sum+(pattern.type==='沖'?3:['刑','害','破'].includes(pattern.type)?2:0),0)}))
     .sort((a,b)=>b.weight-a.weight||a.index-b.index).slice(0,1).map(item=>item.row):priority(changed)
   const turningPointSummary=(locale:'en'|'ko')=>highlights.map(row=>{
-   const year=row.date.slice(0,4),theme=WORKING_LANGUAGE[row.god].name[locale]
+   const year=row.date.slice(0,4),theme=locale==='en'&&targetedProduct01&&rootCauseFix&&plan.kind==='complete'?LIFE_DIRECTION_THEME[row.god]:WORKING_LANGUAGE[row.god].name[locale]
    const areas=[
-    row.lines.some(line=>line.id.endsWith('.change-month'))?(locale==='en'?'work and daily responsibilities':'일과 일상 책임'):undefined,
-    row.lines.some(line=>line.id.endsWith('.change-day'))?(locale==='en'?'close relationships and personal choices':'가까운 관계와 개인적 선택'):undefined,
+    row.lines.some(line=>line.id.endsWith('.change-month'))?(locale==='en'?'work':'일과 일상 책임'):undefined,
+    row.lines.some(line=>line.id.endsWith('.change-day'))?(locale==='en'?'close relationships':'가까운 관계와 개인적 선택'):undefined,
    ].filter((area):area is string=>Boolean(area))
    return locale==='en'?`${year}: a theme of ${theme} connects with ${areas.join(' and ')}`:`${year}년: ${theme} — ${areas.join('·')}`
   }).join(locale==='en'?'. ':'; ')
   const turningPointAnswer=highlights.length&&targetedProduct01&&rootCauseFix&&plan.kind==='complete'
-   ?[`The clearest chart-supported year to reconsider your direction is ${turningPointSummary('en')}. Use it as a time to review the areas named here, not as a promise of a major event.`,`방향을 다시 생각해 볼 가장 뚜렷한 차트상 시기는 ${turningPointSummary('ko')}입니다. 여기에 적힌 영역을 살펴볼 때로 보며, 큰 사건이 생긴다는 약속은 아닙니다.`]
+   ?[`The strongest chart signal for reconsidering your direction appears in ${turningPointSummary('en')}. Use that year to review options in those areas, not as a promise of a major event.`,`방향을 다시 생각해 볼 가장 뚜렷한 차트상 시기는 ${turningPointSummary('ko')}입니다. 여기에 적힌 영역을 살펴볼 때로 보며, 큰 사건이 생긴다는 약속은 아닙니다.`]
    :highlights.length&&targetedProduct01
     ?[`The clearest periods to review a major change are ${turningPointSummary('en')}. These years mark chart contacts with work or close relationships; they do not guarantee an event.`,`큰 변화를 살펴볼 시기는 ${turningPointSummary('ko')}입니다. 일이나 가까운 관계에 닿는 명식의 시기이며, 특정 사건을 보장하지 않습니다.`]
    :highlights.length
     ?[`Give ${dates(highlights)} a closer look when planning a change. These stand out because the reading finds more changes to work or close relationships; the full timeline below keeps the other years in view.`,`변화를 계획할 때는 ${dates(highlights)}년을 먼저 살펴봅니다. 일이나 가까운 관계에서 변화가 더 두드러지는 해이며, 다른 해의 흐름도 아래 전체 일정에 남겨 두었습니다.`]
     :['No work or relationship clash stands out in this ten-year comparison. Your timeline still shows how the focus changes from year to year.','이번 10년 비교에서는 일이나 관계에 부딪히는 변화가 두드러지지 않습니다. 매년 달라지는 중심 주제는 전체 흐름에서 설명합니다.']
-  put('patterns',turningPointAnswer[0],turningPointAnswer[1],highlights,'highlight')
+  put('patterns',turningPointAnswer[0],turningPointAnswer[1],highlights,targetedProduct01&&rootCauseFix&&plan.kind==='complete'?false:'highlight')
   put('next-moves',targetedProduct01?`Your ${plan.referenceYear}–${plan.referenceYear+years.length-1} timeline names each year's main theme, its chart link and what to watch. When a theme returns, compare the new year's chart contacts rather than treating it as the same year again.`:`Your ${plan.referenceYear}–${plan.referenceYear+years.length-1} timeline: each year below gives the main opportunity or pressure, the reason and what needs attention.`,targetedProduct01?`${plan.referenceYear}–${plan.referenceYear+years.length-1}년 흐름에서 매년의 중심 주제와 명식 근거, 살펴볼 점을 확인합니다. 같은 주제가 다시 나타나면 그해에 새로 작용하는 관계를 비교해 읽습니다.`:`${plan.referenceYear}–${plan.referenceYear+years.length-1}년의 전체 흐름입니다. 각 해의 기회나 부담, 그 이유와 주의할 점을 함께 읽습니다.`,years,true)
  }
  if(plan.kind==='career'){

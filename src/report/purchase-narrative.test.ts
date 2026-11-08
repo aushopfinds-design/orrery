@@ -80,8 +80,8 @@ describe('Targeted customer-answer revisions',()=>{
 describe('Buyer review r14: direct answers without repeated warnings or lost dates',()=>{
  it('explains the chart-linked meaning of the life turning-point years in the first answer',()=>{
   const answer=customerNarrative(buildInterpretationPlan('complete',a,2026)).patterns.lines[0].en
-  expect(answer).toContain('The clearest chart-supported year to reconsider your direction is')
-  expect(answer).toMatch(/20\d\d: a theme of .+ connects with work and daily responsibilities/)
+  expect(answer).toContain('The strongest chart signal for reconsidering your direction appears in')
+  expect(answer).toMatch(/20\d\d: .+ connects with work and close relationships/)
   expect(answer).toContain('not as a promise of a major event')
  })
  it('keeps every year visible in the actual delivered timelines after deduplication',()=>{
