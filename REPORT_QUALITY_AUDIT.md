@@ -650,3 +650,26 @@ Five new PDFs were generated after the Product 02 runtime code commit `c67239d95
 Twelve re-scored answers: Q2 for all five profiles; Q4 for profiles 2 and 3; Q7 for all five profiles. Q2 gained a concrete comparison of salary, hours, support, customers, costs and payment terms. Q4 now names the actual less-visible money area for profiles 2 and 3 while avoiding a claim about a real financial cause. Q7 now ties the work/money chart relationship to a concrete pay-and-hours check. Four Q5 answers remain at 94 because the calculation does not establish a reliable improvement year; this limitation was not turned into a prediction to increase the score.
 
 Product 02 meets the required five-profile mean threshold. Four profiles still have one 94-point individual answer, so the additional individual-answer 95 target is not fully met. The detailed 35-row evidence file is `docs/audits/PRODUCT02-INDEPENDENT-REVIEW-9fc5d32.json`.
+
+## Product 03 — actual PDF independent review (code SHA `36548075458d300aae4af1b2e1eb018c2e937e1c`, 2026-11-08)
+
+All 35 official Product 03 answers were read from five newly generated PDFs. Scores use the unchanged six-part rubric: direct answer /35, personalisation /25, specificity and usefulness /15, low repetition and generic advice /10, easy English /10, calculation consistency /5. Each answer score is the sum of those categories; each profile mean is its seven answer totals divided by seven and rounded to one decimal. No automated diagnostic score was used.
+
+| Profile | Q1–Q7 scores | Mean | Lowest answer | Verdict |
+| --- | --- | ---: | ---: | --- |
+| 1 | 88, 78, 89, 88, 85, 88, 80 | 85.1 | 78 | FAIL |
+| 2 | 89, 83, 81, 84, 87, 85, 83 | 84.6 | 81 | FAIL |
+| 3 | 88, 78, 89, 88, 85, 88, 80 | 85.1 | 78 | FAIL |
+| 4 | 90, 78, 88, 88, 85, 88, 80 | 85.3 | 78 | FAIL |
+| 5 | 90, 78, 88, 88, 91, 89, 80 | 86.3 | 78 | FAIL |
+
+Main deductions:
+
+- Q2 attraction is word-for-word identical in profiles 1, 3, 4, and 5. It names a possible theme and avoids claiming actual feelings, but does not make the individual reading feel distinct.
+- Q3 Profile 2 describes the same friction point for both people without explaining its effect on their interaction.
+- Q4's contrast is clear, but the explanation, tailored prompt and caution still repeat the same care needs.
+- Q5 distinguishes private closeness from routine; the “no clear link or clash” result repeats across profiles 1, 3 and 4 and still yields broad advice.
+- Q6 gives calculated years and which chart they belong to; the implications for the couple remain broad and the same caveat/action structure recurs.
+- Q7 uses abstract chart labels, repeats substantially for profiles 1, 3, 4 and 5, and does not yet translate the themes into a concrete shared decision.
+
+The full evidence file `docs/audits/PRODUCT03-INDEPENDENT-REVIEW-3654807.json` records each PDF answer, all six category scores, deduction reason, code location and FIX verdict. PDF structural checks: seven question blocks per PDF; pages 18, 18, 18, 19, 19; zero replacement/black-square glyphs; 12 internal links per PDF. Every page was not visually reviewed. Product 03 remains below the 95-point profile mean requirement and individual-answer target; continue targeted code revision and repeat the same rubric.
