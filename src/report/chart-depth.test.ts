@@ -20,7 +20,7 @@ describe('r16 interpretation depth without new fortune claims',()=>{
    expect(text.en).not.toMatch(/will (earn|lose)|guaranteed|wealth score/)
    const life=moneyDepth(p,'life').en
    if(p.resolution.risks.some(r=>r.code==='money-versus-resource')){
-    expect(life).toContain('income pattern to the skills, tools and help needed to deliver the work')
+    expect(life).toContain('income route to the skills and help used at work')
     expect(life).not.toContain('pull between earning more and maintaining the base')
    }
   }
@@ -32,6 +32,22 @@ describe('r16 interpretation depth without new fortune claims',()=>{
    else if(p.strength.signals.exceptional)expect(text.en).toContain('withholding a strong-or-weak verdict')
    else expect(text.en).toContain(p.strength.signals.seasonalSupport?'season supports it':'season does not directly support it')
   }
+ })
+ it('shows the actual placements behind Product 01 money routes without repeating the direct answer',()=>{
+  const p=subjects[0]
+  const evidence={...p,visibleMoney:[],hiddenMoney:[{stem:'甲',god:'正財',position:'year' as const,branch:'卯',principal:true}],resolution:{...p.resolution,risks:[],circuits:[]}} as typeof p
+  const text=moneyDepth(evidence,'life').en
+  expect(text).toContain('Steady-pay signs appear in wider contacts')
+  expect(text).toContain('inside the branches rather than in outward roles')
+  expect(text).not.toContain('does not treat the absence of an outward sign as an absence of income')
+ })
+ it('keeps a skill-to-customer money explanation specific to its calculated placement',()=>{
+  const p=subjects.find(subject=>subject.resolution.circuits.some(item=>item.code==='output-to-money'))
+  expect(p).toBeDefined()
+  const text=moneyDepth(p!,'life').en
+  expect(text).toContain('Your chart links the work you produce with paying customers.')
+  expect(text).toMatch(/Steady-pay signs appear in|project- and customer-income signs appear in/)
+  expect(text).not.toContain('This describes how income may be earned')
  })
  it('publishes consistent advice at every decision point and pairs every delivered claim',()=>{
   const input={...base,unknownTime:false},chart=calculateSaju(input),plan=buildInterpretationPlan('business',chart,2026),sections=customerNarrative(plan)
