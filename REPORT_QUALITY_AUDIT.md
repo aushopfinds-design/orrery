@@ -447,3 +447,63 @@ The following scores come from reading the five final regenerated `issueReport()
 **Finding:** the language and role separation improved, but every targeted answer is still below 95. Q4's supporting paragraph still returns to the difference between money coming in and money retained. Q6's practical step is distinct and readable but remains a fairly general time-protection action. These are targeted answer scores only; a complete post-fix seven-answer profile mean has not been measured. Product 01 remains **FAIL**.
 
 The latest test run passed the focused narrative/chart/role suites (32/32) and the real paid `issueReport()` Product 01 generator (1/1; five PDFs, seven titles/answers, seven valid contents links). TypeScript verification is recorded separately in the project status. Structural diagnostic values are not these content scores.
+
+
+## Product 01 third targeted re-review (2026-11-08)
+
+After revision 3, five actual `issueReport()` PDFs were regenerated. I read the two changed answer roles in each PDF (10 answer instances) and applied the same six-part rubric. The five fixtures are `new-york-known`, `seoul-known`, `new-york-unknown`, `sydney-known`, and `los-angeles-known`. They are a separate fixture set from the original 35-answer audit; these ten scores do not create a full profile mean.
+
+| Profile | Q4 money | Q6 life challenge |
+|---|---:|---:|
+| 1 — New York, known time | 93 | 94 |
+| 2 — Seoul, known time | 90 | 94 |
+| 3 — New York, unknown time | 93 | 94 |
+| 4 — Sydney, known time | 89 | 93 |
+| 5 — Los Angeles, known time | 93 | 93 |
+
+The score range improved from revision 2's Q4 84–89 and Q6 92–93 to Q4 89–93 and Q6 93–94. **Every reviewed answer remains below 95.** Q4 is more concise and now separates the direct income-route conclusion from the chart evidence, but one profile still has a broad hidden-marker explanation and another has a general skill-to-customer link. Q6's action is now tied to the chart's work theme and the private-life tradeoff; it is still not specific enough to earn 95. Product 01 remains **FAIL**; full post-fix evaluation of all seven answers per profile is still pending.
+
+### Test profile 1 — new-york-known
+**Q4 — What is my natural pattern for earning money? — 93/100 (D/P/U/R/E/C 34/23/14/8/9/5)**
+
+> Answer: Your chart supports both regular income and more variable earnings from customers, projects or deals. This fits a dependable base with selected paid work on the side; which one becomes larger depends on your actual work and agreements.  Answer detail: Your chart places earning signs beside learning-and-support signs in outward roles. This links your income pattern to the skills, tools and help needed to deliver the work; the chart does not measure your pay or profit. 
+
+**Q6 — What are my biggest life challenges? — 94/100 (D/P/U/R/E/C 34/24/14/8/9/5)**
+
+> Answer: Your main life challenge is keeping the demands of customer growth and business development work from crowding out being heard before someone offers a solution in your private life. The chart places these in separate areas, so success in one does not automatically meet the other need.  Answer detail: When customer growth and business development demands increase, name one private commitment you will protect before accepting another duty. 
+
+### Test profile 2 — seoul-known
+**Q4 — What is my natural pattern for earning money? — 90/100 (D/P/U/R/E/C 33/22/12/9/9/5)**
+
+> Answer: Regular work or repeat fees have the clearest chart support. Variable projects may add income, but the chart gives less direct support to depending on them as your only route.  Answer detail: The earning signs are present inside the branches, rather than in the main outward roles. The money reading therefore follows the less visible work behind your role; it does not treat the absence of an outward sign as an absence of income. 
+
+**Q6 — What are my biggest life challenges? — 94/100 (D/P/U/R/E/C 34/24/14/8/9/5)**
+
+> Answer: Your main life challenge is keeping the demands of reliable products and repeatable service work from crowding out warm attention and time for your own interests in your private life. The chart places these in separate areas, so success in one does not automatically meet the other need.  Answer detail: When reliable products and repeatable service demands increase, name one private commitment you will protect before accepting another duty. 
+
+### Test profile 3 — new-york-unknown
+**Q4 — What is my natural pattern for earning money? — 93/100 (D/P/U/R/E/C 34/23/14/8/9/5)**
+
+> Answer: Your chart supports both regular income and more variable earnings from customers, projects or deals. This fits a dependable base with selected paid work on the side; which one becomes larger depends on your actual work and agreements.  Answer detail: Your chart places earning signs beside learning-and-support signs in outward roles. This links your income pattern to the skills, tools and help needed to deliver the work; the chart does not measure your pay or profit. 
+
+**Q6 — What are my biggest life challenges? — 94/100 (D/P/U/R/E/C 34/24/14/8/9/5)**
+
+> Answer: Your main life challenge is keeping the demands of customer growth and business development work from crowding out being heard before someone offers a solution in your private life. The chart places these in separate areas, so success in one does not automatically meet the other need.  Answer detail: When customer growth and business development demands increase, name one private commitment you will protect before accepting another duty. 
+
+### Test profile 4 — sydney-known
+**Q4 — What is my natural pattern for earning money? — 89/100 (D/P/U/R/E/C 33/22/12/8/9/5)**
+
+> Answer: Your chart supports both regular income and more variable earnings from customers, projects or deals. This fits a dependable base with selected paid work on the side; which one becomes larger depends on your actual work and agreements.  Answer detail: Your chart links money across your life with a usable skill and paying customers. Both the work you produce and a pattern linked with earning and managing money appear in the checked route. This describes how income may be earned; it does not tell us how much you will keep. 
+
+**Q6 — What are my biggest life challenges? — 93/100 (D/P/U/R/E/C 34/23/13/9/9/5)**
+
+> Answer: Your main life challenge is keeping the demands of operations and resource management work from crowding out time to share a feeling without being rushed in your private life. The chart places these in separate areas, so success in one does not automatically meet the other need.  Answer detail: When operations and resource management demands increase, name one private commitment you will protect before accepting another duty. 
+
+### Test profile 5 — los-angeles-known
+**Q4 — What is my natural pattern for earning money? — 93/100 (D/P/U/R/E/C 34/23/14/8/9/5)**
+
+> Answer: Your chart supports both regular income and more variable earnings from customers, projects or deals. This fits a dependable base with selected paid work on the side; which one becomes larger depends on your actual work and agreements.  Answer detail: Your chart places earning signs beside learning-and-support signs in outward roles. This links your income pattern to the skills, tools and help needed to deliver the work; the chart does not measure your pay or profit. 
+
+**Q6 — What are my biggest life challenges? — 93/100 (D/P/U/R/E/C 34/23/13/9/9/5)**
+
+> Answer: Your main life challenge is keeping the demands of operations and resource management work from crowding out warm attention and time for your own interests in your private life. The chart places these in separate areas, so success in one does not automatically meet the other need.  Answer detail: When operations and resource management demands increase, name one private commitment you will protect before accepting another duty. 

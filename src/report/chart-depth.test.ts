@@ -18,6 +18,11 @@ describe('r16 interpretation depth without new fortune claims',()=>{
     expect(moneyDepth(p,'life').en).not.toBe(text.en)
    }else expect(text.en).not.toContain('Outward money signs sit beside learning-and-support signs')
    expect(text.en).not.toMatch(/will (earn|lose)|guaranteed|wealth score/)
+   const life=moneyDepth(p,'life').en
+   if(p.resolution.risks.some(r=>r.code==='money-versus-resource')){
+    expect(life).toContain('income pattern to the skills, tools and help needed to deliver the work')
+    expect(life).not.toContain('pull between earning more and maintaining the base')
+   }
   }
  })
  it('keeps unknown-hour and exceptional structures out of an invented capacity verdict',()=>{

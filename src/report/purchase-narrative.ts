@@ -75,26 +75,15 @@ export function customerNarrative(plan:InterpretationPlan,targetedProduct01=true
     :regularRoute?`확인한 명식에서는 변동성 있는 고객·거래 수입보다 안정적인 수입과 지속적인 책임에 더 직접적인 근거가 있습니다. 고정된 역할이나 반복 서비스가 겉에 드러난 재물 글자와 더 잘 맞으며, 독립 업무는 반복 가능한 상품을 먼저 분명히 해야 합니다.`
     :opportunityRoute?`확인한 명식에서는 고정 급여보다 고객·프로젝트·거래를 통한 수입에 더 직접적인 근거가 있습니다. 영업성 업무나 독립 업무와 연결될 수 있지만 현실에서는 안정적인 기반과 대금 조건을 먼저 갖춰야 합니다.`
     :`확인한 위치에는 고정 수입이나 기회성 재물의 통로가 뚜렷하지 않습니다. 업무 방식은 읽을 수 있어도 재물 글자가 없으므로 직장과 사업 중 하나를 정해 말할 수 없습니다.`)
-  const positionName:Record<string,string>={month:'work',year:'wider contacts',day:'private life',hour:'longer-term plans'}
-  const moneyGroups=new Map<string,Set<string>>()
-  for(const item of [...p.visibleMoney,...p.hiddenMoney]){
-    const kind=item.god==='正財'?'steady-income':'deal-based income'
-    const key=`${kind} signs`
-    const where=positionName[item.position]
-    if(!moneyGroups.has(key))moneyGroups.set(key,new Set())
-    moneyGroups.get(key)!.add(where)
-  }
-  const moneyEvidence=[...moneyGroups].map(([kind,places])=>`${kind} appear in ${[...places].join(' and ')}`)
-  const visibleMoneyExplanation=moneyEvidence.length?`In your chart, ${moneyEvidence.join('; ')}. These locations support the income pattern above.`:''
   const moneyAnswer=pair(regularRoute&&opportunityRoute
-    ?`Your chart supports both regular income and more variable earnings from customers, projects or deals. This fits a dependable base with selected paid work on the side; which one becomes larger depends on your actual work and agreements. ${visibleMoneyExplanation}`
-    :regularRoute?`Regular work or repeat fees have the clearest chart support. Variable projects may add income, but the chart gives less direct support to depending on them as your only route. ${visibleMoneyExplanation}`
-    :opportunityRoute?`Project, customer or deal-based income has the clearest chart support; a fixed-pay route is less directly marked. This can suit commercial work, but income is easier to keep steady when payment terms and delivery are settled first. ${visibleMoneyExplanation}`
-    :`Your chart does not establish whether salaried or deal-based work is your natural income route. Use your work skills and real contract terms to judge that choice. ${visibleMoneyExplanation}`,
-    regularRoute&&opportunityRoute?`명식에는 정기 수입과 고객·프로젝트·거래의 변동 수입이 함께 나타납니다. 안정적인 기반에 선택한 유료 업무를 더하는 방식과 맞지만, 어느 쪽이 더 커질지는 실제 일과 계약에 달려 있습니다. ${visibleMoneyExplanation}`
-    :regularRoute?`정기 업무와 반복 수수료에 더 직접적인 근거가 있습니다. 프로젝트 수입을 더할 수는 있어도 그것만을 유일한 통로로 삼는 데는 근거가 약합니다. ${visibleMoneyExplanation}`
-    :opportunityRoute?`프로젝트와 거래를 통한 수입에 더 직접적인 근거가 있으며 고정 급여는 덜 뚜렷합니다. 영업성 업무와 연결될 수 있지만 조건과 납품, 대금 지급을 먼저 정할수록 수입을 안정시키기 쉽습니다. ${visibleMoneyExplanation}`
-    :`확인한 명식만으로 급여와 거래형 수입 중 어느 쪽이 자연스러운 통로인지 정하기 어렵습니다. 실제 업무 능력과 계약 조건을 기준으로 판단해야 합니다. ${visibleMoneyExplanation}`)
+    ?`Your chart supports both regular income and more variable earnings from customers, projects or deals. This fits a dependable base with selected paid work on the side; which one becomes larger depends on your actual work and agreements.`
+    :regularRoute?`Regular work or repeat fees have the clearest chart support. Variable projects may add income, but the chart gives less direct support to depending on them as your only route.`
+    :opportunityRoute?`Project, customer or deal-based income has the clearest chart support; a fixed-pay route is less directly marked. This can suit commercial work, but income is easier to keep steady when payment terms and delivery are settled first.`
+    :`Your chart does not establish whether salaried or deal-based work is your natural income route. Use your work skills and real contract terms to judge that choice.`,
+    regularRoute&&opportunityRoute?`명식에는 정기 수입과 고객·프로젝트·거래의 변동 수입이 함께 나타납니다. 안정적인 기반에 선택한 유료 업무를 더하는 방식과 맞지만, 어느 쪽이 더 커질지는 실제 일과 계약에 달려 있습니다.`
+    :regularRoute?`정기 업무와 반복 수수료에 더 직접적인 근거가 있습니다. 프로젝트 수입을 더할 수는 있어도 그것만을 유일한 통로로 삼는 데는 근거가 약합니다.`
+    :opportunityRoute?`프로젝트와 거래를 통한 수입에 더 직접적인 근거가 있으며 고정 급여는 덜 뚜렷합니다. 영업성 업무나 독립 업무와 연결될 수 있지만 조건과 납품, 대금 지급을 먼저 정할수록 수입을 안정시키기 쉽습니다.`
+    :`확인한 명식만으로 급여와 거래형 수입 중 어느 쪽이 자연스러운 통로인지 정하기 어렵습니다. 실제 업무 능력과 계약 조건을 기준으로 판단해야 합니다.`)
  const monthHidden=[...new Set(p.strength.hidden.filter(item=>item.position==='month').map(item=>LANGUAGE[item.god]?.name.en).filter(Boolean))]
  const monthHiddenKo=[...new Set(p.strength.hidden.filter(item=>item.position==='month').map(item=>LANGUAGE[item.god]?.name.ko).filter(Boolean))]
  const hiddenRoutine=monthHidden.filter(name=>name!==m.name.en).join(' and ')||inner.name.en
@@ -161,7 +150,7 @@ export function customerNarrative(plan:InterpretationPlan,targetedProduct01=true
   if(targetedProduct01)put('life-challenges',[
    ...(rootCauseFix?[pair(`Your main life challenge is keeping the demands of ${CAREER_THEME_LABEL[p.monthStemGod]} work from crowding out ${relationshipProfile.need} in your private life. The chart places these in separate areas, so success in one does not automatically meet the other need.`,`가장 큰 삶의 과제는 ${CAREER_THEME_LABEL[p.monthStemGod]} 업무의 요구가 사적인 생활에서 필요한 ${NEED[p.dayBranch]}의 여유를 잠식하지 않도록 하는 것입니다. 명식에서 두 필요는 서로 다른 영역에 있어, 한쪽의 성취가 다른 쪽을 자동으로 채우지는 않습니다.`)]:[pair(`A recurring challenge is this pressure pattern: ${personal.pressure} It can affect life beyond work, while your career fit centres on ${m.name.en}.`,`반복될 수 있는 개인적인 과제는 ${pk.pressure}입니다. 부담을 받을 때의 반응이며, 직업 답변에서 설명한 ${m.name.ko} 중심의 업무 환경과는 다른 내용입니다.`)]),
    ...(rootCauseFix?[]:[pair(`In close relationships, the day sign ${p.dayBranch} points to ${relationshipProfile.need}. Friction can grow when the support offered differs from the support you actually want.`,`가까운 관계에서는 일지 ${p.dayBranch}가 ${NEED[p.dayBranch]}을 가리킵니다. 받고 싶은 도움과 상대가 건네는 도움이 다를 때 마찰이 커질 수 있습니다.`)]),
-  ],rootCauseFix?pair('When work expands, reserve one specific block of time each week for your private life before taking on another commitment.','업무가 늘 때는 다른 책임을 더 맡기 전에 매주 사적인 시간을 먼저 정해 둡니다.'):pair(`At work, check whether the ${m.name.en} role gives you time and authority for its daily demands. In a close relationship, name when you need ${relationshipProfile.need}.`,`일에서는 ${m.name.ko} 역할에 일상 업무를 감당할 시간과 권한이 있는지 살핍니다. 가까운 관계에서는 ${relationshipProfile.need}이 필요하다고 말합니다.`),rootCauseFix?pair('This is a balance to manage, not a prediction of conflict or failure.','이는 조정해야 하는 균형이지 갈등이나 실패에 대한 예측은 아닙니다.'):m.pressure)
+  ],rootCauseFix?pair(`When ${CAREER_THEME_LABEL[p.monthStemGod]} demands increase, name one private commitment you will protect before accepting another duty.`,`일에서 ${CAREER_THEME_LABEL[p.monthStemGod]} 업무가 늘 때는 다른 책임을 맡기 전에 지킬 사적인 약속 하나를 정해 둡니다.`):pair(`At work, check whether the ${m.name.en} role gives you time and authority for its daily demands. In a close relationship, name when you need ${relationshipProfile.need}.`,`일에서는 ${m.name.ko} 역할에 일상 업무를 감당할 시간과 권한이 있는지 살핍니다. 가까운 관계에서는 ${relationshipProfile.need}이 필요하다고 말합니다.`),rootCauseFix?pair('This is a balance to manage, not a prediction of conflict or failure.','이는 조정해야 하는 균형이지 갈등이나 실패에 대한 예측은 아닙니다.'):m.pressure)
   put('balance',targetedProduct01?[
    pair(`You are more likely to feel balanced when work built around ${m.name.en} still leaves room for ${personal.need}. This combines your birth-day style with the visible work role in your chart.`,`균형을 느끼려면 ${m.name.ko}을 활용하는 일과 ${pk.need}을 위한 여유가 함께 있어야 합니다. 태어난 날의 성향과 명식에 드러난 업무 역할을 연결한 결론입니다.`),
    pair(`The hidden month layer adds ${hiddenRoutine} to daily work${p.monthStemGod===p.monthBranchGod?'; it repeats the visible theme rather than creating a separate demand.':`. ${inner.work.en}`} A job title can fit while its routine still drains you if it leaves no space for these skills.`,`태어난 달의 지장간은 일상 업무에 ${hiddenRoutineKo}을 더합니다${p.monthStemGod===p.monthBranchGod?' 겉의 주제가 반복되는 구조입니다.':`. ${inner.work.ko}`} 직함이 잘 맞아도 실제 업무가 이런 기술을 쓸 여지를 주지 않으면 지칠 수 있습니다.`),

@@ -90,3 +90,9 @@ Products 03–07 lose 30 points because `server/payments/report.ts` supplies `ca
 - TypeScript `tsc -b --pretty false` passed after the latest code edits. Focused narrative/chart/role tests passed 32/32; the actual Product 01 `issueReport()` PDF test passed 1/1 and emitted five test PDFs with seven valid TOC links.
 - Preview for this commit: `dpl_J5W3K43yzFi3xbWQm2LX5PL9qvK3` reached READY; its homepage returned HTTP 200. The current Preview verification was a homepage HTTP 200 smoke check only; product screens, visual rendering and refreshed PDF text were not browser-checked on Preview.
 - Product 01 has targeted Q4/Q6 scores only (Q4 84–89, Q6 92–93); no complete post-fix profile score is available. Products 02–07 are unscored. Production remains unchanged and sales remain closed.
+
+
+### Product 01 third revision and re-review
+- Removed duplicated money-marker placement language from the Q4 lead and moved the evidence explanation to the support paragraph. For the life reading's money/support overlap, the detail now explains the practical link to skills, tools and help. Q6's practical point now refers to the customer's chart-linked work theme and a protected private commitment.
+- Focused suites passed 33/33; the actual Product 01 `issueReport()` test passed 1/1 and generated five PDFs with seven valid TOC links. `tsc -b --pretty false` passed. Structural diagnostic scores (4×100, 1×70) are not content-quality scores.
+- Re-read Q4 and Q6 in the five regenerated PDFs: Q4 93/90/93/89/93; Q6 94/94/94/93/93. These ten targeted answer scores improved from the prior pass but are all below 95 and are not complete product profile means. Product 01 remains FAIL; products 02–07 remain unscored.
