@@ -474,7 +474,9 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
                 : lead.includes('less direct')
                   ? 'Specialist work behind the public-facing role is the clearest earning route to examine.'
                   : 'The chart does not settle an income route; use actual skills, demand and terms.',
-          'working-style': lead.includes('training and support needs')
+          'working-style': lead.includes('possible pressure is the time or cost of training and support')
+            ? 'A possible work/support cost pressure appears, but the chart cannot confirm it is a real financial blocker.'
+            : lead.includes('training and support needs')
             ? 'Paid work and the support needed to do it may compete for the same resources.'
             : lead.includes('demanding responsibilities')
               ? 'The chart points to obligations growing faster than money kept.'
@@ -513,7 +515,7 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
             : undefined
           : undefined
         const repeatFinancialAnswer=question.id==='working-style'&&/specific financial blocker|Less-visible money indicators alone/i.test(leadText)
-        const limitedIncomeAnswer=question.id==='money-commitments'&&/limited sign for (?:regular pay|customer or project income)/i.test(leadText)
+        const limitedIncomeAnswer=question.id==='money-commitments'&&/limited (?:sign|clue)(?: for| toward) (?:regular pay|customer or project income)/i.test(leadText)
         const omitBottomLine=question.id==='proof-of-skill'||question.id==='career-plan'||repeatFinancialAnswer||limitedIncomeAnswer
         const lines = [
           `Your Answer: ${answerText}`,

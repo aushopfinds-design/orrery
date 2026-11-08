@@ -42,9 +42,13 @@ describe('My Money & Career customer-first delivery', () => {
       expect(q7).not.toBe(q1)
       expect(q7).toMatch(/money|income|earning/i)
       if ([1, 2].includes(index)) {
-        expect(buyerSection).toMatch(/Your Answer: Your chart has a limited sign for regular pay, linked to/i)
+        expect(buyerSection).toMatch(/Your Answer: The chart offers a limited clue toward regular pay, tied to/i)
         expect(buyerSection).not.toMatch(/What This Means for You: Steady pay is linked/i)
         expect(buyerSection).not.toMatch(/Bottom Line: The chart does not settle an income route/i)
+      }
+      expect(buyerSection).toMatch(/A possible pressure is the time or cost of training and support|does not identify a specific financial blocker|connects useful work with customers or pay/i)
+      if ([0, 4].includes(index)) {
+        expect(buyerSection).toMatch(/Bottom Line: A possible work\/support cost pressure appears, but the chart cannot confirm it is a real financial blocker/i)
       }
       expect(pdf.subarray(0, 5).toString()).toBe('%PDF-')
       reports.push(report)

@@ -235,11 +235,19 @@ export function customerNarrative(plan:InterpretationPlan,targetedProduct01=true
   const englishMoneyLinks=careerMoneyEvidence.map(item=>item.type==='regular pay'?`Steady pay is linked to ${item.areas}`:`Customer or project income is linked to ${item.areas}`).join('. ')
   const koreanMoneyLinks=careerMoneyEvidenceKo.map(item=>`${item.areas}에서 ${item.type==='regular pay'?'정기 수입':'고객·프로젝트 수입'}의 표시가 확인됩니다`).join('. ')
   const careerMoneyAnswer=pair(
-   careerMoneyEvidence.length?`${englishMoneyLinks}. These are possible earning routes, not expected pay.`:'The checked chart positions do not show a direct money route, so the report does not assign one.',
-   careerMoneyEvidence.length?`${koreanMoneyLinks}. 실제 수입액이 아니라 가능한 업무 통로를 보여 주는 사주 표시입니다.`:'확인한 사주 위치에 직접적인 재물 흐름이 나타나지 않아 특정 수입 방식을 정하지 않습니다.')
+   careerMoneyEvidence.length
+    ? plan.kind==='career'&&!p.visibleMoney.length&&p.hiddenMoney.length
+      ? 'These signs sit in less visible chart areas, so they are clues rather than a clear income pattern.'
+      : `${englishMoneyLinks}. These are possible earning routes, not expected pay.`
+    : 'The checked chart positions do not show a direct money route, so the report does not assign one.',
+   careerMoneyEvidence.length
+    ? plan.kind==='career'&&!p.visibleMoney.length&&p.hiddenMoney.length
+      ? '이 표시는 덜 드러나는 위치에 있어, 분명한 수입 방식이라기보다 참고 단서로 봅니다.'
+      : `${koreanMoneyLinks}. 실제 수입액이 아니라 가능한 업무 통로를 보여 주는 사주 표시입니다.`
+    : '확인한 사주 위치에 직접적인 재물 흐름이 나타나지 않아 특정 수입 방식을 정하지 않습니다.')
   const moneyRiskCodes=new Set(p.resolution.risks.map(risk=>risk.code))
   const financialBlock=moneyRiskCodes.has('money-versus-resource')
-   ? pair('Your chart links income work with a need for training or support. When both use the same time or money, there may be less left from earnings after that support is covered.','명식에서 수입 활동과 교육 또는 지원의 필요가 연결됩니다. 두 가지가 같은 시간이나 돈을 쓰면 필요한 지원 비용을 낸 뒤 남는 수입이 줄 수 있습니다.')
+   ? pair('A possible pressure is the time or cost of training and support needed for income-related work. The chart cannot show whether this is affecting your actual finances.','가능한 부담은 수입과 관련된 일을 위해 필요한 교육이나 지원에 드는 시간과 비용입니다. 명식만으로 이것이 실제 재정에 영향을 주는지는 알 수 없습니다.')
    : moneyRiskCodes.has('money-adds-pressure')
     ? pair('Your chart links money themes with demanding responsibilities. A larger paid task could add obligations before it adds money you keep.','명식에서 재물 주제와 부담이 큰 책임이 연결됩니다. 더 큰 유료 업무를 맡을 때 실제 남는 돈보다 책임이 먼저 늘 수 있습니다.')
     : !p.visibleMoney.length&&p.hiddenMoney.length
@@ -533,8 +541,8 @@ function moneyPassage(p:InterpretationPlan['primary'],area:'life'|'career'|'busi
  :steady?pair('Regular pay and dependable repeat work are your clearer income pattern. A role with defined hours and duties makes that pattern easier to evaluate.','정기 급여와 꾸준한 반복 업무가 더 분명한 수입 방식입니다. 시간과 담당이 정해진 자리에서 그 방식을 판단하기 쉽습니다.')
  :variable?pair('Customer-facing or project-based income stands out more than a purely fixed routine. Your income question is closely tied to access to buyers and control over the terms of the work.','고정된 일상만으로 버는 방식보다 고객이나 프로젝트를 통한 수입이 더 두드러집니다. 구매자를 만날 기회와 업무 조건을 정할 권한이 수입 질문에 중요합니다.')
  :hiddenSteady&&hiddenVariable?pair(`Your chart has limited signs for both regular pay and customer or project income${hiddenAreas.length?`, linked to ${joinHiddenAreas(hiddenAreas)}`:''}. They point to possible routes, not guaranteed income.`,`명식에는 정기 수입과 고객·프로젝트 수입의 근거가 제한적으로 함께 나타납니다${hiddenAreasKo.length?`. 확인된 위치는 ${joinHiddenAreas(hiddenAreasKo)}입니다`:''}. 가능한 수입 경로이지 보장된 수입은 아닙니다.`)
- :hiddenSteady?pair(`Your chart has a limited sign for regular pay${hiddenAreas.length?`, linked to ${joinHiddenAreas(hiddenAreas)}`:''}. This points to a possible earning route, not how much you would earn or whether a job pays more than a business.`,`명식에 정기 수입을 가리키는 제한적인 표시가 있습니다${hiddenAreasKo.length?`. 확인된 위치는 ${joinHiddenAreas(hiddenAreasKo)}입니다`:''}. 가능한 경로일 뿐이며 실제 수입이나 직장과 사업 중 어느 쪽이 더 많이 벌지는 알 수 없습니다.`)
- :hiddenVariable?pair(`Your chart has a limited sign for customer or project income${hiddenAreas.length?`, linked to ${joinHiddenAreas(hiddenAreas)}`:''}. It points to a possible route, not a promise of income or proof that business would pay more than a job.`,`명식에 고객·프로젝트 수입을 가리키는 제한적인 표시가 있습니다${hiddenAreasKo.length?`. 확인된 위치는 ${joinHiddenAreas(hiddenAreasKo)}입니다`:''}. 가능한 경로일 뿐이며 실제 수입이나 사업이 직장보다 더 벌 것이라는 보장은 아닙니다.`)
+ :hiddenSteady?pair(`The chart offers a limited clue toward regular pay${hiddenAreas.length?`, tied to ${joinHiddenAreas(hiddenAreas)}`:''}. It does not show whether that route would pay more than independent work.`,`명식은 정기 수입 쪽에 제한적인 단서를 보여 줍니다${hiddenAreasKo.length?`. 확인된 위치는 ${joinHiddenAreas(hiddenAreasKo)}입니다`:''}. 이 방식이 독립 업무보다 더 많이 벌지는 보여 주지 않습니다.`)
+ :hiddenVariable?pair(`The chart offers a limited clue toward customer or project income${hiddenAreas.length?`, linked to ${joinHiddenAreas(hiddenAreas)}`:''}. It does not show whether that route would pay more than a regular job.`,`명식은 고객·프로젝트 수입 쪽에 제한적인 단서를 보여 줍니다${hiddenAreasKo.length?`. 확인된 위치는 ${joinHiddenAreas(hiddenAreasKo)}입니다`:''}. 이 방식이 정기 급여보다 더 많이 벌지는 보여 주지 않습니다.`)
  :p.hiddenMoney.length?pair('The money-related signs are less visible, so the chart cannot favour a specific pay route. It does not establish whether salary or business income would be higher.','재물 표시가 덜 드러나 특정 수입 방식을 선택하기 어렵습니다. 급여와 사업 수입 중 어느 쪽이 더 클지 명식만으로 판단할 수 없습니다.')
  :pair('A direct earning pattern is not clear in the checked signs. This report therefore gives more weight to work fit and responsibility than to naming a money-making route.','확인한 글자에서 직접적인 수입 방식은 분명하지 않습니다. 특정 돈벌이 통로보다 맞는 업무와 책임에 더 무게를 둡니다.')
  return steady&&variable?pair('Your money pattern combines a steady base with income from new customers or deals. Relying on only one of those routes would leave out part of the reading.','꾸준한 기반 수입과 새 고객·거래의 수입이 함께 나타납니다. 한쪽 통로만 보면 재물 풀이의 일부가 빠집니다.')
