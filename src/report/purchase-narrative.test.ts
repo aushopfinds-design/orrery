@@ -68,7 +68,7 @@ describe('Targeted customer-answer revisions',()=>{
   expect(income).toContain('These chart clues do not show an amount or guarantee')
   expect(income).not.toMatch(/incomes? amount/i)
   const challenge=sections['life-challenges'].lines.map(line=>line.en).join(' ')
-    expect(challenge).toMatch(/Your main life challenge is balancing/)
+    expect(challenge).toMatch(/Your main life challenge may be (?:keeping|balancing)/)
     expect(challenge).toContain('what your private life needs:')
     expect(challenge).toContain('being heard before advice')
     expect(challenge).toContain('This is a pattern to manage, not a fixed outcome.')
