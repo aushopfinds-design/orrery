@@ -31,7 +31,7 @@ describe('My Money & Career customer-first delivery', () => {
       expect(buyerSection.match(/^Your Answer:/gm)?.length).toBe(7)
       expect(buyerSection.match(/^What This Means for You:/gm)?.length).toBeGreaterThanOrEqual(3)
       expect(buyerSection.match(/^Bottom Line:/gm)?.length).toBeGreaterThanOrEqual(1)
-      expect(buyerSection).toMatch(/possible periods of career support|No checked year stands out as a clear period/i)
+      expect(buyerSection).toMatch(/I cannot (?:confirm a date|identify a reliable improvement year)/i)
       expect(buyerSection).toMatch(/Your 2026–2035 outlook is mixed: work themes change/i)
       expect(buyerSection).toMatch(/do not show a steady rise in income/i)
       expect(buyerSection).not.toMatch(/added work friction/i)
