@@ -584,3 +584,19 @@ Five actual Product 02 PDFs were generated from `issueReport()` at source SHA `b
 Q3 (`How do I naturally make money?`) is cautious, but for profiles 2–3 the answer names only a limited possible earning route and does not explain how it fits the person's work pattern. Q4 (`What tends to block my financial progress?`) is internally unclear in profiles 1 and 5: the answer suggests a possible training/support cost pressure, then concludes that no specific blocker is identified. Q5 correctly avoids inventing a year, but four profiles use nearly the same broad no-clear-period explanation and overlap with the ten-year outlook. These are real answer-level deductions, not diagnostic flags.
 
 The baseline review is saved before code edits. Product 02 still fails; no Product 02 code change has yet been committed at this checkpoint. The next source change is limited to Q3's hidden-money phrasing and Q4's distinction between a possible chart pressure and a verified real-world financial cause. Q5 remains unchanged unless a distinct, calculation-backed timing answer is supported.
+
+## Product 02 revision 1 — post-fix independent review (2026-11-09)
+
+The second five-PDF batch was generated from saved code SHA `f54d94b11e1a8489f8d46872378aa1167d2e691c`. All 35 current PDF answer blocks were read; the fixed rubric is unchanged. Actual answer text, criterion points, deductions and code targets are preserved in `docs/audits/PRODUCT02-POSTFIX-INDEPENDENT-REVIEW-f54d94b.json`.
+
+| Profile | Pre-fix mean | Post-fix mean | Lowest current answer | Verdict |
+| --- | ---: | ---: | ---: | --- |
+| 1 | 92.4 | 93.7 | 89 | FAIL |
+| 2 | 92.3 | 93.6 | 91 | FAIL |
+| 3 | 91.9 | 93.1 | 89 | FAIL |
+| 4 | 93.1 | 93.1 | 89 | FAIL |
+| 5 | 92.0 | 93.3 | 89 | FAIL |
+
+The limited-money answer in profiles 2 and 3 is clearer and no longer repeats the same chart-location explanation. The possible training/support pressure in profiles 1 and 5 is now explicitly distinguished from a verified financial cause. However, Q4 still repeats the same caution across its lead, explanation and bottom line, and its chart basis could be more useful. Q5 still has a broad no-clear-period response across four profiles. The revised product does **not** pass; all profile averages remain below 95.
+
+Revision 2 should keep Q4 concise and answer-first, and make Q5's no-improvement-period result more informative using only each profile's checked annual work themes. No unverified timing may be added. Product 03–07 are not started yet.
