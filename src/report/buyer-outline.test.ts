@@ -12,7 +12,7 @@ describe('Buyer questions, not a repeated six-part technical template', () => {
     const reading = buildCategoryReading('compatibility', a, { second: b, year: 2026 })
     const report = applyBuyerQuestions(reading.fullText, 'compatibility', reading.chapters, [], 'standalone')
     expect(report).toContain('The day signs show neither a direct link nor a friction pattern')
-    expect(report).toMatch(/Question: Why are we attracted to each other\?[\s\S]*Answer: The chart suggests a reciprocal pull:/)
+    expect(report).toMatch(/Question: Why are we attracted to each other\?[\s\S]*Answer: You may be drawn to what your partner brings:/)
     expect(report).not.toContain('during a disagreement in you')
   })
   it('gives every question a distinct answer role within its product', () => {
@@ -120,7 +120,7 @@ describe('Buyer questions, not a repeated six-part technical template', () => {
     const source = chapters.map(chapter => deliveredChapter(chapter).join('\n\n')).join('\n\n')
     const report = applyBuyerQuestions(source, 'compatibility', chapters)
     expect((report.match(/^Question:/gm) ?? [])).toHaveLength(7)
-    expect(report).toMatch(/Question: Why are we attracted to each other\?[\s\S]*Answer: The chart suggests a reciprocal pull: you may be drawn to a direct conversation that feels exciting in your partner, while your partner may be drawn to practical care that feels reassuring in you\./)
+    expect(report).toMatch(/Question: Why are we attracted to each other\?[\s\S]*Answer: You may be drawn to what your partner brings: a direct conversation that feels exciting\. Your partner may be drawn to what you bring: practical care that feels reassuring\./)
     expect(report).toContain('Question: How do we express love differently?\n\nAnswer: The chart suggests different care styles. You: Focused conversation is one way you may show care. Your partner: Reliable practical help is one way they may show care.')
     expect(report).not.toContain('These are chart-based tendencies, not proof of how either person behaves.')
     const sameStyleChapters = chapters.map(chapter => chapter.id === 'close-conversation'
@@ -392,7 +392,7 @@ describe('Buyer questions, not a repeated six-part technical template', () => {
     expect(answerFor('How do emotional closeness and everyday compatibility differ?')).toContain('Answer: Direct answer for chart-patterns.')
     expect(answerFor('How do emotional closeness and everyday compatibility differ?')).not.toContain('Neither a strong private-life link nor a direct conflict appears')
     expect(fit).not.toContain('Main caution: Generic caution.')
-    expect(attraction).toContain('Answer: The chart suggests a reciprocal pull: you may be drawn to reassurance and feeling understood in your partner, while your partner may be drawn to fresh ideas and direct speech in you.')
+    expect(attraction).toContain('Answer: You may be drawn to what your partner brings: reassurance and feeling understood. Your partner may be drawn to what you bring: fresh ideas and direct speech.')
     expect(attraction).not.toContain('One person may feel supported while the other feels challenged.')
     expect(attraction).not.toContain('comparison is made in both directions')
     expect(attraction).not.toContain('Practical point: Ask one clear question.')
@@ -404,7 +404,7 @@ describe('Buyer questions, not a repeated six-part technical template', () => {
       sharedDirectionChapters.map(chapter => deliveredChapter(chapter).join('\n\n')).join('\n\n'),
       'compatibility', sharedDirectionChapters,
     )
-    expect(sharedDirectionReport).toContain('Answer: Both chart directions point to the same possible draw: each of you may be drawn to reassurance and feeling understood.')
+    expect(sharedDirectionReport).toContain('Answer: Both directions point to a shared draw: you may each be drawn to reassurance and feeling understood in the connection.')
     expect(sharedDirectionReport).not.toContain('two different possible draws')
 
     const frictionContextChapters = chapters.map(chapter => chapter.id === 'two-directions'
