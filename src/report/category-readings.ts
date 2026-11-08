@@ -104,7 +104,6 @@ export function buildBundleFromPlans(plans: ReturnType<typeof bundleInterpretati
             : hiddenVariable ? 'a possible project-income route appears in less visible signs'
               : 'the chart gives clearer work-fit clues than direct income clues'
   const integratedCollectionAnswer = `Your work pattern centres on ${workTheme}, while ${incomeSummary}. They connect through delivery: opportunities help only when you can complete the work and collect payment. Your close relationships have a separate need: ${privateNeed}. These are related parts of your life, but the chart does not show that one causes another or guarantee an event.`
-  const timingUnavailable = 'This report does not have an independently verified calculation for specific years, so it cannot name a reliable year or month.'
   const threeInsights = `Three chart-linked themes stand out: your core style is ${coreProfile.focus}; your work fit centres on ${workTheme}; and close relationships work best when your need for ${privateNeed} is understood.`
   const repeatingPattern = `A pattern that may repeat is ${plainReadingText(coreProfile.watchFor.at(-1) ?? coreProfile.watchFor[0])} Your chart links this tendency to your ${workTheme}-centred work style; it is a pattern to notice, not a fixed outcome.`
   const finalMessage = `Your chart points to a clear theme: your ${workTheme}-centred work and need for ${privateNeed} both matter in the life you build. Treat this as a personal pattern to weigh alongside your real circumstances, not as a fixed outcome.`
@@ -114,8 +113,8 @@ export function buildBundleFromPlans(plans: ReturnType<typeof bundleInterpretati
     answer(3, DESTINY_COLLECTION_QUESTIONS[2], challenge, undefined, challengeAnswer),
     answer(4, DESTINY_COLLECTION_QUESTIONS[3], moneyFit, undefined, integratedCollectionAnswer),
     answer(5, DESTINY_COLLECTION_QUESTIONS[4], life, undefined, repeatingPattern),
-    answer(6, DESTINY_COLLECTION_QUESTIONS[5], longTerm, undefined, `Across the lifetime timing question, no independently verified year calculation is available here. ${timingUnavailable}`),
-    answer(7, DESTINY_COLLECTION_QUESTIONS[6], yearTheme, undefined, `For the three years following the order reference date, no independently verified three-year timing calculation is available here. ${timingUnavailable}`),
+    answer(6, DESTINY_COLLECTION_QUESTIONS[5], longTerm, undefined, 'No independently verified calculation is available to identify specific important years, so this report does not name dates.'),
+    answer(7, DESTINY_COLLECTION_QUESTIONS[6], yearTheme, undefined, 'No independently verified three-year timing calculation is available for this report, so it cannot rank the coming years or name dates.'),
     answer(8, DESTINY_COLLECTION_QUESTIONS[7], strengthsOverview, undefined, `A strength you may overlook is this: ${plainReadingText(coreProfile.strength)} The chart links this trait to your natural way of approaching work and close relationships.`),
     answer(9, DESTINY_COLLECTION_QUESTIONS[8], life, undefined, `A more fulfilling life is supported when your ${workTheme}-centred work leaves room for the close relationships that meet your need for ${privateNeed}. Your chart describes tendencies; your choices and circumstances still matter.`),
     [
