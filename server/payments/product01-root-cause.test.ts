@@ -46,10 +46,10 @@ describe('Product 01 root-cause recovery', () => {
         return pageByRef.get(destination.get(0).toString())
       })
       // TOC destinations depend on answer text wrapping and PDF pagination.
-      // Verify all five TOC links still target report pages after the TOC.
+      // Verify all seven official Product 01 TOC links still target report pages after the TOC.
       // Different answer lengths can make the target pages non-monotonic.
       const validDestinations = destinations.filter((page): page is number => page !== undefined)
-      expect(validDestinations).toHaveLength(5)
+      expect(validDestinations).toHaveLength(7)
       expect(validDestinations.every(page => page > 3 && page <= pages.length)).toBe(true)
       expect(report.text.match(/Question: /g)).toHaveLength(7)
       expect(report.text.match(/Answer: /g)).toHaveLength(7)

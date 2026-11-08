@@ -54,6 +54,20 @@ describe('Targeted customer-answer revisions',()=>{
   expect((answer.match(/training or support/gi) ?? [])).toHaveLength(1)
   expect(answer).not.toContain('This is a possible overlap in demands')
  })
+ it('keeps Product 01 income limits concise and separates its life-challenge answer from the relationship answer',()=>{
+  const plan=buildInterpretationPlan('complete',a,2026)
+  plan.primary.visibleMoney.length=0
+  plan.primary.hiddenMoney.length=0
+  const sections=customerNarrative(plan)
+  const income=sections.money.lines.map(line=>line.en).join(' ')
+  expect(income).toContain('does not establish whether salaried or deal-based work is your natural income route')
+  expect(income).not.toContain('No direct money sign appears')
+  expect(income).not.toContain('There is no direct money sign in the checked')
+  const challenge=sections['life-challenges'].lines.map(line=>line.en).join(' ')
+  expect(challenge).toContain('Your main life challenge is keeping the demands of')
+  expect(challenge).not.toContain('In close relationships, the day sign')
+  expect(challenge).not.toMatch(/your private life\. The chart places these in separate areas.*When work or private commitments increase/)
+ })
 })
 
 describe('Buyer review r14: direct answers without repeated warnings or lost dates',()=>{

@@ -58,5 +58,15 @@ Products 03–07 lose 30 points because `server/payments/report.ts` supplies `ca
 ## Final 245-answer audit progress (2026-11-08)
 - Audit artifact saved remotely: `REPORT_QUALITY_AUDIT.md` (GitHub commit 3df45e4d4c8ad3f6b9f31ea15cca02668bf32579). It contains the full extracted answer text, itemized rubric points, score, findings and code targets for all five Product 01 PDFs (35/245 answers).
 - Product 01 profile means: 76.9, 81.9, 81.9, 81.7, 76.6; minimum 76.6, average 79.8. Result: FAIL. The main repeated failure is Product 01 Q4 for profiles 1 and 5, where the same missing-money-signal limitation is stated several times; Q6 also overlaps Q3 and Q5.
-- No Product 01 source fix has yet been made from this audit. The next work is to correct the money-answer repetition and distinguish the life-challenge answer, then regenerate all five Product 01 PDFs and independently re-score them before moving to Product 02.
+- Product 01 source fixes are now present in a later work unit; see the revision record below. The independent post-fix 35-answer re-score is still pending, so earlier scores remain baseline scores and Product 01 remains FAIL.
 - Overall independent audit progress: 35/245 answers. Remaining: 210. No overall product reaches PASS until all five profile means for that product are at least 95.
+
+
+## Product 01 targeted revision (2026-11-08)
+- Updated `src/report/purchase-narrative.ts`: the no-money-marker case now states once that the chart cannot establish salaried vs deal-based income; it no longer repeats the missing-sign rationale in the same answer. Product 01 Q6 now separates the work-demand/private-need tension from the standalone relationship answer and removes repeated relationship advice from its body.
+- Updated `src/report/chart-depth.ts`: when neither visible nor hidden money markers are present, the follow-up now limits the claim to income amount/capacity instead of repeating the missing-marker statement.
+- Updated `server/payments/product01-root-cause.test.ts`: fixed a stale assertion expecting five TOC links; Product 01 has seven official questions and the test now verifies all seven links resolve to report pages. This is an assertion correction to the approved structure, not a reduced criterion.
+- Added a focused regression in `src/report/purchase-narrative.test.ts` for the no-money-marker answer and Q6 role separation.
+- Verification on the clean remote-branch worktree at `1b3995c`: targeted narrative/chart-depth tests passed 26/26; actual paid `issueReport()` Product 01 test generated five PDFs and passed 1/1, including seven question titles/answers and seven valid TOC links; TypeScript `tsc -b --pretty false` passed. Structural diagnostic output was 4×100 and 1×70; these are not content scores.
+- The newly generated five PDFs use the test fixture profiles `new-york-known`, `seoul-known`, `new-york-unknown`, `sydney-known`, and `los-angeles-known`, which differ from the five original audit profiles. The original 35/245 answer scores have not been recomputed from post-fix PDFs; do not treat them as a post-fix score. Re-score all five original audit profiles with complete birth inputs before changing the Product 01 score.
+- Product 01 remains FAIL; products 02–07 remain unscored. No Preview or Production deployment was made. Sales remain closed; Stripe Live remains unchanged.

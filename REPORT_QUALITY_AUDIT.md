@@ -336,3 +336,15 @@ Source PDF: `05-complete.pdf`. Profile score: **76.6/100**.
 ## Remaining audit work
 
 Products 02–07 have not yet been independently scored in this file. Their existing automated diagnostics remain separate from human content review. No product is marked complete until every profile mean is at least 95 and its PDF answers are verified.
+
+
+## Product 01 code revision and verification (2026-11-08)
+
+The baseline scores above apply to the original five audit PDFs only. They are not post-fix scores.
+
+- **Income answer:** removed the repeated “no direct money sign” explanation from the no-route answer. It now states once that the chart does not establish salary versus deal-based income and directs the reader to actual skills and contract terms. The supporting no-marker passage now avoids repeating that missing-marker rationale and only states that the report cannot measure income amount or capacity.
+- **Life challenge answer:** separated Q6 from the standalone relationship-needs answer. The Q6 body now focuses on balancing chart-linked work demands with an individual private-life need; its practical line no longer repeats the relationship explanation.
+- **TOC regression:** corrected the Product 01 PDF test from five to seven expected TOC destinations. All seven official question links resolve to report pages.
+- **Tests:** narrative and chart-depth suites passed 26/26. The real paid `issueReport()` Product 01 generation test passed 1/1 and generated five PDFs. TypeScript `tsc -b --pretty false` passed. One initial run exposed the stale five-link assertion; after updating it to the approved seven-question count, the PDF test passed.
+- **Independent post-fix re-score:** not yet completed. The five regenerated PDFs were generated with different test profiles from the original audit set, so they do not replace or revise the baseline scores. Product 01 remains **FAIL**, not 95+.
+- **Remaining audit:** Products 02–07 (210 answers) have not been independently scored.
