@@ -32,6 +32,10 @@ describe('My Money & Career customer-first delivery', () => {
       expect(buyerSection.match(/^What This Means for You:/gm)?.length).toBeGreaterThanOrEqual(3)
       expect(buyerSection.match(/^Bottom Line:/gm)?.length).toBeGreaterThanOrEqual(1)
       expect(buyerSection).toMatch(/I cannot (?:confirm a date|identify a reliable improvement year)/i)
+      const improvementAnswer = buyerSection.split('Question: When might my career or money situation improve?')[1].split('\n\nQuestion:')[0]
+      if (improvementAnswer.includes('No checked year stands out')) {
+        expect(improvementAnswer).toMatch(/annual comparison instead shows \d{4}: .+; \d{4}: .+; \d{4}: /i)
+      }
       expect(buyerSection).toMatch(/Your 2026–2035 outlook is mixed: work themes change/i)
       expect(buyerSection).toMatch(/do not show a steady rise in income/i)
       const tenYearAnswer = buyerSection.split('Question: What do the next ten years suggest for my work and money?')[1].split('\n\nQuestion:')[0]
