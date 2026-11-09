@@ -39,6 +39,9 @@ describe('Product 03 review PDF batch', () => {
       expect(q6).not.toContain('..')
       expect(q6).not.toContain('Check whether it affects time together or personal choice')
       expect(q6).toMatch(/Discuss (?:what work time|which social plans|how study|whether new work contacts|where each person|how practical duties|which new plans|how work and money|who owns|which decisions)/)
+      if (/period flagged in this five-year comparison is \d{4} for both of you/.test(q6)) {
+        expect(q6.match(/Discuss what work time and personal projects leave available for time together\./g)).toHaveLength(1)
+      }
       const q2 = report.text.split('Question: Why are we attracted to each other?')[1]?.split('\n\nQuestion: ')[0] ?? ''
       expect(q2).toContain('The chart cannot confirm either person’s actual feelings.')
       q2Answers.push(q2)

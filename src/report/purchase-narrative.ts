@@ -511,7 +511,12 @@ export function customerNarrative(plan:InterpretationPlan,targetedProduct01=true
   }
   const relationshipPeople=(row:{you?:string;partner?:string})=>row.you&&row.partner?'for both of you':row.you?'for you':'for your partner'
   const relationshipChangeAnswer=relationshipChanges.length
-   ? `${relationshipChanges.length===1?`The only period flagged in this five-year comparison is ${relationshipChanges[0].year} ${relationshipPeople(relationshipChanges[0])}.`:`The periods flagged in this five-year comparison are ${relationshipChanges.map(row=>`${row.year} ${relationshipPeople(row)}`).join(', ')}.`} ${relationshipChanges.map(row=>`${row.year}: ${[row.you ? `for you, ${relationshipChangeText(row.you)}` : '', row.partner ? `for your partner, ${relationshipChangeText(row.partner)}` : ''].filter(Boolean).join('; ')}.`).join(' ')} This timing prompt is based on each person’s chart; it does not predict a shared event.`
+   ? `${relationshipChanges.length===1?`The only period flagged in this five-year comparison is ${relationshipChanges[0].year} ${relationshipPeople(relationshipChanges[0])}.`:`The periods flagged in this five-year comparison are ${relationshipChanges.map(row=>`${row.year} ${relationshipPeople(row)}`).join(', ')}.`} ${relationshipChanges.map(row=>{
+     const you=row.you?relationshipChangeText(row.you):undefined
+     const partner=row.partner?relationshipChangeText(row.partner):undefined
+     if(you&&partner&&you===partner)return `${row.year}: for both of you, ${you}.`
+     return `${row.year}: ${[you?`for you, ${you}`:'',partner?`for your partner, ${partner}`:''].filter(Boolean).join('; ')}.`
+    }).join(' ')} This timing prompt is based on each person’s chart; it does not predict a shared event.`
    : `No year in the five-year comparison has a checked day-branch change signal for either person. That does not predict an easy period; the calculation simply does not single out a year for relationship timing.`
   const timingAction=relationshipChanges.length
    ? pair(`Before ${relationshipChanges.map(row=>`${row.year} ${relationshipPeople(row)}`).join(' and ')}, agree on when to check whether those chart themes are affecting time together. Use the check-in to discuss plans, not predict an event.`,`표시된 각자의 시기 전에 해당 주제가 함께 보내는 시간에 영향을 주는지 살펴볼 시점을 정합니다. 사건을 예측하는 대신 실제 계획을 이야기합니다.`)
