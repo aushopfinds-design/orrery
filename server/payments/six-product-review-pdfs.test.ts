@@ -42,7 +42,10 @@ describe('six final English product reports', () => {
           expect(risk, `profile ${profileIndex + 1} business risk answer`).not.toBeNull()
           businessRiskOpenings.push(risk![1])
         }
-        if (kind === 'year') expect(report.text).toContain('Analysis window: November 2026 through October 2027.')
+        if (kind === 'year') {
+          expect(report.text).toContain('Analysis window: November 2026 through October 2027.')
+          expect(report.text).not.toMatch(/Question: What does it suggest for money\?\n\nAnswer: For [^,]+, Income is linked indirectly with dependable work and recognised responsibility\. A title that adds duties without matching pay is the financial pressure to notice\./)
+        }
         if (profile.first.unknownTime) {
           expect(report.text).toContain('Hour: Unknown')
           expect(report.text).not.toMatch(/Hour (?:pillar|stem|branch) [甲乙丙丁戊己庚辛壬癸]/)
