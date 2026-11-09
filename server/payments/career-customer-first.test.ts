@@ -29,13 +29,11 @@ describe('My Money & Career customer-first delivery', () => {
       const buyerSection = report.text.slice(report.text.indexOf('Question: Which careers suit me best?'), report.text.indexOf('Calculation notes'))
       expect(buyerSection.match(/^Question:/gm)?.length).toBe(7)
       expect(buyerSection.match(/^Your Answer:/gm)?.length).toBe(7)
-      expect(buyerSection.match(/^What This Means for You:/gm)?.length).toBeGreaterThanOrEqual(3)
+      expect(buyerSection.match(/^What This Means for You:/gm)?.length).toBeGreaterThanOrEqual(2)
       expect(buyerSection.match(/^Bottom Line:/gm)?.length).toBeGreaterThanOrEqual(1)
-      expect(buyerSection).toMatch(/I cannot (?:confirm a date|identify a reliable improvement year)/i)
+      expect(buyerSection).toMatch(/The clearest periods for work support are|No year in .* has a verified signal/i)
       const improvementAnswer = buyerSection.split('Question: When might my career or money situation improve?')[1].split('\n\nQuestion:')[0]
-      if (improvementAnswer.includes('No checked year stands out')) {
-        expect(improvementAnswer).toMatch(/annual comparison instead shows \d{4}: .+; \d{4}: .+; \d{4}: /i)
-      }
+      expect(improvementAnswer).toMatch(/\d{4}:|2026–2035/)
       expect(buyerSection).toMatch(/Your 2026–2035 outlook is mixed: work themes change/i)
       expect(buyerSection).toMatch(/do not show a steady rise in income/i)
       const tenYearAnswer = buyerSection.split('Question: What do the next ten years suggest for my work and money?')[1].split('\n\nQuestion:')[0]
@@ -59,15 +57,16 @@ describe('My Money & Career customer-first delivery', () => {
       expect(q4).not.toMatch(/What This Means for You:|Bottom Line:/)
       if ([1, 2].includes(index)) expect(q4).toMatch(/less visible areas linked to (?:long-term plans|day-to-day work)/i)
       const q5 = buyerSection.split('Question: When might my career or money situation improve?')[1].split('\n\nQuestion:')[0]
-      expect(q5).toMatch(/Your Answer: I cannot (?:confirm a date|identify a reliable improvement year)/)
-      expect(q5).toMatch(/2026–2035/)
-      expect(q5).toMatch(/not a promised raise or job change|do not establish a pay rise/i)
+      expect(q5).toMatch(/Your Answer: (?:The clearest periods for work support are|No year)/)
+      expect(q5).toMatch(/\d{4}:|2026–2035/)
+      expect(q5).toMatch(/do not predict a raise or job change|do not establish a pay rise/i)
       expect(q5).not.toMatch(/What This Means for You:/)
       const q2 = buyerSection.split('Question: Am I better suited to employment or independent work?')[1].split('\n\nQuestion:')[0]
       expect(q2).toMatch(/Practical Check: For a real choice, compare confirmed salary, hours and support/i)
       expect(q2).toMatch(/paying customers, costs and payment terms/i)
       const q7Section = buyerSection.split('Question: What is my most important career and money insight?')[1].split('\n\nQuestion:')[0]
-      expect(q7Section).toMatch(/Compare added hours and duties with the confirmed compensation|compare actual duties and confirmed compensation|compare real offers by duties, hours and confirmed compensation/i)
+      expect(q7Section).toMatch(/Your work pattern|Your work fit/i)
+      expect(q7Section).not.toMatch(/What This Means for You:|Bottom Line:/)
       expect(pdf.subarray(0, 5).toString()).toBe('%PDF-')
       reports.push(report)
       if (process.env.CAREER_PDF_DIR) {

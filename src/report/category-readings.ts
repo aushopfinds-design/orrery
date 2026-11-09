@@ -114,8 +114,8 @@ export function buildBundleFromPlans(plans: ReturnType<typeof bundleInterpretati
     answer(3, DESTINY_COLLECTION_QUESTIONS[2], challenge, undefined, challengeAnswer),
     answer(4, DESTINY_COLLECTION_QUESTIONS[3], moneyFit, undefined, integratedCollectionAnswer),
     answer(5, DESTINY_COLLECTION_QUESTIONS[4], life, undefined, repeatingPattern),
-    answer(6, DESTINY_COLLECTION_QUESTIONS[5], longTerm, undefined, 'No independently verified calculation is available to identify specific important years, so this report does not name dates.'),
-    answer(7, DESTINY_COLLECTION_QUESTIONS[6], yearTheme, undefined, 'No independently verified three-year timing calculation is available for this report, so it cannot rank the coming years or name dates.'),
+    answer(6, DESTINY_COLLECTION_QUESTIONS[5], longTerm, undefined, `No specific year can be named from the verified timing in this report. Your clearest chart-wide theme is ${workTheme} at work and making room for ${privateNeed} in close relationships; use this as a review point, not a date prediction.`),
+    answer(7, DESTINY_COLLECTION_QUESTIONS[6], yearTheme, undefined, `For the next three years, keep ${workTheme} at work and protect space for ${privateNeed} in close relationships. This is a steady chart-based priority, not a year-by-year forecast; the report does not calculate a verified three-year sequence.`),
     answer(8, DESTINY_COLLECTION_QUESTIONS[7], strengthsOverview, undefined, `A strength you may overlook is this: ${plainReadingText(coreProfile.strength)} The chart links this trait to your natural way of approaching work and close relationships.`),
     answer(9, DESTINY_COLLECTION_QUESTIONS[8], life, undefined, `A more fulfilling life is supported when work that involves ${workTheme} leaves room for the close relationships that meet your need for ${privateNeed}. Your chart describes tendencies; your choices and circumstances still matter.`),
     [

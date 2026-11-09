@@ -29,9 +29,9 @@ describe('Product 03 review PDF batch', () => {
       for (const question of productQuestions('compatibility')) expect(report.text).toContain(`Question: ${question.title}`)
       const q1 = report.text.split('Question: What makes us compatible?')[1]?.split('\n\nQuestion: ')[0] ?? ''
       const q1ByProfile = [
-        'This shared care is your clearest point of fit; the chart shows no clear personal-life link or conflict.',
+        'That overlap is your clearest point of fit; the personal-life signs add no separate connection or conflict.',
         'This is your clearest common ground, while the chart also points to a difference in personal choices.',
-        'This shared care is your clearest point of fit; the chart shows no clear personal-life link or conflict.',
+        'That overlap is your clearest point of fit; the personal-life signs add no separate connection or conflict.',
         'Your fit comes from giving both needs room; the chart adds no clear personal-life link or conflict.',
         'Your private-life chart link may support shared plans, while your care needs differ; this is a positive signal, not a promise.',
       ]
@@ -59,26 +59,26 @@ describe('Product 03 review PDF batch', () => {
       ]
       expect(q4).toContain(q4Examples[index])
       const q5 = report.text.split('Question: How do emotional closeness and everyday compatibility differ?')[1]?.split('\n\nQuestion: ')[0] ?? ''
-      expect(q5).toMatch(/(?:Your daily chart pattern:|You share this daily chart pattern:)/)
+      expect(q5).toMatch(/(?:You tend to:|You both tend to:)/)
       const q5Examples = [
-        'Everyday example: Keep one shared plan fixed, then leave room for an extra plan without crowding the week.',
-        'Everyday example: For a recurring task, decide who owns it and when to ask for help.',
-        'Everyday example: Keep one shared plan fixed, then leave room for an extra plan without crowding the week.',
-        'Everyday example: Protect one block of personal time and agree who owns each recurring task.',
-        'Everyday example: Give recurring tasks a clear owner while leaving some time open for new plans.',
+        'Try: Keep one shared plan fixed, then leave room for an extra plan without crowding the week.',
+        'Try: For a recurring task, decide who owns it and when to ask for help.',
+        'Try: Keep one shared plan fixed, then leave room for an extra plan without crowding the week.',
+        'Try: Protect one block of personal time and agree who owns each recurring task.',
+        'Try: Give recurring tasks a clear owner while leaving some time open for new plans.',
       ]
       expect(q5).toContain(q5Examples[index])
       if (index === 1) {
         expect(q5).toContain('You both value warm attention and time for your own interests.')
-        expect(q5).toContain('You share this daily chart pattern: Independence becomes tiring when every task has to be handled alone.')
-        expect(q5).not.toContain("Your partner's daily chart pattern: Independence becomes tiring when every task has to be handled alone.")
+        expect(q5).toContain('You both tend to: Independence becomes tiring when every task has to be handled alone.')
+        expect(q5).not.toContain('Your partner tends to: Independence becomes tiring when every task has to be handled alone.')
         const q7 = report.text.split('Question: What does this connection ask of each of us?')[1]?.split('\n\nQuestion: ')[0] ?? ''
         expect(q7).toContain('each of you can give focused attention while protecting time for separate interests')
         expect(q7).toContain('make room for both connection and independence')
       } else {
-        expect(q5).toContain("Your partner's daily chart pattern:")
+        expect(q5).toContain('Your partner tends to:')
       }
-      expect(q5).toContain('Emotional closeness depends more on how you respond to each other’s needs')
+      expect(q5).toMatch(/Emotionally, .+ Daily life:/)
       expect(q5).not.toContain('day-sign comparison')
       expect(q5).not.toContain('Compare the personal routine styles below with the way you actually share daily life.')
       const q6 = report.text.split('Question: Which upcoming periods may affect our relationship themes?')[1]?.split('\n\nQuestion: ')[0] ?? ''

@@ -125,10 +125,10 @@ describe('Buyer questions, not a repeated six-part technical template', () => {
     const report = applyBuyerQuestions(source, 'compatibility', chapters)
     expect((report.match(/^Question:/gm) ?? [])).toHaveLength(7)
     const q5 = report.split('Question: How do emotional closeness and everyday compatibility differ?')[1]?.split('\n\nshared-routine')[0]?.split('\n\nQuestion: ')[0] ?? ''
-    expect(q5).toContain('Emotional closeness depends more on how you respond to each other’s needs')
+    expect(q5).toContain('Emotionally, neither a direct bond nor a direct conflict stands out.')
     expect(q5).toContain('You value being heard before someone offers a solution')
     expect(q5).toContain('your partner values listening as well as practical help')
-    expect(q5).toContain('Your daily chart pattern: Careful work benefits from a steady pace.')
+    expect(q5).toContain('You tend to: Careful work benefits from a steady pace.')
     expect(q5.match(/Careful work benefits from a steady pace\./g)).toHaveLength(1)
     expect(report).toMatch(/Question: Why are we attracted to each other\?[\s\S]*Answer: You may be drawn to what your partner brings: a direct conversation that feels exciting\. Your partner may be drawn to what you bring: practical care that feels reassuring\./)
     expect(report).toContain('Question: How do we express love differently?\n\nAnswer: You may express love by making space for an honest conversation and staying with the other person’s point of view; your partner may express it through practical help, after checking what kind of support is wanted. For example, stay with the concern first, then offer practical help once your partner asks for it.')
@@ -154,9 +154,9 @@ describe('Buyer questions, not a repeated six-part technical template', () => {
     expect(timing).not.toContain('Practical point:')
     expect(timing).not.toContain('Answer detail:')
     expect(timing).not.toContain('Main caution:')
-    expect(report).toContain('Question: How do emotional closeness and everyday compatibility differ?\n\nAnswer: Emotional closeness depends more on how you respond to each other’s needs; everyday compatibility depends more on how your routines work together.')
+    expect(report).toContain('Question: How do emotional closeness and everyday compatibility differ?\n\nAnswer: Emotionally, neither a direct bond nor a direct conflict stands out.')
     const closeness = report.slice(report.indexOf('Question: How do emotional closeness and everyday compatibility differ?')).split('\n\nshared-routine')[0].split('\n\nQuestion: ')[0]
-    expect(closeness).toContain('Your daily chart pattern: Careful work benefits from a steady pace. Your partner\'s daily chart pattern: Creative projects need room for new ideas.')
+    expect(closeness).toContain('You tend to: Careful work benefits from a steady pace. Your partner tends to: Creative projects need room for new ideas.')
     expect(closeness).not.toContain('likely tension')
     expect(closeness).toContain('You value being heard before someone offers a solution')
     expect(closeness).not.toContain('Practical point:')
@@ -183,7 +183,7 @@ describe('Buyer questions, not a repeated six-part technical template', () => {
     const report = applyBuyerQuestions(reading.fullText, 'compatibility', reading.chapters, [], 'standalone')
     const q5 = report.split('Question: How do emotional closeness and everyday compatibility differ?')[1]?.split('\n\nQuestion: ')[0] ?? ''
     expect(q5).toContain('You both value warm attention and time for your own interests.')
-    expect(q5).toContain('You share this daily chart pattern: Independence becomes tiring when every task has to be handled alone.')
+    expect(q5).toContain('You both tend to: Independence becomes tiring when every task has to be handled alone.')
     expect(q5).not.toContain('your partner values warm attention and time for your own interests')
     expect(q5).not.toContain("Your partner's daily chart pattern: Independence becomes tiring when every task has to be handled alone.")
   })
@@ -231,7 +231,7 @@ describe('Buyer questions, not a repeated six-part technical template', () => {
     const report = applyBuyerQuestions(source, 'wellbeing', chapters)
     expect((report.match(/^Question:/gm) ?? [])).toHaveLength(7)
     expect(report).toContain('Question: What should I watch for when pressure builds?\n\nAnswer: Notice when a capable response is taking too much of your time.')
-    expect(report).toContain('Question: What boundary could help protect my everyday balance?\n\nAnswer: Set a limit on new requests: agree what will wait before accepting added work. Your chart points to a specific work pattern to watch as demands build.')
+    expect(report).toContain('Question: What boundary could help protect my everyday balance?\n\nAnswer: A chart-specific practical step.')
     expect(report).not.toContain('Question: What kind of environment brings out my best?')
   })
 
@@ -307,28 +307,27 @@ describe('Buyer questions, not a repeated six-part technical template', () => {
     })
     const chapters = [
       make('annual-theme', 'The year centres on changing demands at home and work.', [], 'Prioritize the chart-linked work theme.'),
-      make('annual-work', 'Career outlook.'), make('annual-money', 'Money outlook.'),
+      make('annual-work', 'Career outlook.', ['The main work theme for 2026–2027 is this: training and dependable support.']), make('annual-money', 'Money outlook.'),
       make('annual-connections', 'Relationship outlook.'), make('annual-cycle-context', 'Supportive months.'),
       make('annual-plan', 'Months needing care.'),
     ]
     const source = chapters.map(chapter => deliveredChapter(chapter).join('\n\n')).join('\n\n')
     const report = applyBuyerQuestions(source, 'year', chapters)
-    expect(report).toContain('Question: What should I focus on most this year?\n\nAnswer: Prioritize the chart-linked work theme.')
+    expect(report).toContain('Question: What should I focus on most this year?\n\nAnswer: Focus this year on training and dependable support.')
   })
 
   it('avoids echoing the same instruction in the annual focus answer', () => {
-    const make = (id: string, lead: string, action = 'Focus on the chart-linked work theme for this year: defined duties. Check that duties and standards are clear.') => ({
-      id, title: id, lead, paragraphs: [], evidence: ['annual comparison'], tryThis: action,
+    const make = (id: string, lead: string, paragraphs: string[] = [], action = 'Focus on the chart-linked work theme for this year: defined duties. Check that duties and standards are clear.') => ({
+      id, title: id, lead, paragraphs, evidence: ['annual comparison'], tryThis: action,
       guidance: { keepClose: ['Keep the answer practical.'], watchFor: ['Do not treat timing as certain.'] }, icon: 'timeline' as const,
     })
     const chapters = [
-      make('annual-theme', 'The chart theme is clear.'), make('annual-work', 'Career answer.'), make('annual-money', 'Money answer.'),
+      make('annual-theme', 'The chart theme is clear.'), make('annual-work', 'Career answer.', ['The main work theme for this year is this: defined duties.']), make('annual-money', 'Money answer.'),
       make('annual-connections', 'Love answer.'), make('annual-cycle-context', 'No supportive month found.'), make('annual-plan', 'Extra care months.'),
     ]
     const source = chapters.map(chapter => deliveredChapter(chapter).join('\n\n')).join('\n\n')
     const report = applyBuyerQuestions(source, 'year', chapters)
-    expect(report).toContain('Question: What should I focus on most this year?\n\nAnswer: The chart’s main work theme is defined duties.')
-    expect(report).not.toContain('The chart’s main work theme is defined duties. Check that duties and standards are clear.')
+    expect(report).toContain('Question: What should I focus on most this year?\n\nAnswer: Focus this year on defined duties.')
   })
 
   it('does not repeat the same turning-point explanation inside the answer', () => {
@@ -417,7 +416,7 @@ describe('Buyer questions, not a repeated six-part technical template', () => {
       : make(source))
     const source = chapters.map(chapter => deliveredChapter(chapter).join('\n\n')).join('\n\n')
     const report = applyBuyerQuestions(source, 'business', chapters)
-    expect(report).toContain('No ten-year cycle starts within this chart’s calculated range. The available business-year comparisons cover 2026–2035; they offer annual context, not a supported long-range business phase or a launch date.')
+    expect(report).toContain('No new ten-year business cycle is available in the checked range. The supported timing clues are the annual comparisons from 2026–2035.')
     expect(report).toContain('2026: Opening signals appear in the annual comparison.')
     expect(report).toContain('2035: Extra pressure calls for a closer review.')
   })
