@@ -235,7 +235,7 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
         if (lead.startsWith('This match shares a similar need for care:')) {
           lead = lead.replace('You have common ground, but you may both wait for the other to offer it first.',
             noPrivateSignal
-              ? 'This shared care is your clearest point of fit; the chart shows no clear personal-life link or conflict.'
+              ? 'That overlap is your clearest point of fit; the personal-life signs add no separate connection or conflict.'
               : 'This shared care is your clearest point of fit.')
         } else if (lead.startsWith('You and your partner share a need for warm attention')) {
           lead = lead.replace('This is your clearest point of common ground; it does not mean you will show care in the same way.',
