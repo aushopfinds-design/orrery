@@ -222,10 +222,12 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
         paragraphs = []
         chapter.paragraphs.forEach(line => used.add(line))
       } else if (kind === 'compatibility' && question.role === 'closeness-vs-routine' && set === 'standalone') {
-        // Compare the private-life signal with the separate daily-routine
-        // comparison, then add each person's calculated routine theme.
-        lead = lead.replace(/\s+You value [\s\S]*?(?=\s+For everyday compatibility,)/u, '')
+        // Keep the personal closeness needs in this answer. Replace the generic
+        // routine passage with the chart's routine finding and each person's pattern.
+        lead = lead.replace(/\s+For everyday compatibility,[\s\S]*$/u, '')
         const routine = byId.get('shared-routine')
+        const routineFinding = routine?.paragraphs[0] ?? routine?.lead
+        if (routineFinding) lead += ` ${routineFinding}`
         const yourRoutine = routine?.paragraphs.find(line => /^Your everyday pattern: /u.test(line))?.replace(/^Your everyday pattern: /u, '').replace(/[.!?]+$/u, '')
         const partnerRoutine = routine?.paragraphs.find(line => /^Your partner(?:'|’)s everyday pattern: /u.test(line))?.replace(/^Your partner(?:'|’)s everyday pattern: /u, '').replace(/[.!?]+$/u, '')
         if (yourRoutine && partnerRoutine) {
