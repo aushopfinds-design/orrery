@@ -401,6 +401,25 @@ describe('Buyer questions, not a repeated six-part technical template', () => {
     expect(report.match(/^Question:/gm)).toHaveLength(7)
   })
 
+  it('explains the checked annual range when no ten-year business cycle starts', () => {
+    const make = (id: string, lead = `Direct answer for ${id}.`, paragraphs: string[] = []) => ({
+      id, title: id, lead, paragraphs, evidence: ['checked annual chart comparison'], tryThis: 'Review the actual customer demand.',
+      guidance: { keepClose: ['Review the actual customer demand.'], watchFor: ['Do not treat timing as certain.'] }, icon: 'timeline' as const,
+    })
+    const sources = [...new Set(BUYER_QUESTIONS.business.map(question => question.source))]
+    const chapters = sources.map(source => source === 'business-chapters'
+      ? make(source, 'No current or upcoming ten-year cycle starts in the calculated period.', [
+        '2026 yearly comparison: Opening signals appear in the annual comparison.',
+        '2035 yearly comparison: Extra pressure calls for a closer review.',
+      ])
+      : make(source))
+    const source = chapters.map(chapter => deliveredChapter(chapter).join('\n\n')).join('\n\n')
+    const report = applyBuyerQuestions(source, 'business', chapters)
+    expect(report).toContain('No ten-year cycle starts within this chart’s calculated range. The available business-year comparisons cover 2026–2035; they offer annual context, not a supported long-range business phase or a launch date.')
+    expect(report).toContain('2026: Opening signals appear in the annual comparison.')
+    expect(report).toContain('2035: Extra pressure calls for a closer review.')
+  })
+
   it('separates compatibility evidence from repeated method notes and generic cautions', () => {
     const make = (id: string, lead: string, paragraphs: string[] = [], tryThis = 'Ask one clear question.') => ({
       id, title: id, lead, paragraphs, evidence: ['checked chart relationship'], tryThis,
