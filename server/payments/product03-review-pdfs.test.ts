@@ -27,6 +27,15 @@ describe('Product 03 review PDF batch', () => {
       expect(report.text.match(/Question: /g)).toHaveLength(7)
       expect(report.text.match(/Answer: /g)).toHaveLength(7)
       for (const question of productQuestions('compatibility')) expect(report.text).toContain(`Question: ${question.title}`)
+      const q1 = report.text.split('Question: What makes us compatible?')[1]?.split('\n\nQuestion: ')[0] ?? ''
+      const q1ByProfile = [
+        'This shared care is your clearest point of fit; the chart shows no clear personal-life link or conflict.',
+        'This is your clearest common ground, while the chart also points to a difference in personal choices.',
+        'This shared care is your clearest point of fit; the chart shows no clear personal-life link or conflict.',
+        'Your fit comes from giving both needs room; the chart adds no clear personal-life link or conflict.',
+        'Your private-life chart link may support shared plans, while your care needs differ; this is a positive signal, not a promise.',
+      ]
+      expect(q1).toContain(q1ByProfile[index])
       const q3 = report.text.split('Question: What tends to cause friction between us?')[1]?.split('\n\nQuestion: ')[0] ?? ''
       expect(q3).not.toContain('different signal your partner is watching for')
       expect(q3).not.toContain('Say what you need before either of you assumes what the other meant')
