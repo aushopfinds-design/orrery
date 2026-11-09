@@ -737,3 +737,19 @@ This is a transparent delta review after the Q6-only content change. All 35 answ
 All profile means improved from the preceding Q5 pass (91.9, 92.6, 91.9, 92.0, 93.4), but remain below 95. The Q6 prompts now name a concrete relationship discussion tied to each calculated year theme and collapse identical same-year prompts for both partners. Remaining largest deductions: Q4 sometimes presents a care need more clearly than an observable expression; Q5 P2 repeats the same need/routine text for both partners; Q1 and Q7 still reuse care-needs material.
 
 The five PDFs contain seven official questions each, 12 PDF annotations and no replacement glyphs. Q2’s three chart outcomes remain represented across the profiles. Preview `dpl_3fG7WRjBDG6W1JCANqkCb91eqYPs` is READY on code SHA `3ea757ffe137bd675056978d966bdbb5ba34cad7`; `/` and `/samples/` returned HTTP 200. Production unchanged.
+
+## Product 03 — Q1 focus follow-up (2026-11-09; code SHA `fc1b2898ae4a53a9ec45482d6a2d3ac9a7ab2053`)
+
+Delta method: extracted and mapped the 35 official answers from five new PDFs. Thirty-two answer strings matched the preceding PDF review exactly and retain their scores; Q1 changed in profiles 1, 3 and 4 when the neutral no-link sentence was removed, and those three blocks were reread and rescored. The audit JSON contains all 35 current answer texts and the same six-part score breakdown.
+
+| Profile | Q1 | Q2 | Q3 | Q4 | Q5 | Q6 | Q7 | Mean | Minimum | Result |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---|
+| 1 | 92 | 93 | 94 | 90 | 92 | 93 | 94 | 92.6 | 90 | FAIL |
+| 2 | 93 | 95 | 92 | 93 | 91 | 94 | 92 | 92.9 | 91 | FAIL |
+| 3 | 92 | 93 | 94 | 90 | 92 | 93 | 94 | 92.6 | 90 | FAIL |
+| 4 | 92 | 93 | 92 | 92 | 92 | 93 | 94 | 92.6 | 92 | FAIL |
+| 5 | 94 | 95 | 94 | 92 | 93 | 94 | 94 | 93.7 | 92 | FAIL |
+
+All five means improved by 0.0–0.2 from the preceding review; no profile reaches 95. Q1 is more focused in P1/P3/P4, but the “similar need for care” content remains repeated across those profiles. The largest remaining repeated-content deduction is Q5 for P2, where the two need and routine descriptions are the same. Q4 P1/P3 remain at 90 because the answer still describes care tendencies more than relationship-specific examples.
+
+Five PDFs have seven official questions each, 12 PDF annotations, no replacement glyphs, Destiny Card and final summary text. Preview `dpl_FKce3vx2Qng4t82HRtVhWzdbFhae` is READY on the exact code SHA, and `/` plus `/samples/` returned HTTP 200. Production unchanged. Detailed audit: `docs/audits/PRODUCT03-INDEPENDENT-REVIEW-fc1b289.json`.
