@@ -389,19 +389,21 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
         const yourExpression = loveExpression(yourCare)
         const partnerExpression = loveExpression(partnerCare)
         const interactionExample = yourCare.includes('respecting private thinking time') && partnerCare.includes('practical help')
-          ? 'For example, respecting your quiet time and asking before offering help make both gestures easier to receive.'
+          ? 'If you need time to think, agree when your partner will check back; if your partner offers help, ask what would be useful before stepping in.'
           : yourCare.includes('practical help') && partnerCare.includes('respecting private thinking time')
-            ? 'For example, asking before offering help and respecting your partner’s quiet time make both gestures easier to receive.'
+            ? 'If your partner needs time to think, agree when you will check back; if you offer help, ask what would be useful before stepping in.'
+            : yourCare.includes('steady check-ins') && partnerCare.includes('steady check-ins')
+              ? 'A brief check-in followed by keeping one promise you made makes this shared style visible.'
             : yourCare.includes('following through on promises') && partnerCare.includes('following through on promises')
               ? 'Keeping a promise is a clear shared sign of care.'
               : yourCare.includes('speaking honestly') && partnerCare.includes('steady check-ins')
-                ? 'A calm check-in can open the honest conversation you value, while follow-through helps your partner feel heard.'
+                ? 'When you share a concern, your partner can first reflect what they heard; agree when to check back and follow through.'
                 : yourCare.includes('steady check-ins') && partnerCare.includes('speaking honestly')
-                  ? 'Your partner’s honest conversation can be met with a steady check-in and follow-through.'
+                  ? 'When your partner shares a concern, reflect what you heard first; agree when to check back and follow through.'
                   : yourCare.includes('following through on promises') && partnerCare.includes('respecting private thinking time')
-                    ? 'Keeping a shared plan and respecting the quiet time around it can show both styles at once.'
+                    ? 'Keep the shared commitment, agree when quiet time is protected, and say clearly when you are ready to reconnect.'
                     : yourCare.includes('respecting private thinking time') && partnerCare.includes('following through on promises')
-                      ? 'Your partner’s follow-through and your respect for quiet time can make care visible in different ways.'
+                      ? 'Your partner can keep the shared commitment, while you agree when quiet time is protected and when you are ready to reconnect.'
                       : yourCare.includes('speaking honestly') && partnerCare.includes('practical help')
                         ? 'For example, an honest conversation can be paired with practical help that was asked for.'
                         : yourCare.includes('practical help') && partnerCare.includes('speaking honestly')
