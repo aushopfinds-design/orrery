@@ -64,6 +64,9 @@ describe('Product 03 review PDF batch', () => {
         expect(q5).toContain('You both value warm attention and time for your own interests.')
         expect(q5).toContain('You share this daily chart pattern: Independence becomes tiring when every task has to be handled alone.')
         expect(q5).not.toContain("Your partner's daily chart pattern: Independence becomes tiring when every task has to be handled alone.")
+        const q7 = report.text.split('Question: What does this connection ask of each of us?')[1]?.split('\n\nQuestion: ')[0] ?? ''
+        expect(q7).toContain('each of you can give focused attention while protecting time for separate interests')
+        expect(q7).toContain('make room for both connection and independence')
       } else {
         expect(q5).toContain("Your partner's daily chart pattern:")
       }
