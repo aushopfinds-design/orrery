@@ -122,11 +122,12 @@ describe('Buyer questions, not a repeated six-part technical template', () => {
     const source = chapters.map(chapter => deliveredChapter(chapter).join('\n\n')).join('\n\n')
     const report = applyBuyerQuestions(source, 'compatibility', chapters)
     expect((report.match(/^Question:/gm) ?? [])).toHaveLength(7)
-    const q5 = report.split('Question: How do emotional closeness and everyday compatibility differ?')[1]?.split('\n\nQuestion: ')[0] ?? ''
+    const q5 = report.split('Question: How do emotional closeness and everyday compatibility differ?')[1]?.split('\n\nshared-routine')[0]?.split('\n\nQuestion: ')[0] ?? ''
     expect(q5).toContain('Emotional closeness depends more on how you respond to each other’s needs')
     expect(q5).toContain('You value being heard before someone offers a solution')
     expect(q5).toContain('your partner values listening as well as practical help')
     expect(q5).toContain('Your daily chart pattern: Careful work benefits from a steady pace.')
+    expect(q5.match(/Careful work benefits from a steady pace\./g)).toHaveLength(1)
     expect(report).toMatch(/Question: Why are we attracted to each other\?[\s\S]*Answer: You may be drawn to what your partner brings: a direct conversation that feels exciting\. Your partner may be drawn to what you bring: practical care that feels reassuring\./)
     expect(report).toContain('Question: How do we express love differently?\n\nAnswer: You may show care by making space for an honest conversation and staying with the other person’s point of view. Your partner may show care through practical help, after checking what kind of support is wanted.')
     expect(report).not.toContain('These are chart-based tendencies, not proof of how either person behaves.')

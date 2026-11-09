@@ -225,6 +225,7 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
         // Keep the personal closeness needs in this answer. Replace the generic
         // routine passage with the chart's routine finding and each person's pattern.
         lead = lead.replace(/\s+For everyday compatibility,[\s\S]*$/u, '')
+        lead = lead.replace(/\s+Your everyday pattern:\s*[^.!?]+[.!?]/u, '')
         const routine = byId.get('shared-routine')
         const routineFinding = routine?.paragraphs[0] ?? routine?.lead
         if (routineFinding) lead += ` ${routineFinding}`
