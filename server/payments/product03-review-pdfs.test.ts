@@ -50,6 +50,14 @@ describe('Product 03 review PDF batch', () => {
       const q4 = report.text.split('Question: How do we express love differently?')[1]?.split('\n\nQuestion: ')[0] ?? ''
       expect(q4).toMatch(/You may express love|You and your partner may express love in a similar way/)
       expect(q4).not.toMatch(/You may (?:Honest conversation|Clear commitment|Privacy and being understood)/)
+      const q4Examples = [
+        'If you need time to think, agree when your partner will check back; if your partner offers help, ask what would be useful before stepping in.',
+        'A brief check-in followed by keeping one promise you made makes this shared style visible.',
+        'If you need time to think, agree when your partner will check back; if your partner offers help, ask what would be useful before stepping in.',
+        'When you share a concern, your partner can first reflect what they heard; agree when to check back and follow through.',
+        'Keep the shared commitment, agree when quiet time is protected, and say clearly when you are ready to reconnect.',
+      ]
+      expect(q4).toContain(q4Examples[index])
       const q5 = report.text.split('Question: How do emotional closeness and everyday compatibility differ?')[1]?.split('\n\nQuestion: ')[0] ?? ''
       expect(q5).toMatch(/(?:Your daily chart pattern:|You share this daily chart pattern:)/)
       const q5Examples = [
