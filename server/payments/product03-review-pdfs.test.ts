@@ -33,6 +33,7 @@ describe('Product 03 review PDF batch', () => {
       const q5 = report.text.split('Question: How do emotional closeness and everyday compatibility differ?')[1]?.split('\n\nQuestion: ')[0] ?? ''
       expect(q5).toContain('Your daily chart pattern:')
       expect(q5).toContain("Your partner's daily chart pattern:")
+      expect(q5).toContain('Emotional closeness depends more on how you respond to each other’s needs')
       expect(q5).not.toContain('day-sign comparison')
       const q2 = report.text.split('Question: Why are we attracted to each other?')[1]?.split('\n\nQuestion: ')[0] ?? ''
       expect(q2).toContain('The chart cannot confirm either person’s actual feelings.')
