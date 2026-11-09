@@ -397,7 +397,7 @@ describe('Buyer questions, not a repeated six-part technical template', () => {
     })
     const sources = [...new Set(BUYER_QUESTIONS.compatibility.map(question => question.source))]
     const chapters = sources.map(source => source === 'two-styles'
-      ? make(source, 'This match has shared care needs.', ['Neither a strong private-life link nor a direct conflict appears in the comparison.'])
+      ? make(source, 'This match has shared care needs. The private-life chart comparison shows no clear tie or clash.', ['Neither a strong private-life link nor a direct conflict appears in the comparison.'])
       : source === 'two-directions'
         ? make(source, 'From your side: reassurance and feeling understood stand out.', [
           "From your partner's side: fresh ideas and direct speech stand out.",
@@ -415,6 +415,7 @@ describe('Buyer questions, not a repeated six-part technical template', () => {
     const fit = answerFor('What makes us compatible?')
     const attraction = answerFor('Why are we attracted to each other?')
     expect(fit).toContain('Answer: This match has shared care needs.')
+    expect(fit).not.toContain('The private-life chart comparison shows no clear tie or clash.')
     expect(fit).not.toContain('Neither a strong private-life link nor a direct conflict appears')
     expect(answerFor('How do emotional closeness and everyday compatibility differ?')).toContain('Answer: Direct answer for chart-patterns.')
     expect(answerFor('How do emotional closeness and everyday compatibility differ?')).not.toContain('Neither a strong private-life link nor a direct conflict appears')

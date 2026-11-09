@@ -217,8 +217,8 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
         paragraphs = []
         chapter.paragraphs.forEach(line => used.add(line))
       } else if (kind === 'compatibility' && question.role === 'overall-fit') {
-        // The opening answer gives the overall fit; the detailed private-life
-        // comparison belongs in Q5 and should not be repeated here.
+        // Keep Q1 on the fit people share; a neutral chart signal belongs in Q5.
+        lead = lead.replace(/\s+The private-life chart comparison shows no clear tie or clash\.?$/u, '')
         paragraphs = []
         chapter.paragraphs.forEach(line => used.add(line))
       } else if (kind === 'compatibility' && question.role === 'closeness-vs-routine' && set === 'standalone') {
