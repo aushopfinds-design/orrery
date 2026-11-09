@@ -247,7 +247,7 @@ export function customerNarrative(plan:InterpretationPlan,targetedProduct01=true
     : '확인한 사주 위치에 직접적인 재물 흐름이 나타나지 않아 특정 수입 방식을 정하지 않습니다.')
   const moneyRiskCodes=new Set(p.resolution.risks.map(risk=>risk.code))
   const financialBlock=moneyRiskCodes.has('money-versus-resource')
-   ? pair('Your chart links income-related effort with learning or support. This may create a time or cost pressure, but the chart cannot confirm that it is limiting your finances.','명식에서 수입과 관련된 노력은 배움이나 지원과 연결됩니다. 시간이나 비용 부담이 생길 수 있지만, 이것이 실제 재정의 걸림돌인지는 알 수 없습니다.')
+   ? pair('The main pressure to check is whether training or support is taking time or money away from paid work. Your chart links these themes, but cannot confirm this is limiting your finances. Compare training costs and hours with income-producing work.','살펴볼 부담은 교육이나 지원에 쓰는 시간·비용이 유료 업무를 줄이는지 여부입니다. 명식에서 두 주제가 연결되지만 이것이 실제 재정의 걸림돌인지는 확인할 수 없습니다. 교육 비용과 시간을 수입이 생기는 업무와 비교해 보세요.')
    : moneyRiskCodes.has('money-adds-pressure')
     ? pair('Your chart links money themes with demanding responsibilities. A larger paid task could add obligations before it adds money you keep.','명식에서 재물 주제와 부담이 큰 책임이 연결됩니다. 더 큰 유료 업무를 맡을 때 실제 남는 돈보다 책임이 먼저 늘 수 있습니다.')
     : !p.visibleMoney.length&&p.hiddenMoney.length
