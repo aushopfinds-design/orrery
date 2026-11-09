@@ -753,3 +753,19 @@ Delta method: extracted and mapped the 35 official answers from five new PDFs. T
 All five means improved by 0.0–0.2 from the preceding review; no profile reaches 95. Q1 is more focused in P1/P3/P4, but the “similar need for care” content remains repeated across those profiles. The largest remaining repeated-content deduction is Q5 for P2, where the two need and routine descriptions are the same. Q4 P1/P3 remain at 90 because the answer still describes care tendencies more than relationship-specific examples.
 
 Five PDFs have seven official questions each, 12 PDF annotations, no replacement glyphs, Destiny Card and final summary text. Preview `dpl_FKce3vx2Qng4t82HRtVhWzdbFhae` is READY on the exact code SHA, and `/` plus `/samples/` returned HTTP 200. Production unchanged. Detailed audit: `docs/audits/PRODUCT03-INDEPENDENT-REVIEW-fc1b289.json`.
+
+## Product 03 — Q5 shared-detail follow-up (code SHA `9637db2df1dc238feb5d745b9b3ec76137ee5546`)
+
+Five actual PDFs were regenerated from the remote code. All 35 answers were extracted from the PDFs and compared with the preceding reviewed set: 34 answer texts match exactly; Profile 2 Q5 changed and was reread/rescored. Full actual answers and deductions are in `docs/audits/PRODUCT03-INDEPENDENT-REVIEW-9637db2.json`.
+
+| Profile | Q1 | Q2 | Q3 | Q4 | Q5 | Q6 | Q7 | Mean | Minimum | Result |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---|
+| 1 | 92 | 93 | 94 | 92 | 92 | 93 | 94 | 92.9 | 92 | FAIL |
+| 2 | 93 | 95 | 92 | 94 | 93 | 94 | 92 | 93.3 | 92 | FAIL |
+| 3 | 92 | 93 | 94 | 92 | 92 | 93 | 94 | 92.9 | 92 | FAIL |
+| 4 | 92 | 93 | 92 | 93 | 92 | 93 | 94 | 92.7 | 92 | FAIL |
+| 5 | 94 | 95 | 94 | 93 | 93 | 94 | 94 | 93.9 | 93 | FAIL |
+
+Profile 2 Q5 improved from 91 to 93 because the exact same chart need and daily pattern are no longer repeated as separate partner sentences. Its remaining deductions are the broad emotional-friction wording and lack of a lived example. Other 34 answers matched the prior reviewed PDF text and retain their previous scores. No profile mean reaches 95.
+
+PDF checks: 5/5 generated, each with seven official questions and answers, 12 annotations, final personal summary and Destiny Card text; page counts 18/16/18/18/18; no replacement glyph. Homepage and `/samples/` on Preview returned HTTP 200. Preview `dpl_DFhzqbJ2shX1Ddn8zbevtf8rbn6t` is READY at the exact code SHA. Production unchanged.
