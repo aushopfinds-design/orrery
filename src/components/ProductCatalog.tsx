@@ -6,7 +6,7 @@ import type { PreviewKind } from '../report/personal-products.ts'
 import ReportIcon from './report/ReportIcon.tsx'
 import ReportArtwork from './report/ReportArtwork.tsx'
 import ReportPrice from './report/ReportPrice.tsx'
-import { bundleSavings, reportPrice } from '../report/pricing.ts'
+import { reportPrice } from '../report/pricing.ts'
 import ReportFinder from './ReportFinder.tsx'
 import { destinyCardCount } from '../report/destiny-card.ts'
 
@@ -14,8 +14,6 @@ const CATALOG_KINDS: PreviewKind[] = [...PREVIEW_KINDS]
 
 export default function ProductCatalog() {
   const { t, locale } = useLocale()
-  const savings = bundleSavings()
-  const discountLabel = locale === 'ko' ? `${savings.percent}% 할인` : `${savings.percent}% OFF`
   const [reducedMotion, setReducedMotion] = useState(() => window.matchMedia('(prefers-reduced-motion: reduce)').matches)
   const [manualMotion, setManualMotion] = useState<boolean | null>(null)
   const [pageVisible, setPageVisible] = useState(() => !document.hidden)
@@ -35,7 +33,7 @@ export default function ProductCatalog() {
 
   return <section id="reports" className="fate-section fate-purpose-reports" aria-labelledby="reports-heading">
     <div id="focused-reports" className="fate-section-heading"><p className="fate-eyebrow">{t('buyer.focus.eyebrow')}</p><h2 id="reports-heading">{t('buyer.focus.title')}</h2><span className="fate-catalog-count">{t('buyer.catalog.count')}</span><p>{t('buyer.focus.text')}</p></div>
-    <div className="fate-launch-offer"><div><p className="fate-eyebrow">{t('buyer.price.collection')}</p><strong>{t('buyer.price.from').replace('{price}', reportPrice('year'))}</strong><span>{t('buyer.price.note')}</span></div><a href={previewHash('bundle')}><strong>{discountLabel}</strong><span><s>{savings.separatePrice}</s> {reportPrice('bundle')}</span><small>{localizedPreviewProduct('bundle', locale, t).title} →</small></a></div>
+    <div className="fate-launch-offer"><div><p className="fate-eyebrow">{t('buyer.price.collection')}</p><strong>{t('buyer.price.from').replace('{price}', reportPrice('year'))}</strong><span>{t('buyer.price.note')}</span></div><a href={previewHash('bundle')}><strong>{reportPrice('bundle')}</strong><small>{localizedPreviewProduct('bundle', locale, t).title} →</small></a></div>
     <a className="fate-catalog-card-included" href="#destiny-card"><span aria-hidden="true">✦</span><strong>{t('destiny.included.launch')}</strong><span>{t('destiny.catalog.text')} ↗</span></a>
     <nav className="fate-catalog-shortcuts" aria-label={t('buyer.catalog.quick')}><p>{t('buyer.catalog.quick')}<small>{t('buyer.price.short')}</small></p><div>{CATALOG_KINDS.map(kind => {
       const product = localizedPreviewProduct(kind, locale, t)
@@ -48,7 +46,7 @@ export default function ProductCatalog() {
       const product = localizedPreviewProduct(kind, locale, t)
       return <article key={kind} className="fate-product-card fate-focus-product" aria-label={product.title}><ReportArtwork kind={kind} title={product.title} motionEnabled={motionEnabled && pageVisible} /><div className="fate-product-content">{kind === 'year' && <span className="fate-catalog-entry">{t('buyer.catalog.entry')}</span>}<p className="fate-eyebrow">{product.subtitle}</p><h3>{product.title}</h3><span className="fate-catalog-scope">{product.questions} {t('site.guide.chaptersUnit')} · {t(kind === 'compatibility' ? 'site.guide.twoPeople' : 'site.guide.onePerson')}</span><p>{product.description}</p><p className="fate-product-card-bonus">✦ {t(destinyCardCount(kind) === 2 ? 'destiny.catalog.two' : 'destiny.catalog.one')}</p><p className="fate-product-price"><ReportPrice kind={kind} /></p><BuyReportLink kind={kind} /><a href={previewHash(kind)} className="fate-product-action">{t('buyer.preview.cta')} <span aria-hidden="true">→</span></a><a href={product.sample} className="fate-buyer-sample-link">{t('buyer.guide.sample')}</a></div></article>
     })}</div>
-    <aside className="fate-bundle-offer"><ReportArtwork kind="bundle" title={localizedPreviewProduct('bundle', locale, t).title} motionEnabled={motionEnabled && pageVisible} /><div className="fate-bundle-copy"><p className="fate-eyebrow">{localizedPreviewProduct('bundle', locale, t).subtitle}</p><h3>{localizedPreviewProduct('bundle', locale, t).title}</h3><p>{localizedPreviewProduct('bundle', locale, t).description}</p><p className="fate-product-card-bonus">✦ {t('destiny.catalog.two')}</p><strong>{discountLabel}</strong><span><s>{savings.separatePrice}</s> {reportPrice('bundle')} · {t('buyer.price.save').replace('{percent}', String(savings.percent))} {savings.savedAmount}</span></div><div className="fate-bundle-action"><ReportPrice kind="bundle" /><BuyReportLink kind="bundle" /><a href="#my-report-bundle" className="fate-complete-primary">{t('buyer.bundle.cta')}</a><a href="#complete-bundle-sample" className="fate-buyer-sample-link">{t('buyer.guide.sample')}</a></div></aside>
+    <aside className="fate-bundle-offer"><ReportArtwork kind="bundle" title={localizedPreviewProduct('bundle', locale, t).title} motionEnabled={motionEnabled && pageVisible} /><div className="fate-bundle-copy"><p className="fate-eyebrow">{localizedPreviewProduct('bundle', locale, t).subtitle}</p><h3>{localizedPreviewProduct('bundle', locale, t).title}</h3><p>{localizedPreviewProduct('bundle', locale, t).description}</p><p className="fate-product-card-bonus">✦ {t('destiny.catalog.two')}</p></div><div className="fate-bundle-action"><ReportPrice kind="bundle" /><BuyReportLink kind="bundle" /><a href="#my-report-bundle" className="fate-complete-primary">{t('buyer.bundle.cta')}</a><a href="#complete-bundle-sample" className="fate-buyer-sample-link">{t('buyer.guide.sample')}</a></div></aside>
     </div>
     <p className="fate-product-note">{t('buyer.checkout.pending')} {t('buyer.price.note')}</p>
   </section>
