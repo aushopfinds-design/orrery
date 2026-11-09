@@ -486,7 +486,28 @@ export function customerNarrative(plan:InterpretationPlan,targetedProduct01=true
     .replace(/^Clear duties and standards/i,'clear duties and expectations')
     .replace(/^Urgent goals and decisive action/i,'urgent goals and quick decisions')
    const theme=plain.replace(/\s+may compete with time together or the freedom to make a personal choice\.?$/i,'').replace(/[.!?]+$/u,'').trim()
-   return `the chart flags ${theme || 'a personal responsibility'} as a theme to review. Check whether it affects time together or personal choice`
+   const relationshipPrompt=theme.startsWith('time for focused work')
+    ? 'Discuss what work time and personal projects leave available for time together.'
+    : theme.startsWith('social commitments and decisions about shared time or resources')
+     ? 'Discuss which social plans and shared costs fit the time and resources you both want to commit.'
+     : theme.startsWith('study, training or support responsibilities')
+      ? 'Discuss how study or support duties fit alongside shared time and practical responsibilities.'
+      : theme.startsWith('finding customers and building work contacts')
+       ? 'Discuss whether new work contacts could change the time or responsibilities you share.'
+       : theme.startsWith('independent decisions')
+        ? 'Discuss where each person wants room to decide alone and where you want a shared decision.'
+        : theme.startsWith('practical work and reliable results')
+         ? 'Discuss how practical duties can be divided without leaving one person to carry the result alone.'
+         : theme.startsWith('new ideas and different ways of doing things')
+          ? 'Discuss which new plans you both want to try and what needs agreement first.'
+          : theme.startsWith('steady work and financial responsibilities')
+           ? 'Discuss how work and money responsibilities affect the plans you share.'
+           : theme.startsWith('clear duties and expectations')
+            ? 'Discuss who owns each shared task and what each person expects.'
+            : theme.startsWith('urgent goals and quick decisions')
+             ? 'Discuss which decisions need speed and where each person needs time to respond.'
+             : 'Discuss how this chart theme could affect a plan you share, without treating it as a predicted event.'
+   return `the chart flags ${theme || 'a personal responsibility'} as a theme to review. ${relationshipPrompt}`
   }
   const relationshipPeople=(row:{you?:string;partner?:string})=>row.you&&row.partner?'for both of you':row.you?'for you':'for your partner'
   const relationshipChangeAnswer=relationshipChanges.length

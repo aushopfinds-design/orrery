@@ -75,6 +75,8 @@ describe('Targeted customer-answer revisions',()=>{
    expect(answer).toMatch(/(?:period|periods) flagged|No year in the five-year comparison/)
    expect(answer).not.toMatch(/Specialist knowledge and independent thought|Contacts, competition and shared resources|Training and dependable support/)
    expect(answer).toMatch(/does not predict a shared event|does not predict an easy period/)
+   expect(answer).not.toContain('Check whether it affects time together or personal choice')
+   expect(answer).toMatch(/Discuss (?:what work time|which social plans|how study|whether new work contacts|where each person|how practical duties|which new plans|how work and money|who owns|which decisions)/)
   }
  })
  it('keeps unknown birth-time notes relevant to the report topic',()=>{
