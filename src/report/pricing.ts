@@ -18,18 +18,6 @@ export const ACTIVE_PRODUCT_KINDS = ['complete', 'career', 'compatibility', 'yea
 export type ActiveProductKind = typeof ACTIVE_PRODUCT_KINDS[number]
 // My Love remains readable for previously paid orders, but is no longer sold separately.
 export const LEGACY_PRODUCT_KINDS = ['love'] as const
-// The Collection includes the complete life, year, compatibility, career and love readings.
-export const BUNDLE_REPORTS = ['complete', 'year', 'compatibility', 'career', 'love'] as const
 
 export function formatUSD(cents: number) { return `$${(cents / 100).toFixed(2)}` }
 export function reportPrice(kind: PricedReportKind) { return formatUSD(REPORT_PRICE_CENTS[kind]) }
-
-export function bundleSavings() {
-  const separateCents = BUNDLE_REPORTS.reduce((total, kind) => total + REPORT_PRICE_CENTS[kind], 0)
-  const savedCents = separateCents - REPORT_PRICE_CENTS.bundle
-  return {
-    separatePrice: formatUSD(separateCents),
-    savedAmount: formatUSD(savedCents),
-    percent: Math.round(savedCents * 100 / separateCents),
-  }
-}
