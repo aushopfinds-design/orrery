@@ -35,7 +35,7 @@ export default function FullReportSamplePage({ kind }: { kind: FocusCategory | '
       kind === 'career' ? careerMoneyChartData(calculateSaju(sample.first), referenceYear).years : [],
       Object.fromEntries(productQuestions(kind).map(question => [question.id, question.title])),
     )
-  const fullText = customerDeliveryText(generatedText, kind === 'complete')
+  const fullText = customerDeliveryText(generatedText)
     .replace(/\n\nCalculation notes\n\n[\s\S]*$/u, '')
     .replace('Your Answer: The main pressure to check is whether training or support is taking time or money away from paid work. Your chart links these themes, but cannot confirm this is limiting your finances. Compare training costs and hours with income-producing work.', 'Your Answer: The main pressure to check is whether training or support is taking time or money away from paid work. What This Means for You: The chart points to a possible squeeze between paid work and the preparation or help needed to do it well; it cannot establish the cause of a real setback. Compare training costs and hours with income-producing work.')
   const paragraphs = fullText.split(/\n{2,}/).map(block => block.trim()).filter(Boolean)
