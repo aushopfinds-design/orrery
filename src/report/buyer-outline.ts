@@ -279,6 +279,9 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
       } else if (kind === 'compatibility' && question.role === 'mutual-adjustment' && set === 'standalone') {
         // Keep the final answer focused on what each person can adjust; earlier
         // answers already cover needs, pressure patterns and day/routine links.
+        if (/You both need warm attention and time for your own interests\./u.test(lead)) {
+          lead = 'Because you share this need, each of you can give focused attention while protecting time for separate interests. Your shared adjustment is to make room for both connection and independence.'
+        }
         lead = lead.replace(/\s+Understanding the difference is more useful than a compatibility percentage\.?$/iu, '')
         paragraphs = []
         chapter.paragraphs.forEach(line => used.add(line))
