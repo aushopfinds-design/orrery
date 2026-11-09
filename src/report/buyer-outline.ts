@@ -217,8 +217,29 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
         paragraphs = []
         chapter.paragraphs.forEach(line => used.add(line))
       } else if (kind === 'compatibility' && question.role === 'overall-fit') {
-        // Q1 answers only the shared-fit question. Any private-life chart
-        // verdict belongs in the closeness/routine answer, not as a duplicate.
+        // State the fit pattern directly, using the personal-life comparison
+        // only to qualify the conclusion. Q5 keeps the fuller comparison.
+        const noPrivateSignal = /private-life chart comparison shows no clear tie or clash/u.test(lead)
+        const privateChoiceDifference = /private-life chart comparison shows a difference in how you may handle personal choices/u.test(lead)
+        const privatePlanLink = /private-life chart comparison shows a link that can support shared plans/u.test(lead)
+        if (lead.startsWith('This match shares a similar need for care:')) {
+          lead = lead.replace('You have common ground, but you may both wait for the other to offer it first.',
+            noPrivateSignal
+              ? 'This shared care is your clearest point of fit; the chart shows no clear personal-life link or conflict.'
+              : 'This shared care is your clearest point of fit.')
+        } else if (lead.startsWith('You and your partner share a need for warm attention')) {
+          lead = lead.replace('This is your clearest point of common ground; it does not mean you will show care in the same way.',
+            privateChoiceDifference
+              ? 'This is your clearest common ground, while the chart also points to a difference in personal choices.'
+              : 'This is your clearest point of common ground.')
+        } else if (lead.startsWith('This match asks for different kinds of care:')) {
+          lead = lead.replace('Your point of fit is learning to recognise these as different requests, not a lack of care.',
+            privatePlanLink
+              ? 'Your private-life chart link may support shared plans, while your care needs differ; this is a positive signal, not a promise.'
+              : noPrivateSignal
+                ? 'Your fit comes from giving both needs room; the chart adds no clear personal-life link or conflict.'
+                : 'Your fit comes from giving both needs room.')
+        }
         lead = lead.replace(/\s+(?:The |Your )private-life chart comparison shows [\s\S]*?(?:relationship will work|difficult|difference|no clear tie or clash)[.!?]?$/u, '')
         lead = lead.replace(/\s+Private closeness is a clearer strength than sharing a daily routine:[\s\S]*$/u, '')
         paragraphs = []
