@@ -116,7 +116,7 @@ export function buildBundleFromPlans(plans: ReturnType<typeof bundleInterpretati
     answer(6, DESTINY_COLLECTION_QUESTIONS[5], longTerm, undefined, 'No independently verified calculation is available to identify specific important years, so this report does not name dates.'),
     answer(7, DESTINY_COLLECTION_QUESTIONS[6], yearTheme, undefined, 'No independently verified three-year timing calculation is available for this report, so it cannot rank the coming years or name dates.'),
     answer(8, DESTINY_COLLECTION_QUESTIONS[7], strengthsOverview, undefined, `A strength you may overlook is this: ${plainReadingText(coreProfile.strength)} The chart links this trait to your natural way of approaching work and close relationships.`),
-    answer(9, DESTINY_COLLECTION_QUESTIONS[8], life, undefined, `A more fulfilling life is supported when your ${workTheme}-centred work leaves room for the close relationships that meet your need for ${privateNeed}. Your chart describes tendencies; your choices and circumstances still matter.`),
+    answer(9, DESTINY_COLLECTION_QUESTIONS[8], life, undefined, `A more fulfilling life is supported when work that involves ${workTheme} leaves room for the close relationships that meet your need for ${privateNeed}. Your chart describes tendencies; your choices and circumstances still matter.`),
     [
       `10 · ${DESTINY_COLLECTION_QUESTIONS[9]}`,
       `Question: ${DESTINY_COLLECTION_QUESTIONS[9]}`,
