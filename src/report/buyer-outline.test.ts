@@ -110,7 +110,7 @@ describe('Buyer questions, not a repeated six-part technical template', () => {
         'Your likely friction is advice arriving before listening; your partner’s is practical help arriving without checking what was asked for.',
       ]),
       make('chart-patterns', 'Emotional closeness depends more on how you respond to each other’s needs; everyday compatibility depends more on how your routines work together. For emotional closeness, neither a direct bond nor a direct conflict stands out. You value being heard before someone offers a solution; your partner values listening as well as practical help. For everyday compatibility, the routine comparison has no clear linking or clashing pattern.', []),
-      make('shared-routine', "In everyday life, Person A's chart puts emphasis on careful work; Person B's chart points to creative projects. This can affect how each of you handles tasks, time and responsibilities.", ['The daily-routine comparison shows no clear link or clash.', 'Your everyday pattern: Careful work benefits from a steady pace.', 'Your partner’s everyday pattern: Creative projects need room for new ideas.']),
+      make('shared-routine', 'The daily-routine comparison shows no clear link or clash.', ['Your everyday pattern: Careful work benefits from a steady pace.', 'Your partner’s everyday pattern: Creative projects need room for new ideas.']),
       make('shared-week', 'This connection asks each person to make room for the other’s different needs. Understanding the difference is more useful than a compatibility percentage.', [
         'The day comparison shows a private-life difference.',
         'The month comparison shows a different daily routine.',

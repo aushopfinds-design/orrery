@@ -227,7 +227,7 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
         lead = lead.replace(/\s+For everyday compatibility,[\s\S]*$/u, '')
         lead = lead.replace(/\s+Your everyday pattern:\s*[^.!?]+[.!?]/u, '')
         const routine = byId.get('shared-routine')
-        const routineFinding = routine?.paragraphs[0] ?? routine?.lead
+        const routineFinding = routine?.lead
         if (routineFinding) lead += ` ${routineFinding}`
         const yourRoutine = routine?.paragraphs.find(line => /^Your everyday pattern: /u.test(line))?.replace(/^Your everyday pattern: /u, '').replace(/[.!?]+$/u, '')
         const partnerRoutine = routine?.paragraphs.find(line => /^Your partner(?:'|’)s everyday pattern: /u.test(line))?.replace(/^Your partner(?:'|’)s everyday pattern: /u, '').replace(/[.!?]+$/u, '')
