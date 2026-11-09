@@ -212,7 +212,13 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
           lead = yourDraw === partnerDraw
             ? `Both directions point to a shared draw: you may each be drawn to ${yourDraw} in the connection. The chart cannot confirm either person’s actual feelings.`
             : `You may be drawn to what your partner brings: ${yourDraw}. Your partner may be drawn to what you bring: ${partnerDraw}. The chart cannot confirm either person’s actual feelings.`
-          if (privateConnection) lead += ` ${privateConnection}`
+          if (privateConnection?.includes('neither a direct link nor a friction pattern')) {
+            lead += ' The private-life chart adds no clear sign of a pull or a clash, so it cannot explain attraction by itself.'
+          } else if (privateConnection?.includes('form a friction pattern')) {
+            lead += ' The private-life chart points to different instincts around personal choices. Attraction can still be present alongside that difference.'
+          } else if (privateConnection?.includes('form a direct link')) {
+            lead += ' The private-life chart shows a link that may support closeness, though it cannot confirm either person’s feelings.'
+          }
         }
         paragraphs = []
         chapter.paragraphs.forEach(line => used.add(line))
