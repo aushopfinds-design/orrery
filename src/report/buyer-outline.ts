@@ -1,5 +1,5 @@
-Warning: truncated output (original token count: 16021)
-Total output lines: 662
+Warning: truncated output (original token count: 16581)
+Total output lines: 681
 
 import type { CompleteReadingPeriod, ReportChapter } from './complete-reading.ts'
 import { deliveredChapter } from './report-delivery.ts'
@@ -208,7 +208,89 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
         const yours = perspectives.find(line => /^From your side:|^You:/.test(line))
         const theirs = perspectives.find(line => /^From your partner(?:'|’)s side:|^Your partner:/.test(line))
         const privateConnection = chapter.paragraphs.find(line => /^The day signs (?:also|show)/.test(line))
-        const cleanPerspective = (li…4021 tokens truncated… pressure response is /i, 'As pressure builds, ')
+        const cleanPerspective = (line: string | undefined, prefix: RegExp) => line?.replace(prefix, '').replace(/^(?:The )?attraction may be\s*/i, '').replace(/\.\s+[\s\S]*$/u, '').replace(/\s+stand out[.!?]*$/i, '').replace(/[.!?]+$/u, '').trim().replace(/fresh ideas and someone who says what they think/iu, 'fresh ideas and open communication').replace(/^(.+?) may feel (.+)$/i, '$1 that feels $2').replace(/^./u, char => char.toLowerCase())
+        if (yours && theirs) {
+          const yourDraw = cleanPerspective(yours, /^(?:From your side:|You:)\s*/)
+          const partnerDraw = cleanPerspective(theirs, /^(?:From your partner(?:'|’)s side:|Your partner:)\s*/)
+          lead = yourDraw === partnerDraw
+            ? `Both directions point to a shared draw: you may each be drawn to ${yourDraw} in the connection. The chart cannot confirm either person’s actual feelings.`
+            : `You may be drawn to what your partner brings: ${yourDraw}. Your partner may be drawn to what you bring: ${partnerDraw}. The chart cannot confirm either person’s actual feelings.`
+          if (privateConnection) lead += ` ${privateConnection}`
+        }
+        paragraphs = []
+        chapter.paragraphs.forEach(line => used.add(line))
+      } else if (kind === 'compatibility' && question.role === 'overall-fit') {
+        // Q1 answers only the shared-fit question. Any private-life chart
+        // verdict belongs in the closeness/routine answer, not as a duplicate.
+        lead = lead.replace(/\s+(?:The |Your )private-life chart comparison shows [\s\S]*?(?:relationship will work|difficult|difference|no clear tie or clash)[.!?]?$/u, '')
+        lead = lead.replace(/\s+Private closeness is a clearer strength than sharing a daily routine:[\s\S]*$/u, '')
+        paragraphs = []
+        chapter.paragraphs.forEach(line => used.add(line))
+      } else if (kind === 'compatibility' && question.role === 'closeness-vs-routine' && set === 'standalone') {
+        // Keep the personal closeness needs in this answer. Replace the generic
+        // routine passage with the chart's routine finding and each person's pattern.
+        lead = lead.replace(/\s+For everyday compatibility,[\s\S]*$/u, '')
+        lead = lead.replace(/\s+Your everyday pattern:\s*[^.!?]+[.!?]/u, '')
+        const routine = byId.get('shared-routine')
+        const noRoutineSignal = /^The two charts show no direct link or clash between daily-routine patterns\./u.test(routine?.lead ?? '')
+        const routineFinding = noRoutineSignal
+          ? 'No clear link or clash stands out in the daily-routine comparison.'
+          : routine?.lead
+        if (routineFinding) lead += ` ${routineFinding}`
+        const yourRoutine = routine?.paragraphs.find(line => /^Your everyday pattern: /u.test(line))?.replace(/^Your everyday pattern: /u, '').replace(/[.!?]+$/u, '')
+        const partnerRoutine = routine?.paragraphs.find(line => /^Your partner(?:'|’)s everyday pattern: /u.test(line))?.replace(/^Your partner(?:'|’)s everyday pattern: /u, '').replace(/[.!?]+$/u, '')
+        if (yourRoutine && partnerRoutine) {
+          const sameRoutine = yourRoutine.replace(/\s+/gu, ' ').trim().toLocaleLowerCase() === partnerRoutine.replace(/\s+/gu, ' ').trim().toLocaleLowerCase()
+          lead += sameRoutine
+            ? ` You share this daily chart pattern: ${yourRoutine}.`
+            : ` Your daily chart pattern: ${yourRoutine}. Your partner's daily chart pattern: ${partnerRoutine}.`
+        }
+        paragraphs = []
+        chapter.paragraphs.forEach(line => used.add(line))
+      } else if (kind === 'compatibility' && question.role === 'mutual-adjustment' && set === 'standalone') {
+        // Keep the final answer focused on what each person can adjust; earlier
+        // answers already cover needs, pressure patterns and day/routine links.
+        lead = lead.replace(/\s+Understanding the difference is more useful than a compatibility percentage\.?$/iu, '')
+        paragraphs = []
+        chapter.paragraphs.forEach(line => used.add(…2581 tokens truncated…s easier to receive.'
+          : yourCare.includes('practical help') && partnerCare.includes('respecting private thinking time')
+            ? 'For example, asking before offering help and respecting your partner’s quiet time make both gestures easier to receive.'
+            : yourCare.includes('steady check-ins') && partnerCare.includes('steady check-ins')
+              ? 'A steady check-in followed by a kept promise makes this shared style visible.'
+              : yourCare.includes('speaking honestly') && partnerCare.includes('steady check-ins')
+                ? 'A calm check-in can open the honest conversation you value, while follow-through helps your partner feel heard.'
+                : yourCare.includes('steady check-ins') && partnerCare.includes('speaking honestly')
+                  ? 'Your partner’s honest conversation can be met with a steady check-in and follow-through.'
+                  : yourCare.includes('following through on promises') && partnerCare.includes('respecting private thinking time')
+                    ? 'Keeping a shared plan and respecting the quiet time around it can show both styles at once.'
+                    : yourCare.includes('respecting private thinking time') && partnerCare.includes('following through on promises')
+                      ? 'Your partner’s follow-through and your respect for quiet time can make care visible in different ways.'
+                      : yourCare.includes('speaking honestly') && partnerCare.includes('practical help')
+                        ? 'For example, an honest conversation can be paired with practical help that was asked for.'
+                        : yourCare.includes('practical help') && partnerCare.includes('speaking honestly')
+                          ? 'For example, your honest conversation can be paired with practical help that was asked for.'
+                          : ''
+        lead = firstCare && secondCare
+          ? yourCare === partnerCare
+            ? `You and your partner may express love in a similar way: ${yourExpression.action}.${interactionExample ? ` ${interactionExample}` : ''}`
+            : `You may express love ${yourExpression.preposition} ${yourExpression.action}; your partner may express it ${partnerExpression.preposition} ${partnerExpression.action}.${interactionExample ? ` ${interactionExample}` : ''}`
+          : `${chapter.paragraphs[0] ?? 'Your chart gives one clue about how care may be recognised.'} ${chapter.paragraphs[1] ?? 'Your partner’s chart gives a separate clue.'}`
+        // Q5 asks what the partners visibly do. Avoid repeating Q1/Q3's
+        // emotional needs and avoid turning chart tendencies into facts.
+        paragraphs = []
+        chapter.paragraphs.forEach(line => used.add(line))
+        paragraphs = []
+      } else if (kind === 'wellbeing' && question.role === 'pressure-response') {
+        // Keep this answer about the response as pressure builds, separate
+        // from Q3's trigger and Q1's general personality description.
+        const warning = chapter.paragraphs.find(line => /^A distinct daily pressure response is /i.test(line))
+          ?? chapter.paragraphs.find(line => /^(?:The pressure to watch is|Under pressure, watch for|As demands build|Under pressure, you may)/i.test(line))
+          ?? chapter.guidance.watchFor.find(line => line !== chapter.lead && !chapter.paragraphs.includes(line))
+          ?? chapter.guidance.watchFor[0]
+          ?? chapter.paragraphs[0]
+          ?? chapter.lead
+        lead = warning.replace(/^The pressure to watch is that\s*/i, 'As pressure builds, ').replace(/^The pressure to watch is\s*/i, 'As pressure builds, ').replace(/^Under pressure, watch for\s*/i, 'As pressure builds, ').replace(/\s+This theme appears in both parts of your birth-month reading, so it may keep coming up in your routine\./i, '. This can recur in your routine because the same theme appears in both parts of your birth-month reading.')
+          .replace(/^A distinct daily pressure response is /i, 'As pressure builds, ')
         paragraphs = []
         chapter.paragraphs.forEach(line => used.add(line))
       } else if (kind === 'wellbeing' && question.role === 'relationship-need') {
