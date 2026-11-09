@@ -90,8 +90,8 @@ describe('Targeted customer-answer revisions',()=>{
   const answers=CATEGORY_SCENARIOS.map(profile=>customerNarrative(buildInterpretationPlan('career',calculateSaju(profile.first),2026))['working-style'].lines.map(line=>line.en))
   const answer=answers.flat().find(line=>/training or support is taking time or money away from paid work/i.test(line))!
   expect(answer).toBeDefined()
-  expect(answer).toContain('the chart cannot confirm that it is limiting your finances')
-  expect((answer.match(/learning or support/gi) ?? [])).toHaveLength(1)
+  expect(answer).toContain('Your chart links these themes, but cannot confirm this is limiting your finances.')
+  expect(answer).toContain('Compare training costs and hours with income-producing work.')
   expect(answer).not.toContain('This is a possible overlap in demands')
  })
  it('keeps Product 01 income limits concise and separates its life-challenge answer from the relationship answer',()=>{
