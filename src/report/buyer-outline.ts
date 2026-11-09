@@ -1,4 +1,4 @@
-Warning: truncated output (original token count: 16658)
+Warning: truncated output (original token count: 16657)
 Total output lines: 683
 
 import type { CompleteReadingPeriod, ReportChapter } from './complete-reading.ts'
@@ -252,8 +252,8 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
         // answers already cover needs, pressure patterns and day/routine links.
         lead = lead.replace(/\s+Understanding the difference is more useful than a compatibility percentage\.?$/iu, '')
         paragraphs = []
-        chapter.paragraphs.forEach(line => used.add(…2658 tokens truncated…heck-ins') && partnerCare.includes('steady check-ins')
-              ? 'A steady check-in followed by a kept promise makes this shared style visible.'
+        chapter.paragraphs.forEach(line => used.add(…2657 tokens truncated…ing through on promises') && partnerCare.includes('following through on promises')
+              ? 'Keeping a promise is a clear shared sign of care.'
               : yourCare.includes('speaking honestly') && partnerCare.includes('steady check-ins')
                 ? 'A calm check-in can open the honest conversation you value, while follow-through helps your partner feel heard.'
                 : yourCare.includes('steady check-ins') && partnerCare.includes('speaking honestly')
