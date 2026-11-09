@@ -1,0 +1,1045 @@
+{
+  "title": "Product 03 independent PDF answer review",
+  "reviewedCodeSha": "f139bca2f82f600fe9806dafec26f52bf186362a",
+  "method": "Manual answer-by-answer review of text extracted from the five newly generated PDFs. No automatic quality diagnostic score was used. Reviewer assessed the actual answer, question fit, specificity and wording.",
+  "rubric": {
+    "directAnswer": 35,
+    "personalization": 25,
+    "specificityUsefulness": 15,
+    "repetitionGenericRemoval": 10,
+    "easyEnglish": 10,
+    "calculationConsistency": 5
+  },
+  "answersReviewed": 35,
+  "profileMeans": {
+    "1": "90.4",
+    "2": "90.9",
+    "3": "90.4",
+    "4": "90.4",
+    "5": "91.3"
+  },
+  "profileMinimumIndividual": {
+    "1": 86,
+    "2": 87,
+    "3": 86,
+    "4": 86,
+    "5": 87
+  },
+  "verdict": "FAIL: all five profile means remain below 95; continue Product 03 improvements.",
+  "pdfFiles": [
+    "01-compatibility.pdf",
+    "02-compatibility.pdf",
+    "03-compatibility.pdf",
+    "04-compatibility.pdf",
+    "05-compatibility.pdf"
+  ],
+  "pdfChecks": [
+    {
+      "profile": 1,
+      "pages": 17,
+      "questions": 7,
+      "tocLinks": 12,
+      "containsGlyphReplacement": false,
+      "destinyCard": true,
+      "finalSummary": true
+    },
+    {
+      "profile": 2,
+      "pages": 16,
+      "questions": 7,
+      "tocLinks": 12,
+      "containsGlyphReplacement": false,
+      "destinyCard": true,
+      "finalSummary": true
+    },
+    {
+      "profile": 3,
+      "pages": 17,
+      "questions": 7,
+      "tocLinks": 12,
+      "containsGlyphReplacement": false,
+      "destinyCard": true,
+      "finalSummary": true
+    },
+    {
+      "profile": 4,
+      "pages": 16,
+      "questions": 7,
+      "tocLinks": 12,
+      "containsGlyphReplacement": false,
+      "destinyCard": true,
+      "finalSummary": true
+    },
+    {
+      "profile": 5,
+      "pages": 16,
+      "questions": 7,
+      "tocLinks": 12,
+      "containsGlyphReplacement": false,
+      "destinyCard": true,
+      "finalSummary": true
+    }
+  ],
+  "answers": [
+    {
+      "product": 3,
+      "profile": 1,
+      "questionId": "two-styles",
+      "questionTitle": "What makes us compatible?",
+      "pdf": "01-compatibility.pdf",
+      "actualPdfAnswer": "This match shares a similar need for care: you value being heard before someone offers a solution; your partner values listening as well as practical help. This is common ground, but both of you can end up waiting for the other to provide it.",
+      "scores": {
+        "directAnswer": 33,
+        "personalization": 21,
+        "specificityUsefulness": 13,
+        "repetitionGenericRemoval": 8,
+        "easyEnglish": 9,
+        "calculationConsistency": 5
+      },
+      "total": 89,
+      "deductionRationale": "Both partners’ care needs are named, but the ending remains broad and partly repeats the needs.",
+      "deductionPointsLost": {
+        "directAnswer": 2,
+        "personalization": 4,
+        "specificityUsefulness": 2,
+        "repetitionGenericRemoval": 2,
+        "easyEnglish": 1
+      },
+      "codeLocation": "src/report/buyer-outline.ts: overall-fit",
+      "verdict": "FIX"
+    },
+    {
+      "product": 3,
+      "profile": 1,
+      "questionId": "two-directions",
+      "questionTitle": "Why are we attracted to each other?",
+      "pdf": "01-compatibility.pdf",
+      "actualPdfAnswer": "You may be drawn to what your partner brings: reassurance, guidance and feeling understood. Your partner may be drawn to what you bring: fresh ideas and open communication. The chart cannot confirm either person's actual feelings. The day signs show neither a direct link nor a friction pattern, so they do not add a separate signal about attraction.",
+      "scores": {
+        "directAnswer": 35,
+        "personalization": 24,
+        "specificityUsefulness": 14,
+        "repetitionGenericRemoval": 9,
+        "easyEnglish": 9,
+        "calculationConsistency": 4
+      },
+      "total": 95,
+      "deductionRationale": "Two-way attraction is stated and the day-sign status is distinguished; the chart limitation is explicit, but the traits remain abstract.",
+      "deductionPointsLost": {
+        "personalization": 1,
+        "specificityUsefulness": 1,
+        "repetitionGenericRemoval": 1,
+        "easyEnglish": 1,
+        "calculationConsistency": 1
+      },
+      "codeLocation": "src/report/buyer-outline.ts: attraction",
+      "verdict": "PASS"
+    },
+    {
+      "product": 3,
+      "profile": 1,
+      "questionId": "q-conflict",
+      "questionTitle": "What tends to cause friction between us?",
+      "pdf": "01-compatibility.pdf",
+      "actualPdfAnswer": "Your friction point is solving a problem before asking what help is wanted. For your partner, tension may arise from offering an answer before hearing how the problem feels.",
+      "scores": {
+        "directAnswer": 34,
+        "personalization": 24,
+        "specificityUsefulness": 13,
+        "repetitionGenericRemoval": 9,
+        "easyEnglish": 9,
+        "calculationConsistency": 4
+      },
+      "total": 93,
+      "deductionRationale": "Both likely friction triggers are named; examples and the mechanism are brief and conditional.",
+      "deductionPointsLost": {
+        "directAnswer": 1,
+        "personalization": 1,
+        "specificityUsefulness": 2,
+        "repetitionGenericRemoval": 1,
+        "easyEnglish": 1,
+        "calculationConsistency": 1
+      },
+      "codeLocation": "src/report/buyer-outline.ts: conflict-trigger",
+      "verdict": "FIX"
+    },
+    {
+      "product": 3,
+      "profile": 1,
+      "questionId": "q-love-language",
+      "questionTitle": "How do we express love differently?",
+      "pdf": "01-compatibility.pdf",
+      "actualPdfAnswer": "The chart suggests different care styles. You: Privacy and being understood without constant explanation can matter. Your partner: Care tends to show through ordinary acts, such as making time, cooking or making home comfortable.",
+      "scores": {
+        "directAnswer": 34,
+        "personalization": 22,
+        "specificityUsefulness": 13,
+        "repetitionGenericRemoval": 8,
+        "easyEnglish": 9,
+        "calculationConsistency": 4
+      },
+      "total": 90,
+      "deductionRationale": "Each person’s chart-based care style is included, but some phrases describe needs rather than clear acts of expressing love.",
+      "deductionPointsLost": {
+        "directAnswer": 1,
+        "personalization": 3,
+        "specificityUsefulness": 2,
+        "repetitionGenericRemoval": 2,
+        "easyEnglish": 1,
+        "calculationConsistency": 1
+      },
+      "codeLocation": "src/report/buyer-outline.ts: care-expression",
+      "verdict": "FIX"
+    },
+    {
+      "product": 3,
+      "profile": 1,
+      "questionId": "chart-patterns",
+      "questionTitle": "How do emotional closeness and everyday compatibility differ?",
+      "pdf": "01-compatibility.pdf",
+      "actualPdfAnswer": "These are two separate parts of your match. For emotional closeness, neither a direct bond nor a direct conflict stands out in the private-life comparison. Here, the relationship depends more on matching each other's needs than on one strong linking pattern. For everyday compatibility, the routine comparison has no clear linking or clashing pattern. Compare your actual habits rather than assuming they will match.",
+      "scores": {
+        "directAnswer": 33,
+        "personalization": 16,
+        "specificityUsefulness": 13,
+        "repetitionGenericRemoval": 9,
+        "easyEnglish": 10,
+        "calculationConsistency": 5
+      },
+      "total": 86,
+      "deductionRationale": "Emotional closeness and everyday fit are separated. No-signal profiles are less personal, and some needs overlap earlier answers.",
+      "deductionPointsLost": {
+        "directAnswer": 2,
+        "personalization": 9,
+        "specificityUsefulness": 2,
+        "repetitionGenericRemoval": 1
+      },
+      "codeLocation": "src/report/buyer-outline.ts: closeness-vs-routine",
+      "verdict": "FIX"
+    },
+    {
+      "product": 3,
+      "profile": 1,
+      "questionId": "support-each-other",
+      "questionTitle": "Which upcoming periods may affect our relationship themes?",
+      "pdf": "01-compatibility.pdf",
+      "actualPdfAnswer": "The only period flagged in this five-year comparison is 2030 for you. 2030: for you, Contacts, competition and shared resources may compete with time together or the freedom to make a personal choice. These are separate personal chart themes to discuss, not dates of shared events.",
+      "scores": {
+        "directAnswer": 31,
+        "personalization": 20,
+        "specificityUsefulness": 14,
+        "repetitionGenericRemoval": 8,
+        "easyEnglish": 9,
+        "calculationConsistency": 4
+      },
+      "total": 86,
+      "deductionRationale": "Years and chart themes are given without forecasting events; some chart terms are hard to understand and the relationship impact is broad.",
+      "deductionPointsLost": {
+        "directAnswer": 4,
+        "personalization": 5,
+        "specificityUsefulness": 1,
+        "repetitionGenericRemoval": 2,
+        "easyEnglish": 1,
+        "calculationConsistency": 1
+      },
+      "codeLocation": "src/report/buyer-outline.ts: relationship-timing",
+      "verdict": "FIX"
+    },
+    {
+      "product": 3,
+      "profile": 1,
+      "questionId": "shared-week",
+      "questionTitle": "What does this connection ask of each of us?",
+      "pdf": "01-compatibility.pdf",
+      "actualPdfAnswer": "The relationship asks you to make room for your partner's need for listening as well as practical help; your partner also needs to make room for your need for being heard before someone offers a solution. These are chart themes to discuss, not predictions of behaviour.",
+      "scores": {
+        "directAnswer": 34,
+        "personalization": 24,
+        "specificityUsefulness": 14,
+        "repetitionGenericRemoval": 9,
+        "easyEnglish": 9,
+        "calculationConsistency": 4
+      },
+      "total": 94,
+      "deductionRationale": "Both partners’ computed needs are connected; “make room” stays abstract and several needs repeat earlier answers.",
+      "deductionPointsLost": {
+        "directAnswer": 1,
+        "personalization": 1,
+        "specificityUsefulness": 1,
+        "repetitionGenericRemoval": 1,
+        "easyEnglish": 1,
+        "calculationConsistency": 1
+      },
+      "codeLocation": "src/report/buyer-outline.ts: mutual-adjustment",
+      "verdict": "FIX"
+    },
+    {
+      "product": 3,
+      "profile": 2,
+      "questionId": "two-styles",
+      "questionTitle": "What makes us compatible?",
+      "pdf": "02-compatibility.pdf",
+      "actualPdfAnswer": "You and your partner share a need for warm attention and time for your own interests. That is common ground, though it does not mean you will show care in the same way.",
+      "scores": {
+        "directAnswer": 33,
+        "personalization": 21,
+        "specificityUsefulness": 13,
+        "repetitionGenericRemoval": 9,
+        "easyEnglish": 9,
+        "calculationConsistency": 4
+      },
+      "total": 89,
+      "deductionRationale": "Both partners’ care needs are named, but the ending remains broad and partly repeats the needs.",
+      "deductionPointsLost": {
+        "directAnswer": 2,
+        "personalization": 4,
+        "specificityUsefulness": 2,
+        "repetitionGenericRemoval": 1,
+        "easyEnglish": 1,
+        "calculationConsistency": 1
+      },
+      "codeLocation": "src/report/buyer-outline.ts: overall-fit",
+      "verdict": "FIX"
+    },
+    {
+      "product": 3,
+      "profile": 2,
+      "questionId": "two-directions",
+      "questionTitle": "Why are we attracted to each other?",
+      "pdf": "02-compatibility.pdf",
+      "actualPdfAnswer": "Both directions point to a shared draw: you may each be drawn to feeling like equals, with room to make your own choices in the connection. The chart cannot confirm either person's actual feelings. The day signs also form a friction pattern: a possible attraction can exist alongside different instincts about private choices.",
+      "scores": {
+        "directAnswer": 35,
+        "personalization": 24,
+        "specificityUsefulness": 15,
+        "repetitionGenericRemoval": 9,
+        "easyEnglish": 8,
+        "calculationConsistency": 4
+      },
+      "total": 95,
+      "deductionRationale": "Two-way attraction is stated and the day-sign status is distinguished; the chart limitation is explicit, but the traits remain abstract.",
+      "deductionPointsLost": {
+        "personalization": 1,
+        "repetitionGenericRemoval": 1,
+        "easyEnglish": 2,
+        "calculationConsistency": 1
+      },
+      "codeLocation": "src/report/buyer-outline.ts: attraction",
+      "verdict": "PASS"
+    },
+    {
+      "product": 3,
+      "profile": 2,
+      "questionId": "q-conflict",
+      "questionTitle": "What tends to cause friction between us?",
+      "pdf": "02-compatibility.pdf",
+      "actualPdfAnswer": "You may both react to tension by taking a request for space as a lack of love. Because this pattern is shared, say what help you want before either of you tries to solve the problem.",
+      "scores": {
+        "directAnswer": 34,
+        "personalization": 23,
+        "specificityUsefulness": 13,
+        "repetitionGenericRemoval": 8,
+        "easyEnglish": 9,
+        "calculationConsistency": 5
+      },
+      "total": 92,
+      "deductionRationale": "Both likely friction triggers are named; examples and the mechanism are brief and conditional.",
+      "deductionPointsLost": {
+        "directAnswer": 1,
+        "personalization": 2,
+        "specificityUsefulness": 2,
+        "repetitionGenericRemoval": 2,
+        "easyEnglish": 1
+      },
+      "codeLocation": "src/report/buyer-outline.ts: conflict-trigger",
+      "verdict": "FIX"
+    },
+    {
+      "product": 3,
+      "profile": 2,
+      "questionId": "q-love-language",
+      "questionTitle": "How do we express love differently?",
+      "pdf": "02-compatibility.pdf",
+      "actualPdfAnswer": "The chart points to a shared care style. You: Reassurance, continuity and feeling understood matter. Your partner: Reassurance, continuity and feeling understood matter.",
+      "scores": {
+        "directAnswer": 34,
+        "personalization": 21,
+        "specificityUsefulness": 13,
+        "repetitionGenericRemoval": 9,
+        "easyEnglish": 9,
+        "calculationConsistency": 5
+      },
+      "total": 91,
+      "deductionRationale": "Each person’s chart-based care style is included, but some phrases describe needs rather than clear acts of expressing love.",
+      "deductionPointsLost": {
+        "directAnswer": 1,
+        "personalization": 4,
+        "specificityUsefulness": 2,
+        "repetitionGenericRemoval": 1,
+        "easyEnglish": 1
+      },
+      "codeLocation": "src/report/buyer-outline.ts: care-expression",
+      "verdict": "FIX"
+    },
+    {
+      "product": 3,
+      "profile": 2,
+      "questionId": "chart-patterns",
+      "questionTitle": "How do emotional closeness and everyday compatibility differ?",
+      "pdf": "02-compatibility.pdf",
+      "actualPdfAnswer": "These are two separate parts of your match. For emotional closeness, small differences in private expectations can become recurring irritations. Saying what a gesture means matters here. For everyday compatibility, your everyday routines may clash over pace, schedules or who does what. Being close does not by itself settle schedules or shared tasks; compare those with your real routines.",
+      "scores": {
+        "directAnswer": 34,
+        "personalization": 22,
+        "specificityUsefulness": 14,
+        "repetitionGenericRemoval": 8,
+        "easyEnglish": 9,
+        "calculationConsistency": 4
+      },
+      "total": 91,
+      "deductionRationale": "Emotional closeness and everyday fit are separated. No-signal profiles are less personal, and some needs overlap earlier answers.",
+      "deductionPointsLost": {
+        "directAnswer": 1,
+        "personalization": 3,
+        "specificityUsefulness": 1,
+        "repetitionGenericRemoval": 2,
+        "easyEnglish": 1,
+        "calculationConsistency": 1
+      },
+      "codeLocation": "src/report/buyer-outline.ts: closeness-vs-routine",
+      "verdict": "FIX"
+    },
+    {
+      "product": 3,
+      "profile": 2,
+      "questionId": "support-each-other",
+      "questionTitle": "Which upcoming periods may affect our relationship themes?",
+      "pdf": "02-compatibility.pdf",
+      "actualPdfAnswer": "The only period flagged in this five-year comparison is 2026 for both of you. 2026: for you, Specialist knowledge and independent thought may compete with time together or the freedom to make a personal choice; for your partner, Specialist knowledge and independent thought may compete with time together or the freedom to make a personal choice. These are separate personal chart themes to discuss, not dates of shared events.",
+      "scores": {
+        "directAnswer": 31,
+        "personalization": 21,
+        "specificityUsefulness": 14,
+        "repetitionGenericRemoval": 8,
+        "easyEnglish": 9,
+        "calculationConsistency": 4
+      },
+      "total": 87,
+      "deductionRationale": "Years and chart themes are given without forecasting events; some chart terms are hard to understand and the relationship impact is broad.",
+      "deductionPointsLost": {
+        "directAnswer": 4,
+        "personalization": 4,
+        "specificityUsefulness": 1,
+        "repetitionGenericRemoval": 2,
+        "easyEnglish": 1,
+        "calculationConsistency": 1
+      },
+      "codeLocation": "src/report/buyer-outline.ts: relationship-timing",
+      "verdict": "FIX"
+    },
+    {
+      "product": 3,
+      "profile": 2,
+      "questionId": "shared-week",
+      "questionTitle": "What does this connection ask of each of us?",
+      "pdf": "02-compatibility.pdf",
+      "actualPdfAnswer": "You and your partner share a need for warm attention and time for your own interests. The relationship asks you to check that each person feels heard rather than assuming you show care in the same way.",
+      "scores": {
+        "directAnswer": 33,
+        "personalization": 23,
+        "specificityUsefulness": 13,
+        "repetitionGenericRemoval": 9,
+        "easyEnglish": 9,
+        "calculationConsistency": 4
+      },
+      "total": 91,
+      "deductionRationale": "Both partners’ computed needs are connected; “make room” stays abstract and several needs repeat earlier answers.",
+      "deductionPointsLost": {
+        "directAnswer": 2,
+        "personalization": 2,
+        "specificityUsefulness": 2,
+        "repetitionGenericRemoval": 1,
+        "easyEnglish": 1,
+        "calculationConsistency": 1
+      },
+      "codeLocation": "src/report/buyer-outline.ts: mutual-adjustment",
+      "verdict": "FIX"
+    },
+    {
+      "product": 3,
+      "profile": 3,
+      "questionId": "two-styles",
+      "questionTitle": "What makes us compatible?",
+      "pdf": "03-compatibility.pdf",
+      "actualPdfAnswer": "This match shares a similar need for care: you value being heard before someone offers a solution; your partner values listening as well as practical help. This is common ground, but both of you can end up waiting for the other to provide it.",
+      "scores": {
+        "directAnswer": 33,
+        "personalization": 21,
+        "specificityUsefulness": 13,
+        "repetitionGenericRemoval": 8,
+        "easyEnglish": 9,
+        "calculationConsistency": 5
+      },
+      "total": 89,
+      "deductionRationale": "Both partners’ care needs are named, but the ending remains broad and partly repeats the needs.",
+      "deductionPointsLost": {
+        "directAnswer": 2,
+        "personalization": 4,
+        "specificityUsefulness": 2,
+        "repetitionGenericRemoval": 2,
+        "easyEnglish": 1
+      },
+      "codeLocation": "src/report/buyer-outline.ts: overall-fit",
+      "verdict": "FIX"
+    },
+    {
+      "product": 3,
+      "profile": 3,
+      "questionId": "two-directions",
+      "questionTitle": "Why are we attracted to each other?",
+      "pdf": "03-compatibility.pdf",
+      "actualPdfAnswer": "You may be drawn to what your partner brings: reassurance, guidance and feeling understood. Your partner may be drawn to what you bring: fresh ideas and open communication. The chart cannot confirm either person's actual feelings. The day signs show neither a direct link nor a friction pattern, so they do not add a separate signal about attraction.",
+      "scores": {
+        "directAnswer": 35,
+        "personalization": 24,
+        "specificityUsefulness": 14,
+        "repetitionGenericRemoval": 9,
+        "easyEnglish": 9,
+        "calculationConsistency": 4
+      },
+      "total": 95,
+      "deductionRationale": "Two-way attraction is stated and the day-sign status is distinguished; the chart limitation is explicit, but the traits remain abstract.",
+      "deductionPointsLost": {
+        "personalization": 1,
+        "specificityUsefulness": 1,
+        "repetitionGenericRemoval": 1,
+        "easyEnglish": 1,
+        "calculationConsistency": 1
+      },
+      "codeLocation": "src/report/buyer-outline.ts: attraction",
+      "verdict": "PASS"
+    },
+    {
+      "product": 3,
+      "profile": 3,
+      "questionId": "q-conflict",
+      "questionTitle": "What tends to cause friction between us?",
+      "pdf": "03-compatibility.pdf",
+      "actualPdfAnswer": "Your friction point is solving a problem before asking what help is wanted. For your partner, tension may arise from offering an answer before hearing how the problem feels.",
+      "scores": {
+        "directAnswer": 34,
+        "personalization": 24,
+        "specificityUsefulness": 13,
+        "repetitionGenericRemoval": 9,
+        "easyEnglish": 9,
+        "calculationConsistency": 4
+      },
+      "total": 93,
+      "deductionRationale": "Both likely friction triggers are named; examples and the mechanism are brief and conditional.",
+      "deductionPointsLost": {
+        "directAnswer": 1,
+        "personalization": 1,
+        "specificityUsefulness": 2,
+        "repetitionGenericRemoval": 1,
+        "easyEnglish": 1,
+        "calculationConsistency": 1
+      },
+      "codeLocation": "src/report/buyer-outline.ts: conflict-trigger",
+      "verdict": "FIX"
+    },
+    {
+      "product": 3,
+      "profile": 3,
+      "questionId": "q-love-language",
+      "questionTitle": "How do we express love differently?",
+      "pdf": "03-compatibility.pdf",
+      "actualPdfAnswer": "The chart suggests different care styles. You: Privacy and being understood without constant explanation can matter. Your partner: Care tends to show through ordinary acts, such as making time, cooking or making home comfortable.",
+      "scores": {
+        "directAnswer": 34,
+        "personalization": 22,
+        "specificityUsefulness": 13,
+        "repetitionGenericRemoval": 8,
+        "easyEnglish": 9,
+        "calculationConsistency": 4
+      },
+      "total": 90,
+      "deductionRationale": "Each person’s chart-based care style is included, but some phrases describe needs rather than clear acts of expressing love.",
+      "deductionPointsLost": {
+        "directAnswer": 1,
+        "personalization": 3,
+        "specificityUsefulness": 2,
+        "repetitionGenericRemoval": 2,
+        "easyEnglish": 1,
+        "calculationConsistency": 1
+      },
+      "codeLocation": "src/report/buyer-outline.ts: care-expression",
+      "verdict": "FIX"
+    },
+    {
+      "product": 3,
+      "profile": 3,
+      "questionId": "chart-patterns",
+      "questionTitle": "How do emotional closeness and everyday compatibility differ?",
+      "pdf": "03-compatibility.pdf",
+      "actualPdfAnswer": "These are two separate parts of your match. For emotional closeness, neither a direct bond nor a direct conflict stands out in the private-life comparison. Here, the relationship depends more on matching each other's needs than on one strong linking pattern. For everyday compatibility, the routine comparison has no clear linking or clashing pattern. Compare your actual habits rather than assuming they will match.",
+      "scores": {
+        "directAnswer": 33,
+        "personalization": 16,
+        "specificityUsefulness": 13,
+        "repetitionGenericRemoval": 9,
+        "easyEnglish": 10,
+        "calculationConsistency": 5
+      },
+      "total": 86,
+      "deductionRationale": "Emotional closeness and everyday fit are separated. No-signal profiles are less personal, and some needs overlap earlier answers.",
+      "deductionPointsLost": {
+        "directAnswer": 2,
+        "personalization": 9,
+        "specificityUsefulness": 2,
+        "repetitionGenericRemoval": 1
+      },
+      "codeLocation": "src/report/buyer-outline.ts: closeness-vs-routine",
+      "verdict": "FIX"
+    },
+    {
+      "product": 3,
+      "profile": 3,
+      "questionId": "support-each-other",
+      "questionTitle": "Which upcoming periods may affect our relationship themes?",
+      "pdf": "03-compatibility.pdf",
+      "actualPdfAnswer": "The only period flagged in this five-year comparison is 2030 for you. 2030: for you, Contacts, competition and shared resources may compete with time together or the freedom to make a personal choice. These are separate personal chart themes to discuss, not dates of shared events.",
+      "scores": {
+        "directAnswer": 31,
+        "personalization": 20,
+        "specificityUsefulness": 14,
+        "repetitionGenericRemoval": 8,
+        "easyEnglish": 9,
+        "calculationConsistency": 4
+      },
+      "total": 86,
+      "deductionRationale": "Years and chart themes are given without forecasting events; some chart terms are hard to understand and the relationship impact is broad.",
+      "deductionPointsLost": {
+        "directAnswer": 4,
+        "personalization": 5,
+        "specificityUsefulness": 1,
+        "repetitionGenericRemoval": 2,
+        "easyEnglish": 1,
+        "calculationConsistency": 1
+      },
+      "codeLocation": "src/report/buyer-outline.ts: relationship-timing",
+      "verdict": "FIX"
+    },
+    {
+      "product": 3,
+      "profile": 3,
+      "questionId": "shared-week",
+      "questionTitle": "What does this connection ask of each of us?",
+      "pdf": "03-compatibility.pdf",
+      "actualPdfAnswer": "The relationship asks you to make room for your partner's need for listening as well as practical help; your partner also needs to make room for your need for being heard before someone offers a solution. These are chart themes to discuss, not predictions of behaviour.",
+      "scores": {
+        "directAnswer": 34,
+        "personalization": 24,
+        "specificityUsefulness": 14,
+        "repetitionGenericRemoval": 9,
+        "easyEnglish": 9,
+        "calculationConsistency": 4
+      },
+      "total": 94,
+      "deductionRationale": "Both partners’ computed needs are connected; “make room” stays abstract and several needs repeat earlier answers.",
+      "deductionPointsLost": {
+        "directAnswer": 1,
+        "personalization": 1,
+        "specificityUsefulness": 1,
+        "repetitionGenericRemoval": 1,
+        "easyEnglish": 1,
+        "calculationConsistency": 1
+      },
+      "codeLocation": "src/report/buyer-outline.ts: mutual-adjustment",
+      "verdict": "FIX"
+    },
+    {
+      "product": 3,
+      "profile": 4,
+      "questionId": "two-styles",
+      "questionTitle": "What makes us compatible?",
+      "pdf": "04-compatibility.pdf",
+      "actualPdfAnswer": "This match asks for different kinds of care: you value time to share a feeling without being rushed, while your partner values warm attention and time for your own interests. Both needs have to be heard for the connection to feel balanced.",
+      "scores": {
+        "directAnswer": 34,
+        "personalization": 22,
+        "specificityUsefulness": 13,
+        "repetitionGenericRemoval": 8,
+        "easyEnglish": 9,
+        "calculationConsistency": 4
+      },
+      "total": 90,
+      "deductionRationale": "Both partners’ care needs are named, but the ending remains broad and partly repeats the needs.",
+      "deductionPointsLost": {
+        "directAnswer": 1,
+        "personalization": 3,
+        "specificityUsefulness": 2,
+        "repetitionGenericRemoval": 2,
+        "easyEnglish": 1,
+        "calculationConsistency": 1
+      },
+      "codeLocation": "src/report/buyer-outline.ts: overall-fit",
+      "verdict": "FIX"
+    },
+    {
+      "product": 3,
+      "profile": 4,
+      "questionId": "two-directions",
+      "questionTitle": "Why are we attracted to each other?",
+      "pdf": "04-compatibility.pdf",
+      "actualPdfAnswer": "You may be drawn to what your partner brings: reassurance, guidance and feeling understood. Your partner may be drawn to what you bring: fresh ideas and open communication. The chart cannot confirm either person's actual feelings. The day signs show neither a direct link nor a friction pattern, so they do not add a separate signal about attraction.",
+      "scores": {
+        "directAnswer": 35,
+        "personalization": 23,
+        "specificityUsefulness": 15,
+        "repetitionGenericRemoval": 9,
+        "easyEnglish": 9,
+        "calculationConsistency": 4
+      },
+      "total": 95,
+      "deductionRationale": "Two-way attraction is stated and the day-sign status is distinguished; the chart limitation is explicit, but the traits remain abstract.",
+      "deductionPointsLost": {
+        "personalization": 2,
+        "repetitionGenericRemoval": 1,
+        "easyEnglish": 1,
+        "calculationConsistency": 1
+      },
+      "codeLocation": "src/report/buyer-outline.ts: attraction",
+      "verdict": "PASS"
+    },
+    {
+      "product": 3,
+      "profile": 4,
+      "questionId": "q-conflict",
+      "questionTitle": "What tends to cause friction between us?",
+      "pdf": "04-compatibility.pdf",
+      "actualPdfAnswer": "Your friction point is hoping someone notices a need you have not said aloud. For your partner, tension may arise from taking a request for space as a lack of love.",
+      "scores": {
+        "directAnswer": 33,
+        "personalization": 23,
+        "specificityUsefulness": 13,
+        "repetitionGenericRemoval": 8,
+        "easyEnglish": 9,
+        "calculationConsistency": 4
+      },
+      "total": 90,
+      "deductionRationale": "Both likely friction triggers are named; examples and the mechanism are brief and conditional.",
+      "deductionPointsLost": {
+        "directAnswer": 2,
+        "personalization": 2,
+        "specificityUsefulness": 2,
+        "repetitionGenericRemoval": 2,
+        "easyEnglish": 1,
+        "calculationConsistency": 1
+      },
+      "codeLocation": "src/report/buyer-outline.ts: conflict-trigger",
+      "verdict": "FIX"
+    },
+    {
+      "product": 3,
+      "profile": 4,
+      "questionId": "q-love-language",
+      "questionTitle": "How do we express love differently?",
+      "pdf": "04-compatibility.pdf",
+      "actualPdfAnswer": "The chart suggests different care styles. You: Honest conversation matters more than polite silence. Your partner: Reassurance, continuity and feeling understood matter.",
+      "scores": {
+        "directAnswer": 34,
+        "personalization": 22,
+        "specificityUsefulness": 14,
+        "repetitionGenericRemoval": 9,
+        "easyEnglish": 9,
+        "calculationConsistency": 4
+      },
+      "total": 92,
+      "deductionRationale": "Each person’s chart-based care style is included, but some phrases describe needs rather than clear acts of expressing love.",
+      "deductionPointsLost": {
+        "directAnswer": 1,
+        "personalization": 3,
+        "specificityUsefulness": 1,
+        "repetitionGenericRemoval": 1,
+        "easyEnglish": 1,
+        "calculationConsistency": 1
+      },
+      "codeLocation": "src/report/buyer-outline.ts: care-expression",
+      "verdict": "FIX"
+    },
+    {
+      "product": 3,
+      "profile": 4,
+      "questionId": "chart-patterns",
+      "questionTitle": "How do emotional closeness and everyday compatibility differ?",
+      "pdf": "04-compatibility.pdf",
+      "actualPdfAnswer": "These are two separate parts of your match. For emotional closeness, neither a direct bond nor a direct conflict stands out in the private-life comparison. Here, the relationship depends more on matching each other's needs than on one strong linking pattern. For everyday compatibility, the routine comparison has no clear linking or clashing pattern. Compare your actual habits rather than assuming they will match.",
+      "scores": {
+        "directAnswer": 33,
+        "personalization": 16,
+        "specificityUsefulness": 13,
+        "repetitionGenericRemoval": 9,
+        "easyEnglish": 10,
+        "calculationConsistency": 5
+      },
+      "total": 86,
+      "deductionRationale": "Emotional closeness and everyday fit are separated. No-signal profiles are less personal, and some needs overlap earlier answers.",
+      "deductionPointsLost": {
+        "directAnswer": 2,
+        "personalization": 9,
+        "specificityUsefulness": 2,
+        "repetitionGenericRemoval": 1
+      },
+      "codeLocation": "src/report/buyer-outline.ts: closeness-vs-routine",
+      "verdict": "FIX"
+    },
+    {
+      "product": 3,
+      "profile": 4,
+      "questionId": "support-each-other",
+      "questionTitle": "Which upcoming periods may affect our relationship themes?",
+      "pdf": "04-compatibility.pdf",
+      "actualPdfAnswer": "The periods flagged in this five-year comparison are 2026 for your partner, 2028 for you. 2026: for your partner, Specialist knowledge and independent thought may compete with time together or the freedom to make a personal choice. 2028: for you, Training and dependable support may compete with time together or the freedom to make a personal choice. These are separate personal chart themes to discuss, not dates of shared events.",
+      "scores": {
+        "directAnswer": 30,
+        "personalization": 21,
+        "specificityUsefulness": 14,
+        "repetitionGenericRemoval": 8,
+        "easyEnglish": 9,
+        "calculationConsistency": 4
+      },
+      "total": 86,
+      "deductionRationale": "Years and chart themes are given without forecasting events; some chart terms are hard to understand and the relationship impact is broad.",
+      "deductionPointsLost": {
+        "directAnswer": 5,
+        "personalization": 4,
+        "specificityUsefulness": 1,
+        "repetitionGenericRemoval": 2,
+        "easyEnglish": 1,
+        "calculationConsistency": 1
+      },
+      "codeLocation": "src/report/buyer-outline.ts: relationship-timing",
+      "verdict": "FIX"
+    },
+    {
+      "product": 3,
+      "profile": 4,
+      "questionId": "shared-week",
+      "questionTitle": "What does this connection ask of each of us?",
+      "pdf": "04-compatibility.pdf",
+      "actualPdfAnswer": "The relationship asks you to make room for your partner's need for warm attention and time for your own interests; your partner also needs to make room for your need for time to share a feeling without being rushed. These are chart themes to discuss, not predictions of behaviour.",
+      "scores": {
+        "directAnswer": 34,
+        "personalization": 24,
+        "specificityUsefulness": 14,
+        "repetitionGenericRemoval": 9,
+        "easyEnglish": 9,
+        "calculationConsistency": 4
+      },
+      "total": 94,
+      "deductionRationale": "Both partners’ computed needs are connected; “make room” stays abstract and several needs repeat earlier answers.",
+      "deductionPointsLost": {
+        "directAnswer": 1,
+        "personalization": 1,
+        "specificityUsefulness": 1,
+        "repetitionGenericRemoval": 1,
+        "easyEnglish": 1,
+        "calculationConsistency": 1
+      },
+      "codeLocation": "src/report/buyer-outline.ts: mutual-adjustment",
+      "verdict": "FIX"
+    },
+    {
+      "product": 3,
+      "profile": 5,
+      "questionId": "two-styles",
+      "questionTitle": "What makes us compatible?",
+      "pdf": "05-compatibility.pdf",
+      "actualPdfAnswer": "This match asks for different kinds of care: you value warm attention and time for your own interests, while your partner values being heard before someone offers a solution. Both needs have to be heard for the connection to feel balanced.",
+      "scores": {
+        "directAnswer": 34,
+        "personalization": 22,
+        "specificityUsefulness": 13,
+        "repetitionGenericRemoval": 8,
+        "easyEnglish": 9,
+        "calculationConsistency": 4
+      },
+      "total": 90,
+      "deductionRationale": "Both partners’ care needs are named, but the ending remains broad and partly repeats the needs.",
+      "deductionPointsLost": {
+        "directAnswer": 1,
+        "personalization": 3,
+        "specificityUsefulness": 2,
+        "repetitionGenericRemoval": 2,
+        "easyEnglish": 1,
+        "calculationConsistency": 1
+      },
+      "codeLocation": "src/report/buyer-outline.ts: overall-fit",
+      "verdict": "FIX"
+    },
+    {
+      "product": 3,
+      "profile": 5,
+      "questionId": "two-directions",
+      "questionTitle": "Why are we attracted to each other?",
+      "pdf": "05-compatibility.pdf",
+      "actualPdfAnswer": "You may be drawn to what your partner brings: reassurance, guidance and feeling understood. Your partner may be drawn to what you bring: fresh ideas and open communication. The chart cannot confirm either person's actual feelings. The day signs also form a direct link, so this possible draw has a chart connection in the private-life comparison.",
+      "scores": {
+        "directAnswer": 35,
+        "personalization": 24,
+        "specificityUsefulness": 15,
+        "repetitionGenericRemoval": 9,
+        "easyEnglish": 8,
+        "calculationConsistency": 4
+      },
+      "total": 95,
+      "deductionRationale": "Two-way attraction is stated and the day-sign status is distinguished; the chart limitation is explicit, but the traits remain abstract.",
+      "deductionPointsLost": {
+        "personalization": 1,
+        "repetitionGenericRemoval": 1,
+        "easyEnglish": 2,
+        "calculationConsistency": 1
+      },
+      "codeLocation": "src/report/buyer-outline.ts: attraction",
+      "verdict": "PASS"
+    },
+    {
+      "product": 3,
+      "profile": 5,
+      "questionId": "q-conflict",
+      "questionTitle": "What tends to cause friction between us?",
+      "pdf": "05-compatibility.pdf",
+      "actualPdfAnswer": "Your friction point is taking a request for space as a lack of love. For your partner, tension may arise from solving a problem before asking what help is wanted.",
+      "scores": {
+        "directAnswer": 34,
+        "personalization": 24,
+        "specificityUsefulness": 13,
+        "repetitionGenericRemoval": 8,
+        "easyEnglish": 9,
+        "calculationConsistency": 5
+      },
+      "total": 93,
+      "deductionRationale": "Both likely friction triggers are named; examples and the mechanism are brief and conditional.",
+      "deductionPointsLost": {
+        "directAnswer": 1,
+        "personalization": 1,
+        "specificityUsefulness": 2,
+        "repetitionGenericRemoval": 2,
+        "easyEnglish": 1
+      },
+      "codeLocation": "src/report/buyer-outline.ts: conflict-trigger",
+      "verdict": "FIX"
+    },
+    {
+      "product": 3,
+      "profile": 5,
+      "questionId": "q-love-language",
+      "questionTitle": "How do we express love differently?",
+      "pdf": "05-compatibility.pdf",
+      "actualPdfAnswer": "The chart suggests different care styles. You: Keeping promises and following through can be your way of showing care. Your partner: Privacy and being understood without constant explanation can matter.",
+      "scores": {
+        "directAnswer": 32,
+        "personalization": 21,
+        "specificityUsefulness": 13,
+        "repetitionGenericRemoval": 9,
+        "easyEnglish": 9,
+        "calculationConsistency": 5
+      },
+      "total": 89,
+      "deductionRationale": "Each person’s chart-based care style is included, but some phrases describe needs rather than clear acts of expressing love.",
+      "deductionPointsLost": {
+        "directAnswer": 3,
+        "personalization": 4,
+        "specificityUsefulness": 2,
+        "repetitionGenericRemoval": 1,
+        "easyEnglish": 1
+      },
+      "codeLocation": "src/report/buyer-outline.ts: care-expression",
+      "verdict": "FIX"
+    },
+    {
+      "product": 3,
+      "profile": 5,
+      "questionId": "chart-patterns",
+      "questionTitle": "How do emotional closeness and everyday compatibility differ?",
+      "pdf": "05-compatibility.pdf",
+      "actualPdfAnswer": "These are two separate parts of your match. For emotional closeness, your private-life patterns link together, giving shared plans a clearer place in this match. For everyday compatibility, the routine comparison has no clear linking or clashing pattern. Compare your actual habits rather than assuming they will match. Being close does not by itself settle schedules or shared tasks; compare those with your real routines.",
+      "scores": {
+        "directAnswer": 34,
+        "personalization": 22,
+        "specificityUsefulness": 14,
+        "repetitionGenericRemoval": 8,
+        "easyEnglish": 9,
+        "calculationConsistency": 4
+      },
+      "total": 91,
+      "deductionRationale": "Emotional closeness and everyday fit are separated. No-signal profiles are less personal, and some needs overlap earlier answers.",
+      "deductionPointsLost": {
+        "directAnswer": 1,
+        "personalization": 3,
+        "specificityUsefulness": 1,
+        "repetitionGenericRemoval": 2,
+        "easyEnglish": 1,
+        "calculationConsistency": 1
+      },
+      "codeLocation": "src/report/buyer-outline.ts: closeness-vs-routine",
+      "verdict": "FIX"
+    },
+    {
+      "product": 3,
+      "profile": 5,
+      "questionId": "support-each-other",
+      "questionTitle": "Which upcoming periods may affect our relationship themes?",
+      "pdf": "05-compatibility.pdf",
+      "actualPdfAnswer": "The periods flagged in this five-year comparison are 2026 for you, 2030 for your partner. 2026: for you, Finding new customers may compete with time together or the freedom to make a personal choice. 2030: for your partner, Contacts, competition and shared resources may compete with time together or the freedom to make a personal choice. These are separate personal chart themes to discuss, not dates of shared events.",
+      "scores": {
+        "directAnswer": 31,
+        "personalization": 21,
+        "specificityUsefulness": 14,
+        "repetitionGenericRemoval": 8,
+        "easyEnglish": 9,
+        "calculationConsistency": 4
+      },
+      "total": 87,
+      "deductionRationale": "Years and chart themes are given without forecasting events; some chart terms are hard to understand and the relationship impact is broad.",
+      "deductionPointsLost": {
+        "directAnswer": 4,
+        "personalization": 4,
+        "specificityUsefulness": 1,
+        "repetitionGenericRemoval": 2,
+        "easyEnglish": 1,
+        "calculationConsistency": 1
+      },
+      "codeLocation": "src/report/buyer-outline.ts: relationship-timing",
+      "verdict": "FIX"
+    },
+    {
+      "product": 3,
+      "profile": 5,
+      "questionId": "shared-week",
+      "questionTitle": "What does this connection ask of each of us?",
+      "pdf": "05-compatibility.pdf",
+      "actualPdfAnswer": "The relationship asks you to make room for your partner's need for being heard before someone offers a solution; your partner also needs to make room for your need for warm attention and time for your own interests. These are chart themes to discuss, not predictions of behaviour.",
+      "scores": {
+        "directAnswer": 34,
+        "personalization": 24,
+        "specificityUsefulness": 14,
+        "repetitionGenericRemoval": 9,
+        "easyEnglish": 9,
+        "calculationConsistency": 4
+      },
+      "total": 94,
+      "deductionRationale": "Both partners’ computed needs are connected; “make room” stays abstract and several needs repeat earlier answers.",
+      "deductionPointsLost": {
+        "directAnswer": 1,
+        "personalization": 1,
+        "specificityUsefulness": 1,
+        "repetitionGenericRemoval": 1,
+        "easyEnglish": 1,
+        "calculationConsistency": 1
+      },
+      "codeLocation": "src/report/buyer-outline.ts: mutual-adjustment",
+      "verdict": "FIX"
+    }
+  ]
+}

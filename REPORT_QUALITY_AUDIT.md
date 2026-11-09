@@ -1,6 +1,3 @@
-Warning: truncated output (original token count: 20721)
-Total output lines: 707
-
 # THE FATE KEY — Independent PDF Answer Audit
 
 Updated: 2026-11-08 (Australia/Sydney)
@@ -685,3 +682,24 @@ Five PDFs were generated from the remotely saved code. Each contains the seven o
 | 5 | 90, 83, 88, 90, 91, 89, 88 | 88.4 | 83 | FAIL |
 
 Answer-level text, prior component scores, deductions and code locations are in `docs/audits/PRODUCT03-INDEPENDENT-REVIEW-a5bbfaf.json`. Key remaining fixes are Q2 repeated identical text for profiles 1/3/4, Q5 generic no-signal wording, Q6 abstract timing implications, and broad repeated practical prompts in Q4/Q7. Product 03 remains below target. The generator’s page-end duplicated text extraction issue was reproduced in the source PDFs; an attempted low-level fix did not pass rendered-page verification and was reverted without commit. Do not mark the PDF renderer issue fixed.
+
+
+## Product 03 — independent PDF review (2026-11-09)
+
+- Reviewed all 35 answers from five newly generated Product 03 PDFs. Scores below are manual answer-level reviews; automated diagnostics were not used.
+- Rubric: direct answer 35, personalization 25, specificity/usefulness 15, repetition/generic removal 10, easy English 10, calculation consistency 5.
+- Baseline means: 87.0, 88.0, 87.0, 87.1, 88.4. New means: 90.4, 90.9, 90.4, 90.4, 91.3. All five remain FAIL against 95.
+- Minimum individual answer scores: 86, 87, 86, 86, 87. 30 answers are FIX; 5 Q2 answers score 95 and PASS.
+- PDF checks: each has 7 official questions, 12 internal links, Destiny Card and final summary text, and no replacement/square glyphs. Page counts: 17, 16, 17, 16, 16. Visual spot-checks confirmed body text fits on reviewed pages; not every page received a visual inspection.
+- Q2 chart status remains differentiated by the PDF: profiles 1/3/4 show no separate day-sign signal, profile 2 shows friction, and profile 5 shows a direct link. The text does not claim that chart data proves actual attraction.
+- Code changes are in `src/report/buyer-outline.ts`; regressions are in `src/report/buyer-outline.test.ts`. They remove repeated generic advice from the care-expression, closeness/routine, timing and mutual-adjustment answers, remove repeated needs in Q5, and trim the generic ending in Q7.
+- Code commit: `f139bca2f82f600fe9806dafec26f52bf186362a`. Preview: `dpl_7o4PwTcSL21tqqaNqztcqjshF93g` READY on the same SHA. Production was not changed.
+- Detailed PDF answer text, category scores, deductions and code locations: `docs/audits/PRODUCT03-INDEPENDENT-REVIEW-f139bca.json`.
+
+| Profile | Q1 | Q2 | Q3 | Q4 | Q5 | Q6 | Q7 | Mean | Minimum | Result |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---|
+| 1 | 89 | 95 | 93 | 90 | 86 | 86 | 94 | 90.4 | 86 | FAIL |
+| 2 | 89 | 95 | 92 | 91 | 91 | 87 | 91 | 90.9 | 87 | FAIL |
+| 3 | 89 | 95 | 93 | 90 | 86 | 86 | 94 | 90.4 | 86 | FAIL |
+| 4 | 90 | 95 | 90 | 92 | 86 | 86 | 94 | 90.4 | 86 | FAIL |
+| 5 | 90 | 95 | 93 | 89 | 91 | 87 | 94 | 91.3 | 87 | FAIL |
