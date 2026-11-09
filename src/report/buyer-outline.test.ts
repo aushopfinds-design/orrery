@@ -12,6 +12,7 @@ describe('Buyer questions, not a repeated six-part technical template', () => {
     const reading = buildCategoryReading('compatibility', a, { second: b, year: 2026 })
     const report = applyBuyerQuestions(reading.fullText, 'compatibility', reading.chapters, [], 'standalone')
     expect(report).toContain('The private-life comparison adds no clear connection or conflict')
+    expect(report).toContain('That overlap is your clearest point of fit; the personal-life signs add no separate connection or conflict.')
     expect(report).toMatch(/Question: Why are we attracted to each other\?[\s\S]*Answer: You may be drawn to what your partner brings:/)
     expect(report).toContain('Your partner may be drawn to what you bring: fresh ideas and open communication.')
     expect(report).not.toContain('during a disagreement in you')
