@@ -186,6 +186,10 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
       } else if (kind === 'year' && question.role === 'money-theme') {
         const annualBasis = chapter.paragraphs[0]
         const monthTheme = chapter.paragraphs[2]
+        lead = lead.replace(
+          /^For (.+?), Income is linked indirectly with dependable work and recognised responsibility\. A title that adds duties without matching pay is the financial pressure to notice\./,
+          'For $1, the clearest money pressure to watch is accepting extra duties without matching pay. Your chart links income indirectly to dependable work and recognised responsibility.',
+        )
         paragraphs = annualBasis && monthTheme ? [`${annualBasis} ${monthTheme}`] : [annualBasis ?? monthTheme].filter((line): line is string => Boolean(line))
         chapter.paragraphs.forEach(line => used.add(line))
       } else if (kind === 'year' && question.role === 'relationship-theme') {
