@@ -222,6 +222,8 @@ describe('Bundle and public report navigation', () => {
     expect(answer(7)).toContain('cannot rank the coming years')
     expect(answer(8)).toContain('A strength you may overlook is')
     expect(answer(9)).toContain('A more fulfilling life is supported')
+    expect(answer(9)).toContain('when work that involves ')
+    expect(answer(9)).not.toMatch(/your .+-centred work leaves room/)
     expect(answer(10)).toContain('Your chart points to a clear theme:')
     expect(answer(10)).toMatch(/work and your need for .+ both matter/i)
     expect(bundle.fullText).not.toMatch(/^Why This Fits You:|^What You May Experience:/m)
