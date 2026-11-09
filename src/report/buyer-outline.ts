@@ -167,11 +167,14 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
       if (kind === 'complete' && question.id === 'balance') {
         lead = `The most important life insight is that ${chapter.lead.charAt(0).toLowerCase()}${chapter.lead.slice(1)}`
       } else if (kind === 'year' && question.role === 'year-priority') {
+        const annualTheme = byId.get('annual-theme')
         const annualWork = byId.get('annual-work')
-        const workTheme = annualWork?.paragraphs[0]
-        lead = workTheme
-          ? workTheme.replace(/^The main work theme for [^:]+ is this:\s*/i, 'Focus this year on ')
-          : byId.get('annual-theme')?.tryThis ?? chapter.tryThis
+        const workTheme = annualWork?.paragraphs.find(line => /^The main work theme for [^:]+ is this:/i.test(line))
+          ?.replace(/^The main work theme for [^:]+ is this:\s*/i, '')
+        const focus = annualTheme?.tryThis || chapter.tryThis
+        lead = /^Focus this year on /i.test(focus) ? focus
+          : workTheme ? `Focus this year on ${workTheme.charAt(0).toLowerCase()}${workTheme.slice(1)}`
+            : `Focus this year on ${focus.charAt(0).toLowerCase()}${focus.slice(1)}`
         paragraphs = []
       } else if (kind === 'year' && question.role === 'career-theme') {
         // Keep the yearly career conclusion, its annual work reason and the
@@ -203,7 +206,11 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
           : months.length
             ? `No month meets the full check for a clear opening. The quieter chart themes appear in ${months.join(', ')}; these are not confirmed opportunities.`
             : 'No month meets the checked conditions for a clear opening. This chart comparison does not rule out real-world opportunities.'
-        paragraphs = chapter.paragraphs.slice(0, 2)
+        paragraphs = chapter.paragraphs.slice(0, 2).map(line => line
+          .replace(/^Answer:\s*/i, '')
+          .replace(/^The (?:quieter|clearest checked) chart themes? (?:appear|are) in [^.]+\.\s*/i, '')
+          .replace(/^These are (?:not confirmed opportunities|conditional support, not guaranteed good outcomes)\.\s*/i, '')
+          .trim()).filter(Boolean)
         chapter.paragraphs.forEach(line => used.add(line))
       } else if (kind === 'business' && question.role === 'partner-fit') {
         paragraphs = chapter.paragraphs.slice(0, 1)
@@ -475,6 +482,7 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
         paragraphs = (relevantYears.length ? relevantYears : years).slice(0, 3).map(line => line
           .replace(/^(\d{4}) yearly comparison:/, '$1:')
           .replace(/^Opening(?: \+ pressure)?\s*[-–]\s*/i, '')
+          .replace(/^(?:Extra pressure|Adjustment)\s*[-–:]\s*/i, '')
           .split(/(?<=[.!?])\s/).slice(0, 2).join(' '))
         chapter.paragraphs.forEach(line => used.add(line))
       } else if (question.part === 'lead-with-caution') {
