@@ -153,6 +153,18 @@ describe('Buyer questions, not a repeated six-part technical template', () => {
     expect(report).not.toContain('Question: What tends to cause friction between us?\n\nAnswer: A generic caution.')
     const care = report.slice(report.indexOf('Question: How do we express love differently?')).split('\n\nQuestion: ')[0]
     expect(care).not.toContain('Practical point:')
+    for (const [rawStyle, expected] of [
+      ['Honest conversation matters more than polite silence. The difficulty is that a useful observation may sound like a judgement.', 'You may show care by speaking honestly while making room for your partner’s point of view.'],
+      ['Clear commitment and respectful behaviour matter. A relationship can become too formal.', 'You may show care through respectful actions and clear commitments, while also saying what you feel.'],
+    ]) {
+      const variants = chapters.map(chapter => chapter.id === 'close-conversation'
+        ? { ...chapter, paragraphs: chapter.paragraphs.map(line => line.startsWith('You: ') ? `You: ${rawStyle}` : line) }
+        : chapter)
+      const variant = applyBuyerQuestions(variants.map(chapter => deliveredChapter(chapter).join('\n\n')).join('\n\n'), 'compatibility', variants)
+      const answer = variant.slice(variant.indexOf('Question: How do we express love differently?')).split('\n\nQuestion: ')[0]
+      expect(answer).toContain(expected)
+      expect(answer).not.toMatch(/You may (?:Honest conversation|Clear commitment)/)
+    }
   })
   it('keeps ten collection questions and maps relationship answers to their matching details', () => {
     expect(COLLECTION_BUYER_QUESTIONS.compatibility).toHaveLength(10)

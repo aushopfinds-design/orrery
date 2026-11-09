@@ -27,6 +27,9 @@ describe('Product 03 review PDF batch', () => {
       expect(report.text.match(/Question: /g)).toHaveLength(7)
       expect(report.text.match(/Answer: /g)).toHaveLength(7)
       for (const question of productQuestions('compatibility')) expect(report.text).toContain(`Question: ${question.title}`)
+      const q4 = report.text.split('Question: How do we express love differently?')[1]?.split('\n\nQuestion: ')[0] ?? ''
+      expect(q4).toMatch(/You may show care|You and your partner may use a similar care style/)
+      expect(q4).not.toMatch(/You may (?:Honest conversation|Clear commitment|Privacy and being understood)/)
       const q2 = report.text.split('Question: Why are we attracted to each other?')[1]?.split('\n\nQuestion: ')[0] ?? ''
       expect(q2).toContain('The chart cannot confirm either person’s actual feelings.')
       q2Answers.push(q2)

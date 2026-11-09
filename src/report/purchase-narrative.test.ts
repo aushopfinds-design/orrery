@@ -73,7 +73,7 @@ describe('Targeted customer-answer revisions',()=>{
   for(const answer of answers){
    expect(answer).toMatch(/(?:period|periods) flagged|No year in the five-year comparison/)
    expect(answer).not.toMatch(/Specialist knowledge and independent thought|Contacts, competition and shared resources|Training and dependable support/)
-   expect(answer).toMatch(/not dates of shared events|does not predict an easy period/)
+   expect(answer).toMatch(/does not predict a shared event|does not predict an easy period/)
   }
  })
  it('keeps unknown birth-time notes relevant to the report topic',()=>{

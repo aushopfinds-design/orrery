@@ -1,5 +1,5 @@
-Warning: truncated output (original token count: 36006)
-Total output lines: 659
+Warning: truncated output (original token count: 36091)
+Total output lines: 662
 
 import { roleChoice, businessDivision, relationshipRepair, personalBoundary, monthlyFit } from './personalised-choices.ts'
 import { sharedCareNeed } from './relationship-needs.ts'
@@ -158,7 +158,58 @@ export function customerNarrative(plan:InterpretationPlan,targetedProduct01=true
   put('balance',targetedProduct01?[
    pair(`You are more likely to feel balanced when work built around ${m.name.en} still leaves room for ${personal.need}. This combines your birth-day style with the visible work role in your chart.`,`균형을 느끼려면 ${m.name.ko}을 활용하는 일과 ${pk.need}을 위한 여유가 함께 있어야 합니다. 태어난 날의 성향과 명식에 드러난 업무 역할을 연결한 결론입니다.`),
    pair(`The hidden month layer adds ${hiddenRoutine} to daily work${p.monthStemGod===p.monthBranchGod?'; it repeats the visible theme rather than creating a separate demand.':`. ${inner.work.en}`} A job title can fit while its routine still drains you if it leaves no space for these skills.`,`태어난 달의 지장간은 일상 업무에 ${hiddenRoutineKo}을 더합니다${p.monthStemGod===p.monthBranchGod?' 겉의 주제가 반복되는 구조입니다.':`. ${inner.work.ko}`} 직함이 잘 맞아도 실제 업무가 이런 기술을 쓸 여지를 주지 않으면 지칠 수 있습니다.`),
-   pair(`In relationships, ${p.dayBranch} in your birth-day column points to ${relationshipProfile.need}. That is a private need, separate from the role you fill at work; notice whether your week gives both sides enough attention.`,`관계에서는 태어난 날의 ${p.dayBranch}가 ${NEED[p.dayBranch]}을 가리킵니다. 직장에서 …18006 tokens truncated…건을 예측하는 대신 실제 계획을 이야기합니다.`)
+   pair(`In relationships, ${p.dayBranch} in your birth-day column points to ${relationshipProfile.need}. That is a private need, separate from the role you fill at work; notice whether your week gives both sides enough attention.`,`관계에서는 태어난 날의 ${p.dayBranch}가 ${NEED[p.dayBranch]}을 가리킵니다. 직장에서 맡는 역할과 별개의 사적인 필요이므로, 한 주에 두 영역 모두 살필 여유가 있는지 확인하세요.`),
+  ]:[pair(`A familiar strength can keep you in the same role even when you want something different: ${m.balance.en}`,`익숙한 강점 때문에 다른 것을 원해도 같은 역할에 머물 수 있습니다. ${m.balance.ko}`)],pair(`Compare the visible work role with the daily routine and protect time for the need named above. Do not use an element count as a health or lifestyle prescription.`,`겉으로 보이는 업무와 실제 일상을 비교하고, 위에 적힌 필요를 위한 시간을 확보합니다. 오행 개수는 건강이나 생활 처방이 아닙니다.`),m.pressure)
+  const turningPointText=timing.patterns?.lines[0]?.en??''
+  const turningPointAction=targetedProduct01&&plan.kind==='complete'
+   ?turningPointText.includes('work')&&turningPointText.includes('close relationships')
+    ?pair('List the work change and relationship choice separately; the chart does not say both must happen.','일의 변화와 관계에서의 선택을 나누어 적으세요. 차트가 두 가지 모두 일어난다고 말하는 것은 아닙니다.')
+    :turningPointText.includes('work')
+     ?pair('Use the year-by-year work notes to review duties, schedule and decision authority before making a change.','변화 전에 연간 직업 풀이를 보고 업무, 일정, 결정 권한을 살펴보세요.')
+     :turningPointText.includes('close relationships')
+      ?pair('Use the year-by-year relationship notes to review shared time and personal choices before making a change.','변화 전에 연간 관계 풀이를 보고 함께하는 시간과 개인의 선택을 살펴보세요.')
+      :pair('Use the full timeline to check the specific area linked to this year before making a change.','변화 전에 전체 흐름에서 이 해와 연결된 구체적인 영역을 확인하세요.')
+   :pair('Before making a major choice, compare the specific work or relationship theme for that year with the options you actually have.','큰 선택을 하기 전에 그해의 직업 또는 관계 주제를 실제로 선택할 수 있는 조건과 비교합니다.')
+  put('patterns',[],turningPointAction,pair('A change signal identifies an area to examine, rather than an event that must happen.','변화 신호는 살펴볼 영역을 가리키며 반드시 일어날 사건을 정하지 않습니다.'))
+  const lifeYearRows=purchaseYears(plan.first,plan.referenceYear,'life',10,true)
+  const lifeYearReadings=lifeYearRows.map(row=>{
+   const year=row.date.slice(0,4),pillar=row.yearPillar,theme=LANGUAGE[row.god]
+   const line=(suffix:string)=>row.lines.find(item=>item.id.endsWith('.'+suffix))?.en
+   const dayChange=line('change-day'),monthChange=line('change-month'),opening=line('opening'),connection=line('connection'),background=line('background-pressure')
+   const natalLinks=row.comparisons.filter(item=>[1,2].includes(item.index)).flatMap(item=>item.found.map(pattern=>`${POSITION[item.index]} ${pattern.type}`))
+   const linkNote=natalLinks.length
+    ?'its checked links to your birth chart are '+[...new Set(natalLinks)].join(' and ')+'.'
+    :'no direct friction is recorded against your day or month pillar at this comparison.'
+   const why=`The ${pillar} reference brings ${theme.name.en} through its stem and ${LANGUAGE[row.innerGod].name.en} underneath; ${linkNote}`
+   const main= `${year}: Main theme — ${theme.name.en}.`
+   const careerMoney=`Career & money — ${theme.work.en} ${theme.money.en}`
+   const love=`Love & relationships — ${theme.love.en}${dayChange?` ${dayChange}`:' No direct day-pillar friction is recorded at this annual comparison.'}`
+   const opportunity=`Opportunity — ${opening??connection??`No distinct paid-work opening is established here. A practical step that fits this theme is to ${PERIOD_VOICE[row.god].action.en[0].toLowerCase()+PERIOD_VOICE[row.god].action.en.slice(1)}`}`
+   const watch=`Cauti…16091 tokens truncated…tine.en[0].toLowerCase()+routine.en.slice(1)} Your routine pattern is ${yourRoutine.toLowerCase()}, while your partner’s is ${partnerRoutine.toLowerCase()}. These are separate chart clues to compare with how you actually live together.`,`정서적 친밀감에서는 ${closeness.ko} 본인은 ${NEED[p.dayBranch]}을, 상대방은 ${NEED[b.dayBranch]}을 중요하게 여기는 흐름입니다. 일상 궁합에서는 ${routine.ko} 본인의 일상 방식은 ${LANGUAGE[p.monthBranchGod].balance.ko}, 상대방의 방식은 ${LANGUAGE[b.monthBranchGod].balance.ko}입니다. 서로 다른 차트의 단서이므로 실제 함께 사는 방식과 비교해 보세요.`)],chartPatternsAction,relationshipWatch)
+  const aYears=purchaseYears(plan.first,plan.referenceYear,'love',5),bYears=purchaseYears(plan.second!,plan.referenceYear,'love',5)
+  const relationshipChanges=aYears.map((a,i)=>({year:a.date.slice(0,4),you:a.lines.find(line=>line.id.endsWith('change-day'))?.en,partner:bYears[i].lines.find(line=>line.id.endsWith('change-day'))?.en})).filter(row=>row.you||row.partner).slice(0,3)
+  const relationshipChangeText=(text:string)=>{
+   const specific=text.replace(/^The (?:clash|adjustment pattern) affects your home and relationship side\.\s*/,'').trim()
+   const plain=specific
+    .replace(/^Specialist knowledge and independent thought/i,'time for focused work and independent interests')
+    .replace(/^Contacts, competition and shared resources/i,'social commitments and decisions about shared time or resources')
+    .replace(/^Training and dependable support/i,'study, training or support responsibilities')
+    .replace(/^Finding new customers/i,'finding customers and building work contacts')
+    .replace(/^Independent choices/i,'independent decisions')
+    .replace(/^Practical skills and reliable results/i,'practical work and reliable results')
+    .replace(/^New ideas and better methods/i,'new ideas and different ways of doing things')
+    .replace(/^Steady earnings and responsibilities/i,'steady work and financial responsibilities')
+    .replace(/^Clear duties and standards/i,'clear duties and expectations')
+    .replace(/^Urgent goals and decisive action/i,'urgent goals and quick decisions')
+   const theme=plain.replace(/\s+may compete with time together or the freedom to make a personal choice\.?$/i,'').replace(/[.!?]+$/u,'').trim()
+   return `the chart flags ${theme || 'a personal responsibility'} as a theme to review. Check whether it affects time together or personal choice`
+  }
+  const relationshipPeople=(row:{you?:string;partner?:string})=>row.you&&row.partner?'for both of you':row.you?'for you':'for your partner'
+  const relationshipChangeAnswer=relationshipChanges.length
+   ? `${relationshipChanges.length===1?`The only period flagged in this five-year comparison is ${relationshipChanges[0].year} ${relationshipPeople(relationshipChanges[0])}.`:`The periods flagged in this five-year comparison are ${relationshipChanges.map(row=>`${row.year} ${relationshipPeople(row)}`).join(', ')}.`} ${relationshipChanges.map(row=>`${row.year}: ${[row.you ? `for you, ${relationshipChangeText(row.you)}` : '', row.partner ? `for your partner, ${relationshipChangeText(row.partner)}` : ''].filter(Boolean).join('; ')}.`).join(' ')} This timing prompt is based on each person’s chart; it does not predict a shared event.`
+   : `No year in the five-year comparison has a checked day-branch change signal for either person. That does not predict an easy period; the calculation simply does not single out a year for relationship timing.`
+  const timingAction=relationshipChanges.length
+   ? pair(`Before ${relationshipChanges.map(row=>`${row.year} ${relationshipPeople(row)}`).join(' and ')}, agree on when to check whether those chart themes are affecting time together. Use the check-in to discuss plans, not predict an event.`,`표시된 각자의 시기 전에 해당 주제가 함께 보내는 시간에 영향을 주는지 살펴볼 시점을 정합니다. 사건을 예측하는 대신 실제 계획을 이야기합니다.`)
    : pair('No relationship year is singled out here. If work or personal responsibilities change, discuss what that changes for time together.','관계 시기가 특정되지 않았습니다. 업무나 개인적인 책임이 실제로 달라지면 함께 보내는 시간에 어떤 변화가 있는지 이야기합니다.')
   put('support-each-other',[pair(relationshipChangeAnswer,relationshipChanges.length?'확인된 일지 시기 신호는 '+relationshipChanges.map(row=>`${row.year}년${row.you?` 본인: ${row.you}`:''}${row.partner?` 상대방: ${row.partner}`:''}`).join(' ')+'입니다. 각자의 사주 주제이며 두 사람에게 함께 일어날 사건 날짜를 예측하지 않습니다.':'5년 비교에서 어느 쪽에도 확인된 일지 변화 신호가 없습니다. 편한 시기를 예측하는 말이 아니라 관계 시기 기준에서 특정 연도를 가리키지 않는다는 뜻입니다.')],timingAction,pair('A year in one person’s chart does not show what will happen to the relationship or how the other person will respond.','한 사람의 해당 연도 흐름만으로 관계에 어떤 일이 생길지 또는 상대가 어떻게 반응할지 알 수는 없습니다.'))
   const needResponse=(need:string)=>{
