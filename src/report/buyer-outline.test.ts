@@ -135,7 +135,7 @@ describe('Buyer questions, not a repeated six-part technical template', () => {
       ? { ...chapter, paragraphs: [chapter.paragraphs[0], 'You: Keeping promises matters.', 'Your partner: Keeping promises matters.', ...chapter.paragraphs.slice(3)] }
       : chapter)
     const sameStyleReport = applyBuyerQuestions(sameStyleChapters.map(chapter => deliveredChapter(chapter).join('\n\n')).join('\n\n'), 'compatibility', sameStyleChapters)
-    expect(sameStyleReport).toContain('Answer: You and your partner may express love in a similar way: following through on promises and handling practical commitments reliably. A steady check-in followed by a kept promise makes this shared style visible.')
+    expect(sameStyleReport).toContain('Answer: You and your partner may express love in a similar way: following through on promises and handling practical commitments reliably. Keeping a promise is a clear shared sign of care.')
     expect(report).toContain('Question: What tends to cause friction between us?\n\nAnswer: Your friction point is advice arriving before listening; your partner’s is practical help arriving without checking what was asked for. A tense moment may start when your response meets the different signal your partner is watching for. Say what you need before either of you assumes what the other meant.')
     const sharedFrictionChapters = chapters.map(chapter => chapter.id === 'close-conversation'
       ? { ...chapter, paragraphs: chapter.paragraphs.map(line => line.startsWith('Your likely friction is ') ? 'Your likely friction is avoiding a difficult conversation; your partner’s is avoiding a difficult conversation.' : line) }
