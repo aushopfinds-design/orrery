@@ -90,9 +90,10 @@ export function customerNarrative(plan:InterpretationPlan,targetedProduct01=true
  const hiddenRoutine=monthHidden.filter(name=>name!==m.name.en).join(' and ')||inner.name.en
  const hiddenRoutineKo=monthHiddenKo.filter(name=>name!==m.name.ko).join('·')||inner.name.ko
  const strengthHabit=personal.balance.replaceAll('**','').split(/(?<=[.!?])\s/)[0].trim().replace(/[.!?]$/,'').replace(/^./,letter=>letter.toLowerCase())
+ const personalExample=personal.example.split('**')[0].trim().replace(/[.!?]$/,'').replace(/^./,letter=>letter.toLowerCase())
  const dayMasterAnswer=targetedProduct01?pair(
-    `Your core style is ${personal.focus}. Your chart describes this as a tendency, not a fact about your personal history.`,
-    `중심 성향은 ${pk.strength}입니다. 명식의 경향을 설명하는 말이며 실제 과거를 단정하지 않습니다.`
+    `Your core style is ${personal.focus}. One way it may show up is when ${personalExample}. This is a chart-based illustration, not a fact about your personal history.`,
+    `중심 성향은 ${pk.strength}입니다. 예를 들면 ${PERSONAL_SCENE_KO[p.dayStem].example.replace(/[.!?]$/, '')} 같은 모습입니다. 이는 명식에서 가져온 예시이며 실제 과거를 단정하지 않습니다.`
   ):strength
  const moneyAreas:Record<string,string>={month:'work and daily responsibilities',day:'private commitments',year:'wider contacts',hour:'longer-term plans'}
  // Product 01 Q4 must answer how money is earned. Do not recycle the Q3 work
