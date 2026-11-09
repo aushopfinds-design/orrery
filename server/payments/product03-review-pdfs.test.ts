@@ -35,6 +35,10 @@ describe('Product 03 review PDF batch', () => {
       expect(q5).toContain("Your partner's daily chart pattern:")
       expect(q5).toContain('Emotional closeness depends more on how you respond to each other’s needs')
       expect(q5).not.toContain('day-sign comparison')
+      const q6 = report.text.split('Question: Which upcoming periods may affect our relationship themes?')[1]?.split('\n\nQuestion: ')[0] ?? ''
+      expect(q6).not.toContain('..')
+      expect(q6).not.toContain('Check whether it affects time together or personal choice')
+      expect(q6).toMatch(/Discuss (?:what work time|which social plans|how study|whether new work contacts|where each person|how practical duties|which new plans|how work and money|who owns|which decisions)/)
       const q2 = report.text.split('Question: Why are we attracted to each other?')[1]?.split('\n\nQuestion: ')[0] ?? ''
       expect(q2).toContain('The chart cannot confirm either person’s actual feelings.')
       q2Answers.push(q2)

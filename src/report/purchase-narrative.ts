@@ -507,7 +507,7 @@ export function customerNarrative(plan:InterpretationPlan,targetedProduct01=true
             : theme.startsWith('urgent goals and quick decisions')
              ? 'Discuss which decisions need speed and where each person needs time to respond.'
              : 'Discuss how this chart theme could affect a plan you share, without treating it as a predicted event.'
-   return `the chart flags ${theme || 'a personal responsibility'} as a theme to review. ${relationshipPrompt}`
+   return `the chart flags ${theme || 'a personal responsibility'} as a theme to review. ${relationshipPrompt}`.replace(/[.!?]+$/u,'')
   }
   const relationshipPeople=(row:{you?:string;partner?:string})=>row.you&&row.partner?'for both of you':row.you?'for you':'for your partner'
   const relationshipChangeAnswer=relationshipChanges.length
