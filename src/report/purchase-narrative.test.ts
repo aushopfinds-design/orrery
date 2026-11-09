@@ -50,19 +50,31 @@ describe('Targeted customer-answer revisions',()=>{
   const sections=customerNarrative(buildInterpretationPlan('compatibility',a,2026,b))
   const closeness=sections['chart-patterns'].lines[0].en
   const adjustment=sections['shared-week'].lines[0].en
-  expect(closeness).toContain('These are two separate parts of your match.')
   expect(closeness).toContain('For emotional closeness,')
   expect(closeness).toContain('For everyday compatibility,')
-  expect(closeness).not.toContain('You share a need for')
-  expect(adjustment).toContain('The relationship asks you to make room for')
-  expect(adjustment).toContain('These are chart themes')
+  expect(closeness).toContain('Your chart describes closeness through')
+  expect(closeness).toContain('Your routine pattern is')
+  expect(closeness).toContain('your partner’s is')
+  expect(closeness).not.toContain('These are two separate parts of your match.')
+  expect(adjustment).toContain('Your chart points to')
+  expect(adjustment).toContain('You can respond by learning to')
+  expect(adjustment).toContain('Your partner can')
+  expect(adjustment).toContain('not predictions of behaviour')
   expect(sections['shared-week'].action.en).toContain('Before one shared decision')
-  expect(sections['shared-week'].lines[0].en).toContain('make room for your partner’s need for')
+  expect(sections['shared-week'].lines[0].en).toContain('Your chart points to')
   expect(sections['shared-week'].lines).toHaveLength(1)
   expect(sections['close-conversation'].action.en).toContain('against the needs named above')
   expect(sections['close-conversation'].caution.en).toContain('You value')
   expect(sections['close-conversation'].caution.en).toContain('your partner values')
   expect(sections['chart-patterns'].action.en).toContain('daily routine')
+ })
+ it('keeps relationship timing chart-based while using plain language for the personal theme',()=>{
+  const answers=CATEGORY_SCENARIOS.map(profile=>customerNarrative(buildInterpretationPlan('compatibility',calculateSaju(profile.first),2026,calculateSaju(profile.second)))['support-each-other'].lines[0].en)
+  for(const answer of answers){
+   expect(answer).toMatch(/(?:period|periods) flagged|No year in the five-year comparison/)
+   expect(answer).not.toMatch(/Specialist knowledge and independent thought|Contacts, competition and shared resources|Training and dependable support/)
+   expect(answer).toMatch(/not dates of shared events|does not predict an easy period/)
+  }
  })
  it('keeps unknown birth-time notes relevant to the report topic',()=>{
   const unknown=calculateSaju({...CATEGORY_SCENARIOS[0].first,unknownTime:true})

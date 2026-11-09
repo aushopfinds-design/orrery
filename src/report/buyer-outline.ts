@@ -271,8 +271,8 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
           ? (() => {
               const parts = friction.match(/^Your likely friction is (.*?); your partner’s is (.*?)\.$/)
               if (!parts) return friction.replace(/^Your likely friction is /, 'The likely friction is ')
-              if (parts[1].toLowerCase() === parts[2].toLowerCase()) return `You may both react to tension by ${parts[1]}. Because this pattern is shared, say what help you want before either of you tries to solve the problem.`
-              return `Your friction point is ${parts[1]}. For your partner, tension may arise from ${parts[2]}.`
+              if (parts[1].toLowerCase() === parts[2].toLowerCase()) return `You may both react to tension by ${parts[1]}. This can leave the same need unspoken on both sides, so name what would help before the conversation stalls.`
+              return `Your friction point is ${parts[1]}; your partner’s is ${parts[2]}. A tense moment may start when your response meets the different signal your partner is watching for. Say what you need before either of you assumes what the other meant.`
             })()
           : friction
             ? `A likely friction point is ${friction.split('Person A is ')[1]?.split(';')[0] ?? 'a difference in private-life preferences'} for Person A, and ${friction.split('for Person B it is ')[1]?.split('.')[0] ?? 'a different reading of the same situation'} for Person B.`
@@ -288,12 +288,29 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
         const firstCare = chapter.paragraphs.find(line => /^You: /.test(line))
         const secondCare = chapter.paragraphs.find(line => /^Your partner: /.test(line))
         const careStyle = (line: string, prefix: RegExp) => line.replace(prefix, '').split(/(?<=[.!?])\s/)[0]
-        const yourCare = firstCare ? careStyle(firstCare, /^You: /) : ''
-        const partnerCare = secondCare ? careStyle(secondCare, /^Your partner: /) : ''
+        const expressCare = (text: string) => {
+          if (/Privacy and being understood without constant explanation/i.test(text)) return 'show care by respecting private thinking time and trying to understand without asking for repeated explanations.'
+          if (/Equality and room to make your own choices/i.test(text)) return 'show care by treating your partner as an equal and respecting their choices.'
+          if (/Friends, social plans and personal freedom/i.test(text)) return 'show care by making room for couple time as well as each person’s social plans and freedom.'
+          if (/Reassurance, continuity and feeling understood/i.test(text)) return 'show care through steady check-ins, keeping promises and listening without rushing to correct.'
+          if (/Care tends to be shown through ordinary acts/i.test(text)) return 'show care through ordinary acts such as making time, preparing food or making daily life more comfortable.'
+          if (/honest exchange rather than polite silence/i.test(text)) return 'show care by saying what is wrong honestly and inviting the other person to do the same.'
+          if (/Equality matters more than being managed/i.test(text)) return 'show care by treating your partner as an equal and leaving room for each person to make choices.'
+          if (/Friends, social commitments and personal freedom/i.test(text)) return 'show care by including your partner in plans while being clear about time reserved for friends or personal interests.'
+          if (/Keeping promises|practical commitments/i.test(text)) return 'show care by following through on promises and handling practical commitments reliably.'
+          if (/Generosity|shared experiences/i.test(text)) return 'show care by sharing experiences and offering generosity without assuming the other person wants the same thing.'
+          if (/decisiveness|intensity/i.test(text)) return 'show care by taking initiative when it helps, while checking that your partner wants you to step in.'
+          if (/respect and a clear place/i.test(text)) return 'show care through respect, clear commitment and making your partner’s place in your life easy to understand.'
+          if (/focused conversation|direct conversation/i.test(text)) return 'show care by making space for an honest conversation and staying with the other person’s point of view.'
+          if (/ordinary acts|practical help/i.test(text)) return 'show care through practical help, after checking what kind of support is wanted.'
+          return text.replace(/\s+/g, ' ').trim()
+        }
+        const yourCare = firstCare ? expressCare(careStyle(firstCare, /^You: /)) : ''
+        const partnerCare = secondCare ? expressCare(careStyle(secondCare, /^Your partner: /)) : ''
         lead = firstCare && secondCare
           ? yourCare === partnerCare
-            ? `The chart points to a shared care style. You: ${yourCare} Your partner: ${partnerCare}`
-            : `The chart suggests different care styles. You: ${yourCare} Your partner: ${partnerCare}`
+            ? `You and your partner may use a similar care style: ${yourCare.replace(/^show care (?:by|through)\s*/i, '').replace(/[.!?]+$/u, '')}.`
+            : `You may ${yourCare} Your partner may ${partnerCare}`
           : `${chapter.paragraphs[0] ?? 'Your chart gives one clue about how care may be recognised.'} ${chapter.paragraphs[1] ?? 'Your partner’s chart gives a separate clue.'}`
         paragraphs = []
         chapter.paragraphs.forEach(line => used.add(line))

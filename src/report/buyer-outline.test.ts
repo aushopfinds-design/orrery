@@ -122,19 +122,19 @@ describe('Buyer questions, not a repeated six-part technical template', () => {
     const report = applyBuyerQuestions(source, 'compatibility', chapters)
     expect((report.match(/^Question:/gm) ?? [])).toHaveLength(7)
     expect(report).toMatch(/Question: Why are we attracted to each other\?[\s\S]*Answer: You may be drawn to what your partner brings: a direct conversation that feels exciting\. Your partner may be drawn to what you bring: practical care that feels reassuring\./)
-    expect(report).toContain('Question: How do we express love differently?\n\nAnswer: The chart suggests different care styles. You: Focused conversation is one way you may show care. Your partner: Reliable practical help is one way they may show care.')
+    expect(report).toContain('Question: How do we express love differently?\n\nAnswer: You may show care by making space for an honest conversation and staying with the other person’s point of view. Your partner may show care through practical help, after checking what kind of support is wanted.')
     expect(report).not.toContain('These are chart-based tendencies, not proof of how either person behaves.')
     const sameStyleChapters = chapters.map(chapter => chapter.id === 'close-conversation'
       ? { ...chapter, paragraphs: [chapter.paragraphs[0], 'You: Keeping promises matters.', 'Your partner: Keeping promises matters.', ...chapter.paragraphs.slice(3)] }
       : chapter)
     const sameStyleReport = applyBuyerQuestions(sameStyleChapters.map(chapter => deliveredChapter(chapter).join('\n\n')).join('\n\n'), 'compatibility', sameStyleChapters)
-    expect(sameStyleReport).toContain('Answer: The chart points to a shared care style. You: Keeping promises matters. Your partner: Keeping promises matters.')
-    expect(report).toContain('Question: What tends to cause friction between us?\n\nAnswer: Your friction point is advice arriving before listening. For your partner, tension may arise from practical help arriving without checking what was asked for.')
+    expect(sameStyleReport).toContain('Answer: You and your partner may use a similar care style: following through on promises and handling practical commitments reliably.')
+    expect(report).toContain('Question: What tends to cause friction between us?\n\nAnswer: Your friction point is advice arriving before listening; your partner’s is practical help arriving without checking what was asked for. A tense moment may start when your response meets the different signal your partner is watching for. Say what you need before either of you assumes what the other meant.')
     const sharedFrictionChapters = chapters.map(chapter => chapter.id === 'close-conversation'
       ? { ...chapter, paragraphs: chapter.paragraphs.map(line => line.startsWith('Your likely friction is ') ? 'Your likely friction is avoiding a difficult conversation; your partner’s is avoiding a difficult conversation.' : line) }
       : chapter)
     const sharedFrictionReport = applyBuyerQuestions(sharedFrictionChapters.map(chapter => deliveredChapter(chapter).join('\n\n')).join('\n\n'), 'compatibility', sharedFrictionChapters)
-    expect(sharedFrictionReport).toContain('You may both react to tension by avoiding a difficult conversation.')
+    expect(sharedFrictionReport).toContain('You may both react to tension by avoiding a difficult conversation. This can leave the same need unspoken on both sides, so name what would help before the conversation stalls.')
     expect(report).toContain('Question: What does this connection ask of each of us?\n\nAnswer: This connection asks each person to make room for the other’s different needs.')
     const adjustment = report.slice(report.indexOf('Question: What does this connection ask of each of us?')).split('\n\nQuestion: ')[0]
     expect(adjustment).not.toContain('Understanding the difference is more useful than a compatibility percentage.')
