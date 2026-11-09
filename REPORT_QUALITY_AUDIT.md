@@ -721,3 +721,19 @@ The unchanged rubric is direct answer 35, personalization 25, specificity/useful
 Relative to the prior means 90.4, 90.9, 90.4, 90.4 and 91.3, this pass is higher for every profile, but none meets the required 95-point mean. Q6 remains the weakest area, with repetitive timing prompts and limited explanation of why each chart-flagged year matters. Q4 still sometimes describes a care need instead of a visible way of expressing love. Q5 is more direct and now preserves both people’s needs, but the neutral chart signal is still wordy and some profiles repeat the same routine description. Q2 logic remains intact: P1/P3/P4 have no separate day-sign signal, P2 has a friction pattern, and P5 has a direct link.
 
 Verification: 55/55 focused tests passed; TypeScript check passed; PDF generation test passed and created five PDFs with seven official questions each; extracted text has no replacement glyphs and includes the Destiny Card and final summary. Preview `dpl_DczY3DscGd1xDwzkdLhbPqm72m7b` is READY on the same SHA; `/` and `/samples/` returned HTTP 200. Production was not changed.
+
+## Product 03 — Q6 timing answer follow-up (2026-11-09; code SHA `3ea757ffe137bd675056978d966bdbb5ba34cad7`)
+
+This is a transparent delta review after the Q6-only content change. All 35 answer blocks were extracted from the five current PDFs. Thirty unchanged answers matched their prior actual PDF text exactly and keep their prior component scores; the five revised Q6 timing answers were reread and rescored on the unchanged rubric. The full current answer text and component deductions for all 35 are in `docs/audits/PRODUCT03-INDEPENDENT-REVIEW-3ea757f.json`.
+
+| Profile | Q1 | Q2 | Q3 | Q4 | Q5 | Q6 | Q7 | Mean | Minimum | Result |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---|
+| 1 | 91 | 93 | 94 | 90 | 92 | 93 | 94 | 92.4 | 90 | FAIL |
+| 2 | 93 | 95 | 92 | 93 | 91 | 94 | 92 | 92.9 | 91 | FAIL |
+| 3 | 91 | 93 | 94 | 90 | 92 | 93 | 94 | 92.4 | 90 | FAIL |
+| 4 | 91 | 93 | 92 | 92 | 92 | 93 | 94 | 92.4 | 91 | FAIL |
+| 5 | 94 | 95 | 94 | 92 | 93 | 94 | 94 | 93.7 | 92 | FAIL |
+
+All profile means improved from the preceding Q5 pass (91.9, 92.6, 91.9, 92.0, 93.4), but remain below 95. The Q6 prompts now name a concrete relationship discussion tied to each calculated year theme and collapse identical same-year prompts for both partners. Remaining largest deductions: Q4 sometimes presents a care need more clearly than an observable expression; Q5 P2 repeats the same need/routine text for both partners; Q1 and Q7 still reuse care-needs material.
+
+The five PDFs contain seven official questions each, 12 PDF annotations and no replacement glyphs. Q2’s three chart outcomes remain represented across the profiles. Preview `dpl_3fG7WRjBDG6W1JCANqkCb91eqYPs` is READY on code SHA `3ea757ffe137bd675056978d966bdbb5ba34cad7`; `/` and `/samples/` returned HTTP 200. Production unchanged.
