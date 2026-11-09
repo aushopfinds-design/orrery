@@ -456,11 +456,13 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
         chapter.paragraphs.forEach(line => used.add(line))
       } else if (kind === 'business' && question.id === 'business-chapters') {
         const cycles = chapter.paragraphs.filter(line => /^From the calculated start |^No current or upcoming ten-year cycle/.test(line))
-        const years = chapter.paragraphs.filter(line => /^\d{4}:/.test(line))
+        const years = chapter.paragraphs.filter(line => /^\d{4} yearly comparison:/.test(line))
+        const annualYears = [...new Set(years.map(line => Number(/^(\d{4}) yearly comparison:/.exec(line)?.[1])).filter(year => Number.isInteger(year) && year >= 1900))].sort((a, b) => a - b)
+        const annualRange = annualYears.length ? `${annualYears[0]}–${annualYears.at(-1)}` : 'the checked annual range'
         lead = cycles.length
           ? `The calculated business-cycle emphasis is: ${cycles.slice(0, 2).join(' ')}`
-          : 'No ten-year cycle starts within the period this chart can calculate, so there is no supported long-range business phase to name. Use the annual business comparisons in this report for the available timing detail; they do not establish a launch date.'
-        paragraphs = years.filter(line => /Opening|extra pressure|extra-care|caution/i.test(line)).slice(0, 3).map(line => line.split(/(?<=[.!?])\s/).slice(0, 2).join(' '))
+          : `No ten-year cycle starts within this chart’s calculated range. The available business-year comparisons cover ${annualRange}; they offer annual context, not a supported long-range business phase or a launch date.`
+        paragraphs = years.filter(line => /Opening|extra pressure|extra-care|caution/i.test(line)).slice(0, 3).map(line => line.replace(/^(\d{4}) yearly comparison:/, '$1:').split(/(?<=[.!?])\s/).slice(0, 2).join(' '))
         chapter.paragraphs.forEach(line => used.add(line))
       } else if (question.part === 'lead-with-caution') {
         lead = chapter.lead
