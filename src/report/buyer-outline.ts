@@ -1,4 +1,4 @@
-Warning: truncated output (original token count: 16641)
+Warning: truncated output (original token count: 16658)
 Total output lines: 683
 
 import type { CompleteReadingPeriod, ReportChapter } from './complete-reading.ts'
@@ -252,8 +252,7 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
         // answers already cover needs, pressure patterns and day/routine links.
         lead = lead.replace(/\s+Understanding the difference is more useful than a compatibility percentage\.?$/iu, '')
         paragraphs = []
-        chapter.paragraphs.forEach(line => used.add(…2641 tokens truncated…ures easier to receive.'
-            : yourCare.includes('steady check-ins') && partnerCare.includes('steady check-ins')
+        chapter.paragraphs.forEach(line => used.add(…2658 tokens truncated…heck-ins') && partnerCare.includes('steady check-ins')
               ? 'A steady check-in followed by a kept promise makes this shared style visible.'
               : yourCare.includes('speaking honestly') && partnerCare.includes('steady check-ins')
                 ? 'A calm check-in can open the honest conversation you value, while follow-through helps your partner feel heard.'
@@ -267,7 +266,7 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
                         ? 'For example, an honest conversation can be paired with practical help that was asked for.'
                         : yourCare.includes('practical help') && partnerCare.includes('speaking honestly')
                           ? 'For example, your honest conversation can be paired with practical help that was asked for.'
-                          : yourCare.includes('Focused conversation') && partnerCare.includes('practical help')
+                          : (yourCare.includes('Focused conversation') || yourCare.includes('making space for an honest conversation')) && partnerCare.includes('practical help')
                             ? 'For example, stay with the concern first, then offer practical help once your partner asks for it.'
                           : ''
         lead = firstCare && secondCare
