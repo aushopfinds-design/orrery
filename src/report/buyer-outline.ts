@@ -317,10 +317,16 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
         }
         const yourCare = firstCare ? expressCare(careStyle(firstCare, /^You: /)) : ''
         const partnerCare = secondCare ? expressCare(careStyle(secondCare, /^Your partner: /)) : ''
+        const loveExpression = (text: string) => {
+          const match = /^show care (by|through)\s*(.*)$/i.exec(text)
+          return { preposition: match?.[1]?.toLowerCase() ?? 'through', action: (match?.[2] ?? text).replace(/[.!?]+$/u, '') }
+        }
+        const yourExpression = loveExpression(yourCare)
+        const partnerExpression = loveExpression(partnerCare)
         lead = firstCare && secondCare
           ? yourCare === partnerCare
-            ? `You and your partner may use a similar care style: ${yourCare.replace(/^show care (?:by|through)\s*/i, '').replace(/[.!?]+$/u, '')}.`
-            : `You may ${yourCare} Your partner may ${partnerCare}`
+            ? `You and your partner may express love in a similar way: ${yourExpression.action}.`
+            : `You may express love ${yourExpression.preposition} ${yourExpression.action}; your partner may express it ${partnerExpression.preposition} ${partnerExpression.action}.`
           : `${chapter.paragraphs[0] ?? 'Your chart gives one clue about how care may be recognised.'} ${chapter.paragraphs[1] ?? 'Your partner’s chart gives a separate clue.'}`
         paragraphs = []
         chapter.paragraphs.forEach(line => used.add(line))

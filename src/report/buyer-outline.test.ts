@@ -129,13 +129,13 @@ describe('Buyer questions, not a repeated six-part technical template', () => {
     expect(q5).toContain('Your daily chart pattern: Careful work benefits from a steady pace.')
     expect(q5.match(/Careful work benefits from a steady pace\./g)).toHaveLength(1)
     expect(report).toMatch(/Question: Why are we attracted to each other\?[\s\S]*Answer: You may be drawn to what your partner brings: a direct conversation that feels exciting\. Your partner may be drawn to what you bring: practical care that feels reassuring\./)
-    expect(report).toContain('Question: How do we express love differently?\n\nAnswer: You may show care by making space for an honest conversation and staying with the other person’s point of view. Your partner may show care through practical help, after checking what kind of support is wanted.')
+    expect(report).toContain('Question: How do we express love differently?\n\nAnswer: You may express love by making space for an honest conversation and staying with the other person’s point of view; your partner may express it through practical help, after checking what kind of support is wanted.')
     expect(report).not.toContain('These are chart-based tendencies, not proof of how either person behaves.')
     const sameStyleChapters = chapters.map(chapter => chapter.id === 'close-conversation'
       ? { ...chapter, paragraphs: [chapter.paragraphs[0], 'You: Keeping promises matters.', 'Your partner: Keeping promises matters.', ...chapter.paragraphs.slice(3)] }
       : chapter)
     const sameStyleReport = applyBuyerQuestions(sameStyleChapters.map(chapter => deliveredChapter(chapter).join('\n\n')).join('\n\n'), 'compatibility', sameStyleChapters)
-    expect(sameStyleReport).toContain('Answer: You and your partner may use a similar care style: following through on promises and handling practical commitments reliably.')
+    expect(sameStyleReport).toContain('Answer: You and your partner may express love in a similar way: following through on promises and handling practical commitments reliably.')
     expect(report).toContain('Question: What tends to cause friction between us?\n\nAnswer: Your friction point is advice arriving before listening; your partner’s is practical help arriving without checking what was asked for. A tense moment may start when your response meets the different signal your partner is watching for. Say what you need before either of you assumes what the other meant.')
     const sharedFrictionChapters = chapters.map(chapter => chapter.id === 'close-conversation'
       ? { ...chapter, paragraphs: chapter.paragraphs.map(line => line.startsWith('Your likely friction is ') ? 'Your likely friction is avoiding a difficult conversation; your partner’s is avoiding a difficult conversation.' : line) }
@@ -162,8 +162,8 @@ describe('Buyer questions, not a repeated six-part technical template', () => {
     const care = report.slice(report.indexOf('Question: How do we express love differently?')).split('\n\nQuestion: ')[0]
     expect(care).not.toContain('Practical point:')
     for (const [rawStyle, expected] of [
-      ['Honest conversation matters more than polite silence. The difficulty is that a useful observation may sound like a judgement.', 'You may show care by speaking honestly while making room for your partner’s point of view.'],
-      ['Clear commitment and respectful behaviour matter. A relationship can become too formal.', 'You may show care through respectful actions and clear commitments, while also saying what you feel.'],
+      ['Honest conversation matters more than polite silence. The difficulty is that a useful observation may sound like a judgement.', 'You may express love by speaking honestly while making room for your partner’s point of view; your partner may express it through practical help, after checking what kind of support is wanted.'],
+      ['Clear commitment and respectful behaviour matter. A relationship can become too formal.', 'You may express love through respectful actions and clear commitments, while also saying what you feel; your partner may express it through practical help, after checking what kind of support is wanted.'],
     ]) {
       const variants = chapters.map(chapter => chapter.id === 'close-conversation'
         ? { ...chapter, paragraphs: chapter.paragraphs.map(line => line.startsWith('You: ') ? `You: ${rawStyle}` : line) }
