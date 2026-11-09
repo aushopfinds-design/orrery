@@ -105,8 +105,8 @@ export function buildBundleFromPlans(plans: ReturnType<typeof bundleInterpretati
               : 'the chart gives clearer work-fit clues than direct income clues'
   const integratedCollectionAnswer = `Your work pattern centres on ${workTheme}, while ${incomeSummary}. They connect through delivery: opportunities help only when you can complete the work and collect payment. Your close relationships have a separate need: ${privateNeed}. These are related parts of your life, but the chart does not show that one causes another or guarantee an event.`
   const threeInsights = `Three chart-linked themes stand out: your core style is ${coreProfile.focus}; your work fit centres on ${workTheme}; and close relationships work best when your need for ${privateNeed} is understood.`
-  const repeatingPattern = `A pattern that may repeat is ${plainReadingText(coreProfile.watchFor.at(-1) ?? coreProfile.watchFor[0])} Your chart links this tendency to your ${workTheme}-centred work style; it is a pattern to notice, not a fixed outcome.`
-  const finalMessage = `Your chart points to a clear theme: your ${workTheme}-centred work and need for ${privateNeed} both matter in the life you build. Treat this as a personal pattern to weigh alongside your real circumstances, not as a fixed outcome.`
+  const repeatingPattern = `A pattern that may repeat is ${plainReadingText(coreProfile.watchFor.at(-1) ?? coreProfile.watchFor[0])} Your chart links this tendency to a work style centred on ${workTheme}; it is a pattern to notice, not a fixed outcome.`
+  const finalMessage = `Your chart points to a clear theme: ${workTheme} at work and your need for ${privateNeed} both matter in the life you build. Treat this as a personal pattern to weigh alongside your real circumstances, not as a fixed outcome.`
   const collectionQuestions = [
     answer(1, DESTINY_COLLECTION_QUESTIONS[0], life, undefined, threeInsights),
     answer(2, DESTINY_COLLECTION_QUESTIONS[1], careerFit, undefined, `Your clearest opportunity is to use ${workTheme} as a regular part of your work, where it can shape the value you offer.`),
