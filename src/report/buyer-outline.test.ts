@@ -52,7 +52,7 @@ describe('Buyer questions, not a repeated six-part technical template', () => {
     const chapters = sourceIds.map(id => ({
       id,
       title: id,
-      lead: id === 'working-style' ? 'Your chart links income-related effort with learning or support. This may create a time or cost pressure, but the chart cannot confirm that it is limiting your finances.' : 'A clear chart-based answer.',
+      lead: id === 'working-style' ? 'The main pressure to check is whether training or support is taking time or money away from paid work. Your chart links these themes, but cannot confirm this is limiting your finances. Compare training costs and hours with income-producing work.' : 'A clear chart-based answer.',
       paragraphs: [],
       evidence: ['chart evidence'],
       tryThis: id === 'working-style' ? 'This is a possible chart pressure, not proof that it is blocking you now or the cause of a real financial problem.' : 'Review the actual terms.',
@@ -62,7 +62,8 @@ describe('Buyer questions, not a repeated six-part technical template', () => {
     const source = chapters.map(chapter => deliveredChapter(chapter).join('\n\n')).join('\n\n')
     const report = applyBuyerQuestions(source, 'career', chapters)
     const answer = report.split('Question: What tends to block my financial progress?')[1].split('\n\nQuestion:')[0]
-    expect(answer).toContain('Your chart links income-related effort with learning or support')
+    expect(answer).toContain('The main pressure to check is whether training or support is taking time or money away from paid work')
+    expect(answer).toContain('Compare training costs and hours with income-producing work')
     expect(answer).not.toMatch(/What This Means for You:|Bottom Line:/)
     expect(answer).not.toContain('Practical point:')
     expect(answer).not.toContain('This is a possible chart pressure')
