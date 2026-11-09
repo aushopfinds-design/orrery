@@ -11,7 +11,7 @@ describe('Buyer questions, not a repeated six-part technical template', () => {
   it('explains the chart context for attraction in plain language', () => {
     const reading = buildCategoryReading('compatibility', a, { second: b, year: 2026 })
     const report = applyBuyerQuestions(reading.fullText, 'compatibility', reading.chapters, [], 'standalone')
-    expect(report).toContain('The private-life chart adds no clear sign of a pull or a clash')
+    expect(report).toContain('The private-life comparison adds no clear connection or conflict')
     expect(report).toMatch(/Question: Why are we attracted to each other\?[\s\S]*Answer: You may be drawn to what your partner brings:/)
     expect(report).toContain('Your partner may be drawn to what you bring: fresh ideas and open communication.')
     expect(report).not.toContain('during a disagreement in you')
@@ -453,7 +453,7 @@ describe('Buyer questions, not a repeated six-part technical template', () => {
       frictionContextChapters.map(chapter => deliveredChapter(chapter).join('\n\n')).join('\n\n'),
       'compatibility', frictionContextChapters,
     )
-    expect(frictionContextReport).toContain('The private-life chart points to different instincts around personal choices. Attraction can still be present alongside that difference.')
+    expect(frictionContextReport).toContain('The private-life comparison points to different instincts about personal choices. That difference can coexist with the attraction pattern described above.')
     expect(report.match(/^Question:/gm)).toHaveLength(7)
   })
 
