@@ -41,6 +41,9 @@ describe('six final English product reports', () => {
           const risk = /Question: What financial risks should I understand\?\s+Answer: ([^.]+\.)/.exec(report.text)
           expect(risk, `profile ${profileIndex + 1} business risk answer`).not.toBeNull()
           businessRiskOpenings.push(risk![1])
+          const cycleAnswer = report.text.split('Question: What do my upcoming cycles suggest about business activity?')[1]?.split('\n\nQuestion: ')[0] ?? ''
+          expect(cycleAnswer).toMatch(/business-year comparisons cover \d{4}–\d{4}/)
+          expect(cycleAnswer).toMatch(/\d{4}: (?:Opening|Adjustment|extra pressure|caution)/i)
         }
         if (kind === 'year') {
           expect(report.text).toContain('Analysis window: November 2026 through October 2027.')
