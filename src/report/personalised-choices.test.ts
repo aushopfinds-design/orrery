@@ -53,8 +53,13 @@ describe('r24 chart-specific customer choices',()=>{
  })
  it('makes the temperament boundary depend on private as well as work roles and gives the collection a joint question',()=>{
   const p=plan.primary
-  expect(personalBoundary({...p,dayBranchGod:p.monthStemGod}).en).toContain('follow you home')
-  expect(personalBoundary({...p,dayBranchGod:p.monthStemGod==='正財'?'食神':'正財'}).en).toContain('more than simply leaving')
+  const shared=personalBoundary({...p,dayBranchGod:p.monthStemGod}).en
+  expect(shared).toContain('The same pattern appears in your work and private life:')
+  expect(shared).not.toContain('while your private-life pattern adds')
+  expect(shared).toContain('the very thing you need a break from')
+  const different=personalBoundary({...p,dayBranchGod:p.monthStemGod==='正財'?'食神':'正財'}).en
+  expect(different).toContain('while your private-life pattern adds')
+  expect(different).toContain('more than simply leaving')
   const collection=bundleNarrative(bundleInterpretationPlans(a,b,2026,2026))
   expect(collection[0].en).toContain('shared time')
   for(const passage of [...collection,roleChoice(p),businessDivision(p),personalBoundary(p)]){expect(passage.ko).toMatch(/[가-힣]/);expect(passage.en).not.toMatch(/undefined|NaN/)}
