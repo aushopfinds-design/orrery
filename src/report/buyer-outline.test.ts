@@ -410,15 +410,16 @@ describe('Buyer questions, not a repeated six-part technical template', () => {
     const sources = [...new Set(BUYER_QUESTIONS.business.map(question => question.source))]
     const chapters = sources.map(source => source === 'business-chapters'
       ? make(source, 'No current or upcoming ten-year cycle starts in the calculated period.', [
-        '2026 yearly comparison: Opening signals appear in the annual comparison.',
-        '2035 yearly comparison: Extra pressure calls for a closer review.',
+        '2026 yearly comparison: Opening + pressure — New customers and changing fees stand out.',
+        '2035 yearly comparison: Extra pressure — A closer review of work demands is useful.',
       ])
       : make(source))
     const source = chapters.map(chapter => deliveredChapter(chapter).join('\n\n')).join('\n\n')
     const report = applyBuyerQuestions(source, 'business', chapters)
     expect(report).toContain('No new ten-year business cycle is available in the checked range. The supported timing clues are the annual comparisons from 2026–2035.')
-    expect(report).toContain('2026: Opening signals appear in the annual comparison.')
-    expect(report).toContain('2035: Extra pressure calls for a closer review.')
+    expect(report).toContain('2026: New customers and changing fees stand out.')
+    expect(report).toContain('2035: A closer review of work demands is useful.')
+    expect(report).not.toMatch(/2026: Opening \+ pressure|2035: Extra pressure/)
   })
 
   it('separates compatibility evidence from repeated method notes and generic cautions', () => {

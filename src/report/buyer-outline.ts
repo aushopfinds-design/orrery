@@ -481,8 +481,7 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
         const relevantYears = years.filter(line => /Opening|extra pressure|extra-care|caution/i.test(line))
         paragraphs = (relevantYears.length ? relevantYears : years).slice(0, 3).map(line => line
           .replace(/^(\d{4}) yearly comparison:/, '$1:')
-          .replace(/^Opening(?: \+ pressure)?\s*[-–]\s*/i, '')
-          .replace(/^(?:Extra pressure|Adjustment)\s*[-–:]\s*/i, '')
+          .replace(/^(\d{4}:\s*)(?:Opening(?: \+ pressure)?|Extra pressure|Adjustment)\s*[-–—:]\s*/i, '$1')
           .split(/(?<=[.!?])\s/).slice(0, 2).join(' '))
         chapter.paragraphs.forEach(line => used.add(line))
       } else if (question.part === 'lead-with-caution') {
