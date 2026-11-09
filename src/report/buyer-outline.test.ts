@@ -1,6 +1,3 @@
-Warning: truncated output (original token count: 9435)
-Total output lines: 451
-
 import { purchaseMonths } from './purchase-timing.ts'
 import { describe, expect, it } from 'vitest'
 import { calculateSaju } from '@orrery/core/saju'
@@ -124,7 +121,216 @@ describe('Buyer questions, not a repeated six-part technical template', () => {
     const source = chapters.map(chapter => deliveredChapter(chapter).join('\n\n')).join('\n\n')
     const report = applyBuyerQuestions(source, 'compatibility', chapters)
     expect((report.match(/^Question:/gm) ?? [])).toHaveLength(7)
-    expect(report).toMatch(/Question: Why are we attracted to each other\?[\s\S]*Answer: You may be drawn to what your partner brings: a direct conversation that feels exciting\. Your partner may be drawn to w…4435 tokens truncated…fined duties and enough authority to use them.')
+    expect(report).toMatch(/Question: Why are we attracted to each other\?[\s\S]*Answer: You may be drawn to what your partner brings: a direct conversation that feels exciting\. Your partner may be drawn to what you bring: practical care that feels reassuring\./)
+    expect(report).toContain('Question: How do we express love differently?\n\nAnswer: The chart suggests different care styles. You: Focused conversation is one way you may show care. Your partner: Reliable practical help is one way they may show care.')
+    expect(report).not.toContain('These are chart-based tendencies, not proof of how either person behaves.')
+    const sameStyleChapters = chapters.map(chapter => chapter.id === 'close-conversation'
+      ? { ...chapter, paragraphs: [chapter.paragraphs[0], 'You: Keeping promises matters.', 'Your partner: Keeping promises matters.', ...chapter.paragraphs.slice(3)] }
+      : chapter)
+    const sameStyleReport = applyBuyerQuestions(sameStyleChapters.map(chapter => deliveredChapter(chapter).join('\n\n')).join('\n\n'), 'compatibility', sameStyleChapters)
+    expect(sameStyleReport).toContain('Answer: The chart points to a shared care style. You: Keeping promises matters. Your partner: Keeping promises matters.')
+    expect(report).toContain('Question: What tends to cause friction between us?\n\nAnswer: Your friction point is advice arriving before listening. For your partner, tension may arise from practical help arriving without checking what was asked for.')
+    const sharedFrictionChapters = chapters.map(chapter => chapter.id === 'close-conversation'
+      ? { ...chapter, paragraphs: chapter.paragraphs.map(line => line.startsWith('Your likely friction is ') ? 'Your likely friction is avoiding a difficult conversation; your partner’s is avoiding a difficult conversation.' : line) }
+      : chapter)
+    const sharedFrictionReport = applyBuyerQuestions(sharedFrictionChapters.map(chapter => deliveredChapter(chapter).join('\n\n')).join('\n\n'), 'compatibility', sharedFrictionChapters)
+    expect(sharedFrictionReport).toContain('You may both react to tension by avoiding a difficult conversation.')
+    expect(report).toContain('Question: What does this connection ask of each of us?\n\nAnswer: This connection asks each person to make room for the other’s different needs.')
+    const adjustment = report.slice(report.indexOf('Question: What does this connection ask of each of us?'))
+    expect(adjustment).not.toContain('Answer detail: The day comparison shows a private-life difference.')
+    expect(adjustment).not.toContain('Answer detail: The main challenge is agreeing on time, duties and who follows through.')
+    const timing = report.slice(report.indexOf('Question: Which upcoming periods may affect our relationship themes?'))
+    expect(timing).toContain('Practical point: Make one clear agreement.')
+    expect(timing).not.toContain('Answer detail:')
+    expect(timing).not.toContain('Main caution:')
+    expect(report).toContain('Question: How do emotional closeness and everyday compatibility differ?\n\nAnswer: Private closeness is stronger than sharing a daily routine; attraction and practical agreements are different kinds of fit.')
+    const closeness = report.slice(report.indexOf('Question: How do emotional closeness and everyday compatibility differ?')).split('\n\nQuestion: ')[0]
+    expect(closeness).not.toContain('likely tension')
+    expect(report).not.toContain('Question: What tends to cause friction between us?\n\nAnswer: A generic caution.')
+  })
+  it('keeps ten collection questions and maps relationship answers to their matching details', () => {
+    expect(COLLECTION_BUYER_QUESTIONS.compatibility).toHaveLength(10)
+    const make = (id: string, lead: string, paragraphs: string[] = [], action = 'Make one clear agreement.') => ({
+      id, title: id, lead, paragraphs, evidence: [], tryThis: action,
+      guidance: { keepClose: [action], watchFor: ['A chart-specific caution.'] }, icon: 'personality' as const,
+    })
+    const chapters = [
+      make('two-directions', 'Attraction can grow through reassurance.'),
+      make('two-styles', 'Different care needs can fit together.', ['Private closeness is stronger than sharing a daily routine.']),
+      make('close-conversation', 'You value listening; your partner values practical help.', [
+        'You need time to finish a concern.',
+        'Your partner needs undivided attention.',
+        'The private-life patterns connect.',
+        'The clearest friction is advice arriving before listening.',
+      ]),
+      make('chart-patterns', 'Your main tension is correcting before clarifying the problem.'),
+      make('shared-week', 'This connection asks each person to make room for different needs.', [], 'Agree on who owns one shared task.'),
+      make('support-each-other', 'Each person has a separate relationship timeline.'),
+    ]
+    const source = chapters.map(chapter => deliveredChapter(chapter).join('\n\n')).join('\n\n')
+    const report = applyBuyerQuestions(source, 'compatibility', chapters, [], 'collection')
+    expect((report.match(/^Question:/gm) ?? [])).toHaveLength(10)
+    expect(report).toContain('Question: How do we express love differently?\n\nAnswer: You need time to finish a concern. Your partner needs undivided attention.')
+    expect(report).toContain('Question: Where is closeness strongest, and where might daily routines be harder?\n\nAnswer: Private closeness is stronger than sharing a daily routine.')
+    expect(report).toContain('Question: What recurring tension should we watch for?\n\nAnswer: Your main tension is correcting before clarifying the problem.')
+    expect(report).toContain('Question: What does this connection ask of each of us?\n\nAnswer: This connection asks each person to make room for different needs.')
+    expect(report).toContain('Question: What practical step could strengthen this connection?\n\nAnswer: Agree on who owns one shared task.')
+  })
+  it('maps wellbeing questions to the chapter that answers each one', () => {
+    const make = (id: string, lead: string, paragraphs: string[] = [], action = 'A chart-specific practical step.', caution = 'A chart reading cannot diagnose health.') => ({
+      id, title: id, lead, paragraphs, evidence: [], tryThis: action,
+      guidance: { keepClose: [action], watchFor: [caution] }, icon: 'personality' as const,
+    })
+    const chapters = [
+      make('everyday-pace', 'A personalized temperament answer.'),
+      make('visible-elements', 'A clear explanation of the visible element pattern.'),
+      make('workload-rhythm', 'A personalized daily pressure pattern.', [], 'A chart-specific practical step.', 'Notice when a capable response is taking too much of your time.'),
+      make('support-and-space', 'A relationship support need.'),
+      make('balance-week', 'A strength and its matching blind spot.', [], 'Choose a routine that fits.'),
+    ]
+    const source = chapters.map(chapter => deliveredChapter(chapter).join('\n\n')).join('\n\n')
+    const report = applyBuyerQuestions(source, 'wellbeing', chapters)
+    expect((report.match(/^Question:/gm) ?? [])).toHaveLength(7)
+    expect(report).toContain('Question: What should I watch for when pressure builds?\n\nAnswer: Notice when a capable response is taking too much of your time.')
+    expect(report).toContain('Question: What boundary could help protect my everyday balance?\n\nAnswer: Set a limit on new requests: agree what will wait before accepting added work. Your chart points to a specific work pattern to watch as demands build.')
+    expect(report).not.toContain('Question: What kind of environment brings out my best?')
+  })
+
+  it('answers the distinctive-traits question with personal roles, not an element-count inventory', () => {
+    const make = (id: string, lead: string, paragraphs: string[] = []) => ({
+      id, title: id, lead, paragraphs, evidence: ['verified chart marker'], tryThis: 'Keep the answer tied to the chart.',
+      guidance: { keepClose: ['Keep one clear boundary.'], watchFor: ['Avoid treating a count as an ability.'] }, icon: 'personality' as const,
+    })
+    const chapters = [
+      make('everyday-pace', 'A personal temperament answer.'),
+      make('visible-elements', 'The visible count is 3 Earth and 2 Metal.', [
+        'Your public role draws on finding customers, while close relationships call for time to think before a difficult conversation.',
+        'In the visible count, Earth appears 3 times and Metal appears 2 times.',
+        'A missing visible element is not a missing ability; the rest of the chart still matters.',
+      ]),
+      make('workload-rhythm', 'A personal pressure trigger.', ['Under pressure, you may keep working past a useful stopping point.']),
+      make('support-and-space', 'A relationship need.'),
+      make('balance-week', 'A strength and its possible blind spot.'),
+    ]
+    const source = chapters.map(chapter => deliveredChapter(chapter).join('\n\n')).join('\n\n')
+    const report = applyBuyerQuestions(source, 'wellbeing', chapters)
+    const start = report.indexOf('Question: Which parts of my nature stand out?')
+    const end = report.indexOf('\n\nQuestion: ', start + 1)
+    const answer = report.slice(start, end)
+    expect(answer).toContain('Answer: Your public role draws on finding customers')
+    expect(answer).not.toContain('Answer: In the visible count, Earth appears')
+    expect(answer).not.toContain('visible count')
+  })
+
+  it('answers pressure response with the chart-specific response pattern, distinct from its trigger', () => {
+    const make = (id: string, lead: string, paragraphs: string[] = []) => ({
+      id, title: id, lead, paragraphs, evidence: ['verified chart marker'], tryThis: 'Set a clear stopping point.',
+      guidance: { keepClose: ['Name the task already using your time.'], watchFor: ['A chart-specific pressure response.'] }, icon: 'personality' as const,
+    })
+    const chapters = [
+      make('everyday-pace', 'A general core style.'), make('visible-elements', 'A personal traits answer.'),
+      make('workload-rhythm', 'The trigger is a full day with too many demands.', [
+        'The pressure to watch is that you may keep refining small details after the result is ready.',
+        'The birth-month pattern is the setting, not a claim about every day.',
+      ]),
+      make('support-and-space', 'A relationship need.'), make('balance-week', 'A strength and matching blind spot.'),
+    ]
+    const source = chapters.map(chapter => deliveredChapter(chapter).join('\n\n')).join('\n\n')
+    const report = applyBuyerQuestions(source, 'wellbeing', chapters)
+    expect(report).toContain('Question: What tends to put me under pressure?\n\nAnswer: The trigger is a full day with too many demands.')
+    expect(report).toContain('Question: What should I watch for when pressure builds?\n\nAnswer: As pressure builds, you may keep refining small details after the result is ready.')
+    expect(report.match(/Question: What should I watch for when pressure builds\?[\s\S]*?\n\n(?=support-and-space)/)?.[0]).toContain('after the result is ready')
+  })
+
+  it('keeps the relationship-needs answer focused on relationship support', () => {
+    const make = (id: string) => ({
+      id, title: id, lead: 'A chart-based personal answer.', paragraphs: [] as string[], evidence: ['chart evidence'],
+      tryThis: 'Use a relevant practical step.', guidance: { keepClose: ['Keep the answer specific.'], watchFor: ['A relevant caution.'] }, icon: 'personality' as const,
+    })
+    const chapters = [...new Set(BUYER_QUESTIONS.wellbeing.map(question => question.source))].map(make)
+    const sourceChapter = chapters.find(chapter => chapter.id === 'support-and-space')!
+    sourceChapter.paragraphs = [
+      'First chart detail.', 'Second chart detail.',
+      'The support that suits this side of you is specific: someone who listens before offering a solution. The setting matters too: an uncluttered workspace with a short definition of a finished result.',
+    ]
+    const source = chapters.map(chapter => deliveredChapter(chapter).join('\n\n')).join('\n\n')
+    const report = applyBuyerQuestions(source, 'wellbeing', chapters)
+    const answer = report.split('Question: What do I need most in relationships?')[1].split('\n\nQuestion:')[0]
+    expect(answer).toContain('someone who listens before offering a solution')
+    expect(answer).not.toContain('The setting matters too')
+    expect(answer).not.toContain('uncluttered workspace')
+  })
+
+  it('answers the annual focus question with a chart-backed work theme', () => {
+    const make = (id: string, lead: string, paragraphs: string[] = [], tryThis = 'Review your priorities.') => ({
+      id, title: id, lead, paragraphs, evidence: [], tryThis,
+      guidance: { keepClose: ['Review your priorities.'], watchFor: ['Avoid overcommitting.'] }, icon: 'personality' as const,
+    })
+    const chapters = [
+      make('annual-theme', 'The year centres on changing demands at home and work.', [], 'Prioritize the chart-linked work theme.'),
+      make('annual-work', 'Career outlook.'), make('annual-money', 'Money outlook.'),
+      make('annual-connections', 'Relationship outlook.'), make('annual-cycle-context', 'Supportive months.'),
+      make('annual-plan', 'Months needing care.'),
+    ]
+    const source = chapters.map(chapter => deliveredChapter(chapter).join('\n\n')).join('\n\n')
+    const report = applyBuyerQuestions(source, 'year', chapters)
+    expect(report).toContain('Question: What should I focus on most this year?\n\nAnswer: Prioritize the chart-linked work theme.')
+  })
+
+  it('avoids echoing the same instruction in the annual focus answer', () => {
+    const make = (id: string, lead: string, action = 'Focus on the chart-linked work theme for this year: defined duties. Check that duties and standards are clear.') => ({
+      id, title: id, lead, paragraphs: [], evidence: ['annual comparison'], tryThis: action,
+      guidance: { keepClose: ['Keep the answer practical.'], watchFor: ['Do not treat timing as certain.'] }, icon: 'timeline' as const,
+    })
+    const chapters = [
+      make('annual-theme', 'The chart theme is clear.'), make('annual-work', 'Career answer.'), make('annual-money', 'Money answer.'),
+      make('annual-connections', 'Love answer.'), make('annual-cycle-context', 'No supportive month found.'), make('annual-plan', 'Extra care months.'),
+    ]
+    const source = chapters.map(chapter => deliveredChapter(chapter).join('\n\n')).join('\n\n')
+    const report = applyBuyerQuestions(source, 'year', chapters)
+    expect(report).toContain('Question: What should I focus on most this year?\n\nAnswer: The chart’s main work theme is defined duties.')
+    expect(report).not.toContain('The chart’s main work theme is defined duties. Check that duties and standards are clear.')
+  })
+
+  it('does not repeat the same turning-point explanation inside the answer', () => {
+    const make = (id: string) => ({
+      id, title: id, lead: 'A clear conclusion.', paragraphs: [] as string[], evidence: ['checked chart comparison'], tryThis: 'Review the actual changes.',
+      guidance: { keepClose: ['Review the actual changes.'], watchFor: ['Do not treat timing as certain.'] }, icon: 'timeline' as const,
+    })
+    const chapters = [...new Set(BUYER_QUESTIONS.complete.map(question => question.source))].map(make)
+    const patterns = chapters.find(chapter => chapter.id === 'patterns')!
+    patterns.lead = 'The clearest year to review a major change is 2032: a theme of new ideas connects work and relationships.'
+    patterns.paragraphs = ['Why 2032 is highlighted here: The 2032 theme of new ideas connects work and relationships. Review how work demands and shared time fit together.']
+    const source = chapters.map(chapter => deliveredChapter(chapter).join('\n\n')).join('\n\n')
+    const report = applyBuyerQuestions(source, 'complete', chapters)
+    const answer = report.split('Question: When may my life change direction?')[1].split('\n\nQuestion:')[0]
+    expect(answer).toContain('Review how work demands and shared time fit together.')
+    expect(answer).not.toContain('Why 2032 is highlighted here')
+    expect(answer.match(/The 2032 theme/g)).toBeNull()
+  })
+
+  it('keeps the yearly career answer to its distinct annual and personal chart reasons', () => {
+    const make = (id: string, lead: string, paragraphs: string[] = [], tryThis = 'Review your priorities.') => ({
+      id, title: id, lead, paragraphs, evidence: ['checked chart relationship'], tryThis,
+      guidance: { keepClose: ['Generic advice.'], watchFor: ['Repeated caution.'] }, icon: 'personality' as const,
+    })
+    const chapters = [
+      make('annual-theme', 'The year centres on changing demands at home and work.', [], 'Focus on the changed work demand.'),
+      make('annual-work', 'For the fixed period, clear responsibility and standards are the strongest career theme.', [
+        'The annual comparison points to defined duties and enough authority to use them.',
+        'Your birth-chart work pattern centres on finding new customers.',
+        'A sales channel is repeated again in the yearly career detail.',
+        'The same blind spot appears in several other questions.',
+        '2030 is the separate timing reference.',
+      ]),
+      make('annual-money', 'Money outlook.'), make('annual-connections', 'Relationship outlook.'),
+      make('annual-cycle-context', 'Supportive months.'), make('annual-plan', 'Months needing care.'),
+    ]
+    const source = chapters.map(chapter => deliveredChapter(chapter).join('\n\n')).join('\n\n')
+    const report = applyBuyerQuestions(source, 'year', chapters)
+    const career = report.split('annual-work\n\n')[1].split('\n\nannual-money')[0]
+    expect(career).toContain('Answer: For the fixed period, clear responsibility and standards are the strongest career theme.')
+    expect(career).toContain('Answer detail: The annual comparison points to defined duties and enough authority to use them.')
     expect(career).toContain('Answer detail: Your birth-chart work pattern centres on finding new customers.')
     expect(career).not.toContain('A sales channel is repeated again')
     expect(career).not.toContain('The same blind spot appears')
