@@ -54,7 +54,12 @@ export function relationshipRepair(a:Subject,b:Subject):Passage{
 }
 export function personalBoundary(p:Subject):Passage{
  const task=TASKS[p.monthStemGod],privateRole=WORDS[p.dayBranchGod]
- return pair(`A revealing moment is being asked to keep ${task.en} after your own day is already full. Your work role emphasises ${WORDS[p.monthStemGod].name.en}, while your private-life pattern adds ${privateRole.name.en}. ${p.monthStemGod===p.dayBranchGod?'The familiar role can follow you home: the thing others value may be the very thing you need a break from.':'Changing from the work role to the private one may take more than simply leaving the workplace.'} Use this scene to recognise the pattern, rather than assume it happens every day.`,`이미 하루가 꽉 찼는데도 ${task.ko}을 계속 부탁받는 순간을 떠올려 봅니다. 일에서는 ${WORDS[p.monthStemGod].name.ko}, 사적인 생활에서는 ${privateRole.name.ko}이 나타납니다. ${p.monthStemGod===p.dayBranchGod?'익숙한 역할이 집까지 이어질 수 있습니다. 남들이 좋아하는 그 역할에서 정작 자신은 쉬고 싶을 수 있습니다.':'일하는 역할에서 개인적인 역할로 바꾸는 데는 퇴근하는 것 이상의 전환이 필요할 수 있습니다.'} 매일 그렇다고 단정하지 않고 특징을 알아보는 예시로 사용합니다.`)
+ const workRole=WORDS[p.monthStemGod].name,privateName=privateRole.name
+ const shared=p.monthStemGod===p.dayBranchGod
+ const contrast=shared
+  ? pair(`The same pattern appears in your work and private life: ${workRole.en}. The role others rely on may be the very thing you need a break from.`,`일과 사적인 생활에서 모두 ${workRole.ko}이 나타납니다. 남들이 의지하는 역할이 자신에게는 쉬고 싶은 일이 될 수 있습니다.`)
+  : pair(`Your work role emphasises ${workRole.en}, while your private-life pattern adds ${privateName.en}. Changing from the work role to the private one may take more than simply leaving the workplace.`,`일에서는 ${workRole.ko}, 사적인 생활에서는 ${privateName.ko}이 나타납니다. 일하는 역할에서 개인적인 역할로 바꾸는 데는 퇴근하는 것 이상의 전환이 필요할 수 있습니다.`)
+ return pair(`A revealing moment is being asked to keep ${task.en} after your own day is already full. ${contrast.en} Use this scene to recognise the pattern, rather than assume it happens every day.`,`이미 하루가 꽉 찼는데도 ${task.ko}을 계속 부탁받는 순간을 떠올려 봅니다. ${contrast.ko} 매일 그렇다고 단정하지 않고 특징을 알아보는 예시로 사용합니다.`)
 }
 export function monthlyFit(p:Subject,month:InterpretationPlan['months'][number]):Passage{
  const g=WORDS[month.god],work=WORDS[p.monthStemGod]
