@@ -13,6 +13,7 @@ describe('Buyer questions, not a repeated six-part technical template', () => {
     const report = applyBuyerQuestions(reading.fullText, 'compatibility', reading.chapters, [], 'standalone')
     expect(report).toContain('The day signs show neither a direct link nor a friction pattern')
     expect(report).toMatch(/Question: Why are we attracted to each other\?[\s\S]*Answer: You may be drawn to what your partner brings:/)
+    expect(report).toContain('Your partner may be drawn to what you bring: fresh ideas and open communication.')
     expect(report).not.toContain('during a disagreement in you')
   })
   it('gives every question a distinct answer role within its product', () => {
