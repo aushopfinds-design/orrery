@@ -553,11 +553,14 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
             'Regular income': 'predictable pay', 'Commercial openings': 'new customers and deals', 'Formal responsibility': 'defined responsibilities',
             'Decisive pressure': 'demanding assignments', 'Learning and support': 'training and guidance', 'Specialist insight': 'independent problem-solving',
           }
-          const otherThemes = [...new Set(careerYears.map(item => themeLanguage[item.stemGod]).filter(Boolean))].slice(0, 2)
+          const checkedThemes = [...new Map(careerYears.filter(item => item.year >= 1900).sort((a, b) => a.year - b.year)
+            .map(item => [item.year, themeLanguage[item.stemGod] ?? item.stemGod.toLowerCase()]))]
+            .slice(0, 3).map(([year, theme]) => `${year}: ${theme.toLowerCase()}`)
+          const context = checkedThemes.length ? `The annual comparison instead shows ${checkedThemes.join('; ')}` : 'The annual comparison instead shows other work themes'
           return [
             `Your Answer: ${supportYears.length
               ? `I cannot confirm a date when your career or finances will improve. Within the checked years${checkedRange ? ` (${checkedRange})` : ''}, ${supportYears.join(', ')} show possible support for work efforts, not a promised raise or job change.`
-              : `I cannot identify a reliable improvement year${checkedRange ? ` within ${checkedRange}` : ''}. No checked year stands out; the annual comparisons emphasize ${otherThemes.join(' and ') || 'work themes to review'}, which do not establish a pay rise.`}`,
+              : `I cannot identify a reliable improvement year${checkedRange ? ` within ${checkedRange}` : ''}. No checked year stands out. ${context}, which describe work themes but do not establish a pay rise.`}`,
           ]
         }
         const details = question.id === 'q-risk'
