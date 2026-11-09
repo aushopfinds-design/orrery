@@ -491,7 +491,10 @@ describe('Buyer questions, not a repeated six-part technical template', () => {
     })
     const source = chapters.map(chapter => deliveredChapter(chapter).join('\n\n')).join('\n\n')
     const report = applyBuyerQuestions(source, 'wellbeing', chapters)
+    const coreAnswer = report.split('Question: What is my core personality?')[1]?.split('\n\nQuestion: ')[0] ?? ''
     expect(report).toContain('Answer: Your core style is patient and precise.')
+    expect(coreAnswer).not.toContain('The pressure reaction belongs in the pressure answer.')
+    expect(coreAnswer).not.toContain('Your public role differs from your private pace.')
     expect(report).not.toContain('The pressure reaction belongs in the pressure answer.')
     expect(report).not.toContain('About this reading: symbolic, not a promise.')
     expect(report).toContain('Your standout strength is careful attention.')
