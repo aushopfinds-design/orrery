@@ -224,11 +224,14 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
       } else if (kind === 'compatibility' && question.role === 'closeness-vs-routine' && set === 'standalone') {
         // This question asks for a comparison of two kinds of fit. Keep the
         // source's direct comparison and leave friction in its own answer.
+        // Do not repeat the private-life needs already answered in Q1/Q4.
+        lead = lead.replace(/\s+You value [\s\S]*?(?=\s+For everyday compatibility,)/u, '')
         paragraphs = []
         chapter.paragraphs.forEach(line => used.add(line))
       } else if (kind === 'compatibility' && question.role === 'mutual-adjustment' && set === 'standalone') {
         // Keep the final answer focused on what each person can adjust; earlier
         // answers already cover needs, pressure patterns and day/routine links.
+        lead = lead.replace(/\s+Understanding the difference is more useful than a compatibility percentage\.?$/iu, '')
         paragraphs = []
         chapter.paragraphs.forEach(line => used.add(line))
       } else if (kind === 'wellbeing' && question.role === 'core-personality') {
@@ -563,13 +566,15 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
       || (kind === 'wellbeing' && ['pressure-response', 'relationship-need'].includes(questions.at(-1)?.role ?? ''))
     const suppressAllGuidance = kind === 'compatibility' && ['attraction', 'overall-fit'].includes(questions[0].role)
       || kind === 'compatibility' && questions[0].role === 'overall-fit'
+    const suppressRepeatedRelationshipAdvice = kind === 'compatibility'
+      && questions.some(question => ['care-expression', 'closeness-vs-routine', 'relationship-timing', 'mutual-adjustment'].includes(question.role))
     const suppressGuidance = kind === 'year' && ['annual-work', 'annual-money', 'annual-connections', 'annual-cycle-context'].includes(source)
       || kind === 'year' && questions.some(question => question.role === 'year-overview')
       || kind === 'year' && source === 'annual-plan' && questions[0].role === 'caution-months'
       || kind === 'business' && questions[0].role === 'financial-risk'
       || kind === 'business' && questions[0].role === 'business-cycle'
       || kind === 'business' && questions[0].role === 'business-caution'
-    const guidance = kind === 'career' && set === 'standalone' || suppressGuidance || suppressAllGuidance
+    const guidance = kind === 'career' && set === 'standalone' || suppressGuidance || suppressAllGuidance || suppressRepeatedRelationshipAdvice
       || kind === 'wellbeing' && ['core-personality', 'distinctive-traits', 'pressure-trigger'].includes(questions[0].role)
       ? [] : chapter.showGuidance === false ? [] : [
         ...(set === 'collection' ? (!extraAnswers.some(item => item.lines.includes(chapter.tryThis)) ? ['Practical point: ' + chapter.tryThis] : []) : (!answeredLines.includes(chapter.tryThis) ? ['Practical point: ' + chapter.tryThis] : [])),

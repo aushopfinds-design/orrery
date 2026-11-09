@@ -109,8 +109,8 @@ describe('Buyer questions, not a repeated six-part technical template', () => {
         'Your partner: Reliable practical help is one way they may show care.',
         'Your likely friction is advice arriving before listening; your partner’s is practical help arriving without checking what was asked for.',
       ]),
-      make('chart-patterns', 'Private closeness is stronger than sharing a daily routine; attraction and practical agreements are different kinds of fit.', []),
-      make('shared-week', 'This connection asks each person to make room for the other’s different needs.', [
+      make('chart-patterns', 'For emotional closeness, neither a direct bond nor a direct conflict stands out. You value being heard before someone offers a solution, while your partner values listening as well as practical help. For everyday compatibility, the routine comparison has no clear linking or clashing pattern. Compare your actual habits rather than assuming they will match.', []),
+      make('shared-week', 'This connection asks each person to make room for the other’s different needs. Understanding the difference is more useful than a compatibility percentage.', [
         'The day comparison shows a private-life difference.',
         'The month comparison shows a different daily routine.',
         'Each person needs a clear voice in shared decisions.',
@@ -136,17 +136,23 @@ describe('Buyer questions, not a repeated six-part technical template', () => {
     const sharedFrictionReport = applyBuyerQuestions(sharedFrictionChapters.map(chapter => deliveredChapter(chapter).join('\n\n')).join('\n\n'), 'compatibility', sharedFrictionChapters)
     expect(sharedFrictionReport).toContain('You may both react to tension by avoiding a difficult conversation.')
     expect(report).toContain('Question: What does this connection ask of each of us?\n\nAnswer: This connection asks each person to make room for the other’s different needs.')
-    const adjustment = report.slice(report.indexOf('Question: What does this connection ask of each of us?'))
+    const adjustment = report.slice(report.indexOf('Question: What does this connection ask of each of us?')).split('\n\nQuestion: ')[0]
+    expect(adjustment).not.toContain('Understanding the difference is more useful than a compatibility percentage.')
+    expect(adjustment).not.toContain('Practical point:')
     expect(adjustment).not.toContain('Answer detail: The day comparison shows a private-life difference.')
     expect(adjustment).not.toContain('Answer detail: The main challenge is agreeing on time, duties and who follows through.')
     const timing = report.slice(report.indexOf('Question: Which upcoming periods may affect our relationship themes?'))
-    expect(timing).toContain('Practical point: Make one clear agreement.')
+    expect(timing).not.toContain('Practical point:')
     expect(timing).not.toContain('Answer detail:')
     expect(timing).not.toContain('Main caution:')
-    expect(report).toContain('Question: How do emotional closeness and everyday compatibility differ?\n\nAnswer: Private closeness is stronger than sharing a daily routine; attraction and practical agreements are different kinds of fit.')
+    expect(report).toContain('Question: How do emotional closeness and everyday compatibility differ?\n\nAnswer: For emotional closeness, neither a direct bond nor a direct conflict stands out. For everyday compatibility, the routine comparison has no clear linking or clashing pattern. Compare your actual habits rather than assuming they will match.')
     const closeness = report.slice(report.indexOf('Question: How do emotional closeness and everyday compatibility differ?')).split('\n\nQuestion: ')[0]
     expect(closeness).not.toContain('likely tension')
+    expect(closeness).not.toContain('You value being heard')
+    expect(closeness).not.toContain('Practical point:')
     expect(report).not.toContain('Question: What tends to cause friction between us?\n\nAnswer: A generic caution.')
+    const care = report.slice(report.indexOf('Question: How do we express love differently?')).split('\n\nQuestion: ')[0]
+    expect(care).not.toContain('Practical point:')
   })
   it('keeps ten collection questions and maps relationship answers to their matching details', () => {
     expect(COLLECTION_BUYER_QUESTIONS.compatibility).toHaveLength(10)
