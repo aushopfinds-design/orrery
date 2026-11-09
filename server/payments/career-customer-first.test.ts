@@ -34,6 +34,7 @@ describe('My Money & Career customer-first delivery', () => {
       expect(buyerSection).toMatch(/I cannot (?:confirm a date|identify a reliable improvement year)/i)
       expect(buyerSection).toMatch(/Your 2026–2035 outlook is mixed: work themes change/i)
       expect(buyerSection).toMatch(/do not show a steady rise in income/i)
+      expect(buyerSection).toMatch(/\d{4} points to [^;]+; \d{4} points to /i)
       expect(buyerSection).not.toMatch(/added work friction/i)
       const q1 = buyerSection.match(/Question: Which careers suit me best\?\n\nYour Answer: ([^\n]+)/)?.[1]
       const q7 = buyerSection.match(/Question: What is my most important career and money insight\?\n\nYour Answer: ([^\n]+)/)?.[1]
