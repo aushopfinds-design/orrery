@@ -493,7 +493,7 @@ export function customerNarrative(plan:InterpretationPlan,targetedProduct01=true
     .replace(/^Urgent goals and decisive action/i,'urgent goals and quick decisions')
    const theme=plain.replace(/\s+may compete with time together or the freedom to make a personal choice\.?$/i,'').replace(/[.!?]+$/u,'').trim()
    const relationshipPrompt=theme.startsWith('time for focused work')
-    ? 'Discuss what work time and personal projects leave available for time together. With both charts flagging individual focus, agree which shared plan you each want to protect.'
+    ? 'Discuss what work time and personal projects leave available for time together, then agree which shared plan to protect.'
     : theme.startsWith('social commitments and decisions about shared time or resources')
      ? 'Discuss which social plans and shared costs fit the time and resources you both want to commit. This is the specific shared-time theme flagged for the year.'
      : theme.startsWith('study, training or support responsibilities')
