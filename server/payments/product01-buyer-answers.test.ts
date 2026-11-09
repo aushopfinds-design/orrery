@@ -28,7 +28,7 @@ describe('Product 01 paid customer question answers', () => {
       for (const question of productQuestions('complete')) expect(report.text).toContain(`Question: ${question.title}`)
       const identity = report.text.split('Question: What kind of person am I?')[1]?.split('\n\nQuestion: ')[0] ?? ''
       expect(identity).toMatch(/Answer: Your core style is /)
-      expect(identity).not.toMatch(/One way it may show up|chart-based illustration/i)
+      expect(identity).toMatch(/One way it may show up is when .+\\. This is a chart-based illustration, not a fact about your personal history\\./i)
       expect(report.text).toContain('What Challenges Keep Returning in Your Life?')
       expect(report.text).toContain('Your most important life insight is that')
       const turningPoints = report.text.slice(report.text.indexOf('Question: When may my life change direction?'))
