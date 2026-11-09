@@ -8,10 +8,10 @@ import { BUYER_OUTLINES, BUYER_QUESTIONS, COLLECTION_BUYER_QUESTIONS, applyBuyer
 import { deliveredChapter } from './report-delivery.ts'
 const a = calculateSaju(CATEGORY_SCENARIOS[0].first), b = calculateSaju(CATEGORY_SCENARIOS[0].second)
 describe('Buyer questions, not a repeated six-part technical template', () => {
-  it('keeps the calculated day-sign attraction context in the delivered compatibility answer', () => {
+  it('explains the chart context for attraction in plain language', () => {
     const reading = buildCategoryReading('compatibility', a, { second: b, year: 2026 })
     const report = applyBuyerQuestions(reading.fullText, 'compatibility', reading.chapters, [], 'standalone')
-    expect(report).toContain('The day signs show neither a direct link nor a friction pattern')
+    expect(report).toContain('The private-life chart adds no clear sign of a pull or a clash')
     expect(report).toMatch(/Question: Why are we attracted to each other\?[\s\S]*Answer: You may be drawn to what your partner brings:/)
     expect(report).toContain('Your partner may be drawn to what you bring: fresh ideas and open communication.')
     expect(report).not.toContain('during a disagreement in you')
@@ -453,7 +453,7 @@ describe('Buyer questions, not a repeated six-part technical template', () => {
       frictionContextChapters.map(chapter => deliveredChapter(chapter).join('\n\n')).join('\n\n'),
       'compatibility', frictionContextChapters,
     )
-    expect(frictionContextReport).toContain('a possible attraction can exist alongside different instincts about private choices.')
+    expect(frictionContextReport).toContain('The private-life chart points to different instincts around personal choices. Attraction can still be present alongside that difference.')
     expect(report.match(/^Question:/gm)).toHaveLength(7)
   })
 
