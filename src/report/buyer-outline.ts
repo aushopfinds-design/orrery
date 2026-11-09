@@ -1,6 +1,3 @@
-Warning: truncated output (original token count: 18491)
-Total output lines: 763
-
 import type { CompleteReadingPeriod, ReportChapter } from './complete-reading.ts'
 import { deliveredChapter } from './report-delivery.ts'
 export const BUYER_OUTLINES = {
@@ -291,7 +288,107 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
               : /Variety can be energising/u.test(routinePair) && /Independence becomes tiring/u.test(routinePair)
                 ? 'Give recurring tasks a clear owner while leaving some time open for new plans.'
                 : /Independence becomes tiring/u.test(routinePair)
-                  ? 'For a recur…2491 tokens truncated…mmitment and making your partner’s place in your life easy to understand.'
+                  ? 'For a recurring task, decide who owns it and when to ask for help.'
+                  : 'Compare one fixed plan with one flexible plan to see how your routines fit together.'
+          lead += ` Try: ${routineExample}`
+        }
+        lead = lead.replace(/\s+/gu, ' ').trim()
+        paragraphs = []
+        chapter.paragraphs.forEach(line => used.add(line))
+      } else if (kind === 'compatibility' && question.role === 'mutual-adjustment' && set === 'standalone') {
+        // Keep the final answer focused on what each person can adjust; earlier
+        // answers already cover needs, pressure patterns and day/routine links.
+        if (/You both need warm attention and time for your own interests\./u.test(lead)) {
+          lead = 'Because you share this need, each of you can give focused attention while protecting time for separate interests. Your shared adjustment is to make room for both connection and independence.'
+        }
+        lead = lead.replace(/\s+Understanding the difference is more useful than a compatibility percentage\.?$/iu, '')
+        paragraphs = []
+        chapter.paragraphs.forEach(line => used.add(line))
+      } else if (kind === 'wellbeing' && question.role === 'core-personality') {
+        paragraphs = []
+        chapter.paragraphs.forEach(line => used.add(line))
+      } else if (kind === 'wellbeing' && question.role === 'distinctive-traits') {
+        // Use the personal interpretation that connects work and relationships;
+        // the element-count discussion belongs with the chart explanation.
+        lead = chapter.paragraphs.find(line => /public role|work role|parts of your nature/i.test(line)) ?? chapter.lead
+        paragraphs = []
+        chapter.paragraphs.forEach(line => used.add(line))
+      } else if (kind === 'wellbeing' && question.role === 'daily-boundary') {
+        const personalStep = byId.get('workload-rhythm')?.tryThis
+        lead = personalStep ?? chapter.tryThis
+        paragraphs = []
+        chapter.paragraphs.forEach(line => used.add(line))
+      } else if (kind === 'wellbeing' && question.role === 'pressure-trigger') {
+        paragraphs = []
+        chapter.paragraphs.forEach(line => used.add(line))
+      } else if (kind === 'business' && question.role === 'financial-risk') {
+        const moneyPattern = chapter.lead.toLowerCase()
+        lead = moneyPattern.includes('combines repeat customers with new deals')
+          ? 'Your main financial risk is relying on new-deal income to cover ongoing delivery for repeat customers before payment is secure.'
+          : moneyPattern.includes('repeat sales and clearly priced ongoing work')
+            ? 'Your main financial risk is underpricing ongoing service: repeat sales can still require costs after payment.'
+            : moneyPattern.includes('finding buyers and making deals')
+              ? 'Your main financial risk is uneven cash flow: income depends on new buyers, so fees can vary between deals.'
+            : moneyPattern.includes('business money signs sit behind the main role')
+              ? 'Your main financial risk is setting business costs around sales before the less visible income route has been tested.'
+              : moneyPattern.includes('does not give a clear direct business money route')
+                ? 'Your main financial risk is taking on fixed costs before a direct business income route is clear.'
+                : 'Your main financial risk is counting a promising deal as income before payment arrives.'
+        paragraphs = chapter.paragraphs.filter(line => line !== chapter.lead).slice(0, 2)
+      } else if (kind === 'compatibility' && question.role === 'conflict-trigger') {
+        const friction = chapter.paragraphs.find(line => /^(?:Your likely friction is|The practical tension for Person A is)/.test(line))
+        lead = friction?.startsWith('Your likely friction is')
+          ? (() => {
+              const parts = friction.match(/^Your likely friction is (.*?); your partner’s is (.*?)\.$/)
+              if (!parts) return friction.replace(/^Your likely friction is /, 'The likely friction is ')
+              const yourFriction = parts[1].toLowerCase()
+              const partnerFriction = parts[2].toLowerCase()
+              if (yourFriction === partnerFriction) {
+                if (set === 'standalone' && yourFriction.includes('taking a request for space')) {
+                  return 'When either of you asks for space, the other may read it as rejection. Say whether you need time alone or reassurance, and when you will reconnect.'
+                }
+                return `You may both react to tension by ${parts[1]}. This can leave the same need unspoken on both sides, so name what would help before the conversation stalls.`
+              }
+              if (set === 'standalone' && yourFriction.includes('solving a problem before asking what help is wanted') && partnerFriction.includes('offering an answer before hearing how the problem feels')) {
+                return 'You may move to solve a problem before asking what help is wanted; your partner may answer before hearing how the problem feels. The feeling behind the problem can then go unheard.'
+              }
+              if (set === 'standalone' && yourFriction.includes('hoping someone notices a need you have not said aloud') && partnerFriction.includes('taking a request for space')) {
+                return 'You may hope an unspoken need will be noticed; your partner may read a request for space as rejection. One of you may need reassurance while the other needs room.'
+              }
+              if (set === 'standalone' && yourFriction.includes('taking a request for space') && partnerFriction.includes('solving a problem before asking what help is wanted')) {
+                return 'A request for space may feel like rejection to you, while your partner may start solving before checking what help is wanted. The moment can become tense before either request is clear.'
+              }
+              return `Your friction point is ${parts[1]}; your partner’s is ${parts[2]}. A tense moment may start when your response meets the different signal your partner is watching for. Say what you need before either of you assumes what the other meant.`
+            })()
+          : friction
+            ? `A likely friction point is ${friction.split('Person A is ')[1]?.split(';')[0] ?? 'a difference in private-life preferences'} for Person A, and ${friction.split('for Person B it is ')[1]?.split('.')[0] ?? 'a different reading of the same situation'} for Person B.`
+            : chapter.paragraphs.find(line => /^Your partner: /.test(line)) ?? chapter.paragraphs[3] ?? chapter.guidance.watchFor[0] ?? chapter.lead
+        paragraphs = []
+        chapter.paragraphs.forEach(line => used.add(line))
+      } else if (kind === 'compatibility' && question.role === 'relationship-timing' && set === 'standalone') {
+        // The year comparison is the answer; keep its tailored action below,
+        // without repeating another general relationship explanation.
+        paragraphs = []
+        chapter.paragraphs.forEach(line => used.add(line))
+      } else if (kind === 'compatibility' && question.role === 'care-expression') {
+        const firstCare = chapter.paragraphs.find(line => /^You: /.test(line))
+        const secondCare = chapter.paragraphs.find(line => /^Your partner: /.test(line))
+        const careStyle = (line: string, prefix: RegExp) => line.replace(prefix, '').split(/(?<=[.!?])\s/)[0]
+        const expressCare = (text: string) => {
+          if (/Privacy and being understood without constant explanation/i.test(text)) return 'show care by respecting private thinking time and trying to understand without asking for repeated explanations.'
+          if (/Equality and room to make your own choices/i.test(text)) return 'show care by treating your partner as an equal and respecting their choices.'
+          if (/Friends, social plans and personal freedom/i.test(text)) return 'show care by making room for couple time as well as each person’s social plans and freedom.'
+          if (/Reassurance, continuity and feeling understood/i.test(text)) return 'show care through steady check-ins, keeping promises and listening without rushing to correct.'
+          if (/Care tends to be shown through ordinary acts/i.test(text)) return 'show care through ordinary acts such as making time, preparing food or making daily life more comfortable.'
+          if (/honest exchange rather than polite silence/i.test(text)) return 'show care by saying what is wrong honestly and inviting the other person to do the same.'
+          if (/honest conversation matters more than polite silence/i.test(text)) return 'show care by speaking honestly while making room for your partner’s point of view.'
+          if (/Equality matters more than being managed/i.test(text)) return 'show care by treating your partner as an equal and leaving room for each person to make choices.'
+          if (/Friends, social commitments and personal freedom/i.test(text)) return 'show care by including your partner in plans while being clear about time reserved for friends or personal interests.'
+          if (/Keeping promises|practical commitments/i.test(text)) return 'show care by following through on promises and handling practical commitments reliably.'
+          if (/Generosity|shared experiences/i.test(text)) return 'show care by sharing experiences and offering generosity without assuming the other person wants the same thing.'
+          if (/decisiveness|intensity/i.test(text)) return 'show care by taking initiative when it helps, while checking that your partner wants you to step in.'
+          if (/Clear commitment and respectful behaviour/i.test(text)) return 'show care through respectful actions and clear commitments, while also saying what you feel.'
+          if (/respect and a clear place/i.test(text)) return 'show care through respect, clear commitment and making your partner’s place in your life easy to understand.'
           if (/focused conversation|direct conversation/i.test(text)) return 'show care by making space for an honest conversation and staying with the other person’s point of view.'
           if (/ordinary acts|practical help/i.test(text)) return 'show care through practical help, after checking what kind of support is wanted.'
           return text.replace(/\s+/g, ' ').trim()
