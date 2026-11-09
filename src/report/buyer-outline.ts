@@ -227,7 +227,10 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
         lead = lead.replace(/\s+For everyday compatibility,[\s\S]*$/u, '')
         lead = lead.replace(/\s+Your everyday pattern:\s*[^.!?]+[.!?]/u, '')
         const routine = byId.get('shared-routine')
-        const routineFinding = routine?.lead
+        const noRoutineSignal = /^The two charts show no direct link or clash between daily-routine patterns\./u.test(routine?.lead ?? '')
+        const routineFinding = noRoutineSignal
+          ? 'No clear link or clash stands out in the daily-routine comparison.'
+          : routine?.lead
         if (routineFinding) lead += ` ${routineFinding}`
         const yourRoutine = routine?.paragraphs.find(line => /^Your everyday pattern: /u.test(line))?.replace(/^Your everyday pattern: /u, '').replace(/[.!?]+$/u, '')
         const partnerRoutine = routine?.paragraphs.find(line => /^Your partner(?:'|’)s everyday pattern: /u.test(line))?.replace(/^Your partner(?:'|’)s everyday pattern: /u, '').replace(/[.!?]+$/u, '')
@@ -282,7 +285,23 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
           ? (() => {
               const parts = friction.match(/^Your likely friction is (.*?); your partner’s is (.*?)\.$/)
               if (!parts) return friction.replace(/^Your likely friction is /, 'The likely friction is ')
-              if (parts[1].toLowerCase() === parts[2].toLowerCase()) return `You may both react to tension by ${parts[1]}. This can leave the same need unspoken on both sides, so name what would help before the conversation stalls.`
+              const yourFriction = parts[1].toLowerCase()
+              const partnerFriction = parts[2].toLowerCase()
+              if (yourFriction === partnerFriction) {
+                if (set === 'standalone' && yourFriction.includes('taking a request for space')) {
+                  return 'When either of you asks for space, the other may read it as rejection. Say whether you need time alone or reassurance, and when you will reconnect.'
+                }
+                return `You may both react to tension by ${parts[1]}. This can leave the same need unspoken on both sides, so name what would help before the conversation stalls.`
+              }
+              if (set === 'standalone' && yourFriction.includes('solving a problem before asking what help is wanted') && partnerFriction.includes('offering an answer before hearing how the problem feels')) {
+                return 'You may move to solve a problem before asking what help is wanted; your partner may answer before hearing how the problem feels. The feeling behind the problem can then go unheard.'
+              }
+              if (set === 'standalone' && yourFriction.includes('hoping someone notices a need you have not said aloud') && partnerFriction.includes('taking a request for space')) {
+                return 'You may hope an unspoken need will be noticed; your partner may read a request for space as rejection. One of you may need reassurance while the other needs room.'
+              }
+              if (set === 'standalone' && yourFriction.includes('taking a request for space') && partnerFriction.includes('solving a problem before asking what help is wanted')) {
+                return 'A request for space may feel like rejection to you, while your partner may start solving before checking what help is wanted. The moment can become tense before either request is clear.'
+              }
               return `Your friction point is ${parts[1]}; your partner’s is ${parts[2]}. A tense moment may start when your response meets the different signal your partner is watching for. Say what you need before either of you assumes what the other meant.`
             })()
           : friction
