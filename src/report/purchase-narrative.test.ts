@@ -88,7 +88,7 @@ describe('Targeted customer-answer revisions',()=>{
  })
  it('explains the chart-linked income and support conflict without claiming a real setback',()=>{
   const answers=CATEGORY_SCENARIOS.map(profile=>customerNarrative(buildInterpretationPlan('career',calculateSaju(profile.first),2026))['working-style'].lines.map(line=>line.en))
-  const answer=answers.flat().find(line=>/learning or support/i.test(line))!
+  const answer=answers.flat().find(line=>/training or support is taking time or money away from paid work/i.test(line))!
   expect(answer).toBeDefined()
   expect(answer).toContain('the chart cannot confirm that it is limiting your finances')
   expect((answer.match(/learning or support/gi) ?? [])).toHaveLength(1)
