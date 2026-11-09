@@ -27,7 +27,7 @@ describe('Product 03 review PDF batch', () => {
       expect(report.text.match(/Question: /g)).toHaveLength(7)
       expect(report.text.match(/Answer: /g)).toHaveLength(7)
       for (const question of productQuestions('compatibility')) expect(report.text).toContain(`Question: ${question.title}`)
-      const q3 = report.text.split('Question: What tends to cause friction between us?')[1]?.split('\\n\\nQuestion: ')[0] ?? ''
+      const q3 = report.text.split('Question: What tends to cause friction between us?')[1]?.split('\n\nQuestion: ')[0] ?? ''
       expect(q3).not.toContain('different signal your partner is watching for')
       expect(q3).not.toContain('Say what you need before either of you assumes what the other meant')
       const q3ByProfile = [
