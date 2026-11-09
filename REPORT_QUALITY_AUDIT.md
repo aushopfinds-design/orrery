@@ -703,3 +703,21 @@ Answer-level text, prior component scores, deductions and code locations are in 
 | 3 | 89 | 95 | 93 | 90 | 86 | 86 | 94 | 90.4 | 86 | FAIL |
 | 4 | 90 | 95 | 90 | 92 | 86 | 86 | 94 | 90.4 | 86 | FAIL |
 | 5 | 90 | 95 | 93 | 89 | 91 | 87 | 94 | 91.3 | 87 | FAIL |
+
+## Product 03 — independent review after Q5 correction (2026-11-09; code SHA `e0e2185d4e66ccbf0c1329d0213dcb575ea7fbca`)
+
+The five new PDFs were generated only after confirming the exact code SHA on the official GitHub branch. This is a fresh answer-by-answer review of the generated files, not an automated diagnostic and not a reuse of the previous score.
+
+The unchanged rubric is direct answer 35, personalization 25, specificity/usefulness 15, repetition/generalities 10, easy English 10 and calculation consistency 5. The evaluator read all 35 official answer blocks. Component points, exact extracted answers, rationale, verdict and relevant code locations are stored in `docs/audits/PRODUCT03-INDEPENDENT-REVIEW-e0e2185.json`.
+
+| Profile | Q1 | Q2 | Q3 | Q4 | Q5 | Q6 | Q7 | Mean | Lowest answer | Result |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---|
+| 1 | 91 | 93 | 94 | 90 | 92 | 89 | 94 | 91.9 | 89 | FAIL |
+| 2 | 93 | 95 | 92 | 93 | 91 | 92 | 92 | 92.6 | 91 | FAIL |
+| 3 | 91 | 93 | 94 | 90 | 92 | 89 | 94 | 91.9 | 89 | FAIL |
+| 4 | 91 | 93 | 92 | 92 | 92 | 90 | 94 | 92.0 | 90 | FAIL |
+| 5 | 94 | 95 | 94 | 92 | 93 | 92 | 94 | 93.4 | 92 | FAIL |
+
+Relative to the prior means 90.4, 90.9, 90.4, 90.4 and 91.3, this pass is higher for every profile, but none meets the required 95-point mean. Q6 remains the weakest area, with repetitive timing prompts and limited explanation of why each chart-flagged year matters. Q4 still sometimes describes a care need instead of a visible way of expressing love. Q5 is more direct and now preserves both people’s needs, but the neutral chart signal is still wordy and some profiles repeat the same routine description. Q2 logic remains intact: P1/P3/P4 have no separate day-sign signal, P2 has a friction pattern, and P5 has a direct link.
+
+Verification: 55/55 focused tests passed; TypeScript check passed; PDF generation test passed and created five PDFs with seven official questions each; extracted text has no replacement glyphs and includes the Destiny Card and final summary. Preview `dpl_DczY3DscGd1xDwzkdLhbPqm72m7b` is READY on the same SHA; `/` and `/samples/` returned HTTP 200. Production was not changed.
