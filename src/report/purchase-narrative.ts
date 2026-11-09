@@ -1,4 +1,4 @@
-Warning: truncated output (original token count: 36091)
+Warning: truncated output (original token count: 36010)
 Total output lines: 662
 
 import { roleChoice, businessDivision, relationshipRepair, personalBoundary, monthlyFit } from './personalised-choices.ts'
@@ -185,7 +185,7 @@ export function customerNarrative(plan:InterpretationPlan,targetedProduct01=true
    const careerMoney=`Career & money — ${theme.work.en} ${theme.money.en}`
    const love=`Love & relationships — ${theme.love.en}${dayChange?` ${dayChange}`:' No direct day-pillar friction is recorded at this annual comparison.'}`
    const opportunity=`Opportunity — ${opening??connection??`No distinct paid-work opening is established here. A practical step that fits this theme is to ${PERIOD_VOICE[row.god].action.en[0].toLowerCase()+PERIOD_VOICE[row.god].action.en.slice(1)}`}`
-   const watch=`Cauti…16091 tokens truncated…tine.en[0].toLowerCase()+routine.en.slice(1)} Your routine pattern is ${yourRoutine.toLowerCase()}, while your partner’s is ${partnerRoutine.toLowerCase()}. These are separate chart clues to compare with how you actually live together.`,`정서적 친밀감에서는 ${closeness.ko} 본인은 ${NEED[p.dayBranch]}을, 상대방은 ${NEED[b.dayBranch]}을 중요하게 여기는 흐름입니다. 일상 궁합에서는 ${routine.ko} 본인의 일상 방식은 ${LANGUAGE[p.monthBranchGod].balance.ko}, 상대방의 방식은 ${LANGUAGE[b.monthBranchGod].balance.ko}입니다. 서로 다른 차트의 단서이므로 실제 함께 사는 방식과 비교해 보세요.`)],chartPatternsAction,relationshipWatch)
+   const watch=`Cauti…16010 tokens truncated…tine.en[0].toLowerCase()+routine.en.slice(1)} Your routine pattern is ${yourRoutine.toLowerCase()}, while your partner’s is ${partnerRoutine.toLowerCase()}. These are separate chart clues to compare with how you actually live together.`,`정서적 친밀감에서는 ${closeness.ko} 본인은 ${NEED[p.dayBranch]}을, 상대방은 ${NEED[b.dayBranch]}을 중요하게 여기는 흐름입니다. 일상 궁합에서는 ${routine.ko} 본인의 일상 방식은 ${LANGUAGE[p.monthBranchGod].balance.ko}, 상대방의 방식은 ${LANGUAGE[b.monthBranchGod].balance.ko}입니다. 서로 다른 차트의 단서이므로 실제 함께 사는 방식과 비교해 보세요.`)],chartPatternsAction,relationshipWatch)
   const aYears=purchaseYears(plan.first,plan.referenceYear,'love',5),bYears=purchaseYears(plan.second!,plan.referenceYear,'love',5)
   const relationshipChanges=aYears.map((a,i)=>({year:a.date.slice(0,4),you:a.lines.find(line=>line.id.endsWith('change-day'))?.en,partner:bYears[i].lines.find(line=>line.id.endsWith('change-day'))?.en})).filter(row=>row.you||row.partner).slice(0,3)
   const relationshipChangeText=(text:string)=>{

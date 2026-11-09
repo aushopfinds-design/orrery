@@ -222,10 +222,17 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
         paragraphs = []
         chapter.paragraphs.forEach(line => used.add(line))
       } else if (kind === 'compatibility' && question.role === 'closeness-vs-routine' && set === 'standalone') {
-        // This question asks for a comparison of two kinds of fit. Keep the
-        // source's direct comparison and leave friction in its own answer.
-        // Do not repeat the private-life needs already answered in Q1/Q4.
+        // Compare the private-life signal with the separate daily-routine
+        // comparison, then add each person's calculated routine theme.
         lead = lead.replace(/\s+You value [\s\S]*?(?=\s+For everyday compatibility,)/u, '')
+        const routine = byId.get('shared-routine')?.lead
+        if (routine) {
+          const personalRoutine = routine
+            .replace(/^In everyday life, Person A's chart/u, 'For everyday life, your chart')
+            .replace(/Person B's chart/gu, "your partner's chart")
+            .replace('This can affect how each of you handles tasks, time and responsibilities.', 'These chart themes can shape how you handle tasks, time and responsibilities together.')
+          lead += ` ${personalRoutine}`
+        }
         paragraphs = []
         chapter.paragraphs.forEach(line => used.add(line))
       } else if (kind === 'compatibility' && question.role === 'mutual-adjustment' && set === 'standalone') {
