@@ -1,9 +1,9 @@
 import { describe, expect, it } from 'vitest'
 import { FOCUS_CATALOG } from './category-catalog.ts'
 import { PREVIEW_KINDS, previewProduct } from './personal-products.ts'
-import { ACTIVE_PRODUCT_KINDS, BUNDLE_REPORTS, REPORT_PRICE_CENTS, bundleSavings, formatUSD, reportPrice } from './pricing.ts'
+import { ACTIVE_PRODUCT_KINDS, REPORT_PRICE_CENTS, formatUSD, reportPrice } from './pricing.ts'
 
-describe('launch prices and genuine bundle comparison', () => {
+describe('launch prices and integrated collection', () => {
   it('provides a positive integer-cent price for every offered report', () => {
     expect(REPORT_PRICE_CENTS).toEqual({ complete:1999, year:899, compatibility:1499, career:1499, love:999, bundle:4827, business:1199, wellbeing:899 })
     expect([...ACTIVE_PRODUCT_KINDS].sort()).toEqual([...PREVIEW_KINDS].sort())
@@ -20,25 +20,17 @@ describe('launch prices and genuine bundle comparison', () => {
     expect(previewProduct('wellbeing').price).toBe('$8.99')
   })
 
-  it('offers the approved seven-product set while retaining My Love for legacy orders and the existing package', () => {
+  it('offers the approved seven-product set while retaining My Love for legacy orders', () => {
     expect([...ACTIVE_PRODUCT_KINDS]).toEqual(['complete', 'career', 'compatibility', 'year', 'business', 'wellbeing', 'bundle'])
     expect(previewProduct('love').title).toBe('My Love')
     expect(reportPrice('business')).toBe('$11.99')
     expect(reportPrice('wellbeing')).toBe('$8.99')
-    expect(BUNDLE_REPORTS).toEqual(['complete', 'year', 'compatibility', 'career', 'love'])
   })
 
-  it('compares the bundle with all five included reports', () => {
-    expect(BUNDLE_REPORTS).toEqual(['complete', 'year', 'compatibility', 'career', 'love'])
-    expect(bundleSavings()).toEqual({ separatePrice: '$68.95', savedAmount: '$20.68', percent: 30 })
+  it('prices the ten-question collection as one integrated report without a false multi-report discount', () => {
     expect(reportPrice('bundle')).toBe('$48.27')
-  })
-
-  it('never rounds the advertised saving above the actual discount', () => {
-    const total = BUNDLE_REPORTS.reduce((sum, kind) => sum + REPORT_PRICE_CENTS[kind], 0)
-    const actual = (total - REPORT_PRICE_CENTS.bundle) * 100 / total
-    expect(bundleSavings().percent).toBe(Math.round(actual))
-    expect(Math.abs(actual - bundleSavings().percent)).toBeLessThan(1)
+    expect(previewProduct('bundle').questions).toBe(10)
+    expect(previewProduct('bundle').description).toContain('integrated 10-question reading')
   })
 
   it('formats cents as explicit USD amounts without a currency conversion', () => {
