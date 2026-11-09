@@ -521,7 +521,7 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
         const clean = (value: string) => value.replace(/^(?:Direct answer|What this means for you|Important timing|Bottom line):\s*/i, '').trim()
         const sourceChapter = byId.get(question.source)!
         if (question.id === 'work-chapters') {
-          const years = careerYears.filter(item => item.year >= 1900)
+          const years = careerYears.filter(item => item.year >= 1900).sort((a, b) => a.year - b.year)
           const changedYears = [...new Set(years.filter(item => item.workTension).map(item => item.year))]
           const yearRange = years.length ? `${years[0].year}–${years.at(-1)!.year}` : 'next ten years'
           const themeLanguage: Record<string, string> = {
@@ -533,11 +533,9 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
           const themeList = importantThemes.length < 2 ? importantThemes.join('')
             : importantThemes.length === 2 ? `${importantThemes[0]} and ${importantThemes[1]}`
               : `${importantThemes.slice(0, -1).join(', ')}, and ${importantThemes.at(-1)}`
-          const yearThemes = [...new Map(years.map(item => [themeLanguage[item.stemGod] ?? item.stemGod.toLowerCase(), item.year]))]
-            .slice(0, 3)
-            .map(([theme, year]) => `${year} points to ${theme.toLowerCase()}`)
-          const themeYears = yearThemes.length ? yearThemes.join('; ') : 'the checked years show different work demands'
-          const conclusion = `Your ${yearRange} outlook is mixed: work themes change, but the comparisons do not show a steady rise in income. The main themes include ${themeList.toLowerCase() || 'different work demands'}; ${themeYears}.`
+          const yearThemes = years.map(item => `${item.year}: ${(themeLanguage[item.stemGod] ?? item.stemGod.toLowerCase()).toLowerCase()}`)
+          const themeYears = yearThemes.length ? `Year by year: ${yearThemes.join('; ')}.` : 'The checked years show different work demands.'
+          const conclusion = `Your ${yearRange} outlook is mixed: work themes change, but the comparisons do not show a steady rise in income. The main themes include ${themeList.toLowerCase() || 'different work demands'}. ${themeYears}`
           const importantTiming = changedYears.length
             ? `Work may feel more demanding in ${changedYears.join(', ')}. Treat these as review points, not predicted setbacks.`
             : 'No year stands out for a stronger work challenge in the checked comparisons.'
