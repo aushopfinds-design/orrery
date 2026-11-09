@@ -31,8 +31,14 @@ describe('Product 03 review PDF batch', () => {
       expect(q4).toMatch(/You may express love|You and your partner may express love in a similar way/)
       expect(q4).not.toMatch(/You may (?:Honest conversation|Clear commitment|Privacy and being understood)/)
       const q5 = report.text.split('Question: How do emotional closeness and everyday compatibility differ?')[1]?.split('\n\nQuestion: ')[0] ?? ''
-      expect(q5).toContain('Your daily chart pattern:')
-      expect(q5).toContain("Your partner's daily chart pattern:")
+      expect(q5).toMatch(/(?:Your daily chart pattern:|You share this daily chart pattern:)/)
+      if (index === 1) {
+        expect(q5).toContain('You both value warm attention and time for your own interests.')
+        expect(q5).toContain('You share this daily chart pattern: Independence becomes tiring when every task has to be handled alone.')
+        expect(q5).not.toContain("Your partner's daily chart pattern: Independence becomes tiring when every task has to be handled alone.")
+      } else {
+        expect(q5).toContain("Your partner's daily chart pattern:")
+      }
       expect(q5).toContain('Emotional closeness depends more on how you respond to each other’s needs')
       expect(q5).not.toContain('day-sign comparison')
       const q6 = report.text.split('Question: Which upcoming periods may affect our relationship themes?')[1]?.split('\n\nQuestion: ')[0] ?? ''

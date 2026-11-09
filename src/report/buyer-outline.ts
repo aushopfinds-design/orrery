@@ -232,7 +232,10 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
         const yourRoutine = routine?.paragraphs.find(line => /^Your everyday pattern: /u.test(line))?.replace(/^Your everyday pattern: /u, '').replace(/[.!?]+$/u, '')
         const partnerRoutine = routine?.paragraphs.find(line => /^Your partner(?:'|’)s everyday pattern: /u.test(line))?.replace(/^Your partner(?:'|’)s everyday pattern: /u, '').replace(/[.!?]+$/u, '')
         if (yourRoutine && partnerRoutine) {
-          lead += ` Your daily chart pattern: ${yourRoutine}. Your partner's daily chart pattern: ${partnerRoutine}.`
+          const sameRoutine = yourRoutine.replace(/\s+/gu, ' ').trim().toLocaleLowerCase() === partnerRoutine.replace(/\s+/gu, ' ').trim().toLocaleLowerCase()
+          lead += sameRoutine
+            ? ` You share this daily chart pattern: ${yourRoutine}.`
+            : ` Your daily chart pattern: ${yourRoutine}. Your partner's daily chart pattern: ${partnerRoutine}.`
         }
         paragraphs = []
         chapter.paragraphs.forEach(line => used.add(line))

@@ -174,6 +174,17 @@ describe('Buyer questions, not a repeated six-part technical template', () => {
       expect(answer).not.toMatch(/You may (?:Honest conversation|Clear commitment)/)
     }
   })
+  it('states identical closeness needs and daily patterns once in Product 03 Q5', () => {
+    const profile = CATEGORY_SCENARIOS[1]
+    const first = calculateSaju(profile.first), second = calculateSaju(profile.second)
+    const reading = buildCategoryReading('compatibility', first, { second, year: 2026 })
+    const report = applyBuyerQuestions(reading.fullText, 'compatibility', reading.chapters, [], 'standalone')
+    const q5 = report.split('Question: How do emotional closeness and everyday compatibility differ?')[1]?.split('\n\nQuestion: ')[0] ?? ''
+    expect(q5).toContain('You both value warm attention and time for your own interests.')
+    expect(q5).toContain('You share this daily chart pattern: Independence becomes tiring when every task has to be handled alone.')
+    expect(q5).not.toContain('your partner values warm attention and time for your own interests')
+    expect(q5).not.toContain("Your partner's daily chart pattern: Independence becomes tiring when every task has to be handled alone.")
+  })
   it('keeps ten collection questions and maps relationship answers to their matching details', () => {
     expect(COLLECTION_BUYER_QUESTIONS.compatibility).toHaveLength(10)
     const make = (id: string, lead: string, paragraphs: string[] = [], action = 'Make one clear agreement.') => ({
