@@ -241,6 +241,17 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
           lead += sameRoutine
             ? ` You share this daily chart pattern: ${yourRoutine}.`
             : ` Your daily chart pattern: ${yourRoutine}. Your partner's daily chart pattern: ${partnerRoutine}.`
+          const routinePair = `${yourRoutine} ${partnerRoutine}`
+          const routineExample = /Variety can be energising/u.test(routinePair) && /A steady rhythm can help/u.test(routinePair)
+            ? 'Keep one shared plan fixed, then leave room for an extra plan without crowding the week.'
+            : /Busy social obligations can crowd out/u.test(routinePair) && /Independence becomes tiring/u.test(routinePair)
+              ? 'Protect one block of personal time and agree who owns each recurring task.'
+              : /Variety can be energising/u.test(routinePair) && /Independence becomes tiring/u.test(routinePair)
+                ? 'Give recurring tasks a clear owner while leaving some time open for new plans.'
+                : /Independence becomes tiring/u.test(routinePair)
+                  ? 'For a recurring task, decide who owns it and when to ask for help.'
+                  : 'Compare one fixed plan with one flexible plan to see how your routines fit together.'
+          lead += ` Everyday example: ${routineExample}`
         }
         paragraphs = []
         chapter.paragraphs.forEach(line => used.add(line))
