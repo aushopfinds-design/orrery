@@ -30,6 +30,9 @@ describe('Product 03 review PDF batch', () => {
       const q4 = report.text.split('Question: How do we express love differently?')[1]?.split('\n\nQuestion: ')[0] ?? ''
       expect(q4).toMatch(/You may show care|You and your partner may use a similar care style/)
       expect(q4).not.toMatch(/You may (?:Honest conversation|Clear commitment|Privacy and being understood)/)
+      const q5 = report.text.split('Question: How do emotional closeness and everyday compatibility differ?')[1]?.split('\n\nQuestion: ')[0] ?? ''
+      expect(q5).toContain('Your daily chart pattern:')
+      expect(q5).toContain("Your partner's daily chart pattern:")
       const q2 = report.text.split('Question: Why are we attracted to each other?')[1]?.split('\n\nQuestion: ')[0] ?? ''
       expect(q2).toContain('The chart cannot confirm either person’s actual feelings.')
       q2Answers.push(q2)

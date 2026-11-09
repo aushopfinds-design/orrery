@@ -110,7 +110,7 @@ describe('Buyer questions, not a repeated six-part technical template', () => {
         'Your likely friction is advice arriving before listening; your partner’s is practical help arriving without checking what was asked for.',
       ]),
       make('chart-patterns', 'For emotional closeness, neither a direct bond nor a direct conflict stands out. You value being heard before someone offers a solution, while your partner values listening as well as practical help. For everyday compatibility, the routine comparison has no clear linking or clashing pattern. Compare your actual habits rather than assuming they will match.', []),
-      make('shared-routine', "In everyday life, Person A's chart puts emphasis on careful work; Person B's chart points to creative projects. This can affect how each of you handles tasks, time and responsibilities.", []),
+      make('shared-routine', "In everyday life, Person A's chart puts emphasis on careful work; Person B's chart points to creative projects. This can affect how each of you handles tasks, time and responsibilities.", ['Your everyday pattern: Careful work benefits from a steady pace.', 'Your partner’s everyday pattern: Creative projects need room for new ideas.']),
       make('shared-week', 'This connection asks each person to make room for the other’s different needs. Understanding the difference is more useful than a compatibility percentage.', [
         'The day comparison shows a private-life difference.',
         'The month comparison shows a different daily routine.',
@@ -148,7 +148,7 @@ describe('Buyer questions, not a repeated six-part technical template', () => {
     expect(timing).not.toContain('Main caution:')
     expect(report).toContain('Question: How do emotional closeness and everyday compatibility differ?\n\nAnswer: For emotional closeness, neither a direct bond nor a direct conflict stands out. For everyday compatibility, the routine comparison has no clear linking or clashing pattern. Compare your actual habits rather than assuming they will match.')
     const closeness = report.slice(report.indexOf('Question: How do emotional closeness and everyday compatibility differ?')).split('\n\nshared-routine')[0].split('\n\nQuestion: ')[0]
-    expect(closeness).toContain('For everyday life, your chart puts emphasis on careful work; your partner\'s chart points to creative projects.')
+    expect(closeness).toContain('Your daily chart pattern: Careful work benefits from a steady pace. Your partner\'s daily chart pattern: Creative projects need room for new ideas.')
     expect(closeness).not.toContain('likely tension')
     expect(closeness).not.toContain('You value being heard')
     expect(closeness).not.toContain('Practical point:')

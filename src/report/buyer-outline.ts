@@ -225,13 +225,11 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
         // Compare the private-life signal with the separate daily-routine
         // comparison, then add each person's calculated routine theme.
         lead = lead.replace(/\s+You value [\s\S]*?(?=\s+For everyday compatibility,)/u, '')
-        const routine = byId.get('shared-routine')?.lead
-        if (routine) {
-          const personalRoutine = routine
-            .replace(/^In everyday life, Person A's chart/u, 'For everyday life, your chart')
-            .replace(/Person B's chart/gu, "your partner's chart")
-            .replace('This can affect how each of you handles tasks, time and responsibilities.', 'These chart themes can shape how you handle tasks, time and responsibilities together.')
-          lead += ` ${personalRoutine}`
+        const routine = byId.get('shared-routine')
+        const yourRoutine = routine?.paragraphs.find(line => /^Your everyday pattern: /u.test(line))?.replace(/^Your everyday pattern: /u, '').replace(/[.!?]+$/u, '')
+        const partnerRoutine = routine?.paragraphs.find(line => /^Your partner(?:'|’)s everyday pattern: /u.test(line))?.replace(/^Your partner(?:'|’)s everyday pattern: /u, '').replace(/[.!?]+$/u, '')
+        if (yourRoutine && partnerRoutine) {
+          lead += ` Your daily chart pattern: ${yourRoutine}. Your partner's daily chart pattern: ${partnerRoutine}.`
         }
         paragraphs = []
         chapter.paragraphs.forEach(line => used.add(line))
