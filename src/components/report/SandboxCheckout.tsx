@@ -8,6 +8,10 @@ import { isSandboxHost, isPurchaseHost } from '../../utils/purchase-client.ts'
 import { downloadRecovery, recoveryCode, rememberOrder, validOrderId } from '../../utils/order-access.ts'
 export { PURCHASES_KEY } from '../../utils/purchase-client.ts'
 export const TEST_ACCESS_KEY = 'fate-sandbox-access-v1'
+
+class CheckoutFailure extends Error {
+  constructor(readonly diagnostic: string) { super(diagnostic) }
+}
 export default function SandboxCheckout({ order }: { order: OrderInput }) {
   const { t } = useLocale()
   const [recipientName, setRecipientName] = useState('')
@@ -47,14 +51,22 @@ export default function SandboxCheckout({ order }: { order: OrderInput }) {
         method: 'POST', headers: { 'Content-Type': 'application/json', ...(mode === 'test' ? { 'X-Fate-Test-Token': access } : {}), 'Idempotency-Key': key },
         body: draft, signal: controller.signal,
       })
-      const result = await response.json()
+      const result = await response.json().catch(() => ({}))
       if (controller.signal.aborted) return
-      if (!response.ok || result.mode !== mode || !validOrderId(result.orderId ?? '') || !/^[A-Za-z0-9_-]{43}$/.test(result.accessToken ?? '') || !/^https:\/\/checkout\.stripe\.com\//.test(result.checkoutUrl ?? '')) throw new Error('Checkout unavailable')
+      if (!response.ok) {
+        const code = typeof result.error === 'string' && /^[a-z0-9_]{1,64}$/.test(result.error) ? result.error : 'checkout_request_failed'
+        throw new CheckoutFailure(String(response.status) + ' ' + code)
+      }
+      if (result.mode !== mode || !validOrderId(result.orderId ?? '') || !/^[A-Za-z0-9_-]{43}$/.test(result.accessToken ?? '') || !/^https:\/\/checkout\.stripe\.com\//.test(result.checkoutUrl ?? '')) throw new CheckoutFailure(String(response.status) + ' checkout_response_invalid')
       rememberOrder(result.orderId, { accessToken: result.accessToken, kind: order.kind }, remember)
       setPrepared({ orderId: result.orderId, accessToken: result.accessToken, checkoutUrl: result.checkoutUrl })
 
-    } catch {
-      if (activeRequest.current === controller) { setMessage(t('sandbox.error')); setBusy(false) }
+    } catch (error) {
+      if (activeRequest.current === controller) {
+        const diagnostic = error instanceof CheckoutFailure ? error.diagnostic : controller.signal.aborted ? 'checkout_timeout' : 'checkout_network_error'
+        setMessage(t('sandbox.error') + ' (' + diagnostic + ')')
+        setBusy(false)
+      }
     } finally { clearTimeout(timeout); if (activeRequest.current === controller) { activeRequest.current = null; setBusy(false) } }
   }
   if (mode === 'closed') return <p role="status">{t('buyer.checkout.pending')}</p>
