@@ -4,6 +4,7 @@ import type { BirthInput } from '@orrery/core/types'
 import { buildCompleteReading, buildFreeReading } from './complete-reading.ts'
 import { resolveReportRoute } from '../utils/report-route.ts'
 import { plainReadingText } from './reading-text.ts'
+import { PERSONAL_PROFILES } from './reading-profiles.ts'
 
 const locations = [
   { timezone: 'Asia/Seoul', latitude: 37.5665, longitude: 126.978 },
@@ -48,7 +49,10 @@ describe('Complete reading quality across 60 international profiles', () => {
   const readings = profiles.map(input => ({ input, result: calculateSaju(input), reading: buildCompleteReading(calculateSaju(input), 2026) }))
 
   it('has substantive variation beyond changing date labels, including profiles with the same day marker', () => {
-    expect(new Set(readings.map(({ reading }) => reading.chapters[0].paragraphs.join(' '))).size).toBeGreaterThan(30)
+    expect(new Set(readings.map(({ reading }) => {
+      const personality = reading.chapters[0]
+      return [personality.lead, ...personality.paragraphs].join(' ')
+    })).size).toBeGreaterThan(30)
     const grouped = new Map<string, string[]>()
     for (const { reading } of readings) {
       const values = grouped.get(reading.dayMaster) ?? []
@@ -218,7 +222,7 @@ describe('Independent checks do not change the customer-facing reading', () => {
       current: [...current, null],
       independent: [...current, null],
     })
-    expect(report.chapters.find(chapter => chapter.id === 'personality')!.lead).toContain(result.pillars[1].pillar.stem)
+    expect(report.chapters.find(chapter => chapter.id === 'personality')!.lead).toContain(PERSONAL_PROFILES[result.pillars[1].pillar.stem].focus)
     expect(report.pillarSummary).toContain('Hour: Unknown')
     expect(report.fullText).toContain('The hour result is not independently confirmed.')
     expect(report.fullText).not.toMatch(/Hour (?:stem|branch) (?!result)/)
