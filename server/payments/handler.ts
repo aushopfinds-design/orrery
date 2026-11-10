@@ -27,8 +27,8 @@ async function bodyText(request: Request, limit: number) {
 export function paymentHandler(getService: () => PaymentService) {
   return async (request: Request): Promise<Response> => {
     const requestId = randomUUID()
+    const action = new URL(request.url).searchParams.get('action')
     try {
-      const action = new URL(request.url).searchParams.get('action')
       if (action === 'subscription' && ['GET','POST'].includes(request.method)) {
         const service=getService(), url=new URL(request.url), purpose=url.searchParams.get('preference')
         if(!await service.customerRecordsReady())throw new PaymentError('customer_records_not_ready',503)
@@ -96,9 +96,9 @@ export function paymentHandler(getService: () => PaymentService) {
       const status = error instanceof PaymentError ? error.status : 503
       const code = error instanceof PaymentError ? error.code : 'payment_service_unavailable'
       // Never log webhook bodies, URLs, birth details, emails, database URLs or provider errors.
-      if (status >= 500 || code === 'payment_order_mismatch') {
+      if (action === 'checkout' || status >= 500 || code === 'payment_order_mismatch') {
         const providerCode = (error as { code?: unknown } | null)?.code
-        console.error(JSON.stringify({ event: 'payment_request_failed', code, requestId,
+        console.error(JSON.stringify({ event: 'payment_request_failed', action, status, code, requestId,
           ...(typeof providerCode === 'string' && /^[a-zA-Z0-9_]{1,80}$/.test(providerCode) ? { providerCode } : {}) }))
       }
       return json({ error: code, requestId }, status)
