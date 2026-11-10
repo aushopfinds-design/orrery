@@ -444,6 +444,10 @@ async function reportPdf(report: BuyerReport, emphasis: string[], mode: 'test' |
   for (const [blockIndex, block] of blocks.entries()) {
     const value = block.trim()
     if (!value) continue
+    // Product 03 answers can be long when both partners have distinct chart
+    // patterns. Keep a question and its answer off the footer-safe area.
+    if (report.kind === 'compatibility' && value === 'Question: How do emotional closeness and everyday compatibility differ?' && y < 430) addPage()
+    if (report.kind === 'compatibility' && value.startsWith('Question: ') && y < 300) addPage()
     if (value.startsWith('Question: ')) {
       const definition = questionDefinitions.find(question => question.title === value.slice('Question: '.length).trim())
       if (definition && !questionDestinations.has(definition.id)) questionDestinations.set(definition.id, { page, y: y - 2 })

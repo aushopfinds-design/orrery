@@ -26,7 +26,7 @@ describe('final six-product representative PDF review', () => {
         expect(loveLanguage).toBeTruthy()
         expect(loveLanguage).not.toBe(conflict)
         expect(loveLanguage).not.toMatch(/useful first response is to listen to the full concern/i)
-        expect(report.text).toMatch(/Question: Which upcoming periods may affect our relationship themes\?\n\nAnswer: The only period flagged in this five-year comparison is \d{4} for you\./)
+        expect(report.text).toMatch(/Question: Which upcoming periods may affect our relationship themes\?\n\nAnswer: \d{4}: for you, the chart flags/)
         expect(report.text).not.toMatch(/\b20\d\dfor your partner:|checked day-branch timing/)
       }
       if (kind === 'year') {

@@ -26,7 +26,20 @@ describe('Product 03 review PDF batch', () => {
       expect(pdf.getPages().flatMap(page => page.node.Annots()?.asArray() ?? []).length).toBeGreaterThanOrEqual(7)
       expect(report.text.match(/Question: /g)).toHaveLength(7)
       expect(report.text.match(/Answer: /g)).toHaveLength(7)
-      for (const question of productQuestions('compatibility')) expect(report.text).toContain(`Question: ${question.title}`)
+      const officialQuestions = productQuestions('compatibility')
+      expect([...report.text.matchAll(/Question: ([^\n]+)/g)].map(match => match[1])).toEqual(officialQuestions.map(question => question.title))
+      const reportBody = report.text.split('\n\nCalculation notes\n\n')[0]
+      expect(reportBody).not.toContain('Your reading at a glance')
+      for (const legacyChapter of [
+        'How Do You Fit Together?',
+        'Why Are You Drawn to Each Other?',
+        'Why Do You See Things Differently?',
+        'Can Your Everyday Lives Fit Together?',
+        'Can You Agree About Money?',
+        'What Brings You Closer - and What Creates Friction?',
+        'How Might the Years Ahead Affect Your Relationship?',
+        'What Does This Connection Ask of You?',
+      ]) expect(reportBody).not.toContain(legacyChapter)
       const q1 = report.text.split('Question: What makes us compatible?')[1]?.split('\n\nQuestion: ')[0] ?? ''
       const q1ByProfile = [
         'That overlap is your clearest point of fit; the personal-life signs add no separate connection or conflict.',
@@ -68,8 +81,9 @@ describe('Product 03 review PDF batch', () => {
         'Try: Give recurring tasks a clear owner while leaving some time open for new plans.',
       ]
       expect(q5).toContain(q5Examples[index])
+      expect(q5).not.toMatch(/You(?: both)? value /)
       if (index === 1) {
-        expect(q5).toContain('You both value warm attention and time for your own interests.')
+        expect(q5).toContain('small differences in what you expect from private life can become recurring irritations.')
         expect(q5).toContain('You both tend to: Independence becomes tiring when every task has to be handled alone.')
         expect(q5).not.toContain('Your partner tends to: Independence becomes tiring when every task has to be handled alone.')
         const q7 = report.text.split('Question: What does this connection ask of each of us?')[1]?.split('\n\nQuestion: ')[0] ?? ''
@@ -81,8 +95,13 @@ describe('Product 03 review PDF batch', () => {
       expect(q5).toMatch(/Emotionally, .+ Daily life:/)
       expect(q5).not.toContain('day-sign comparison')
       expect(q5).not.toContain('Compare the personal routine styles below with the way you actually share daily life.')
+      const q7 = report.text.split('Question: What does this connection ask of each of us?')[1]?.split('\n\nQuestion: ')[0] ?? ''
+      expect(q7).not.toContain('Your chart points to')
+      if (index === 0 || index === 2) expect(q7).toContain('Your partner can hear your concern first, then ask before offering advice.')
       const q6 = report.text.split('Question: Which upcoming periods may affect our relationship themes?')[1]?.split('\n\nQuestion: ')[0] ?? ''
       expect(q6).not.toContain('..')
+      expect(q6).not.toMatch(/The (?:only )?periods? flagged in this five-year comparison/)
+      expect(q6).not.toContain('This is the specific shared-time theme flagged for the year.')
       expect(q6).not.toContain('Check whether it affects time together or personal choice')
       expect(q6).not.toContain('With both charts flagging individual focus')
       expect(q6).toMatch(/Discuss (?:what work time|which social plans|how study|whether new work contacts|where each person|how practical duties|which new plans|how work and money|who owns|which decisions)/)

@@ -1,3 +1,6 @@
+Warning: truncated output (original token count: 19259)
+Total output lines: 804
+
 import type { CompleteReadingPeriod, ReportChapter } from './complete-reading.ts'
 import { deliveredChapter } from './report-delivery.ts'
 export const BUYER_OUTLINES = {
@@ -159,6 +162,24 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
     if (!byId.has(source)) throw new Error(`Missing answer source: ${kind}/${source}`)
     questionsBySource.set(source, [...(questionsBySource.get(source) ?? []), question])
   }
+  // Product 03's paid standalone report is defined by its seven buyer
+  // questions. The category-reading source still carries legacy routine and
+  // money chapters; those are not additional compatibility questions.
+  if (kind === 'compatibility' && set === 'standalone') {
+    const overviewAt = text.indexOf('Your reading at a glance')
+    if (overviewAt >= 0) {
+      const firstSource = chapters[0] ? deliveredChapter(chapters[0]).join('\n\n') : ''
+      const firstChapterAt = firstSource ? text.indexOf(firstSource, overviewAt + 'Your reading at a glance'.length) : -1
+      if (firstChapterAt < 0) throw new Error('Missing first Product 03 chapter after overview')
+      text = `${text.slice(0, overviewAt - 2)}\n\n${text.slice(firstChapterAt)}`
+    }
+    for (const chapter of chapters) {
+      if (questionsBySource.has(chapter.id)) continue
+      const original = deliveredChapter(chapter).join('\n\n')
+      if (!text.includes(original)) throw new Error(`Missing delivered source: ${kind}/${chapter.id}`)
+      text = text.replace(`${original}\n\n`, '').replace(original, '')
+    }
+  }
   for (const [source, questions] of questionsBySource) {
     const chapter = byId.get(source)!, used = new Set<string>()
     const answer = (question: BuyerQuestion) => {
@@ -191,292 +212,7 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
           /^For (.+?), Income is linked indirectly with dependable work and recognised responsibility\. A title that adds duties without matching pay is the financial pressure to notice\./,
           'For $1, the clearest money pressure to watch is accepting extra duties without matching pay. Your chart links income indirectly to dependable work and recognised responsibility.',
         )
-        paragraphs = annualBasis && monthTheme ? [`${annualBasis} ${monthTheme}`] : [annualBasis ?? monthTheme].filter((line): line is string => Boolean(line))
-        chapter.paragraphs.forEach(line => used.add(line))
-      } else if (kind === 'year' && question.role === 'relationship-theme') {
-        paragraphs = chapter.paragraphs.slice(0, 2)
-        chapter.paragraphs.forEach(line => used.add(line))
-      } else if (kind === 'year' && question.role === 'supportive-months') {
-        const monthPattern = /\b(?:January|February|March|April|May|June|July|August|September|October|November|December) 20\d{2}\b/g
-        const months = [...new Set(chapter.lead.match(monthPattern) ?? [])]
-        const hasOpenings = chapter.lead.startsWith('The clearest conditional activity openings are ')
-        const overlap = /also meets the separate extra-care check|both lists/iu.test(chapter.lead)
-        lead = hasOpenings
-          ? `The clearest checked months are ${months.join(', ')}. They show conditional support, not guaranteed good outcomes.${overlap ? ' Each also carries a separate demand to review.' : ''}`
-          : months.length
-            ? `No month meets the full check for a clear opening. The quieter chart themes appear in ${months.join(', ')}; these are not confirmed opportunities.`
-            : 'No month meets the checked conditions for a clear opening. This chart comparison does not rule out real-world opportunities.'
-        paragraphs = chapter.paragraphs.slice(0, 2).map(line => line
-          .replace(/^Answer:\s*/i, '')
-          .replace(/^The (?:quieter|clearest checked) chart themes? (?:appear|are) in [^.]+\.\s*/i, '')
-          .replace(/^These are (?:not confirmed opportunities|conditional support, not guaranteed good outcomes)\.\s*/i, '')
-          .trim()).filter(Boolean)
-        chapter.paragraphs.forEach(line => used.add(line))
-      } else if (kind === 'business' && question.role === 'partner-fit') {
-        paragraphs = chapter.paragraphs.slice(0, 1)
-        chapter.paragraphs.forEach(line => used.add(line))
-      } else if (kind === 'business' && question.role === 'expansion-timing') {
-        paragraphs = chapter.paragraphs.slice(0, 1)
-        chapter.paragraphs.forEach(line => used.add(line))
-      } else if (kind === 'compatibility' && question.role === 'attraction' && set === 'standalone') {
-        const perspectives = [chapter.lead, ...chapter.paragraphs]
-        const yours = perspectives.find(line => /^From your side:|^You:/.test(line))
-        const theirs = perspectives.find(line => /^From your partner(?:'|’)s side:|^Your partner:/.test(line))
-        const privateConnection = chapter.paragraphs.find(line => /^The day signs (?:also|show)/.test(line))
-        const cleanPerspective = (line: string | undefined, prefix: RegExp) => line?.replace(prefix, '').replace(/^(?:The )?attraction may be\s*/i, '').replace(/\.\s+[\s\S]*$/u, '').replace(/\s+stand out[.!?]*$/i, '').replace(/[.!?]+$/u, '').trim().replace(/fresh ideas and someone who says what they think/iu, 'fresh ideas and open communication').replace(/^(.+?) may feel (.+)$/i, '$1 that feels $2').replace(/^./u, char => char.toLowerCase())
-        if (yours && theirs) {
-          const yourDraw = cleanPerspective(yours, /^(?:From your side:|You:)\s*/)
-          const partnerDraw = cleanPerspective(theirs, /^(?:From your partner(?:'|’)s side:|Your partner:)\s*/)
-          lead = yourDraw === partnerDraw
-            ? `Both directions point to a shared draw: you may each be drawn to ${yourDraw} in the connection. The chart cannot confirm either person’s actual feelings.`
-            : `You may be drawn to what your partner brings: ${yourDraw}. Your partner may be drawn to what you bring: ${partnerDraw}. The chart cannot confirm either person’s actual feelings.`
-          if (privateConnection?.includes('neither a direct link nor a friction pattern')) {
-            lead += ' The private-life comparison adds no clear connection or conflict, so it offers no extra clue about attraction.'
-          } else if (privateConnection?.includes('form a friction pattern')) {
-            lead += ' The private-life comparison points to different instincts about personal choices. That difference can coexist with the attraction pattern described above.'
-          } else if (privateConnection?.includes('form a direct link')) {
-            lead += ' The private-life comparison shows a link that may support closeness; it does not promise a particular relationship outcome.'
-          }
-        }
-        paragraphs = []
-        chapter.paragraphs.forEach(line => used.add(line))
-      } else if (kind === 'compatibility' && question.role === 'overall-fit') {
-        // State the fit pattern directly, using the personal-life comparison
-        // only to qualify the conclusion. Q5 keeps the fuller comparison.
-        const noPrivateSignal = /private-life chart comparison shows no clear tie or clash/u.test(lead)
-        const privateChoiceDifference = /private-life chart comparison shows a difference in how you may handle personal choices/u.test(lead)
-        const privatePlanLink = /private-life chart comparison shows a link that can support shared plans/u.test(lead)
-        if (lead.startsWith('This match shares a similar need for care:')) {
-          lead = lead.replace('You have common ground, but you may both wait for the other to offer it first.',
-            noPrivateSignal
-              ? 'That overlap is your clearest point of fit; the personal-life signs add no separate connection or conflict.'
-              : 'This shared care is your clearest point of fit.')
-        } else if (lead.startsWith('You and your partner share a need for warm attention')) {
-          lead = lead.replace('This is your clearest point of common ground; it does not mean you will show care in the same way.',
-            privateChoiceDifference
-              ? 'This is your clearest common ground, while the chart also points to a difference in personal choices.'
-              : 'This is your clearest point of common ground.')
-        } else if (lead.startsWith('This match asks for different kinds of care:')) {
-          lead = lead.replace('Your point of fit is learning to recognise these as different requests, not a lack of care.',
-            privatePlanLink
-              ? 'Your private-life chart link may support shared plans, while your care needs differ; this is a positive signal, not a promise.'
-              : noPrivateSignal
-                ? 'Your fit comes from giving both needs room; the chart adds no clear personal-life link or conflict.'
-                : 'Your fit comes from giving both needs room.')
-        }
-        lead = lead.replace(/\s+(?:The |Your )private-life chart comparison shows [\s\S]*?(?:relationship will work|difficult|difference|no clear tie or clash)[.!?]?$/u, '')
-        lead = lead.replace(/\s+Private closeness is a clearer strength than sharing a daily routine:[\s\S]*$/u, '')
-        paragraphs = []
-        chapter.paragraphs.forEach(line => used.add(line))
-      } else if (kind === 'compatibility' && question.role === 'closeness-vs-routine' && set === 'standalone') {
-        // Give a short comparison, then show each person's actual daily pattern.
-        lead = lead.replace(/^Emotional closeness depends more on how you respond to each other[’']s needs; everyday compatibility depends more on how your routines work together\.\s*/u, '')
-        lead = lead.replace(/^For emotional closeness,\s*/u, 'Emotionally, ')
-        lead = lead.replace(/\s+For everyday compatibility,[\s\S]*$/u, '')
-        lead = lead.replace(/\s+Your everyday pattern:\s*[^.!?]+[.!?]/u, '')
-        const routine = byId.get('shared-routine')
-        const noRoutineSignal = /^The two charts show no direct link or clash between daily-routine patterns\./u.test(routine?.lead ?? '')
-        const routineFinding = noRoutineSignal
-          ? 'The chart does not show a clear link or clash in daily routines.'
-          : routine?.lead?.replace(/^Your everyday routines may clash over/u, 'Your daily routines may differ in')
-        if (routineFinding) lead += ` Daily life: ${routineFinding}`
-        const yourRoutine = routine?.paragraphs.find(line => /^Your everyday pattern: /u.test(line))?.replace(/^Your everyday pattern: /u, '').replace(/[.!?]+$/u, '')
-        const partnerRoutine = routine?.paragraphs.find(line => /^Your partner(?:'|’)s everyday pattern: /u.test(line))?.replace(/^Your partner(?:'|’)s everyday pattern: /u, '').replace(/[.!?]+$/u, '')
-        if (yourRoutine && partnerRoutine) {
-          const sameRoutine = yourRoutine.replace(/\s+/gu, ' ').trim().toLocaleLowerCase() === partnerRoutine.replace(/\s+/gu, ' ').trim().toLocaleLowerCase()
-          lead += sameRoutine
-            ? ` You both tend to: ${yourRoutine}.`
-            : ` You tend to: ${yourRoutine}. Your partner tends to: ${partnerRoutine}.`
-          const routinePair = `${yourRoutine} ${partnerRoutine}`
-          const routineExample = /Variety can be energising/u.test(routinePair) && /A steady rhythm can help/u.test(routinePair)
-            ? 'Keep one shared plan fixed, then leave room for an extra plan without crowding the week.'
-            : /Busy social obligations can crowd out/u.test(routinePair) && /Independence becomes tiring/u.test(routinePair)
-              ? 'Protect one block of personal time and agree who owns each recurring task.'
-              : /Variety can be energising/u.test(routinePair) && /Independence becomes tiring/u.test(routinePair)
-                ? 'Give recurring tasks a clear owner while leaving some time open for new plans.'
-                : /Independence becomes tiring/u.test(routinePair)
-                  ? 'For a recurring task, decide who owns it and when to ask for help.'
-                  : 'Compare one fixed plan with one flexible plan to see how your routines fit together.'
-          lead += ` Try: ${routineExample}`
-        }
-        lead = lead.replace(/\s+/gu, ' ').trim()
-        paragraphs = []
-        chapter.paragraphs.forEach(line => used.add(line))
-      } else if (kind === 'compatibility' && question.role === 'mutual-adjustment' && set === 'standalone') {
-        // Keep the final answer focused on what each person can adjust; earlier
-        // answers already cover needs, pressure patterns and day/routine links.
-        if (/You both need warm attention and time for your own interests\./u.test(lead)) {
-          lead = 'Because you share this need, each of you can give focused attention while protecting time for separate interests. Your shared adjustment is to make room for both connection and independence.'
-        }
-        lead = lead.replace(/\s+Understanding the difference is more useful than a compatibility percentage\.?$/iu, '')
-        paragraphs = []
-        chapter.paragraphs.forEach(line => used.add(line))
-      } else if (kind === 'wellbeing' && question.role === 'core-personality') {
-        paragraphs = []
-        chapter.paragraphs.forEach(line => used.add(line))
-      } else if (kind === 'wellbeing' && question.role === 'distinctive-traits') {
-        // Use the personal interpretation that connects work and relationships;
-        // the element-count discussion belongs with the chart explanation.
-        lead = chapter.paragraphs.find(line => /public role|work role|parts of your nature/i.test(line)) ?? chapter.lead
-        paragraphs = []
-        chapter.paragraphs.forEach(line => used.add(line))
-      } else if (kind === 'wellbeing' && question.role === 'daily-boundary') {
-        const personalStep = byId.get('workload-rhythm')?.tryThis
-        lead = personalStep ?? chapter.tryThis
-        paragraphs = []
-        chapter.paragraphs.forEach(line => used.add(line))
-      } else if (kind === 'wellbeing' && question.role === 'pressure-trigger') {
-        paragraphs = []
-        chapter.paragraphs.forEach(line => used.add(line))
-      } else if (kind === 'business' && question.role === 'financial-risk') {
-        const moneyPattern = chapter.lead.toLowerCase()
-        lead = moneyPattern.includes('combines repeat customers with new deals')
-          ? 'Your main financial risk is relying on new-deal income to cover ongoing delivery for repeat customers before payment is secure.'
-          : moneyPattern.includes('repeat sales and clearly priced ongoing work')
-            ? 'Your main financial risk is underpricing ongoing service: repeat sales can still require costs after payment.'
-            : moneyPattern.includes('finding buyers and making deals')
-              ? 'Your main financial risk is uneven cash flow: income depends on new buyers, so fees can vary between deals.'
-            : moneyPattern.includes('business money signs sit behind the main role')
-              ? 'Your main financial risk is setting business costs around sales before the less visible income route has been tested.'
-              : moneyPattern.includes('does not give a clear direct business money route')
-                ? 'Your main financial risk is taking on fixed costs before a direct business income route is clear.'
-                : 'Your main financial risk is counting a promising deal as income before payment arrives.'
-        paragraphs = chapter.paragraphs.filter(line => line !== chapter.lead).slice(0, 2)
-      } else if (kind === 'compatibility' && question.role === 'conflict-trigger') {
-        const friction = chapter.paragraphs.find(line => /^(?:Your likely friction is|The practical tension for Person A is)/.test(line))
-        lead = friction?.startsWith('Your likely friction is')
-          ? (() => {
-              const parts = friction.match(/^Your likely friction is (.*?); your partner’s is (.*?)\.$/)
-              if (!parts) return friction.replace(/^Your likely friction is /, 'The likely friction is ')
-              const yourFriction = parts[1].toLowerCase()
-              const partnerFriction = parts[2].toLowerCase()
-              if (yourFriction === partnerFriction) {
-                if (set === 'standalone' && yourFriction.includes('taking a request for space')) {
-                  return 'When either of you asks for space, the other may read it as rejection. Say whether you need time alone or reassurance, and when you will reconnect.'
-                }
-                return `You may both react to tension by ${parts[1]}. This can leave the same need unspoken on both sides, so name what would help before the conversation stalls.`
-              }
-              if (set === 'standalone' && yourFriction.includes('solving a problem before asking what help is wanted') && partnerFriction.includes('offering an answer before hearing how the problem feels')) {
-                return 'You may move to solve a problem before asking what help is wanted; your partner may answer before hearing how the problem feels. The feeling behind the problem can then go unheard.'
-              }
-              if (set === 'standalone' && yourFriction.includes('hoping someone notices a need you have not said aloud') && partnerFriction.includes('taking a request for space')) {
-                return 'You may hope an unspoken need will be noticed; your partner may read a request for space as rejection. One of you may need reassurance while the other needs room.'
-              }
-              if (set === 'standalone' && yourFriction.includes('taking a request for space') && partnerFriction.includes('solving a problem before asking what help is wanted')) {
-                return 'A request for space may feel like rejection to you, while your partner may start solving before checking what help is wanted. The moment can become tense before either request is clear.'
-              }
-              return `Your friction point is ${parts[1]}; your partner’s is ${parts[2]}. A tense moment may start when your response meets the different signal your partner is watching for. Say what you need before either of you assumes what the other meant.`
-            })()
-          : friction
-            ? `A likely friction point is ${friction.split('Person A is ')[1]?.split(';')[0] ?? 'a difference in private-life preferences'} for Person A, and ${friction.split('for Person B it is ')[1]?.split('.')[0] ?? 'a different reading of the same situation'} for Person B.`
-            : chapter.paragraphs.find(line => /^Your partner: /.test(line)) ?? chapter.paragraphs[3] ?? chapter.guidance.watchFor[0] ?? chapter.lead
-        paragraphs = []
-        chapter.paragraphs.forEach(line => used.add(line))
-      } else if (kind === 'compatibility' && question.role === 'relationship-timing' && set === 'standalone') {
-        // The year comparison is the answer; keep its tailored action below,
-        // without repeating another general relationship explanation.
-        paragraphs = []
-        chapter.paragraphs.forEach(line => used.add(line))
-      } else if (kind === 'compatibility' && question.role === 'care-expression') {
-        const firstCare = chapter.paragraphs.find(line => /^You: /.test(line))
-        const secondCare = chapter.paragraphs.find(line => /^Your partner: /.test(line))
-        const careStyle = (line: string, prefix: RegExp) => line.replace(prefix, '').split(/(?<=[.!?])\s/)[0]
-        const expressCare = (text: string) => {
-          if (/Privacy and being understood without constant explanation/i.test(text)) return 'show care by respecting private thinking time and trying to understand without asking for repeated explanations.'
-          if (/Equality and room to make your own choices/i.test(text)) return 'show care by treating your partner as an equal and respecting their choices.'
-          if (/Friends, social plans and personal freedom/i.test(text)) return 'show care by making room for couple time as well as each person’s social plans and freedom.'
-          if (/Reassurance, continuity and feeling understood/i.test(text)) return 'show care through steady check-ins, keeping promises and listening without rushing to correct.'
-          if (/Care tends to be shown through ordinary acts/i.test(text)) return 'show care through ordinary acts such as making time, preparing food or making daily life more comfortable.'
-          if (/honest exchange rather than polite silence/i.test(text)) return 'show care by saying what is wrong honestly and inviting the other person to do the same.'
-          if (/honest conversation matters more than polite silence/i.test(text)) return 'show care by speaking honestly while making room for your partner’s point of view.'
-          if (/Equality matters more than being managed/i.test(text)) return 'show care by treating your partner as an equal and leaving room for each person to make choices.'
-          if (/Friends, social commitments and personal freedom/i.test(text)) return 'show care by including your partner in plans while being clear about time reserved for friends or personal interests.'
-          if (/Keeping promises|practical commitments/i.test(text)) return 'show care by following through on promises and handling practical commitments reliably.'
-          if (/Generosity|shared experiences/i.test(text)) return 'show care by sharing experiences and offering generosity without assuming the other person wants the same thing.'
-          if (/decisiveness|intensity/i.test(text)) return 'show care by taking initiative when it helps, while checking that your partner wants you to step in.'
-          if (/Clear commitment and respectful behaviour/i.test(text)) return 'show care through respectful actions and clear commitments, while also saying what you feel.'
-          if (/respect and a clear place/i.test(text)) return 'show care through respect, clear commitment and making your partner’s place in your life easy to understand.'
-          if (/focused conversation|direct conversation/i.test(text)) return 'show care by making space for an honest conversation and staying with the other person’s point of view.'
-          if (/ordinary acts|practical help/i.test(text)) return 'show care through practical help, after checking what kind of support is wanted.'
-          return text.replace(/\s+/g, ' ').trim()
-        }
-        const yourCare = firstCare ? expressCare(careStyle(firstCare, /^You: /)) : ''
-        const partnerCare = secondCare ? expressCare(careStyle(secondCare, /^Your partner: /)) : ''
-        const loveExpression = (text: string) => {
-          const match = /^show care (by|through)\s*(.*)$/i.exec(text)
-          return { preposition: match?.[1]?.toLowerCase() ?? 'through', action: (match?.[2] ?? text).replace(/[.!?]+$/u, '') }
-        }
-        const yourExpression = loveExpression(yourCare)
-        const partnerExpression = loveExpression(partnerCare)
-        const interactionExample = yourCare.includes('respecting private thinking time') && partnerCare.includes('practical help')
-          ? 'If you need time to think, agree when your partner will check back; if your partner offers help, ask what would be useful before stepping in.'
-          : yourCare.includes('practical help') && partnerCare.includes('respecting private thinking time')
-            ? 'If your partner needs time to think, agree when you will check back; if you offer help, ask what would be useful before stepping in.'
-            : yourCare.includes('steady check-ins') && partnerCare.includes('steady check-ins')
-              ? 'A brief check-in followed by keeping one promise you made makes this shared style visible.'
-            : yourCare.includes('following through on promises') && partnerCare.includes('following through on promises')
-              ? 'Keeping a promise is a clear shared sign of care.'
-              : yourCare.includes('speaking honestly') && partnerCare.includes('steady check-ins')
-                ? 'When you share a concern, your partner can first reflect what they heard; agree when to check back and follow through.'
-                : yourCare.includes('steady check-ins') && partnerCare.includes('speaking honestly')
-                  ? 'When your partner shares a concern, reflect what you heard first; agree when to check back and follow through.'
-                  : yourCare.includes('following through on promises') && partnerCare.includes('respecting private thinking time')
-                    ? 'Keep the shared commitment, agree when quiet time is protected, and say clearly when you are ready to reconnect.'
-                    : yourCare.includes('respecting private thinking time') && partnerCare.includes('following through on promises')
-                      ? 'Your partner can keep the shared commitment, while you agree when quiet time is protected and when you are ready to reconnect.'
-                      : yourCare.includes('speaking honestly') && partnerCare.includes('practical help')
-                        ? 'For example, an honest conversation can be paired with practical help that was asked for.'
-                        : yourCare.includes('practical help') && partnerCare.includes('speaking honestly')
-                          ? 'For example, your honest conversation can be paired with practical help that was asked for.'
-                          : (yourCare.includes('Focused conversation') || yourCare.includes('making space for an honest conversation')) && partnerCare.includes('practical help')
-                            ? 'For example, stay with the concern first, then offer practical help once your partner asks for it.'
-                          : ''
-        lead = firstCare && secondCare
-          ? yourCare === partnerCare
-            ? `You and your partner may express love in a similar way: ${yourExpression.action}.${interactionExample ? ` ${interactionExample}` : ''}`
-            : `You may express love ${yourExpression.preposition} ${yourExpression.action}; your partner may express it ${partnerExpression.preposition} ${partnerExpression.action}.${interactionExample ? ` ${interactionExample}` : ''}`
-          : `${chapter.paragraphs[0] ?? 'Your chart gives one clue about how care may be recognised.'} ${chapter.paragraphs[1] ?? 'Your partner’s chart gives a separate clue.'}`
-        // Q5 asks what the partners visibly do. Avoid repeating Q1/Q3's
-        // emotional needs and avoid turning chart tendencies into facts.
-        paragraphs = []
-        chapter.paragraphs.forEach(line => used.add(line))
-        paragraphs = []
-      } else if (kind === 'wellbeing' && question.role === 'pressure-response') {
-        // Keep this answer about the response as pressure builds, separate
-        // from Q3's trigger and Q1's general personality description.
-        const warning = chapter.paragraphs.find(line => /^A distinct daily pressure response is /i.test(line))
-          ?? chapter.paragraphs.find(line => /^(?:The pressure to watch is|Under pressure, watch for|As demands build|Under pressure, you may)/i.test(line))
-          ?? chapter.guidance.watchFor.find(line => line !== chapter.lead && !chapter.paragraphs.includes(line))
-          ?? chapter.guidance.watchFor[0]
-          ?? chapter.paragraphs[0]
-          ?? chapter.lead
-        lead = warning.replace(/^The pressure to watch is that\s*/i, 'As pressure builds, ').replace(/^The pressure to watch is\s*/i, 'As pressure builds, ').replace(/^Under pressure, watch for\s*/i, 'As pressure builds, ').replace(/\s+This theme appears in both parts of your birth-month reading, so it may keep coming up in your routine\./i, '. This can recur in your routine because the same theme appears in both parts of your birth-month reading.')
-          .replace(/^A distinct daily pressure response is /i, 'As pressure builds, ')
-        paragraphs = []
-        chapter.paragraphs.forEach(line => used.add(line))
-      } else if (kind === 'wellbeing' && question.role === 'relationship-need') {
-        const support = chapter.paragraphs.find(line => line.startsWith('The support that suits this side'))
-        paragraphs = support ? [support.split(/\s+The setting matters too:/i)[0]] : []
-        chapter.paragraphs.forEach(line => used.add(line))
-      } else if (kind === 'complete' && question.role === 'strengths-and-limits') {
-        lead = chapter.lead
-        paragraphs = chapter.paragraphs.slice(0, 2)
-        chapter.paragraphs.forEach(line => used.add(line))
-      } else if (kind === 'business' && question.id === 'business-plan') {
-        const timingLines = chapter.paragraphs.filter(line => /^Why \d{4} is highlighted here/.test(line))
-        const years = [...new Set(timingLines.map(line => /^Why (\d{4})/.exec(line)?.[1]).filter((year): year is string => Boolean(year)))]
-        lead = years.length
-          ? `Check that your cash and capacity can cover added business demands in ${years.join(', ')}. The chart flags planning pressure in those years, not business failure.`
-          : chapter.guidance.watchFor[0] ?? chapter.paragraphs.find(line => /^Give commitments in|^No period stands out/.test(line)) ?? chapter.lead
-        paragraphs = timingLines.slice(0, 2).map(line => line.replace(/^Why (\d{4}) is highlighted here: /, '$1: '))
-        chapter.paragraphs.forEach(line => used.add(line))
-      } else if (kind === 'business' && question.id === 'business-chapters') {
-        const cycles = chapter.paragraphs.filter(line => /^From the calculated start |^No current or upcoming ten-year cycle/.test(line))
-        const years = chapter.paragraphs.filter(line => /^\d{4} yearly comparison:/.test(line))
-        const annualYears = [...new Set(years.map(line => Number(/^(\d{4}) yearly comparison:/.exec(line)?.[1])).filter(year => Number.isInteger(year) && year >= 1900))].sort((a, b) => a - b)
-        const annualRange = annualYears.length ? `${annualYears[0]}–${annualYears.at(-1)}` : 'the checked annual range'
-        lead = cycles.length
-          ? `The calculated business-cycle emphasis is ${cycles.slice(0, 2).join(' ')} Treat this as a work theme, not a launch date.`
+        paragraphs = annualBasis &&…7259 tokens truncated…mphasis is ${cycles.slice(0, 2).join(' ')} Treat this as a work theme, not a launch date.`
           : `No new ten-year business cycle is available in the checked range. The supported timing clues are the annual comparisons from ${annualRange}.`
         const relevantYears = years.filter(line => /Opening|extra pressure|extra-care|caution/i.test(line))
         paragraphs = (relevantYears.length ? relevantYears : years).slice(0, 3).map(line => line
@@ -752,7 +488,11 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
       ...firstLines.map((line, index) => `${kind === 'career' && set === 'standalone' ? '' : index ? 'Answer detail: ' : 'Answer: '}${line}`),
       ...extraAnswers.flatMap(({ question, lines }) => [`Question: ${questionTitles[question.id] ?? question.question}`, ...lines.map((line, index) => `${kind === 'career' && set === 'standalone' ? '' : index ? 'Answer detail: ' : 'Answer: '}${line}`)]),
     ]
-    const replacement = [chapter.title, ...qas, ...guidance].join('\n\n')
+    const replacement = [
+      ...(kind === 'compatibility' && set === 'standalone' ? [] : [chapter.title]),
+      ...qas,
+      ...guidance,
+    ].join('\n\n')
     const original = deliveredChapter(chapter).join('\n\n')
     if (!text.includes(original)) throw new Error(`Missing delivered source: ${kind}/${source}`)
     text = text.replace(original, replacement)
