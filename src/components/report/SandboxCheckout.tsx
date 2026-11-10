@@ -10,7 +10,8 @@ export { PURCHASES_KEY } from '../../utils/purchase-client.ts'
 export const TEST_ACCESS_KEY = 'fate-sandbox-access-v1'
 
 class CheckoutFailure extends Error {
-  constructor(readonly diagnostic: string) { super(diagnostic) }
+  readonly diagnostic: string
+  constructor(diagnostic: string) { super(diagnostic); this.diagnostic = diagnostic }
 }
 export default function SandboxCheckout({ order }: { order: OrderInput }) {
   const { t } = useLocale()
