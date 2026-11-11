@@ -649,12 +649,19 @@
     "status": "PASS"
   },
   "limitations": [
-    "Product 03 only. The remaining 30 PDFs have not been regenerated or scored.",
-    "The local prescribed npm build is blocked because Bun is not installed in this runner; the build script stopped at bun run --cwd packages/core build.",
-    "The full suite had five resource-related timeout failures (954/959 passed); those five files were rerun serially and passed 110/110.",
-    "Preview for source commit 8ecd295b8cb725c5e88b5d95b869d0f7603360da is still building; this latest revision has not yet been deployed.",
-    "No Production deployment was performed."
+    "Product 03 only: five PDFs were regenerated and reviewed; the remaining 30 PDFs were not regenerated, reviewed, or scored.",
+    "The prescribed local npm run build could not execute because Bun is unavailable in this runner. The same source commit completed a READY Vercel Preview build, including TypeScript 5.9.3 and Vite build.",
+    "The full local test run passed 954/959; five long-running tests timed out while tests ran concurrently. The five files were rerun serially and passed 110/110.",
+    "The Preview homepage returned HTTP 200 after READY. The paid PDF generator was exercised by local PDF generation tests against the exact source tree, not by creating a report through Preview UI.",
+    "No Production deployment or sales setting was changed."
   ],
-  "generated_at_utc": "2026-11-11T20:55:00Z",
-  "source_commit_before_uncommitted_revision": "8ecd295b8cb725c5e88b5d95b869d0f7603360da"
+  "generated_at_utc": "2026-11-11T21:03:00Z",
+  "tested_source_code_commit_sha": "993120b02c6b4334f8c590d8a04c5a9cb67ce20c",
+  "tested_repository_tree_sha": "376caddaeb26d88f5eb9ae4ca896c78448b30201",
+  "preview_deployment": {
+    "deployment_id": "dpl_5ajeziq5qwzJ9jk2vmoLL6LCeLFz",
+    "state": "READY",
+    "url": "https://saju-english-report-preview-5fd1csmxr-shopping-shorts-ai.vercel.app",
+    "source_commit_sha": "993120b02c6b4334f8c590d8a04c5a9cb67ce20c"
+  }
 }
