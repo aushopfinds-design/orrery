@@ -94,11 +94,13 @@ describe('Quality dashboard client script', () => {
 
   it('keeps the preliminary Product 03 findings separate from independent scores', async () => {
     const data = JSON.parse(await readFile(resolve(process.cwd(), 'docs/quality-audits/product-03-preliminary-review-2026-11-11.json'), 'utf8')) as { reviews: Array<{ productId: string; profileId: string; questionId: string; score: number | null; status: string; deductionSentence: string; deductionReason: string; revisionNote: string }> }
+    const vercel = JSON.parse(await readFile(resolve(process.cwd(), 'vercel.json'), 'utf8')) as { functions: Record<string, { includeFiles: string }> }
     expect(data.reviews).toHaveLength(35)
     expect(new Set(data.reviews.map(row => `${row.profileId}:${row.questionId}`)).size).toBe(35)
     expect(data.reviews.every(row => row.productId === '03' && row.score === null && row.deductionSentence && row.deductionReason && row.revisionNote)).toBe(true)
     expect(data.reviews.filter(row => row.status === 'FIX')).toHaveLength(20)
     expect(data.reviews.filter(row => row.status === 'VERIFY')).toHaveLength(15)
+    expect(vercel.functions['api/admin-review.ts'].includeFiles).toContain('product-03-preliminary-review-2026-11-11.json')
   })
 })
 
