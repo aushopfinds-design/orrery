@@ -3,7 +3,7 @@ import { generateKeyPair, SignJWT } from 'jose'
 import { createHash } from 'node:crypto'
 import { Script } from 'node:vm'
 import { reviewConfig, ReviewError } from './config.ts'
-import { cookie, NONCE_COOKIE, SESSION_COOKIE, ticket, verifyGoogle } from './auth.ts'
+import { cookie, NONCE_COOKIE, SESSION_COOKIE, ticket, verifyAccessKey, verifyGoogle } from './auth.ts'
 import { reviewHandler } from './handler.ts'
 import { buildReview } from './report.ts'
 import { translateReview, validateTranslation } from './translate.ts'
@@ -59,6 +59,20 @@ describe('Google identity and administrator authorization', () => {
     }
     const wrongKeys = await generateKeyPair('RS256')
     await expect(verifyGoogle(config, await token(), 'challenge', async () => wrongKeys.publicKey)).rejects.toThrow('unauthorized')
+  })
+})
+
+describe('Passphrase administrator login', () => {
+  const secret = 'b'.repeat(64)
+  const passConfig = reviewConfig({ ...env, FATE_REVIEW_LOGIN_MODE: 'passphrase', FATE_REVIEW_ACCESS_KEY: secret })
+  it('accepts only the server-configured access key', () => {
+    expect(verifyAccessKey(passConfig, secret)).toBe(passConfig.adminEmail)
+    expect(() => verifyAccessKey(passConfig, 'wrong')).toThrow('unauthorized')
+  })
+  it('renders a password form without loading Google identity scripts', () => {
+    const html = loginPage('', 'challenge', 'nonce', '/api/admin-review?view=quality', 'passphrase')
+    expect(html).toContain('type="password"')
+    expect(html).not.toContain('accounts.google.com/gsi/client')
   })
 })
 

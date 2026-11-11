@@ -1,7 +1,7 @@
 import { createHash, randomBytes } from 'node:crypto'
 import { ReviewError, reviewConfig, translationConfigured } from './config.ts'
 import type { ReviewConfig } from './config.ts'
-import { cookie, NONCE_COOKIE, readCookie, requireAdmin, SESSION_COOKIE, ticket, verifyGoogle, verifyTicket } from './auth.ts'
+import { cookie, NONCE_COOKIE, readCookie, requireAdmin, SESSION_COOKIE, ticket, verifyAccessKey, verifyGoogle, verifyTicket } from './auth.ts'
 import { buildReview } from './report.ts'
 import type { ReviewBlock } from './report.ts'
 import { translateReview } from './translate.ts'
@@ -59,7 +59,7 @@ export function reviewHandler(deps: Dependencies = { config: () => reviewConfig(
           if (!(error instanceof ReviewError) || error.status !== 401) throw error
           const challenge = randomBytes(24).toString('base64url')
           const redirect = url.searchParams.get('view') === 'quality' ? '/api/admin-review?view=quality' : '/api/admin-review'
-          const response = html(loginPage(config.clientId, challenge, nonce, redirect), nonce)
+          const response = html(loginPage(config.clientId, challenge, nonce, redirect, config.loginMode), nonce)
           response.headers.append('Set-Cookie', cookie(NONCE_COOKIE, await ticket(config, 'login', 'nonce', { nonce: challenge }, 600), 600))
           return response
         }
@@ -71,8 +71,14 @@ export function reviewHandler(deps: Dependencies = { config: () => reviewConfig(
       if (action === 'login') {
         const challenge = await verifyTicket(config, readCookie(request, NONCE_COOKIE), 'nonce')
         const data = await body(request)
-        if (typeof data.credential !== 'string' || data.credential.length > 12000) throw new ReviewError('unauthorized', 401)
-        const sub = await deps.google(config, data.credential, String(challenge.nonce))
+        let sub: string
+        if (config.loginMode === 'passphrase') {
+          if (typeof data.accessKey !== 'string') throw new ReviewError('unauthorized', 401)
+          sub = verifyAccessKey(config, data.accessKey)
+        } else {
+          if (typeof data.credential !== 'string' || data.credential.length > 12000) throw new ReviewError('unauthorized', 401)
+          sub = await deps.google(config, data.credential, String(challenge.nonce))
+        }
         const response = json({ authenticated: true })
         response.headers.append('Set-Cookie', cookie(SESSION_COOKIE, await ticket(config, sub, 'session', { email: config.adminEmail }, 1800), 1800))
         response.headers.append('Set-Cookie', cookie(NONCE_COOKIE, '', 0))

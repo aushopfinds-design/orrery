@@ -1,4 +1,5 @@
 import { createRemoteJWKSet, jwtVerify, SignJWT } from 'jose'
+import { createHash, timingSafeEqual } from 'node:crypto'
 import type { JWTVerifyGetKey } from 'jose'
 import type { ReviewConfig } from './config.ts'
 import { ReviewError } from './config.ts'
@@ -30,6 +31,13 @@ export async function verifyGoogle(config: ReviewConfig, token: string, nonce: s
     if (payload.email !== config.adminEmail || payload.email_verified !== true || payload.nonce !== nonce) throw new Error()
     return payload.sub!
   } catch { throw new ReviewError('unauthorized', 401) }
+}
+export function verifyAccessKey(config: ReviewConfig, candidate: string) {
+  if (config.loginMode !== 'passphrase' || !config.accessKey || typeof candidate !== 'string' || candidate.length > 256) throw new ReviewError('unauthorized', 401)
+  const expected = createHash('sha256').update(config.accessKey).digest()
+  const actual = createHash('sha256').update(candidate).digest()
+  if (!timingSafeEqual(expected, actual)) throw new ReviewError('unauthorized', 401)
+  return config.adminEmail
 }
 export async function requireAdmin(config: ReviewConfig, request: Request) {
   const session = await verifyTicket(config, readCookie(request, SESSION_COOKIE), 'session')

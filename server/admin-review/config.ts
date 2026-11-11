@@ -6,7 +6,7 @@ export class ReviewError extends Error {
   constructor(code: string, status = 400) { super(code); this.code = code; this.status = status }
 }
 export interface ReviewConfig {
-  origin: string; clientId: string; adminEmail: string; signingKey: Uint8Array
+  origin: string; clientId: string; adminEmail: string; signingKey: Uint8Array; loginMode: 'google' | 'passphrase'; accessKey?: string
   gatewayKey?: string; gatewayToken?: () => Promise<string>; model?: string
 }
 /** No payment secret, customer order database or public VITE_* setting is used here. */
@@ -17,10 +17,13 @@ export function reviewConfig(env: NodeJS.ProcessEnv): ReviewConfig {
   const url = new URL(origin || 'https://invalid.example')
   if (url.origin !== origin || url.protocol !== 'https:'
     || !/^saju-english-report-preview(?:-[a-z0-9-]+)?\.vercel\.app$/.test(url.hostname)
-    || !/^\d+-[a-zA-Z0-9_-]+\.apps\.googleusercontent\.com$/.test(env.FATE_REVIEW_GOOGLE_CLIENT_ID ?? '')
     || !/^[a-z0-9._%+-]+@gmail\.com$/.test(env.FATE_REVIEW_ADMIN_EMAIL ?? '')
     || !/^[a-f0-9]{64}$/.test(env.FATE_REVIEW_SIGNING_KEY ?? '')) throw new ReviewError('review_not_configured', 503)
-  return { origin, clientId: env.FATE_REVIEW_GOOGLE_CLIENT_ID!, adminEmail: env.FATE_REVIEW_ADMIN_EMAIL!,
+  const loginMode = env.FATE_REVIEW_LOGIN_MODE === 'passphrase' ? 'passphrase' : 'google'
+  if (loginMode === 'google' && !/^\d+-[a-zA-Z0-9_-]+\.apps\.googleusercontent\.com$/.test(env.FATE_REVIEW_GOOGLE_CLIENT_ID ?? '')) throw new ReviewError('review_not_configured', 503)
+  if (loginMode === 'passphrase' && !/^[a-f0-9]{64}$/.test(env.FATE_REVIEW_ACCESS_KEY ?? '')) throw new ReviewError('review_not_configured', 503)
+  return { origin, clientId: env.FATE_REVIEW_GOOGLE_CLIENT_ID ?? '', adminEmail: env.FATE_REVIEW_ADMIN_EMAIL!, loginMode,
+    ...(loginMode === 'passphrase' ? { accessKey: env.FATE_REVIEW_ACCESS_KEY! } : {}),
     signingKey: Buffer.from(env.FATE_REVIEW_SIGNING_KEY!, 'hex'),
     gatewayKey: env.FATE_REVIEW_AI_GATEWAY_KEY,
     ...(env.FATE_REVIEW_AUTH_MODE === 'vercel-oidc' ? { gatewayToken: async () => getVercelOidcToken() } : {}),
