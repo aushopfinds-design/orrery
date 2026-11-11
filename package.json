@@ -9,7 +9,7 @@
   ],
   "scripts": {
     "dev": "vite",
-    "build": "bun run --cwd packages/core build && ./node_modules/.bin/tsc -b && vite build && node scripts/build-public-pages.mjs",
+    "build": "node scripts/verify-source-integrity.mjs && bun run --cwd packages/core build && ./node_modules/.bin/tsc -b && vite build && node scripts/build-public-pages.mjs",
     "lint": "eslint .",
     "preview": "vite preview",
     "generate-icons": "bun scripts/generate-icons.ts",
