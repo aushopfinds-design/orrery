@@ -240,6 +240,8 @@ describe('Buyer questions, not a repeated six-part technical template', () => {
     expect((report.match(/^Question:/gm) ?? [])).toHaveLength(7)
     expect(report).toContain('Question: What should I watch for when pressure builds?\n\nAnswer: Notice when a capable response is taking too much of your time.')
     expect(report).toContain('Question: What boundary could help protect my everyday balance?\n\nAnswer: A chart-specific practical step.')
+    const boundary = report.split('Question: What boundary could help protect my everyday balance?')[1]?.split('\n\nQuestion: ')[0] ?? ''
+    expect(boundary).not.toContain('Practical point:')
     expect(report).not.toContain('Question: What kind of environment brings out my best?')
   })
 

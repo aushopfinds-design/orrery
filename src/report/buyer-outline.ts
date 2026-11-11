@@ -777,6 +777,10 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
       || kind === 'business' && questions[0].role === 'financial-risk'
       || kind === 'business' && questions[0].role === 'business-cycle'
       || kind === 'business' && questions[0].role === 'business-caution'
+      // The answer lead is already the selected boundary action from the
+      // pressure chapter. Adding this chapter's practical point repeats the
+      // same advice in different words.
+      || kind === 'wellbeing' && questions.some(question => question.role === 'daily-boundary')
     const guidance = kind === 'career' && set === 'standalone' || suppressGuidance || suppressAllGuidance || suppressRepeatedRelationshipAdvice
       || kind === 'wellbeing' && ['core-personality', 'distinctive-traits', 'pressure-trigger'].includes(questions[0].role)
       ? [] : chapter.showGuidance === false ? [] : [
