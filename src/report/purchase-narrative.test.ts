@@ -52,10 +52,10 @@ describe('Targeted customer-answer revisions',()=>{
   const adjustment=sections['shared-week'].lines[0].en
   expect(closeness).toContain('For emotional closeness,')
   expect(closeness).toContain('For everyday compatibility,')
-  expect(closeness).toContain('Emotional closeness depends more on how you respond to each other’s needs')
+  expect(closeness).toContain('Emotional closeness depends on how you meet each other’s needs')
   expect(closeness).toContain('You value')
-  expect(closeness).toContain('Your routine:')
-  expect(closeness).toContain('Your partner’s routine:')
+  expect(closeness).toContain('For you,')
+  expect(closeness).toContain('For your partner,')
   expect(closeness).not.toContain('These are two separate parts of your match.')
   expect(adjustment).toContain('Your chart points to')
   expect(adjustment).toContain('You can respond by learning to')

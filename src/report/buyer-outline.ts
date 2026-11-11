@@ -262,7 +262,24 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
             ? `Both directions point to a shared draw: you may each be drawn to ${yourDraw} in the connection. The chart cannot confirm either person’s actual feelings.`
             : `You may be drawn to what your partner brings: ${yourDraw}. Your partner may be drawn to what you bring: ${partnerDraw}. The chart cannot confirm either person’s actual feelings.`
         }
-        paragraphs = []
+        const linkLine = perspectives.find(line => /^The day signs also form a direct link/u.test(line))
+        const frictionLine = perspectives.find(line => /^The day signs also form a friction pattern/u.test(line))
+        const noSignalLine = perspectives.find(line => /^The day signs show neither a direct link/u.test(line))
+        const mutualLine = perspectives.find(line => /^Both directions have the same theme/u.test(line))
+        const splitLine = perspectives.find(line => /^One person may feel supported/u.test(line))
+        const chartContext = linkLine
+          ? 'Your chart also shows a private-life link that supports this possible pull.'
+          : frictionLine
+            ? 'The chart also shows different instincts around personal choices, so attraction and ease are separate questions here.'
+            : noSignalLine
+              ? 'The chart adds no separate connection or conflict in close relationships.'
+              : undefined
+        const directionContext = mutualLine
+          ? 'The theme appears in both directions, but that does not establish equal feelings or effort.'
+          : splitLine
+            ? 'The two directions may feel different: one can feel supported while the other feels challenged.'
+            : undefined
+        paragraphs = [chartContext, directionContext].filter((line): line is string => Boolean(line))
         chapter.paragraphs.forEach(line => used.add(line))
       } else if (kind === 'compatibility' && question.role === 'overall-fit') {
         // State the fit pattern directly, using the personal-life comparison
@@ -293,46 +310,38 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
         paragraphs = []
         chapter.paragraphs.forEach(line => used.add(line))
       } else if (kind === 'compatibility' && question.role === 'closeness-vs-routine' && set === 'standalone') {
-        // Give a short comparison, then show each person's actual daily pattern.
-        lead = lead.replace(/^Emotional closeness depends more on how you respond to each other[’']s needs; everyday compatibility depends more on how your routines work together\.\s*/u, '')
-        lead = lead.replace(/^For emotional closeness,\s*/u, 'Emotionally, ')
-        lead = lead.replace(/\s+For everyday compatibility,[\s\S]*$/u, '')
-        lead = lead.replace(/\s+Your everyday pattern:\s*[^.!?]+[.!?]/u, '')
-        // Q1 already gives the pair's care needs. Keep Q5 on the contrast
-        // between emotional signals and practical routines instead of repeating them.
-        lead = lead.replace(/\s+You(?: both)? value [\s\S]*$/u, '')
+        // Lead with the distinction the buyer asked about, then keep one
+        // concise chart comparison for emotional fit and everyday routine.
+        const emotionalFinding = /For emotional closeness,\s*([\s\S]*?)(?=\s+You (?:both )?value|\s+For everyday compatibility|\s+Your routine:)/u.exec(lead)?.[1]?.trim()
         const routine = byId.get('shared-routine')
-        const noRoutineSignal = /^The two charts show no direct link or clash between daily-routine patterns\./u.test(routine?.lead ?? '')
-        const emotionalSignalIsUnclear = /^Emotionally, your charts show no clear private-life link or clash/u.test(lead)
+        const routineLead = routine?.lead ?? ''
+        const noRoutineSignal = /^The two charts show no direct link or clash between daily-routine patterns\./u.test(routineLead)
+        const noEmotionalSignal = /neither a direct bond nor a direct conflict stands out|no clear private-life link or clash|no clear emotional link or (?:conflict|clash)/iu.test(lead)
         const routineFinding = noRoutineSignal
-          ? 'The chart does not show a clear link or clash in daily routines.'
-          : routine?.lead?.replace(/^Your everyday routines may clash over/u, 'Your daily routines may differ in')
-        if (noRoutineSignal && emotionalSignalIsUnclear) {
-          lead = lead.replace(/^Emotionally, your charts show no clear private-life link or clash, so your personal needs are the better guide here\./u,
-            'The charts show no clear emotional link or clash; your daily routines offer the clearer comparison.')
-        } else if (routineFinding) {
-          lead += ` Daily life: ${routineFinding}`
-        }
+          ? 'The chart shows no clear link or conflict between your daily routines.'
+          : /^Your everyday routines may clash over/u.test(routineLead)
+            ? routineLead.replace(/^Your everyday routines may clash over/u, 'Your daily routines may differ over')
+            : /^The daily-routine comparison points to repeated small disagreements/u.test(routineLead)
+              ? 'Small differences in everyday expectations may cause friction.'
+              : /^Your everyday patterns link together/u.test(routineLead)
+                ? 'Your daily patterns show a link that may help you coordinate routines.'
+                : routineLead.replace(/[.!?]+$/u, '')
+        const personalComparison = noRoutineSignal && noEmotionalSignal
+          ? 'Neither comparison shows a clear link or conflict, so your day-to-day styles offer the clearest point of comparison.'
+          : undefined
         const yourRoutine = routine?.paragraphs.find(line => /^Your everyday pattern: /u.test(line))?.replace(/^Your everyday pattern: /u, '').replace(/[.!?]+$/u, '')
         const partnerRoutine = routine?.paragraphs.find(line => /^Your partner(?:'|’)s everyday pattern: /u.test(line))?.replace(/^Your partner(?:'|’)s everyday pattern: /u, '').replace(/[.!?]+$/u, '')
-        if (yourRoutine && partnerRoutine) {
-          const sameRoutine = yourRoutine.replace(/\s+/gu, ' ').trim().toLocaleLowerCase() === partnerRoutine.replace(/\s+/gu, ' ').trim().toLocaleLowerCase()
-          const lowerFirst = (value: string) => value.charAt(0).toLowerCase() + value.slice(1)
-          lead += sameRoutine
-            ? ` You share this daily pattern: ${lowerFirst(yourRoutine)}.`
-            : ` For you, ${lowerFirst(yourRoutine)}. For your partner, ${lowerFirst(partnerRoutine)}.`
-          const routinePair = `${yourRoutine} ${partnerRoutine}`
-          const routineExample = /Variety can be energising/u.test(routinePair) && /A steady rhythm can help/u.test(routinePair)
-            ? 'Keep one shared plan fixed, then leave room for an extra plan without crowding the week.'
-            : /Busy social obligations can crowd out/u.test(routinePair) && /Independence becomes tiring/u.test(routinePair)
-              ? 'Protect one block of personal time and agree who owns each recurring task.'
-              : /Variety can be energising/u.test(routinePair) && /Independence becomes tiring/u.test(routinePair)
-                ? 'Give recurring tasks a clear owner while leaving some time open for new plans.'
-                : /Independence becomes tiring/u.test(routinePair)
-                  ? 'Give a recurring task a clear owner and agree when to ask for help.'
-                  : 'Compare one fixed plan with one flexible plan to see how your routines fit together.'
-          lead += ` A practical middle ground is to ${lowerFirst(routineExample.replace(/[.!?]+$/u, ''))}.`
-        }
+        const direct = 'Emotional closeness depends on how you meet each other’s needs; everyday compatibility depends on how your routines work together.'
+        const lowerFirst = (value: string) => value.charAt(0).toLowerCase() + value.slice(1)
+        const sameRoutine = Boolean(yourRoutine && partnerRoutine && yourRoutine.replace(/\s+/gu, ' ').trim().toLocaleLowerCase() === partnerRoutine.replace(/\s+/gu, ' ').trim().toLocaleLowerCase())
+        const routineExamples = yourRoutine && partnerRoutine
+          ? sameRoutine
+            ? `You share a routine pattern: ${lowerFirst(yourRoutine)}.`
+            : `For you, ${lowerFirst(yourRoutine)}. For your partner, ${lowerFirst(partnerRoutine)}.`
+          : ''
+        const sentenceCase = (value: string) => value.charAt(0).toLocaleUpperCase() + value.slice(1)
+        const finishSentence = (value: string) => /[.!?]$/u.test(value) ? value : `${value}.`
+        lead = [direct, personalComparison ?? (emotionalFinding && finishSentence(sentenceCase(emotionalFinding))), personalComparison ? undefined : routineFinding && finishSentence(sentenceCase(routineFinding)), routineExamples].filter(Boolean).join(' ').replace(/\s+/gu, ' ').trim()
         lead = lead.replace(/\s+/gu, ' ').trim()
         paragraphs = []
         chapter.paragraphs.forEach(line => used.add(line))
@@ -840,66 +849,62 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
 
 function compatibilityBottomLine(questionId: string, source: string): string {
   if (questionId === 'two-styles') {
+    const different = /This match asks for different kinds of care: you value (.+?), while your partner values (.+?)\./iu.exec(source)
+    if (different) return 'Your fit depends on making room for the care each of you values. Different needs do not make either person’s way of caring the wrong one.'
+    if (/You and your partner share a need for warm attention and time for your own interests\./iu.test(source)) {
+      return /difference in personal choices/iu.test(source)
+        ? 'Warm attention and personal freedom give you common ground. Your different personal choices are a separate part of the fit to understand.'
+        : 'Warm attention and personal freedom give you common ground. This shared need is one strength, not a complete verdict on the relationship.'
+    }
     if (/shares a similar need for care/iu.test(source) || /You may feel understood when/iu.test(source)) {
-      return 'Feeling heard before advice is an important point of common ground. Check whether practical help is welcome before stepping in.'
+      return 'You have a clear point of connection around care. It gives you common ground without making every part of the relationship identical.'
     }
-    if (/warm attention and time for your own interests/iu.test(source)) {
-      return 'Focused attention and personal freedom both matter in your connection. Make room for both when planning time together.'
-    }
-    if (/different kinds of care:/iu.test(source) || /Your main need is/iu.test(source)) {
-      return 'The two of you may look for care in different forms. Talk about what support means to each person so well-meant gestures are less likely to be missed.'
-    }
-    return 'A possible planning link appears alongside different care needs. Treat it as an opening for discussion, not a promise about the relationship.'
+    return 'The chart points to a possible area of fit, alongside needs that may differ. It cannot rate the relationship as a whole.'
   }
   if (questionId === 'two-directions') {
-    const shared = /both directions point to a shared draw: you may each be drawn to (.+?) in the connection\./iu.exec(source)?.[1]
-    if (shared) return `You may each be drawn to ${shared}. The chart can suggest appeal, but it cannot confirm anyone's feelings.`
+    const shared = /Both directions point to a shared draw: you may each be drawn to (.+?) in the connection\./iu.exec(source)
+    if (shared) return 'The chart points to a shared attraction theme rather than opposite draws. It cannot establish how either of you actually feels.'
     const different = /You may be drawn to what your partner brings: (.+?)\. Your partner may be drawn to what you bring: (.+?)\./iu.exec(source)
-    if (different) return `You may notice ${different[1]}, while your partner may notice ${different[2]}. This suggests a possible pull, not confirmed feelings or shared intent.`
-    return 'The chart describes qualities that may create a pull between you. It cannot confirm either person’s feelings or intentions.'
+    if (different) return 'You may each notice something the other brings to the connection. This is a possible pull, not confirmation of your feelings.'
+    return 'The chart points to qualities that may create a pull between you. Only you and your partner can confirm whether those qualities match what you actually feel.'
   }
   if (questionId === 'q-conflict') {
-    if (/When either of you asks for space/iu.test(source)) return 'A request for space can be mistaken for rejection. Agree how and when to reconnect whenever one of you needs a pause.'
-    if (/Your friction point is (.+?); your partner’s is (.+?)\./iu.test(source)) {
-      const match = /Your friction point is (.+?); your partner’s is (.+?)\./iu.exec(source)!
-      return `Tension can start when ${match[1]} meets ${match[2]}. Ask what support each of you wants before reacting.`
-    }
-    if (/You may both react to tension by (.+?)\./iu.test(source)) return 'If both of you respond to tension by avoiding the conversation, the same need can stay unspoken. Name what would make it easier to talk.'
-    if (/You may move to solve a problem before asking what help is wanted/iu.test(source)) return 'The missed moment is often the gap between offering a solution and feeling heard. Ask what kind of support is wanted before you try to fix the issue.'
-    return 'A difference in how you respond to tension can leave a need unclear. Slow the exchange down and ask what each person wants from the conversation.'
+    if (/When either of you asks for space/iu.test(source)) return 'A pause and a need for reassurance can sound like opposites. A clear plan to reconnect can show that space does not have to mean rejection.'
+    if (/You may move to solve a problem before asking what help is wanted/iu.test(source)) return 'The tension is about timing: one person may be ready to fix the issue while the other still needs to be heard. A useful response can still miss the moment if it comes too soon.'
+    if (/You may hope an unspoken need will be noticed/iu.test(source)) return 'Reassurance may be expected without being asked for, while space may be heard as rejection. Naming both needs can keep either interpretation from taking over.'
+    if (/A request for space may feel like rejection to you/iu.test(source)) return 'One person may need room while the other is ready to help. Slowing the exchange gives each request a chance to be understood before either of you reacts.'
+    return 'The tension can begin when the first reaction misses the need underneath it. Treat this as a pattern to check against your real disagreements, not a claim about what either person always does.'
   }
   if (questionId === 'q-love-language') {
-    const different = /You may express love by (.+?); your partner may express it (?:through|by) (.+?)\./iu.exec(source)
-    if (different) {
-      if (/quiet reflection|private thinking/iu.test(different[1]) && /practical help/iu.test(different[2])) return 'Quiet thinking time and practical support are different routes to care. Agree when to reconnect so silence or help is not misread.'
-      if (/honest conversation/iu.test(different[1]) && /steady check-ins/iu.test(different[2])) return 'Honest conversation and steady follow-through offer different routes to trust. Reflect what you heard before planning a check-in.'
-      if (/keeping promises/iu.test(different[1]) && /privacy|quiet/iu.test(different[2])) return 'Reliability and quiet understanding matter in different ways here. Protect shared commitments as well as personal space.'
-      return 'You may show care in different ways. Name what feels meaningful to each of you so effort is easier to recognise.'
-    }
-    if (/express love in a similar way/iu.test(source)) {
-      return 'Follow-through is already a shared strength. Keep it reciprocal so neither of you carries the connection alone.'
-    }
-    return 'Your ways of showing care may be similar or different, but the useful question is whether each person recognises the other’s effort. Ask what support feels meaningful before assuming.'
+    if (/express love in a similar way/iu.test(source)) return 'Your shared style can make care easier to recognise. Similar habits still need to feel mutual to both of you.'
+    if (/respecting private thinking time/iu.test(source) && /practical help/iu.test(source)) return 'You may show care through quiet understanding, while your partner may offer practical help. Neither style alone shows how deeply someone feels.'
+    if (/speaking honestly/iu.test(source) && /steady check-ins/iu.test(source)) return 'You may rely on open conversation while your partner may show care through steady follow-through. The difference is in expression, not necessarily affection.'
+    if (/following through on promises/iu.test(source) && /private thinking time/iu.test(source)) return 'You may show care by keeping commitments, while your partner may value quiet understanding. A difference in style does not mean a difference in care.'
+    return 'Your charts suggest that care may be expressed in different forms. That difference does not show that one person cares more than the other.'
   }
   if (questionId === 'chart-patterns') {
-    if (/variety|new plans/iu.test(source) && /steadier rhythm|steady rhythm/iu.test(source)) return 'You may enjoy variety while your partner may prefer a steadier rhythm. Keep one shared plan fixed and leave some room for flexibility.'
-    if (/both.*(?:independent|handle tasks alone)|each.*(?:independent|handle tasks alone)/iu.test(source)) return 'Handling every task alone can become tiring for both of you. Give a recurring task a clear owner so asking for help feels easier.'
-    if (/social obligations/iu.test(source) && /independent tasks/iu.test(source)) return 'You may need protected personal time, while your partner may benefit from help with recurring tasks. A protected block and a clear task owner can address both.'
-    if (/reliable help/iu.test(source) && /new plans|variety/iu.test(source)) return 'Your routines call for both reliable help and room for new plans. Give recurring tasks a clear owner and leave some time open.'
-    return 'Your relationship shows patterns in both emotional needs and daily routines. Compare the two before assuming one shared strength solves every difference.'
+    if (/Your private-life comparison shows a link that may support shared plans/iu.test(source)) return 'A possible link appears in the private-life comparison, while everyday routines show no clear pattern. Shared plans and daily coordination are separate parts of your fit.'
+    if (/Small differences in private expectations may become recurring irritations/iu.test(source)) return 'Your emotional and daily comparisons both point to possible differences in expectations. They describe areas to understand, not a verdict on your relationship.'
+    if (/Neither comparison shows a clear link or conflict/iu.test(source) && /variety can be energising/iu.test(source) && /steady rhythm can help/iu.test(source)) return 'You may bring more variety while your partner prefers a steadier pace. The chart shows no clear tie or conflict, so your actual routines are the clearest guide.'
+    if (/Neither comparison shows a clear link or conflict/iu.test(source) && /busy social obligations/iu.test(source)) return 'Your routine may be crowded by social plans, while your partner may tire of handling tasks alone. The chart does not show a clear routine link or conflict.'
+    return 'Emotional closeness and daily routines are separate parts of your compatibility. A strength in one area does not settle how the other will work.'
   }
   if (questionId === 'support-each-other') {
     const points = [...source.matchAll(/(20\d{2}): for (you|your partner|both of you), the chart flags (.+?) as a theme to review\./giu)]
-    const years = [...new Set(points.map(point => point[1]))]
-    const themes = [...new Set(points.map(point => point[3]))]
-    if (years.length) return `The review points are ${years.join(' and ')}, tied to ${themes.join(' and ')}. They are prompts to discuss shared plans, not predictions of a joint event.`
-    return 'Use the listed period to review the relationship theme the chart identifies. It is a planning prompt, not a prediction of a shared event.'
+    if (points.length) {
+      const themes = [...new Set(points.map(point => point[3]))]
+      const years = [...new Set(points.map(point => point[1]))]
+      return `The chart flags ${themes.join(' and ')} for review in ${years.join(' and ')}. Treat these as planning points, not predictions of a shared relationship event.`
+    }
+    return 'No year stands out in the checked comparison. That means the chart offers no specific timing point here, not a promise about what will happen.'
   }
   if (questionId === 'shared-week') {
-    if (/Because you share this need/iu.test(source)) return 'You need both intentional connection and independent time. Agree where each belongs in your shared week.'
-    if (/You can ask whether your partner wants listening or practical help/iu.test(source)) return 'Ask before stepping in, then give your partner the kind of support they request. Your partner can help by hearing your concern before offering a solution.'
-    if (/listen first, then ask whether advice or practical help/iu.test(source)) return 'Advice may land better after your partner feels heard. Your partner can return that care by staying with your concern before trying to settle it.'
-    return 'A useful next step is to name what response each person needs before acting. Keep the adjustment mutual so neither partner carries all the responsibility.'
+    if (/Because you share this need/iu.test(source)) return 'You share a need for focused attention and time for separate interests. Balancing connection with independence is the mutual adjustment.'
+    if (/You can ask whether your partner wants listening or practical help before you respond/iu.test(source)) return 'You can ask what kind of support your partner wants. Your partner can help by hearing your concern before offering a solution.'
+    const ownAdjustment = /You can respond by learning to (.+?)\./iu.exec(source)
+    const partnerAdjustment = /Your partner can (.+?)\./iu.exec(source)
+    if (ownAdjustment && partnerAdjustment) return `Your part is to ${ownAdjustment[1]}; your partner’s is to ${partnerAdjustment[1]}. Both adjustments matter for the relationship to feel mutual.`
+    return 'This connection asks for care that fits each person’s stated needs, rather than assuming one response suits both. A lasting adjustment should leave both of you with a voice.'
   }
   return ''
 }

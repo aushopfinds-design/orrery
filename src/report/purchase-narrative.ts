@@ -464,18 +464,25 @@ export function customerNarrative(plan:InterpretationPlan,targetedProduct01=true
   const closeness=meeting('day'),routine=meeting('month')
   const yourRoutine=LANGUAGE[p.monthBranchGod].balance.en.split(/(?<=[.!?])\s/)[0].replace(/[.!?]+$/u,'')
   const partnerRoutine=LANGUAGE[b.monthBranchGod].balance.en.split(/(?<=[.!?])\s/)[0].replace(/[.!?]+$/u,'')
-  const sharedClosenessNeed=yourNeed.trim().toLocaleLowerCase()===partnerNeed.trim().toLocaleLowerCase()
-   ? `You both value ${yourNeed}.`
-   : `You value ${yourNeed}; your partner values ${partnerNeed}.`
-  const sharedClosenessNeedKo=yourNeed.trim().toLocaleLowerCase()===partnerNeed.trim().toLocaleLowerCase()
-   ? `두 사람 모두 ${NEED[p.dayBranch]}을 중요하게 여깁니다.`
-   : `본인은 ${NEED[p.dayBranch]}을, 상대방은 ${NEED[b.dayBranch]}을 중요하게 여깁니다.`
   const chartPatternsAction=isLink(dayPair)
    ? pair(isFriction(routinePair)?'The private-life link can support a shared plan, while the routine comparison calls for a clear owner for one recurring task.':'Use the private-life link as a starting point for a shared plan; agree separately on who owns one recurring task.','사적인 연결을 함께할 계획의 바탕으로 삼되, 반복 업무의 담당은 별도로 정합니다.')
    : isFriction(dayPair)
     ? pair(isFriction(routinePair)?'Leave room for each person’s private choices, then name who owns one recurring task; the two differences need separate agreements.':'Leave room for each person’s private choices, then agree how one recurring task will be handled.','각자의 사적인 선택을 존중하고 반복 업무 하나의 담당을 정합니다.')
     : pair(isFriction(routinePair)?'Ask what helps each person feel close, then agree who owns one recurring task; the routine comparison shows a different practical pressure.':'Ask what helps each person feel close, then set one daily routine together; neither comparison alone decides how you fit.','각자 친밀함을 느끼는 방식을 묻고, 일상 습관 하나를 함께 정합니다.')
-  put('chart-patterns',[pair(`Emotional closeness depends more on how you respond to each other’s needs; everyday compatibility depends more on how your routines work together. For emotional closeness, ${closeness.en[0].toLowerCase()+closeness.en.slice(1)} ${sharedClosenessNeed} For everyday compatibility, ${routine.en[0].toLowerCase()+routine.en.slice(1)} Your routine: ${yourRoutine}. Your partner’s routine: ${partnerRoutine}.`,`정서적 친밀감은 서로의 필요에 어떻게 반응하는지에, 일상 궁합은 생활 방식이 어떻게 맞는지에 더 달려 있습니다. 정서적 친밀감에서는 ${closeness.ko} ${sharedClosenessNeedKo} 일상 궁합에서는 ${routine.ko} 본인의 일상 방식은 ${LANGUAGE[p.monthBranchGod].balance.ko}, 상대방의 방식은 ${LANGUAGE[b.monthBranchGod].balance.ko}입니다.`)],chartPatternsAction,relationshipWatch)
+  const closenessFit=yourNeed.trim().toLocaleLowerCase()===partnerNeed.trim().toLocaleLowerCase()
+   ? `You both value ${yourNeed}.`
+   : `You value ${yourNeed}, while your partner values ${partnerNeed}.`
+  const sharedClosenessNeedKo=yourNeed.trim().toLocaleLowerCase()===partnerNeed.trim().toLocaleLowerCase()
+   ? `두 사람 모두 ${NEED[p.dayBranch]}을 중요하게 여깁니다.`
+   : `본인은 ${NEED[p.dayBranch]}을, 상대방은 ${NEED[b.dayBranch]}을 중요하게 여깁니다.`
+  const relationshipLayer=(row:typeof dayPair,position:'day'|'month')=>{
+   const clash=row.patterns.some(item=>item.type==='沖'),friction=row.patterns.some(item=>['刑','害','破'].includes(item.type)),link=row.patterns.some(item=>item.type==='合')
+   if(position==='day')return clash?'Your private needs may pull in different directions, so closeness can require room for separate choices.':friction?'Small differences in private expectations may become recurring irritations.':link?'Your private-life comparison shows a link that may support shared plans.':'The chart shows no clear emotional link or conflict; the care needs you each value are the clearer guide.'
+   return clash?'Your daily routines may clash over pace, schedules or shared duties.':friction?'Small differences in everyday expectations may cause friction.':link?'Your daily patterns show a link that may help you coordinate routines.':'The chart shows no clear link or conflict between your daily routines.'
+  }
+  const emotionalSummary=relationshipLayer(dayPair,'day'),routineSummary=relationshipLayer(routinePair,'month')
+  const routineDescription=`For you, ${yourRoutine[0].toLowerCase()+yourRoutine.slice(1)}. For your partner, ${partnerRoutine[0].toLowerCase()+partnerRoutine.slice(1)}.`
+  put('chart-patterns',[pair(`Emotional closeness depends on how you meet each other’s needs; everyday compatibility depends on how your routines work together. For emotional closeness, ${emotionalSummary} ${closenessFit} For everyday compatibility, ${routineSummary} ${routineDescription}`,`정서적 친밀감은 서로의 필요에 어떻게 반응하는지에, 일상 궁합은 생활 방식이 어떻게 맞는지에 달려 있습니다. 정서적 친밀감에서는 ${closeness.ko} ${sharedClosenessNeedKo} 일상에서는 ${routine.ko} 본인의 일상 방식은 ${LANGUAGE[p.monthBranchGod].balance.ko}, 상대방은 ${LANGUAGE[b.monthBranchGod].balance.ko}입니다.`)],chartPatternsAction,relationshipWatch)
   const aYears=purchaseYears(plan.first,plan.referenceYear,'love',5),bYears=purchaseYears(plan.second!,plan.referenceYear,'love',5)
   const relationshipChanges=aYears.map((a,i)=>({year:a.date.slice(0,4),you:a.lines.find(line=>line.id.endsWith('change-day'))?.en,partner:bYears[i].lines.find(line=>line.id.endsWith('change-day'))?.en})).filter(row=>row.you||row.partner).slice(0,3)
   const relationshipChangeText=(text:string)=>{

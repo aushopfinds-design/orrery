@@ -23,7 +23,7 @@ describe('Buyer questions, not a repeated six-part technical template', () => {
     expect(report).toMatch(/Question: Why are we attracted to each other\?[\s\S]*Answer: You may be drawn to what your partner brings:/)
     expect(report).toContain('Your partner may be drawn to what you bring: fresh ideas and open communication.')
     expect(report).not.toContain('during a disagreement in you')
-    expect(report).toContain('The charts show no clear emotional link or clash; your daily routines offer the clearer comparison.')
+    expect(report).toContain('Neither comparison shows a clear link or conflict, so your day-to-day styles offer the clearest point of comparison.')
   })
   it('gives every question a distinct answer role within its product', () => {
     for (const [kind, questions] of Object.entries(BUYER_QUESTIONS)) {
@@ -137,7 +137,7 @@ describe('Buyer questions, not a repeated six-part technical template', () => {
     const report = applyBuyerQuestions(source, 'compatibility', chapters)
     expect((report.match(/^Question:/gm) ?? [])).toHaveLength(7)
     const q5 = report.split('Question: How do emotional closeness and everyday compatibility differ?')[1]?.split('\n\nshared-routine')[0]?.split('\n\nQuestion: ')[0] ?? ''
-    expect(q5).toContain('Emotionally, neither a direct bond nor a direct conflict stands out.')
+    expect(q5).toContain('Neither a direct bond nor a direct conflict stands out.')
     expect(q5).not.toContain('You value being heard before someone offers a solution')
     expect(q5).not.toContain('your partner values listening as well as practical help')
     expect(q5).toContain('For you, careful work benefits from a steady pace.')
@@ -175,7 +175,7 @@ describe('Buyer questions, not a repeated six-part technical template', () => {
     const timing = report.slice(report.indexOf('Question: Which upcoming periods may affect our relationship themes?'))
     expect(timing).not.toContain('Practical point:')
     expect(timing).not.toContain('Main caution:')
-    expect(report).toContain('Question: How do emotional closeness and everyday compatibility differ?\n\nAnswer: Emotionally, neither a direct bond nor a direct conflict stands out.')
+    expect(report).toContain('Question: How do emotional closeness and everyday compatibility differ?\n\nAnswer: Emotional closeness depends on how you meet each other’s needs; everyday compatibility depends on how your routines work together.')
     const closeness = report.slice(report.indexOf('Question: How do emotional closeness and everyday compatibility differ?')).split('\n\nshared-routine')[0].split('\n\nQuestion: ')[0]
     expect(closeness).toContain('For you, careful work benefits from a steady pace.')
     expect(closeness).toContain('For your partner, creative projects need room for new ideas.')
@@ -204,9 +204,9 @@ describe('Buyer questions, not a repeated six-part technical template', () => {
     const reading = buildCategoryReading('compatibility', first, { second, year: 2026 })
     const report = applyBuyerQuestions(reading.fullText, 'compatibility', reading.chapters, [], 'standalone')
     const q5 = report.split('Question: How do emotional closeness and everyday compatibility differ?')[1]?.split('\n\nQuestion: ')[0] ?? ''
-    expect(q5).toContain('Emotionally, small differences in what you expect from private life can become recurring irritations.')
+    expect(q5).toContain('Answer: Emotional closeness depends on how you meet each other’s needs; everyday compatibility depends on how your routines work together.')
     expect(q5).not.toContain('You both value warm attention and time for your own interests.')
-    expect(q5).toContain('You share this daily pattern: independence becomes tiring when every task has to be handled alone.')
+    expect(q5).toContain('You share a routine pattern: independence becomes tiring when every task has to be handled alone.')
     expect(q5).not.toContain('your partner values warm attention and time for your own interests')
     expect(q5).not.toContain("Your partner's daily chart pattern: Independence becomes tiring when every task has to be handled alone.")
   })
@@ -487,7 +487,7 @@ describe('Buyer questions, not a repeated six-part technical template', () => {
     expect(fit).toContain('Answer: This match has shared care needs.')
     expect(fit).not.toContain('The private-life chart comparison shows no clear tie or clash.')
     expect(fit).not.toContain('Neither a strong private-life link nor a direct conflict appears')
-    expect(answerFor('How do emotional closeness and everyday compatibility differ?')).toContain('Answer: Direct answer for chart-patterns.')
+    expect(answerFor('How do emotional closeness and everyday compatibility differ?')).toContain('Answer: Emotional closeness depends on how you meet each other’s needs; everyday compatibility depends on how your routines work together.')
     expect(answerFor('How do emotional closeness and everyday compatibility differ?')).not.toContain('Neither a strong private-life link nor a direct conflict appears')
     expect(fit).not.toContain('Main caution: Generic caution.')
     expect(attraction).toContain('Answer: You may be drawn to what your partner brings: reassurance and feeling understood.')
