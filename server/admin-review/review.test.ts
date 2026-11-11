@@ -156,6 +156,14 @@ describe('Protected page and translation API', () => {
     expect(page.status).toBe(200)
     expect(await page.text()).toContain('FATE KEY · 품질 관리')
   })
+  it('serves the quality dashboard at the short admin URL and keeps it behind the same session', async () => {
+    const anonymous = await handler(new Request(config.origin + '/admin/quality'))
+    expect(anonymous.status).toBe(200)
+    expect(await anonymous.text()).toContain('google-login')
+    const page = await handler(new Request(config.origin + '/admin/quality', { headers: { Cookie: `${SESSION_COOKIE}=${await session()}` } }))
+    expect(page.status).toBe(200)
+    expect(await page.text()).toContain('FATE KEY · 품질 관리')
+  })
   it('requires a signed challenge for login and issues a short HttpOnly session', async () => {
     expect((await handler(request('login', { credential: 'test' }))).status).toBe(401)
     const nonce = await ticket(config, 'login', 'nonce', { nonce: 'nonce' }, 300)

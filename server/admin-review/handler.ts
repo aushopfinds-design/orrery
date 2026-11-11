@@ -50,15 +50,16 @@ export function reviewHandler(deps: Dependencies = { config: () => reviewConfig(
           await requireAdmin(config, request)
           return json(await qualityData())
         }
+        const qualityView = url.pathname === '/admin/quality' || url.searchParams.get('view') === 'quality'
         const nonce = randomBytes(24).toString('base64url')
         try {
           await requireAdmin(config, request)
-          if (url.searchParams.get('view') === 'quality') return html(qualityDashboardPage(nonce), nonce)
+          if (qualityView) return html(qualityDashboardPage(nonce), nonce)
           return html(reviewPage(nonce), nonce)
         } catch (error) {
           if (!(error instanceof ReviewError) || error.status !== 401) throw error
           const challenge = randomBytes(24).toString('base64url')
-          const redirect = url.searchParams.get('view') === 'quality' ? '/api/admin-review?view=quality' : '/api/admin-review'
+          const redirect = qualityView ? '/admin/quality' : '/api/admin-review'
           const response = html(loginPage(config.clientId, challenge, nonce, redirect, config.loginMode), nonce)
           response.headers.append('Set-Cookie', cookie(NONCE_COOKIE, await ticket(config, 'login', 'nonce', { nonce: challenge }, 600), 600))
           return response
