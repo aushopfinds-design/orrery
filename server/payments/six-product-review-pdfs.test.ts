@@ -11,11 +11,11 @@ const profiles: { id: string; first: BirthInput; second: BirthInput }[] = [
   { id: 'sydney-1990', first: { year: 1990, month: 8, day: 14, hour: 8, minute: 30, gender: 'F' as const, timezone: 'Australia/Sydney', latitude: -33.8688, longitude: 151.2093 }, second: CATEGORY_SCENARIOS[1].second },
   { id: 'la-1975', first: { year: 1975, month: 12, day: 2, hour: 22, minute: 15, gender: 'M' as const, timezone: 'America/Los_Angeles', latitude: 34.0522, longitude: -118.2437 }, second: CATEGORY_SCENARIOS[0].first },
 ]
-const products = ['complete', 'compatibility', 'year', 'business', 'wellbeing', 'bundle'] as const
-const questions: Record<(typeof products)[number], number> = { complete: 7, compatibility: 7, year: 7, business: 7, wellbeing: 7, bundle: 10 }
+const products = ['complete', 'career', 'compatibility', 'year', 'business', 'wellbeing', 'bundle'] as const
+const questions: Record<(typeof products)[number], number> = { complete: 7, career: 7, compatibility: 7, year: 7, business: 7, wellbeing: 7, bundle: 10 }
 
-describe('six final English product reports', () => {
-  it('generates and opens all 30 reviewed customer PDFs', async () => {
+describe('seven final English product reports', () => {
+  it('generates and opens all 35 reviewed customer PDFs', async () => {
     const output = process.env.FATE_SIX_PRODUCT_PDF_DIR
     if (output) await mkdir(output, { recursive: true })
     let count = 0
@@ -57,7 +57,7 @@ describe('six final English product reports', () => {
         count++
       }
     }
-    expect(count).toBe(30)
+    expect(count).toBe(35)
     expect(new Set(businessRiskOpenings).size).toBeGreaterThan(1)
   }, 180_000)
 })

@@ -1,0 +1,94 @@
+{
+  "checkpoint_date": "2026-11-11",
+  "baseline_commit": "59ad58003cb2628088e8ab075a66266976d88130",
+  "evaluation_status": "VERIFY",
+  "independent_scores": null,
+  "score_policy": "No score is assigned without an independent review of the generated PDF. Automated report diagnostics are not independent quality scores.",
+  "pdf_batch": {
+    "expected_count": 35,
+    "generated_count": 35,
+    "test": "server/payments/six-product-review-pdfs.test.ts",
+    "profiles": [
+      "category-scenario-1",
+      "category-scenario-2",
+      "category-scenario-3",
+      "sydney-1990",
+      "la-1975"
+    ],
+    "question_counts": {
+      "01": 7,
+      "02": 7,
+      "03": 7,
+      "04": 7,
+      "05": 7,
+      "06": 7,
+      "07": 10
+    },
+    "independent_pdf_review": "not completed; no scores assigned"
+  },
+  "repairs": [
+    {
+      "product_id": "06",
+      "question_id": "q-balance-action",
+      "question_title": "What boundary could help protect my everyday balance?",
+      "problem_sentence": "When a new request arrives, name the work already using your time and ask which responsibility should move before you agree.",
+      "deduction_reason_ko": "5개 프로필에 같은 일반 조언이 반복됐고, 개인의 업무 역할과 사생활에서 필요한 점이 답에 드러나지 않았습니다.",
+      "revision_rule": "Build the boundary from the profile's calculated work-role wording and private-life need. Do not reuse the generic balance-week action.",
+      "sample_revised_answer": "A useful boundary is to protect [profile-specific need] by deciding which work request can wait. Your chart centres on [profile-specific work pattern]; repeated requests can compete with that focus and your personal time.",
+      "before_score_historical": 88,
+      "before_score_commit": "b1a22a08a8e4e33fe10a6e6a36babeb3b7843777",
+      "after_score": null,
+      "status": "VERIFY"
+    },
+    {
+      "product_id": "07",
+      "question_id": "collection-q4",
+      "question_title": "How do my personality, career, money and love connect?",
+      "problem_sentence": "The former lead linked work, money and relationships but omitted the personality theme.",
+      "deduction_reason_ko": "질문에 적힌 네 영역 중 성격이 실제 결론에서 빠져 있었습니다.",
+      "revision_rule": "Name the personal style, career theme, chart-supported earning route, and separate close-relationship need in the direct answer.",
+      "sample_revised_answer": "Your personal style centres on [profile-specific focus]. At work, your chart points to [work theme]; [income route]. These areas meet through the time and effort you can give, while your close relationships have a separate need: [private need]. The chart describes connected themes, not a guaranteed cause or outcome.",
+      "before_score_historical": 93,
+      "before_score_commit": "b1a22a08a8e4e33fe10a6e6a36babeb3b7843777",
+      "after_score": null,
+      "status": "VERIFY"
+    },
+    {
+      "product_id": "07",
+      "question_id": "collection-q6",
+      "question_title": "Which years are most important for me?",
+      "problem_sentence": "The lead said no specific year could be named even when a checked timing comparison appeared in its detail.",
+      "deduction_reason_ko": "연도 정규식이 연주 표기 (간지)를 포함한 제목을 읽지 못해, 답변 첫 문장과 실제 근거가 서로 모순됐습니다.",
+      "revision_rule": "Read the year and concise theme from verified turning-point comparisons. State no year only when those comparisons contain none.",
+      "sample_revised_answer": "The chart flags 2026 (recognised responsibility and clear standards); 2031 (independent judgement); 2032 (ideas, expression and improving a method) as review years. These comparisons identify themes, not guaranteed life events.",
+      "before_score_historical": 83,
+      "before_score_commit": "b1a22a08a8e4e33fe10a6e6a36babeb3b7843777",
+      "after_score": null,
+      "status": "VERIFY"
+    },
+    {
+      "product_id": "07",
+      "question_id": "collection-q7",
+      "question_title": "What should I prioritise over the next three years?",
+      "problem_sentence": "The former answer used a stock six-month check and did not derive its priority from the selected chart theme.",
+      "deduction_reason_ko": "실제 개인별 연간 업무 주제가 답에 연결되지 않았습니다. 또한 계산하지 않은 3개년 예측은 만들면 안 됩니다.",
+      "revision_rule": "Derive one useful focus from the current annual chart chapter; disclose that this is a priority, not a year-by-year forecast.",
+      "sample_revised_answer": "For the next three years, prioritise [profile-specific annual work theme]. The annual chart comparison identifies this as a useful focus; it does not provide a separate forecast for each of the three years.",
+      "before_score_historical": 83,
+      "before_score_commit": "b1a22a08a8e4e33fe10a6e6a36babeb3b7843777",
+      "after_score": null,
+      "status": "VERIFY"
+    }
+  ],
+  "current_task_status": {
+    "official_question_catalogue": "unchanged; 01-06 each 7 and 07 has 10 in generated batch",
+    "pdf_rendering_and_question_navigation": "35 PDFs regenerated from current modified code; opened by regression test; 35 files present in /tmp/fate-key-final-35",
+    "automated_regression": "957 tests passed; 83 test files passed",
+    "production_build": "passed (source integrity, core build, TypeScript, Vite, public pages)",
+    "independent_scores": "not assigned; all 35 remain VERIFY",
+    "score_warning": "70/100 diagnostic values emitted by the automatic gate are not independent report scores",
+    "reviewed_pdf_text": "P06 Q7 and P07 Q4/Q6/Q7 extracted and spot checked; broader sentence-level review of all 260 answer blocks remains incomplete",
+    "deployment": "not deployed; production and sales settings untouched",
+    "remaining_scope": "Complete independent review of all 260 answers; repair and regenerate PDFs with sub-95 answers; independently rescore every PDF; remove legacy answer labels where required; preserve historical baseline and compare quality before any release."
+  }
+}

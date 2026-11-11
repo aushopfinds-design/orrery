@@ -60,12 +60,13 @@ export function buildBundleFromPlans(plans: ReturnType<typeof bundleInterpretati
     if (!found) throw new Error(`Missing collection answer source: ${id}`)
     return found
   }
-  const answer = (number: number, question: string, source: ReportChapter, timing?: string, collectionLead?: string) => {
+  const answer = (number: number, question: string, source: ReportChapter, details: string[], bottomLine: string, collectionLead?: string) => {
     return [
       `${String(number).padStart(2, '0')} · ${question}`,
       `Question: ${question}`,
       `Your Answer: ${plainReadingText(collectionLead ?? source.lead)}`,
-      ...(timing ? [`Important Timing: ${plainReadingText(timing)}`] : []),
+      ...details.filter(Boolean).slice(0, 2).map(detail => `Answer detail: ${plainReadingText(detail)}`),
+      `Bottom Line: ${plainReadingText(bottomLine)}`,
     ].join('\n\n')
   }
   const life = chapter(complete, 'personality')
@@ -79,6 +80,7 @@ export function buildBundleFromPlans(plans: ReturnType<typeof bundleInterpretati
   }
   const careerFit = chapter(career, 'two-work-layers')
   const moneyFit = chapter(career, 'money-commitments')
+  const loveNeed = chapter(love, 'love-needs')
   const challenge = chapter(complete, 'life-challenges')
   const yearTheme = chapter(annual, 'annual-theme')
   const longTerm = chapter(complete, 'patterns')
@@ -103,25 +105,44 @@ export function buildBundleFromPlans(plans: ReturnType<typeof bundleInterpretati
           : hiddenSteady ? 'a possible repeat-pay route appears in less visible signs'
             : hiddenVariable ? 'a possible project-income route appears in less visible signs'
               : 'the chart gives clearer work-fit clues than direct income clues'
-  const integratedCollectionAnswer = `Your work pattern centres on ${workTheme}, while ${incomeSummary}. They connect through delivery: opportunities help only when you can complete the work and collect payment. Your close relationships have a separate need: ${privateNeed}. These are related parts of your life, but the chart does not show that one causes another or guarantee an event.`
+  const integratedCollectionAnswer = `Your personal style centres on ${coreProfile.focus}. At work, your chart points to ${workTheme}; ${incomeSummary}. These areas meet through the time and effort you can give, while your close relationships have a separate need: ${privateNeed}. The chart describes connected themes, not a guaranteed cause or outcome.`
   const threeInsights = `Three chart-linked themes stand out: your core style is ${coreProfile.focus}; your work fit centres on ${workTheme}; and close relationships work best when your need for ${privateNeed} is understood.`
   const repeatingPatternText = plainReadingText(coreProfile.watchFor.at(-1) ?? coreProfile.watchFor[0])
   const repeatingPattern = `A pattern that may repeat is ${repeatingPatternText.charAt(0).toLowerCase()}${repeatingPatternText.slice(1)} Your chart links this tendency to a work style centred on ${workTheme}; it is a pattern to notice, not a fixed outcome.`
   const finalMessage = `Your chart points to a clear theme: ${workTheme} at work and your need for ${privateNeed} both matter in the life you build. Treat this as a personal pattern to weigh alongside your real circumstances, not as a fixed outcome.`
+  const turningPointThemes = longTerm.paragraphs
+    .map(line => /^Why (\d{4})(?:\s+\([^)]*\))? is highlighted here:\s*(.+)$/u.exec(line))
+    .filter((match): match is RegExpExecArray => Boolean(match))
+    .slice(0, 3)
+  const turningPointLabel = (year: string, theme: string) => theme
+    .replace(new RegExp(`^The ${year} theme of `), '')
+    .split(/\s+connects with\s+/iu)[0]
+    .replace(/[.!?]+$/u, '')
+  const yearPriority = plainReadingText(yearTheme.tryThis)
+    .replace(/^Focus this year on\s+/iu, '')
+    .replace(/\s+at work$/iu, '')
+    .replace(/[.!?]+$/u, '')
+  const threeYearPriority = `For the next three years, prioritise ${yearPriority}. The annual chart comparison identifies this as a useful focus; it does not provide a separate forecast for each of the three years.`
   const collectionQuestions = [
-    answer(1, DESTINY_COLLECTION_QUESTIONS[0], life, undefined, threeInsights),
-    answer(2, DESTINY_COLLECTION_QUESTIONS[1], careerFit, undefined, `Your clearest opportunity is to make your contribution in ${workTheme} visible. Choose one project or responsibility where the result can be seen and credited to you.`),
-    answer(3, DESTINY_COLLECTION_QUESTIONS[2], challenge, undefined, challengeAnswer),
-    answer(4, DESTINY_COLLECTION_QUESTIONS[3], moneyFit, undefined, integratedCollectionAnswer),
-    answer(5, DESTINY_COLLECTION_QUESTIONS[4], life, undefined, repeatingPattern),
-    answer(6, DESTINY_COLLECTION_QUESTIONS[5], longTerm, undefined, 'No specific year can be named from the verified timing in this report. The checked comparisons support review points, not a date for a major life event.'),
-    answer(7, DESTINY_COLLECTION_QUESTIONS[6], yearTheme, undefined, `For the next three years, build your work around ${workTheme}. Every six months, check whether it is producing the result you want and adjust your plan if needed. This is a priority, not a year-by-year forecast; no verified three-year sequence is available.`),
-    answer(8, DESTINY_COLLECTION_QUESTIONS[7], strengthsOverview, undefined, `A strength you may overlook is this: ${plainReadingText(coreProfile.strength)} The chart links this trait to your natural way of approaching work and close relationships.`),
-    answer(9, DESTINY_COLLECTION_QUESTIONS[8], life, undefined, `A more fulfilling life may come from work centred on ${workTheme} and close relationships that make room for ${privateNeed}. The chart offers these as personal themes, not a fixed definition of happiness.`),
+    answer(1, DESTINY_COLLECTION_QUESTIONS[0], life, [`Your personal style is read from your birth-day sign, your public work role from the birth month, and your close-relationship need from a separate chart position.`, `Your earning clues describe possible routes, while your relationship need describes what supports closeness.`], 'Your chart’s strongest themes are your personal style and the work you are suited to. The kind of care you need in close relationships is a third part of that picture.', threeInsights),
+    answer(2, DESTINY_COLLECTION_QUESTIONS[1], careerFit, careerFit.paragraphs, 'Use your work strength where your contribution is visible and clearly owned. A chart theme points to a direction, while real openings depend on your choices and circumstances.', `Your clearest opportunity is to make your contribution in ${workTheme} visible. Choose one project or responsibility where the result can be seen and credited to you.`),
+    answer(3, DESTINY_COLLECTION_QUESTIONS[2], challenge, [challenge.paragraphs[0], challenge.paragraphs[2]], 'Your challenge is letting a useful strength become a role you cannot put down. Protecting your personal needs helps you choose when to use that strength.', challengeAnswer),
+    answer(4, DESTINY_COLLECTION_QUESTIONS[3], moneyFit, [moneyFit.paragraphs[0], loveNeed.lead], 'Your personal style shapes how you approach work. Work, money and close relationships still depend on the time and effort you can realistically give.', integratedCollectionAnswer),
+    answer(5, DESTINY_COLLECTION_QUESTIONS[4], life, [plainReadingText(coreProfile.pressure), `Your work theme is ${workTheme}; the repeated pattern is a tendency to carry the same response into that setting.`], 'A familiar strength can become a repeated pattern when it shapes both your work choices and your response to pressure. Notice when the same approach is no longer helping.', repeatingPattern),
+    answer(6, DESTINY_COLLECTION_QUESTIONS[5], longTerm, turningPointThemes.length ? [`The first year links to ${turningPointLabel(turningPointThemes[0][1], turningPointThemes[0][2])}. The detailed comparison is included in the chart timing pages.`] : [longTerm.paragraphs[0]], turningPointThemes.length
+      ? 'Use these years as review points for the named themes, not as guaranteed events. Compare them with real work, money and personal decisions before making a change.'
+      : 'No listed year means the available calculation did not identify a supported timing signal. Review your real circumstances rather than treating an unverified date as guidance.', turningPointThemes.length
+      ? `The chart flags ${turningPointThemes.map(([_, year, theme]) => `${year} (${turningPointLabel(year, theme)})`).join('; ')} as review years. These comparisons identify themes, not guaranteed life events.`
+      : 'No specific year stands out in the verified turning-point comparisons available for this reading. The chart supports themes to review, not a date for a major life event.'),
+    answer(7, DESTINY_COLLECTION_QUESTIONS[6], yearTheme, [yearTheme.paragraphs[0]], 'Keep one work priority central, then check whether your actual responsibilities and authority support it. The annual chart comparison offers a focus, not a separate forecast for each of the next three years.', threeYearPriority),
+    answer(8, DESTINY_COLLECTION_QUESTIONS[7], strengthsOverview, [social.paragraphs[0], life.paragraphs[0]], 'Your potential is easiest to miss when a familiar strength feels ordinary to you. Look at what others rely on you to do, while checking that the role still suits you.', `A strength you may overlook is this: ${plainReadingText(coreProfile.strength)} The chart links this trait to your natural way of approaching work and close relationships.`),
+    answer(9, DESTINY_COLLECTION_QUESTIONS[8], life, [`Your work theme is ${workTheme}; your close-relationship need is ${privateNeed}. They describe separate parts of the chart that have to fit into the same life.`], 'A fulfilling life in this chart balances meaningful contribution with the kind of closeness that supports you. Your own priorities and lived experience remain the guide.', `A more fulfilling life may come from work centred on ${workTheme} and close relationships that make room for ${privateNeed}. The chart offers these as personal themes, not a fixed definition of happiness.`),
     [
       `10 · ${DESTINY_COLLECTION_QUESTIONS[9]}`,
       `Question: ${DESTINY_COLLECTION_QUESTIONS[9]}`,
       `Your Answer: ${plainReadingText(finalMessage)}`,
+      `Answer detail: Your work theme is ${workTheme}; your close-relationship need is ${privateNeed}. These are distinct chart clues, not a prediction that one will determine the other.`,
+      `Bottom Line: ${plainReadingText(`Build around ${workTheme} while making room for ${privateNeed}. Let your real circumstances shape how that balance looks.`)}`,
     ].join('\n\n'),
   ]
   const includedReports = [complete, compatibility, career, annual, love]

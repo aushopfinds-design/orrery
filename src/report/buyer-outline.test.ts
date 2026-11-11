@@ -255,6 +255,19 @@ describe('Buyer questions, not a repeated six-part technical template', () => {
     expect(report).not.toContain('Question: What kind of environment brings out my best?')
   })
 
+  it('builds the everyday-balance boundary from each chart’s work and private-life patterns', () => {
+    const profiles = [a, calculateSaju({ ...a.input, year: a.input.year + 1, month: a.input.month === 12 ? 1 : a.input.month + 1 })]
+    const answers = profiles.map(chart => {
+      const reading = buildCategoryReading('wellbeing', chart, { year: 2026 })
+      const text = applyBuyerQuestions(reading.fullText, 'wellbeing', reading.chapters)
+      return text.split('Question: What boundary could help protect my everyday balance?')[1]?.split('\n\nQuestion: ')[0] ?? ''
+    })
+    expect(answers.every(answer => answer.startsWith('\n\nAnswer: A useful boundary is to protect'))).toBe(true)
+    expect(new Set(answers).size).toBeGreaterThan(1)
+    expect(answers.join(' ')).not.toContain('When a new request arrives, name the work already using your time')
+    expect(answers.join(' ')).not.toMatch(/daily pressure response is|\.\./)
+  })
+
   it('answers the distinctive-traits question with personal roles, not an element-count inventory', () => {
     const make = (id: string, lead: string, paragraphs: string[] = []) => ({
       id, title: id, lead, paragraphs, evidence: ['verified chart marker'], tryThis: 'Keep the answer tied to the chart.',
