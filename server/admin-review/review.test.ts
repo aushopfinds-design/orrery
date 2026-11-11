@@ -14,6 +14,8 @@ import { plainReadingText } from '../../src/report/reading-text.ts'
 import { PREVIEW_KINDS } from '../../src/report/personal-products.ts'
 import { loginPage, reviewPage } from './ui.ts'
 import { qualityDashboardPage } from './quality-dashboard.ts'
+import { readFile } from 'node:fs/promises'
+import { resolve } from 'node:path'
 
 const env = { VERCEL_ENV: 'preview', VERCEL_GIT_COMMIT_REF: 'feature/english-saju-report-20261013', FATE_REVIEW_ENABLED: 'true',
   FATE_REVIEW_ORIGIN: 'https://saju-english-report-preview-review.vercel.app', FATE_REVIEW_GOOGLE_CLIENT_ID: '123-test.apps.googleusercontent.com',
@@ -85,6 +87,18 @@ describe('Quality dashboard client script', () => {
     expect(() => new Script(script!)).not.toThrow()
     expect(html).toContain('.card{color:#182333;text-align:left;cursor:pointer}')
     expect(html).toContain('.card .badge{color:#182333}')
+    expect(html).toContain('초기 내용 검수')
+    expect(html).toContain('a.preliminaryReview?.status')
+    expect(html).toContain('const finding=p?')
+  })
+
+  it('keeps the preliminary Product 03 findings separate from independent scores', async () => {
+    const data = JSON.parse(await readFile(resolve(process.cwd(), 'docs/quality-audits/product-03-preliminary-review-2026-11-11.json'), 'utf8')) as { reviews: Array<{ productId: string; profileId: string; questionId: string; score: number | null; status: string; deductionSentence: string; deductionReason: string; revisionNote: string }> }
+    expect(data.reviews).toHaveLength(35)
+    expect(new Set(data.reviews.map(row => `${row.profileId}:${row.questionId}`)).size).toBe(35)
+    expect(data.reviews.every(row => row.productId === '03' && row.score === null && row.deductionSentence && row.deductionReason && row.revisionNote)).toBe(true)
+    expect(data.reviews.filter(row => row.status === 'FIX')).toHaveLength(20)
+    expect(data.reviews.filter(row => row.status === 'VERIFY')).toHaveLength(15)
   })
 })
 
