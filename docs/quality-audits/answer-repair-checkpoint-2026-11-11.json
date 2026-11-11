@@ -123,17 +123,45 @@
       "before_score_commit": "b1a22a08a8e4e33fe10a6e6a36babeb3b7843777",
       "after_score": null,
       "status": "VERIFY"
+    },
+    {
+      "product_id": "02",
+      "question_id": "career-plan",
+      "question_title": "What is the most important insight for my future?",
+      "problem_sentence": "Your work pattern—customer growth and business development—shares a chart area with clues for steady pay and income from customers or projects. This links work and earning themes, but does not estimate your pay.",
+      "deduction_reason_ko": "가운데 삽입된 대시 때문에 PDF 텍스트 추출에서 문장이 어색하게 붙고, 사주 용어처럼 읽힐 수 있는 표현이 질문의 핵심을 흐렸습니다.",
+      "revision_rule": "State the calculated link between the work theme and possible earning routes in plain English. Keep the pay limitation concise.",
+      "sample_revised_answer": "Your chart links [work theme] at work with [calculated earning routes] as possible ways of earning. That connects the themes, but it cannot estimate your pay.",
+      "before_scores_historical": [
+        91,
+        92,
+        92,
+        92,
+        92
+      ],
+      "before_score_commit": "b1a22a08a8e4e33fe10a6e6a36babeb3b7843777",
+      "after_score": null,
+      "status": "VERIFY"
     }
   ],
   "current_task_status": {
     "official_question_catalogue": "unchanged; 01-06 each 7 and 07 has 10 in generated batch",
-    "pdf_rendering_and_question_navigation": "35 PDFs regenerated after Product 03, 04 and 05 answer revisions; batch regression passed; final PDFs located in /tmp/fate-key-final-35",
-    "automated_regression": "957 tests passed; 83 test files passed after latest code edits",
-    "production_build": "passed after latest code edits (source integrity, core build, TypeScript, Vite, public pages)",
+    "pdf_rendering_and_question_navigation": "35 PDFs regenerated with seven product question counts 7/7/7/7/7/7/10; integrated PDF generation test passed. Files are in /tmp/fate-key-final-35.",
+    "automated_regression": "Latest full suite: 83 files passed, 957 tests passed.",
+    "production_build": "passed after latest report source edits (source integrity, core build, TypeScript, Vite, public content).",
     "independent_scores": "not assigned; all 35 remain VERIFY",
     "score_warning": "70/100 diagnostic values emitted by the automatic gate are not independent report scores",
-    "reviewed_pdf_text": "P03 Q5, P04 Q2, P05 Q7, P06 Q7, and P07 Q4/Q6/Q7 spot checked; full independent review of all 260 answer blocks remains incomplete",
+    "reviewed_pdf_text": "Targeted text checks: P02 Q7, P03 Q5, P04 annual focus, P05 business caution, P06 daily boundary, and P07 Q4/Q6/Q7. Full independent review of all 260 answer blocks remains incomplete.",
     "deployment": "not deployed; production and sales settings untouched",
-    "remaining_scope": "Complete independent review of all 260 answers; repair and regenerate PDFs with sub-95 answers; independently rescore every PDF; remove legacy answer labels where required; preserve historical baseline and compare quality before any release."
+    "remaining_scope": "Independently review all 260 answers, repair and regenerate any sub-95 PDF, then independently rescore all 35 PDFs. Current result remains VERIFY for all 35; no score assigned."
+  },
+  "verification_run": {
+    "date": "2026-11-11",
+    "full_test_files_passed": 83,
+    "full_tests_passed": 957,
+    "full_tests_failed": 0,
+    "build_passed": true,
+    "pdf_batch_generated": 35,
+    "independent_pdf_scores_assigned": 0
   }
 }

@@ -95,6 +95,10 @@ describe('Buyer questions, not a repeated six-part technical template', () => {
   })
   it('answers work and money questions while keeping career and business topics separate', () => {
     const career = buildCategoryReading('career', a, { year: 2026 }), business = buildCategoryReading('business', a, { year: 2026 })
+    const careerAnswers = applyBuyerQuestions(career.fullText, 'career', career.chapters)
+    const insight = careerAnswers.split('Question: What is the most important insight for my future?')[1]?.split('\n\nQuestion: ')[0] ?? ''
+    expect(insight).toMatch(/Answer: Your chart links .+ at work with .+ as possible ways of earning\./)
+    expect(insight).not.toMatch(/work pattern[-—].*shares a chart area/)
     for (const [report, id] of [[career, 'feedback-and-boundaries'], [career, 'work-chapters'], [business, 'offer-test'], [business, 'customer-communication']] as const) {
       const chapter = report.chapters.find(c => c.id === id)!
       expect(chapter.evidence.join(' ')).toContain('2026-07-15')

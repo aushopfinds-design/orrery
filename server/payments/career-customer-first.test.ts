@@ -65,7 +65,7 @@ describe('My Money & Career customer-first delivery', () => {
       expect(q2).toMatch(/Practical Check: For a real choice, compare confirmed salary, hours and support/i)
       expect(q2).toMatch(/paying customers, costs and payment terms/i)
       const q7Section = buyerSection.split('Question: What is my most important career and money insight?')[1].split('\n\nQuestion:')[0]
-      expect(q7Section).toMatch(/Your work pattern|Your work fit/i)
+      expect(q7Section).toMatch(/(?:Your chart links .+ at work with .+ as possible ways of earning|Your work fit centres on .+ while the chart points to .+ as a separate earning clue)/i)
       expect(q7Section).not.toMatch(/What This Means for You:|Bottom Line:/)
       expect(pdf.subarray(0, 5).toString()).toBe('%PDF-')
       reports.push(report)

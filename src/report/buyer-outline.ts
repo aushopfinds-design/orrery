@@ -660,9 +660,9 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
           const linked = /^Your chart places signs for (.+?) in the same birth-month area that points to (.+?)\./iu.exec(careerLead)
           const separated = /^Your work signature is (.+?), while (?:the )?chart places its money signs in (.+?), away from the birth-month work area\./iu.exec(careerLead)
           const insight = linked
-            ? `Your work pattern—${linked[2]}—shares a chart area with clues for ${linked[1]}. This links work and earning themes, but does not estimate your pay.`
+            ? `Your chart links ${linked[2]} at work with ${linked[1]} as possible ways of earning. That connects the themes, but it cannot estimate your pay.`
             : separated
-              ? `Your work fit centres on ${separated[1]}, while its earning clues sit in ${separated[2]}. These are separate chart themes; they do not estimate your pay.`
+              ? `Your work fit centres on ${separated[1]}, while the chart points to ${separated[2]} as a separate earning clue. Neither theme estimates your pay.`
               : careerLead
           return [`Your Answer: ${insight}`]
         }
