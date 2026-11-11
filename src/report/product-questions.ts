@@ -24,18 +24,18 @@ const QUESTION_IDS_IN_PDF_ORDER: Record<BuyerOutlineKind, readonly string[]> = {
   love: BUYER_QUESTIONS.love.map(question => question.id),
 }
 
-/** These ten titles are the current Product 07 opening questions in the paid PDF. */
+/** Approved Product 07 life-centered questions, in the locked customer-facing order. */
 export const DESTINY_COLLECTION_QUESTIONS = [
   'What are the three most important things about my destiny?',
-  'What is my greatest opportunity?',
-  'What is my main personal challenge?',
-  'How do my personality, career, money and relationships connect?',
-  'What pattern keeps repeating in my life?',
-  'Which years may be most important for me?',
-  'What should I focus on over the next three years?',
-  'What strength or potential am I not seeing?',
-  'What conditions can help me live a more fulfilling life?',
-  'What is the most important message for my path?',
+  'What is my greatest opportunity in life?',
+  'What is my biggest challenge?',
+  'How do my personality, career, money and love connect?',
+  'What patterns keep repeating in my life?',
+  'Which years are most important for me?',
+  'What should I prioritise over the next three years?',
+  'What am I not seeing about my potential?',
+  'What will help me build a fulfilling life?',
+  'What is the most important message from my chart?',
 ] as const
 
 const COLLECTION_ANSWER_ROLES = [
