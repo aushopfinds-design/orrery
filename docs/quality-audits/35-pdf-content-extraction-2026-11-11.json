@@ -103,7 +103,8 @@
         "letter_format": "FIX",
         "finding": "The PDF predates the requested direct-answer/personal-explanation/two-sentence-bottom-line format.",
         "visual_design_review": "VERIFY",
-        "destiny_card": "VERIFY"
+        "destiny_card": "PASS — embedded card image detected",
+        "card_asset_image_present": true
       },
       "independent_score": null,
       "evaluation_status": "VERIFY",
@@ -184,7 +185,8 @@
         "letter_format": "FIX",
         "finding": "The PDF predates the requested direct-answer/personal-explanation/two-sentence-bottom-line format.",
         "visual_design_review": "VERIFY",
-        "destiny_card": "VERIFY"
+        "destiny_card": "PASS — embedded card image detected",
+        "card_asset_image_present": true
       },
       "independent_score": null,
       "evaluation_status": "VERIFY",
@@ -265,7 +267,8 @@
         "letter_format": "FIX",
         "finding": "The PDF predates the requested direct-answer/personal-explanation/two-sentence-bottom-line format.",
         "visual_design_review": "VERIFY",
-        "destiny_card": "VERIFY"
+        "destiny_card": "PASS — embedded card image detected",
+        "card_asset_image_present": true
       },
       "independent_score": null,
       "evaluation_status": "VERIFY",
@@ -346,7 +349,8 @@
         "letter_format": "FIX",
         "finding": "The PDF predates the requested direct-answer/personal-explanation/two-sentence-bottom-line format.",
         "visual_design_review": "VERIFY",
-        "destiny_card": "VERIFY"
+        "destiny_card": "PASS — embedded card image detected",
+        "card_asset_image_present": true
       },
       "independent_score": null,
       "evaluation_status": "VERIFY",
@@ -427,7 +431,8 @@
         "letter_format": "FIX",
         "finding": "The PDF predates the requested direct-answer/personal-explanation/two-sentence-bottom-line format.",
         "visual_design_review": "VERIFY",
-        "destiny_card": "VERIFY"
+        "destiny_card": "PASS — embedded card image detected",
+        "card_asset_image_present": true
       },
       "independent_score": null,
       "evaluation_status": "VERIFY",
@@ -508,7 +513,8 @@
         "letter_format": "FIX",
         "finding": "The PDF predates the requested direct-answer/personal-explanation/two-sentence-bottom-line format.",
         "visual_design_review": "VERIFY",
-        "destiny_card": "VERIFY"
+        "destiny_card": "PASS — embedded card image detected",
+        "card_asset_image_present": true
       },
       "independent_score": null,
       "evaluation_status": "VERIFY",
@@ -613,7 +619,8 @@
         "letter_format": "FIX",
         "finding": "The PDF predates the requested direct-answer/personal-explanation/two-sentence-bottom-line format.",
         "visual_design_review": "VERIFY",
-        "destiny_card": "VERIFY"
+        "destiny_card": "PASS — embedded card image detected",
+        "card_asset_image_present": true
       },
       "independent_score": null,
       "evaluation_status": "VERIFY",
@@ -694,7 +701,8 @@
         "letter_format": "FIX",
         "finding": "The PDF predates the requested direct-answer/personal-explanation/two-sentence-bottom-line format.",
         "visual_design_review": "VERIFY",
-        "destiny_card": "VERIFY"
+        "destiny_card": "PASS — embedded card image detected",
+        "card_asset_image_present": true
       },
       "independent_score": null,
       "evaluation_status": "VERIFY",
@@ -775,7 +783,8 @@
         "letter_format": "FIX",
         "finding": "The PDF predates the requested direct-answer/personal-explanation/two-sentence-bottom-line format.",
         "visual_design_review": "VERIFY",
-        "destiny_card": "VERIFY"
+        "destiny_card": "PASS — embedded card image detected",
+        "card_asset_image_present": true
       },
       "independent_score": null,
       "evaluation_status": "VERIFY",
@@ -856,7 +865,8 @@
         "letter_format": "FIX",
         "finding": "The PDF predates the requested direct-answer/personal-explanation/two-sentence-bottom-line format.",
         "visual_design_review": "VERIFY",
-        "destiny_card": "VERIFY"
+        "destiny_card": "PASS — embedded card image detected",
+        "card_asset_image_present": true
       },
       "independent_score": null,
       "evaluation_status": "VERIFY",
@@ -937,7 +947,8 @@
         "letter_format": "FIX",
         "finding": "The PDF predates the requested direct-answer/personal-explanation/two-sentence-bottom-line format.",
         "visual_design_review": "VERIFY",
-        "destiny_card": "VERIFY"
+        "destiny_card": "PASS — embedded card image detected",
+        "card_asset_image_present": true
       },
       "independent_score": null,
       "evaluation_status": "VERIFY",
@@ -1018,7 +1029,8 @@
         "letter_format": "FIX",
         "finding": "The PDF predates the requested direct-answer/personal-explanation/two-sentence-bottom-line format.",
         "visual_design_review": "VERIFY",
-        "destiny_card": "VERIFY"
+        "destiny_card": "PASS — embedded card image detected",
+        "card_asset_image_present": true
       },
       "independent_score": null,
       "evaluation_status": "VERIFY",
@@ -1123,7 +1135,8 @@
         "letter_format": "FIX",
         "finding": "The PDF predates the requested direct-answer/personal-explanation/two-sentence-bottom-line format.",
         "visual_design_review": "VERIFY",
-        "destiny_card": "VERIFY"
+        "destiny_card": "PASS — embedded card image detected",
+        "card_asset_image_present": true
       },
       "independent_score": null,
       "evaluation_status": "VERIFY",
@@ -1204,7 +1217,8 @@
         "letter_format": "FIX",
         "finding": "The PDF predates the requested direct-answer/personal-explanation/two-sentence-bottom-line format.",
         "visual_design_review": "VERIFY",
-        "destiny_card": "VERIFY"
+        "destiny_card": "PASS — embedded card image detected",
+        "card_asset_image_present": true
       },
       "independent_score": null,
       "evaluation_status": "VERIFY",
@@ -1285,7 +1299,8 @@
         "letter_format": "FIX",
         "finding": "The PDF predates the requested direct-answer/personal-explanation/two-sentence-bottom-line format.",
         "visual_design_review": "VERIFY",
-        "destiny_card": "VERIFY"
+        "destiny_card": "PASS — embedded card image detected",
+        "card_asset_image_present": true
       },
       "independent_score": null,
       "evaluation_status": "VERIFY",
@@ -1366,7 +1381,8 @@
         "letter_format": "FIX",
         "finding": "The PDF predates the requested direct-answer/personal-explanation/two-sentence-bottom-line format.",
         "visual_design_review": "VERIFY",
-        "destiny_card": "VERIFY"
+        "destiny_card": "PASS — embedded card image detected",
+        "card_asset_image_present": true
       },
       "independent_score": null,
       "evaluation_status": "VERIFY",
@@ -1447,7 +1463,8 @@
         "letter_format": "FIX",
         "finding": "The PDF predates the requested direct-answer/personal-explanation/two-sentence-bottom-line format.",
         "visual_design_review": "VERIFY",
-        "destiny_card": "VERIFY"
+        "destiny_card": "PASS — embedded card image detected",
+        "card_asset_image_present": true
       },
       "independent_score": null,
       "evaluation_status": "VERIFY",
@@ -1528,7 +1545,8 @@
         "letter_format": "FIX",
         "finding": "The PDF predates the requested direct-answer/personal-explanation/two-sentence-bottom-line format.",
         "visual_design_review": "VERIFY",
-        "destiny_card": "VERIFY"
+        "destiny_card": "PASS — embedded card image detected",
+        "card_asset_image_present": true
       },
       "independent_score": null,
       "evaluation_status": "VERIFY",
@@ -1633,7 +1651,8 @@
         "letter_format": "FIX",
         "finding": "The PDF predates the requested direct-answer/personal-explanation/two-sentence-bottom-line format.",
         "visual_design_review": "VERIFY",
-        "destiny_card": "VERIFY"
+        "destiny_card": "PASS — embedded card image detected",
+        "card_asset_image_present": true
       },
       "independent_score": null,
       "evaluation_status": "VERIFY",
@@ -1714,7 +1733,8 @@
         "letter_format": "FIX",
         "finding": "The PDF predates the requested direct-answer/personal-explanation/two-sentence-bottom-line format.",
         "visual_design_review": "VERIFY",
-        "destiny_card": "VERIFY"
+        "destiny_card": "PASS — embedded card image detected",
+        "card_asset_image_present": true
       },
       "independent_score": null,
       "evaluation_status": "VERIFY",
@@ -1795,7 +1815,8 @@
         "letter_format": "FIX",
         "finding": "The PDF predates the requested direct-answer/personal-explanation/two-sentence-bottom-line format.",
         "visual_design_review": "VERIFY",
-        "destiny_card": "VERIFY"
+        "destiny_card": "PASS — embedded card image detected",
+        "card_asset_image_present": true
       },
       "independent_score": null,
       "evaluation_status": "VERIFY",
@@ -1876,7 +1897,8 @@
         "letter_format": "FIX",
         "finding": "The PDF predates the requested direct-answer/personal-explanation/two-sentence-bottom-line format.",
         "visual_design_review": "VERIFY",
-        "destiny_card": "VERIFY"
+        "destiny_card": "PASS — embedded card image detected",
+        "card_asset_image_present": true
       },
       "independent_score": null,
       "evaluation_status": "VERIFY",
@@ -1957,7 +1979,8 @@
         "letter_format": "FIX",
         "finding": "The PDF predates the requested direct-answer/personal-explanation/two-sentence-bottom-line format.",
         "visual_design_review": "VERIFY",
-        "destiny_card": "VERIFY"
+        "destiny_card": "PASS — embedded card image detected",
+        "card_asset_image_present": true
       },
       "independent_score": null,
       "evaluation_status": "VERIFY",
@@ -2038,7 +2061,8 @@
         "letter_format": "FIX",
         "finding": "The PDF predates the requested direct-answer/personal-explanation/two-sentence-bottom-line format.",
         "visual_design_review": "VERIFY",
-        "destiny_card": "VERIFY"
+        "destiny_card": "PASS — embedded card image detected",
+        "card_asset_image_present": true
       },
       "independent_score": null,
       "evaluation_status": "VERIFY",
@@ -2143,7 +2167,8 @@
         "letter_format": "FIX",
         "finding": "The PDF predates the requested direct-answer/personal-explanation/two-sentence-bottom-line format.",
         "visual_design_review": "VERIFY",
-        "destiny_card": "VERIFY"
+        "destiny_card": "PASS — embedded card image detected",
+        "card_asset_image_present": true
       },
       "independent_score": null,
       "evaluation_status": "VERIFY",
@@ -2224,7 +2249,8 @@
         "letter_format": "FIX",
         "finding": "The PDF predates the requested direct-answer/personal-explanation/two-sentence-bottom-line format.",
         "visual_design_review": "VERIFY",
-        "destiny_card": "VERIFY"
+        "destiny_card": "PASS — embedded card image detected",
+        "card_asset_image_present": true
       },
       "independent_score": null,
       "evaluation_status": "VERIFY",
@@ -2305,7 +2331,8 @@
         "letter_format": "FIX",
         "finding": "The PDF predates the requested direct-answer/personal-explanation/two-sentence-bottom-line format.",
         "visual_design_review": "VERIFY",
-        "destiny_card": "VERIFY"
+        "destiny_card": "PASS — embedded card image detected",
+        "card_asset_image_present": true
       },
       "independent_score": null,
       "evaluation_status": "VERIFY",
@@ -2386,7 +2413,8 @@
         "letter_format": "FIX",
         "finding": "The PDF predates the requested direct-answer/personal-explanation/two-sentence-bottom-line format.",
         "visual_design_review": "VERIFY",
-        "destiny_card": "VERIFY"
+        "destiny_card": "PASS — embedded card image detected",
+        "card_asset_image_present": true
       },
       "independent_score": null,
       "evaluation_status": "VERIFY",
@@ -2467,7 +2495,8 @@
         "letter_format": "FIX",
         "finding": "The PDF predates the requested direct-answer/personal-explanation/two-sentence-bottom-line format.",
         "visual_design_review": "VERIFY",
-        "destiny_card": "VERIFY"
+        "destiny_card": "PASS — embedded card image detected",
+        "card_asset_image_present": true
       },
       "independent_score": null,
       "evaluation_status": "VERIFY",
@@ -2548,7 +2577,8 @@
         "letter_format": "FIX",
         "finding": "The PDF predates the requested direct-answer/personal-explanation/two-sentence-bottom-line format.",
         "visual_design_review": "VERIFY",
-        "destiny_card": "VERIFY"
+        "destiny_card": "PASS — embedded card image detected",
+        "card_asset_image_present": true
       },
       "independent_score": null,
       "evaluation_status": "VERIFY",
@@ -2629,7 +2659,8 @@
         "letter_format": "FIX",
         "finding": "The PDF predates the requested direct-answer/personal-explanation/two-sentence-bottom-line format.",
         "visual_design_review": "VERIFY",
-        "destiny_card": "VERIFY"
+        "destiny_card": "PASS — embedded card image detected",
+        "card_asset_image_present": true
       },
       "independent_score": null,
       "evaluation_status": "VERIFY",
@@ -2710,7 +2741,8 @@
         "letter_format": "FIX",
         "finding": "The PDF predates the requested direct-answer/personal-explanation/two-sentence-bottom-line format.",
         "visual_design_review": "VERIFY",
-        "destiny_card": "VERIFY"
+        "destiny_card": "PASS — embedded card image detected",
+        "card_asset_image_present": true
       },
       "independent_score": null,
       "evaluation_status": "VERIFY",
@@ -2791,7 +2823,8 @@
         "letter_format": "FIX",
         "finding": "The PDF predates the requested direct-answer/personal-explanation/two-sentence-bottom-line format.",
         "visual_design_review": "VERIFY",
-        "destiny_card": "VERIFY"
+        "destiny_card": "PASS — embedded card image detected",
+        "card_asset_image_present": true
       },
       "independent_score": null,
       "evaluation_status": "VERIFY",
@@ -2872,7 +2905,8 @@
         "letter_format": "FIX",
         "finding": "The PDF predates the requested direct-answer/personal-explanation/two-sentence-bottom-line format.",
         "visual_design_review": "VERIFY",
-        "destiny_card": "VERIFY"
+        "destiny_card": "PASS — embedded card image detected",
+        "card_asset_image_present": true
       },
       "independent_score": null,
       "evaluation_status": "VERIFY",
@@ -2953,11 +2987,17 @@
         "letter_format": "FIX",
         "finding": "The PDF predates the requested direct-answer/personal-explanation/two-sentence-bottom-line format.",
         "visual_design_review": "VERIFY",
-        "destiny_card": "VERIFY"
+        "destiny_card": "PASS — embedded card image detected",
+        "card_asset_image_present": true
       },
       "independent_score": null,
       "evaluation_status": "VERIFY",
       "evaluation_note": "PDF text and structure extracted; a human editorial review against the full 100-point rubric has not been completed. Do not treat as PASS or 95+."
     }
-  ]
+  ],
+  "card_asset_check": {
+    "pdfs_checked": 35,
+    "embedded_card_image_found": 35,
+    "method": "pdfimages detected the 1080x1350 card artwork image in each PDF; one sample was visually inspected."
+  }
 }
