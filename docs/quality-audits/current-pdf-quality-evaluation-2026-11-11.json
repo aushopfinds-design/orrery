@@ -1,0 +1,574 @@
+{
+  "record_type": "current_pdf_quality_evaluation",
+  "evaluation_date": "2026-11-11",
+  "source_commit": "ba0a86e1d3d2708f9fb516217d9e339f998c6a46",
+  "pdf_generation_test": "server/payments/six-product-review-pdfs.test.ts",
+  "pdf_generation_result": "passed: 35 PDFs generated from the source at source_commit",
+  "rubric": {
+    "direct_answer": 35,
+    "personalisation": 25,
+    "easy_english": 15,
+    "repetition_and_generic_advice": 10,
+    "evidence_consistency": 10,
+    "pdf_readability": 5
+  },
+  "score_policy": "A score is recorded only for a PDF whose answer content was manually reviewed. Structure-only failures are marked FIX with score null; automated diagnostic scores are not quality scores.",
+  "pdfs": [
+    {
+      "product_id": "01",
+      "profile_index": 1,
+      "file": "01-complete.pdf",
+      "page_count": 23,
+      "question_count": 7,
+      "bottom_line_count": 0,
+      "your_answer_label_count": 0,
+      "what_this_means_label_count": 0,
+      "answer_detail_label_count": 6,
+      "destiny_card_asset_1080x1350": true
+    },
+    {
+      "product_id": "01",
+      "profile_index": 2,
+      "file": "02-complete.pdf",
+      "page_count": 25,
+      "question_count": 7,
+      "bottom_line_count": 0,
+      "your_answer_label_count": 0,
+      "what_this_means_label_count": 0,
+      "answer_detail_label_count": 6,
+      "destiny_card_asset_1080x1350": true
+    },
+    {
+      "product_id": "01",
+      "profile_index": 3,
+      "file": "03-complete.pdf",
+      "page_count": 23,
+      "question_count": 7,
+      "bottom_line_count": 0,
+      "your_answer_label_count": 0,
+      "what_this_means_label_count": 0,
+      "answer_detail_label_count": 6,
+      "destiny_card_asset_1080x1350": true
+    },
+    {
+      "product_id": "01",
+      "profile_index": 4,
+      "file": "04-complete.pdf",
+      "page_count": 24,
+      "question_count": 7,
+      "bottom_line_count": 0,
+      "your_answer_label_count": 0,
+      "what_this_means_label_count": 0,
+      "answer_detail_label_count": 6,
+      "destiny_card_asset_1080x1350": true
+    },
+    {
+      "product_id": "01",
+      "profile_index": 5,
+      "file": "05-complete.pdf",
+      "page_count": 25,
+      "question_count": 7,
+      "bottom_line_count": 0,
+      "your_answer_label_count": 0,
+      "what_this_means_label_count": 0,
+      "answer_detail_label_count": 6,
+      "destiny_card_asset_1080x1350": true
+    },
+    {
+      "product_id": "02",
+      "profile_index": 1,
+      "file": "01-career.pdf",
+      "page_count": 18,
+      "question_count": 7,
+      "bottom_line_count": 2,
+      "your_answer_label_count": 7,
+      "what_this_means_label_count": 3,
+      "answer_detail_label_count": 0,
+      "destiny_card_asset_1080x1350": true
+    },
+    {
+      "product_id": "02",
+      "profile_index": 2,
+      "file": "02-career.pdf",
+      "page_count": 17,
+      "question_count": 7,
+      "bottom_line_count": 1,
+      "your_answer_label_count": 7,
+      "what_this_means_label_count": 2,
+      "answer_detail_label_count": 0,
+      "destiny_card_asset_1080x1350": true
+    },
+    {
+      "product_id": "02",
+      "profile_index": 3,
+      "file": "03-career.pdf",
+      "page_count": 17,
+      "question_count": 7,
+      "bottom_line_count": 2,
+      "your_answer_label_count": 7,
+      "what_this_means_label_count": 3,
+      "answer_detail_label_count": 0,
+      "destiny_card_asset_1080x1350": true
+    },
+    {
+      "product_id": "02",
+      "profile_index": 4,
+      "file": "04-career.pdf",
+      "page_count": 18,
+      "question_count": 7,
+      "bottom_line_count": 2,
+      "your_answer_label_count": 7,
+      "what_this_means_label_count": 3,
+      "answer_detail_label_count": 0,
+      "destiny_card_asset_1080x1350": true
+    },
+    {
+      "product_id": "02",
+      "profile_index": 5,
+      "file": "05-career.pdf",
+      "page_count": 17,
+      "question_count": 7,
+      "bottom_line_count": 2,
+      "your_answer_label_count": 7,
+      "what_this_means_label_count": 3,
+      "answer_detail_label_count": 0,
+      "destiny_card_asset_1080x1350": true
+    },
+    {
+      "product_id": "03",
+      "profile_index": 1,
+      "file": "01-compatibility.pdf",
+      "page_count": 16,
+      "question_count": 7,
+      "bottom_line_count": 7,
+      "your_answer_label_count": 0,
+      "what_this_means_label_count": 0,
+      "answer_detail_label_count": 0,
+      "destiny_card_asset_1080x1350": true
+    },
+    {
+      "product_id": "03",
+      "profile_index": 2,
+      "file": "02-compatibility.pdf",
+      "page_count": 16,
+      "question_count": 7,
+      "bottom_line_count": 7,
+      "your_answer_label_count": 0,
+      "what_this_means_label_count": 0,
+      "answer_detail_label_count": 0,
+      "destiny_card_asset_1080x1350": true
+    },
+    {
+      "product_id": "03",
+      "profile_index": 3,
+      "file": "03-compatibility.pdf",
+      "page_count": 15,
+      "question_count": 7,
+      "bottom_line_count": 7,
+      "your_answer_label_count": 0,
+      "what_this_means_label_count": 0,
+      "answer_detail_label_count": 0,
+      "destiny_card_asset_1080x1350": true
+    },
+    {
+      "product_id": "03",
+      "profile_index": 4,
+      "file": "04-compatibility.pdf",
+      "page_count": 16,
+      "question_count": 7,
+      "bottom_line_count": 7,
+      "your_answer_label_count": 0,
+      "what_this_means_label_count": 0,
+      "answer_detail_label_count": 0,
+      "destiny_card_asset_1080x1350": true
+    },
+    {
+      "product_id": "03",
+      "profile_index": 5,
+      "file": "05-compatibility.pdf",
+      "page_count": 16,
+      "question_count": 7,
+      "bottom_line_count": 7,
+      "your_answer_label_count": 0,
+      "what_this_means_label_count": 0,
+      "answer_detail_label_count": 0,
+      "destiny_card_asset_1080x1350": true
+    },
+    {
+      "product_id": "04",
+      "profile_index": 1,
+      "file": "01-year.pdf",
+      "page_count": 26,
+      "question_count": 7,
+      "bottom_line_count": 0,
+      "your_answer_label_count": 0,
+      "what_this_means_label_count": 0,
+      "answer_detail_label_count": 8,
+      "destiny_card_asset_1080x1350": true
+    },
+    {
+      "product_id": "04",
+      "profile_index": 2,
+      "file": "02-year.pdf",
+      "page_count": 27,
+      "question_count": 7,
+      "bottom_line_count": 0,
+      "your_answer_label_count": 0,
+      "what_this_means_label_count": 0,
+      "answer_detail_label_count": 8,
+      "destiny_card_asset_1080x1350": true
+    },
+    {
+      "product_id": "04",
+      "profile_index": 3,
+      "file": "03-year.pdf",
+      "page_count": 26,
+      "question_count": 7,
+      "bottom_line_count": 0,
+      "your_answer_label_count": 0,
+      "what_this_means_label_count": 0,
+      "answer_detail_label_count": 8,
+      "destiny_card_asset_1080x1350": true
+    },
+    {
+      "product_id": "04",
+      "profile_index": 4,
+      "file": "04-year.pdf",
+      "page_count": 27,
+      "question_count": 7,
+      "bottom_line_count": 0,
+      "your_answer_label_count": 0,
+      "what_this_means_label_count": 0,
+      "answer_detail_label_count": 8,
+      "destiny_card_asset_1080x1350": true
+    },
+    {
+      "product_id": "04",
+      "profile_index": 5,
+      "file": "05-year.pdf",
+      "page_count": 27,
+      "question_count": 7,
+      "bottom_line_count": 0,
+      "your_answer_label_count": 0,
+      "what_this_means_label_count": 0,
+      "answer_detail_label_count": 8,
+      "destiny_card_asset_1080x1350": true
+    },
+    {
+      "product_id": "05",
+      "profile_index": 1,
+      "file": "01-business.pdf",
+      "page_count": 16,
+      "question_count": 7,
+      "bottom_line_count": 0,
+      "your_answer_label_count": 0,
+      "what_this_means_label_count": 0,
+      "answer_detail_label_count": 12,
+      "destiny_card_asset_1080x1350": true
+    },
+    {
+      "product_id": "05",
+      "profile_index": 2,
+      "file": "02-business.pdf",
+      "page_count": 16,
+      "question_count": 7,
+      "bottom_line_count": 0,
+      "your_answer_label_count": 0,
+      "what_this_means_label_count": 0,
+      "answer_detail_label_count": 12,
+      "destiny_card_asset_1080x1350": true
+    },
+    {
+      "product_id": "05",
+      "profile_index": 3,
+      "file": "03-business.pdf",
+      "page_count": 16,
+      "question_count": 7,
+      "bottom_line_count": 0,
+      "your_answer_label_count": 0,
+      "what_this_means_label_count": 0,
+      "answer_detail_label_count": 12,
+      "destiny_card_asset_1080x1350": true
+    },
+    {
+      "product_id": "05",
+      "profile_index": 4,
+      "file": "04-business.pdf",
+      "page_count": 16,
+      "question_count": 7,
+      "bottom_line_count": 0,
+      "your_answer_label_count": 0,
+      "what_this_means_label_count": 0,
+      "answer_detail_label_count": 12,
+      "destiny_card_asset_1080x1350": true
+    },
+    {
+      "product_id": "05",
+      "profile_index": 5,
+      "file": "05-business.pdf",
+      "page_count": 16,
+      "question_count": 7,
+      "bottom_line_count": 0,
+      "your_answer_label_count": 0,
+      "what_this_means_label_count": 0,
+      "answer_detail_label_count": 12,
+      "destiny_card_asset_1080x1350": true
+    },
+    {
+      "product_id": "06",
+      "profile_index": 1,
+      "file": "01-wellbeing.pdf",
+      "page_count": 12,
+      "question_count": 7,
+      "bottom_line_count": 0,
+      "your_answer_label_count": 0,
+      "what_this_means_label_count": 0,
+      "answer_detail_label_count": 1,
+      "destiny_card_asset_1080x1350": true
+    },
+    {
+      "product_id": "06",
+      "profile_index": 2,
+      "file": "02-wellbeing.pdf",
+      "page_count": 12,
+      "question_count": 7,
+      "bottom_line_count": 0,
+      "your_answer_label_count": 0,
+      "what_this_means_label_count": 0,
+      "answer_detail_label_count": 1,
+      "destiny_card_asset_1080x1350": true
+    },
+    {
+      "product_id": "06",
+      "profile_index": 3,
+      "file": "03-wellbeing.pdf",
+      "page_count": 12,
+      "question_count": 7,
+      "bottom_line_count": 0,
+      "your_answer_label_count": 0,
+      "what_this_means_label_count": 0,
+      "answer_detail_label_count": 1,
+      "destiny_card_asset_1080x1350": true
+    },
+    {
+      "product_id": "06",
+      "profile_index": 4,
+      "file": "04-wellbeing.pdf",
+      "page_count": 12,
+      "question_count": 7,
+      "bottom_line_count": 0,
+      "your_answer_label_count": 0,
+      "what_this_means_label_count": 0,
+      "answer_detail_label_count": 1,
+      "destiny_card_asset_1080x1350": true
+    },
+    {
+      "product_id": "06",
+      "profile_index": 5,
+      "file": "05-wellbeing.pdf",
+      "page_count": 12,
+      "question_count": 7,
+      "bottom_line_count": 0,
+      "your_answer_label_count": 0,
+      "what_this_means_label_count": 0,
+      "answer_detail_label_count": 1,
+      "destiny_card_asset_1080x1350": true
+    },
+    {
+      "product_id": "07",
+      "profile_index": 1,
+      "file": "01-bundle.pdf",
+      "page_count": 85,
+      "question_count": 10,
+      "bottom_line_count": 10,
+      "your_answer_label_count": 10,
+      "what_this_means_label_count": 0,
+      "answer_detail_label_count": 15,
+      "destiny_card_asset_1080x1350": true
+    },
+    {
+      "product_id": "07",
+      "profile_index": 2,
+      "file": "02-bundle.pdf",
+      "page_count": 84,
+      "question_count": 10,
+      "bottom_line_count": 10,
+      "your_answer_label_count": 10,
+      "what_this_means_label_count": 0,
+      "answer_detail_label_count": 15,
+      "destiny_card_asset_1080x1350": true
+    },
+    {
+      "product_id": "07",
+      "profile_index": 3,
+      "file": "03-bundle.pdf",
+      "page_count": 84,
+      "question_count": 10,
+      "bottom_line_count": 10,
+      "your_answer_label_count": 10,
+      "what_this_means_label_count": 0,
+      "answer_detail_label_count": 15,
+      "destiny_card_asset_1080x1350": true
+    },
+    {
+      "product_id": "07",
+      "profile_index": 4,
+      "file": "04-bundle.pdf",
+      "page_count": 84,
+      "question_count": 10,
+      "bottom_line_count": 10,
+      "your_answer_label_count": 10,
+      "what_this_means_label_count": 0,
+      "answer_detail_label_count": 15,
+      "destiny_card_asset_1080x1350": true
+    },
+    {
+      "product_id": "07",
+      "profile_index": 5,
+      "file": "05-bundle.pdf",
+      "page_count": 86,
+      "question_count": 10,
+      "bottom_line_count": 10,
+      "your_answer_label_count": 10,
+      "what_this_means_label_count": 0,
+      "answer_detail_label_count": 15,
+      "destiny_card_asset_1080x1350": true
+    }
+  ],
+  "manual_content_review": {
+    "product_id": "03",
+    "scope": "All seven answer sections in each of five compatibility PDFs were read. One representative PDF was rendered for visual review; card artwork presence was checked programmatically across the batch.",
+    "pdf_scores": [
+      {
+        "product_id": "03",
+        "profile_index": 1,
+        "score": 84,
+        "breakdown": {
+          "direct_answer": 31,
+          "personalisation": 19,
+          "easy_english": 14,
+          "repetition_and_generic_advice": 8,
+          "evidence_consistency": 8,
+          "pdf_readability": 4
+        }
+      },
+      {
+        "product_id": "03",
+        "profile_index": 2,
+        "score": 86,
+        "breakdown": {
+          "direct_answer": 32,
+          "personalisation": 21,
+          "easy_english": 14,
+          "repetition_and_generic_advice": 8,
+          "evidence_consistency": 7,
+          "pdf_readability": 4
+        }
+      },
+      {
+        "product_id": "03",
+        "profile_index": 3,
+        "score": 84,
+        "breakdown": {
+          "direct_answer": 31,
+          "personalisation": 19,
+          "easy_english": 14,
+          "repetition_and_generic_advice": 8,
+          "evidence_consistency": 8,
+          "pdf_readability": 4
+        }
+      },
+      {
+        "product_id": "03",
+        "profile_index": 4,
+        "score": 83,
+        "breakdown": {
+          "direct_answer": 31,
+          "personalisation": 20,
+          "easy_english": 14,
+          "repetition_and_generic_advice": 7,
+          "evidence_consistency": 7,
+          "pdf_readability": 4
+        }
+      },
+      {
+        "product_id": "03",
+        "profile_index": 5,
+        "score": 83,
+        "breakdown": {
+          "direct_answer": 31,
+          "personalisation": 20,
+          "easy_english": 14,
+          "repetition_and_generic_advice": 7,
+          "evidence_consistency": 7,
+          "pdf_readability": 4
+        }
+      }
+    ],
+    "average": 84,
+    "minimum": 83,
+    "status": "FIX",
+    "deductions_ko": [
+      "질문 2의 attraction 표현이 여러 프로필에서 거의 동일하게 반복됩니다.",
+      "질문 1·2·7의 핵심 문장과 Bottom Line이 같은 care/communication 조언을 되풀이하는 구간이 있습니다.",
+      "질문 6은 근거 있는 연도를 제시하지만, 연도 뒤의 shared-plans 조언이 개인별 연도 주제와 충분히 구별되지 않습니다.",
+      "직접 답변을 굵게 강조하는 서식이 확인되지 않았습니다.",
+      "사주 계산의 외부 정확성은 검증하지 않았습니다."
+    ]
+  },
+  "structural_findings": [
+    {
+      "product_id": "01",
+      "finding": "각 PDF 질문 7개는 있으나 Bottom Line은 0개이며 Answer detail 표식이 6개입니다.",
+      "status": "FIX",
+      "scores_assigned": false
+    },
+    {
+      "product_id": "02",
+      "finding": "각 PDF 질문 7개 중 Bottom Line은 1~2개뿐입니다. Your Answer 표식이 7개이고 What This Means for You 표식이 2~3개 남아 있습니다.",
+      "status": "FIX",
+      "scores_assigned": false
+    },
+    {
+      "product_id": "03",
+      "finding": "각 PDF 7문항 및 7개 Bottom Line. 편지형 문단 구조는 확인했으나 프로필별 반복과 강조 서식 문제로 모든 점수가 95 미만입니다.",
+      "status": "FIX",
+      "scores_assigned": true
+    },
+    {
+      "product_id": "04",
+      "finding": "각 PDF 질문 7개는 있으나 Bottom Line은 0개이며 Answer detail 표식이 8개입니다.",
+      "status": "FIX",
+      "scores_assigned": false
+    },
+    {
+      "product_id": "05",
+      "finding": "각 PDF 질문 7개는 있으나 Bottom Line은 0개이며 Answer detail 표식이 12개입니다.",
+      "status": "FIX",
+      "scores_assigned": false
+    },
+    {
+      "product_id": "06",
+      "finding": "각 PDF 질문 7개는 있으나 Bottom Line은 0개입니다.",
+      "status": "FIX",
+      "scores_assigned": false
+    },
+    {
+      "product_id": "07",
+      "finding": "각 PDF 질문 10개 및 Bottom Line 10개. 그러나 Your Answer 표식 10개와 Answer detail 표식 15개가 남아 있어 승인된 간결한 편지형 구성과 다릅니다.",
+      "status": "FIX",
+      "scores_assigned": false
+    }
+  ],
+  "visual_checks": {
+    "generated_pdf_count": 35,
+    "all_35_contain_1080x1350_card_asset": true,
+    "visually_rendered": [
+      "01-compatibility.pdf pages 6, 14, 15"
+    ],
+    "visual_limit": "Only one representative compatibility PDF was visually reviewed; remaining 34 PDFs require page-by-page visual inspection. Card asset presence is not proof every rendered card is visually correct."
+  },
+  "overall_status": "FAIL_TO_MEET_95_TARGET",
+  "remaining": "Manually review all 260 answer blocks across the other 30 PDFs; fix the missing Bottom Line and legacy section labels in affected products; regenerate and re-review all 35 PDFs; visually inspect every PDF and verify question titles, links, charts, card and layout before any release.",
+  "question_count_note": "For Product 03 the PDF prints question titles without a literal “Question:” prefix; its seven title pages were counted from the PDF contents/TOC and confirmed by the generation test."
+}
