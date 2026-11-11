@@ -92,7 +92,12 @@ describe('Product 03 review PDF batch', () => {
       } else {
         expect(q5).toContain('Your partner tends to:')
       }
-      expect(q5).toMatch(/Emotionally, .+ Daily life:/)
+      if (index === 0 || index === 2 || index === 3) {
+        expect(q5).toContain('Neither chart comparison shows a clear link or clash, so your everyday habits offer the clearest comparison.')
+        expect(q5).not.toContain('Daily life: The chart does not show a clear link or clash in daily routines.')
+      } else {
+        expect(q5).toMatch(/Emotionally, .+ Daily life:/)
+      }
       expect(q5).not.toContain('day-sign comparison')
       expect(q5).not.toContain('Compare the personal routine styles below with the way you actually share daily life.')
       const q7 = report.text.split('Question: What does this connection ask of each of us?')[1]?.split('\n\nQuestion: ')[0] ?? ''
