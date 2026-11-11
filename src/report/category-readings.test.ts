@@ -231,7 +231,7 @@ describe('Bundle and public report navigation', () => {
     expect(answer(10)).toMatch(/work and your need for .+ both matter/i)
     expect(bundle.fullText).not.toMatch(/^Why This Fits You:|^What You May Experience:/m)
     expect(bundle.fullText).toContain('Chart evidence for these answers')
-    expect(bundle.fullText).toContain('Which years may be most important for me?')
+    expect(bundle.fullText).toContain('Which years are most important for me?')
     expect(bundle.fullText).not.toContain('Question: How do you and your partner fit together?')
     for (const report of [bundle.career, bundle.annual, bundle.compatibility, bundle.love]) {
       const copiedLead = report.chapters[0].lead
