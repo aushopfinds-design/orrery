@@ -115,12 +115,11 @@ describe('Product 03 review PDF batch', () => {
       }
       const q2 = report.text.split('Question: Why are we attracted to each other?')[1]?.split('\n\nQuestion: ')[0] ?? ''
       expect(q2).toContain('The chart cannot confirm either person’s actual feelings.')
-      expect(q2).toMatch(/The private-life comparison (?:adds no clear connection or conflict|points to different instincts about personal choices|shows a link that may support closeness)/)
+      expect(q2).not.toContain('private-life comparison')
+      expect(q2).toMatch(/You may be drawn|Both directions point to a shared draw/)
       q2Answers.push(q2)
       if (output) await writeFile(`${output}/${String(index + 1).padStart(2, '0')}-compatibility.pdf`, bytes)
     }
-    expect(q2Answers.some(answer => answer.includes('adds no clear connection or conflict'))).toBe(true)
-    expect(q2Answers.some(answer => answer.includes('different instincts about personal choices'))).toBe(true)
-    expect(q2Answers.some(answer => answer.includes('shows a link that may support closeness'))).toBe(true)
+    expect(new Set(q2Answers).size).toBeGreaterThan(1)
   }, 120_000)
 })
