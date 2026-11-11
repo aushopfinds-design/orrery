@@ -1,5 +1,6 @@
 import { Pool } from 'pg'
-import source from '../../docs/quality-audits/35-pdf-content-extraction-2026-11-11.json'
+import { readFile } from 'node:fs/promises'
+import { resolve } from 'node:path'
 import { productQuestions } from '../../src/report/product-questions.ts'
 
 const products = [
@@ -7,8 +8,17 @@ const products = [
   ['03', 'Are We Meant to Be?', 'compatibility'], ['04', 'Your Next 12 Months', 'year'],
   ['05', 'Born to Build a Business?', 'business'], ['06', 'The Real You', 'wellbeing'], ['07', 'Your Destiny Collection', 'bundle'],
 ] as const
-type SourcePdf = (typeof source.pdfs)[number]
+interface SourceAnswer { title: string; actual_answer: string; status: string; score: number | null; deductions: string[] }
+interface SourcePdf { product_id: string; profile_id: string; pdf: string; page_count: number; question_count: number; answers: SourceAnswer[] }
+interface QualitySource { source_commit: string; audit_date: string; pdfs: SourcePdf[]; card_asset_check?: { pdfs_checked?: number; embedded_card_image_found?: number } }
 let pool: Pool | undefined
+let sourceCache: QualitySource | undefined
+async function loadSource(): Promise<QualitySource> {
+  if (sourceCache) return sourceCache
+  const path = resolve(process.cwd(), 'docs/quality-audits/35-pdf-content-extraction-2026-11-11.json')
+  sourceCache = JSON.parse(await readFile(path, 'utf8')) as QualitySource
+  return sourceCache
+}
 function db() {
   const url = process.env.FATE_REVIEW_DATABASE_URL || process.env.FATE_PAYMENTS_DATABASE_URL
   if (!url || !/^postgres(?:ql)?:\/\//.test(url)) throw new Error('review_storage_not_configured')
@@ -29,13 +39,14 @@ const qid = (productId: string, title: string, index: number) => {
   return items.find(q => q.title === title)?.id ?? `${productId}-q${index + 1}`
 }
 export async function qualityData() {
+  const source = await loadSource()
   const records = await db().query('SELECT * FROM fate_quality_reviews')
   const saved = new Map(records.rows.map(row => [`${row.pdf_id}:${row.question_id}`, row]))
-  const pdfs = (source.pdfs as SourcePdf[]).filter(pdf => pdf.product_id !== '02' || pdf.pdf.includes('profile-'))
+  const pdfs = source.pdfs.filter(pdf => pdf.product_id !== '02' || pdf.pdf.includes('profile-'))
   const rows = pdfs.map(pdf => ({
     pdfId: `${pdf.product_id}-${pdf.profile_id}`, productId: pdf.product_id, profileId: pdf.profile_id,
     pdfFile: pdf.pdf.split('/').pop() ?? 'unknown.pdf', pageCount: pdf.page_count,
-    cardChecked: pdf.product_id !== '02', questionCount: pdf.question_count,
+    cardChecked: source.card_asset_check?.pdfs_checked === 35 && source.card_asset_check?.embedded_card_image_found === 35, questionCount: pdf.question_count,
     answers: pdf.answers.map((answer, index) => {
       const questionId = qid(pdf.product_id, answer.title, index)
       const review = saved.get(`${pdf.product_id}-${pdf.profile_id}:${questionId}`)
@@ -67,7 +78,8 @@ export async function saveReview(value: Record<string, unknown>, reviewer: strin
     deductionReason: text('deductionReason', 4000), revisionNote: text('revisionNote', 4000),
     revisedAnswer: text('revisedAnswer', 10000), githubSha: text('githubSha', 64), pdfVersion: text('pdfVersion', 200),
   }
-  const pdf = (source.pdfs as SourcePdf[]).find(row => `${row.product_id}-${row.profile_id}` === fields.pdfId)
+  const source = await loadSource()
+  const pdf = source.pdfs.find(row => `${row.product_id}-${row.profile_id}` === fields.pdfId)
   if (!pdf || pdf.product_id !== fields.productId || pdf.profile_id !== fields.profileId
     || !pdf.answers.some((answer, index) => qid(pdf.product_id, answer.title, index) === fields.questionId)) throw new Error('unknown_review_target')
   if (status === 'PASS' && (score === null || (score as number) < 95)) throw new Error('pass_requires_95')

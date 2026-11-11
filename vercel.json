@@ -1,6 +1,7 @@
 {
   "functions": {
     "api/admin-review.ts": {
+      "includeFiles": "{docs/quality-audits/35-pdf-content-extraction-2026-11-11.json}",
       "maxDuration": 90
     },
     "api/payments.ts": {

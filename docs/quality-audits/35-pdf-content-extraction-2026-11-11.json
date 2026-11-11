@@ -1,10 +1,7 @@
-Warning: truncated output (original token count: 203589)
-Total output lines: 3003
-
 {
   "audit_date": "2026-11-11",
   "source_commit": "9810685be42888fd2f919701fce1ff17802ab895",
-  "official_question_source_status": "Products 01–06 retain the exact current paid-PDF titles and order per owner decision on 2026-11-11. Product 07 uses the exact 10 final titles supplied by owner on 2026-11-11.",
+  "official_question_source_status": "Exact original approved English strings not located; candidate-vs-current map is in docs/QUESTION_TITLE_RECONCILIATION_2026-11-11.md",
   "pdf_count": 35,
   "pdfs": [
     {
@@ -111,7 +108,7 @@ Total output lines: 3003
       },
       "independent_score": null,
       "evaluation_status": "VERIFY",
-      "evaluation_note": "Extracted legacy PDF predates approved Product 07 titles and requested letter format; not rescored. Rebuild and independent editorial review required."
+      "evaluation_note": "PDF text and structure extracted; a human editorial review against the full 100-point rubric has not been completed. Do not treat as PASS or 95+."
     },
     {
       "product_id": "05",
@@ -627,7 +624,7 @@ Total output lines: 3003
       },
       "independent_score": null,
       "evaluation_status": "VERIFY",
-      "evaluation_note": "Extracted legacy PDF predates approved Product 07 titles and requested letter format; not rescored. Rebuild and independent editorial review required."
+      "evaluation_note": "PDF text and structure extracted; a human editorial review against the full 100-point rubric has not been completed. Do not treat as PASS or 95+."
     },
     {
       "product_id": "05",
@@ -1143,12 +1140,171 @@ Total output lines: 3003
       },
       "independent_score": null,
       "evaluation_status": "VERIFY",
-      "evaluation_note": "Extracted legacy PDF predates approved Product 07 titles and requested letter format; not rescored. Rebuild and independent editorial review required."
+      "evaluation_note": "PDF text and structure extracted; a human editorial review against the full 100-point rubric has not been completed. Do not treat as PASS or 95+."
     },
     {
       "product_id": "05",
       "product_key": "business",
-      "prof…3589 tokens truncated…tructure extracted; a human editorial review against the full 100-point rubric has not been completed. Do not treat as PASS or 95+."
+      "profile_id": "category-scenario-3",
+      "source_profile_index": 3,
+      "pdf": "/tmp/fate-key-35/final-six/03-business.pdf",
+      "page_count": 16,
+      "question_count": 7,
+      "expected_question_count": 7,
+      "answers": [
+        {
+          "title": "Am I naturally suited to running a business?",
+          "actual_answer": "Your business strength is finding buyers and opening sales channels. The harder part is keeping growth manageable after the sale. The suitable scale and workload remain less certain without a birth time. Answer detail: Reading basis: Your birth time is unknown, so this reading uses your year, month and day signs only. It does not guess an hour. Answer detail: This comes from finding new customers in the work-related part of your chart, repeated in both layers of the birth month. Practical point: Compare the business model with who will buy, what they Compare the business model with who will buy, what they receive and what you can reliably deliver. receive and what you can reliably deliver. Main caution: Do not count a promising deal as income before the payment arrives. 02 · What Does Your Chart Say About Starting Out?",
+          "score": null,
+          "status": "VERIFY",
+          "deductions": [],
+          "revision_instruction": null
+        },
+        {
+          "title": "What kind of business work suits me?",
+          "actual_answer": "Your chart repeats finding new customers across the public work role and daily routine. That points to a consistent customer-facing work style. A small offer sold directly to a clear customer group fits this style. A broad launch can scatter effort across too many possible buyers. Answer detail: Customer and money themes appear in 2034, 2035. Treat them as prompts to test a paid offer. Start with a small offer you can deliver repeatedly; the reading does not establish a safe date for a larger launch. Practical point: Define what the first paying customer receives and the time, Define what the first paying customer receives and the time, cost and support needed to deliver it. cost and support needed to deliver it. Main caution: A wide first offer can tie up delivery time before you know which part customers value. 03 · Could a Business Partner Help or Complicate Things?",
+          "score": null,
+          "status": "VERIFY",
+          "deductions": [],
+          "revision_instruction": null
+        },
+        {
+          "title": "Am I better suited to working alone or with partners?",
+          "actual_answer": "Your chart leans towards working with a partner who adds knowledge, a reliable method or support you would otherwise need to provide yourself. If a partner cannot take on one of those gaps as real work, working independently may be simpler. Answer detail: Both work roles emphasise finding buyers, developing accounts or opening a sales channel. That gives the business a clear centre, but the repeat does not establish a second strength in operations or finance. The work pattern alone does not establish demand; finding buyers and completing their orders remain separate responsibilities. A useful partner would take ownership of a gap in this chain, rather than duplicate your preferred task. Practical point: Separate ownership, decision rights, income and the work Separate ownership, decision rights, income and the work each partner actually carries. each partner actually carries. 04 · How Could Your Business Earn and Keep Money?",
+          "score": null,
+          "status": "VERIFY",
+          "deductions": [],
+          "revision_instruction": null
+        },
+        {
+          "title": "What financial risks should I understand?",
+          "actual_answer": "Your main financial risk is relying on new-deal income to cover ongoing delivery for repeat customers before payment is secure. Answer detail: Your money themes appear in these areas: work and everyday responsibilities; wider contacts. Look at the people, promises and costs involved there when judging a new source of income. Answer detail: Your business money reading has a specific tension: sales and the support needed to fulfil them draw on the same resources. Outward money signs sit beside learning-and-support signs. Finding a new buyer is therefore only half the pattern; supplying that buyer may use funds or help already committed to keeping the business running. 05 · When Might Expansion Deserve a Closer Look?",
+          "score": null,
+          "status": "VERIFY",
+          "deductions": [],
+          "revision_instruction": null
+        },
+        {
+          "title": "When might expansion deserve a closer look?",
+          "actual_answer": "Use 2034, 2035 to review customer demand and pricing. Expand only after repeat sales cover delivery costs and the work can be completed without relying entirely on you. A money theme alone is not an expansion signal. Answer detail: Adding sales channels fits your growth style, but delivery and payment collection are the likely bottlenecks. A new channel adds follow-up work as well as orders. Practical point: Before expanding, agree with the customer on the deadline, Before expanding, agree with the customer on the deadline, revision limits, payment terms and who handles follow-up. revision limits, payment terms and who handles follow-up. 06 · What Do Your Ten-Year Business Cycles Reveal?",
+          "score": null,
+          "status": "VERIFY",
+          "deductions": [],
+          "revision_instruction": null
+        },
+        {
+          "title": "What do my upcoming cycles suggest about business activity?",
+          "actual_answer": "No new ten-year business cycle is available in the checked range. The supported timing clues are the annual comparisons from 2026-2035. Answer detail: 2026: A defined role and greater responsibility come into focus. Tighter targets can make the work more urgent. Answer detail: 2027: Demanding targets call for firmer decisions. You also need space to work through a specialist question. Answer detail: 2028: Learning, qualifications and dependable help are prominent. Shared projects make the division of money and credit more important. 07 · When Should You Be More Careful in Business?",
+          "score": null,
+          "status": "VERIFY",
+          "deductions": [],
+          "revision_instruction": null
+        },
+        {
+          "title": "What should I be careful about in business?",
+          "actual_answer": "Check that your cash and capacity can cover added business demands in 2026, 2031, 2032. The chart flags planning pressure in those years, not business failure. Answer detail: 2026: An adjustment pattern links this period with your work side. This period brings recognised responsibility and clear standards alongside the ten-year theme of training and dependable support. Answer detail: 2031: A direct clash links this period with your work side. Your Everyday Compass Symbolic colours & numbers Your birth-day symbol · Metal Colours: White / Soft silver Numbers: 4 / 9 Your Yin Metal birth-day symbol belongs to Metal. The colours and number pair follow that traditional association. Try a shade in your private planning notes. Choose customer-facing colours for clarity and fit with your audience. These colours and numbers are traditional symbols for your birth-day element. Use them as personal reminders. They do not change the odds of an event or promise a result. A reminder to keep: Use the reading to name a traditional pattern. Actual choices, consent and circumstances determine what happens. Cultural references Five-colour tradition · Korea.net: https://www.korea.net/NewsFocus/HonoraryReporters/view?articleId=218521 He Tu number pairs · historical text: https://zh.wikisource.org/wiki/河圖原",
+          "score": null,
+          "status": "VERIFY",
+          "deductions": [],
+          "revision_instruction": null
+        }
+      ],
+      "structural_review": {
+        "question_count": "PASS",
+        "legacy_answer_labels": 7,
+        "legacy_explanation_or_detail_labels": 12,
+        "bottom_line_sections": 0,
+        "letter_format": "FIX",
+        "finding": "The PDF predates the requested direct-answer/personal-explanation/two-sentence-bottom-line format.",
+        "visual_design_review": "VERIFY",
+        "destiny_card": "PASS — embedded card image detected",
+        "card_asset_image_present": true
+      },
+      "independent_score": null,
+      "evaluation_status": "VERIFY",
+      "evaluation_note": "PDF text and structure extracted; a human editorial review against the full 100-point rubric has not been completed. Do not treat as PASS or 95+."
+    },
+    {
+      "product_id": "03",
+      "product_key": "compatibility",
+      "profile_id": "category-scenario-3",
+      "source_profile_index": 3,
+      "pdf": "/tmp/fate-key-35/final-six/03-compatibility.pdf",
+      "page_count": 14,
+      "question_count": 7,
+      "expected_question_count": 7,
+      "answers": [
+        {
+          "title": "What makes us compatible?",
+          "actual_answer": "This match shares a similar need for care: you value being heard before someone offers a solution; your partner values listening as well as practical help. That overlap is your clearest point of fit; the personal-life signs add no separate connection or conflict.",
+          "score": null,
+          "status": "VERIFY",
+          "deductions": [],
+          "revision_instruction": null
+        },
+        {
+          "title": "Why are we attracted to each other?",
+          "actual_answer": "You may be drawn to what your partner brings: reassurance, guidance and feeling understood. Your partner may be drawn to what you bring: fresh ideas and open communication. The chart cannot confirm either person's actual feelings.",
+          "score": null,
+          "status": "VERIFY",
+          "deductions": [],
+          "revision_instruction": null
+        },
+        {
+          "title": "What tends to cause friction between us?",
+          "actual_answer": "You may move to solve a problem before asking what help is wanted; your partner may answer before hearing how the problem feels. The feeling behind the problem can then go unheard.",
+          "score": null,
+          "status": "VERIFY",
+          "deductions": [],
+          "revision_instruction": null
+        },
+        {
+          "title": "How do we express love differently?",
+          "actual_answer": "You may express love by respecting private thinking time and trying to understand without asking for repeated explanations; your partner may express it through practical help, after checking what kind of support is wanted. Agree when you will return to a difficult conversation, so quiet time does not feel like withdrawal.",
+          "score": null,
+          "status": "VERIFY",
+          "deductions": [],
+          "revision_instruction": null
+        },
+        {
+          "title": "How do emotional closeness and everyday compatibility differ?",
+          "actual_answer": "Neither chart comparison shows a clear link or clash, so your everyday habits offer the clearest comparison. You tend to: Variety can be energising while too many open commitments compete for attention. Your partner tends to: A steady rhythm can help, but comfort can also become a reason to delay a needed change. Try: Keep one shared plan fixed, then leave room for an extra plan without crowding the week.",
+          "score": null,
+          "status": "VERIFY",
+          "deductions": [],
+          "revision_instruction": null
+        },
+        {
+          "title": "Which upcoming periods may affect our relationship themes?",
+          "actual_answer": "2030: for you, the chart flags social commitments and decisions about shared time or resources as a theme to review. Discuss which social plans and shared costs fit the time and resources you both want to commit. This timing prompt is based on each person's chart; it does not predict a shared event.",
+          "score": null,
+          "status": "VERIFY",
+          "deductions": [],
+          "revision_instruction": null
+        },
+        {
+          "title": "What does this connection ask of each of us?",
+          "actual_answer": "You can ask whether your partner wants listening or practical help before you respond. Your partner can hear your concern first, then ask before offering advice. These are specific needs to discuss, not predictions of behaviour. Your Everyday Compass Symbolic colours & numbers You · Metal Colours: White / Soft silver Numbers: 4 / 9 Your Yin Metal birth-day symbol belongs to Metal. The colours and number pair follow that traditional association. Choose a shade each for a shared note. Use the note to record one request from each person; neither palette is the better one. Your partner · Earth Colours: Yellow / Sand Numbers: 5 / 10 Your Yang Earth birth-day symbol belongs to Earth. The colours and number pair follow that traditional association. Choose a shade each for a shared note. Use the note to record one request from each person; neither palette is the better one. These colours and numbers are traditional symbols for your birth-day element. Use them as personal reminders. They do not change the odds of an event or promise a result. A reminder to keep: Use the reading to name a traditional pattern. Actual choices, consent and circumstances determine what happens. Cultural references Five-colour tradition · Korea.net: https://www.korea.net/NewsFocus/HonoraryReporters/view?articleId=218521 He Tu number pairs · historical text: https://zh.wikisource.org/wiki/河圖原",
+          "score": null,
+          "status": "VERIFY",
+          "deductions": [],
+          "revision_instruction": null
+        }
+      ],
+      "structural_review": {
+        "question_count": "PASS",
+        "legacy_answer_labels": 7,
+        "legacy_explanation_or_detail_labels": 0,
+        "bottom_line_sections": 0,
+        "letter_format": "FIX",
+        "finding": "The PDF predates the requested direct-answer/personal-explanation/two-sentence-bottom-line format.",
+        "visual_design_review": "VERIFY",
+        "destiny_card": "PASS — embedded card image detected",
+        "card_asset_image_present": true
+      },
+      "independent_score": null,
+      "evaluation_status": "VERIFY",
+      "evaluation_note": "PDF text and structure extracted; a human editorial review against the full 100-point rubric has not been completed. Do not treat as PASS or 95+."
     },
     {
       "product_id": "01",
@@ -1500,7 +1656,7 @@ Total output lines: 3003
       },
       "independent_score": null,
       "evaluation_status": "VERIFY",
-      "evaluation_note": "Extracted legacy PDF predates approved Product 07 titles and requested letter format; not rescored. Rebuild and independent editorial review required."
+      "evaluation_note": "PDF text and structure extracted; a human editorial review against the full 100-point rubric has not been completed. Do not treat as PASS or 95+."
     },
     {
       "product_id": "05",
@@ -2016,7 +2172,7 @@ Total output lines: 3003
       },
       "independent_score": null,
       "evaluation_status": "VERIFY",
-      "evaluation_note": "Extracted legacy PDF predates approved Product 07 titles and requested letter format; not rescored. Rebuild and independent editorial review required."
+      "evaluation_note": "PDF text and structure extracted; a human editorial review against the full 100-point rubric has not been completed. Do not treat as PASS or 95+."
     },
     {
       "product_id": "05",
