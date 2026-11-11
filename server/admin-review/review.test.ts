@@ -13,6 +13,7 @@ import { calculateSaju } from '../../packages/core/src/saju.ts'
 import { plainReadingText } from '../../src/report/reading-text.ts'
 import { PREVIEW_KINDS } from '../../src/report/personal-products.ts'
 import { loginPage, reviewPage } from './ui.ts'
+import { qualityDashboardPage } from './quality-dashboard.ts'
 
 const env = { VERCEL_ENV: 'preview', VERCEL_GIT_COMMIT_REF: 'feature/english-saju-report-20261013', FATE_REVIEW_ENABLED: 'true',
   FATE_REVIEW_ORIGIN: 'https://saju-english-report-preview-review.vercel.app', FATE_REVIEW_GOOGLE_CLIENT_ID: '123-test.apps.googleusercontent.com',
@@ -73,6 +74,15 @@ describe('Passphrase administrator login', () => {
     const html = loginPage('', 'challenge', 'nonce', '/api/admin-review?view=quality', 'passphrase')
     expect(html).toContain('type="password"')
     expect(html).not.toContain('accounts.google.com/gsi/client')
+  })
+})
+
+describe('Quality dashboard client script', () => {
+  it('renders a syntactically valid browser script so data loading can start', () => {
+    const html = qualityDashboardPage('test-nonce')
+    const script = html.match(/<script nonce="test-nonce">([\s\S]*?)<\/script>/)?.[1]
+    expect(script).toBeTruthy()
+    expect(() => new Script(script!)).not.toThrow()
   })
 })
 
