@@ -40,7 +40,18 @@ describe('canonical paid report questions', () => {
       ['What is the overall theme of my next 12 months?', 'What should I focus on most this year?', 'What does it suggest for money?', 'What does this period suggest for my career?', 'What does it suggest for love?', 'Which months have more supportive chart relationships?', 'Which months require closer attention?'],
       ['Am I naturally suited to running a business?', 'What kind of business work suits me?', 'Am I better suited to working alone or with partners?', 'What financial risks should I understand?', 'When might expansion deserve a closer look?', 'What do my upcoming cycles suggest about business activity?', 'What should I be careful about in business?'],
       ['What is my core personality?', 'Which parts of my nature stand out?', 'What tends to put me under pressure?', 'How do I tend to respond when I feel under pressure?', 'What do I need most in relationships?', 'How can my strengths become blind spots?', 'What boundary could help protect my everyday balance?'],
-      [...DESTINY_COLLECTION_QUESTIONS],
+      [
+        'What are the three most important things about my destiny?',
+        'What is my greatest opportunity in life?',
+        'What is my biggest challenge?',
+        'How do my personality, career, money and love connect?',
+        'What patterns keep repeating in my life?',
+        'Which years are most important for me?',
+        'What should I prioritise over the next three years?',
+        'What am I not seeing about my potential?',
+        'What will help me build a fulfilling life?',
+        'What is the most important message from my chart?',
+      ],
     ])
   })
 })
