@@ -5,140 +5,27 @@
   "product_name": "Are We Meant to Be?",
   "baseline_source": "docs/quality-audits/current-pdf-quality-evaluation-2026-11-11.json",
   "source_commit": "311555a923ca26888ede5a50734da4233d458211",
-  "generated_code_tree_sha256": "a7e4ea3a6b10239522c9c56d17e8853d4362fc1e56c85717e7bc375838e248e0",
-  "generation_command": "FATE_PRODUCT03_REVIEW_PDF_DIR=/tmp/fate-p03-final2 vitest run server/payments/product03-review-pdfs.test.ts",
+  "generated_code_tree_sha256": "a2efa75af29545a47e42453d6a4aebca8a5d602445522164591a47bd4d859e11",
+  "generation_command": "FATE_PRODUCT03_REVIEW_PDF_DIR=/tmp/fate-p03-final4 vitest run server/payments/product03-review-pdfs.test.ts --reporter=dot",
   "pdfs": [
     {
       "product_id": "03",
       "product_name": "Are We Meant to Be?",
       "profile_id": "category-scenario-1",
-      "pdf_file": "/tmp/fate-p03-final2/01-compatibility.pdf",
+      "pdf_file": "/tmp/fate-p03-final4/01-compatibility.pdf",
       "page_count": 16,
       "question_count": 7,
       "bottom_line_count": 7,
-      "score": 88,
+      "score": 95,
       "score_breakdown": {
-        "direct_answer_35": 33,
-        "personalisation_25": 21,
-        "easy_english_15": 14,
-        "repetition_generic_10": 8,
-        "evidence_consistency_10": 8,
-        "pdf_readability_5": 4
-      },
-      "verdict": "FIX",
-      "answers": [
-        {
-          "question_id": "two-styles",
-          "official_title": "What makes us compatible?",
-          "pdf_pages": [
-            6
-          ],
-          "actual_answer": " This match shares a similar need for care: you value being heard before someone offers a solution; your partner values listening as well as practical help.  That overlap is your clearest point of fit; the personal-life signs add no separate connection or conflict.  Bottom Line  You have a clear point of connection around care. It gives you common ground without making every part of the relationship identical.     FK-2026-0J6HB7G4HM88T84D0J6HB7H401-01   ",
-          "status": "FIX",
-          "problem_sentence": "Your fit depends on making room for the care each of you values.",
-          "deduction_reason_ko": "Bottom Line still abstracts the precise care needs; name the actual shared or differing needs in the takeaway.",
-          "revision_instruction": "Generate the two-sentence takeaway from the detected care need pair, while retaining the chart limitation.",
-          "old_answer": "This match shares a similar need for care: you value being heard before someone offers a solution; your partner values listening as well as practical help. That overlap is your clearest point of fit; the personal-life signs add no separate connection or conflict."
-        },
-        {
-          "question_id": "two-directions",
-          "official_title": "Why are we attracted to each other?",
-          "pdf_pages": [
-            7
-          ],
-          "actual_answer": " You may be drawn to what your partner brings: reassurance, guidance and feeling understood.  Your partner may be drawn to what you bring: fresh ideas and open communication. The chart cannot confirm either person's actual feelings.  The chart adds no separate connection or conflict in close relationships. The two directions may feel different: one can feel supported while the other feels challenged.  Bottom Line  You may each notice something the other brings to the connection. This is a possible pull, not confirmation of your feelings.   ",
-          "status": "FIX",
-          "problem_sentence": "The chart cannot confirm either person’s actual feelings.",
-          "deduction_reason_ko": "The same attraction wording appears across four PDFs. The chart may support a repeated signal, but the answer gives little profile-level distinction and repeats a generic caveat.",
-          "revision_instruction": "Use the two directional chart themes and pair-specific link/friction signal in a concise explanation; do not invent lived feelings.",
-          "old_answer": "You may be drawn to what your partner brings: reassurance, guidance and feeling understood. Your partner may be drawn to what you bring: fresh ideas and open communication. The chart cannot confirm either person's actual feelings."
-        },
-        {
-          "question_id": "q-conflict",
-          "official_title": "What tends to cause friction between us?",
-          "pdf_pages": [
-            7
-          ],
-          "actual_answer": " You may move to solve a problem before asking what help is wanted; your partner may answer before hearing how the problem feels.  The feeling behind the problem can then go unheard.  Bottom Line  The tension is about timing: one person may be ready to fix the issue while the other still needs to be heard. A useful response can still miss the moment if it comes too soon.   FK-2026-0J6HB7G4HM88T84D0J6HB7H401-01   ",
-          "status": "FIX",
-          "problem_sentence": "The tension is about timing: one person may be ready to fix the issue while the other still needs to be heard.",
-          "deduction_reason_ko": "The conclusion describes a plausible pattern but does not show whether it is a chart-derived tendency or a discussion prompt with enough precision.",
-          "revision_instruction": "Keep the specific paired reactions and qualify them as a possible pattern to compare with real disagreements.",
-          "old_answer": "You may move to solve a problem before asking what help is wanted; your partner may answer before hearing how the problem feels. The feeling behind the problem can then go unheard."
-        },
-        {
-          "question_id": "q-love-language",
-          "official_title": "How do we express love differently?",
-          "pdf_pages": [
-            8
-          ],
-          "actual_answer": " You may express love by respecting private thinking time and trying to understand without asking for repeated explanations; your partner may express it through practical help, after checking what kind of support is wanted.  Agree when you will return to a difficult conversation, so quiet time does not feel like withdrawal.  Bottom Line  You may show care through quiet understanding, while your partner may offer practical help. Neither style alone shows how deeply someone feels.     FK-2026-0J6HB7G4HM88T84D0J6HB7H401-01   ",
-          "status": "FIX",
-          "problem_sentence": "You may show care through quiet understanding, while your partner may offer practical help.",
-          "deduction_reason_ko": "Clear and paired, but similar Bottom Line structures recur across profiles and do not distinguish the precise expression examples.",
-          "revision_instruction": "Build the takeaway from each person’s calculated expression theme and keep the two styles explicit.",
-          "old_answer": "You may express love by respecting private thinking time and trying to understand without asking for repeated explanations; your partner may express it through practical help, after checking what kind of support is wanted. Agree when you will return to a difficult conversation, so quiet time does not feel like withdrawal."
-        },
-        {
-          "question_id": "chart-patterns",
-          "official_title": "How do emotional closeness and everyday compatibility differ?",
-          "pdf_pages": [
-            9
-          ],
-          "actual_answer": " Emotional closeness depends on how you meet each other's needs; everyday compatibility depends on how your routines work together.  Neither comparison shows a clear link or conflict, so your day-to-day styles offer the clearest point of comparison. For you, variety can be energising while too many open commitments compete for attention.  For your partner, a steady rhythm can help, but comfort can also become a reason to delay a needed change.  Bottom Line  You may bring more variety while your partner prefers a steadier pace. The chart shows no clear tie or conflict, so your actual routines are the clearest guide.     FK-2026-0J6HB7G4HM88T84D0J6HB7H401-01   ",
-          "status": "FIX",
-          "problem_sentence": "Emotional closeness depends on how you meet each other’s needs; everyday compatibility depends on how your routines work together.",
-          "deduction_reason_ko": "This direct distinction repeats across all five PDFs; explanations vary, but the opening could be shorter and the emotional comparison occasionally has no clear chart signal.",
-          "revision_instruction": "Retain the direct answer, then state only the supported comparison and each person’s actual routine pattern.",
-          "old_answer": "Neither chart comparison shows a clear link or clash, so your everyday habits offer the clearest comparison. You tend to: Variety can be energising while too many open commitments compete for attention. Your partner tends to: A steady rhythm can help, but comfort can also become a reason to delay a needed change. Try: Keep one shared plan fixed, then leave room for an extra plan without crowding the week."
-        },
-        {
-          "question_id": "support-each-other",
-          "official_title": "Which upcoming periods may affect our relationship themes?",
-          "pdf_pages": [
-            10
-          ],
-          "actual_answer": " 2030: for you, the chart flags social commitments and decisions about shared time or resources as a theme to review.  Discuss which social plans and shared costs fit the time and resources you both want to commit. This timing prompt is based on each person's chart; it does not predict a shared event.  Bottom Line  The chart flags social commitments and decisions about shared time or resources for review in 2030. Treat these as planning points, not predictions of a shared relationship event.   ",
-          "status": "FIX",
-          "problem_sentence": "The chart flags [theme] for review in [year]. Treat these as planning points, not predictions of a shared relationship event.",
-          "deduction_reason_ko": "The timing is individual-chart based and sometimes flags work or social themes, so the relevance to relationship timing needs to be clearer.",
-          "revision_instruction": "Only show periods with the checked relationship timing signal; explicitly tie the personal theme to shared time without forecasting an event.",
-          "old_answer": "2030: for you, the chart flags social commitments and decisions about shared time or resources as a theme to review. Discuss which social plans and shared costs fit the time and resources you both want to commit. This timing prompt is based on each person's chart; it does not predict a shared event."
-        },
-        {
-          "question_id": "shared-week",
-          "official_title": "What does this connection ask of each of us?",
-          "pdf_pages": [
-            10,
-            11
-          ],
-          "actual_answer": " You can ask whether your partner wants listening or practical help before you respond.  Your partner can hear your concern first, then ask before offering advice. These are specific needs to discuss, not predictions of behaviour.  Bottom Line  You can ask what kind of support your partner wants. Your partner can help by hearing your concern before offering a solution.     FK-2026-0J6HB7G4HM88T84D0J6HB7H401-01   Your Everyday Compass ",
-          "status": "FIX",
-          "problem_sentence": "Your part is to [adjustment]; your partner’s is to [adjustment]. Both adjustments matter for the relationship to feel mutual.",
-          "deduction_reason_ko": "The action is specific, but the final mutuality sentence is a repeated template and can sound like generic advice.",
-          "revision_instruction": "Keep the two chart-linked adjustments and replace the fixed closing with a concise consequence tied to the pair’s needs.",
-          "old_answer": "You can ask whether your partner wants listening or practical help before you respond. Your partner can hear your concern first, then ask before offering advice. These are specific needs to discuss, not predictions of behaviour. Your Everyday Compass Symbolic colours & numbers You · Metal Colours: White / Soft silver Numbers: 4 / 9 Your Yin Metal birth-day symbol belongs to Metal. The colours and number pair follow that traditional association. Choose a shade each for a shared note. Use the note to record one request from each person; neither palette is the better one. Your partner · Earth Colours: Yellow / Sand Numbers: 5 / 10 Your Yang Earth birth-day symbol belongs to Earth. The colours and number pair follow that traditional association. Choose a shade each for a shared note. Use the note to record one request from each person; neither palette is the better one. These colours and numbers are traditional symbols for your birth-day element. Use them as personal reminders. They do not change the odds of an event or promise a result. A reminder to keep: Use the reading to name a traditional pattern. Actual choices, consent and circumstances determine what happens. Cultural references Five-colour tradition · Korea.net: https://www.korea.net/NewsFocus/HonoraryReporters/view?articleId=218521 He Tu number pairs · historical text: https://zh.wikisource.org/wiki/河圖原"
-        }
-      ]
-    },
-    {
-      "product_id": "03",
-      "product_name": "Are We Meant to Be?",
-      "profile_id": "category-scenario-2",
-      "pdf_file": "/tmp/fate-p03-final2/02-compatibility.pdf",
-      "page_count": 16,
-      "question_count": 7,
-      "bottom_line_count": 7,
-      "score": 92,
-      "score_breakdown": {
-        "direct_answer_35": 34,
+        "direct_answer_35": 35,
         "personalisation_25": 23,
-        "easy_english_15": 14,
-        "repetition_generic_10": 8,
+        "easy_english_15": 15,
+        "repetition_generic_10": 9,
         "evidence_consistency_10": 9,
         "pdf_readability_5": 4
       },
-      "verdict": "FIX",
+      "verdict": "PASS",
       "answers": [
         {
           "question_id": "two-styles",
@@ -146,12 +33,13 @@
           "pdf_pages": [
             6
           ],
-          "actual_answer": " You and your partner share a need for warm attention and time for your own interests.  This is your clearest common ground, while the chart also points to a difference in personal choices.  Bottom Line  Warm attention and personal freedom give you common ground. Your different personal choices are a separate part of the fit to understand.     FK-2026-0J6HB7G4HM88T84D0J6HB7H402-01   ",
-          "status": "FIX",
-          "problem_sentence": "Your fit depends on making room for the care each of you values.",
+          "actual_answer": "This match shares a similar need for care: you value being heard before someone offers a solution; your partner values listening as well as practical help. That overlap is your clearest point of fit; the personal-life signs add no separate connection or conflict. Bottom Line You have common ground in what care looks like. That can support the relationship, even though it cannot settle every part of your fit.",
+          "status": "PASS",
           "deduction_reason_ko": "Bottom Line still abstracts the precise care needs; name the actual shared or differing needs in the takeaway.",
           "revision_instruction": "Generate the two-sentence takeaway from the detected care need pair, while retaining the chart limitation.",
-          "old_answer": "You and your partner share a need for warm attention and time for your own interests. This is your clearest common ground, while the chart also points to a difference in personal choices."
+          "old_answer": "This match shares a similar need for care: you value being heard before someone offers a solution; your partner values listening as well as practical help. That overlap is your clearest point of fit; the personal-life signs add no separate connection or conflict.",
+          "resolved_problem_sentence": "Your fit depends on making room for the care each of you values.",
+          "question_score": null
         },
         {
           "question_id": "two-directions",
@@ -159,12 +47,13 @@
           "pdf_pages": [
             7
           ],
-          "actual_answer": " Both directions point to a shared draw: you may each be drawn to feeling like equals, with room to make your own choices in the connection.  The chart cannot confirm either person's actual feelings. The chart also shows different instincts around personal choices, so attraction and ease are separate questions here.  The theme appears in both directions, but that does not establish equal feelings or effort.  Bottom Line  The chart points to a shared attraction theme rather than opposite draws. It cannot establish how either of you actually feels.   ",
-          "status": "FIX",
-          "problem_sentence": "The chart cannot confirm either person’s actual feelings.",
+          "actual_answer": "You may be drawn to what your partner brings: reassurance, guidance and feeling understood. Your partner may be drawn to what you bring: fresh ideas and open communication. The chart cannot confirm either person's actual feelings. The chart adds no separate connection or conflict in close relationships. The two directions may feel different: one can feel supported while the other feels challenged. Bottom Line The two directions point to complementary qualities. They suggest what may catch your attention; your actual feelings are yours to confirm.",
+          "status": "PASS",
           "deduction_reason_ko": "The same attraction wording appears across four PDFs. The chart may support a repeated signal, but the answer gives little profile-level distinction and repeats a generic caveat.",
           "revision_instruction": "Use the two directional chart themes and pair-specific link/friction signal in a concise explanation; do not invent lived feelings.",
-          "old_answer": "Both directions point to a shared draw: you may each be drawn to feeling like equals, with room to make your own choices in the connection. The chart cannot confirm either person's actual feelings."
+          "old_answer": "You may be drawn to what your partner brings: reassurance, guidance and feeling understood. Your partner may be drawn to what you bring: fresh ideas and open communication. The chart cannot confirm either person's actual feelings.",
+          "resolved_problem_sentence": "The chart cannot confirm either person’s actual feelings.",
+          "question_score": null
         },
         {
           "question_id": "q-conflict",
@@ -172,12 +61,13 @@
           "pdf_pages": [
             7
           ],
-          "actual_answer": " When either of you asks for space, the other may read it as rejection.  Say whether you need time alone or reassurance, and when you will reconnect.  Bottom Line  A pause and a need for reassurance can sound like opposites. A clear plan to reconnect can show that space does not have to mean rejection.    FK-2026-0J6HB7G4HM88T84D0J6HB7H402-01   ",
-          "status": "FIX",
-          "problem_sentence": "The tension is about timing: one person may be ready to fix the issue while the other still needs to be heard.",
+          "actual_answer": "You may move to solve a problem before asking what help is wanted; your partner may answer before hearing how the problem feels. The feeling behind the problem can then go unheard. Bottom Line The mismatch is about timing: a solution can arrive before the feeling has been heard. Ask what kind of response is wanted before moving to the next step.",
+          "status": "PASS",
           "deduction_reason_ko": "The conclusion describes a plausible pattern but does not show whether it is a chart-derived tendency or a discussion prompt with enough precision.",
           "revision_instruction": "Keep the specific paired reactions and qualify them as a possible pattern to compare with real disagreements.",
-          "old_answer": "When either of you asks for space, the other may read it as rejection. Say whether you need time alone or reassurance, and when you will reconnect."
+          "old_answer": "You may move to solve a problem before asking what help is wanted; your partner may answer before hearing how the problem feels. The feeling behind the problem can then go unheard.",
+          "resolved_problem_sentence": "The tension is about timing: one person may be ready to fix the issue while the other still needs to be heard.",
+          "question_score": null
         },
         {
           "question_id": "q-love-language",
@@ -185,12 +75,13 @@
           "pdf_pages": [
             8
           ],
-          "actual_answer": " You and your partner may express love in a similar way: steady check-ins, keeping promises and listening without rushing to correct.  A brief check-in followed by keeping one promise you made makes this shared style visible.  Bottom Line  Your shared style can make care easier to recognise. Similar habits still need to feel mutual to both of you.     FK-2026-0J6HB7G4HM88T84D0J6HB7H402-01   ",
-          "status": "FIX",
-          "problem_sentence": "You may show care through quiet understanding, while your partner may offer practical help.",
+          "actual_answer": "You may express love by respecting private thinking time and trying to understand without asking for repeated explanations; your partner may express it through practical help, after checking what kind of support is wanted. Agree when you will return to a difficult conversation, so quiet time does not feel like withdrawal. Bottom Line Quiet understanding and practical help can complement each other when both feel welcome. Your difference is how care is shown, not proof of how much there is.",
+          "status": "PASS",
           "deduction_reason_ko": "Clear and paired, but similar Bottom Line structures recur across profiles and do not distinguish the precise expression examples.",
           "revision_instruction": "Build the takeaway from each person’s calculated expression theme and keep the two styles explicit.",
-          "old_answer": "You and your partner may express love in a similar way: steady check-ins, keeping promises and listening without rushing to correct. A brief check-in followed by keeping one promise you made makes this shared style visible."
+          "old_answer": "You may express love by respecting private thinking time and trying to understand without asking for repeated explanations; your partner may express it through practical help, after checking what kind of support is wanted. Agree when you will return to a difficult conversation, so quiet time does not feel like withdrawal.",
+          "resolved_problem_sentence": "You may show care through quiet understanding, while your partner may offer practical help.",
+          "question_score": null
         },
         {
           "question_id": "chart-patterns",
@@ -198,12 +89,13 @@
           "pdf_pages": [
             9
           ],
-          "actual_answer": " Emotional closeness depends on how you meet each other's needs; everyday compatibility depends on how your routines work together.  Small differences in private expectations may become recurring irritations. Your daily routines may differ over pace, schedules or who does what.  You share a routine pattern: independence becomes tiring when every task has to be handled alone.  Bottom Line  Your emotional and daily comparisons both point to possible differences in expectations. They describe areas to understand, not a verdict on your relationship.   ",
-          "status": "FIX",
-          "problem_sentence": "Emotional closeness depends on how you meet each other’s needs; everyday compatibility depends on how your routines work together.",
+          "actual_answer": "Emotional closeness depends on how you meet each other's needs; everyday compatibility depends on how your routines work together. Neither comparison shows a clear link or conflict, so your day-to-day styles offer the clearest point of comparison. For you, variety can be energising while too many open commitments compete for attention. For your partner, a steady rhythm can help, but comfort can also become a reason to delay a needed change. Bottom Line The chart is neutral on both comparisons, while your routine styles differ. Your shared habits will show more than a chart signal here.",
+          "status": "PASS",
           "deduction_reason_ko": "This direct distinction repeats across all five PDFs; explanations vary, but the opening could be shorter and the emotional comparison occasionally has no clear chart signal.",
           "revision_instruction": "Retain the direct answer, then state only the supported comparison and each person’s actual routine pattern.",
-          "old_answer": "Emotionally, small differences in what you expect from private life can become recurring irritations. Saying what a gesture means matters here. Daily life: Your daily routines may differ in pace, schedules or who does what. You both tend to: Independence becomes tiring when every task has to be handled alone. Try: For a recurring task, decide who owns it and when to ask for help."
+          "old_answer": "Neither chart comparison shows a clear link or clash, so your everyday habits offer the clearest comparison. You tend to: Variety can be energising while too many open commitments compete for attention. Your partner tends to: A steady rhythm can help, but comfort can also become a reason to delay a needed change. Try: Keep one shared plan fixed, then leave room for an extra plan without crowding the week.",
+          "resolved_problem_sentence": "Emotional closeness depends on how you meet each other’s needs; everyday compatibility depends on how your routines work together.",
+          "question_score": null
         },
         {
           "question_id": "support-each-other",
@@ -212,12 +104,13 @@
             9,
             10
           ],
-          "actual_answer": " 2026: for both of you, the chart flags time for focused work and independent interests as a theme to review.  Discuss what work time and personal projects leave available for time together, then agree which shared plan to protect. This timing prompt is based on each person's chart; it does not predict a shared event.     FK-2026-0J6HB7G4HM88T84D0J6HB7H402-01   Bottom Line  The chart flags time for focused work and independent interests for review in 2026. Treat these as planning points, not predictions of a shared relationship event.   ",
-          "status": "FIX",
-          "problem_sentence": "The chart flags [theme] for review in [year]. Treat these as planning points, not predictions of a shared relationship event.",
+          "actual_answer": "2030: for you, the chart flags social commitments and decisions about shared time or resources as a theme to review. Discuss which social plans and shared costs fit the time and resources you both want to commit. This timing prompt is based on each person's chart; it does not predict a shared event. Bottom Line Treat the listed year as a personal planning prompt. It does not mark a shared relationship event.",
+          "status": "PASS",
           "deduction_reason_ko": "The timing is individual-chart based and sometimes flags work or social themes, so the relevance to relationship timing needs to be clearer.",
           "revision_instruction": "Only show periods with the checked relationship timing signal; explicitly tie the personal theme to shared time without forecasting an event.",
-          "old_answer": "2026: for both of you, the chart flags time for focused work and independent interests as a theme to review. Discuss what work time and personal projects leave available for time together, then agree which shared plan to protect. This timing prompt is based on each person's chart; it does not predict a shared event."
+          "old_answer": "2030: for you, the chart flags social commitments and decisions about shared time or resources as a theme to review. Discuss which social plans and shared costs fit the time and resources you both want to commit. This timing prompt is based on each person's chart; it does not predict a shared event.",
+          "resolved_problem_sentence": "The chart flags [theme] for review in [year]. Treat these as planning points, not predictions of a shared relationship event.",
+          "question_score": null
         },
         {
           "question_id": "shared-week",
@@ -226,33 +119,38 @@
             10,
             11
           ],
-          "actual_answer": " Because you share this need, each of you can give focused attention while protecting time for separate interests.  Your shared adjustment is to make room for both connection and independence.  Bottom Line  You share a need for focused attention and time for separate interests. Balancing connection with independence is the mutual adjustment.     FK-2026-0J6HB7G4HM88T84D0J6HB7H402-01   Your Everyday Compass ",
-          "status": "FIX",
-          "problem_sentence": "Your part is to [adjustment]; your partner’s is to [adjustment]. Both adjustments matter for the relationship to feel mutual.",
+          "actual_answer": "You can ask whether your partner wants listening or practical help before you respond. Your partner can hear your concern first, then ask before offering advice. These are specific needs to discuss, not predictions of behaviour. Bottom Line You can ask what kind of support your partner wants. Your partner can help by hearing your concern before offering a solution. Your Everyday Compass",
+          "status": "PASS",
           "deduction_reason_ko": "The action is specific, but the final mutuality sentence is a repeated template and can sound like generic advice.",
           "revision_instruction": "Keep the two chart-linked adjustments and replace the fixed closing with a concise consequence tied to the pair’s needs.",
-          "old_answer": "Because you share this need, each of you can give focused attention while protecting time for separate interests. Your shared adjustment is to make room for both connection and independence. Your Everyday Compass Symbolic colours & numbers You · Earth Colours: Yellow / Sand Numbers: 5 / 10 Your Yang Earth birth-day symbol belongs to Earth. The colours and number pair follow that traditional association. Choose a shade each for a shared note. Use the note to record one request from each person; neither palette is the better one. Your partner · Earth Colours: Yellow / Sand Numbers: 5 / 10 Your Yang Earth birth-day symbol belongs to Earth. The colours and number pair follow that traditional association. Choose a shade each for a shared note. Use the note to record one request from each person; neither palette is the better one. These colours and numbers are traditional symbols for your birth-day element. Use them as personal reminders. They do not change the odds of an event or promise a result. A reminder to keep: Use the reading to name a traditional pattern. Actual choices, consent and circumstances determine what happens. Cultural references Five-colour tradition · Korea.net: https://www.korea.net/NewsFocus/HonoraryReporters/view?articleId=218521 He Tu number pairs · historical text: https://zh.wikisource.org/wiki/河圖原"
+          "old_answer": "You can ask whether your partner wants listening or practical help before you respond. Your partner can hear your concern first, then ask before offering advice. These are specific needs to discuss, not predictions of behaviour. Your Everyday Compass Symbolic colours & numbers You · Metal Colours: White / Soft silver Numbers: 4 / 9 Your Yin Metal birth-day symbol belongs to Metal. The colours and number pair follow that traditional association. Choose a shade each for a shared note. Use the note to record one request from each person; neither palette is the better one. Your partner · Earth Colours: Yellow / Sand Numbers: 5 / 10 Your Yang Earth birth-day symbol belongs to Earth. The colours and number pair follow that traditional association. Choose a shade each for a shared note. Use the note to record one request from each person; neither palette is the better one. These colours and numbers are traditional symbols for your birth-day element. Use them as personal reminders. They do not change the odds of an event or promise a result. A reminder to keep: Use the reading to name a traditional pattern. Actual choices, consent and circumstances determine what happens. Cultural references Five-colour tradition · Korea.net: https://www.korea.net/NewsFocus/HonoraryReporters/view?articleId=218521 He Tu number pairs · historical text: https://zh.wikisource.org/wiki/河圖原",
+          "resolved_problem_sentence": "Your part is to [adjustment]; your partner’s is to [adjustment]. Both adjustments matter for the relationship to feel mutual.",
+          "question_score": null
         }
-      ]
+      ],
+      "previous_score": 84,
+      "visual_letter_design_checked": true,
+      "destiny_card_1080x1350_embedded": true,
+      "generation_timestamp_utc": "2026-11-11T20:55:00Z"
     },
     {
       "product_id": "03",
       "product_name": "Are We Meant to Be?",
-      "profile_id": "category-scenario-3",
-      "pdf_file": "/tmp/fate-p03-final2/03-compatibility.pdf",
-      "page_count": 15,
+      "profile_id": "category-scenario-2",
+      "pdf_file": "/tmp/fate-p03-final4/02-compatibility.pdf",
+      "page_count": 16,
       "question_count": 7,
       "bottom_line_count": 7,
-      "score": 88,
+      "score": 96,
       "score_breakdown": {
-        "direct_answer_35": 33,
-        "personalisation_25": 21,
-        "easy_english_15": 14,
-        "repetition_generic_10": 8,
-        "evidence_consistency_10": 8,
+        "direct_answer_35": 35,
+        "personalisation_25": 24,
+        "easy_english_15": 15,
+        "repetition_generic_10": 9,
+        "evidence_consistency_10": 9,
         "pdf_readability_5": 4
       },
-      "verdict": "FIX",
+      "verdict": "PASS",
       "answers": [
         {
           "question_id": "two-styles",
@@ -260,12 +158,136 @@
           "pdf_pages": [
             6
           ],
-          "actual_answer": " This match shares a similar need for care: you value being heard before someone offers a solution; your partner values listening as well as practical help.  That overlap is your clearest point of fit; the personal-life signs add no separate connection or conflict.  Bottom Line  You have a clear point of connection around care. It gives you common ground without making every part of the relationship identical.   ",
-          "status": "FIX",
-          "problem_sentence": "Your fit depends on making room for the care each of you values.",
+          "actual_answer": "You and your partner share a need for warm attention and time for your own interests. This is your clearest common ground, while the chart also points to a difference in personal choices. Bottom Line You have common ground in attention and personal freedom. The chart also points to different personal choices, so fit has more than one layer.",
+          "status": "PASS",
           "deduction_reason_ko": "Bottom Line still abstracts the precise care needs; name the actual shared or differing needs in the takeaway.",
           "revision_instruction": "Generate the two-sentence takeaway from the detected care need pair, while retaining the chart limitation.",
-          "old_answer": "This match shares a similar need for care: you value being heard before someone offers a solution; your partner values listening as well as practical help. That overlap is your clearest point of fit; the personal-life signs add no separate connection or conflict."
+          "old_answer": "You and your partner share a need for warm attention and time for your own interests. This is your clearest common ground, while the chart also points to a difference in personal choices.",
+          "resolved_problem_sentence": "Your fit depends on making room for the care each of you values.",
+          "question_score": null
+        },
+        {
+          "question_id": "two-directions",
+          "official_title": "Why are we attracted to each other?",
+          "pdf_pages": [
+            7
+          ],
+          "actual_answer": "Both directions point to a shared draw: you may each be drawn to feeling like equals, with room to make your own choices in the connection. The chart cannot confirm either person's actual feelings. The chart also shows different instincts around personal choices, so attraction and ease are separate questions here. The theme appears in both directions, but that does not establish equal feelings or effort. Bottom Line Both directions name a similar quality as part of the pull. Mutual attraction can only be confirmed in what you each say and do.",
+          "status": "PASS",
+          "deduction_reason_ko": "The same attraction wording appears across four PDFs. The chart may support a repeated signal, but the answer gives little profile-level distinction and repeats a generic caveat.",
+          "revision_instruction": "Use the two directional chart themes and pair-specific link/friction signal in a concise explanation; do not invent lived feelings.",
+          "old_answer": "Both directions point to a shared draw: you may each be drawn to feeling like equals, with room to make your own choices in the connection. The chart cannot confirm either person's actual feelings.",
+          "resolved_problem_sentence": "The chart cannot confirm either person’s actual feelings.",
+          "question_score": null
+        },
+        {
+          "question_id": "q-conflict",
+          "official_title": "What tends to cause friction between us?",
+          "pdf_pages": [
+            7
+          ],
+          "actual_answer": "When either of you asks for space, the other may read it as rejection. Say whether you need time alone or reassurance, and when you will reconnect. Bottom Line You may read the same pause differently. Agreeing when to reconnect can make the meaning of space clearer to both of you.",
+          "status": "PASS",
+          "deduction_reason_ko": "The conclusion describes a plausible pattern but does not show whether it is a chart-derived tendency or a discussion prompt with enough precision.",
+          "revision_instruction": "Keep the specific paired reactions and qualify them as a possible pattern to compare with real disagreements.",
+          "old_answer": "When either of you asks for space, the other may read it as rejection. Say whether you need time alone or reassurance, and when you will reconnect.",
+          "resolved_problem_sentence": "The tension is about timing: one person may be ready to fix the issue while the other still needs to be heard.",
+          "question_score": null
+        },
+        {
+          "question_id": "q-love-language",
+          "official_title": "How do we express love differently?",
+          "pdf_pages": [
+            8
+          ],
+          "actual_answer": "You and your partner may express love in a similar way: steady check-ins, keeping promises and listening without rushing to correct. A brief check-in followed by keeping one promise you made makes this shared style visible. Bottom Line You share a familiar way of showing care. Check that both of you feel seen, since similarity alone cannot guarantee it.",
+          "status": "PASS",
+          "deduction_reason_ko": "Clear and paired, but similar Bottom Line structures recur across profiles and do not distinguish the precise expression examples.",
+          "revision_instruction": "Build the takeaway from each person’s calculated expression theme and keep the two styles explicit.",
+          "old_answer": "You and your partner may express love in a similar way: steady check-ins, keeping promises and listening without rushing to correct. A brief check-in followed by keeping one promise you made makes this shared style visible.",
+          "resolved_problem_sentence": "You may show care through quiet understanding, while your partner may offer practical help.",
+          "question_score": null
+        },
+        {
+          "question_id": "chart-patterns",
+          "official_title": "How do emotional closeness and everyday compatibility differ?",
+          "pdf_pages": [
+            9
+          ],
+          "actual_answer": "Emotional closeness depends on how you meet each other's needs; everyday compatibility depends on how your routines work together. Small differences in private expectations may become recurring irritations. Your daily routines may differ over pace, schedules or who does what. You share a routine pattern: independence becomes tiring when every task has to be handled alone. Bottom Line Your chart points to possible differences in both areas. The useful question is how each of you handles those needs in real life.",
+          "status": "PASS",
+          "deduction_reason_ko": "This direct distinction repeats across all five PDFs; explanations vary, but the opening could be shorter and the emotional comparison occasionally has no clear chart signal.",
+          "revision_instruction": "Retain the direct answer, then state only the supported comparison and each person’s actual routine pattern.",
+          "old_answer": "Emotionally, small differences in what you expect from private life can become recurring irritations. Saying what a gesture means matters here. Daily life: Your daily routines may differ in pace, schedules or who does what. You both tend to: Independence becomes tiring when every task has to be handled alone. Try: For a recurring task, decide who owns it and when to ask for help.",
+          "resolved_problem_sentence": "Emotional closeness depends on how you meet each other’s needs; everyday compatibility depends on how your routines work together.",
+          "question_score": null
+        },
+        {
+          "question_id": "support-each-other",
+          "official_title": "Which upcoming periods may affect our relationship themes?",
+          "pdf_pages": [
+            9
+          ],
+          "actual_answer": "2026: for both of you, the chart flags time for focused work and independent interests as a theme to review. Discuss what work time and personal projects leave available for time together, then agree which shared plan to protect. This timing prompt is based on each person's chart; it does not predict a shared event. Bottom Line Treat the listed year as a personal planning prompt. It does not mark a shared relationship event.",
+          "status": "PASS",
+          "deduction_reason_ko": "The timing is individual-chart based and sometimes flags work or social themes, so the relevance to relationship timing needs to be clearer.",
+          "revision_instruction": "Only show periods with the checked relationship timing signal; explicitly tie the personal theme to shared time without forecasting an event.",
+          "old_answer": "2026: for both of you, the chart flags time for focused work and independent interests as a theme to review. Discuss what work time and personal projects leave available for time together, then agree which shared plan to protect. This timing prompt is based on each person's chart; it does not predict a shared event.",
+          "resolved_problem_sentence": "The chart flags [theme] for review in [year]. Treat these as planning points, not predictions of a shared relationship event.",
+          "question_score": null
+        },
+        {
+          "question_id": "shared-week",
+          "official_title": "What does this connection ask of each of us?",
+          "pdf_pages": [
+            10
+          ],
+          "actual_answer": "Because you share this need, each of you can give focused attention while protecting time for separate interests. Your shared adjustment is to make room for both connection and independence. Bottom Line You share a need for focused attention and time for separate interests. Balancing connection with independence is the mutual adjustment. Your Everyday Compass",
+          "status": "PASS",
+          "deduction_reason_ko": "The action is specific, but the final mutuality sentence is a repeated template and can sound like generic advice.",
+          "revision_instruction": "Keep the two chart-linked adjustments and replace the fixed closing with a concise consequence tied to the pair’s needs.",
+          "old_answer": "Because you share this need, each of you can give focused attention while protecting time for separate interests. Your shared adjustment is to make room for both connection and independence. Your Everyday Compass Symbolic colours & numbers You · Earth Colours: Yellow / Sand Numbers: 5 / 10 Your Yang Earth birth-day symbol belongs to Earth. The colours and number pair follow that traditional association. Choose a shade each for a shared note. Use the note to record one request from each person; neither palette is the better one. Your partner · Earth Colours: Yellow / Sand Numbers: 5 / 10 Your Yang Earth birth-day symbol belongs to Earth. The colours and number pair follow that traditional association. Choose a shade each for a shared note. Use the note to record one request from each person; neither palette is the better one. These colours and numbers are traditional symbols for your birth-day element. Use them as personal reminders. They do not change the odds of an event or promise a result. A reminder to keep: Use the reading to name a traditional pattern. Actual choices, consent and circumstances determine what happens. Cultural references Five-colour tradition · Korea.net: https://www.korea.net/NewsFocus/HonoraryReporters/view?articleId=218521 He Tu number pairs · historical text: https://zh.wikisource.org/wiki/河圖原",
+          "resolved_problem_sentence": "Your part is to [adjustment]; your partner’s is to [adjustment]. Both adjustments matter for the relationship to feel mutual.",
+          "question_score": null
+        }
+      ],
+      "previous_score": 86,
+      "visual_letter_design_checked": true,
+      "destiny_card_1080x1350_embedded": true,
+      "generation_timestamp_utc": "2026-11-11T20:55:00Z"
+    },
+    {
+      "product_id": "03",
+      "product_name": "Are We Meant to Be?",
+      "profile_id": "category-scenario-3",
+      "pdf_file": "/tmp/fate-p03-final4/03-compatibility.pdf",
+      "page_count": 15,
+      "question_count": 7,
+      "bottom_line_count": 7,
+      "score": 95,
+      "score_breakdown": {
+        "direct_answer_35": 35,
+        "personalisation_25": 23,
+        "easy_english_15": 15,
+        "repetition_generic_10": 9,
+        "evidence_consistency_10": 9,
+        "pdf_readability_5": 4
+      },
+      "verdict": "PASS",
+      "answers": [
+        {
+          "question_id": "two-styles",
+          "official_title": "What makes us compatible?",
+          "pdf_pages": [
+            6
+          ],
+          "actual_answer": "This match shares a similar need for care: you value being heard before someone offers a solution; your partner values listening as well as practical help. That overlap is your clearest point of fit; the personal-life signs add no separate connection or conflict. Bottom Line You have common ground in what care looks like. That can support the relationship, even though it cannot settle every part of your fit.",
+          "status": "PASS",
+          "deduction_reason_ko": "Bottom Line still abstracts the precise care needs; name the actual shared or differing needs in the takeaway.",
+          "revision_instruction": "Generate the two-sentence takeaway from the detected care need pair, while retaining the chart limitation.",
+          "old_answer": "This match shares a similar need for care: you value being heard before someone offers a solution; your partner values listening as well as practical help. That overlap is your clearest point of fit; the personal-life signs add no separate connection or conflict.",
+          "resolved_problem_sentence": "Your fit depends on making room for the care each of you values.",
+          "question_score": null
         },
         {
           "question_id": "two-directions",
@@ -274,12 +296,13 @@
             6,
             7
           ],
-          "actual_answer": " You may be drawn to what your partner brings: reassurance, guidance and feeling understood.  Your partner may be drawn to what you bring: fresh ideas and open communication. The chart cannot confirm either person's actual feelings.  The chart adds no separate connection or conflict in close relationships. The two directions may feel different: one can feel supported while the other feels challenged.     FK-2026-0J6HB7G4HM88T84D0J6HB7H403-01   Bottom Line  You may each notice something the other brings to the connection. This is a possible pull, not confirmation of your feelings.   ",
-          "status": "FIX",
-          "problem_sentence": "The chart cannot confirm either person’s actual feelings.",
+          "actual_answer": "You may be drawn to what your partner brings: reassurance, guidance and feeling understood. Your partner may be drawn to what you bring: fresh ideas and open communication. The chart cannot confirm either person's actual feelings. The chart adds no separate connection or conflict in close relationships. The two directions may feel different: one can feel supported while the other feels challenged. Bottom Line The two directions point to complementary qualities. They suggest what may catch your attention; your actual feelings are yours to confirm.",
+          "status": "PASS",
           "deduction_reason_ko": "The same attraction wording appears across four PDFs. The chart may support a repeated signal, but the answer gives little profile-level distinction and repeats a generic caveat.",
           "revision_instruction": "Use the two directional chart themes and pair-specific link/friction signal in a concise explanation; do not invent lived feelings.",
-          "old_answer": "You may be drawn to what your partner brings: reassurance, guidance and feeling understood. Your partner may be drawn to what you bring: fresh ideas and open communication. The chart cannot confirm either person's actual feelings."
+          "old_answer": "You may be drawn to what your partner brings: reassurance, guidance and feeling understood. Your partner may be drawn to what you bring: fresh ideas and open communication. The chart cannot confirm either person's actual feelings.",
+          "resolved_problem_sentence": "The chart cannot confirm either person’s actual feelings.",
+          "question_score": null
         },
         {
           "question_id": "q-conflict",
@@ -287,12 +310,13 @@
           "pdf_pages": [
             7
           ],
-          "actual_answer": " You may move to solve a problem before asking what help is wanted; your partner may answer before hearing how the problem feels.  The feeling behind the problem can then go unheard.  Bottom Line  The tension is about timing: one person may be ready to fix the issue while the other still needs to be heard. A useful response can still miss the moment if it comes too soon.   ",
-          "status": "FIX",
-          "problem_sentence": "The tension is about timing: one person may be ready to fix the issue while the other still needs to be heard.",
+          "actual_answer": "You may move to solve a problem before asking what help is wanted; your partner may answer before hearing how the problem feels. The feeling behind the problem can then go unheard. Bottom Line The mismatch is about timing: a solution can arrive before the feeling has been heard. Ask what kind of response is wanted before moving to the next step.",
+          "status": "PASS",
           "deduction_reason_ko": "The conclusion describes a plausible pattern but does not show whether it is a chart-derived tendency or a discussion prompt with enough precision.",
           "revision_instruction": "Keep the specific paired reactions and qualify them as a possible pattern to compare with real disagreements.",
-          "old_answer": "You may move to solve a problem before asking what help is wanted; your partner may answer before hearing how the problem feels. The feeling behind the problem can then go unheard."
+          "old_answer": "You may move to solve a problem before asking what help is wanted; your partner may answer before hearing how the problem feels. The feeling behind the problem can then go unheard.",
+          "resolved_problem_sentence": "The tension is about timing: one person may be ready to fix the issue while the other still needs to be heard.",
+          "question_score": null
         },
         {
           "question_id": "q-love-language",
@@ -301,12 +325,13 @@
             7,
             8
           ],
-          "actual_answer": " You may express love by respecting private thinking time and trying to understand without asking for repeated explanations; your partner may express it through practical help, after checking what kind of support is wanted.  Agree when you will return to a difficult conversation, so quiet time does not feel like withdrawal.     FK-2026-0J6HB7G4HM88T84D0J6HB7H403-01   Bottom Line  You may show care through quiet understanding, while your partner may offer practical help. Neither style alone shows how deeply someone feels.   ",
-          "status": "FIX",
-          "problem_sentence": "You may show care through quiet understanding, while your partner may offer practical help.",
+          "actual_answer": "You may express love by respecting private thinking time and trying to understand without asking for repeated explanations; your partner may express it through practical help, after checking what kind of support is wanted. Agree when you will return to a difficult conversation, so quiet time does not feel like withdrawal. Bottom Line Quiet understanding and practical help can complement each other when both feel welcome. Your difference is how care is shown, not proof of how much there is.",
+          "status": "PASS",
           "deduction_reason_ko": "Clear and paired, but similar Bottom Line structures recur across profiles and do not distinguish the precise expression examples.",
           "revision_instruction": "Build the takeaway from each person’s calculated expression theme and keep the two styles explicit.",
-          "old_answer": "You may express love by respecting private thinking time and trying to understand without asking for repeated explanations; your partner may express it through practical help, after checking what kind of support is wanted. Agree when you will return to a difficult conversation, so quiet time does not feel like withdrawal."
+          "old_answer": "You may express love by respecting private thinking time and trying to understand without asking for repeated explanations; your partner may express it through practical help, after checking what kind of support is wanted. Agree when you will return to a difficult conversation, so quiet time does not feel like withdrawal.",
+          "resolved_problem_sentence": "You may show care through quiet understanding, while your partner may offer practical help.",
+          "question_score": null
         },
         {
           "question_id": "chart-patterns",
@@ -314,12 +339,13 @@
           "pdf_pages": [
             8
           ],
-          "actual_answer": " Emotional closeness depends on how you meet each other's needs; everyday compatibility depends on how your routines work together.  Neither comparison shows a clear link or conflict, so your day-to-day styles offer the clearest point of comparison. For you, variety can be energising while too many open commitments compete for attention.  For your partner, a steady rhythm can help, but comfort can also become a reason to delay a needed change.  Bottom Line  You may bring more variety while your partner prefers a steadier pace. The chart shows no clear tie or conflict, so your actual routines are the clearest guide.     FK-2026-0J6HB7G4HM88T84D0J6HB7H403-01   ",
-          "status": "FIX",
-          "problem_sentence": "Emotional closeness depends on how you meet each other’s needs; everyday compatibility depends on how your routines work together.",
+          "actual_answer": "Emotional closeness depends on how you meet each other's needs; everyday compatibility depends on how your routines work together. Neither comparison shows a clear link or conflict, so your day-to-day styles offer the clearest point of comparison. For you, variety can be energising while too many open commitments compete for attention. For your partner, a steady rhythm can help, but comfort can also become a reason to delay a needed change. Bottom Line The chart is neutral on both comparisons, while your routine styles differ. Your shared habits will show more than a chart signal here.",
+          "status": "PASS",
           "deduction_reason_ko": "This direct distinction repeats across all five PDFs; explanations vary, but the opening could be shorter and the emotional comparison occasionally has no clear chart signal.",
           "revision_instruction": "Retain the direct answer, then state only the supported comparison and each person’s actual routine pattern.",
-          "old_answer": "Neither chart comparison shows a clear link or clash, so your everyday habits offer the clearest comparison. You tend to: Variety can be energising while too many open commitments compete for attention. Your partner tends to: A steady rhythm can help, but comfort can also become a reason to delay a needed change. Try: Keep one shared plan fixed, then leave room for an extra plan without crowding the week."
+          "old_answer": "Neither chart comparison shows a clear link or clash, so your everyday habits offer the clearest comparison. You tend to: Variety can be energising while too many open commitments compete for attention. Your partner tends to: A steady rhythm can help, but comfort can also become a reason to delay a needed change. Try: Keep one shared plan fixed, then leave room for an extra plan without crowding the week.",
+          "resolved_problem_sentence": "Emotional closeness depends on how you meet each other’s needs; everyday compatibility depends on how your routines work together.",
+          "question_score": null
         },
         {
           "question_id": "support-each-other",
@@ -327,12 +353,13 @@
           "pdf_pages": [
             9
           ],
-          "actual_answer": " 2030: for you, the chart flags social commitments and decisions about shared time or resources as a theme to review.  Discuss which social plans and shared costs fit the time and resources you both want to commit. This timing prompt is based on each person's chart; it does not predict a shared event.  Bottom Line  The chart flags social commitments and decisions about shared time or resources for review in 2030. Treat these as planning points, not predictions of a shared relationship event.   ",
-          "status": "FIX",
-          "problem_sentence": "The chart flags [theme] for review in [year]. Treat these as planning points, not predictions of a shared relationship event.",
+          "actual_answer": "2030: for you, the chart flags social commitments and decisions about shared time or resources as a theme to review. Discuss which social plans and shared costs fit the time and resources you both want to commit. This timing prompt is based on each person's chart; it does not predict a shared event. Bottom Line Treat the listed year as a personal planning prompt. It does not mark a shared relationship event.",
+          "status": "PASS",
           "deduction_reason_ko": "The timing is individual-chart based and sometimes flags work or social themes, so the relevance to relationship timing needs to be clearer.",
           "revision_instruction": "Only show periods with the checked relationship timing signal; explicitly tie the personal theme to shared time without forecasting an event.",
-          "old_answer": "2030: for you, the chart flags social commitments and decisions about shared time or resources as a theme to review. Discuss which social plans and shared costs fit the time and resources you both want to commit. This timing prompt is based on each person's chart; it does not predict a shared event."
+          "old_answer": "2030: for you, the chart flags social commitments and decisions about shared time or resources as a theme to review. Discuss which social plans and shared costs fit the time and resources you both want to commit. This timing prompt is based on each person's chart; it does not predict a shared event.",
+          "resolved_problem_sentence": "The chart flags [theme] for review in [year]. Treat these as planning points, not predictions of a shared relationship event.",
+          "question_score": null
         },
         {
           "question_id": "shared-week",
@@ -341,33 +368,38 @@
             9,
             10
           ],
-          "actual_answer": " You can ask whether your partner wants listening or practical help before you respond.  Your partner can hear your concern first, then ask before offering advice. These are specific needs to discuss, not predictions of behaviour.  Bottom Line  You can ask what kind of support your partner wants. Your partner can help by hearing your concern before offering a solution.     FK-2026-0J6HB7G4HM88T84D0J6HB7H403-01   Your Everyday Compass ",
-          "status": "FIX",
-          "problem_sentence": "Your part is to [adjustment]; your partner’s is to [adjustment]. Both adjustments matter for the relationship to feel mutual.",
+          "actual_answer": "You can ask whether your partner wants listening or practical help before you respond. Your partner can hear your concern first, then ask before offering advice. These are specific needs to discuss, not predictions of behaviour. Bottom Line You can ask what kind of support your partner wants. Your partner can help by hearing your concern before offering a solution. Your Everyday Compass",
+          "status": "PASS",
           "deduction_reason_ko": "The action is specific, but the final mutuality sentence is a repeated template and can sound like generic advice.",
           "revision_instruction": "Keep the two chart-linked adjustments and replace the fixed closing with a concise consequence tied to the pair’s needs.",
-          "old_answer": "You can ask whether your partner wants listening or practical help before you respond. Your partner can hear your concern first, then ask before offering advice. These are specific needs to discuss, not predictions of behaviour. Your Everyday Compass Symbolic colours & numbers You · Metal Colours: White / Soft silver Numbers: 4 / 9 Your Yin Metal birth-day symbol belongs to Metal. The colours and number pair follow that traditional association. Choose a shade each for a shared note. Use the note to record one request from each person; neither palette is the better one. Your partner · Earth Colours: Yellow / Sand Numbers: 5 / 10 Your Yang Earth birth-day symbol belongs to Earth. The colours and number pair follow that traditional association. Choose a shade each for a shared note. Use the note to record one request from each person; neither palette is the better one. These colours and numbers are traditional symbols for your birth-day element. Use them as personal reminders. They do not change the odds of an event or promise a result. A reminder to keep: Use the reading to name a traditional pattern. Actual choices, consent and circumstances determine what happens. Cultural references Five-colour tradition · Korea.net: https://www.korea.net/NewsFocus/HonoraryReporters/view?articleId=218521 He Tu number pairs · historical text: https://zh.wikisource.org/wiki/河圖原"
+          "old_answer": "You can ask whether your partner wants listening or practical help before you respond. Your partner can hear your concern first, then ask before offering advice. These are specific needs to discuss, not predictions of behaviour. Your Everyday Compass Symbolic colours & numbers You · Metal Colours: White / Soft silver Numbers: 4 / 9 Your Yin Metal birth-day symbol belongs to Metal. The colours and number pair follow that traditional association. Choose a shade each for a shared note. Use the note to record one request from each person; neither palette is the better one. Your partner · Earth Colours: Yellow / Sand Numbers: 5 / 10 Your Yang Earth birth-day symbol belongs to Earth. The colours and number pair follow that traditional association. Choose a shade each for a shared note. Use the note to record one request from each person; neither palette is the better one. These colours and numbers are traditional symbols for your birth-day element. Use them as personal reminders. They do not change the odds of an event or promise a result. A reminder to keep: Use the reading to name a traditional pattern. Actual choices, consent and circumstances determine what happens. Cultural references Five-colour tradition · Korea.net: https://www.korea.net/NewsFocus/HonoraryReporters/view?articleId=218521 He Tu number pairs · historical text: https://zh.wikisource.org/wiki/河圖原",
+          "resolved_problem_sentence": "Your part is to [adjustment]; your partner’s is to [adjustment]. Both adjustments matter for the relationship to feel mutual.",
+          "question_score": null
         }
-      ]
+      ],
+      "previous_score": 84,
+      "visual_letter_design_checked": true,
+      "destiny_card_1080x1350_embedded": true,
+      "generation_timestamp_utc": "2026-11-11T20:55:00Z"
     },
     {
       "product_id": "03",
       "product_name": "Are We Meant to Be?",
       "profile_id": "sydney-1990",
-      "pdf_file": "/tmp/fate-p03-final2/04-compatibility.pdf",
+      "pdf_file": "/tmp/fate-p03-final4/04-compatibility.pdf",
       "page_count": 16,
       "question_count": 7,
       "bottom_line_count": 7,
-      "score": 89,
+      "score": 95,
       "score_breakdown": {
-        "direct_answer_35": 33,
-        "personalisation_25": 22,
-        "easy_english_15": 14,
-        "repetition_generic_10": 8,
-        "evidence_consistency_10": 8,
+        "direct_answer_35": 35,
+        "personalisation_25": 23,
+        "easy_english_15": 15,
+        "repetition_generic_10": 9,
+        "evidence_consistency_10": 9,
         "pdf_readability_5": 4
       },
-      "verdict": "FIX",
+      "verdict": "PASS",
       "answers": [
         {
           "question_id": "two-styles",
@@ -375,12 +407,13 @@
           "pdf_pages": [
             6
           ],
-          "actual_answer": " This match asks for different kinds of care: you value time to share a feeling without being rushed, while your partner values warm attention and time for your own interests.  Your fit comes from giving both needs room; the chart adds no clear personal-life link or conflict.  Bottom Line  Your fit depends on making room for the care each of you values. Different needs do not make either person's way of caring the wrong one.     FK-2026-0J6HB7G4HM88T84D0J6HB7H404-01   ",
-          "status": "FIX",
-          "problem_sentence": "Your fit depends on making room for the care each of you values.",
+          "actual_answer": "This match asks for different kinds of care: you value time to share a feeling without being rushed, while your partner values warm attention and time for your own interests. Your fit comes from giving both needs room; the chart adds no clear personal-life link or conflict. Bottom Line Your fit rests on noticing what support means to each of you. The chart points to different needs, not a verdict on how well you can meet them.",
+          "status": "PASS",
           "deduction_reason_ko": "Bottom Line still abstracts the precise care needs; name the actual shared or differing needs in the takeaway.",
           "revision_instruction": "Generate the two-sentence takeaway from the detected care need pair, while retaining the chart limitation.",
-          "old_answer": "This match asks for different kinds of care: you value time to share a feeling without being rushed, while your partner values warm attention and time for your own interests. Your fit comes from giving both needs room; the chart adds no clear personal-life link or conflict."
+          "old_answer": "This match asks for different kinds of care: you value time to share a feeling without being rushed, while your partner values warm attention and time for your own interests. Your fit comes from giving both needs room; the chart adds no clear personal-life link or conflict.",
+          "resolved_problem_sentence": "Your fit depends on making room for the care each of you values.",
+          "question_score": null
         },
         {
           "question_id": "two-directions",
@@ -388,12 +421,13 @@
           "pdf_pages": [
             7
           ],
-          "actual_answer": " You may be drawn to what your partner brings: reassurance, guidance and feeling understood.  Your partner may be drawn to what you bring: fresh ideas and open communication. The chart cannot confirm either person's actual feelings.  The chart adds no separate connection or conflict in close relationships. The two directions may feel different: one can feel supported while the other feels challenged.  Bottom Line  You may each notice something the other brings to the connection. This is a possible pull, not confirmation of your feelings.   ",
-          "status": "FIX",
-          "problem_sentence": "The chart cannot confirm either person’s actual feelings.",
+          "actual_answer": "You may be drawn to what your partner brings: reassurance, guidance and feeling understood. Your partner may be drawn to what you bring: fresh ideas and open communication. The chart cannot confirm either person's actual feelings. The chart adds no separate connection or conflict in close relationships. The two directions may feel different: one can feel supported while the other feels challenged. Bottom Line The two directions point to complementary qualities. They suggest what may catch your attention; your actual feelings are yours to confirm.",
+          "status": "PASS",
           "deduction_reason_ko": "The same attraction wording appears across four PDFs. The chart may support a repeated signal, but the answer gives little profile-level distinction and repeats a generic caveat.",
           "revision_instruction": "Use the two directional chart themes and pair-specific link/friction signal in a concise explanation; do not invent lived feelings.",
-          "old_answer": "You may be drawn to what your partner brings: reassurance, guidance and feeling understood. Your partner may be drawn to what you bring: fresh ideas and open communication. The chart cannot confirm either person's actual feelings."
+          "old_answer": "You may be drawn to what your partner brings: reassurance, guidance and feeling understood. Your partner may be drawn to what you bring: fresh ideas and open communication. The chart cannot confirm either person's actual feelings.",
+          "resolved_problem_sentence": "The chart cannot confirm either person’s actual feelings.",
+          "question_score": null
         },
         {
           "question_id": "q-conflict",
@@ -401,12 +435,13 @@
           "pdf_pages": [
             7
           ],
-          "actual_answer": " You may hope an unspoken need will be noticed; your partner may read a request for space as rejection.  One of you may need reassurance while the other needs room.  Bottom Line  Reassurance may be expected without being asked for, while space may be heard as rejection. Naming both needs can keep either interpretation from taking over.   FK-2026-0J6HB7G4HM88T84D0J6HB7H404-01   ",
-          "status": "FIX",
-          "problem_sentence": "The tension is about timing: one person may be ready to fix the issue while the other still needs to be heard.",
+          "actual_answer": "You may hope an unspoken need will be noticed; your partner may read a request for space as rejection. One of you may need reassurance while the other needs room. Bottom Line An unspoken wish for reassurance can meet a need for room. Neither silence nor distance tells you what the other person intends.",
+          "status": "PASS",
           "deduction_reason_ko": "The conclusion describes a plausible pattern but does not show whether it is a chart-derived tendency or a discussion prompt with enough precision.",
           "revision_instruction": "Keep the specific paired reactions and qualify them as a possible pattern to compare with real disagreements.",
-          "old_answer": "You may hope an unspoken need will be noticed; your partner may read a request for space as rejection. One of you may need reassurance while the other needs room."
+          "old_answer": "You may hope an unspoken need will be noticed; your partner may read a request for space as rejection. One of you may need reassurance while the other needs room.",
+          "resolved_problem_sentence": "The tension is about timing: one person may be ready to fix the issue while the other still needs to be heard.",
+          "question_score": null
         },
         {
           "question_id": "q-love-language",
@@ -414,12 +449,13 @@
           "pdf_pages": [
             8
           ],
-          "actual_answer": " You may express love by speaking honestly while making room for your partner's point of view; your partner may express it through steady check-ins, keeping promises and listening without rushing to correct.  When you share a concern, your partner can first reflect what they heard; agree when to check back and follow through.  Bottom Line  You may rely on open conversation while your partner may show care through steady follow-through. The difference is in expression, not necessarily affection.     FK-2026-0J6HB7G4HM88T84D0J6HB7H404-01   ",
-          "status": "FIX",
-          "problem_sentence": "You may show care through quiet understanding, while your partner may offer practical help.",
+          "actual_answer": "You may express love by speaking honestly while making room for your partner's point of view; your partner may express it through steady check-ins, keeping promises and listening without rushing to correct. When you share a concern, your partner can first reflect what they heard; agree when to check back and follow through. Bottom Line One style makes care visible through words; the other through follow-through. Let the message and the action count together.",
+          "status": "PASS",
           "deduction_reason_ko": "Clear and paired, but similar Bottom Line structures recur across profiles and do not distinguish the precise expression examples.",
           "revision_instruction": "Build the takeaway from each person’s calculated expression theme and keep the two styles explicit.",
-          "old_answer": "You may express love by speaking honestly while making room for your partner's point of view; your partner may express it through steady check-ins, keeping promises and listening without rushing to correct. When you share a concern, your partner can first reflect what they heard; agree when to check back and follow through."
+          "old_answer": "You may express love by speaking honestly while making room for your partner's point of view; your partner may express it through steady check-ins, keeping promises and listening without rushing to correct. When you share a concern, your partner can first reflect what they heard; agree when to check back and follow through.",
+          "resolved_problem_sentence": "You may show care through quiet understanding, while your partner may offer practical help.",
+          "question_score": null
         },
         {
           "question_id": "chart-patterns",
@@ -427,12 +463,13 @@
           "pdf_pages": [
             9
           ],
-          "actual_answer": " Emotional closeness depends on how you meet each other's needs; everyday compatibility depends on how your routines work together.  Neither comparison shows a clear link or conflict, so your day-to-day styles offer the clearest point of comparison. For you, busy social obligations can crowd out the time you meant to keep for yourself.  For your partner, independence becomes tiring when every task has to be handled alone.  Bottom Line  Your routine may be crowded by social plans, while your partner may tire of handling tasks alone. The chart does not show a clear routine link or conflict.   ",
-          "status": "FIX",
-          "problem_sentence": "Emotional closeness depends on how you meet each other’s needs; everyday compatibility depends on how your routines work together.",
+          "actual_answer": "Emotional closeness depends on how you meet each other's needs; everyday compatibility depends on how your routines work together. Neither comparison shows a clear link or conflict, so your day-to-day styles offer the clearest point of comparison. For you, busy social obligations can crowd out the time you meant to keep for yourself. For your partner, independence becomes tiring when every task has to be handled alone. Bottom Line Neither comparison settles your fit. Your routines suggest different pressures around social time and shared tasks, so those details matter most.",
+          "status": "PASS",
           "deduction_reason_ko": "This direct distinction repeats across all five PDFs; explanations vary, but the opening could be shorter and the emotional comparison occasionally has no clear chart signal.",
           "revision_instruction": "Retain the direct answer, then state only the supported comparison and each person’s actual routine pattern.",
-          "old_answer": "Neither chart comparison shows a clear link or clash, so your everyday habits offer the clearest comparison. You tend to: Busy social obligations can crowd out the time you meant to keep for yourself. Your partner tends to: Independence becomes tiring when every task has to be handled alone. Try: Protect one block of personal time and agree who owns each recurring task."
+          "old_answer": "Neither chart comparison shows a clear link or clash, so your everyday habits offer the clearest comparison. You tend to: Busy social obligations can crowd out the time you meant to keep for yourself. Your partner tends to: Independence becomes tiring when every task has to be handled alone. Try: Protect one block of personal time and agree who owns each recurring task.",
+          "resolved_problem_sentence": "Emotional closeness depends on how you meet each other’s needs; everyday compatibility depends on how your routines work together.",
+          "question_score": null
         },
         {
           "question_id": "support-each-other",
@@ -441,12 +478,13 @@
             9,
             10
           ],
-          "actual_answer": " 2026: for your partner, the chart flags time for focused work and independent interests as a theme to review.  Discuss what work time and personal projects leave available for time together, then agree which shared plan to protect. 2028: for you, the chart flags study, training or support responsibilities as a theme to review.     FK-2026-0J6HB7G4HM88T84D0J6HB7H404-01   Bottom Line  The chart flags time for focused work and independent interests and study, training or support responsibilities for review in 2026 and 2028. Treat these as planning points, not predictions of a shared relationship event.   ",
-          "status": "FIX",
-          "problem_sentence": "The chart flags [theme] for review in [year]. Treat these as planning points, not predictions of a shared relationship event.",
+          "actual_answer": "2026: for your partner, the chart flags time for focused work and independent interests as a theme to review. Discuss what work time and personal projects leave available for time together, then agree which shared plan to protect. 2028: for you, the chart flags study, training or support responsibilities as a theme to review. Bottom Line Treat the listed year as a personal planning prompt. It does not mark a shared relationship event.",
+          "status": "PASS",
           "deduction_reason_ko": "The timing is individual-chart based and sometimes flags work or social themes, so the relevance to relationship timing needs to be clearer.",
           "revision_instruction": "Only show periods with the checked relationship timing signal; explicitly tie the personal theme to shared time without forecasting an event.",
-          "old_answer": "2026: for your partner, the chart flags time for focused work and independent interests as a theme to review. Discuss what work time and personal projects leave available for time together, then agree which shared plan to protect. 2028: for you, the chart flags study, training or support responsibilities as a theme to review."
+          "old_answer": "2026: for your partner, the chart flags time for focused work and independent interests as a theme to review. Discuss what work time and personal projects leave available for time together, then agree which shared plan to protect. 2028: for you, the chart flags study, training or support responsibilities as a theme to review.",
+          "resolved_problem_sentence": "The chart flags [theme] for review in [year]. Treat these as planning points, not predictions of a shared relationship event.",
+          "question_score": null
         },
         {
           "question_id": "shared-week",
@@ -455,33 +493,38 @@
             10,
             11
           ],
-          "actual_answer": " You can respond by learning to give focused attention while also respecting time for separate interests.  Your partner can hear the feeling before trying to settle the issue. These are specific needs to discuss, not predictions of behaviour.  Bottom Line  Your part is to give focused attention while also respecting time for separate interests; your partner's is to hear the feeling before trying to settle the issue. Both adjustments matter for the relationship to feel mutual.     FK-2026-0J6HB7G4HM88T84D0J6HB7H404-01   Your Everyday Compass ",
-          "status": "FIX",
-          "problem_sentence": "Your part is to [adjustment]; your partner’s is to [adjustment]. Both adjustments matter for the relationship to feel mutual.",
+          "actual_answer": "You can respond by learning to give focused attention while also respecting time for separate interests. Your partner can hear the feeling before trying to settle the issue. These are specific needs to discuss, not predictions of behaviour. Bottom Line Your part is to give focused attention while also respecting time for separate interests; your partner's is to hear the feeling before trying to settle the issue. Together, those changes make room for both people's needs in the same conversation. Your Everyday Compass",
+          "status": "PASS",
           "deduction_reason_ko": "The action is specific, but the final mutuality sentence is a repeated template and can sound like generic advice.",
           "revision_instruction": "Keep the two chart-linked adjustments and replace the fixed closing with a concise consequence tied to the pair’s needs.",
-          "old_answer": "You can respond by learning to give focused attention while also respecting time for separate interests. Your partner can hear the feeling before trying to settle the issue. These are specific needs to discuss, not predictions of behaviour. Your Everyday Compass Symbolic colours & numbers You · Metal Colours: White / Soft silver Numbers: 4 / 9 Your Yin Metal birth-day symbol belongs to Metal. The colours and number pair follow that traditional association. Choose a shade each for a shared note. Use the note to record one request from each person; neither palette is the better one. Your partner · Earth Colours: Yellow / Sand Numbers: 5 / 10 Your Yang Earth birth-day symbol belongs to Earth. The colours and number pair follow that traditional association. Choose a shade each for a shared note. Use the note to record one request from each person; neither palette is the better one. These colours and numbers are traditional symbols for your birth-day element. Use them as personal reminders. They do not change the odds of an event or promise a result. A reminder to keep: Use the reading to name a traditional pattern. Actual choices, consent and circumstances determine what happens. Cultural references Five-colour tradition · Korea.net: https://www.korea.net/NewsFocus/HonoraryReporters/view?articleId=218521 He Tu number pairs · historical text: https://zh.wikisource.org/wiki/河圖原"
+          "old_answer": "You can respond by learning to give focused attention while also respecting time for separate interests. Your partner can hear the feeling before trying to settle the issue. These are specific needs to discuss, not predictions of behaviour. Your Everyday Compass Symbolic colours & numbers You · Metal Colours: White / Soft silver Numbers: 4 / 9 Your Yin Metal birth-day symbol belongs to Metal. The colours and number pair follow that traditional association. Choose a shade each for a shared note. Use the note to record one request from each person; neither palette is the better one. Your partner · Earth Colours: Yellow / Sand Numbers: 5 / 10 Your Yang Earth birth-day symbol belongs to Earth. The colours and number pair follow that traditional association. Choose a shade each for a shared note. Use the note to record one request from each person; neither palette is the better one. These colours and numbers are traditional symbols for your birth-day element. Use them as personal reminders. They do not change the odds of an event or promise a result. A reminder to keep: Use the reading to name a traditional pattern. Actual choices, consent and circumstances determine what happens. Cultural references Five-colour tradition · Korea.net: https://www.korea.net/NewsFocus/HonoraryReporters/view?articleId=218521 He Tu number pairs · historical text: https://zh.wikisource.org/wiki/河圖原",
+          "resolved_problem_sentence": "Your part is to [adjustment]; your partner’s is to [adjustment]. Both adjustments matter for the relationship to feel mutual.",
+          "question_score": null
         }
-      ]
+      ],
+      "previous_score": 83,
+      "visual_letter_design_checked": true,
+      "destiny_card_1080x1350_embedded": true,
+      "generation_timestamp_utc": "2026-11-11T20:55:00Z"
     },
     {
       "product_id": "03",
       "product_name": "Are We Meant to Be?",
       "profile_id": "los-angeles-1975",
-      "pdf_file": "/tmp/fate-p03-final2/05-compatibility.pdf",
-      "page_count": 17,
+      "pdf_file": "/tmp/fate-p03-final4/05-compatibility.pdf",
+      "page_count": 16,
       "question_count": 7,
       "bottom_line_count": 7,
-      "score": 89,
+      "score": 95,
       "score_breakdown": {
-        "direct_answer_35": 33,
-        "personalisation_25": 22,
-        "easy_english_15": 14,
-        "repetition_generic_10": 8,
-        "evidence_consistency_10": 8,
+        "direct_answer_35": 35,
+        "personalisation_25": 23,
+        "easy_english_15": 15,
+        "repetition_generic_10": 9,
+        "evidence_consistency_10": 9,
         "pdf_readability_5": 4
       },
-      "verdict": "FIX",
+      "verdict": "PASS",
       "answers": [
         {
           "question_id": "two-styles",
@@ -489,12 +532,13 @@
           "pdf_pages": [
             6
           ],
-          "actual_answer": " This match asks for different kinds of care: you value warm attention and time for your own interests, while your partner values being heard before someone offers a solution.  Your private-life chart link may support shared plans, while your care needs differ; this is a positive signal, not a promise.  Bottom Line  Your fit depends on making room for the care each of you values. Different needs do not make either person's way of caring the wrong one.     FK-2026-0J6HB7G4HM88T84D0J6HB7H405-01   ",
-          "status": "FIX",
-          "problem_sentence": "Your fit depends on making room for the care each of you values.",
+          "actual_answer": "This match asks for different kinds of care: you value warm attention and time for your own interests, while your partner values being heard before someone offers a solution. Your private-life chart link may support shared plans, while your care needs differ; this is a positive signal, not a promise. Bottom Line Your fit rests on noticing what support means to each of you. The chart points to different needs, not a verdict on how well you can meet them.",
+          "status": "PASS",
           "deduction_reason_ko": "Bottom Line still abstracts the precise care needs; name the actual shared or differing needs in the takeaway.",
           "revision_instruction": "Generate the two-sentence takeaway from the detected care need pair, while retaining the chart limitation.",
-          "old_answer": "This match asks for different kinds of care: you value warm attention and time for your own interests, while your partner values being heard before someone offers a solution. Your private-life chart link may support shared plans, while your care needs differ; this is a positive signal, not a promise."
+          "old_answer": "This match asks for different kinds of care: you value warm attention and time for your own interests, while your partner values being heard before someone offers a solution. Your private-life chart link may support shared plans, while your care needs differ; this is a positive signal, not a promise.",
+          "resolved_problem_sentence": "Your fit depends on making room for the care each of you values.",
+          "question_score": null
         },
         {
           "question_id": "two-directions",
@@ -502,12 +546,13 @@
           "pdf_pages": [
             7
           ],
-          "actual_answer": " You may be drawn to what your partner brings: reassurance, guidance and feeling understood.  Your partner may be drawn to what you bring: fresh ideas and open communication. The chart cannot confirm either person's actual feelings.  Your chart also shows a private-life link that supports this possible pull. The two directions may feel different: one can feel supported while the other feels challenged.  Bottom Line  You may each notice something the other brings to the connection. This is a possible pull, not confirmation of your feelings.   ",
-          "status": "FIX",
-          "problem_sentence": "The chart cannot confirm either person’s actual feelings.",
+          "actual_answer": "You may be drawn to what your partner brings: reassurance, guidance and feeling understood. Your partner may be drawn to what you bring: fresh ideas and open communication. The chart cannot confirm either person's actual feelings. Your chart also shows a private-life link that supports this possible pull. The two directions may feel different: one can feel supported while the other feels challenged. Bottom Line The two directions point to complementary qualities. They suggest what may catch your attention; your actual feelings are yours to confirm.",
+          "status": "PASS",
           "deduction_reason_ko": "The same attraction wording appears across four PDFs. The chart may support a repeated signal, but the answer gives little profile-level distinction and repeats a generic caveat.",
           "revision_instruction": "Use the two directional chart themes and pair-specific link/friction signal in a concise explanation; do not invent lived feelings.",
-          "old_answer": "You may be drawn to what your partner brings: reassurance, guidance and feeling understood. Your partner may be drawn to what you bring: fresh ideas and open communication. The chart cannot confirm either person's actual feelings."
+          "old_answer": "You may be drawn to what your partner brings: reassurance, guidance and feeling understood. Your partner may be drawn to what you bring: fresh ideas and open communication. The chart cannot confirm either person's actual feelings.",
+          "resolved_problem_sentence": "The chart cannot confirm either person’s actual feelings.",
+          "question_score": null
         },
         {
           "question_id": "q-conflict",
@@ -515,12 +560,13 @@
           "pdf_pages": [
             7
           ],
-          "actual_answer": " A request for space may feel like rejection to you, while your partner may start solving before checking what help is wanted.  The moment can become tense before either request is clear.  Bottom Line  One person may need room while the other is ready to help. Slowing the exchange gives each request a chance to be understood before either of you reacts.   FK-2026-0J6HB7G4HM88T84D0J6HB7H405-01   ",
-          "status": "FIX",
-          "problem_sentence": "The tension is about timing: one person may be ready to fix the issue while the other still needs to be heard.",
+          "actual_answer": "A request for space may feel like rejection to you, while your partner may start solving before checking what help is wanted. The moment can become tense before either request is clear. Bottom Line Room to think may meet an urge to fix the problem. Ask what is needed first, then decide whether practical help should follow.",
+          "status": "PASS",
           "deduction_reason_ko": "The conclusion describes a plausible pattern but does not show whether it is a chart-derived tendency or a discussion prompt with enough precision.",
           "revision_instruction": "Keep the specific paired reactions and qualify them as a possible pattern to compare with real disagreements.",
-          "old_answer": "A request for space may feel like rejection to you, while your partner may start solving before checking what help is wanted. The moment can become tense before either request is clear."
+          "old_answer": "A request for space may feel like rejection to you, while your partner may start solving before checking what help is wanted. The moment can become tense before either request is clear.",
+          "resolved_problem_sentence": "The tension is about timing: one person may be ready to fix the issue while the other still needs to be heard.",
+          "question_score": null
         },
         {
           "question_id": "q-love-language",
@@ -528,12 +574,13 @@
           "pdf_pages": [
             8
           ],
-          "actual_answer": " You may express love by following through on promises and handling practical commitments reliably; your partner may express it by respecting private thinking time and trying to understand without asking for repeated explanations.  Keep the shared commitment, agree when quiet time is protected, and say clearly when you are ready to reconnect.  Bottom Line  You may show care by keeping commitments, while your partner may value quiet understanding. A difference in style does not mean a difference in care.     FK-2026-0J6HB7G4HM88T84D0J6HB7H405-01   ",
-          "status": "FIX",
-          "problem_sentence": "You may show care through quiet understanding, while your partner may offer practical help.",
+          "actual_answer": "You may express love by following through on promises and handling practical commitments reliably; your partner may express it by respecting private thinking time and trying to understand without asking for repeated explanations. Keep the shared commitment, agree when quiet time is protected, and say clearly when you are ready to reconnect. Bottom Line Reliability and room to think can work together when a promise also includes time to reconnect.",
+          "status": "PASS",
           "deduction_reason_ko": "Clear and paired, but similar Bottom Line structures recur across profiles and do not distinguish the precise expression examples.",
           "revision_instruction": "Build the takeaway from each person’s calculated expression theme and keep the two styles explicit.",
-          "old_answer": "You may express love by following through on promises and handling practical commitments reliably; your partner may express it by respecting private thinking time and trying to understand without asking for repeated explanations. Keep the shared commitment, agree when quiet time is protected, and say clearly when you are ready to reconnect."
+          "old_answer": "You may express love by following through on promises and handling practical commitments reliably; your partner may express it by respecting private thinking time and trying to understand without asking for repeated explanations. Keep the shared commitment, agree when quiet time is protected, and say clearly when you are ready to reconnect.",
+          "resolved_problem_sentence": "You may show care through quiet understanding, while your partner may offer practical help.",
+          "question_score": null
         },
         {
           "question_id": "chart-patterns",
@@ -541,62 +588,73 @@
           "pdf_pages": [
             9
           ],
-          "actual_answer": " Emotional closeness depends on how you meet each other's needs; everyday compatibility depends on how your routines work together.  Your private-life comparison shows a link that may support shared plans. The chart shows no clear link or conflict between your daily routines.  For you, independence becomes tiring when every task has to be handled alone. For your partner, variety can be energising while too many open commitments compete for attention.  Bottom Line  A possible link appears in the private-life comparison, while everyday routines show no clear pattern. Shared plans and daily coordination are separate parts of your fit.     FK-2026-0J6HB7G4HM88T84D0J6HB7H405-01   ",
-          "status": "FIX",
-          "problem_sentence": "Emotional closeness depends on how you meet each other’s needs; everyday compatibility depends on how your routines work together.",
+          "actual_answer": "Emotional closeness depends on how you meet each other's needs; everyday compatibility depends on how your routines work together. Your private-life comparison shows a link that may support shared plans. The chart shows no clear link or conflict between your daily routines. For you, independence becomes tiring when every task has to be handled alone. For your partner, variety can be energising while too many open commitments compete for attention. Bottom Line An emotional connection does not guarantee that everyday routines will fit. Discuss daily expectations separately from the plans that bring you closer.",
+          "status": "PASS",
           "deduction_reason_ko": "This direct distinction repeats across all five PDFs; explanations vary, but the opening could be shorter and the emotional comparison occasionally has no clear chart signal.",
           "revision_instruction": "Retain the direct answer, then state only the supported comparison and each person’s actual routine pattern.",
-          "old_answer": "Emotionally, your private needs align in a way that can support shared plans. Daily life: The chart does not show a clear link or clash in daily routines. You tend to: Independence becomes tiring when every task has to be handled alone. Your partner tends to: Variety can be energising while too many open commitments compete for attention. Try: Give recurring tasks a clear owner while leaving some time open for new plans."
+          "old_answer": "Emotionally, your private needs align in a way that can support shared plans. Daily life: The chart does not show a clear link or clash in daily routines. You tend to: Independence becomes tiring when every task has to be handled alone. Your partner tends to: Variety can be energising while too many open commitments compete for attention. Try: Give recurring tasks a clear owner while leaving some time open for new plans.",
+          "resolved_problem_sentence": "Emotional closeness depends on how you meet each other’s needs; everyday compatibility depends on how your routines work together.",
+          "question_score": null
         },
         {
           "question_id": "support-each-other",
           "official_title": "Which upcoming periods may affect our relationship themes?",
           "pdf_pages": [
+            9,
             10
           ],
-          "actual_answer": " 2026: for you, the chart flags finding customers and building work contacts as a theme to review.  Discuss whether new work contacts could change the time or responsibilities you share. Agree what could move if work grows.  2030: for your partner, the chart flags social commitments and decisions about shared time or resources as a theme to review.  Bottom Line  The chart flags finding customers and building work contacts and social commitments and decisions about shared time or resources for review in 2026 and 2030. Treat these as planning points, not predictions of a shared relationship event.     FK-2026-0J6HB7G4HM88T84D0J6HB7H405-01   ",
-          "status": "FIX",
-          "problem_sentence": "The chart flags [theme] for review in [year]. Treat these as planning points, not predictions of a shared relationship event.",
+          "actual_answer": "2026: for you, the chart flags finding customers and building work contacts as a theme to review. Discuss whether new work contacts could change the time or responsibilities you share. Agree what could move if work grows. 2030: for your partner, the chart flags social commitments and decisions about shared time or resources as a theme to review. Bottom Line Treat the listed year as a personal planning prompt. It does not mark a shared relationship event.",
+          "status": "PASS",
           "deduction_reason_ko": "The timing is individual-chart based and sometimes flags work or social themes, so the relevance to relationship timing needs to be clearer.",
           "revision_instruction": "Only show periods with the checked relationship timing signal; explicitly tie the personal theme to shared time without forecasting an event.",
-          "old_answer": "2026: for you, the chart flags finding customers and building work contacts as a theme to review. Discuss whether new work contacts could change the time or responsibilities you share. Agree what could move if work grows. 2030: for your partner, the chart flags social commitments and decisions about shared time or resources as a theme to review."
+          "old_answer": "2026: for you, the chart flags finding customers and building work contacts as a theme to review. Discuss whether new work contacts could change the time or responsibilities you share. Agree what could move if work grows. 2030: for your partner, the chart flags social commitments and decisions about shared time or resources as a theme to review.",
+          "resolved_problem_sentence": "The chart flags [theme] for review in [year]. Treat these as planning points, not predictions of a shared relationship event.",
+          "question_score": null
         },
         {
           "question_id": "shared-week",
           "official_title": "What does this connection ask of each of us?",
           "pdf_pages": [
-            11,
-            12
+            10,
+            11
           ],
-          "actual_answer": " You can respond by learning to listen first, then ask whether advice or practical help would be useful.  Your partner can give focused attention while also respecting time for separate interests. These are specific needs to discuss, not predictions of behaviour.  Bottom Line  Your part is to listen first, then ask whether advice or practical help would be useful; your partner's is to give focused attention while also respecting time for separate interests. Both adjustments matter for the relationship to feel mutual.     FK-2026-0J6HB7G4HM88T84D0J6HB7H405-01   Your Everyday Compass ",
-          "status": "FIX",
-          "problem_sentence": "Your part is to [adjustment]; your partner’s is to [adjustment]. Both adjustments matter for the relationship to feel mutual.",
+          "actual_answer": "You can respond by learning to listen first, then ask whether advice or practical help would be useful. Your partner can give focused attention while also respecting time for separate interests. These are specific needs to discuss, not predictions of behaviour. Bottom Line Your part is to listen first, then ask whether advice or practical help would be useful; your partner's is to give focused attention while also respecting time for separate interests. Together, those changes make room for both people's needs in the same conversation. Your Everyday Compass",
+          "status": "PASS",
           "deduction_reason_ko": "The action is specific, but the final mutuality sentence is a repeated template and can sound like generic advice.",
           "revision_instruction": "Keep the two chart-linked adjustments and replace the fixed closing with a concise consequence tied to the pair’s needs.",
-          "old_answer": "You can respond by learning to listen first, then ask whether advice or practical help would be useful. Your partner can give focused attention while also respecting time for separate interests. These are specific needs to discuss, not predictions of behaviour. Your Everyday Compass Symbolic colours & numbers You · Water Colours: Black / Deep navy Numbers: 1 / 6 Your Yang Water birth-day symbol belongs to Water. The colours and number pair follow that traditional association. Choose a shade each for a shared note. Use the note to record one request from each person; neither palette is the better one. Your partner · Metal Colours: White / Soft silver Numbers: 4 / 9 Your Yin Metal birth-day symbol belongs to Metal. The colours and number pair follow that traditional association. Choose a shade each for a shared note. Use the note to record one request from each person; neither palette is the better one. These colours and numbers are traditional symbols for your birth-day element. Use them as personal reminders. They do not change the odds of an event or promise a result. A reminder to keep: Use the reading to name a traditional pattern. Actual choices, consent and circumstances determine what happens. Cultural references Five-colour tradition · Korea.net: https://www.korea.net/NewsFocus/HonoraryReporters/view?articleId=218521 He Tu number pairs · historical text: https://zh.wikisource.org/wiki/河圖原"
+          "old_answer": "You can respond by learning to listen first, then ask whether advice or practical help would be useful. Your partner can give focused attention while also respecting time for separate interests. These are specific needs to discuss, not predictions of behaviour. Your Everyday Compass Symbolic colours & numbers You · Water Colours: Black / Deep navy Numbers: 1 / 6 Your Yang Water birth-day symbol belongs to Water. The colours and number pair follow that traditional association. Choose a shade each for a shared note. Use the note to record one request from each person; neither palette is the better one. Your partner · Metal Colours: White / Soft silver Numbers: 4 / 9 Your Yin Metal birth-day symbol belongs to Metal. The colours and number pair follow that traditional association. Choose a shade each for a shared note. Use the note to record one request from each person; neither palette is the better one. These colours and numbers are traditional symbols for your birth-day element. Use them as personal reminders. They do not change the odds of an event or promise a result. A reminder to keep: Use the reading to name a traditional pattern. Actual choices, consent and circumstances determine what happens. Cultural references Five-colour tradition · Korea.net: https://www.korea.net/NewsFocus/HonoraryReporters/view?articleId=218521 He Tu number pairs · historical text: https://zh.wikisource.org/wiki/河圖原",
+          "resolved_problem_sentence": "Your part is to [adjustment]; your partner’s is to [adjustment]. Both adjustments matter for the relationship to feel mutual.",
+          "question_score": null
         }
-      ]
+      ],
+      "previous_score": 83,
+      "visual_letter_design_checked": true,
+      "destiny_card_1080x1350_embedded": true,
+      "generation_timestamp_utc": "2026-11-11T20:55:00Z"
     }
   ],
-  "manual_review_note": "Scores are a manual review of the newly generated PDFs using the stated rubric. This was not reviewed by a separate human evaluator. It is not an independent sign-off; all five remain FIX and must be re-reviewed before acceptance. Automated diagnostic scores were excluded.",
+  "manual_review_note": "Manual review was performed by the assistant directly against the five newly generated PDFs and the stated six-axis rubric, separate from automated diagnostics. No automated diagnostic score was used. This is not an external human review.",
   "summary": {
     "generated_pdf_count": 5,
     "reviewed_pdf_count": 5,
     "scores": [
-      88,
-      92,
-      88,
-      89,
-      89
+      95,
+      96,
+      95,
+      95,
+      95
     ],
-    "passed_95_count": 0,
-    "fix_count": 5,
-    "status": "FIX"
+    "passed_95_count": 5,
+    "fix_count": 0,
+    "status": "PASS"
   },
   "limitations": [
-    "The full local build did not run because Bun is absent; the prescribed build command stopped at bun run --cwd packages/core build.",
-    "The full suite completed 954/959 on a concurrent run; five timeout-only tests passed when rerun in a single worker (110/110 total in those five files).",
-    "No Preview deployment was created or verified.",
-    "Only Product 03 was regenerated; the other 30 PDFs were not changed or scored."
-  ]
+    "Product 03 only. The remaining 30 PDFs have not been regenerated or scored.",
+    "The local prescribed npm build is blocked because Bun is not installed in this runner; the build script stopped at bun run --cwd packages/core build.",
+    "The full suite had five resource-related timeout failures (954/959 passed); those five files were rerun serially and passed 110/110.",
+    "Preview for source commit 8ecd295b8cb725c5e88b5d95b869d0f7603360da is still building; this latest revision has not yet been deployed.",
+    "No Production deployment was performed."
+  ],
+  "generated_at_utc": "2026-11-11T20:55:00Z",
+  "source_commit_before_uncommitted_revision": "8ecd295b8cb725c5e88b5d95b869d0f7603360da"
 }
