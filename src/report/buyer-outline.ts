@@ -445,9 +445,9 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
         const yourExpression = loveExpression(yourCare)
         const partnerExpression = loveExpression(partnerCare)
         const interactionExample = yourCare.includes('respecting private thinking time') && partnerCare.includes('practical help')
-          ? 'If you need time to think, agree when your partner will check back; if your partner offers help, ask what would be useful before stepping in.'
+          ? 'Agree when you will return to a difficult conversation, so quiet time does not feel like withdrawal.'
           : yourCare.includes('practical help') && partnerCare.includes('respecting private thinking time')
-            ? 'If your partner needs time to think, agree when you will check back; if you offer help, ask what would be useful before stepping in.'
+            ? 'Agree when your partner wants to return to a difficult conversation, so quiet time does not feel like withdrawal.'
             : yourCare.includes('steady check-ins') && partnerCare.includes('steady check-ins')
               ? 'A brief check-in followed by keeping one promise you made makes this shared style visible.'
             : yourCare.includes('following through on promises') && partnerCare.includes('following through on promises')
