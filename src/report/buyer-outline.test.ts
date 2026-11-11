@@ -11,7 +11,7 @@ describe('Buyer questions, not a repeated six-part technical template', () => {
   it('explains the chart context for attraction in plain language', () => {
     const reading = buildCategoryReading('compatibility', a, { second: b, year: 2026 })
     const report = applyBuyerQuestions(reading.fullText, 'compatibility', reading.chapters, [], 'standalone')
-    expect(report).toContain('The private-life comparison adds no clear connection or conflict')
+    expect(report).not.toContain('The private-life comparison adds no clear connection or conflict')
     expect(report).toContain('That overlap is your clearest point of fit; the personal-life signs add no separate connection or conflict.')
     expect(report).toMatch(/Question: Why are we attracted to each other\?[\s\S]*Answer: You may be drawn to what your partner brings:/)
     expect(report).toContain('Your partner may be drawn to what you bring: fresh ideas and open communication.')
@@ -457,6 +457,7 @@ describe('Buyer questions, not a repeated six-part technical template', () => {
     expect(attraction).not.toContain('One person may feel supported while the other feels challenged.')
     expect(attraction).not.toContain('comparison is made in both directions')
     expect(attraction).not.toContain('Practical point: Ask one clear question.')
+    expect(attraction).not.toContain('private-life comparison')
 
     const sharedDirectionChapters = chapters.map(chapter => chapter.id === 'two-directions'
       ? { ...chapter, lead: 'From your side: Reassurance and feeling understood stand out.', paragraphs: ["From your partner’s side: Reassurance and feeling understood stand out."] }
@@ -468,14 +469,6 @@ describe('Buyer questions, not a repeated six-part technical template', () => {
     expect(sharedDirectionReport).toContain('Answer: Both directions point to a shared draw: you may each be drawn to reassurance and feeling understood in the connection.')
     expect(sharedDirectionReport).not.toContain('two different possible draws')
 
-    const frictionContextChapters = chapters.map(chapter => chapter.id === 'two-directions'
-      ? { ...chapter, paragraphs: [...chapter.paragraphs, 'The day signs also form a friction pattern: a possible attraction can exist alongside different instincts about private choices.'] }
-      : chapter)
-    const frictionContextReport = applyBuyerQuestions(
-      frictionContextChapters.map(chapter => deliveredChapter(chapter).join('\n\n')).join('\n\n'),
-      'compatibility', frictionContextChapters,
-    )
-    expect(frictionContextReport).toContain('The private-life comparison points to different instincts about personal choices. That difference can coexist with the attraction pattern described above.')
     expect(report.match(/^Question:/gm)).toHaveLength(7)
   })
 
