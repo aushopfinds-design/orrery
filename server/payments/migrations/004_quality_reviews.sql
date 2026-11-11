@@ -1,5 +1,7 @@
 -- Private administrator quality notes, separate from order and customer records.
-CREATE TABLE IF NOT EXISTS fate_quality_reviews (
+CREATE SCHEMA IF NOT EXISTS fate_quality;
+
+CREATE TABLE IF NOT EXISTS fate_quality.reviews (
   pdf_id text NOT NULL,
   product_id text NOT NULL,
   profile_id text NOT NULL,

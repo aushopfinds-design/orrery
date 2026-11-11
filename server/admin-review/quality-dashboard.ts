@@ -24,15 +24,6 @@ function db() {
   if (!url || !/^postgres(?:ql)?:\/\//.test(url)) throw new Error('review_storage_not_configured')
   return pool ??= new Pool({ connectionString: url, max: 2, connectionTimeoutMillis: 5000, statement_timeout: 10000 })
 }
-async function ensureSchema() {
-  await db().query(`CREATE TABLE IF NOT EXISTS fate_quality_reviews (
-    pdf_id text NOT NULL, product_id text NOT NULL, profile_id text NOT NULL, question_id text NOT NULL,
-    score integer, deduction_sentence text NOT NULL DEFAULT '', deduction_reason text NOT NULL DEFAULT '',
-    revision_note text NOT NULL DEFAULT '', revised_answer text NOT NULL DEFAULT '', status text NOT NULL DEFAULT 'VERIFY',
-    reviewer text NOT NULL DEFAULT '', evaluated_at timestamptz, github_sha text NOT NULL DEFAULT '',
-    pdf_version text NOT NULL DEFAULT '', updated_at timestamptz NOT NULL DEFAULT now(),
-    PRIMARY KEY(pdf_id, question_id))`)
-}
 const qid = (productId: string, title: string, index: number) => {
   const kind = products.find(([id]) => id === productId)?.[2]
   const items = kind ? productQuestions(kind) : []
@@ -40,7 +31,7 @@ const qid = (productId: string, title: string, index: number) => {
 }
 export async function qualityData() {
   const source = await loadSource()
-  const records = await db().query('SELECT * FROM fate_quality_reviews')
+  const records = await db().query('SELECT * FROM fate_quality.reviews')
   const saved = new Map(records.rows.map(row => [`${row.pdf_id}:${row.question_id}`, row]))
   const pdfs = source.pdfs.filter(pdf => pdf.product_id !== '02' || pdf.pdf.includes('profile-'))
   const rows = pdfs.map(pdf => ({
@@ -83,8 +74,7 @@ export async function saveReview(value: Record<string, unknown>, reviewer: strin
   if (!pdf || pdf.product_id !== fields.productId || pdf.profile_id !== fields.profileId
     || !pdf.answers.some((answer, index) => qid(pdf.product_id, answer.title, index) === fields.questionId)) throw new Error('unknown_review_target')
   if (status === 'PASS' && (score === null || (score as number) < 95)) throw new Error('pass_requires_95')
-  await ensureSchema()
-  await db().query(`INSERT INTO fate_quality_reviews
+  await db().query(`INSERT INTO fate_quality.reviews
     (pdf_id,product_id,profile_id,question_id,score,deduction_sentence,deduction_reason,revision_note,revised_answer,status,reviewer,evaluated_at,github_sha,pdf_version)
     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,now(),$12,$13)
     ON CONFLICT (pdf_id,question_id) DO UPDATE SET score=EXCLUDED.score,deduction_sentence=EXCLUDED.deduction_sentence,
