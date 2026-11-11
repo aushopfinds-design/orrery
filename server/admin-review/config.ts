@@ -12,7 +12,7 @@ export interface ReviewConfig {
 /** No payment secret, customer order database or public VITE_* setting is used here. */
 export function reviewConfig(env: NodeJS.ProcessEnv): ReviewConfig {
   if (env.FATE_REVIEW_ENABLED !== 'true' || env.VERCEL_ENV !== 'preview'
-    || env.VERCEL_GIT_COMMIT_REF !== 'feature/english-saju-report-20261013') throw new ReviewError('not_found', 404)
+    || !['feature/english-saju-report-20261013', 'work/final-report-repair-20261111'].includes(env.VERCEL_GIT_COMMIT_REF ?? '')) throw new ReviewError('not_found', 404)
   const origin = env.FATE_REVIEW_ORIGIN ?? ''
   const url = new URL(origin || 'https://invalid.example')
   if (url.origin !== origin || url.protocol !== 'https:'

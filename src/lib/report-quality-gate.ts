@@ -53,7 +53,8 @@ export function inspectReport(input: ReportQualityInput): QualityResult {
     // answers need a human check; concise answers are never penalized by length.
     if (answerWords < 12) flag("LENGTH_REVIEW", `Answer ${i + 1} is unusually short (${answerWords} words); confirm it still answers the question`, 0);
     if (answerWords > 180) flag("LENGTH_REVIEW", `Answer ${i + 1} is unusually long (${answerWords} words); check for repetition or unnecessary advice`, 0);
-    const paragraphCount = answer.split(/\n\s*\n/).map(part => part.trim()).filter(Boolean).length;
+    const paragraphCount = answer.split(/\n\s*\n/).map(part => part.trim())
+      .filter(part => Boolean(part) && !/^bottom line:\s*/i.test(part)).length;
     if (paragraphCount > 3) flag("PARAGRAPH_REVIEW", `Answer ${i + 1} has ${paragraphCount} text blocks; check whether it can be made easier to scan`, 0);
     if ((answer.match(GENERIC) || []).length > 0) flag("GENERIC_ADVICE", `Generic advice in answer ${i + 1}; human review needed`, 0);
     const firstText = answer.split(/\n\s*\n/).map(part => part.trim()).find(Boolean) ?? '';

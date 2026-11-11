@@ -442,7 +442,13 @@ async function reportPdf(report: BuyerReport, emphasis: string[], mode: 'test' |
   const pdfText = shortPdfAppendix(report.text)
   const blocks = pdfText.split(/\n+/).map(block => block.trim()).filter(Boolean)
   for (const [blockIndex, block] of blocks.entries()) {
-    const value = block.trim()
+    const rawValue = block.trim()
+    const compatibilityDirect = report.kind === 'compatibility' && rawValue.startsWith('Answer: ')
+    const compatibilityDetail = report.kind === 'compatibility' && rawValue.startsWith('Answer detail: ')
+    const compatibilityBottomLine = report.kind === 'compatibility' && rawValue.startsWith('Bottom Line: ')
+    const value = report.kind === 'compatibility'
+      ? rawValue.replace(/^(?:Answer|Answer detail):\s*/i, '')
+      : rawValue
     if (!value) continue
     // Product 03 answers can be long when both partners have distinct chart
     // patterns. Keep a question and its answer off the footer-safe area.
@@ -468,10 +474,21 @@ async function reportPdf(report: BuyerReport, emphasis: string[], mode: 'test' |
       }, 70)
       if (y - answerHeight < 83) addPage()
     }
+    const questionHeading = report.kind === 'compatibility' && value.startsWith('Question: ')
     const heading = /^(\d{2} [·-]|THE FATE KEY|Your Ten-Year|Your reading at a glance|Your Everyday Compass|Calculation notes|Symbolic colours & numbers|Chart terms in plain English|How this reading is prepared)/.test(value)
     const note = inAppendix || /^(From (your|the) chart:|Why this focus:|Report edition|Sources|Method|Calculated start:)/.test(value)
     if (heading && !inAppendix && value !== 'Your reading at a glance' && y < 350) addPage()
-    if (heading) {
+    if (questionHeading) {
+      if (y < 300) addPage()
+      y -= 10
+      paragraph(value.slice('Question: '.length), 15, gold, true)
+      y -= 5
+    } else if (compatibilityBottomLine) {
+      const conclusion = value.slice('Bottom Line: '.length)
+      if (y < 145) addPage()
+      paragraph('Bottom Line', 11.5, gold, true)
+      paragraph(conclusion, 13.2, ink, false)
+    } else if (heading) {
       if (/^\d{2} [·-]/.test(value)) {
         const destinationTitle = value.replace(/^\d{2} [·-]\s*/, '').trim()
         // Some detailed/source sections repeat the buyer-facing headings.
@@ -486,7 +503,7 @@ async function reportPdf(report: BuyerReport, emphasis: string[], mode: 'test' |
       const top = rowBaseline + 11
       const tocLabel = toc ? value.split(' — ', 1)[0].trim() : ''
       const tocPage = page
-      paragraph(value, note ? 10.2 : 13.4, note ? muted : ink, !note)
+      paragraph(value, note ? 10.2 : 13.4, note ? muted : ink, compatibilityDirect || !compatibilityDetail && !note)
       if (toc) { tocRows.push({ label: tocLabel, page: tocPage, bottom: rowBaseline - 4, top }); tocRowsRemaining-- }
     }
   }

@@ -32,6 +32,9 @@ describe('Private review deployment gate', () => {
     { ...env, VERCEL_GIT_COMMIT_REF: 'main' }])('refuses an unapproved environment or branch', value => {
     expect(() => reviewConfig(value)).toThrow(ReviewError)
   })
+  it('allows the dedicated quality work branch only in Preview', () => {
+    expect(() => reviewConfig({ ...env, VERCEL_GIT_COMMIT_REF: 'work/final-report-repair-20261111' })).not.toThrow()
+  })
   it.each(['FATE_REVIEW_GOOGLE_CLIENT_ID', 'FATE_REVIEW_ADMIN_EMAIL', 'FATE_REVIEW_SIGNING_KEY', 'FATE_REVIEW_ORIGIN'])('fails closed without %s', key => {
     expect(() => reviewConfig({ ...env, [key]: undefined })).toThrow(ReviewError)
   })
@@ -98,6 +101,18 @@ describe('Protected page and translation API', () => {
   it('returns 404 before any content when feature configuration is absent', async () => {
     const closed = reviewHandler({ config: () => reviewConfig({}), google, translate })
     expect((await closed(new Request(config.origin + '/api/admin-review'))).status).toBe(404)
+  })
+  it('protects the real quality dashboard and its 260-answer API behind the admin session', async () => {
+    const anonymousPage = await handler(new Request(config.origin + '/api/admin-review?view=quality'))
+    expect(anonymousPage.status).toBe(200)
+    const login = await anonymousPage.text()
+    expect(login).toContain('google-login')
+    expect(login).not.toContain('FATE KEY · 품질 관리')
+    expect((await handler(new Request(config.origin + '/api/admin-review?action=quality-data'))).status).toBe(401)
+    const auth = await session()
+    const page = await handler(new Request(config.origin + '/api/admin-review?view=quality', { headers: { Cookie: `${SESSION_COOKIE}=${auth}` } }))
+    expect(page.status).toBe(200)
+    expect(await page.text()).toContain('FATE KEY · 품질 관리')
   })
   it('requires a signed challenge for login and issues a short HttpOnly session', async () => {
     expect((await handler(request('login', { credential: 'test' }))).status).toBe(401)

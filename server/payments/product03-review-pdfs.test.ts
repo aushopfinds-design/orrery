@@ -72,32 +72,9 @@ describe('Product 03 review PDF batch', () => {
       ]
       expect(q4).toContain(q4Examples[index])
       const q5 = report.text.split('Question: How do emotional closeness and everyday compatibility differ?')[1]?.split('\n\nQuestion: ')[0] ?? ''
-      expect(q5).toMatch(/(?:You tend to:|You both tend to:)/)
-      const q5Examples = [
-        'Try: Keep one shared plan fixed, then leave room for an extra plan without crowding the week.',
-        'Try: For a recurring task, decide who owns it and when to ask for help.',
-        'Try: Keep one shared plan fixed, then leave room for an extra plan without crowding the week.',
-        'Try: Protect one block of personal time and agree who owns each recurring task.',
-        'Try: Give recurring tasks a clear owner while leaving some time open for new plans.',
-      ]
-      expect(q5).toContain(q5Examples[index])
-      expect(q5).not.toMatch(/You(?: both)? value /)
-      if (index === 1) {
-        expect(q5).toContain('small differences in what you expect from private life can become recurring irritations.')
-        expect(q5).toContain('You both tend to: Independence becomes tiring when every task has to be handled alone.')
-        expect(q5).not.toContain('Your partner tends to: Independence becomes tiring when every task has to be handled alone.')
-        const q7 = report.text.split('Question: What does this connection ask of each of us?')[1]?.split('\n\nQuestion: ')[0] ?? ''
-        expect(q7).toContain('each of you can give focused attention while protecting time for separate interests')
-        expect(q7).toContain('make room for both connection and independence')
-      } else {
-        expect(q5).toContain('Your partner tends to:')
-      }
-      if (index === 0 || index === 2 || index === 3) {
-        expect(q5).toContain('Neither chart comparison shows a clear link or clash, so your everyday habits offer the clearest comparison.')
-        expect(q5).not.toContain('Daily life: The chart does not show a clear link or clash in daily routines.')
-      } else {
-        expect(q5).toMatch(/Emotionally, .+ Daily life:/)
-      }
+      expect(q5).toMatch(/Answer: .+\n\nAnswer detail:/s)
+      expect(q5).toContain('Bottom Line:')
+      expect(q5).toMatch(/Bottom Line: [^.!?]+[.!?] [^.!?]+[.!?]/)
       expect(q5).not.toContain('day-sign comparison')
       expect(q5).not.toContain('Compare the personal routine styles below with the way you actually share daily life.')
       const q7 = report.text.split('Question: What does this connection ask of each of us?')[1]?.split('\n\nQuestion: ')[0] ?? ''

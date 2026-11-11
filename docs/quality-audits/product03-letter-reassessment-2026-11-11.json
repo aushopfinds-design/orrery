@@ -1,0 +1,104 @@
+{
+  "productId": "03",
+  "productName": "Are We Meant to Be?",
+  "generatedAt": "2026-11-11T18:52:00Z",
+  "status": "FIX",
+  "sourceCommit": "69a8601505535a44965c83fa3826d28c243a7d16",
+  "workingTreeChanges": [
+    "src/report/buyer-outline.ts",
+    "src/report/buyer-outline.test.ts",
+    "src/lib/report-quality-gate.ts",
+    "server/payments/report.ts"
+  ],
+  "rubric": {
+    "directAnswer": 35,
+    "personalisation": 25,
+    "easyEnglish": 15,
+    "repetitionAndGenericAdvice": 10,
+    "evidenceConsistency": 10,
+    "pdfReadability": 5
+  },
+  "pdfs": [
+    {
+      "profileId": "new-york-london",
+      "file": "01-compatibility.pdf",
+      "pageCount": 16,
+      "questionCount": 7,
+      "bottomLineCount": 7,
+      "destinyCardEmbedded": true,
+      "score": 85,
+      "verdict": "FIX"
+    },
+    {
+      "profileId": "seoul-sydney",
+      "file": "02-compatibility.pdf",
+      "pageCount": 16,
+      "questionCount": 7,
+      "bottomLineCount": 7,
+      "destinyCardEmbedded": true,
+      "score": 86,
+      "verdict": "FIX"
+    },
+    {
+      "profileId": "new-york-london-unknown-hour",
+      "file": "03-compatibility.pdf",
+      "pageCount": 15,
+      "questionCount": 7,
+      "bottomLineCount": 7,
+      "destinyCardEmbedded": true,
+      "score": 83,
+      "verdict": "FIX"
+    },
+    {
+      "profileId": "sydney-1990",
+      "file": "04-compatibility.pdf",
+      "pageCount": 16,
+      "questionCount": 7,
+      "bottomLineCount": 7,
+      "destinyCardEmbedded": true,
+      "score": 86,
+      "verdict": "FIX"
+    },
+    {
+      "profileId": "la-1975",
+      "file": "05-compatibility.pdf",
+      "pageCount": 16,
+      "questionCount": 7,
+      "bottomLineCount": 7,
+      "destinyCardEmbedded": true,
+      "score": 83,
+      "verdict": "FIX"
+    }
+  ],
+  "scoreMethod": "Manual qualitative profile-level review of all seven extracted answer sections against the six-axis rubric. The score is a provisional profile mean, not a claim that every answer scores at least 95; repeated or misaligned question roles remain direct deductions. Automated diagnostic scores were not used.",
+  "deductions": [
+    {
+      "questionTitle": "How do we express love differently?",
+      "problemSentence": "You may show care in different ways. Name what feels meaningful to each of you so effort is easier to recognise.",
+      "reasonKo": "일부 프로필에서 개인별 사랑 표현을 요약하지 않고 일반론으로 대체했습니다. 해당 질문에 대한 구체 답이 약해졌습니다.",
+      "change": "Revised generator to produce a concise two-sentence takeaway tied to the detected pair of expression styles."
+    },
+    {
+      "questionTitle": "Why are we attracted to each other?",
+      "problemSentence": "You may notice reassurance, guidance and feeling understood, while your partner may notice fresh ideas and open communication.",
+      "reasonKo": "서로 다른 프로필에서 같은 차트 테마가 선택되어 핵심 문구가 반복됩니다. 반복을 줄이려면 질문 답변 생성의 입력 신호 다양성과 중복 축약이 필요합니다.",
+      "change": "No fabricated variation added; same detected pattern remains transparent. Further source-level generation change required."
+    },
+    {
+      "questionTitle": "Question mapping",
+      "problemSentence": "How do emotional closeness and everyday compatibility differ? / Which upcoming periods may affect our relationship themes?",
+      "reasonKo": "실제 PDF 질문 5·6이 요청에 합의된 주제인 상대방이 놓치기 쉬운 필요, 안정적인 미래 가능성과 맞지 않습니다. 질문 배열을 임의 변경하지 않아 이번 수정에서 해결되지 않았습니다.",
+      "change": "Hold question changes; reconcile approved existing Product 03 title/order against current productQuestions and chapter mapping before broader rollout."
+    }
+  ],
+  "qa": {
+    "specializedTests": "30/30 buyer-outline tests passed",
+    "build": "passed",
+    "pdfGenerationTest": "passed; generated 30 product PDFs, of which five Product 03 PDFs were extracted and reviewed",
+    "pdfText": "Each Product 03 PDF includes seven question headings and seven Bottom Line headings; visible Answer labels absent.",
+    "layout": "Letter stationery visually inspected; Bottom Line rendered with its paragraph; no clipping observed in sampled pages.",
+    "destinyCard": "1080x1350 image embedded in all five PDFs.",
+    "limitations": "The complete 950-test suite has not been rerun after these changes. The 35-PDF requirement is outside this Product 03-only stage. No GitHub push or Preview deployment of these uncommitted changes has been performed."
+  },
+  "limitations": "The requested Product 03 exact question titles/roles are not matched by the current Product 03 productQuestions mapping: current PDF Q5 and Q6 ask about closeness/everyday compatibility and periods, not the approved partner-needs and stable-future topics. This blocks a 95+ signoff. Full 950-test suite not rerun; no GitHub push or Preview deployment. Product 03 five PDFs only; no claim about all 35."
+}

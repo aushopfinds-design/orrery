@@ -311,9 +311,10 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
         const partnerRoutine = routine?.paragraphs.find(line => /^Your partner(?:'|’)s everyday pattern: /u.test(line))?.replace(/^Your partner(?:'|’)s everyday pattern: /u, '').replace(/[.!?]+$/u, '')
         if (yourRoutine && partnerRoutine) {
           const sameRoutine = yourRoutine.replace(/\s+/gu, ' ').trim().toLocaleLowerCase() === partnerRoutine.replace(/\s+/gu, ' ').trim().toLocaleLowerCase()
+          const lowerFirst = (value: string) => value.charAt(0).toLowerCase() + value.slice(1)
           lead += sameRoutine
-            ? ` You both tend to: ${yourRoutine}.`
-            : ` You tend to: ${yourRoutine}. Your partner tends to: ${partnerRoutine}.`
+            ? ` You share this daily pattern: ${lowerFirst(yourRoutine)}.`
+            : ` For you, ${lowerFirst(yourRoutine)}. For your partner, ${lowerFirst(partnerRoutine)}.`
           const routinePair = `${yourRoutine} ${partnerRoutine}`
           const routineExample = /Variety can be energising/u.test(routinePair) && /A steady rhythm can help/u.test(routinePair)
             ? 'Keep one shared plan fixed, then leave room for an extra plan without crowding the week.'
@@ -322,9 +323,9 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
               : /Variety can be energising/u.test(routinePair) && /Independence becomes tiring/u.test(routinePair)
                 ? 'Give recurring tasks a clear owner while leaving some time open for new plans.'
                 : /Independence becomes tiring/u.test(routinePair)
-                  ? 'For a recurring task, decide who owns it and when to ask for help.'
+                  ? 'Give a recurring task a clear owner and agree when to ask for help.'
                   : 'Compare one fixed plan with one flexible plan to see how your routines fit together.'
-          lead += ` Try: ${routineExample}`
+          lead += ` A practical middle ground is to ${lowerFirst(routineExample.replace(/[.!?]+$/u, ''))}.`
         }
         lead = lead.replace(/\s+/gu, ' ').trim()
         paragraphs = []
@@ -801,7 +802,97 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
     if (!text.includes(original)) throw new Error(`Missing delivered source: ${kind}/${source}`)
     text = text.replace(original, replacement)
   }
-  return text
+  return kind === 'compatibility' && set === 'standalone' ? formatCompatibilityPersonalLetters(text) : text
+}
+
+function compatibilityBottomLine(questionId: string, source: string): string {
+  if (questionId === 'two-styles') {
+    if (/shares a similar need for care/iu.test(source) || /You may feel understood when/iu.test(source)) {
+      return 'Feeling heard before advice is an important point of common ground. Check whether practical help is welcome before stepping in.'
+    }
+    if (/warm attention and time for your own interests/iu.test(source)) {
+      return 'Focused attention and personal freedom both matter in your connection. Make room for both when planning time together.'
+    }
+    if (/different kinds of care:/iu.test(source) || /Your main need is/iu.test(source)) {
+      return 'The two of you may look for care in different forms. Talk about what support means to each person so well-meant gestures are less likely to be missed.'
+    }
+    return 'A possible planning link appears alongside different care needs. Treat it as an opening for discussion, not a promise about the relationship.'
+  }
+  if (questionId === 'two-directions') {
+    const shared = /both directions point to a shared draw: you may each be drawn to (.+?) in the connection\./iu.exec(source)?.[1]
+    if (shared) return `You may each be drawn to ${shared}. The chart can suggest appeal, but it cannot confirm anyone's feelings.`
+    const different = /You may be drawn to what your partner brings: (.+?)\. Your partner may be drawn to what you bring: (.+?)\./iu.exec(source)
+    if (different) return `You may notice ${different[1]}, while your partner may notice ${different[2]}. This suggests a possible pull, not confirmed feelings or shared intent.`
+    return 'The chart describes qualities that may create a pull between you. It cannot confirm either person’s feelings or intentions.'
+  }
+  if (questionId === 'q-conflict') {
+    if (/When either of you asks for space/iu.test(source)) return 'A request for space can be mistaken for rejection. Agree how and when to reconnect whenever one of you needs a pause.'
+    if (/Your friction point is (.+?); your partner’s is (.+?)\./iu.test(source)) {
+      const match = /Your friction point is (.+?); your partner’s is (.+?)\./iu.exec(source)!
+      return `Tension can start when ${match[1]} meets ${match[2]}. Ask what support each of you wants before reacting.`
+    }
+    if (/You may both react to tension by (.+?)\./iu.test(source)) return 'If both of you respond to tension by avoiding the conversation, the same need can stay unspoken. Name what would make it easier to talk.'
+    if (/You may move to solve a problem before asking what help is wanted/iu.test(source)) return 'The missed moment is often the gap between offering a solution and feeling heard. Ask what kind of support is wanted before you try to fix the issue.'
+    return 'A difference in how you respond to tension can leave a need unclear. Slow the exchange down and ask what each person wants from the conversation.'
+  }
+  if (questionId === 'q-love-language') {
+    const different = /You may express love by (.+?); your partner may express it (?:through|by) (.+?)\./iu.exec(source)
+    if (different) {
+      if (/quiet reflection|private thinking/iu.test(different[1]) && /practical help/iu.test(different[2])) return 'Quiet thinking time and practical support are different routes to care. Agree when to reconnect so silence or help is not misread.'
+      if (/honest conversation/iu.test(different[1]) && /steady check-ins/iu.test(different[2])) return 'Honest conversation and steady follow-through offer different routes to trust. Reflect what you heard before planning a check-in.'
+      if (/keeping promises/iu.test(different[1]) && /privacy|quiet/iu.test(different[2])) return 'Reliability and quiet understanding matter in different ways here. Protect shared commitments as well as personal space.'
+      return 'You may show care in different ways. Name what feels meaningful to each of you so effort is easier to recognise.'
+    }
+    if (/express love in a similar way/iu.test(source)) {
+      return 'Follow-through is already a shared strength. Keep it reciprocal so neither of you carries the connection alone.'
+    }
+    return 'Your ways of showing care may be similar or different, but the useful question is whether each person recognises the other’s effort. Ask what support feels meaningful before assuming.'
+  }
+  if (questionId === 'chart-patterns') {
+    if (/variety|new plans/iu.test(source) && /steadier rhythm|steady rhythm/iu.test(source)) return 'You may enjoy variety while your partner may prefer a steadier rhythm. Keep one shared plan fixed and leave some room for flexibility.'
+    if (/both.*(?:independent|handle tasks alone)|each.*(?:independent|handle tasks alone)/iu.test(source)) return 'Handling every task alone can become tiring for both of you. Give a recurring task a clear owner so asking for help feels easier.'
+    if (/social obligations/iu.test(source) && /independent tasks/iu.test(source)) return 'You may need protected personal time, while your partner may benefit from help with recurring tasks. A protected block and a clear task owner can address both.'
+    if (/reliable help/iu.test(source) && /new plans|variety/iu.test(source)) return 'Your routines call for both reliable help and room for new plans. Give recurring tasks a clear owner and leave some time open.'
+    return 'Your relationship shows patterns in both emotional needs and daily routines. Compare the two before assuming one shared strength solves every difference.'
+  }
+  if (questionId === 'support-each-other') {
+    const points = [...source.matchAll(/(20\d{2}): for (you|your partner|both of you), the chart flags (.+?) as a theme to review\./giu)]
+    const years = [...new Set(points.map(point => point[1]))]
+    const themes = [...new Set(points.map(point => point[3]))]
+    if (years.length) return `The review points are ${years.join(' and ')}, tied to ${themes.join(' and ')}. They are prompts to discuss shared plans, not predictions of a joint event.`
+    return 'Use the listed period to review the relationship theme the chart identifies. It is a planning prompt, not a prediction of a shared event.'
+  }
+  if (questionId === 'shared-week') {
+    if (/Because you share this need/iu.test(source)) return 'You need both intentional connection and independent time. Agree where each belongs in your shared week.'
+    if (/You can ask whether your partner wants listening or practical help/iu.test(source)) return 'Ask before stepping in, then give your partner the kind of support they request. Your partner can help by hearing your concern before offering a solution.'
+    if (/listen first, then ask whether advice or practical help/iu.test(source)) return 'Advice may land better after your partner feels heard. Your partner can return that care by staying with your concern before trying to settle it.'
+    return 'A useful next step is to name what response each person needs before acting. Keep the adjustment mutual so neither partner carries all the responsibility.'
+  }
+  return ''
+}
+
+function formatCompatibilityPersonalLetters(text: string): string {
+  const definitions = BUYER_QUESTIONS.compatibility
+  const sections = /Question: ([^\n]+)\n\n([\s\S]*?)(?=\n\nQuestion: |\n\nYour Everyday Compass|\n\nCalculation notes|$)/gu
+  return text.replace(sections, (match, title: string, raw: string) => {
+    const question = definitions.find(item => item.question === title.trim())
+    if (!question) return match
+    const answerBlocks = raw.split(/\n\s*\n/u).map(block => block.trim())
+      .filter(block => /^(?:Answer|Answer detail|Important Timing):/i.test(block))
+    let source = answerBlocks.map(block => block.replace(/^(?:Answer|Answer detail|Important Timing):\s*/i, '')).join(' ')
+    if (question.id === 'chart-patterns') {
+    }
+    const sentences = source.match(/[^.!?]+[.!?]+(?:[”’"])?/gu)?.map(sentence => sentence.trim()) ?? [source.trim()]
+    const direct = sentences.shift() ?? source
+    const explanationGroups: string[] = []
+    for (let index = 0; index < sentences.length; index += 2) explanationGroups.push(sentences.slice(index, index + 2).join(' '))
+    const body = [
+      `Answer: ${direct}`,
+      ...explanationGroups.slice(0, 2).map(paragraph => `Answer detail: ${paragraph}`),
+      `Bottom Line: ${compatibilityBottomLine(question.id, source)}`,
+    ].join('\n\n')
+    return `Question: ${question.question}\n\n${body}`
+  })
 }
 /** Preserve chapter IDs for saved links, while making the reading order buyer-led. */
 export function buyerOutline(kind: BuyerOutlineKind, chapters: ReportChapter[]) {

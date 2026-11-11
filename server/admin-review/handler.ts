@@ -6,6 +6,7 @@ import { buildReview } from './report.ts'
 import type { ReviewBlock } from './report.ts'
 import { translateReview } from './translate.ts'
 import { loginPage, reviewPage } from './ui.ts'
+import { qualityDashboardPage, qualityData, saveReview } from './quality-dashboard.ts'
 
 const hash = (value: string) => createHash('sha256').update(value).digest('hex')
 const privateHeaders = { 'Cache-Control': 'no-store, private', 'X-Robots-Tag': 'noindex, nofollow, noarchive',
@@ -44,14 +45,21 @@ export function reviewHandler(deps: Dependencies = { config: () => reviewConfig(
       const config = deps.config(), url = new URL(request.url)
       if (url.origin !== config.origin) throw new ReviewError('not_found', 404)
       if (request.method === 'GET') {
+        const action = url.searchParams.get('action')
+        if (action === 'quality-data') {
+          await requireAdmin(config, request)
+          return json(await qualityData())
+        }
         const nonce = randomBytes(24).toString('base64url')
         try {
           await requireAdmin(config, request)
+          if (url.searchParams.get('view') === 'quality') return html(qualityDashboardPage(nonce), nonce)
           return html(reviewPage(nonce), nonce)
         } catch (error) {
           if (!(error instanceof ReviewError) || error.status !== 401) throw error
           const challenge = randomBytes(24).toString('base64url')
-          const response = html(loginPage(config.clientId, challenge, nonce), nonce)
+          const redirect = url.searchParams.get('view') === 'quality' ? '/api/admin-review?view=quality' : '/api/admin-review'
+          const response = html(loginPage(config.clientId, challenge, nonce, redirect), nonce)
           response.headers.append('Set-Cookie', cookie(NONCE_COOKIE, await ticket(config, 'login', 'nonce', { nonce: challenge }, 600), 600))
           return response
         }
@@ -71,6 +79,7 @@ export function reviewHandler(deps: Dependencies = { config: () => reviewConfig(
         return response
       }
       const sub = await requireAdmin(config, request)
+      if (action === 'quality-save') return json(await saveReview(await body(request), sub))
       if (action === 'logout') {
         const response = json({ authenticated: false })
         response.headers.append('Set-Cookie', cookie(SESSION_COOKIE, '', 0))
