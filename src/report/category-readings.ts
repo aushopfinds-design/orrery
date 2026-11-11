@@ -110,14 +110,14 @@ export function buildBundleFromPlans(plans: ReturnType<typeof bundleInterpretati
   const finalMessage = `Your chart points to a clear theme: ${workTheme} at work and your need for ${privateNeed} both matter in the life you build. Treat this as a personal pattern to weigh alongside your real circumstances, not as a fixed outcome.`
   const collectionQuestions = [
     answer(1, DESTINY_COLLECTION_QUESTIONS[0], life, undefined, threeInsights),
-    answer(2, DESTINY_COLLECTION_QUESTIONS[1], careerFit, undefined, `Your clearest opportunity is to use ${workTheme} as a regular part of your work, where it can shape the value you offer.`),
+    answer(2, DESTINY_COLLECTION_QUESTIONS[1], careerFit, undefined, `Your clearest opportunity is to make your contribution in ${workTheme} visible. Choose one project or responsibility where the result can be seen and credited to you.`),
     answer(3, DESTINY_COLLECTION_QUESTIONS[2], challenge, undefined, challengeAnswer),
     answer(4, DESTINY_COLLECTION_QUESTIONS[3], moneyFit, undefined, integratedCollectionAnswer),
     answer(5, DESTINY_COLLECTION_QUESTIONS[4], life, undefined, repeatingPattern),
-    answer(6, DESTINY_COLLECTION_QUESTIONS[5], longTerm, undefined, `No specific year can be named from the verified timing in this report. Your clearest chart-wide theme is ${workTheme} at work and making room for ${privateNeed} in close relationships; use this as a review point, not a date prediction.`),
-    answer(7, DESTINY_COLLECTION_QUESTIONS[6], yearTheme, undefined, `For the next three years, keep ${workTheme} at work and protect space for ${privateNeed} in close relationships. This is a steady chart-based priority, not a year-by-year forecast; the report does not calculate a verified three-year sequence.`),
+    answer(6, DESTINY_COLLECTION_QUESTIONS[5], longTerm, undefined, 'No specific year can be named from the verified timing in this report. The checked comparisons support review points, not a date for a major life event.'),
+    answer(7, DESTINY_COLLECTION_QUESTIONS[6], yearTheme, undefined, `For the next three years, use ${workTheme} as a steady work goal. Every six months, check whether it is producing the result you want and adjust your plan if needed. This is a priority, not a year-by-year forecast; no verified three-year sequence is available.`),
     answer(8, DESTINY_COLLECTION_QUESTIONS[7], strengthsOverview, undefined, `A strength you may overlook is this: ${plainReadingText(coreProfile.strength)} The chart links this trait to your natural way of approaching work and close relationships.`),
-    answer(9, DESTINY_COLLECTION_QUESTIONS[8], life, undefined, `A more fulfilling life is supported when work that involves ${workTheme} leaves room for the close relationships that meet your need for ${privateNeed}. Your chart describes tendencies; your choices and circumstances still matter.`),
+    answer(9, DESTINY_COLLECTION_QUESTIONS[8], life, undefined, `A more fulfilling life may come from pursuing ${workTheme} without letting work crowd out the closeness you need: ${privateNeed}. The chart offers these as personal themes, not a definition of what must make you happy.`),
     [
       `10 · ${DESTINY_COLLECTION_QUESTIONS[9]}`,
       `Question: ${DESTINY_COLLECTION_QUESTIONS[9]}`,

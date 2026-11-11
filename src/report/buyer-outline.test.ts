@@ -314,7 +314,7 @@ describe('Buyer questions, not a repeated six-part technical template', () => {
     ]
     const source = chapters.map(chapter => deliveredChapter(chapter).join('\n\n')).join('\n\n')
     const report = applyBuyerQuestions(source, 'year', chapters)
-    expect(report).toContain('Question: What should I focus on most this year?\n\nAnswer: Focus this year on training and dependable support.')
+    expect(report).toContain('Question: What should I focus on most this year?\n\nAnswer: Look for work where you can use training and dependable support with enough time and authority to do it well. Before accepting extra duties, agree who makes decisions and what result you own.')
   })
 
   it('avoids echoing the same instruction in the annual focus answer', () => {
@@ -328,7 +328,7 @@ describe('Buyer questions, not a repeated six-part technical template', () => {
     ]
     const source = chapters.map(chapter => deliveredChapter(chapter).join('\n\n')).join('\n\n')
     const report = applyBuyerQuestions(source, 'year', chapters)
-    expect(report).toContain('Question: What should I focus on most this year?\n\nAnswer: Focus this year on defined duties.')
+    expect(report).toContain('Question: What should I focus on most this year?\n\nAnswer: Look for work where you can use defined duties with enough time and authority to do it well. Before accepting extra duties, agree who makes decisions and what result you own.')
   })
 
   it('does not repeat the same turning-point explanation inside the answer', () => {

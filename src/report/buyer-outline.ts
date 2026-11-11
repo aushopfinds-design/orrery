@@ -190,9 +190,10 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
         const workTheme = annualWork?.paragraphs.find(line => /^The main work theme for [^:]+ is this:/i.test(line))
           ?.replace(/^The main work theme for [^:]+ is this:\s*/i, '')
         const focus = annualTheme?.tryThis || chapter.tryThis
-        lead = /^Focus this year on /i.test(focus) ? focus
-          : workTheme ? `Focus this year on ${workTheme.charAt(0).toLowerCase()}${workTheme.slice(1)}`
-            : `Focus this year on ${focus.charAt(0).toLowerCase()}${focus.slice(1)}`
+        const priority = (/^Focus this year on (.+?)(?:[.!?]|$)/i.exec(focus)?.[1]
+          ?? workTheme
+          ?? focus).replace(/[.!?]+$/u, '')
+        lead = `Look for work where you can use ${priority.charAt(0).toLowerCase()}${priority.slice(1)} with enough time and authority to do it well. Before accepting extra duties, agree who makes decisions and what result you own.`
         paragraphs = []
       } else if (kind === 'year' && question.role === 'career-theme') {
         // Keep the yearly career conclusion, its annual work reason and the
