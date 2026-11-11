@@ -83,6 +83,8 @@ describe('Quality dashboard client script', () => {
     const script = html.match(/<script nonce="test-nonce">([\s\S]*?)<\/script>/)?.[1]
     expect(script).toBeTruthy()
     expect(() => new Script(script!)).not.toThrow()
+    expect(html).toContain('.card{color:#182333;text-align:left;cursor:pointer}')
+    expect(html).toContain('.card .badge{color:#182333}')
   })
 })
 
