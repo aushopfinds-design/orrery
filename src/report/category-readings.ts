@@ -115,9 +115,9 @@ export function buildBundleFromPlans(plans: ReturnType<typeof bundleInterpretati
     answer(4, DESTINY_COLLECTION_QUESTIONS[3], moneyFit, undefined, integratedCollectionAnswer),
     answer(5, DESTINY_COLLECTION_QUESTIONS[4], life, undefined, repeatingPattern),
     answer(6, DESTINY_COLLECTION_QUESTIONS[5], longTerm, undefined, 'No specific year can be named from the verified timing in this report. The checked comparisons support review points, not a date for a major life event.'),
-    answer(7, DESTINY_COLLECTION_QUESTIONS[6], yearTheme, undefined, `For the next three years, use ${workTheme} as a steady work goal. Every six months, check whether it is producing the result you want and adjust your plan if needed. This is a priority, not a year-by-year forecast; no verified three-year sequence is available.`),
+    answer(7, DESTINY_COLLECTION_QUESTIONS[6], yearTheme, undefined, `For the next three years, build your work around ${workTheme}. Every six months, check whether it is producing the result you want and adjust your plan if needed. This is a priority, not a year-by-year forecast; no verified three-year sequence is available.`),
     answer(8, DESTINY_COLLECTION_QUESTIONS[7], strengthsOverview, undefined, `A strength you may overlook is this: ${plainReadingText(coreProfile.strength)} The chart links this trait to your natural way of approaching work and close relationships.`),
-    answer(9, DESTINY_COLLECTION_QUESTIONS[8], life, undefined, `A more fulfilling life may come from pursuing ${workTheme} without letting work crowd out the closeness you need: ${privateNeed}. The chart offers these as personal themes, not a definition of what must make you happy.`),
+    answer(9, DESTINY_COLLECTION_QUESTIONS[8], life, undefined, `A more fulfilling life may come from work centred on ${workTheme} and close relationships that make room for ${privateNeed}. The chart offers these as personal themes, not a fixed definition of happiness.`),
     [
       `10 · ${DESTINY_COLLECTION_QUESTIONS[9]}`,
       `Question: ${DESTINY_COLLECTION_QUESTIONS[9]}`,

@@ -193,7 +193,8 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
         const priority = (/^Focus this year on (.+?)(?:[.!?]|$)/i.exec(focus)?.[1]
           ?? workTheme
           ?? focus).replace(/[.!?]+$/u, '')
-        lead = `Look for work where you can use ${priority.charAt(0).toLowerCase()}${priority.slice(1)} with enough time and authority to do it well. Before accepting extra duties, agree who makes decisions and what result you own.`
+        const cleanPriority = priority.replace(/\s+at work$/i, '')
+        lead = `Look for work where you can use ${cleanPriority.charAt(0).toLowerCase()}${cleanPriority.slice(1)} with enough time and authority to do it well. Before accepting extra duties, agree who makes decisions and what result you own.`
         paragraphs = []
       } else if (kind === 'year' && question.role === 'career-theme') {
         // Keep the yearly career conclusion, its annual work reason and the
