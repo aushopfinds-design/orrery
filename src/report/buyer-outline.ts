@@ -297,10 +297,16 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
         lead = lead.replace(/\s+You(?: both)? value [\s\S]*$/u, '')
         const routine = byId.get('shared-routine')
         const noRoutineSignal = /^The two charts show no direct link or clash between daily-routine patterns\./u.test(routine?.lead ?? '')
+        const emotionalSignalIsUnclear = /^Emotionally, your charts show no clear private-life link or clash/u.test(lead)
         const routineFinding = noRoutineSignal
           ? 'The chart does not show a clear link or clash in daily routines.'
           : routine?.lead?.replace(/^Your everyday routines may clash over/u, 'Your daily routines may differ in')
-        if (routineFinding) lead += ` Daily life: ${routineFinding}`
+        if (noRoutineSignal && emotionalSignalIsUnclear) {
+          lead = lead.replace(/^Emotionally, your charts show no clear private-life link or clash, so your personal needs are the better guide here\./u,
+            'Neither chart comparison shows a clear link or clash, so your everyday habits offer the clearest comparison.')
+        } else if (routineFinding) {
+          lead += ` Daily life: ${routineFinding}`
+        }
         const yourRoutine = routine?.paragraphs.find(line => /^Your everyday pattern: /u.test(line))?.replace(/^Your everyday pattern: /u, '').replace(/[.!?]+$/u, '')
         const partnerRoutine = routine?.paragraphs.find(line => /^Your partner(?:'|’)s everyday pattern: /u.test(line))?.replace(/^Your partner(?:'|’)s everyday pattern: /u, '').replace(/[.!?]+$/u, '')
         if (yourRoutine && partnerRoutine) {
