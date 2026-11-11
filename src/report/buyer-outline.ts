@@ -159,21 +159,27 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
     if (!byId.has(source)) throw new Error(`Missing answer source: ${kind}/${source}`)
     questionsBySource.set(source, [...(questionsBySource.get(source) ?? []), question])
   }
-  // Product 03's paid standalone report is defined by its seven buyer
-  // questions. The category-reading source still carries legacy routine and
-  // money chapters; those are not additional compatibility questions.
-  if (kind === 'compatibility' && set === 'standalone') {
-    const overviewAt = text.indexOf('Your reading at a glance')
-    if (overviewAt >= 0) {
-      const firstSource = chapters[0] ? deliveredChapter(chapters[0]).join('\n\n') : ''
-      const firstChapterAt = firstSource ? text.indexOf(firstSource, overviewAt + 'Your reading at a glance'.length) : -1
-      if (firstChapterAt < 0) throw new Error('Missing first Product 03 chapter after overview')
-      text = `${text.slice(0, overviewAt - 2)}\n\n${text.slice(firstChapterAt)}`
+  // Standalone paid reports must contain only the source chapters used by
+  // their seven buyer questions. Reading builders may retain older chapters
+  // for free/full-reading views; those must not leak into a paid product as
+  // extra, unlisted report sections.
+  if (set === 'standalone') {
+    if (kind === 'compatibility') {
+      const overviewAt = text.indexOf('Your reading at a glance')
+      if (overviewAt >= 0) {
+        const firstSource = chapters[0] ? deliveredChapter(chapters[0]).join('\n\n') : ''
+        const firstChapterAt = firstSource ? text.indexOf(firstSource, overviewAt + 'Your reading at a glance'.length) : -1
+        if (firstChapterAt < 0) throw new Error('Missing first Product 03 chapter after overview')
+        text = `${text.slice(0, overviewAt - 2)}\n\n${text.slice(firstChapterAt)}`
+      }
     }
     for (const chapter of chapters) {
       if (questionsBySource.has(chapter.id)) continue
       const original = deliveredChapter(chapter).join('\n\n')
-      if (!text.includes(original)) throw new Error(`Missing delivered source: ${kind}/${chapter.id}`)
+      if (!text.includes(original)) {
+        if (kind === 'compatibility') throw new Error(`Missing delivered source: ${kind}/${chapter.id}`)
+        continue
+      }
       text = text.replace(`${original}\n\n`, '').replace(original, '')
     }
   }

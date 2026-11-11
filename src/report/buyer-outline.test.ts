@@ -8,6 +8,13 @@ import { BUYER_OUTLINES, BUYER_QUESTIONS, COLLECTION_BUYER_QUESTIONS, applyBuyer
 import { deliveredChapter } from './report-delivery.ts'
 const a = calculateSaju(CATEGORY_SCENARIOS[0].first), b = calculateSaju(CATEGORY_SCENARIOS[0].second)
 describe('Buyer questions, not a repeated six-part technical template', () => {
+  it('removes the unused Product 01 legacy synthesis chapter from standalone delivery', () => {
+    const reading = buildCompleteReading(a, 2026)
+    const report = applyBuyerQuestions(reading.fullText, 'complete', reading.chapters, reading.periods, 'standalone')
+    expect(report.match(/^Question:/gm)).toHaveLength(7)
+    const buyerFacingBody = report.slice(0, report.indexOf('Calculation notes'))
+    expect(buyerFacingBody).not.toMatch(/^08 · Your Most Important Life Insight$/m)
+  })
   it('explains the chart context for attraction in plain language', () => {
     const reading = buildCategoryReading('compatibility', a, { second: b, year: 2026 })
     const report = applyBuyerQuestions(reading.fullText, 'compatibility', reading.chapters, [], 'standalone')

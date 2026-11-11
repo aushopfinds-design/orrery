@@ -30,7 +30,8 @@ describe('Product 01 paid customer question answers', () => {
       expect(identity).toMatch(/Answer: Your core style is /)
       expect(identity).toMatch(/One way it may show up is when .+\. This is a chart-based illustration, not a fact about your personal history\./i)
       expect(report.text).toContain('What Challenges Keep Returning in Your Life?')
-      expect(report.text).toContain('Your most important life insight is that')
+      const reportBody = report.text.split('Calculation notes')[0] ?? report.text
+      expect(reportBody).not.toContain('Your most important life insight is that')
       const turningPoints = report.text.slice(report.text.indexOf('Question: When may my life change direction?'))
       expect(turningPoints.match(/Why 20\d\d/g)?.length ?? 0).toBeLessThanOrEqual(1)
       const challengeStart = report.text.indexOf('Question: What are my biggest life challenges?')
