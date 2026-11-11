@@ -23,6 +23,7 @@ describe('Buyer questions, not a repeated six-part technical template', () => {
     expect(report).toMatch(/Question: Why are we attracted to each other\?[\s\S]*Answer: You may be drawn to what your partner brings:/)
     expect(report).toContain('Your partner may be drawn to what you bring: fresh ideas and open communication.')
     expect(report).not.toContain('during a disagreement in you')
+    expect(report).toContain('The charts show no clear emotional link or clash; your daily routines offer the clearer comparison.')
   })
   it('gives every question a distinct answer role within its product', () => {
     for (const [kind, questions] of Object.entries(BUYER_QUESTIONS)) {

@@ -309,7 +309,7 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
           : routine?.lead?.replace(/^Your everyday routines may clash over/u, 'Your daily routines may differ in')
         if (noRoutineSignal && emotionalSignalIsUnclear) {
           lead = lead.replace(/^Emotionally, your charts show no clear private-life link or clash, so your personal needs are the better guide here\./u,
-            'Neither chart comparison shows a clear link or clash, so your everyday habits offer the clearest comparison.')
+            'The charts show no clear emotional link or clash; your daily routines offer the clearer comparison.')
         } else if (routineFinding) {
           lead += ` Daily life: ${routineFinding}`
         }

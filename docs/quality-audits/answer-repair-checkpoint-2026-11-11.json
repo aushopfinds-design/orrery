@@ -104,16 +104,35 @@
       "before_score_commit": "b1a22a08a8e4e33fe10a6e6a36babeb3b7843777",
       "after_score": null,
       "status": "VERIFY"
+    },
+    {
+      "product_id": "03",
+      "question_id": "chart-patterns",
+      "question_title": "How do emotional closeness and everyday compatibility differ?",
+      "problem_sentence": "Neither chart comparison shows a clear link or clash, so your everyday habits offer the clearest comparison.",
+      "deduction_reason_ko": "감정 연결과 일상 루틴 모두 뚜렷한 신호가 없는 경우, 기존 첫 문장이 같은 무신호를 반복하면서 질문의 비교 결론을 흐렸습니다.",
+      "revision_rule": "State once that emotional connection is not clearly indicated and identify everyday routines as the clearer comparison; then give both partners' chart-specific routines.",
+      "sample_revised_answer": "The charts show no clear emotional link or clash; your daily routines offer the clearer comparison.",
+      "before_scores_historical": [
+        89,
+        91,
+        89,
+        89,
+        92
+      ],
+      "before_score_commit": "b1a22a08a8e4e33fe10a6e6a36babeb3b7843777",
+      "after_score": null,
+      "status": "VERIFY"
     }
   ],
   "current_task_status": {
     "official_question_catalogue": "unchanged; 01-06 each 7 and 07 has 10 in generated batch",
-    "pdf_rendering_and_question_navigation": "35 PDFs regenerated after Product 04 and 05 answer revisions; regression verified the batch; final PDFs located in /tmp/fate-key-final-35",
+    "pdf_rendering_and_question_navigation": "35 PDFs regenerated after Product 03, 04 and 05 answer revisions; batch regression passed; final PDFs located in /tmp/fate-key-final-35",
     "automated_regression": "957 tests passed; 83 test files passed after latest code edits",
     "production_build": "passed after latest code edits (source integrity, core build, TypeScript, Vite, public pages)",
     "independent_scores": "not assigned; all 35 remain VERIFY",
     "score_warning": "70/100 diagnostic values emitted by the automatic gate are not independent report scores",
-    "reviewed_pdf_text": "P04 Q2, P05 Q7, P06 Q7, and P07 Q4/Q6/Q7 text spot checked in regenerated PDFs; complete 260-answer independent review remains incomplete",
+    "reviewed_pdf_text": "P03 Q5, P04 Q2, P05 Q7, P06 Q7, and P07 Q4/Q6/Q7 spot checked; full independent review of all 260 answer blocks remains incomplete",
     "deployment": "not deployed; production and sales settings untouched",
     "remaining_scope": "Complete independent review of all 260 answers; repair and regenerate PDFs with sub-95 answers; independently rescore every PDF; remove legacy answer labels where required; preserve historical baseline and compare quality before any release."
   }
