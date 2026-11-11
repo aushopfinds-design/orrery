@@ -24,7 +24,7 @@
       "06": 7,
       "07": 10
     },
-    "independent_pdf_review": "not completed; no scores assigned"
+    "independent_pdf_review": "not completed; all 35 remain VERIFY"
   },
   "repairs": [
     {
@@ -78,16 +78,42 @@
       "before_score_commit": "b1a22a08a8e4e33fe10a6e6a36babeb3b7843777",
       "after_score": null,
       "status": "VERIFY"
+    },
+    {
+      "product_id": "04",
+      "question_id": "q-year-focus",
+      "question_title": "What should I focus on most this year?",
+      "problem_sentence": "Look for work where you can use management, regulated work, public service and structured organisations with enough time and authority to do it well. Before accepting extra duties, agree who makes decisions and what result you own.",
+      "deduction_reason_ko": "연간 업무 주제는 개인별 계산에서 나오지만 답이 긴 직무 목록과 공통 조언에 치우쳐 그 해의 특징을 바로 보여주지 못했습니다.",
+      "revision_rule": "Lead with the chart-selected annual work theme, say whether it repeats a familiar demand or adds a different demand when the calculation says so, then give one short responsibility check.",
+      "sample_revised_answer": "This year, focus on [calculated annual work theme]. It [repeats a familiar demand / adds a different demand to your usual pattern]. Take on extra responsibility only when you have the time and authority to deliver the result.",
+      "before_score_historical": 91,
+      "before_score_commit": "b1a22a08a8e4e33fe10a6e6a36babeb3b7843777",
+      "after_score": null,
+      "status": "VERIFY"
+    },
+    {
+      "product_id": "05",
+      "question_id": "business-plan",
+      "question_title": "What should I be careful about in business?",
+      "problem_sentence": "Check that your cash and capacity can cover added business demands in [calculated years]. The chart flags planning pressure in those years, not business failure.",
+      "deduction_reason_ko": "연도는 표시했지만 구체적으로 어떤 사업 운영 항목을 점검해야 하는지와 연도별 계산 주제가 답에서 분명하지 않았습니다.",
+      "revision_rule": "Name cash, delivery capacity and responsibility in the direct answer. Summarise each verified year theme and tailor the check to a calculated clash or adjustment; do not imply failure.",
+      "sample_revised_answer": "Review cash, delivery capacity and responsibility before taking on more business commitments in [calculated years]. The chart flags planning pressure in those years, not business failure.",
+      "before_score_historical": 91,
+      "before_score_commit": "b1a22a08a8e4e33fe10a6e6a36babeb3b7843777",
+      "after_score": null,
+      "status": "VERIFY"
     }
   ],
   "current_task_status": {
     "official_question_catalogue": "unchanged; 01-06 each 7 and 07 has 10 in generated batch",
-    "pdf_rendering_and_question_navigation": "35 PDFs regenerated from current modified code; opened by regression test; 35 files present in /tmp/fate-key-final-35",
-    "automated_regression": "957 tests passed; 83 test files passed",
-    "production_build": "passed (source integrity, core build, TypeScript, Vite, public pages)",
+    "pdf_rendering_and_question_navigation": "35 PDFs regenerated after Product 04 and 05 answer revisions; regression verified the batch; final PDFs located in /tmp/fate-key-final-35",
+    "automated_regression": "957 tests passed; 83 test files passed after latest code edits",
+    "production_build": "passed after latest code edits (source integrity, core build, TypeScript, Vite, public pages)",
     "independent_scores": "not assigned; all 35 remain VERIFY",
     "score_warning": "70/100 diagnostic values emitted by the automatic gate are not independent report scores",
-    "reviewed_pdf_text": "P06 Q7 and P07 Q4/Q6/Q7 extracted and spot checked; broader sentence-level review of all 260 answer blocks remains incomplete",
+    "reviewed_pdf_text": "P04 Q2, P05 Q7, P06 Q7, and P07 Q4/Q6/Q7 text spot checked in regenerated PDFs; complete 260-answer independent review remains incomplete",
     "deployment": "not deployed; production and sales settings untouched",
     "remaining_scope": "Complete independent review of all 260 answers; repair and regenerate PDFs with sub-95 answers; independently rescore every PDF; remove legacy answer labels where required; preserve historical baseline and compare quality before any release."
   }

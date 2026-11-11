@@ -346,7 +346,7 @@ describe('Buyer questions, not a repeated six-part technical template', () => {
     ]
     const source = chapters.map(chapter => deliveredChapter(chapter).join('\n\n')).join('\n\n')
     const report = applyBuyerQuestions(source, 'year', chapters)
-    expect(report).toContain('Question: What should I focus on most this year?\n\nAnswer: Look for work where you can use training and dependable support with enough time and authority to do it well. Before accepting extra duties, agree who makes decisions and what result you own.')
+    expect(report).toContain('Question: What should I focus on most this year?\n\nAnswer: This year, focus on training and dependable support. Take on extra responsibility only when you have the time and authority to deliver the result.')
   })
 
   it('avoids echoing the same instruction in the annual focus answer', () => {
@@ -355,12 +355,12 @@ describe('Buyer questions, not a repeated six-part technical template', () => {
       guidance: { keepClose: ['Keep the answer practical.'], watchFor: ['Do not treat timing as certain.'] }, icon: 'timeline' as const,
     })
     const chapters = [
-      make('annual-theme', 'The chart theme is clear.'), make('annual-work', 'Career answer.', ['The main work theme for this year is this: defined duties.']), make('annual-money', 'Money answer.'),
+      make('annual-theme', 'Compared with your usual pattern of steady work, this work direction adds a different demand.', [], 'Focus this year on defined duties at work.'), make('annual-work', 'Career answer.', ['The main work theme for this year is this: defined duties.']), make('annual-money', 'Money answer.'),
       make('annual-connections', 'Love answer.'), make('annual-cycle-context', 'No supportive month found.'), make('annual-plan', 'Extra care months.'),
     ]
     const source = chapters.map(chapter => deliveredChapter(chapter).join('\n\n')).join('\n\n')
     const report = applyBuyerQuestions(source, 'year', chapters)
-    expect(report).toContain('Question: What should I focus on most this year?\n\nAnswer: Look for work where you can use defined duties with enough time and authority to do it well. Before accepting extra duties, agree who makes decisions and what result you own.')
+    expect(report).toContain('Question: What should I focus on most this year?\n\nAnswer: This year, focus on defined duties. It adds a different demand to your usual pattern. Take on extra responsibility only when you have the time and authority to deliver the result.')
   })
 
   it('does not repeat the same turning-point explanation inside the answer', () => {
