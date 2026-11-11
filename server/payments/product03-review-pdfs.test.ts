@@ -64,9 +64,9 @@ describe('Product 03 review PDF batch', () => {
       expect(q4).toMatch(/You may express love|You and your partner may express love in a similar way/)
       expect(q4).not.toMatch(/You may (?:Honest conversation|Clear commitment|Privacy and being understood)/)
       const q4Examples = [
-        'If you need time to think, agree when your partner will check back; if your partner offers help, ask what would be useful before stepping in.',
+        'Agree when you will return to a difficult conversation, so quiet time does not feel like withdrawal.',
         'A brief check-in followed by keeping one promise you made makes this shared style visible.',
-        'If you need time to think, agree when your partner will check back; if your partner offers help, ask what would be useful before stepping in.',
+        'Agree when you will return to a difficult conversation, so quiet time does not feel like withdrawal.',
         'When you share a concern, your partner can first reflect what they heard; agree when to check back and follow through.',
         'Keep the shared commitment, agree when quiet time is protected, and say clearly when you are ready to reconnect.',
       ]
