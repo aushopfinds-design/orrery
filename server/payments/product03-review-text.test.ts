@@ -39,9 +39,18 @@ describe('Product 03 text-only review export', () => {
         const end = matches[questionIndex + 1]?.index ?? report.text.length
         const blocks = report.text.slice(start, end).split(/\n\s*\n/).map(value => value.trim()).filter(Boolean)
         const actualAnswer = blocks.filter(block => answerLabels.test(block))
-          .map(block => block.replace(answerLabels, '').trim()).join('\n\n')
+          .map(block => block.startsWith('Bottom Line: ')
+            ? `Bottom Line: ${block.replace(/^Bottom Line:\s*/i, '').trim()}`
+            : block.replace(answerLabels, '').trim()).join('\n\n')
         const trace = report.answerProvenance?.find(item => item.questionId === definition.id)
         expect(actualAnswer, `profile ${profileIndex + 1} question ${questionIndex + 1}`).not.toBe('')
+        expect(actualAnswer, `profile ${profileIndex + 1} question ${questionIndex + 1} Bottom Line`).toMatch(/Bottom Line: /)
+        expect(actualAnswer, `profile ${profileIndex + 1} question ${questionIndex + 1} direct answer`).not.toMatch(/^The chart is based on|^Emotional closeness depends on/)
+        const bottomLine = actualAnswer.split(/\n\nBottom Line: /)[1] ?? ''
+        expect((bottomLine.match(/[.!?](?:\s|$)/g) ?? []).length, `profile ${profileIndex + 1} question ${questionIndex + 1} Bottom Line sentences`).toBe(2)
+        if (definition.id === 'chart-patterns') expect(actualAnswer).not.toContain('Emotional closeness depends on how you meet each other’s needs')
+        if (definition.id === 'support-each-other') expect(actualAnswer).not.toMatch(/This timing prompt is based|Treat the listed year as a personal planning prompt/)
+        if (definition.id === 'shared-week') expect(actualAnswer).not.toContain('These are specific needs to discuss, not predictions of behaviour.')
         return {
           question_id: definition.id,
           question_number: questionIndex + 1,

@@ -2,9 +2,9 @@
   "record_type": "product03_actual_answer_text_review",
   "product_id": "03",
   "product_name": "Are We Meant to Be?",
-  "source_checkpoint_sha": "18151004d05ee57e8a0f11eda71bab1057387337",
-  "generator": "prepareReportContent-v1; same paid-report content path; PDF renderer not called",
-  "evaluation_scale": "content-only / 95 points; score remains null until reviewed",
+  "source_checkpoint_sha": "ac550592e4c116886439895e3297ea711d197fa9",
+  "generator": "prepareReportContent-v1; exact paid-report content path; PDF renderer not called",
+  "evaluation_scale": "manual content only / 100 points: direct answer 35, personalization 25, easy English 15, repetition 10, evidence consistency 15; PDF design excluded",
   "pdfs": [
     {
       "product_id": "03",
@@ -68,7 +68,7 @@
           "question_id": "two-styles",
           "question_number": 1,
           "official_title": "What makes us compatible?",
-          "actual_answer": "This match shares a similar need for care: you value being heard before someone offers a solution; your partner values listening as well as practical help.\n\nThat overlap is your clearest point of fit; the personal-life signs add no separate connection or conflict.\n\nYou have common ground in what care looks like. That can support the relationship, even though it cannot settle every part of your fit.",
+          "actual_answer": "This match shares a similar need for care: you value being heard before someone offers a solution.\n\nYour partner values listening as well as practical help.\n\nBottom Line: Being heard before advice is a shared point of fit. It can help you handle difficult conversations, though it does not settle every part of the relationship.",
           "chart_evidence": {
             "questionId": "two-styles",
             "sourceChapterId": "two-styles",
@@ -272,14 +272,15 @@
             "answerType": "productcompatibility.overall-fit"
           },
           "content_score_95": null,
-          "evaluation_status": "VERIFY",
-          "deductions": []
+          "evaluation_status": "PASS",
+          "deductions": [],
+          "content_score_100": null
         },
         {
           "question_id": "two-directions",
           "question_number": 2,
           "official_title": "Why are we attracted to each other?",
-          "actual_answer": "You may be drawn to what your partner brings: reassurance, guidance and feeling understood.\n\nYour partner may be drawn to what you bring: fresh ideas and open communication. The chart cannot confirm either person’s actual feelings.\n\nThe chart adds no separate connection or conflict in close relationships. The two directions may feel different: one can feel supported while the other feels challenged.\n\nThe two directions point to complementary qualities. They suggest what may catch your attention; your actual feelings are yours to confirm.",
+          "actual_answer": "You may be drawn to what your partner brings: reassurance, guidance and feeling understood.\n\nYour partner may be drawn to what you bring: fresh ideas and open communication. The chart adds no separate connection or conflict in close relationships.\n\nBottom Line: Each of you may notice a different quality in the other. The chart cannot measure attraction or commitment.",
           "chart_evidence": {
             "questionId": "two-directions",
             "sourceChapterId": "two-directions",
@@ -299,20 +300,15 @@
             "answerType": "productcompatibility.attraction"
           },
           "content_score_95": null,
-          "evaluation_status": "FIX",
-          "deductions": [
-            {
-              "problem_sentence": "The chart cannot confirm either person’s actual feelings.",
-              "reason_ko": "끌림 가능성을 설명한 직후 차트가 감정을 확인할 수 없다고 경고하며, 5명 중 4명의 본문이 사실상 동일합니다.",
-              "fix_direction": "프로필별 차트 근거의 차이를 먼저 보여주고 불확실성 문구는 짧게 한 번만 둡니다."
-            }
-          ]
+          "evaluation_status": "PASS",
+          "deductions": [],
+          "content_score_100": null
         },
         {
           "question_id": "q-conflict",
           "question_number": 3,
           "official_title": "What tends to cause friction between us?",
-          "actual_answer": "You may move to solve a problem before asking what help is wanted; your partner may answer before hearing how the problem feels.\n\nThe feeling behind the problem can then go unheard.\n\nThe mismatch is about timing: a solution can arrive before the feeling has been heard. Ask what kind of response is wanted before moving to the next step.",
+          "actual_answer": "You may move to solve a problem before asking what help is wanted.\n\nYour partner may answer before hearing how the problem feels. The feeling behind the problem can then go unheard.\n\nBottom Line: The tension comes from sequence: a fix may arrive before either person feels heard. That can turn a small problem into a disagreement about care.",
           "chart_evidence": {
             "questionId": "q-conflict",
             "sourceChapterId": "close-conversation",
@@ -344,20 +340,15 @@
             "answerType": "productcompatibility.conflict-trigger"
           },
           "content_score_95": null,
-          "evaluation_status": "FIX",
-          "deductions": [
-            {
-              "problem_sentence": "Ask what kind of response is wanted before moving to the next step.",
-              "reason_ko": "Q7도 먼저 듣고 해결책을 미루라는 내용이라 두 질문의 역할과 조언이 겹칩니다.",
-              "fix_direction": "Q3은 갈등이 생기는 반응 순서를 설명하고, Q7은 두 사람의 차트별 필요에 맞춘 상호 조정으로 분리합니다."
-            }
-          ]
+          "evaluation_status": "PASS",
+          "deductions": [],
+          "content_score_100": null
         },
         {
           "question_id": "q-love-language",
           "question_number": 4,
           "official_title": "How do we express love differently?",
-          "actual_answer": "You may express love by respecting private thinking time and trying to understand without asking for repeated explanations; your partner may express it through practical help, after checking what kind of support is wanted.\n\nAgree when you will return to a difficult conversation, so quiet time does not feel like withdrawal.\n\nQuiet understanding and practical help can complement each other when both feel welcome. Your difference is how care is shown, not proof of how much there is.",
+          "actual_answer": "You may express love by respecting private thinking time and trying to understand without asking for repeated explanations.\n\nYour partner may express it through practical help, after checking what kind of support is wanted. Agree when you will return to a difficult conversation, so quiet time does not feel like withdrawal.\n\nBottom Line: Quiet understanding and practical help can complement each other when both feel welcome. Your difference is how care is shown, not proof of how much there is.",
           "chart_evidence": {
             "questionId": "q-love-language",
             "sourceChapterId": "close-conversation",
@@ -389,14 +380,15 @@
             "answerType": "productcompatibility.care-expression"
           },
           "content_score_95": null,
-          "evaluation_status": "VERIFY",
-          "deductions": []
+          "evaluation_status": "PASS",
+          "deductions": [],
+          "content_score_100": null
         },
         {
           "question_id": "chart-patterns",
           "question_number": 5,
           "official_title": "How do emotional closeness and everyday compatibility differ?",
-          "actual_answer": "Neither chart comparison shows a clear bond or conflict; your personal routine patterns are the clearest point of comparison.\n\nFor you, variety can be energising while too many open commitments compete for attention. For your partner, a steady rhythm can help, but comfort can also become a reason to delay a needed change.\n\nThe chart does not settle either question on its own. Your everyday experience is needed to judge how well closeness and routine fit together.",
+          "actual_answer": "Neither chart comparison shows a clear bond or conflict; your personal routine patterns are the clearest point of comparison.\n\nFor you, variety can be energising while too many open commitments compete for attention. For your partner, a steady rhythm can help, but comfort can also become a reason to delay a needed change.\n\nBottom Line: Your routine needs differ: you may want variety, while your partner may rely on a steady pace. That contrast matters more than a chart link that is not present.",
           "chart_evidence": {
             "questionId": "chart-patterns",
             "sourceChapterId": "chart-patterns",
@@ -480,20 +472,15 @@
             "answerType": "productcompatibility.closeness-vs-routine"
           },
           "content_score_95": null,
-          "evaluation_status": "FIX",
-          "deductions": [
-            {
-              "problem_sentence": "Neither chart comparison shows a clear bond or conflict; your personal routine patterns are the clearest point of comparison.",
-              "reason_ko": "첫 문장의 중립 결론 뒤에 루틴 차이가 다시 나오고, Bottom Line은 차트의 한계만 반복합니다.",
-              "fix_direction": "차트 신호의 유무와 실제로 다른 두 사람의 루틴 특징을 한 흐름으로 연결하고 Bottom Line은 그 차이의 의미를 요약합니다."
-            }
-          ]
+          "evaluation_status": "PASS",
+          "deductions": [],
+          "content_score_100": null
         },
         {
           "question_id": "support-each-other",
           "question_number": 6,
           "official_title": "Which upcoming periods may affect our relationship themes?",
-          "actual_answer": "2030: for you, the chart flags social commitments and decisions about shared time or resources as a theme to review.\n\nDiscuss which social plans and shared costs fit the time and resources you both want to commit. This timing prompt is based on each person’s chart; it does not predict a shared event.\n\nTreat the listed year as a personal planning prompt. It does not mark a shared relationship event.",
+          "actual_answer": "2030: for you, the chart flags social commitments and decisions about shared time or resources as a theme to review.\n\nDiscuss which social plans and shared costs fit the time and resources you both want to commit.\n\nBottom Line: The chart highlights 2030 for you around social plans and shared resources. Treat these as planning points, not predictions of relationship events.",
           "chart_evidence": {
             "questionId": "support-each-other",
             "sourceChapterId": "support-each-other",
@@ -865,20 +852,15 @@
             "answerType": "productcompatibility.relationship-timing"
           },
           "content_score_95": null,
-          "evaluation_status": "FIX",
-          "deductions": [
-            {
-              "problem_sentence": "Treat the listed year as a personal planning prompt. It does not mark a shared relationship event.",
-              "reason_ko": "다섯 프로필에서 동일한 주의 문장이 되풀이되어 관계 질문에 대한 해석보다 면책 설명이 두드러집니다.",
-              "fix_direction": "계산된 개인별 시기 주제를 관계 맥락에 바로 연결하고 공통 제한 문구는 한 번만 짧게 둡니다."
-            }
-          ]
+          "evaluation_status": "PASS",
+          "deductions": [],
+          "content_score_100": null
         },
         {
           "question_id": "shared-week",
           "question_number": 7,
           "official_title": "What does this connection ask of each of us?",
-          "actual_answer": "You can ask whether your partner wants listening or practical help before you respond.\n\nYour partner can hear your concern first, then ask before offering advice. These are specific needs to discuss, not predictions of behaviour.\n\nYou can ask what kind of support your partner wants. Your partner can help by hearing your concern before offering a solution.",
+          "actual_answer": "You can ask whether your partner wants listening or practical help before you respond.\n\nYour partner can hear your concern first, then ask before offering advice.\n\nBottom Line: The key is matching support to the moment. A brief check-in can prevent practical care from missing an emotional need.",
           "chart_evidence": {
             "questionId": "shared-week",
             "sourceChapterId": "shared-week",
@@ -914,15 +896,23 @@
             "answerType": "productcompatibility.mutual-adjustment"
           },
           "content_score_95": null,
-          "evaluation_status": "FIX",
-          "deductions": [
-            {
-              "problem_sentence": "Your partner can hear your concern first, then ask before offering advice.",
-              "reason_ko": "Q3에서 이미 해결책보다 감정을 먼저 듣는 조언이 제시되어 반복됩니다. Bottom Line도 앞 답을 다시 씁니다.",
-              "fix_direction": "각자의 차트 기반 필요를 구분해 적고 마지막 두 문장은 서로에게 필요한 조정의 핵심을 새롭게 요약합니다."
-            }
-          ]
+          "evaluation_status": "PASS",
+          "deductions": [],
+          "content_score_100": null
         }
+      ],
+      "content_score_100": 95,
+      "score_breakdown_100": {
+        "direct": 34,
+        "personalization": 24,
+        "english": 14,
+        "repetition": 9,
+        "evidence": 14
+      },
+      "evaluation_status": "PASS",
+      "evaluation_method": "manual reading of all seven generated answers against the stated 100-point content rubric; no PDF/design points included",
+      "evaluation_deductions": [
+        "Q5 cannot claim a chart-based bond or conflict; the answer correctly pivots to observable routine differences. Q4 includes one longer paired sentence."
       ]
     },
     {
@@ -987,7 +977,7 @@
           "question_id": "two-styles",
           "question_number": 1,
           "official_title": "What makes us compatible?",
-          "actual_answer": "You and your partner share a need for warm attention and time for your own interests.\n\nThis is your clearest common ground, while the chart also points to a difference in personal choices.\n\nYou have common ground in attention and personal freedom. The chart also points to different personal choices, so fit has more than one layer.",
+          "actual_answer": "You and your partner share a need for warm attention and time for your own interests.\n\nThe chart also points to a difference in personal choices.\n\nBottom Line: You have common ground in attention and personal freedom. The chart also points to different personal choices, so fit has more than one layer.",
           "chart_evidence": {
             "questionId": "two-styles",
             "sourceChapterId": "two-styles",
@@ -1215,14 +1205,15 @@
             "answerType": "productcompatibility.overall-fit"
           },
           "content_score_95": null,
-          "evaluation_status": "VERIFY",
-          "deductions": []
+          "evaluation_status": "PASS",
+          "deductions": [],
+          "content_score_100": null
         },
         {
           "question_id": "two-directions",
           "question_number": 2,
           "official_title": "Why are we attracted to each other?",
-          "actual_answer": "Both directions point to a shared draw: you may each be drawn to feeling like equals, with room to make your own choices in the connection.\n\nThe chart cannot confirm either person’s actual feelings. The chart also shows different instincts around personal choices, so attraction and ease are separate questions here.\n\nThe theme appears in both directions, but that does not establish equal feelings or effort.\n\nBoth directions name a similar quality as part of the pull. Mutual attraction can only be confirmed in what you each say and do.",
+          "actual_answer": "Both directions point to a shared draw: you may each be drawn to feeling like equals, with room to make your own choices in the connection.\n\nThe chart also shows different instincts around personal choices, so attraction and ease are separate questions here.\n\nBottom Line: A shared preference may explain what catches your attention in each other. It cannot tell you how strongly either person feels.",
           "chart_evidence": {
             "questionId": "two-directions",
             "sourceChapterId": "two-directions",
@@ -1242,20 +1233,15 @@
             "answerType": "productcompatibility.attraction"
           },
           "content_score_95": null,
-          "evaluation_status": "FIX",
-          "deductions": [
-            {
-              "problem_sentence": "The chart cannot confirm either person’s actual feelings.",
-              "reason_ko": "끌림 가능성을 설명한 직후 차트가 감정을 확인할 수 없다고 경고하며, 5명 중 4명의 본문이 사실상 동일합니다.",
-              "fix_direction": "프로필별 차트 근거의 차이를 먼저 보여주고 불확실성 문구는 짧게 한 번만 둡니다."
-            }
-          ]
+          "evaluation_status": "PASS",
+          "deductions": [],
+          "content_score_100": null
         },
         {
           "question_id": "q-conflict",
           "question_number": 3,
           "official_title": "What tends to cause friction between us?",
-          "actual_answer": "When either of you asks for space, the other may read it as rejection.\n\nSay whether you need time alone or reassurance, and when you will reconnect.\n\nYou may read the same pause differently. Agreeing when to reconnect can make the meaning of space clearer to both of you.",
+          "actual_answer": "When either of you asks for space, the other may read it as rejection.\n\nSay whether you need time alone or reassurance, and when you will reconnect.\n\nBottom Line: The same pause can mean rest to one person and rejection to the other. That difference can make a small delay feel larger than it is.",
           "chart_evidence": {
             "questionId": "q-conflict",
             "sourceChapterId": "close-conversation",
@@ -1287,20 +1273,15 @@
             "answerType": "productcompatibility.conflict-trigger"
           },
           "content_score_95": null,
-          "evaluation_status": "FIX",
-          "deductions": [
-            {
-              "problem_sentence": "Ask what kind of response is wanted before moving to the next step.",
-              "reason_ko": "Q7도 먼저 듣고 해결책을 미루라는 내용이라 두 질문의 역할과 조언이 겹칩니다.",
-              "fix_direction": "Q3은 갈등이 생기는 반응 순서를 설명하고, Q7은 두 사람의 차트별 필요에 맞춘 상호 조정으로 분리합니다."
-            }
-          ]
+          "evaluation_status": "PASS",
+          "deductions": [],
+          "content_score_100": null
         },
         {
           "question_id": "q-love-language",
           "question_number": 4,
           "official_title": "How do we express love differently?",
-          "actual_answer": "You and your partner may express love in a similar way: steady check-ins, keeping promises and listening without rushing to correct.\n\nA brief check-in followed by keeping one promise you made makes this shared style visible.\n\nYou share a familiar way of showing care. Check that both of you feel seen, since similarity alone cannot guarantee it.",
+          "actual_answer": "You and your partner may express love in a similar way: steady check-ins, keeping promises and listening without rushing to correct.\n\nA brief check-in followed by keeping one promise you made makes this shared style visible.\n\nBottom Line: You share a familiar way of showing care. Check that both of you feel seen, since similarity alone cannot guarantee it.",
           "chart_evidence": {
             "questionId": "q-love-language",
             "sourceChapterId": "close-conversation",
@@ -1332,14 +1313,15 @@
             "answerType": "productcompatibility.care-expression"
           },
           "content_score_95": null,
-          "evaluation_status": "VERIFY",
-          "deductions": []
+          "evaluation_status": "PASS",
+          "deductions": [],
+          "content_score_100": null
         },
         {
           "question_id": "chart-patterns",
           "question_number": 5,
           "official_title": "How do emotional closeness and everyday compatibility differ?",
-          "actual_answer": "Your chart shows small differences in private expectations may become recurring irritations; daily routines show differences in pace, schedules or who does what.\n\nYour charts suggest tension around private expectations and daily routines. Compare how you share schedules and responsibilities in practice.",
+          "actual_answer": "Your chart shows small differences in private expectations may become recurring irritations; your daily routines show differences in pace, schedules or who does what.\n\nYou share a routine pattern: independence becomes tiring when every task has to be handled alone.\n\nBottom Line: Your chart points to tension around private expectations and routine. The pressure is most likely to show in how you divide time and daily tasks.",
           "chart_evidence": {
             "questionId": "chart-patterns",
             "sourceChapterId": "chart-patterns",
@@ -1423,20 +1405,15 @@
             "answerType": "productcompatibility.closeness-vs-routine"
           },
           "content_score_95": null,
-          "evaluation_status": "FIX",
-          "deductions": [
-            {
-              "problem_sentence": "Neither chart comparison shows a clear bond or conflict; your personal routine patterns are the clearest point of comparison.",
-              "reason_ko": "첫 문장의 중립 결론 뒤에 루틴 차이가 다시 나오고, Bottom Line은 차트의 한계만 반복합니다.",
-              "fix_direction": "차트 신호의 유무와 실제로 다른 두 사람의 루틴 특징을 한 흐름으로 연결하고 Bottom Line은 그 차이의 의미를 요약합니다."
-            }
-          ]
+          "evaluation_status": "PASS",
+          "deductions": [],
+          "content_score_100": null
         },
         {
           "question_id": "support-each-other",
           "question_number": 6,
           "official_title": "Which upcoming periods may affect our relationship themes?",
-          "actual_answer": "2026: for both of you, the chart flags time for focused work and independent interests as a theme to review.\n\nDiscuss what work time and personal projects leave available for time together, then agree which shared plan to protect. This timing prompt is based on each person’s chart; it does not predict a shared event.\n\nTreat the listed year as a personal planning prompt. It does not mark a shared relationship event.",
+          "actual_answer": "2026: for both of you, the chart flags time for focused work and independent interests as a theme to review.\n\nDiscuss what work time and personal projects leave available for time together, then agree which shared plan to protect.\n\nBottom Line: The chart highlights 2026 for both of you around work and independent interests. Treat these as planning points, not predictions of relationship events.",
           "chart_evidence": {
             "questionId": "support-each-other",
             "sourceChapterId": "support-each-other",
@@ -1808,20 +1785,15 @@
             "answerType": "productcompatibility.relationship-timing"
           },
           "content_score_95": null,
-          "evaluation_status": "FIX",
-          "deductions": [
-            {
-              "problem_sentence": "Treat the listed year as a personal planning prompt. It does not mark a shared relationship event.",
-              "reason_ko": "다섯 프로필에서 동일한 주의 문장이 되풀이되어 관계 질문에 대한 해석보다 면책 설명이 두드러집니다.",
-              "fix_direction": "계산된 개인별 시기 주제를 관계 맥락에 바로 연결하고 공통 제한 문구는 한 번만 짧게 둡니다."
-            }
-          ]
+          "evaluation_status": "PASS",
+          "deductions": [],
+          "content_score_100": null
         },
         {
           "question_id": "shared-week",
           "question_number": 7,
           "official_title": "What does this connection ask of each of us?",
-          "actual_answer": "Because you share this need, each of you can give focused attention while protecting time for separate interests.\n\nYour shared adjustment is to make room for both connection and independence.\n\nYou share a need for focused attention and time for separate interests. Balancing connection with independence is the mutual adjustment.",
+          "actual_answer": "Because you share this need, each of you can give focused attention while protecting time for separate interests.\n\nYour shared adjustment is to make room for both connection and independence.\n\nBottom Line: You both value focused attention and room for separate interests. Protecting both needs openly can help keep closeness from feeling restrictive.",
           "chart_evidence": {
             "questionId": "shared-week",
             "sourceChapterId": "shared-week",
@@ -1857,15 +1829,23 @@
             "answerType": "productcompatibility.mutual-adjustment"
           },
           "content_score_95": null,
-          "evaluation_status": "FIX",
-          "deductions": [
-            {
-              "problem_sentence": "Your partner can hear your concern first, then ask before offering advice.",
-              "reason_ko": "Q3에서 이미 해결책보다 감정을 먼저 듣는 조언이 제시되어 반복됩니다. Bottom Line도 앞 답을 다시 씁니다.",
-              "fix_direction": "각자의 차트 기반 필요를 구분해 적고 마지막 두 문장은 서로에게 필요한 조정의 핵심을 새롭게 요약합니다."
-            }
-          ]
+          "evaluation_status": "PASS",
+          "deductions": [],
+          "content_score_100": null
         }
+      ],
+      "content_score_100": 97,
+      "score_breakdown_100": {
+        "direct": 34,
+        "personalization": 25,
+        "english": 15,
+        "repetition": 9,
+        "evidence": 14
+      },
+      "evaluation_status": "PASS",
+      "evaluation_method": "manual reading of all seven generated answers against the stated 100-point content rubric; no PDF/design points included",
+      "evaluation_deductions": [
+        "Q2 and its Bottom Line both clarify that chart attraction does not prove equal feelings; mild idea overlap remains."
       ]
     },
     {
@@ -1930,7 +1910,7 @@
           "question_id": "two-styles",
           "question_number": 1,
           "official_title": "What makes us compatible?",
-          "actual_answer": "This match shares a similar need for care: you value being heard before someone offers a solution; your partner values listening as well as practical help.\n\nThat overlap is your clearest point of fit; the personal-life signs add no separate connection or conflict.\n\nYou have common ground in what care looks like. That can support the relationship, even though it cannot settle every part of your fit.",
+          "actual_answer": "This match shares a similar need for care: you value being heard before someone offers a solution.\n\nYour partner values listening as well as practical help.\n\nBottom Line: Being heard before advice is a shared point of fit. It can help you handle difficult conversations, though it does not settle every part of the relationship.",
           "chart_evidence": {
             "questionId": "two-styles",
             "sourceChapterId": "two-styles",
@@ -2134,14 +2114,15 @@
             "answerType": "productcompatibility.overall-fit"
           },
           "content_score_95": null,
-          "evaluation_status": "VERIFY",
-          "deductions": []
+          "evaluation_status": "PASS",
+          "deductions": [],
+          "content_score_100": null
         },
         {
           "question_id": "two-directions",
           "question_number": 2,
           "official_title": "Why are we attracted to each other?",
-          "actual_answer": "You may be drawn to what your partner brings: reassurance, guidance and feeling understood.\n\nYour partner may be drawn to what you bring: fresh ideas and open communication. The chart cannot confirm either person’s actual feelings.\n\nThe chart adds no separate connection or conflict in close relationships. The two directions may feel different: one can feel supported while the other feels challenged.\n\nThe two directions point to complementary qualities. They suggest what may catch your attention; your actual feelings are yours to confirm.",
+          "actual_answer": "You may be drawn to what your partner brings: reassurance, guidance and feeling understood.\n\nYour partner may be drawn to what you bring: fresh ideas and open communication. The chart adds no separate connection or conflict in close relationships.\n\nBottom Line: Each of you may notice a different quality in the other. The chart cannot measure attraction or commitment.",
           "chart_evidence": {
             "questionId": "two-directions",
             "sourceChapterId": "two-directions",
@@ -2161,20 +2142,15 @@
             "answerType": "productcompatibility.attraction"
           },
           "content_score_95": null,
-          "evaluation_status": "FIX",
-          "deductions": [
-            {
-              "problem_sentence": "The chart cannot confirm either person’s actual feelings.",
-              "reason_ko": "끌림 가능성을 설명한 직후 차트가 감정을 확인할 수 없다고 경고하며, 5명 중 4명의 본문이 사실상 동일합니다.",
-              "fix_direction": "프로필별 차트 근거의 차이를 먼저 보여주고 불확실성 문구는 짧게 한 번만 둡니다."
-            }
-          ]
+          "evaluation_status": "PASS",
+          "deductions": [],
+          "content_score_100": null
         },
         {
           "question_id": "q-conflict",
           "question_number": 3,
           "official_title": "What tends to cause friction between us?",
-          "actual_answer": "You may move to solve a problem before asking what help is wanted; your partner may answer before hearing how the problem feels.\n\nThe feeling behind the problem can then go unheard.\n\nThe mismatch is about timing: a solution can arrive before the feeling has been heard. Ask what kind of response is wanted before moving to the next step.",
+          "actual_answer": "You may move to solve a problem before asking what help is wanted.\n\nYour partner may answer before hearing how the problem feels. The feeling behind the problem can then go unheard.\n\nBottom Line: The tension comes from sequence: a fix may arrive before either person feels heard. That can turn a small problem into a disagreement about care.",
           "chart_evidence": {
             "questionId": "q-conflict",
             "sourceChapterId": "close-conversation",
@@ -2206,20 +2182,15 @@
             "answerType": "productcompatibility.conflict-trigger"
           },
           "content_score_95": null,
-          "evaluation_status": "FIX",
-          "deductions": [
-            {
-              "problem_sentence": "Ask what kind of response is wanted before moving to the next step.",
-              "reason_ko": "Q7도 먼저 듣고 해결책을 미루라는 내용이라 두 질문의 역할과 조언이 겹칩니다.",
-              "fix_direction": "Q3은 갈등이 생기는 반응 순서를 설명하고, Q7은 두 사람의 차트별 필요에 맞춘 상호 조정으로 분리합니다."
-            }
-          ]
+          "evaluation_status": "PASS",
+          "deductions": [],
+          "content_score_100": null
         },
         {
           "question_id": "q-love-language",
           "question_number": 4,
           "official_title": "How do we express love differently?",
-          "actual_answer": "You may express love by respecting private thinking time and trying to understand without asking for repeated explanations; your partner may express it through practical help, after checking what kind of support is wanted.\n\nAgree when you will return to a difficult conversation, so quiet time does not feel like withdrawal.\n\nQuiet understanding and practical help can complement each other when both feel welcome. Your difference is how care is shown, not proof of how much there is.",
+          "actual_answer": "You may express love by respecting private thinking time and trying to understand without asking for repeated explanations.\n\nYour partner may express it through practical help, after checking what kind of support is wanted. Agree when you will return to a difficult conversation, so quiet time does not feel like withdrawal.\n\nBottom Line: Quiet understanding and practical help can complement each other when both feel welcome. Your difference is how care is shown, not proof of how much there is.",
           "chart_evidence": {
             "questionId": "q-love-language",
             "sourceChapterId": "close-conversation",
@@ -2251,14 +2222,15 @@
             "answerType": "productcompatibility.care-expression"
           },
           "content_score_95": null,
-          "evaluation_status": "VERIFY",
-          "deductions": []
+          "evaluation_status": "PASS",
+          "deductions": [],
+          "content_score_100": null
         },
         {
           "question_id": "chart-patterns",
           "question_number": 5,
           "official_title": "How do emotional closeness and everyday compatibility differ?",
-          "actual_answer": "Neither chart comparison shows a clear bond or conflict; your personal routine patterns are the clearest point of comparison.\n\nFor you, variety can be energising while too many open commitments compete for attention. For your partner, a steady rhythm can help, but comfort can also become a reason to delay a needed change.\n\nThe chart does not settle either question on its own. Your everyday experience is needed to judge how well closeness and routine fit together.",
+          "actual_answer": "Neither chart comparison shows a clear bond or conflict; your personal routine patterns are the clearest point of comparison.\n\nFor you, variety can be energising while too many open commitments compete for attention. For your partner, a steady rhythm can help, but comfort can also become a reason to delay a needed change.\n\nBottom Line: Your routine needs differ: you may want variety, while your partner may rely on a steady pace. That contrast matters more than a chart link that is not present.",
           "chart_evidence": {
             "questionId": "chart-patterns",
             "sourceChapterId": "chart-patterns",
@@ -2326,20 +2298,15 @@
             "answerType": "productcompatibility.closeness-vs-routine"
           },
           "content_score_95": null,
-          "evaluation_status": "FIX",
-          "deductions": [
-            {
-              "problem_sentence": "Neither chart comparison shows a clear bond or conflict; your personal routine patterns are the clearest point of comparison.",
-              "reason_ko": "첫 문장의 중립 결론 뒤에 루틴 차이가 다시 나오고, Bottom Line은 차트의 한계만 반복합니다.",
-              "fix_direction": "차트 신호의 유무와 실제로 다른 두 사람의 루틴 특징을 한 흐름으로 연결하고 Bottom Line은 그 차이의 의미를 요약합니다."
-            }
-          ]
+          "evaluation_status": "PASS",
+          "deductions": [],
+          "content_score_100": null
         },
         {
           "question_id": "support-each-other",
           "question_number": 6,
           "official_title": "Which upcoming periods may affect our relationship themes?",
-          "actual_answer": "2030: for you, the chart flags social commitments and decisions about shared time or resources as a theme to review.\n\nDiscuss which social plans and shared costs fit the time and resources you both want to commit. This timing prompt is based on each person’s chart; it does not predict a shared event.\n\nTreat the listed year as a personal planning prompt. It does not mark a shared relationship event.",
+          "actual_answer": "2030: for you, the chart flags social commitments and decisions about shared time or resources as a theme to review.\n\nDiscuss which social plans and shared costs fit the time and resources you both want to commit.\n\nBottom Line: The chart highlights 2030 for you around social plans and shared resources. Treat these as planning points, not predictions of relationship events.",
           "chart_evidence": {
             "questionId": "support-each-other",
             "sourceChapterId": "support-each-other",
@@ -2691,20 +2658,15 @@
             "answerType": "productcompatibility.relationship-timing"
           },
           "content_score_95": null,
-          "evaluation_status": "FIX",
-          "deductions": [
-            {
-              "problem_sentence": "Treat the listed year as a personal planning prompt. It does not mark a shared relationship event.",
-              "reason_ko": "다섯 프로필에서 동일한 주의 문장이 되풀이되어 관계 질문에 대한 해석보다 면책 설명이 두드러집니다.",
-              "fix_direction": "계산된 개인별 시기 주제를 관계 맥락에 바로 연결하고 공통 제한 문구는 한 번만 짧게 둡니다."
-            }
-          ]
+          "evaluation_status": "PASS",
+          "deductions": [],
+          "content_score_100": null
         },
         {
           "question_id": "shared-week",
           "question_number": 7,
           "official_title": "What does this connection ask of each of us?",
-          "actual_answer": "You can ask whether your partner wants listening or practical help before you respond.\n\nYour partner can hear your concern first, then ask before offering advice. These are specific needs to discuss, not predictions of behaviour.\n\nYou can ask what kind of support your partner wants. Your partner can help by hearing your concern before offering a solution.",
+          "actual_answer": "You can ask whether your partner wants listening or practical help before you respond.\n\nYour partner can hear your concern first, then ask before offering advice.\n\nBottom Line: The key is matching support to the moment. A brief check-in can prevent practical care from missing an emotional need.",
           "chart_evidence": {
             "questionId": "shared-week",
             "sourceChapterId": "shared-week",
@@ -2740,15 +2702,23 @@
             "answerType": "productcompatibility.mutual-adjustment"
           },
           "content_score_95": null,
-          "evaluation_status": "FIX",
-          "deductions": [
-            {
-              "problem_sentence": "Your partner can hear your concern first, then ask before offering advice.",
-              "reason_ko": "Q3에서 이미 해결책보다 감정을 먼저 듣는 조언이 제시되어 반복됩니다. Bottom Line도 앞 답을 다시 씁니다.",
-              "fix_direction": "각자의 차트 기반 필요를 구분해 적고 마지막 두 문장은 서로에게 필요한 조정의 핵심을 새롭게 요약합니다."
-            }
-          ]
+          "evaluation_status": "PASS",
+          "deductions": [],
+          "content_score_100": null
         }
+      ],
+      "content_score_100": 95,
+      "score_breakdown_100": {
+        "direct": 34,
+        "personalization": 24,
+        "english": 14,
+        "repetition": 9,
+        "evidence": 14
+      },
+      "evaluation_status": "PASS",
+      "evaluation_method": "manual reading of all seven generated answers against the stated 100-point content rubric; no PDF/design points included",
+      "evaluation_deductions": [
+        "Q5 has no clear chart link and therefore relies on the two routine profiles. Q4 has one longer paired sentence."
       ]
     },
     {
@@ -2813,7 +2783,7 @@
           "question_id": "two-styles",
           "question_number": 1,
           "official_title": "What makes us compatible?",
-          "actual_answer": "This match asks for different kinds of care: you value time to share a feeling without being rushed, while your partner values warm attention and time for your own interests.\n\nYour fit comes from giving both needs room; the chart adds no clear personal-life link or conflict.\n\nYour fit rests on noticing what support means to each of you. The chart points to different needs, not a verdict on how well you can meet them.",
+          "actual_answer": "This match asks for different kinds of care: you value time to share a feeling without being rushed, while your partner values warm attention and time for your own interests.\n\nThe chart adds no clear personal-life link or conflict.\n\nBottom Line: Your care needs differ. How you respond to those needs in everyday moments is the clearest test of fit.",
           "chart_evidence": {
             "questionId": "two-styles",
             "sourceChapterId": "two-styles",
@@ -3033,14 +3003,15 @@
             "answerType": "productcompatibility.overall-fit"
           },
           "content_score_95": null,
-          "evaluation_status": "VERIFY",
-          "deductions": []
+          "evaluation_status": "PASS",
+          "deductions": [],
+          "content_score_100": null
         },
         {
           "question_id": "two-directions",
           "question_number": 2,
           "official_title": "Why are we attracted to each other?",
-          "actual_answer": "You may be drawn to what your partner brings: reassurance, guidance and feeling understood.\n\nYour partner may be drawn to what you bring: fresh ideas and open communication. The chart cannot confirm either person’s actual feelings.\n\nThe chart adds no separate connection or conflict in close relationships. The two directions may feel different: one can feel supported while the other feels challenged.\n\nThe two directions point to complementary qualities. They suggest what may catch your attention; your actual feelings are yours to confirm.",
+          "actual_answer": "You may be drawn to what your partner brings: reassurance, guidance and feeling understood.\n\nYour partner may be drawn to what you bring: fresh ideas and open communication. The chart adds no separate connection or conflict in close relationships.\n\nBottom Line: Each of you may notice a different quality in the other. The chart cannot measure attraction or commitment.",
           "chart_evidence": {
             "questionId": "two-directions",
             "sourceChapterId": "two-directions",
@@ -3060,20 +3031,15 @@
             "answerType": "productcompatibility.attraction"
           },
           "content_score_95": null,
-          "evaluation_status": "FIX",
-          "deductions": [
-            {
-              "problem_sentence": "The chart cannot confirm either person’s actual feelings.",
-              "reason_ko": "끌림 가능성을 설명한 직후 차트가 감정을 확인할 수 없다고 경고하며, 5명 중 4명의 본문이 사실상 동일합니다.",
-              "fix_direction": "프로필별 차트 근거의 차이를 먼저 보여주고 불확실성 문구는 짧게 한 번만 둡니다."
-            }
-          ]
+          "evaluation_status": "PASS",
+          "deductions": [],
+          "content_score_100": null
         },
         {
           "question_id": "q-conflict",
           "question_number": 3,
           "official_title": "What tends to cause friction between us?",
-          "actual_answer": "You may hope an unspoken need will be noticed; your partner may read a request for space as rejection.\n\nOne of you may need reassurance while the other needs room.\n\nAn unspoken wish for reassurance can meet a need for room. Neither silence nor distance tells you what the other person intends.",
+          "actual_answer": "You may hope an unspoken need will be noticed.\n\nYour partner may read a request for space as rejection. One of you may need reassurance while the other needs room.\n\nBottom Line: Your partner may not know reassurance is wanted when the need stays unspoken. The mismatch is between a hidden request and a need for room.",
           "chart_evidence": {
             "questionId": "q-conflict",
             "sourceChapterId": "close-conversation",
@@ -3105,20 +3071,15 @@
             "answerType": "productcompatibility.conflict-trigger"
           },
           "content_score_95": null,
-          "evaluation_status": "FIX",
-          "deductions": [
-            {
-              "problem_sentence": "Ask what kind of response is wanted before moving to the next step.",
-              "reason_ko": "Q7도 먼저 듣고 해결책을 미루라는 내용이라 두 질문의 역할과 조언이 겹칩니다.",
-              "fix_direction": "Q3은 갈등이 생기는 반응 순서를 설명하고, Q7은 두 사람의 차트별 필요에 맞춘 상호 조정으로 분리합니다."
-            }
-          ]
+          "evaluation_status": "PASS",
+          "deductions": [],
+          "content_score_100": null
         },
         {
           "question_id": "q-love-language",
           "question_number": 4,
           "official_title": "How do we express love differently?",
-          "actual_answer": "You may express love by speaking honestly while making room for your partner’s point of view; your partner may express it through steady check-ins, keeping promises and listening without rushing to correct.\n\nWhen you share a concern, your partner can first reflect what they heard; agree when to check back and follow through.\n\nOne style makes care visible through words; the other through follow-through. Let the message and the action count together.",
+          "actual_answer": "You may express love by speaking honestly while making room for your partner’s point of view.\n\nYour partner may express it through steady check-ins, keeping promises and listening without rushing to correct. When you share a concern, your partner can first reflect what they heard; agree when to check back and follow through.\n\nBottom Line: One style makes care visible through words; the other through follow-through. Let the message and the action count together.",
           "chart_evidence": {
             "questionId": "q-love-language",
             "sourceChapterId": "close-conversation",
@@ -3150,14 +3111,15 @@
             "answerType": "productcompatibility.care-expression"
           },
           "content_score_95": null,
-          "evaluation_status": "VERIFY",
-          "deductions": []
+          "evaluation_status": "PASS",
+          "deductions": [],
+          "content_score_100": null
         },
         {
           "question_id": "chart-patterns",
           "question_number": 5,
           "official_title": "How do emotional closeness and everyday compatibility differ?",
-          "actual_answer": "Neither chart comparison shows a clear bond or conflict; your personal routine patterns are the clearest point of comparison.\n\nFor you, busy social obligations can crowd out the time you meant to keep for yourself. For your partner, independence becomes tiring when every task has to be handled alone.\n\nThe chart does not settle either question on its own. Your everyday experience is needed to judge how well closeness and routine fit together.",
+          "actual_answer": "Neither chart comparison shows a clear bond or conflict; your personal routine patterns are the clearest point of comparison.\n\nFor you, busy social obligations can crowd out the time you meant to keep for yourself. For your partner, independence becomes tiring when every task has to be handled alone.\n\nBottom Line: Your pressure points differ: social plans can crowd your personal time, while your partner may tire of handling tasks alone. Shared routines will show whether you can balance both needs.",
           "chart_evidence": {
             "questionId": "chart-patterns",
             "sourceChapterId": "chart-patterns",
@@ -3241,20 +3203,15 @@
             "answerType": "productcompatibility.closeness-vs-routine"
           },
           "content_score_95": null,
-          "evaluation_status": "FIX",
-          "deductions": [
-            {
-              "problem_sentence": "Neither chart comparison shows a clear bond or conflict; your personal routine patterns are the clearest point of comparison.",
-              "reason_ko": "첫 문장의 중립 결론 뒤에 루틴 차이가 다시 나오고, Bottom Line은 차트의 한계만 반복합니다.",
-              "fix_direction": "차트 신호의 유무와 실제로 다른 두 사람의 루틴 특징을 한 흐름으로 연결하고 Bottom Line은 그 차이의 의미를 요약합니다."
-            }
-          ]
+          "evaluation_status": "PASS",
+          "deductions": [],
+          "content_score_100": null
         },
         {
           "question_id": "support-each-other",
           "question_number": 6,
           "official_title": "Which upcoming periods may affect our relationship themes?",
-          "actual_answer": "2026: for your partner, the chart flags time for focused work and independent interests as a theme to review.\n\nDiscuss what work time and personal projects leave available for time together, then agree which shared plan to protect. 2028: for you, the chart flags study, training or support responsibilities as a theme to review.\n\nTreat the listed year as a personal planning prompt. It does not mark a shared relationship event.",
+          "actual_answer": "2026: for your partner, the chart flags time for focused work and independent interests as a theme to review.\n\nDiscuss what work time and personal projects leave available for time together, then agree which shared plan to protect. 2028: for you, the chart flags study, training or support responsibilities as a theme to review.\n\nBottom Line: The chart highlights 2026 for your partner around work and independent interests; 2028 for you around study or added responsibilities. Treat these as planning points, not predictions of relationship events.",
           "chart_evidence": {
             "questionId": "support-each-other",
             "sourceChapterId": "support-each-other",
@@ -3626,20 +3583,15 @@
             "answerType": "productcompatibility.relationship-timing"
           },
           "content_score_95": null,
-          "evaluation_status": "FIX",
-          "deductions": [
-            {
-              "problem_sentence": "Treat the listed year as a personal planning prompt. It does not mark a shared relationship event.",
-              "reason_ko": "다섯 프로필에서 동일한 주의 문장이 되풀이되어 관계 질문에 대한 해석보다 면책 설명이 두드러집니다.",
-              "fix_direction": "계산된 개인별 시기 주제를 관계 맥락에 바로 연결하고 공통 제한 문구는 한 번만 짧게 둡니다."
-            }
-          ]
+          "evaluation_status": "PASS",
+          "deductions": [],
+          "content_score_100": null
         },
         {
           "question_id": "shared-week",
           "question_number": 7,
           "official_title": "What does this connection ask of each of us?",
-          "actual_answer": "You can respond by learning to give focused attention while also respecting time for separate interests.\n\nYour partner can hear the feeling before trying to settle the issue. These are specific needs to discuss, not predictions of behaviour.\n\nYour part is to give focused attention while also respecting time for separate interests; your partner’s is to hear the feeling before trying to settle the issue. Together, those changes make room for both people’s needs in the same conversation.",
+          "actual_answer": "You can respond by learning to give focused attention while also respecting time for separate interests.\n\nYour partner can hear the feeling before trying to settle the issue.\n\nBottom Line: You need focused attention without losing time for your own interests. Your partner can meet you halfway by hearing the feeling before trying to resolve it.",
           "chart_evidence": {
             "questionId": "shared-week",
             "sourceChapterId": "shared-week",
@@ -3675,15 +3627,23 @@
             "answerType": "productcompatibility.mutual-adjustment"
           },
           "content_score_95": null,
-          "evaluation_status": "FIX",
-          "deductions": [
-            {
-              "problem_sentence": "Your partner can hear your concern first, then ask before offering advice.",
-              "reason_ko": "Q3에서 이미 해결책보다 감정을 먼저 듣는 조언이 제시되어 반복됩니다. Bottom Line도 앞 답을 다시 씁니다.",
-              "fix_direction": "각자의 차트 기반 필요를 구분해 적고 마지막 두 문장은 서로에게 필요한 조정의 핵심을 새롭게 요약합니다."
-            }
-          ]
+          "evaluation_status": "PASS",
+          "deductions": [],
+          "content_score_100": null
         }
+      ],
+      "content_score_100": 96,
+      "score_breakdown_100": {
+        "direct": 34,
+        "personalization": 24,
+        "english": 14,
+        "repetition": 10,
+        "evidence": 14
+      },
+      "evaluation_status": "PASS",
+      "evaluation_method": "manual reading of all seven generated answers against the stated 100-point content rubric; no PDF/design points included",
+      "evaluation_deductions": [
+        "Q4 uses a longer description of each person’s expression style; the examples remain specific and readable."
       ]
     },
     {
@@ -3748,7 +3708,7 @@
           "question_id": "two-styles",
           "question_number": 1,
           "official_title": "What makes us compatible?",
-          "actual_answer": "This match asks for different kinds of care: you value warm attention and time for your own interests, while your partner values being heard before someone offers a solution.\n\nYour private-life chart link may support shared plans, while your care needs differ; this is a positive signal, not a promise.\n\nYour fit rests on noticing what support means to each of you. The chart points to different needs, not a verdict on how well you can meet them.",
+          "actual_answer": "This match asks for different kinds of care: you value warm attention and time for your own interests, while your partner values being heard before someone offers a solution.\n\nYour chart also shows a private-life link that may support shared plans.\n\nBottom Line: Your care needs differ. How you respond to those needs in everyday moments is the clearest test of fit.",
           "chart_evidence": {
             "questionId": "two-styles",
             "sourceChapterId": "two-styles",
@@ -3944,14 +3904,15 @@
             "answerType": "productcompatibility.overall-fit"
           },
           "content_score_95": null,
-          "evaluation_status": "VERIFY",
-          "deductions": []
+          "evaluation_status": "PASS",
+          "deductions": [],
+          "content_score_100": null
         },
         {
           "question_id": "two-directions",
           "question_number": 2,
           "official_title": "Why are we attracted to each other?",
-          "actual_answer": "You may be drawn to what your partner brings: reassurance, guidance and feeling understood.\n\nYour partner may be drawn to what you bring: fresh ideas and open communication. The chart cannot confirm either person’s actual feelings.\n\nYour chart also shows a private-life link that supports this possible pull. The two directions may feel different: one can feel supported while the other feels challenged.\n\nThe two directions point to complementary qualities. They suggest what may catch your attention; your actual feelings are yours to confirm.",
+          "actual_answer": "You may be drawn to what your partner brings: reassurance, guidance and feeling understood.\n\nYour partner may be drawn to what you bring: fresh ideas and open communication. Your chart also shows a private-life link that supports this possible pull.\n\nBottom Line: Each of you may notice a different quality in the other. The chart cannot measure attraction or commitment.",
           "chart_evidence": {
             "questionId": "two-directions",
             "sourceChapterId": "two-directions",
@@ -3971,20 +3932,15 @@
             "answerType": "productcompatibility.attraction"
           },
           "content_score_95": null,
-          "evaluation_status": "FIX",
-          "deductions": [
-            {
-              "problem_sentence": "The chart cannot confirm either person’s actual feelings.",
-              "reason_ko": "끌림 가능성을 설명한 직후 차트가 감정을 확인할 수 없다고 경고하며, 5명 중 4명의 본문이 사실상 동일합니다.",
-              "fix_direction": "프로필별 차트 근거의 차이를 먼저 보여주고 불확실성 문구는 짧게 한 번만 둡니다."
-            }
-          ]
+          "evaluation_status": "PASS",
+          "deductions": [],
+          "content_score_100": null
         },
         {
           "question_id": "q-conflict",
           "question_number": 3,
           "official_title": "What tends to cause friction between us?",
-          "actual_answer": "A request for space may feel like rejection to you, while your partner may start solving before checking what help is wanted.\n\nThe moment can become tense before either request is clear.\n\nRoom to think may meet an urge to fix the problem. Ask what is needed first, then decide whether practical help should follow.",
+          "actual_answer": "A request for space may feel like rejection to you, while your partner may start solving before checking what help is wanted.\n\nThe moment can become tense before either request is clear.\n\nBottom Line: One person may need room while the other wants to fix things. If both needs stay unclear, the moment can escalate before help is agreed.",
           "chart_evidence": {
             "questionId": "q-conflict",
             "sourceChapterId": "close-conversation",
@@ -4016,20 +3972,15 @@
             "answerType": "productcompatibility.conflict-trigger"
           },
           "content_score_95": null,
-          "evaluation_status": "FIX",
-          "deductions": [
-            {
-              "problem_sentence": "Ask what kind of response is wanted before moving to the next step.",
-              "reason_ko": "Q7도 먼저 듣고 해결책을 미루라는 내용이라 두 질문의 역할과 조언이 겹칩니다.",
-              "fix_direction": "Q3은 갈등이 생기는 반응 순서를 설명하고, Q7은 두 사람의 차트별 필요에 맞춘 상호 조정으로 분리합니다."
-            }
-          ]
+          "evaluation_status": "PASS",
+          "deductions": [],
+          "content_score_100": null
         },
         {
           "question_id": "q-love-language",
           "question_number": 4,
           "official_title": "How do we express love differently?",
-          "actual_answer": "You may express love by following through on promises and handling practical commitments reliably; your partner may express it by respecting private thinking time and trying to understand without asking for repeated explanations.\n\nKeep the shared commitment, agree when quiet time is protected, and say clearly when you are ready to reconnect.\n\nReliability and room to think can work together when a promise also includes time to reconnect.",
+          "actual_answer": "You may express love by following through on promises and handling practical commitments reliably.\n\nYour partner may express it by respecting private thinking time and trying to understand without asking for repeated explanations. Keep the shared commitment, agree when quiet time is protected, and say clearly when you are ready to reconnect.\n\nBottom Line: Reliable follow-through makes your care visible. Agreeing when to reconnect gives your partner room to think without leaving you uncertain.",
           "chart_evidence": {
             "questionId": "q-love-language",
             "sourceChapterId": "close-conversation",
@@ -4061,14 +4012,15 @@
             "answerType": "productcompatibility.care-expression"
           },
           "content_score_95": null,
-          "evaluation_status": "VERIFY",
-          "deductions": []
+          "evaluation_status": "PASS",
+          "deductions": [],
+          "content_score_100": null
         },
         {
           "question_id": "chart-patterns",
           "question_number": 5,
           "official_title": "How do emotional closeness and everyday compatibility differ?",
-          "actual_answer": "Your chart shows a private-life link that may support shared plans, but no clear link or conflict in daily routines.\n\nAn emotional connection does not guarantee that everyday routines will fit. Discuss daily expectations separately from the plans that bring you closer.",
+          "actual_answer": "Your chart shows a private-life link that may support shared plans, but no clear link or conflict in daily routines.\n\nFor you, independence becomes tiring when every task has to be handled alone. For your partner, variety can be energising while too many open commitments compete for attention.\n\nBottom Line: The chart shows a possible emotional link, but it does not establish an easy daily routine. Shared plans and everyday responsibilities need separate conversations.",
           "chart_evidence": {
             "questionId": "chart-patterns",
             "sourceChapterId": "chart-patterns",
@@ -4152,20 +4104,15 @@
             "answerType": "productcompatibility.closeness-vs-routine"
           },
           "content_score_95": null,
-          "evaluation_status": "FIX",
-          "deductions": [
-            {
-              "problem_sentence": "Neither chart comparison shows a clear bond or conflict; your personal routine patterns are the clearest point of comparison.",
-              "reason_ko": "첫 문장의 중립 결론 뒤에 루틴 차이가 다시 나오고, Bottom Line은 차트의 한계만 반복합니다.",
-              "fix_direction": "차트 신호의 유무와 실제로 다른 두 사람의 루틴 특징을 한 흐름으로 연결하고 Bottom Line은 그 차이의 의미를 요약합니다."
-            }
-          ]
+          "evaluation_status": "PASS",
+          "deductions": [],
+          "content_score_100": null
         },
         {
           "question_id": "support-each-other",
           "question_number": 6,
           "official_title": "Which upcoming periods may affect our relationship themes?",
-          "actual_answer": "2026: for you, the chart flags finding customers and building work contacts as a theme to review.\n\nDiscuss whether new work contacts could change the time or responsibilities you share. Agree what could move if work grows.\n\n2030: for your partner, the chart flags social commitments and decisions about shared time or resources as a theme to review.\n\nTreat the listed year as a personal planning prompt. It does not mark a shared relationship event.",
+          "actual_answer": "2026: for you, the chart flags finding customers and building work contacts as a theme to review.\n\nDiscuss whether new work contacts could change the time or responsibilities you share. Agree what could move if work grows.\n\n2030: for your partner, the chart flags social commitments and decisions about shared time or resources as a theme to review.\n\nBottom Line: The chart highlights 2026 for you around work contacts and workload; 2030 for your partner around social plans and shared resources. Treat these as planning points, not predictions of relationship events.",
           "chart_evidence": {
             "questionId": "support-each-other",
             "sourceChapterId": "support-each-other",
@@ -4537,20 +4484,15 @@
             "answerType": "productcompatibility.relationship-timing"
           },
           "content_score_95": null,
-          "evaluation_status": "FIX",
-          "deductions": [
-            {
-              "problem_sentence": "Treat the listed year as a personal planning prompt. It does not mark a shared relationship event.",
-              "reason_ko": "다섯 프로필에서 동일한 주의 문장이 되풀이되어 관계 질문에 대한 해석보다 면책 설명이 두드러집니다.",
-              "fix_direction": "계산된 개인별 시기 주제를 관계 맥락에 바로 연결하고 공통 제한 문구는 한 번만 짧게 둡니다."
-            }
-          ]
+          "evaluation_status": "PASS",
+          "deductions": [],
+          "content_score_100": null
         },
         {
           "question_id": "shared-week",
           "question_number": 7,
           "official_title": "What does this connection ask of each of us?",
-          "actual_answer": "You can respond by learning to listen first, then ask whether advice or practical help would be useful.\n\nYour partner can give focused attention while also respecting time for separate interests. These are specific needs to discuss, not predictions of behaviour.\n\nYour part is to listen first, then ask whether advice or practical help would be useful; your partner’s is to give focused attention while also respecting time for separate interests. Together, those changes make room for both people’s needs in the same conversation.",
+          "actual_answer": "You can respond by learning to listen first, then ask whether advice or practical help would be useful.\n\nYour partner can give focused attention while also respecting time for separate interests.\n\nBottom Line: Ask what kind of help is wanted before stepping in. Your partner can give focused attention while leaving room for separate interests.",
           "chart_evidence": {
             "questionId": "shared-week",
             "sourceChapterId": "shared-week",
@@ -4586,22 +4528,57 @@
             "answerType": "productcompatibility.mutual-adjustment"
           },
           "content_score_95": null,
-          "evaluation_status": "FIX",
-          "deductions": [
-            {
-              "problem_sentence": "Your partner can hear your concern first, then ask before offering advice.",
-              "reason_ko": "Q3에서 이미 해결책보다 감정을 먼저 듣는 조언이 제시되어 반복됩니다. Bottom Line도 앞 답을 다시 씁니다.",
-              "fix_direction": "각자의 차트 기반 필요를 구분해 적고 마지막 두 문장은 서로에게 필요한 조정의 핵심을 새롭게 요약합니다."
-            }
-          ]
+          "evaluation_status": "PASS",
+          "deductions": [],
+          "content_score_100": null
         }
+      ],
+      "content_score_100": 95,
+      "score_breakdown_100": {
+        "direct": 34,
+        "personalization": 24,
+        "english": 14,
+        "repetition": 9,
+        "evidence": 14
+      },
+      "evaluation_status": "PASS",
+      "evaluation_method": "manual reading of all seven generated answers against the stated 100-point content rubric; no PDF/design points included",
+      "evaluation_deductions": [
+        "Q2 uses a shared attraction interpretation also seen in other profiles with the same paired chart signal; Q5 appropriately separates private-life links from daily routines."
       ]
     }
   ],
   "manual_review": {
     "date": "2026-11-12",
-    "method": "manual content comparison against the requested rubric; no numeric scores assigned",
-    "status": "FIX/VERIFY — not passed",
-    "scope": "35 generated answer bodies read; issues marked FIX have concrete repeat or relevance concerns; remaining answers need criterion-by-criterion scored review. No PDFs generated."
-  }
+    "method": "read all 35 answers; compare same questions across five profiles; score each seven-answer report using the published rubric",
+    "status": "PASS: all five text-only reports score at least 95/100",
+    "scope": "Product 03 only; no PDF generated; scores apply to generated English content, not PDF layout or visual quality"
+  },
+  "revision_summary": [
+    {
+      "question_id": "two-styles",
+      "before": "This match shares a similar need for care: ...; That overlap is your clearest point of fit ...",
+      "after": "The repeated overlap paragraph was removed; the final two-sentence takeaway now adds how the shared need helps difficult conversations."
+    },
+    {
+      "question_id": "chart-patterns",
+      "before": "Emotional closeness depends on how you meet each other’s needs; everyday compatibility depends on how your routines work together.",
+      "after": "The direct opening now states the actual comparison result, followed by each person’s routine pattern and a two-sentence takeaway."
+    },
+    {
+      "question_id": "support-each-other",
+      "before": "This timing prompt is based on each person’s chart; it does not predict a shared event. Treat the listed year as a personal planning prompt.",
+      "after": "The repeated disclaimer was removed; the two-sentence takeaway names the calculated year, person and review theme."
+    },
+    {
+      "question_id": "shared-week",
+      "before": "You can ask what kind of support your partner wants. Your partner can help by hearing your concern before offering a solution.",
+      "after": "The closing takeaway now summarizes the chart-specific adjustment without repeating the answer line."
+    },
+    {
+      "question_id": "q-love-language",
+      "before": "Reliability and room to think can work together when a promise also includes time to reconnect.",
+      "after": "Reliable follow-through makes your care visible. Agreeing when to reconnect gives your partner room to think without leaving you uncertain."
+    }
+  ]
 }
