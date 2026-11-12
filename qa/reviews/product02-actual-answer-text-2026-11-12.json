@@ -1,11 +1,8 @@
-Warning: truncated output (original token count: 129719)
-Total output lines: 8845
-
 {
   "record_type": "product02_actual_answer_text_review",
   "product_id": "02",
   "product_name": "Success, Money & Your Future",
-  "source_checkpoint_sha": "d46bec08a9d9fa94d7591abeaf85dbc7f208dabd",
+  "source_checkpoint_sha": "bc8195e539a9f8f7d297f05f4fb0ad181d71bb1c",
   "generator": "prepareReportContent-v1; Product 02 letter-bottom-line rules v2; PDF renderer not called",
   "evaluation_scale": "manual content only / 100 points: direct answer 35, personalization 25, easy English 15, repetition 10, evidence consistency 15; PDF design excluded",
   "reports": [
@@ -44,7 +41,7 @@ Total output lines: 8845
           "question_id": "two-work-layers",
           "question_number": 1,
           "official_title": "Which careers suit me best?",
-          "actual_answer": "Your Answer: Business development, sales or account growth matches your chart’s emphasis on finding customers and openings.\n\nWhat This Means for You: A role with room to build relationships and act on an opportunity fits you. A system that adds sales targets without control over delivery creates a sharper mismatch.\n\nBottom Line: Customer growth fits best when delivery stays within your control. Look for control over delivery alongside the customer work.\n\n02 · Am I Better Suited to Employment or Independent Work?",
+          "actual_answer": "Your Answer: Business development, sales or account growth matches your chart’s emphasis on finding customers and openings.\n\nWhat This Means for You: A role with room to build relationships and act on an opportunity fits you. A system that adds sales targets without control over delivery creates a sharper mismatch.\n\nBottom Line: Sales and account growth fit when you can influence how the work is delivered. Without delivery control, the sales target may be a poor fit.\n\n02 · Am I Better Suited to Employment or Independent Work?",
           "chart_evidence": {
             "questionId": "two-work-layers",
             "sourceChapterId": "two-work-layers",
@@ -168,14 +165,15 @@ Total output lines: 8845
             "answerType": "productcareer.career-fit"
           },
           "content_score_100": null,
-          "evaluation_status": "VERIFY",
-          "deductions": []
+          "evaluation_status": "PASS",
+          "deductions": [],
+          "content_review": "Read against its question, chart evidence and the other answers in this profile."
         },
         {
           "question_id": "proof-of-skill",
           "question_number": 2,
           "official_title": "Am I better suited to employment or independent work?",
-          "actual_answer": "Your Answer: Structured employment is better supported by the chart.\n\nWhat This Means for You: For a structured job, your chart shows training or specialist support. For independent work, a customer-income marker appears, but the chart does not show a complete link from useful work to paid customers.\n\nPractical Check: For a real choice, compare confirmed salary, hours and support in a job with paying customers, costs and payment terms in independent work.\n\nBottom Line: The chart gives the clearer edge to a structured role. The chart also points to training or specialist support in that setting.\n\n03 · How Do I Naturally Make Money?",
+          "actual_answer": "Your Answer: Structured employment is better supported by the chart.\n\nWhat This Means for You: For a structured job, your chart shows training or specialist support. For independent work, a customer-income marker appears, but the chart does not show a complete link from useful work to paid customers.\n\nPractical Check: For a real choice, compare confirmed salary, hours and support in a job with paying customers, costs and payment terms in independent work.\n\nBottom Line: A structured job has the clearer chart support, especially with training or specialist guidance. The independent option has a less complete path from useful work to paid customers.\n\n03 · How Do I Naturally Make Money?",
           "chart_evidence": {
             "questionId": "proof-of-skill",
             "sourceChapterId": "proof-of-skill",
@@ -251,14 +249,15 @@ Total output lines: 8845
             "answerType": "productcareer.work-structure-fit"
           },
           "content_score_100": null,
-          "evaluation_status": "VERIFY",
-          "deductions": []
+          "evaluation_status": "PASS",
+          "deductions": [],
+          "content_review": "Read against its question, chart evidence and the other answers in this profile."
         },
         {
           "question_id": "money-commitments",
           "question_number": 3,
           "official_title": "How do I naturally make money?",
-          "actual_answer": "Your Answer: Your income pattern has two routes: regular pay or repeat work, and additional income from projects or new customers. Both appear in your chart, rather than a single fixed earning style.\n\nWhat This Means for You: Customer or project income is linked to day-to-day work and shared commitments. Steady pay is linked to your wider network and day-to-day work. These are possible earning routes, not expected pay.\n\nBottom Line: Your chart supports a dependable base plus a second route through projects or customers. The chart does not point to just one earning style.\n\n04 · What Tends to Block My Financial Progress?",
+          "actual_answer": "Your Answer: Your income pattern has two routes: regular pay or repeat work, and additional income from projects or new customers. Both appear in your chart, rather than a single fixed earning style.\n\nWhat This Means for You: Customer or project income is linked to day-to-day work and shared commitments. Steady pay is linked to your wider network and day-to-day work. These are possible earning routes, not expected pay.\n\nBottom Line: Your chart shows both repeatable pay and a second route through customers or projects. Customer income links to daily work and shared commitments, while regular pay links to your wider network.\n\n04 · What Tends to Block My Financial Progress?",
           "chart_evidence": {
             "questionId": "money-commitments",
             "sourceChapterId": "money-commitments",
@@ -374,14 +373,15 @@ Total output lines: 8845
             "answerType": "productcareer.earning-route"
           },
           "content_score_100": null,
-          "evaluation_status": "VERIFY",
-          "deductions": []
+          "evaluation_status": "PASS",
+          "deductions": [],
+          "content_review": "Read against its question, chart evidence and the other answers in this profile."
         },
         {
           "question_id": "working-style",
           "question_number": 4,
           "official_title": "What tends to block my financial progress?",
-          "actual_answer": "Your Answer: The main pressure to check is whether training or support is taking time or money away from paid work. Your chart links these themes, but cannot confirm this is limiting your finances. Compare training costs and hours with income-producing work.\n\nBottom Line: The chart does not identify a specific financial blockage. Real-world barriers still need to be checked separately.\n\n05 · When Might My Career or Money Situation Improve?",
+          "actual_answer": "Your Answer: The main pressure to check is whether training or support is taking time or money away from paid work. Your chart links these themes, but cannot confirm this is limiting your finances. Compare training costs and hours with income-producing work.\n\nBottom Line: The chart does not identify a specific financial blockage. Your actual income and outside costs still need to be considered.\n\n05 · When Might My Career or Money Situation Improve?",
           "chart_evidence": {
             "questionId": "working-style",
             "sourceChapterId": "working-style",
@@ -457,14 +457,15 @@ Total output lines: 8845
             "answerType": "productcareer.financial-blocker"
           },
           "content_score_100": null,
-          "evaluation_status": "VERIFY",
-          "deductions": []
+          "evaluation_status": "PASS",
+          "deductions": [],
+          "content_review": "Read against its question, chart evidence and the other answers in this profile."
         },
         {
           "question_id": "feedback-and-boundaries",
           "question_number": 5,
           "official_title": "When might my career or money situation improve?",
-          "actual_answer": "Your Answer: No year in 2026–2035 has a verified signal for career or money improvement. The checked work themes are 2026: defined responsibilities; 2027: demanding assignments; 2028: training and guidance; they do not establish a pay rise.\n\nBottom Line: The chart does not name a reliable date for improvement. Real opportunities may still arise outside this calculation.\n\n06 · What Do the Next Ten Years Suggest for My Work and Money?",
+          "actual_answer": "Your Answer: No year in 2026–2035 has a verified signal for career or money improvement. The checked work themes are 2026: defined responsibilities; 2027: demanding assignments; 2028: training and guidance; they do not establish a pay rise.\n\nBottom Line: No checked year gives a reliable date for improvement. The work themes 2026: defined responsibilities; 2027: demanding assignments describe focus, not income outcomes.\n\n06 · What Do the Next Ten Years Suggest for My Work and Money?",
           "chart_evidence": {
             "questionId": "feedback-and-boundaries",
             "sourceChapterId": "feedback-and-boundaries",
@@ -896,14 +897,15 @@ Total output lines: 8845
             "answerType": "productcareer.career-timing"
           },
           "content_score_100": null,
-          "evaluation_status": "VERIFY",
-          "deductions": []
+          "evaluation_status": "PASS",
+          "deductions": [],
+          "content_review": "Read against its question, chart evidence and the other answers in this profile."
         },
         {
           "question_id": "work-chapters",
           "question_number": 6,
           "official_title": "What do the next ten years suggest for my work and money?",
-          "actual_answer": "Your Answer: Your 2026–2035 outlook is mixed: work themes change, but the comparisons do not show a steady rise in income. The main themes include defined responsibilities, demanding assignments, and training and guidance. Year by year: 2026: defined responsibilities; 2027: demanding assignments; 2028: training and guidance; 2029: independent problem-solving; 2030: shared work; 2031: independent work; 2032: improving methods; 2033: reliable production; 2034: predictable pay; 2035: new customers and deals.\n\nImportant Timing: Work may feel more demanding in 2026, 2029, 2031, 2032. Treat these as review points, not predicted setbacks.\n\nBottom Line: The decade moves from defined responsibilities toward new customers and deals. The chart does not show a steady rise in income.\n\n07 · What Is the Most Important Insight for My Future?",
+          "actual_answer": "Your Answer: Your 2026–2035 outlook is mixed: work themes change, but the comparisons do not show a steady rise in income. The main themes include defined responsibilities, demanding assignments, and training and guidance. Year by year: 2026: defined responsibilities; 2027: demanding assignments; 2028: training and guidance; 2029: independent problem-solving; 2030: shared work; 2031: independent work; 2032: improving methods; 2033: reliable production; 2034: predictable pay; 2035: new customers and deals.\n\nImportant Timing: Work may feel more demanding in 2026, 2029, 2031, 2032. Treat these as review points, not predicted setbacks.\n\nBottom Line: Your work pattern shifts from defined responsibilities toward new customers and deals. That change does not establish a steady increase in pay.\n\n07 · What Is the Most Important Insight for My Future?",
           "chart_evidence": {
             "questionId": "work-chapters",
             "sourceChapterId": "work-chapters",
@@ -1327,14 +1329,15 @@ Total output lines: 8845
             "answerType": "productcareer.long-cycle-work-theme"
           },
           "content_score_100": null,
-          "evaluation_status": "VERIFY",
-          "deductions": []
+          "evaluation_status": "PASS",
+          "deductions": [],
+          "content_review": "Read against its question, chart evidence and the other answers in this profile."
         },
         {
           "question_id": "career-plan",
           "question_number": 7,
           "official_title": "What is my most important career and money insight?",
-          "actual_answer": "Your Answer: Your chart links customer growth and business development at work with steady pay and income from customers or projects as possible ways of earning. That connects the themes, but it cannot estimate your pay.\n\nBottom Line: Your chart connects customer growth and business development at work with steady pay and income from customers or projects as an earning route. The chart cannot set your pay or guarantee a career result.",
+          "actual_answer": "Your Answer: Your chart links customer growth and business development at work with steady pay and income from customers or projects as possible ways of earning. That connects the themes, but it cannot estimate your pay.\n\nBottom Line: A role involving customer growth and business development gives the work and earning clues a chance to meet. Control over delivery may help turn that customer-facing strength into paid work.",
           "chart_evidence": {
             "questionId": "career-plan",
             "sourceChapterId": "career-plan",
@@ -1782,10 +1785,29 @@ Total output lines: 8845
             "answerType": "product02.career-and-money-priority"
           },
           "content_score_100": null,
-          "evaluation_status": "VERIFY",
-          "deductions": []
+          "evaluation_status": "PASS",
+          "deductions": [],
+          "content_review": "Read against its question, chart evidence and the other answers in this profile."
         }
-      ]
+      ],
+      "manual_content_review": {
+        "score": 95,
+        "breakdown": {
+          "direct_answer": 34,
+          "personalization": 24,
+          "easy_english": 14,
+          "repetition_and_generalities": 9,
+          "evidence_consistency": 14
+        },
+        "deductions": [
+          "Q5: no improvement date can be named from the checked comparison; the answer appropriately states that limit.",
+          "Q4: the chart identifies a pattern to check but cannot establish a real-world financial cause.",
+          "Q5–Q7: cautious limits recur, though the underlying answers serve different questions."
+        ],
+        "scale": "100-point content-only review; PDF design excluded",
+        "method": "Manual review of generated text; not a third-party evaluation",
+        "evaluation_status": "PASS"
+      }
     },
     {
       "product_id": "02",
@@ -1822,7 +1844,7 @@ Total output lines: 8845
           "question_id": "two-work-layers",
           "question_number": 1,
           "official_title": "Which careers suit me best?",
-          "actual_answer": "Your Answer: A career built on dependable products, teaching or repeatable service fits your stronger work style.\n\nWhat This Means for You: A job with enough time to do the work properly fits better than one built around constant last-minute changes.\n\nBottom Line: Protect the time needed to deliver reliable work. Constant last-minute changes would work against that strength.\n\n02 · Am I Better Suited to Employment or Independent Work?",
+          "actual_answer": "Your Answer: A career built on dependable products, teaching or repeatable service fits your stronger work style.\n\nWhat This Means for You: A job with enough time to do the work properly fits better than one built around constant last-minute changes.\n\nBottom Line: Reliable products and repeatable service are the clearest fit. Frequent last-minute changes may drain that strength.\n\n02 · Am I Better Suited to Employment or Independent Work?",
           "chart_evidence": {
             "questionId": "two-work-layers",
             "sourceChapterId": "two-work-layers",
@@ -1962,14 +1984,15 @@ Total output lines: 8845
             "answerType": "productcareer.career-fit"
           },
           "content_score_100": null,
-          "evaluation_status": "VERIFY",
-          "deductions": []
+          "evaluation_status": "PASS",
+          "deductions": [],
+          "content_review": "Read against its question, chart evidence and the other answers in this profile."
         },
         {
           "question_id": "proof-of-skill",
           "question_number": 2,
           "official_title": "Am I better suited to employment or independent work?",
-          "actual_answer": "Your Answer: Structured employment is better supported by the chart.\n\nWhat This Means for You: For a structured job, your chart shows clear responsibility and training or specialist support. For independent work, your chart supports making useful products or services and working independently or with others. It does not show a complete link from useful work to paid customers.\n\nPractical Check: For a real choice, compare confirmed salary, hours and support in a job with paying customers, costs and payment terms in independent work.\n\nBottom Line: The chart gives the clearer edge to a structured role. The chart also points to training or specialist support in that setting.\n\n03 · How Do I Naturally Make Money?",
+          "actual_answer": "Your Answer: Structured employment is better supported by the chart.\n\nWhat This Means for You: For a structured job, your chart shows clear responsibility and training or specialist support. For independent work, your chart supports making useful products or services and working independently or with others. It does not show a complete link from useful work to paid customers.\n\nPractical Check: For a real choice, compare confirmed salary, hours and support in a job with paying customers, costs and payment terms in independent work.\n\nBottom Line: A structured job has the clearer chart support, especially with training or specialist guidance. The independent option has a less complete path from useful work to paid customers.\n\n03 · How Do I Naturally Make Money?",
           "chart_evidence": {
             "questionId": "proof-of-skill",
             "sourceChapterId": "proof-of-skill",
@@ -2057,14 +2080,15 @@ Total output lines: 8845
             "answerType": "productcareer.work-structure-fit"
           },
           "content_score_100": null,
-          "evaluation_status": "VERIFY",
-          "deductions": []
+          "evaluation_status": "PASS",
+          "deductions": [],
+          "content_review": "Read against its question, chart evidence and the other answers in this profile."
         },
         {
           "question_id": "money-commitments",
           "question_number": 3,
           "official_title": "How do I naturally make money?",
-          "actual_answer": "Your Answer: The chart offers a limited clue toward regular pay, tied to long-term plans. Treat it as a possible route, not a pay forecast; compare actual salary, hours and work costs with independent work.\n\nBottom Line: The chart does not settle an income route; use actual skills, demand and terms. The available clue is not enough to name a dependable income source.\n\n04 · What Tends to Block My Financial Progress?",
+          "actual_answer": "Your Answer: The chart offers a limited clue toward regular pay, tied to long-term plans. Treat it as a possible route, not a pay forecast; compare actual salary, hours and work costs with independent work.\n\nBottom Line: The chart gives a limited clue toward regular pay, without naming a second route. Treat this as a chart clue, not a forecast of income.\n\n04 · What Tends to Block My Financial Progress?",
           "chart_evidence": {
             "questionId": "money-commitments",
             "sourceChapterId": "money-commitments",
@@ -2192,14 +2216,15 @@ Total output lines: 8845
             "answerType": "productcareer.earning-route"
           },
           "content_score_100": null,
-          "evaluation_status": "VERIFY",
-          "deductions": []
+          "evaluation_status": "PASS",
+          "deductions": [],
+          "content_review": "Read against its question, chart evidence and the other answers in this profile."
         },
         {
           "question_id": "working-style",
           "question_number": 4,
           "official_title": "What tends to block my financial progress?",
-          "actual_answer": "Your Answer: Your limited money signs sit in less visible areas linked to long-term plans. This makes the earning route less direct, but it cannot show why progress slowed in real life.\n\nBottom Line: The chart shows a less direct earning route, not a confirmed financial cause. That chart clue cannot explain the cause of a real delay.\n\n05 · When Might My Career or Money Situation Improve?",
+          "actual_answer": "Your Answer: Your chart shows only a limited earning clue tied to long-term plans, not a clear day-to-day income route. This may make the pattern harder to read, but it cannot explain a real-life slowdown.\n\nBottom Line: The earning route looks less direct, but that is not proof of a financial block. The chart cannot identify what caused slower progress in real life.\n\n05 · When Might My Career or Money Situation Improve?",
           "chart_evidence": {
             "questionId": "working-style",
             "sourceChapterId": "working-style",
@@ -2287,14 +2312,15 @@ Total output lines: 8845
             "answerType": "productcareer.financial-blocker"
           },
           "content_score_100": null,
-          "evaluation_status": "VERIFY",
-          "deductions": []
+          "evaluation_status": "PASS",
+          "deductions": [],
+          "content_review": "Read against its question, chart evidence and the other answers in this profile."
         },
         {
           "question_id": "feedback-and-boundaries",
           "question_number": 5,
           "official_title": "When might my career or money situation improve?",
-          "actual_answer": "Your Answer: The clearest periods for work support are 2031: improving methods; 2032: new customers and deals; 2034: demanding assignments. These years may help you use the named work theme, but they do not predict a raise or job change.\n\nBottom Line: Review these years when work support may be easier to use. They do not guarantee a raise or job change.\n\n06 · What Do the Next Ten Years Suggest for My Work and Money?",
+          "actual_answer": "Your Answer: The clearest periods for work support are 2031: improving methods; 2032: new customers and deals; 2034: demanding assignments. These years may help you use the named work theme, but they do not predict a raise or job change.\n\nBottom Line: The strongest work-support periods are 2031: improving methods; 2032: new customers and deals; 2034: demanding assignments. They do not guarantee a raise or job change.\n\n06 · What Do the Next Ten Years Suggest for My Work and Money?",
           "chart_evidence": {
             "questionId": "feedback-and-boundaries",
             "sourceChapterId": "feedback-and-boundaries",
@@ -2722,14 +2748,15 @@ Total output lines: 8845
             "answerType": "productcareer.career-timing"
           },
           "content_score_100": null,
-          "evaluation_status": "VERIFY",
-          "deductions": []
+          "evaluation_status": "PASS",
+          "deductions": [],
+          "content_review": "Read against its question, chart evidence and the other answers in this profile."
         },
         {
           "question_id": "work-chapters",
           "question_number": 6,
           "official_title": "What do the next ten years suggest for my work and money?",
-          "actual_answer": "Your Answer: Your 2026–2035 outlook is mixed: work themes change, but the comparisons do not show a steady rise in income. The main themes include independent problem-solving, training and guidance, and independent work. Year by year: 2026: independent problem-solving; 2027: training and guidance; 2028: independent work; 2029: shared work; 2030: reliable production; 2031: improving methods; 2032: new customers and deals; 2033: predictable pay; 2034: demanding assignments; 2035: defined responsibilities.\n\nImportant Timing: Work may feel more demanding in 2027, 2029, 2034. Treat these as review points, not predicted setbacks.\n\nBottom Line: The decade moves from independent problem-solving toward defined responsibilities. The chart does not show a steady rise in income.\n\n07 · What Is the Most Important Insight for My Future?",
+          "actual_answer": "Your Answer: Your 2026–2035 outlook is mixed: work themes change, but the comparisons do not show a steady rise in income. The main themes include independent problem-solving, training and guidance, and independent work. Year by year: 2026: independent problem-solving; 2027: training and guidance; 2028: independent work; 2029: shared work; 2030: reliable production; 2031: improving methods; 2032: new customers and deals; 2033: predictable pay; 2034: demanding assignments; 2035: defined responsibilities.\n\nImportant Timing: Work may feel more demanding in 2027, 2029, 2034. Treat these as review points, not predicted setbacks.\n\nBottom Line: Your work pattern shifts from independent problem-solving toward defined responsibilities. That change does not establish a steady increase in pay.\n\n07 · What Is the Most Important Insight for My Future?",
           "chart_evidence": {
             "questionId": "work-chapters",
             "sourceChapterId": "work-chapters",
@@ -3153,14 +3180,15 @@ Total output lines: 8845
             "answerType": "productcareer.long-cycle-work-theme"
           },
           "content_score_100": null,
-          "evaluation_status": "VERIFY",
-          "deductions": []
+          "evaluation_status": "PASS",
+          "deductions": [],
+          "content_review": "Read against its question, chart evidence and the other answers in this profile."
         },
         {
           "question_id": "career-plan",
           "question_number": 7,
           "official_title": "What is my most important career and money insight?",
-          "actual_answer": "Your Answer: Your work fit centres on reliable products and repeatable service, while the chart points to long-term plans as a separate earning clue. Neither theme estimates your pay.\n\nBottom Line: Your work fit centres on reliable products and repeatable service, while your earning clue points to long-term plans. The chart cannot set your pay or guarantee a career result.",
+          "actual_answer": "Your Answer: Your work fit centres on reliable products and repeatable service, while the chart points to long-term plans as a separate earning clue. Neither theme estimates your pay.\n\nBottom Line: Your chart separates a fit for reliable products and repeatable service from an earning clue tied to long-term plans. It does not show that one option will pay better.",
           "chart_evidence": {
             "questionId": "career-plan",
             "sourceChapterId": "career-plan",
@@ -3430,7 +3458,2032 @@ Total output lines: 8845
               },
               {
                 "id": "chapter.career-plan.evidence.66",
-                "value": "2031-07-15: Both the active cycle and this reference add output, management or responsibility to a chart that leans supported. This can provide an outlet for its support, pr…29719 tokens truncated…": "chapter.proof-of-skill.evidence.3",
+                "value": "2031-07-15: Both the active cycle and this reference add output, management or responsibility to a chart that leans supported. This can provide an outlet for its support, provided real skills and capacity match the obligation. A checked clash, punishment, harm or break adds competing demands; a supportive balance reading therefore still has a caution."
+              },
+              {
+                "id": "chapter.career-plan.evidence.67",
+                "value": "Reference 2032-07-15 at 12:00 Asia/Seoul: 壬子; year 壬子; day stem 戊; reference stem 壬 = 偏財; principal inner stem 癸 = 正財."
+              },
+              {
+                "id": "chapter.career-plan.evidence.68",
+                "value": "Reference / birth hour: 壬子 / 丙辰: stem 沖; branch 半合 (water)."
+              },
+              {
+                "id": "chapter.career-plan.evidence.69",
+                "value": "Reference / birth day: 壬子 / 戊午: branch 沖."
+              },
+              {
+                "id": "chapter.career-plan.evidence.70",
+                "value": "Reference / birth month: 壬子 / 庚戌: no pattern in the checked pair tables."
+              },
+              {
+                "id": "chapter.career-plan.evidence.71",
+                "value": "Reference / birth year: 壬子 / 丁卯: stem 合 (tree); branch 刑 (無禮)."
+              },
+              {
+                "id": "chapter.career-plan.evidence.72",
+                "value": "Assessment FATE-qualitative-r1: natal supported; reference 壬子 (偏財 / 正財); direction potential-outlet; friction true."
+              },
+              {
+                "id": "chapter.career-plan.evidence.73",
+                "value": "Active cycle at 2032-07-15 12:00 shared comparison wall clock: 乙卯; calculated start 2028-10-29T00:47:27.000Z."
+              },
+              {
+                "id": "chapter.career-plan.evidence.74",
+                "value": "Reference / active ten-year cycle: 壬子 / 乙卯: branch 刑 (無禮)."
+              },
+              {
+                "id": "chapter.career-plan.evidence.75",
+                "value": "2032-07-15: Both the active cycle and this reference add output, management or responsibility to a chart that leans supported. This can provide an outlet for its support, provided real skills and capacity match the obligation. A checked clash, punishment, harm or break adds competing demands; a supportive balance reading therefore still has a caution."
+              },
+              {
+                "id": "chapter.career-plan.evidence.76",
+                "value": "Reference 2033-07-15 at 12:00 Asia/Seoul: 癸丑; year 癸丑; day stem 戊; reference stem 癸 = 正財; principal inner stem 己 = 劫財."
+              },
+              {
+                "id": "chapter.career-plan.evidence.77",
+                "value": "Reference / birth hour: 癸丑 / 丙辰: branch 破."
+              },
+              {
+                "id": "chapter.career-plan.evidence.78",
+                "value": "Reference / birth day: 癸丑 / 戊午: stem 合 (fire); branch 害; branch 怨嗔; branch 鬼門."
+              },
+              {
+                "id": "chapter.career-plan.evidence.79",
+                "value": "Reference / birth month: 癸丑 / 庚戌: no pattern in the checked pair tables."
+              },
+              {
+                "id": "chapter.career-plan.evidence.80",
+                "value": "Reference / birth year: 癸丑 / 丁卯: stem 沖."
+              },
+              {
+                "id": "chapter.career-plan.evidence.81",
+                "value": "Assessment FATE-qualitative-r1: natal supported; reference 癸丑 (正財 / 劫財); direction mixed; friction true."
+              },
+              {
+                "id": "chapter.career-plan.evidence.82",
+                "value": "Active cycle at 2033-07-15 12:00 shared comparison wall clock: 乙卯; calculated start 2028-10-29T00:47:27.000Z."
+              },
+              {
+                "id": "chapter.career-plan.evidence.83",
+                "value": "Reference / active ten-year cycle: 癸丑 / 乙卯: no pattern in the checked pair tables."
+              },
+              {
+                "id": "chapter.career-plan.evidence.84",
+                "value": "2033-07-15: The active cycle and this reference do not give one consistent balance between help and added responsibility. The reading keeps the opportunity and its burden separate. A checked clash, punishment, harm or break adds competing demands; a supportive balance reading therefore still has a caution."
+              },
+              {
+                "id": "chapter.career-plan.evidence.85",
+                "value": "Reference 2034-07-15 at 12:00 Asia/Seoul: 甲寅; year 甲寅; day stem 戊; reference stem 甲 = 偏官; principal inner stem 甲 = 偏官."
+              },
+              {
+                "id": "chapter.career-plan.evidence.86",
+                "value": "Reference / birth hour: 甲寅 / 丙辰: no pattern in the checked pair tables."
+              },
+              {
+                "id": "chapter.career-plan.evidence.87",
+                "value": "Reference / birth day: 甲寅 / 戊午: branch 半合 (fire)."
+              },
+              {
+                "id": "chapter.career-plan.evidence.88",
+                "value": "Reference / birth month: 甲寅 / 庚戌: stem 沖."
+              },
+              {
+                "id": "chapter.career-plan.evidence.89",
+                "value": "Reference / birth year: 甲寅 / 丁卯: no pattern in the checked pair tables."
+              },
+              {
+                "id": "chapter.career-plan.evidence.90",
+                "value": "Assessment FATE-qualitative-r1: natal supported; reference 甲寅 (偏官 / 偏官); direction potential-outlet; friction true."
+              },
+              {
+                "id": "chapter.career-plan.evidence.91",
+                "value": "Active cycle at 2034-07-15 12:00 shared comparison wall clock: 乙卯; calculated start 2028-10-29T00:47:27.000Z."
+              },
+              {
+                "id": "chapter.career-plan.evidence.92",
+                "value": "Reference / active ten-year cycle: 甲寅 / 乙卯: no pattern in the checked pair tables."
+              },
+              {
+                "id": "chapter.career-plan.evidence.93",
+                "value": "2034-07-15: Both the active cycle and this reference add output, management or responsibility to a chart that leans supported. This can provide an outlet for its support, provided real skills and capacity match the obligation. A checked clash, punishment, harm or break adds competing demands; a supportive balance reading therefore still has a caution."
+              },
+              {
+                "id": "chapter.career-plan.evidence.94",
+                "value": "Reference 2035-07-15 at 12:00 Asia/Seoul: 乙卯; year 乙卯; day stem 戊; reference stem 乙 = 正官; principal inner stem 乙 = 正官."
+              },
+              {
+                "id": "chapter.career-plan.evidence.95",
+                "value": "Reference / birth hour: 乙卯 / 丙辰: branch 害."
+              },
+              {
+                "id": "chapter.career-plan.evidence.96",
+                "value": "Reference / birth day: 乙卯 / 戊午: branch 破."
+              },
+              {
+                "id": "chapter.career-plan.evidence.97",
+                "value": "Reference / birth month: 乙卯 / 庚戌: stem 合 (metal); branch 合 (fire)."
+              },
+              {
+                "id": "chapter.career-plan.evidence.98",
+                "value": "Reference / birth year: 乙卯 / 丁卯: no pattern in the checked pair tables."
+              },
+              {
+                "id": "chapter.career-plan.evidence.99",
+                "value": "Assessment FATE-qualitative-r1: natal supported; reference 乙卯 (正官 / 正官); direction potential-outlet; friction true."
+              },
+              {
+                "id": "chapter.career-plan.evidence.100",
+                "value": "Active cycle at 2035-07-15 12:00 shared comparison wall clock: 乙卯; calculated start 2028-10-29T00:47:27.000Z."
+              },
+              {
+                "id": "chapter.career-plan.evidence.101",
+                "value": "Reference / active ten-year cycle: 乙卯 / 乙卯: no pattern in the checked pair tables."
+              },
+              {
+                "id": "chapter.career-plan.evidence.102",
+                "value": "2035-07-15: Both the active cycle and this reference add output, management or responsibility to a chart that leans supported. This can provide an outlet for its support, provided real skills and capacity match the obligation. A checked clash, punishment, harm or break adds competing demands; a supportive balance reading therefore still has a caution."
+              },
+              {
+                "id": "chapter.career-plan.evidence.103",
+                "value": "Policy FATE-qualitative-r1. Month branch 戌; principal stem 戊; relationship 比肩; seasonal support true."
+              },
+              {
+                "id": "chapter.career-plan.evidence.104",
+                "value": "Exposed hour stem 丙: 偏印; support."
+              },
+              {
+                "id": "chapter.career-plan.evidence.105",
+                "value": "Exposed month stem 庚: 食神; output, management or control."
+              },
+              {
+                "id": "chapter.career-plan.evidence.106",
+                "value": "Exposed year stem 丁: 正印; support."
+              },
+              {
+                "id": "chapter.career-plan.evidence.107",
+                "value": "Root: 戊 inside hour branch 辰; principal hidden stem."
+              },
+              {
+                "id": "chapter.career-plan.evidence.108",
+                "value": "Root: 己 inside day branch 午; secondary hidden stem."
+              },
+              {
+                "id": "chapter.career-plan.evidence.109",
+                "value": "Root: 戊 inside month branch 戌; principal hidden stem."
+              },
+              {
+                "id": "chapter.career-plan.evidence.110",
+                "value": "Month hidden stem 辛: 傷官; exposed at no checked non-day stem."
+              },
+              {
+                "id": "chapter.career-plan.evidence.111",
+                "value": "Month hidden stem 丁: 正印; exposed at year."
+              },
+              {
+                "id": "chapter.career-plan.evidence.112",
+                "value": "Month hidden stem 戊: 比肩; exposed at no checked non-day stem."
+              }
+            ],
+            "answerType": "product02.career-and-money-priority"
+          },
+          "content_score_100": null,
+          "evaluation_status": "PASS",
+          "deductions": [],
+          "content_review": "Read against its question, chart evidence and the other answers in this profile."
+        }
+      ],
+      "manual_content_review": {
+        "score": 95,
+        "breakdown": {
+          "direct_answer": 34,
+          "personalization": 24,
+          "easy_english": 14,
+          "repetition_and_generalities": 9,
+          "evidence_consistency": 14
+        },
+        "deductions": [
+          "Q3–Q4: the earning clue is limited, so the report cannot name a stronger route or real-life cause.",
+          "Q5: dates are framed as work-support themes, not a guaranteed raise or job change.",
+          "Q6–Q7: long-term and work-fit themes remain distinct but could be sharper."
+        ],
+        "scale": "100-point content-only review; PDF design excluded",
+        "method": "Manual review of generated text; not a third-party evaluation",
+        "evaluation_status": "PASS"
+      }
+    },
+    {
+      "product_id": "02",
+      "product_name": "Success, Money & Your Future",
+      "profile_number": 3,
+      "profile_id": "unknown-hour",
+      "chart_data_used": {
+        "birthTimeKnown": false,
+        "pillars": [
+          {
+            "ganzi": "??",
+            "stemRole": "?",
+            "branchRole": "?"
+          },
+          {
+            "ganzi": "辛未",
+            "stemRole": "本元",
+            "branchRole": "偏印"
+          },
+          {
+            "ganzi": "乙卯",
+            "stemRole": "偏財",
+            "branchRole": "偏財"
+          },
+          {
+            "ganzi": "戊寅",
+            "stemRole": "正印",
+            "branchRole": "正財"
+          }
+        ]
+      },
+      "answers": [
+        {
+          "question_id": "two-work-layers",
+          "question_number": 1,
+          "official_title": "Which careers suit me best?",
+          "actual_answer": "Your Answer: Business development, sales or account growth matches your chart’s emphasis on finding customers and openings.\n\nWhat This Means for You: A role with room to build relationships and act on an opportunity fits you. A system that adds sales targets without control over delivery creates a sharper mismatch.\n\nBottom Line: Sales and account growth fit when you can influence how the work is delivered. Without delivery control, the sales target may be a poor fit.\n\n02 · Am I Better Suited to Employment or Independent Work?",
+          "chart_evidence": {
+            "questionId": "two-work-layers",
+            "sourceChapterId": "two-work-layers",
+            "ruleIds": [
+              "purchase-narrative.customerNarrative.career.two-work-layers.v1"
+            ],
+            "evidence": [
+              {
+                "id": "chapter.two-work-layers.evidence.1",
+                "value": "day pillar 辛未. Stem 辛: 本元 (starting point); branch 未: 偏印 (Independent learning)."
+              },
+              {
+                "id": "chapter.two-work-layers.evidence.2",
+                "value": "month pillar 乙卯. Stem 乙: 偏財 (Opportunity and exchange); branch 卯: 偏財 (Opportunity and exchange)."
+              },
+              {
+                "id": "chapter.two-work-layers.evidence.3",
+                "value": "day branch 未 (principal stem): 偏印 (specialist insight)."
+              },
+              {
+                "id": "chapter.two-work-layers.evidence.4",
+                "value": "month stem 乙: 偏財 (opportunities and wider money)."
+              },
+              {
+                "id": "chapter.two-work-layers.evidence.5",
+                "value": "month branch 卯 (principal stem): 偏財 (opportunities and wider money)."
+              },
+              {
+                "id": "chapter.two-work-layers.evidence.6",
+                "value": "year stem 戊: 正印 (learning and dependable support)."
+              },
+              {
+                "id": "chapter.two-work-layers.evidence.7",
+                "value": "year branch 寅 (principal stem): 正財 (regular money and commitments)."
+              },
+              {
+                "id": "chapter.two-work-layers.evidence.8",
+                "value": "2026-07-15: No judgement about whether the period may be easier or harder is assigned: the balance of support and demands in your birth chart or a current longer period is unresolved. A checked clash, punishment, harm or break adds competing demands; a supportive balance reading therefore still has a caution."
+              },
+              {
+                "id": "chapter.two-work-layers.evidence.9",
+                "value": "2027-07-15: No judgement about whether the period may be easier or harder is assigned: the balance of support and demands in your birth chart or a current longer period is unresolved. No checked clash, punishment, harm or break adds a separate sign of competing demands at this comparison date; this is not a guarantee of an easy period."
+              },
+              {
+                "id": "chapter.two-work-layers.evidence.10",
+                "value": "2028-07-15: No judgement about whether the period may be easier or harder is assigned: the balance of support and demands in your birth chart or a current longer period is unresolved. A checked clash, punishment, harm or break adds competing demands; a supportive balance reading therefore still has a caution."
+              },
+              {
+                "id": "chapter.two-work-layers.evidence.11",
+                "value": "2029-07-15: No judgement about whether the period may be easier or harder is assigned: the balance of support and demands in your birth chart or a current longer period is unresolved. A checked clash, punishment, harm or break adds competing demands; a supportive balance reading therefore still has a caution."
+              },
+              {
+                "id": "chapter.two-work-layers.evidence.12",
+                "value": "2030-07-15: No judgement about whether the period may be easier or harder is assigned: the balance of support and demands in your birth chart or a current longer period is unresolved. A checked clash, punishment, harm or break adds competing demands; a supportive balance reading therefore still has a caution."
+              },
+              {
+                "id": "chapter.two-work-layers.evidence.13",
+                "value": "Policy FATE-qualitative-r1. Month branch 卯; principal stem 乙; relationship 偏財; seasonal support false."
+              },
+              {
+                "id": "chapter.two-work-layers.evidence.14",
+                "value": "Exposed month stem 乙: 偏財; output, management or control."
+              },
+              {
+                "id": "chapter.two-work-layers.evidence.15",
+                "value": "Exposed year stem 戊: 正印; support."
+              },
+              {
+                "id": "chapter.two-work-layers.evidence.16",
+                "value": "No same-element root in the supplied branches."
+              },
+              {
+                "id": "chapter.two-work-layers.evidence.17",
+                "value": "Month hidden stem 甲: 正財; exposed at no checked non-day stem."
+              },
+              {
+                "id": "chapter.two-work-layers.evidence.18",
+                "value": "Month hidden stem 乙: 偏財; exposed at month."
+              },
+              {
+                "id": "chapter.two-work-layers.evidence.19",
+                "value": "The birth hour is unknown; the missing support or demand could change the assessment."
+              },
+              {
+                "id": "chapter.two-work-layers.evidence.20",
+                "value": "A strong-or-weak verdict is deferred because the available chart requires an exception check or has an unknown birth hour."
+              },
+              {
+                "id": "chapter.two-work-layers.evidence.21",
+                "value": "A provisional month-led structure candidate is opportunities and wider money: hidden stem 乙 also appears in the month stem. This is a candidate, not confirmation that the structure succeeds or that its element is beneficial."
+              },
+              {
+                "id": "chapter.two-work-layers.evidence.22",
+                "value": "No balancing-element preference is assigned while the support judgement is unresolved. A missing element is not automatically a useful element."
+              },
+              {
+                "id": "chapter.two-work-layers.evidence.23",
+                "value": "The month-led structure and a balancing element answer different questions. A working preference below applies only to the stated ordinary-chart rule; it is not a universal lucky element or an outcome guarantee."
+              },
+              {
+                "id": "chapter.two-work-layers.evidence.24",
+                "value": "A complete ordinary month-led structure is not assigned from the available evidence. The reading retains the seasonal relationship without forcing a structure label."
+              },
+              {
+                "id": "chapter.two-work-layers.evidence.25",
+                "value": "Money and resource relationships are both exposed. Commercial commitments and the time or support needed to prepare can pull in different directions; their positions still matter."
+              },
+              {
+                "id": "chapter.two-work-layers.evidence.26",
+                "value": "No single balancing element is selected: the birth hour is unknown; support and demand do not resolve into one direction; competing exposed relationships remain; no single rooted and exposed route meets this policy. An absent element is not automatically the answer."
+              }
+            ],
+            "answerType": "productcareer.career-fit"
+          },
+          "content_score_100": null,
+          "evaluation_status": "PASS",
+          "deductions": [],
+          "content_review": "Read against its question, chart evidence and the other answers in this profile."
+        },
+        {
+          "question_id": "proof-of-skill",
+          "question_number": 2,
+          "official_title": "Am I better suited to employment or independent work?",
+          "actual_answer": "Your Answer: Structured employment is better supported by the chart.\n\nWhat This Means for You: For a structured job, your chart shows training or specialist support. For independent work, a customer-income marker appears, but the chart does not show a complete link from useful work to paid customers.\n\nPractical Check: For a real choice, compare confirmed salary, hours and support in a job with paying customers, costs and payment terms in independent work.\n\nBottom Line: A structured job has the clearer chart support, especially with training or specialist guidance. The independent option has a less complete path from useful work to paid customers.\n\n03 · How Do I Naturally Make Money?",
+          "chart_evidence": {
+            "questionId": "proof-of-skill",
+            "sourceChapterId": "proof-of-skill",
+            "ruleIds": [
+              "purchase-narrative.customerNarrative.career.proof-of-skill.v1"
+            ],
+            "evidence": [
+              {
+                "id": "chapter.proof-of-skill.evidence.1",
+                "value": "month pillar 乙卯. Stem 乙: 偏財 (Opportunity and exchange); branch 卯: 偏財 (Opportunity and exchange)."
+              },
+              {
+                "id": "chapter.proof-of-skill.evidence.2",
+                "value": "year pillar 戊寅. Stem 戊: 正印 (Support and knowledge); branch 寅: 正財 (Steady resources)."
+              },
+              {
+                "id": "chapter.proof-of-skill.evidence.3",
+                "value": "day branch 未 (principal stem): 偏印 (specialist insight)."
+              },
+              {
+                "id": "chapter.proof-of-skill.evidence.4",
+                "value": "month stem 乙: 偏財 (opportunities and wider money)."
+              },
+              {
+                "id": "chapter.proof-of-skill.evidence.5",
+                "value": "month branch 卯 (principal stem): 偏財 (opportunities and wider money)."
+              },
+              {
+                "id": "chapter.proof-of-skill.evidence.6",
+                "value": "year stem 戊: 正印 (learning and dependable support)."
+              },
+              {
+                "id": "chapter.proof-of-skill.evidence.7",
+                "value": "year branch 寅 (principal stem): 正財 (regular money and commitments)."
+              },
+              {
+                "id": "chapter.proof-of-skill.evidence.8",
+                "value": "Policy FATE-qualitative-r1. Month branch 卯; principal stem 乙; relationship 偏財; seasonal support false."
+              },
+              {
+                "id": "chapter.proof-of-skill.evidence.9",
+                "value": "Exposed month stem 乙: 偏財; output, management or control."
+              },
+              {
+                "id": "chapter.proof-of-skill.evidence.10",
+                "value": "Exposed year stem 戊: 正印; support."
+              },
+              {
+                "id": "chapter.proof-of-skill.evidence.11",
+                "value": "No same-element root in the supplied branches."
+              },
+              {
+                "id": "chapter.proof-of-skill.evidence.12",
+                "value": "Month hidden stem 甲: 正財; exposed at no checked non-day stem."
+              },
+              {
+                "id": "chapter.proof-of-skill.evidence.13",
+                "value": "Month hidden stem 乙: 偏財; exposed at month."
+              },
+              {
+                "id": "chapter.proof-of-skill.evidence.14",
+                "value": "The birth hour is unknown; the missing support or demand could change the assessment."
+              }
+            ],
+            "answerType": "productcareer.work-structure-fit"
+          },
+          "content_score_100": null,
+          "evaluation_status": "PASS",
+          "deductions": [],
+          "content_review": "Read against its question, chart evidence and the other answers in this profile."
+        },
+        {
+          "question_id": "money-commitments",
+          "question_number": 3,
+          "official_title": "How do I naturally make money?",
+          "actual_answer": "Your Answer: Your income pattern has two routes: regular pay or repeat work, and additional income from projects or new customers. Both appear in your chart, rather than a single fixed earning style.\n\nWhat This Means for You: Customer or project income is linked to day-to-day work and shared commitments. Steady pay is linked to your wider network and day-to-day work. These are possible earning routes, not expected pay.\n\nBottom Line: Your chart shows both repeatable pay and a second route through customers or projects. Customer income links to daily work and shared commitments, while regular pay links to your wider network.\n\n04 · What Tends to Block My Financial Progress?",
+          "chart_evidence": {
+            "questionId": "money-commitments",
+            "sourceChapterId": "money-commitments",
+            "ruleIds": [
+              "purchase-narrative.customerNarrative.career.money-commitments.v1"
+            ],
+            "evidence": [
+              {
+                "id": "chapter.money-commitments.evidence.1",
+                "value": "day branch 未 (principal stem): 偏印 (specialist insight)."
+              },
+              {
+                "id": "chapter.money-commitments.evidence.2",
+                "value": "month stem 乙: 偏財 (opportunities and wider money)."
+              },
+              {
+                "id": "chapter.money-commitments.evidence.3",
+                "value": "month branch 卯 (principal stem): 偏財 (opportunities and wider money)."
+              },
+              {
+                "id": "chapter.money-commitments.evidence.4",
+                "value": "year stem 戊: 正印 (learning and dependable support)."
+              },
+              {
+                "id": "chapter.money-commitments.evidence.5",
+                "value": "year branch 寅 (principal stem): 正財 (regular money and commitments)."
+              },
+              {
+                "id": "chapter.money-commitments.evidence.6",
+                "value": "丁 within day branch 未: 偏官 (pressure and decisive action)."
+              },
+              {
+                "id": "chapter.money-commitments.evidence.7",
+                "value": "乙 within day branch 未: 偏財 (opportunities and wider money)."
+              },
+              {
+                "id": "chapter.money-commitments.evidence.8",
+                "value": "己 within day branch 未: 偏印 (specialist insight)."
+              },
+              {
+                "id": "chapter.money-commitments.evidence.9",
+                "value": "甲 within month branch 卯: 正財 (regular money and commitments)."
+              },
+              {
+                "id": "chapter.money-commitments.evidence.10",
+                "value": "乙 within month branch 卯: 偏財 (opportunities and wider money)."
+              },
+              {
+                "id": "chapter.money-commitments.evidence.11",
+                "value": "戊 within year branch 寅: 正印 (learning and dependable support)."
+              },
+              {
+                "id": "chapter.money-commitments.evidence.12",
+                "value": "丙 within year branch 寅: 正官 (responsibility and recognised roles)."
+              },
+              {
+                "id": "chapter.money-commitments.evidence.13",
+                "value": "甲 within year branch 寅: 正財 (regular money and commitments)."
+              },
+              {
+                "id": "chapter.money-commitments.evidence.14",
+                "value": "Policy FATE-qualitative-r1. Month branch 卯; principal stem 乙; relationship 偏財; seasonal support false."
+              },
+              {
+                "id": "chapter.money-commitments.evidence.15",
+                "value": "Exposed month stem 乙: 偏財; output, management or control."
+              },
+              {
+                "id": "chapter.money-commitments.evidence.16",
+                "value": "Exposed year stem 戊: 正印; support."
+              },
+              {
+                "id": "chapter.money-commitments.evidence.17",
+                "value": "No same-element root in the supplied branches."
+              },
+              {
+                "id": "chapter.money-commitments.evidence.18",
+                "value": "Month hidden stem 甲: 正財; exposed at no checked non-day stem."
+              },
+              {
+                "id": "chapter.money-commitments.evidence.19",
+                "value": "Month hidden stem 乙: 偏財; exposed at month."
+              },
+              {
+                "id": "chapter.money-commitments.evidence.20",
+                "value": "The birth hour is unknown; the missing support or demand could change the assessment."
+              },
+              {
+                "id": "chapter.money-commitments.evidence.21",
+                "value": "The checked positions are month stem 乙 (opportunities and wider money); month branch 卯 (principal stem) (opportunities and wider money); year branch 寅 (principal stem) (regular money and commitments). The hidden check finds 乙 in the day branch 未; 甲 in the month branch 卯; 乙 in the month branch 卯; 甲 in the year branch 寅. Hidden entries are supporting evidence, not additional strength points."
+              }
+            ],
+            "answerType": "productcareer.earning-route"
+          },
+          "content_score_100": null,
+          "evaluation_status": "PASS",
+          "deductions": [],
+          "content_review": "Read against its question, chart evidence and the other answers in this profile."
+        },
+        {
+          "question_id": "working-style",
+          "question_number": 4,
+          "official_title": "What tends to block my financial progress?",
+          "actual_answer": "Your Answer: The main pressure to check is whether training or support is taking time or money away from paid work. Your chart links these themes, but cannot confirm this is limiting your finances. Compare training costs and hours with income-producing work.\n\nBottom Line: The chart does not identify a specific financial blockage. Your actual income and outside costs still need to be considered.\n\n05 · When Might My Career or Money Situation Improve?",
+          "chart_evidence": {
+            "questionId": "working-style",
+            "sourceChapterId": "working-style",
+            "ruleIds": [
+              "purchase-narrative.customerNarrative.career.working-style.v1"
+            ],
+            "evidence": [
+              {
+                "id": "chapter.working-style.evidence.1",
+                "value": "day pillar 辛未. Stem 辛: 本元 (starting point); branch 未: 偏印 (Independent learning)."
+              },
+              {
+                "id": "chapter.working-style.evidence.2",
+                "value": "month pillar 乙卯. Stem 乙: 偏財 (Opportunity and exchange); branch 卯: 偏財 (Opportunity and exchange)."
+              },
+              {
+                "id": "chapter.working-style.evidence.3",
+                "value": "day branch 未 (principal stem): 偏印 (specialist insight)."
+              },
+              {
+                "id": "chapter.working-style.evidence.4",
+                "value": "month stem 乙: 偏財 (opportunities and wider money)."
+              },
+              {
+                "id": "chapter.working-style.evidence.5",
+                "value": "month branch 卯 (principal stem): 偏財 (opportunities and wider money)."
+              },
+              {
+                "id": "chapter.working-style.evidence.6",
+                "value": "year stem 戊: 正印 (learning and dependable support)."
+              },
+              {
+                "id": "chapter.working-style.evidence.7",
+                "value": "year branch 寅 (principal stem): 正財 (regular money and commitments)."
+              },
+              {
+                "id": "chapter.working-style.evidence.8",
+                "value": "Policy FATE-qualitative-r1. Month branch 卯; principal stem 乙; relationship 偏財; seasonal support false."
+              },
+              {
+                "id": "chapter.working-style.evidence.9",
+                "value": "Exposed month stem 乙: 偏財; output, management or control."
+              },
+              {
+                "id": "chapter.working-style.evidence.10",
+                "value": "Exposed year stem 戊: 正印; support."
+              },
+              {
+                "id": "chapter.working-style.evidence.11",
+                "value": "No same-element root in the supplied branches."
+              },
+              {
+                "id": "chapter.working-style.evidence.12",
+                "value": "Month hidden stem 甲: 正財; exposed at no checked non-day stem."
+              },
+              {
+                "id": "chapter.working-style.evidence.13",
+                "value": "Month hidden stem 乙: 偏財; exposed at month."
+              },
+              {
+                "id": "chapter.working-style.evidence.14",
+                "value": "The birth hour is unknown; the missing support or demand could change the assessment."
+              }
+            ],
+            "answerType": "productcareer.financial-blocker"
+          },
+          "content_score_100": null,
+          "evaluation_status": "PASS",
+          "deductions": [],
+          "content_review": "Read against its question, chart evidence and the other answers in this profile."
+        },
+        {
+          "question_id": "feedback-and-boundaries",
+          "question_number": 5,
+          "official_title": "When might my career or money situation improve?",
+          "actual_answer": "Your Answer: No year in 2026–2035 has a verified signal for career or money improvement. The checked work themes are 2026: defined responsibilities; 2027: demanding assignments; 2028: training and guidance; they do not establish a pay rise.\n\nBottom Line: No checked year gives a reliable date for improvement. The work themes 2026: defined responsibilities; 2027: demanding assignments describe focus, not income outcomes.\n\n06 · What Do the Next Ten Years Suggest for My Work and Money?",
+          "chart_evidence": {
+            "questionId": "feedback-and-boundaries",
+            "sourceChapterId": "feedback-and-boundaries",
+            "ruleIds": [
+              "purchase-narrative.customerNarrative.career.feedback-and-boundaries.v1"
+            ],
+            "evidence": [
+              {
+                "id": "chapter.feedback-and-boundaries.evidence.1",
+                "value": "month pillar 乙卯. Stem 乙: 偏財 (Opportunity and exchange); branch 卯: 偏財 (Opportunity and exchange)."
+              },
+              {
+                "id": "chapter.feedback-and-boundaries.evidence.2",
+                "value": "year pillar 戊寅. Stem 戊: 正印 (Support and knowledge); branch 寅: 正財 (Steady resources)."
+              },
+              {
+                "id": "chapter.feedback-and-boundaries.evidence.3",
+                "value": "Birth day / month: 辛未 / 乙卯: stem 沖; branch 半合 (tree)."
+              },
+              {
+                "id": "chapter.feedback-and-boundaries.evidence.4",
+                "value": "Birth day / year: 辛未 / 戊寅: branch 鬼門."
+              },
+              {
+                "id": "chapter.feedback-and-boundaries.evidence.5",
+                "value": "Birth month / year: 乙卯 / 戊寅: no pattern in the checked pair tables."
+              },
+              {
+                "id": "chapter.feedback-and-boundaries.evidence.6",
+                "value": "Ten-year cycle 戊午; calculated start 2021-11-07; stem 正印; branch 偏官."
+              },
+              {
+                "id": "chapter.feedback-and-boundaries.evidence.7",
+                "value": "Ten-year cycle 己未; calculated start 2031-11-07; stem 偏印; branch 偏印."
+              },
+              {
+                "id": "chapter.feedback-and-boundaries.evidence.8",
+                "value": "Ten-year cycle 庚申; calculated start 2041-11-07; stem 劫財; branch 劫財."
+              },
+              {
+                "id": "chapter.feedback-and-boundaries.evidence.9",
+                "value": "Reference 2026-07-15 at 12:00 Asia/Seoul: 丙午; year 丙午; day stem 辛; reference stem 丙 = 正官; principal inner stem 丁 = 偏官."
+              },
+              {
+                "id": "chapter.feedback-and-boundaries.evidence.10",
+                "value": "Reference / birth day: 丙午 / 辛未: stem 合 (water); branch 合 (fire)."
+              },
+              {
+                "id": "chapter.feedback-and-boundaries.evidence.11",
+                "value": "Reference / birth month: 丙午 / 乙卯: branch 破."
+              },
+              {
+                "id": "chapter.feedback-and-boundaries.evidence.12",
+                "value": "Reference / birth year: 丙午 / 戊寅: branch 半合 (fire)."
+              },
+              {
+                "id": "chapter.feedback-and-boundaries.evidence.13",
+                "value": "Assessment FATE-qualitative-r1: natal deferred; reference 丙午 (正官 / 偏官); direction unresolved; friction true."
+              },
+              {
+                "id": "chapter.feedback-and-boundaries.evidence.14",
+                "value": "Active cycle at 2026-07-15 12:00 shared comparison wall clock: 戊午; approximate calculated start (birth hour unknown) 2021-11-07T03:33:18.000Z."
+              },
+              {
+                "id": "chapter.feedback-and-boundaries.evidence.15",
+                "value": "Reference / active ten-year cycle: 丙午 / 戊午: branch 刑 (自刑)."
+              },
+              {
+                "id": "chapter.feedback-and-boundaries.evidence.16",
+                "value": "2026-07-15: No judgement about whether the period may be easier or harder is assigned: the balance of support and demands in your birth chart or a current longer period is unresolved. A checked clash, punishment, harm or break adds competing demands; a supportive balance reading therefore still has a caution."
+              },
+              {
+                "id": "chapter.feedback-and-boundaries.evidence.17",
+                "value": "Reference 2027-07-15 at 12:00 Asia/Seoul: 丁未; year 丁未; day stem 辛; reference stem 丁 = 偏官; principal inner stem 己 = 偏印."
+              },
+              {
+                "id": "chapter.feedback-and-boundaries.evidence.18",
+                "value": "Reference / birth day: 丁未 / 辛未: no pattern in the checked pair tables."
+              },
+              {
+                "id": "chapter.feedback-and-boundaries.evidence.19",
+                "value": "Reference / birth month: 丁未 / 乙卯: branch 半合 (tree)."
+              },
+              {
+                "id": "chapter.feedback-and-boundaries.evidence.20",
+                "value": "Reference / birth year: 丁未 / 戊寅: branch 鬼門."
+              },
+              {
+                "id": "chapter.feedback-and-boundaries.evidence.21",
+                "value": "Assessment FATE-qualitative-r1: natal deferred; reference 丁未 (偏官 / 偏印); direction unresolved; friction false."
+              },
+              {
+                "id": "chapter.feedback-and-boundaries.evidence.22",
+                "value": "Active cycle at 2027-07-15 12:00 shared comparison wall clock: 戊午; approximate calculated start (birth hour unknown) 2021-11-07T03:33:18.000Z."
+              },
+              {
+                "id": "chapter.feedback-and-boundaries.evidence.23",
+                "value": "Reference / active ten-year cycle: 丁未 / 戊午: branch 合 (fire)."
+              },
+              {
+                "id": "chapter.feedback-and-boundaries.evidence.24",
+                "value": "2027-07-15: No judgement about whether the period may be easier or harder is assigned: the balance of support and demands in your birth chart or a current longer period is unresolved. No checked clash, punishment, harm or break adds a separate sign of competing demands at this comparison date; this is not a guarantee of an easy period."
+              },
+              {
+                "id": "chapter.feedback-and-boundaries.evidence.25",
+                "value": "Reference 2028-07-15 at 12:00 Asia/Seoul: 戊申; year 戊申; day stem 辛; reference stem 戊 = 正印; principal inner stem 庚 = 劫財."
+              },
+              {
+                "id": "chapter.feedback-and-boundaries.evidence.26",
+                "value": "Reference / birth day: 戊申 / 辛未: no pattern in the checked pair tables."
+              },
+              {
+                "id": "chapter.feedback-and-boundaries.evidence.27",
+                "value": "Reference / birth month: 戊申 / 乙卯: branch 怨嗔; branch 鬼門."
+              },
+              {
+                "id": "chapter.feedback-and-boundaries.evidence.28",
+                "value": "Reference / birth year: 戊申 / 戊寅: branch 沖."
+              },
+              {
+                "id": "chapter.feedback-and-boundaries.evidence.29",
+                "value": "Assessment FATE-qualitative-r1: natal deferred; reference 戊申 (正印 / 劫財); direction unresolved; friction true."
+              },
+              {
+                "id": "chapter.feedback-and-boundaries.evidence.30",
+                "value": "Active cycle at 2028-07-15 12:00 shared comparison wall clock: 戊午; approximate calculated start (birth hour unknown) 2021-11-07T03:33:18.000Z."
+              },
+              {
+                "id": "chapter.feedback-and-boundaries.evidence.31",
+                "value": "Reference / active ten-year cycle: 戊申 / 戊午: no pattern in the checked pair tables."
+              },
+              {
+                "id": "chapter.feedback-and-boundaries.evidence.32",
+                "value": "2028-07-15: No judgement about whether the period may be easier or harder is assigned: the balance of support and demands in your birth chart or a current longer period is unresolved. A checked clash, punishment, harm or break adds competing demands; a supportive balance reading therefore still has a caution."
+              },
+              {
+                "id": "chapter.feedback-and-boundaries.evidence.33",
+                "value": "Reference 2029-07-15 at 12:00 Asia/Seoul: 己酉; year 己酉; day stem 辛; reference stem 己 = 偏印; principal inner stem 辛 = 比肩."
+              },
+              {
+                "id": "chapter.feedback-and-boundaries.evidence.34",
+                "value": "Reference / birth day: 己酉 / 辛未: no pattern in the checked pair tables."
+              },
+              {
+                "id": "chapter.feedback-and-boundaries.evidence.35",
+                "value": "Reference / birth month: 己酉 / 乙卯: branch 沖."
+              },
+              {
+                "id": "chapter.feedback-and-boundaries.evidence.36",
+                "value": "Reference / birth year: 己酉 / 戊寅: branch 怨嗔."
+              },
+              {
+                "id": "chapter.feedback-and-boundaries.evidence.37",
+                "value": "Assessment FATE-qualitative-r1: natal deferred; reference 己酉 (偏印 / 比肩); direction unresolved; friction true."
+              },
+              {
+                "id": "chapter.feedback-and-boundaries.evidence.38",
+                "value": "Active cycle at 2029-07-15 12:00 shared comparison wall clock: 戊午; approximate calculated start (birth hour unknown) 2021-11-07T03:33:18.000Z."
+              },
+              {
+                "id": "chapter.feedback-and-boundaries.evidence.39",
+                "value": "Reference / active ten-year cycle: 己酉 / 戊午: no pattern in the checked pair tables."
+              },
+              {
+                "id": "chapter.feedback-and-boundaries.evidence.40",
+                "value": "2029-07-15: No judgement about whether the period may be easier or harder is assigned: the balance of support and demands in your birth chart or a current longer period is unresolved. A checked clash, punishment, harm or break adds competing demands; a supportive balance reading therefore still has a caution."
+              },
+              {
+                "id": "chapter.feedback-and-boundaries.evidence.41",
+                "value": "Reference 2030-07-15 at 12:00 Asia/Seoul: 庚戌; year 庚戌; day stem 辛; reference stem 庚 = 劫財; principal inner stem 戊 = 正印."
+              },
+              {
+                "id": "chapter.feedback-and-boundaries.evidence.42",
+                "value": "Reference / birth day: 庚戌 / 辛未: branch 破."
+              },
+              {
+                "id": "chapter.feedback-and-boundaries.evidence.43",
+                "value": "Reference / birth month: 庚戌 / 乙卯: stem 合 (metal); branch 合 (fire)."
+              },
+              {
+                "id": "chapter.feedback-and-boundaries.evidence.44",
+                "value": "Reference / birth year: 庚戌 / 戊寅: no pattern in the checked pair tables."
+              },
+              {
+                "id": "chapter.feedback-and-boundaries.evidence.45",
+                "value": "Assessment FATE-qualitative-r1: natal deferred; reference 庚戌 (劫財 / 正印); direction unresolved; friction true."
+              },
+              {
+                "id": "chapter.feedback-and-boundaries.evidence.46",
+                "value": "Active cycle at 2030-07-15 12:00 shared comparison wall clock: 戊午; approximate calculated start (birth hour unknown) 2021-11-07T03:33:18.000Z."
+              },
+              {
+                "id": "chapter.feedback-and-boundaries.evidence.47",
+                "value": "Reference / active ten-year cycle: 庚戌 / 戊午: branch 半合 (fire)."
+              },
+              {
+                "id": "chapter.feedback-and-boundaries.evidence.48",
+                "value": "2030-07-15: No judgement about whether the period may be easier or harder is assigned: the balance of support and demands in your birth chart or a current longer period is unresolved. A checked clash, punishment, harm or break adds competing demands; a supportive balance reading therefore still has a caution."
+              },
+              {
+                "id": "chapter.feedback-and-boundaries.evidence.49",
+                "value": "Reference 2031-07-15 at 12:00 Asia/Seoul: 辛亥; year 辛亥; day stem 辛; reference stem 辛 = 比肩; principal inner stem 壬 = 傷官."
+              },
+              {
+                "id": "chapter.feedback-and-boundaries.evidence.50",
+                "value": "Reference / birth day: 辛亥 / 辛未: no pattern in the checked pair tables."
+              },
+              {
+                "id": "chapter.feedback-and-boundaries.evidence.51",
+                "value": "Reference / birth month: 辛亥 / 乙卯: stem 沖; branch 半合 (tree)."
+              },
+              {
+                "id": "chapter.feedback-and-boundaries.evidence.52",
+                "value": "Reference / birth year: 辛亥 / 戊寅: branch 合 (tree); branch 破."
+              },
+              {
+                "id": "chapter.feedback-and-boundaries.evidence.53",
+                "value": "Assessment FATE-qualitative-r1: natal deferred; reference 辛亥 (比肩 / 傷官); direction unresolved; friction true."
+              },
+              {
+                "id": "chapter.feedback-and-boundaries.evidence.54",
+                "value": "Active cycle at 2031-07-15 12:00 shared comparison wall clock: 戊午; approximate calculated start (birth hour unknown) 2021-11-07T03:33:18.000Z."
+              },
+              {
+                "id": "chapter.feedback-and-boundaries.evidence.55",
+                "value": "Reference / active ten-year cycle: 辛亥 / 戊午: no pattern in the checked pair tables."
+              },
+              {
+                "id": "chapter.feedback-and-boundaries.evidence.56",
+                "value": "2031-07-15: No judgement about whether the period may be easier or harder is assigned: the balance of support and demands in your birth chart or a current longer period is unresolved. A checked clash, punishment, harm or break adds competing demands; a supportive balance reading therefore still has a caution."
+              },
+              {
+                "id": "chapter.feedback-and-boundaries.evidence.57",
+                "value": "Reference 2032-07-15 at 12:00 Asia/Seoul: 壬子; year 壬子; day stem 辛; reference stem 壬 = 傷官; principal inner stem 癸 = 食神."
+              },
+              {
+                "id": "chapter.feedback-and-boundaries.evidence.58",
+                "value": "Reference / birth day: 壬子 / 辛未: branch 害; branch 怨嗔."
+              },
+              {
+                "id": "chapter.feedback-and-boundaries.evidence.59",
+                "value": "Reference / birth month: 壬子 / 乙卯: branch 刑 (無禮)."
+              },
+              {
+                "id": "chapter.feedback-and-boundaries.evidence.60",
+                "value": "Reference / birth year: 壬子 / 戊寅: no pattern in the checked pair tables."
+              },
+              {
+                "id": "chapter.feedback-and-boundaries.evidence.61",
+                "value": "Assessment FATE-qualitative-r1: natal deferred; reference 壬子 (傷官 / 食神); direction unresolved; friction true."
+              },
+              {
+                "id": "chapter.feedback-and-boundaries.evidence.62",
+                "value": "Active cycle at 2032-07-15 12:00 shared comparison wall clock: 己未; approximate calculated start (birth hour unknown) 2031-11-07T03:33:18.000Z."
+              },
+              {
+                "id": "chapter.feedback-and-boundaries.evidence.63",
+                "value": "Reference / active ten-year cycle: 壬子 / 己未: branch 害; branch 怨嗔."
+              },
+              {
+                "id": "chapter.feedback-and-boundaries.evidence.64",
+                "value": "2032-07-15: No judgement about whether the period may be easier or harder is assigned: the balance of support and demands in your birth chart or a current longer period is unresolved. A checked clash, punishment, harm or break adds competing demands; a supportive balance reading therefore still has a caution."
+              },
+              {
+                "id": "chapter.feedback-and-boundaries.evidence.65",
+                "value": "Reference 2033-07-15 at 12:00 Asia/Seoul: 癸丑; year 癸丑; day stem 辛; reference stem 癸 = 食神; principal inner stem 己 = 偏印."
+              },
+              {
+                "id": "chapter.feedback-and-boundaries.evidence.66",
+                "value": "Reference / birth day: 癸丑 / 辛未: branch 沖."
+              },
+              {
+                "id": "chapter.feedback-and-boundaries.evidence.67",
+                "value": "Reference / birth month: 癸丑 / 乙卯: no pattern in the checked pair tables."
+              },
+              {
+                "id": "chapter.feedback-and-boundaries.evidence.68",
+                "value": "Reference / birth year: 癸丑 / 戊寅: stem 合 (fire)."
+              },
+              {
+                "id": "chapter.feedback-and-boundaries.evidence.69",
+                "value": "Assessment FATE-qualitative-r1: natal deferred; reference 癸丑 (食神 / 偏印); direction unresolved; friction true."
+              },
+              {
+                "id": "chapter.feedback-and-boundaries.evidence.70",
+                "value": "Active cycle at 2033-07-15 12:00 shared comparison wall clock: 己未; approximate calculated start (birth hour unknown) 2031-11-07T03:33:18.000Z."
+              },
+              {
+                "id": "chapter.feedback-and-boundaries.evidence.71",
+                "value": "Reference / active ten-year cycle: 癸丑 / 己未: branch 沖."
+              },
+              {
+                "id": "chapter.feedback-and-boundaries.evidence.72",
+                "value": "2033-07-15: No judgement about whether the period may be easier or harder is assigned: the balance of support and demands in your birth chart or a current longer period is unresolved. A checked clash, punishment, harm or break adds competing demands; a supportive balance reading therefore still has a caution."
+              },
+              {
+                "id": "chapter.feedback-and-boundaries.evidence.73",
+                "value": "Reference 2034-07-15 at 12:00 Asia/Seoul: 甲寅; year 甲寅; day stem 辛; reference stem 甲 = 正財; principal inner stem 甲 = 正財."
+              },
+              {
+                "id": "chapter.feedback-and-boundaries.evidence.74",
+                "value": "Reference / birth day: 甲寅 / 辛未: branch 鬼門."
+              },
+              {
+                "id": "chapter.feedback-and-boundaries.evidence.75",
+                "value": "Reference / birth month: 甲寅 / 乙卯: no pattern in the checked pair tables."
+              },
+              {
+                "id": "chapter.feedback-and-boundaries.evidence.76",
+                "value": "Reference / birth year: 甲寅 / 戊寅: no pattern in the checked pair tables."
+              },
+              {
+                "id": "chapter.feedback-and-boundaries.evidence.77",
+                "value": "Assessment FATE-qualitative-r1: natal deferred; reference 甲寅 (正財 / 正財); direction unresolved; friction false."
+              },
+              {
+                "id": "chapter.feedback-and-boundaries.evidence.78",
+                "value": "Active cycle at 2034-07-15 12:00 shared comparison wall clock: 己未; approximate calculated start (birth hour unknown) 2031-11-07T03:33:18.000Z."
+              },
+              {
+                "id": "chapter.feedback-and-boundaries.evidence.79",
+                "value": "Reference / active ten-year cycle: 甲寅 / 己未: stem 合 (earth); branch 鬼門."
+              },
+              {
+                "id": "chapter.feedback-and-boundaries.evidence.80",
+                "value": "2034-07-15: No judgement about whether the period may be easier or harder is assigned: the balance of support and demands in your birth chart or a current longer period is unresolved. No checked clash, punishment, harm or break adds a separate sign of competing demands at this comparison date; this is not a guarantee of an easy period."
+              },
+              {
+                "id": "chapter.feedback-and-boundaries.evidence.81",
+                "value": "Reference 2035-07-15 at 12:00 Asia/Seoul: 乙卯; year 乙卯; day stem 辛; reference stem 乙 = 偏財; principal inner stem 乙 = 偏財."
+              },
+              {
+                "id": "chapter.feedback-and-boundaries.evidence.82",
+                "value": "Reference / birth day: 乙卯 / 辛未: stem 沖; branch 半合 (tree)."
+              },
+              {
+                "id": "chapter.feedback-and-boundaries.evidence.83",
+                "value": "Reference / birth month: 乙卯 / 乙卯: no pattern in the checked pair tables."
+              },
+              {
+                "id": "chapter.feedback-and-boundaries.evidence.84",
+                "value": "Reference / birth year: 乙卯 / 戊寅: no pattern in the checked pair tables."
+              },
+              {
+                "id": "chapter.feedback-and-boundaries.evidence.85",
+                "value": "Assessment FATE-qualitative-r1: natal deferred; reference 乙卯 (偏財 / 偏財); direction unresolved; friction true."
+              },
+              {
+                "id": "chapter.feedback-and-boundaries.evidence.86",
+                "value": "Active cycle at 2035-07-15 12:00 shared comparison wall clock: 己未; approximate calculated start (birth hour unknown) 2031-11-07T03:33:18.000Z."
+              },
+              {
+                "id": "chapter.feedback-and-boundaries.evidence.87",
+                "value": "Reference / active ten-year cycle: 乙卯 / 己未: branch 半合 (tree)."
+              },
+              {
+                "id": "chapter.feedback-and-boundaries.evidence.88",
+                "value": "2035-07-15: No judgement about whether the period may be easier or harder is assigned: the balance of support and demands in your birth chart or a current longer period is unresolved. A checked clash, punishment, harm or break adds competing demands; a supportive balance reading therefore still has a caution."
+              },
+              {
+                "id": "chapter.feedback-and-boundaries.evidence.89",
+                "value": "Activity policy FATE-activity-r1: area work; route expertise-to-role; status opening-with-caution; capacity deferred; natal roles 偏財/正印/偏印/偏財/正財; reference roles 正官/偏官; longer roles 正印/偏官; no overall luck judgement from a matched activity."
+              },
+              {
+                "id": "chapter.feedback-and-boundaries.evidence.90",
+                "value": "Activity policy FATE-activity-r1: area work; route none; status opening-with-caution; capacity deferred; natal roles 偏財/正印/偏印/偏財/正財; reference roles 偏印/比肩; longer roles 正印/偏官; no overall luck judgement from a matched activity."
+              },
+              {
+                "id": "chapter.feedback-and-boundaries.evidence.91",
+                "value": "Activity policy FATE-activity-r1: area work; route none; status extra-care; capacity deferred; natal roles 偏財/正印/偏印/偏財/正財; reference roles 比肩/傷官; longer roles 正印/偏官; no overall luck judgement from a matched activity."
+              },
+              {
+                "id": "chapter.feedback-and-boundaries.evidence.92",
+                "value": "Activity policy FATE-activity-r1: area work; route none; status extra-care; capacity deferred; natal roles 偏財/正印/偏印/偏財/正財; reference roles 傷官/食神; longer roles 偏印/偏印; no overall luck judgement from a matched activity."
+              }
+            ],
+            "answerType": "productcareer.career-timing"
+          },
+          "content_score_100": null,
+          "evaluation_status": "PASS",
+          "deductions": [],
+          "content_review": "Read against its question, chart evidence and the other answers in this profile."
+        },
+        {
+          "question_id": "work-chapters",
+          "question_number": 6,
+          "official_title": "What do the next ten years suggest for my work and money?",
+          "actual_answer": "Your Answer: Your 2026–2035 outlook is mixed: work themes change, but the comparisons do not show a steady rise in income. The main themes include defined responsibilities, demanding assignments, and training and guidance. Year by year: 2026: defined responsibilities; 2027: demanding assignments; 2028: training and guidance; 2029: independent problem-solving; 2030: shared work; 2031: independent work; 2032: improving methods; 2033: reliable production; 2034: predictable pay; 2035: new customers and deals.\n\nImportant Timing: Work may feel more demanding in 2026, 2029, 2031, 2032. Treat these as review points, not predicted setbacks.\n\nBottom Line: Your work pattern shifts from defined responsibilities toward new customers and deals. That change does not establish a steady increase in pay.\n\n07 · What Is the Most Important Insight for My Future?",
+          "chart_evidence": {
+            "questionId": "work-chapters",
+            "sourceChapterId": "work-chapters",
+            "ruleIds": [
+              "purchase-narrative.customerNarrative.career.work-chapters.v1"
+            ],
+            "evidence": [
+              {
+                "id": "chapter.work-chapters.evidence.1",
+                "value": "Ten-year cycle 戊午; calculated start 2021-11-07; stem 正印; branch 偏官."
+              },
+              {
+                "id": "chapter.work-chapters.evidence.2",
+                "value": "Ten-year cycle 己未; calculated start 2031-11-07; stem 偏印; branch 偏印."
+              },
+              {
+                "id": "chapter.work-chapters.evidence.3",
+                "value": "Ten-year cycle 庚申; calculated start 2041-11-07; stem 劫財; branch 劫財."
+              },
+              {
+                "id": "chapter.work-chapters.evidence.4",
+                "value": "Reference 2026-07-15 at 12:00 Asia/Seoul: 丙午; year 丙午; day stem 辛; reference stem 丙 = 正官; principal inner stem 丁 = 偏官."
+              },
+              {
+                "id": "chapter.work-chapters.evidence.5",
+                "value": "Reference / birth day: 丙午 / 辛未: stem 合 (water); branch 合 (fire)."
+              },
+              {
+                "id": "chapter.work-chapters.evidence.6",
+                "value": "Reference / birth month: 丙午 / 乙卯: branch 破."
+              },
+              {
+                "id": "chapter.work-chapters.evidence.7",
+                "value": "Reference / birth year: 丙午 / 戊寅: branch 半合 (fire)."
+              },
+              {
+                "id": "chapter.work-chapters.evidence.8",
+                "value": "Assessment FATE-qualitative-r1: natal deferred; reference 丙午 (正官 / 偏官); direction unresolved; friction true."
+              },
+              {
+                "id": "chapter.work-chapters.evidence.9",
+                "value": "Active cycle at 2026-07-15 12:00 shared comparison wall clock: 戊午; approximate calculated start (birth hour unknown) 2021-11-07T03:33:18.000Z."
+              },
+              {
+                "id": "chapter.work-chapters.evidence.10",
+                "value": "Reference / active ten-year cycle: 丙午 / 戊午: branch 刑 (自刑)."
+              },
+              {
+                "id": "chapter.work-chapters.evidence.11",
+                "value": "2026-07-15: No judgement about whether the period may be easier or harder is assigned: the balance of support and demands in your birth chart or a current longer period is unresolved. A checked clash, punishment, harm or break adds competing demands; a supportive balance reading therefore still has a caution."
+              },
+              {
+                "id": "chapter.work-chapters.evidence.12",
+                "value": "Reference 2027-07-15 at 12:00 Asia/Seoul: 丁未; year 丁未; day stem 辛; reference stem 丁 = 偏官; principal inner stem 己 = 偏印."
+              },
+              {
+                "id": "chapter.work-chapters.evidence.13",
+                "value": "Reference / birth day: 丁未 / 辛未: no pattern in the checked pair tables."
+              },
+              {
+                "id": "chapter.work-chapters.evidence.14",
+                "value": "Reference / birth month: 丁未 / 乙卯: branch 半合 (tree)."
+              },
+              {
+                "id": "chapter.work-chapters.evidence.15",
+                "value": "Reference / birth year: 丁未 / 戊寅: branch 鬼門."
+              },
+              {
+                "id": "chapter.work-chapters.evidence.16",
+                "value": "Assessment FATE-qualitative-r1: natal deferred; reference 丁未 (偏官 / 偏印); direction unresolved; friction false."
+              },
+              {
+                "id": "chapter.work-chapters.evidence.17",
+                "value": "Active cycle at 2027-07-15 12:00 shared comparison wall clock: 戊午; approximate calculated start (birth hour unknown) 2021-11-07T03:33:18.000Z."
+              },
+              {
+                "id": "chapter.work-chapters.evidence.18",
+                "value": "Reference / active ten-year cycle: 丁未 / 戊午: branch 合 (fire)."
+              },
+              {
+                "id": "chapter.work-chapters.evidence.19",
+                "value": "2027-07-15: No judgement about whether the period may be easier or harder is assigned: the balance of support and demands in your birth chart or a current longer period is unresolved. No checked clash, punishment, harm or break adds a separate sign of competing demands at this comparison date; this is not a guarantee of an easy period."
+              },
+              {
+                "id": "chapter.work-chapters.evidence.20",
+                "value": "Reference 2028-07-15 at 12:00 Asia/Seoul: 戊申; year 戊申; day stem 辛; reference stem 戊 = 正印; principal inner stem 庚 = 劫財."
+              },
+              {
+                "id": "chapter.work-chapters.evidence.21",
+                "value": "Reference / birth day: 戊申 / 辛未: no pattern in the checked pair tables."
+              },
+              {
+                "id": "chapter.work-chapters.evidence.22",
+                "value": "Reference / birth month: 戊申 / 乙卯: branch 怨嗔; branch 鬼門."
+              },
+              {
+                "id": "chapter.work-chapters.evidence.23",
+                "value": "Reference / birth year: 戊申 / 戊寅: branch 沖."
+              },
+              {
+                "id": "chapter.work-chapters.evidence.24",
+                "value": "Assessment FATE-qualitative-r1: natal deferred; reference 戊申 (正印 / 劫財); direction unresolved; friction true."
+              },
+              {
+                "id": "chapter.work-chapters.evidence.25",
+                "value": "Active cycle at 2028-07-15 12:00 shared comparison wall clock: 戊午; approximate calculated start (birth hour unknown) 2021-11-07T03:33:18.000Z."
+              },
+              {
+                "id": "chapter.work-chapters.evidence.26",
+                "value": "Reference / active ten-year cycle: 戊申 / 戊午: no pattern in the checked pair tables."
+              },
+              {
+                "id": "chapter.work-chapters.evidence.27",
+                "value": "2028-07-15: No judgement about whether the period may be easier or harder is assigned: the balance of support and demands in your birth chart or a current longer period is unresolved. A checked clash, punishment, harm or break adds competing demands; a supportive balance reading therefore still has a caution."
+              },
+              {
+                "id": "chapter.work-chapters.evidence.28",
+                "value": "Reference 2029-07-15 at 12:00 Asia/Seoul: 己酉; year 己酉; day stem 辛; reference stem 己 = 偏印; principal inner stem 辛 = 比肩."
+              },
+              {
+                "id": "chapter.work-chapters.evidence.29",
+                "value": "Reference / birth day: 己酉 / 辛未: no pattern in the checked pair tables."
+              },
+              {
+                "id": "chapter.work-chapters.evidence.30",
+                "value": "Reference / birth month: 己酉 / 乙卯: branch 沖."
+              },
+              {
+                "id": "chapter.work-chapters.evidence.31",
+                "value": "Reference / birth year: 己酉 / 戊寅: branch 怨嗔."
+              },
+              {
+                "id": "chapter.work-chapters.evidence.32",
+                "value": "Assessment FATE-qualitative-r1: natal deferred; reference 己酉 (偏印 / 比肩); direction unresolved; friction true."
+              },
+              {
+                "id": "chapter.work-chapters.evidence.33",
+                "value": "Active cycle at 2029-07-15 12:00 shared comparison wall clock: 戊午; approximate calculated start (birth hour unknown) 2021-11-07T03:33:18.000Z."
+              },
+              {
+                "id": "chapter.work-chapters.evidence.34",
+                "value": "Reference / active ten-year cycle: 己酉 / 戊午: no pattern in the checked pair tables."
+              },
+              {
+                "id": "chapter.work-chapters.evidence.35",
+                "value": "2029-07-15: No judgement about whether the period may be easier or harder is assigned: the balance of support and demands in your birth chart or a current longer period is unresolved. A checked clash, punishment, harm or break adds competing demands; a supportive balance reading therefore still has a caution."
+              },
+              {
+                "id": "chapter.work-chapters.evidence.36",
+                "value": "Reference 2030-07-15 at 12:00 Asia/Seoul: 庚戌; year 庚戌; day stem 辛; reference stem 庚 = 劫財; principal inner stem 戊 = 正印."
+              },
+              {
+                "id": "chapter.work-chapters.evidence.37",
+                "value": "Reference / birth day: 庚戌 / 辛未: branch 破."
+              },
+              {
+                "id": "chapter.work-chapters.evidence.38",
+                "value": "Reference / birth month: 庚戌 / 乙卯: stem 合 (metal); branch 合 (fire)."
+              },
+              {
+                "id": "chapter.work-chapters.evidence.39",
+                "value": "Reference / birth year: 庚戌 / 戊寅: no pattern in the checked pair tables."
+              },
+              {
+                "id": "chapter.work-chapters.evidence.40",
+                "value": "Assessment FATE-qualitative-r1: natal deferred; reference 庚戌 (劫財 / 正印); direction unresolved; friction true."
+              },
+              {
+                "id": "chapter.work-chapters.evidence.41",
+                "value": "Active cycle at 2030-07-15 12:00 shared comparison wall clock: 戊午; approximate calculated start (birth hour unknown) 2021-11-07T03:33:18.000Z."
+              },
+              {
+                "id": "chapter.work-chapters.evidence.42",
+                "value": "Reference / active ten-year cycle: 庚戌 / 戊午: branch 半合 (fire)."
+              },
+              {
+                "id": "chapter.work-chapters.evidence.43",
+                "value": "2030-07-15: No judgement about whether the period may be easier or harder is assigned: the balance of support and demands in your birth chart or a current longer period is unresolved. A checked clash, punishment, harm or break adds competing demands; a supportive balance reading therefore still has a caution."
+              },
+              {
+                "id": "chapter.work-chapters.evidence.44",
+                "value": "Reference 2031-07-15 at 12:00 Asia/Seoul: 辛亥; year 辛亥; day stem 辛; reference stem 辛 = 比肩; principal inner stem 壬 = 傷官."
+              },
+              {
+                "id": "chapter.work-chapters.evidence.45",
+                "value": "Reference / birth day: 辛亥 / 辛未: no pattern in the checked pair tables."
+              },
+              {
+                "id": "chapter.work-chapters.evidence.46",
+                "value": "Reference / birth month: 辛亥 / 乙卯: stem 沖; branch 半合 (tree)."
+              },
+              {
+                "id": "chapter.work-chapters.evidence.47",
+                "value": "Reference / birth year: 辛亥 / 戊寅: branch 合 (tree); branch 破."
+              },
+              {
+                "id": "chapter.work-chapters.evidence.48",
+                "value": "Assessment FATE-qualitative-r1: natal deferred; reference 辛亥 (比肩 / 傷官); direction unresolved; friction true."
+              },
+              {
+                "id": "chapter.work-chapters.evidence.49",
+                "value": "Active cycle at 2031-07-15 12:00 shared comparison wall clock: 戊午; approximate calculated start (birth hour unknown) 2021-11-07T03:33:18.000Z."
+              },
+              {
+                "id": "chapter.work-chapters.evidence.50",
+                "value": "Reference / active ten-year cycle: 辛亥 / 戊午: no pattern in the checked pair tables."
+              },
+              {
+                "id": "chapter.work-chapters.evidence.51",
+                "value": "2031-07-15: No judgement about whether the period may be easier or harder is assigned: the balance of support and demands in your birth chart or a current longer period is unresolved. A checked clash, punishment, harm or break adds competing demands; a supportive balance reading therefore still has a caution."
+              },
+              {
+                "id": "chapter.work-chapters.evidence.52",
+                "value": "Reference 2032-07-15 at 12:00 Asia/Seoul: 壬子; year 壬子; day stem 辛; reference stem 壬 = 傷官; principal inner stem 癸 = 食神."
+              },
+              {
+                "id": "chapter.work-chapters.evidence.53",
+                "value": "Reference / birth day: 壬子 / 辛未: branch 害; branch 怨嗔."
+              },
+              {
+                "id": "chapter.work-chapters.evidence.54",
+                "value": "Reference / birth month: 壬子 / 乙卯: branch 刑 (無禮)."
+              },
+              {
+                "id": "chapter.work-chapters.evidence.55",
+                "value": "Reference / birth year: 壬子 / 戊寅: no pattern in the checked pair tables."
+              },
+              {
+                "id": "chapter.work-chapters.evidence.56",
+                "value": "Assessment FATE-qualitative-r1: natal deferred; reference 壬子 (傷官 / 食神); direction unresolved; friction true."
+              },
+              {
+                "id": "chapter.work-chapters.evidence.57",
+                "value": "Active cycle at 2032-07-15 12:00 shared comparison wall clock: 己未; approximate calculated start (birth hour unknown) 2031-11-07T03:33:18.000Z."
+              },
+              {
+                "id": "chapter.work-chapters.evidence.58",
+                "value": "Reference / active ten-year cycle: 壬子 / 己未: branch 害; branch 怨嗔."
+              },
+              {
+                "id": "chapter.work-chapters.evidence.59",
+                "value": "2032-07-15: No judgement about whether the period may be easier or harder is assigned: the balance of support and demands in your birth chart or a current longer period is unresolved. A checked clash, punishment, harm or break adds competing demands; a supportive balance reading therefore still has a caution."
+              },
+              {
+                "id": "chapter.work-chapters.evidence.60",
+                "value": "Reference 2033-07-15 at 12:00 Asia/Seoul: 癸丑; year 癸丑; day stem 辛; reference stem 癸 = 食神; principal inner stem 己 = 偏印."
+              },
+              {
+                "id": "chapter.work-chapters.evidence.61",
+                "value": "Reference / birth day: 癸丑 / 辛未: branch 沖."
+              },
+              {
+                "id": "chapter.work-chapters.evidence.62",
+                "value": "Reference / birth month: 癸丑 / 乙卯: no pattern in the checked pair tables."
+              },
+              {
+                "id": "chapter.work-chapters.evidence.63",
+                "value": "Reference / birth year: 癸丑 / 戊寅: stem 合 (fire)."
+              },
+              {
+                "id": "chapter.work-chapters.evidence.64",
+                "value": "Assessment FATE-qualitative-r1: natal deferred; reference 癸丑 (食神 / 偏印); direction unresolved; friction true."
+              },
+              {
+                "id": "chapter.work-chapters.evidence.65",
+                "value": "Active cycle at 2033-07-15 12:00 shared comparison wall clock: 己未; approximate calculated start (birth hour unknown) 2031-11-07T03:33:18.000Z."
+              },
+              {
+                "id": "chapter.work-chapters.evidence.66",
+                "value": "Reference / active ten-year cycle: 癸丑 / 己未: branch 沖."
+              },
+              {
+                "id": "chapter.work-chapters.evidence.67",
+                "value": "2033-07-15: No judgement about whether the period may be easier or harder is assigned: the balance of support and demands in your birth chart or a current longer period is unresolved. A checked clash, punishment, harm or break adds competing demands; a supportive balance reading therefore still has a caution."
+              },
+              {
+                "id": "chapter.work-chapters.evidence.68",
+                "value": "Reference 2034-07-15 at 12:00 Asia/Seoul: 甲寅; year 甲寅; day stem 辛; reference stem 甲 = 正財; principal inner stem 甲 = 正財."
+              },
+              {
+                "id": "chapter.work-chapters.evidence.69",
+                "value": "Reference / birth day: 甲寅 / 辛未: branch 鬼門."
+              },
+              {
+                "id": "chapter.work-chapters.evidence.70",
+                "value": "Reference / birth month: 甲寅 / 乙卯: no pattern in the checked pair tables."
+              },
+              {
+                "id": "chapter.work-chapters.evidence.71",
+                "value": "Reference / birth year: 甲寅 / 戊寅: no pattern in the checked pair tables."
+              },
+              {
+                "id": "chapter.work-chapters.evidence.72",
+                "value": "Assessment FATE-qualitative-r1: natal deferred; reference 甲寅 (正財 / 正財); direction unresolved; friction false."
+              },
+              {
+                "id": "chapter.work-chapters.evidence.73",
+                "value": "Active cycle at 2034-07-15 12:00 shared comparison wall clock: 己未; approximate calculated start (birth hour unknown) 2031-11-07T03:33:18.000Z."
+              },
+              {
+                "id": "chapter.work-chapters.evidence.74",
+                "value": "Reference / active ten-year cycle: 甲寅 / 己未: stem 合 (earth); branch 鬼門."
+              },
+              {
+                "id": "chapter.work-chapters.evidence.75",
+                "value": "2034-07-15: No judgement about whether the period may be easier or harder is assigned: the balance of support and demands in your birth chart or a current longer period is unresolved. No checked clash, punishment, harm or break adds a separate sign of competing demands at this comparison date; this is not a guarantee of an easy period."
+              },
+              {
+                "id": "chapter.work-chapters.evidence.76",
+                "value": "Reference 2035-07-15 at 12:00 Asia/Seoul: 乙卯; year 乙卯; day stem 辛; reference stem 乙 = 偏財; principal inner stem 乙 = 偏財."
+              },
+              {
+                "id": "chapter.work-chapters.evidence.77",
+                "value": "Reference / birth day: 乙卯 / 辛未: stem 沖; branch 半合 (tree)."
+              },
+              {
+                "id": "chapter.work-chapters.evidence.78",
+                "value": "Reference / birth month: 乙卯 / 乙卯: no pattern in the checked pair tables."
+              },
+              {
+                "id": "chapter.work-chapters.evidence.79",
+                "value": "Reference / birth year: 乙卯 / 戊寅: no pattern in the checked pair tables."
+              },
+              {
+                "id": "chapter.work-chapters.evidence.80",
+                "value": "Assessment FATE-qualitative-r1: natal deferred; reference 乙卯 (偏財 / 偏財); direction unresolved; friction true."
+              },
+              {
+                "id": "chapter.work-chapters.evidence.81",
+                "value": "Active cycle at 2035-07-15 12:00 shared comparison wall clock: 己未; approximate calculated start (birth hour unknown) 2031-11-07T03:33:18.000Z."
+              },
+              {
+                "id": "chapter.work-chapters.evidence.82",
+                "value": "Reference / active ten-year cycle: 乙卯 / 己未: branch 半合 (tree)."
+              },
+              {
+                "id": "chapter.work-chapters.evidence.83",
+                "value": "2035-07-15: No judgement about whether the period may be easier or harder is assigned: the balance of support and demands in your birth chart or a current longer period is unresolved. A checked clash, punishment, harm or break adds competing demands; a supportive balance reading therefore still has a caution."
+              },
+              {
+                "id": "chapter.work-chapters.evidence.84",
+                "value": "Activity policy FATE-activity-r1: area work; route expertise-to-role; status opening-with-caution; capacity deferred; natal roles 偏財/正印/偏印/偏財/正財; reference roles 正官/偏官; longer roles 正印/偏官; no overall luck judgement from a matched activity."
+              },
+              {
+                "id": "chapter.work-chapters.evidence.85",
+                "value": "Activity policy FATE-activity-r1: area work; route expertise-to-role; status conditional-opening; capacity deferred; natal roles 偏財/正印/偏印/偏財/正財; reference roles 偏官/偏印; longer roles 正印/偏官; no overall luck judgement from a matched activity."
+              },
+              {
+                "id": "chapter.work-chapters.evidence.86",
+                "value": "Activity policy FATE-activity-r1: area work; route none; status conditional-opening; capacity deferred; natal roles 偏財/正印/偏印/偏財/正財; reference roles 正印/劫財; longer roles 正印/偏官; no overall luck judgement from a matched activity."
+              },
+              {
+                "id": "chapter.work-chapters.evidence.87",
+                "value": "Activity policy FATE-activity-r1: area work; route none; status opening-with-caution; capacity deferred; natal roles 偏財/正印/偏印/偏財/正財; reference roles 偏印/比肩; longer roles 正印/偏官; no overall luck judgement from a matched activity."
+              },
+              {
+                "id": "chapter.work-chapters.evidence.88",
+                "value": "Activity policy FATE-activity-r1: area work; route none; status opening-with-caution; capacity deferred; natal roles 偏財/正印/偏印/偏財/正財; reference roles 劫財/正印; longer roles 正印/偏官; no overall luck judgement from a matched activity."
+              },
+              {
+                "id": "chapter.work-chapters.evidence.89",
+                "value": "Activity policy FATE-activity-r1: area work; route none; status extra-care; capacity deferred; natal roles 偏財/正印/偏印/偏財/正財; reference roles 比肩/傷官; longer roles 正印/偏官; no overall luck judgement from a matched activity."
+              },
+              {
+                "id": "chapter.work-chapters.evidence.90",
+                "value": "Activity policy FATE-activity-r1: area work; route none; status extra-care; capacity deferred; natal roles 偏財/正印/偏印/偏財/正財; reference roles 傷官/食神; longer roles 偏印/偏印; no overall luck judgement from a matched activity."
+              },
+              {
+                "id": "chapter.work-chapters.evidence.91",
+                "value": "Activity policy FATE-activity-r1: area work; route none; status opening-with-caution; capacity deferred; natal roles 偏財/正印/偏印/偏財/正財; reference roles 食神/偏印; longer roles 偏印/偏印; no overall luck judgement from a matched activity."
+              },
+              {
+                "id": "chapter.work-chapters.evidence.92",
+                "value": "Activity policy FATE-activity-r1: area work; route none; status conditional-opening; capacity deferred; natal roles 偏財/正印/偏印/偏財/正財; reference roles 正財/正財; longer roles 偏印/偏印; no overall luck judgement from a matched activity."
+              },
+              {
+                "id": "chapter.work-chapters.evidence.93",
+                "value": "Activity policy FATE-activity-r1: area work; route none; status opening-with-caution; capacity deferred; natal roles 偏財/正印/偏印/偏財/正財; reference roles 偏財/偏財; longer roles 偏印/偏印; no overall luck judgement from a matched activity."
+              }
+            ],
+            "answerType": "productcareer.long-cycle-work-theme"
+          },
+          "content_score_100": null,
+          "evaluation_status": "PASS",
+          "deductions": [],
+          "content_review": "Read against its question, chart evidence and the other answers in this profile."
+        },
+        {
+          "question_id": "career-plan",
+          "question_number": 7,
+          "official_title": "What is my most important career and money insight?",
+          "actual_answer": "Your Answer: Your chart links customer growth and business development at work with steady pay and income from customers or projects as possible ways of earning. That connects the themes, but it cannot estimate your pay.\n\nBottom Line: A role involving customer growth and business development gives the work and earning clues a chance to meet. Control over delivery may help turn that customer-facing strength into paid work.",
+          "chart_evidence": {
+            "questionId": "career-plan",
+            "sourceChapterId": "career-plan",
+            "ruleIds": [
+              "purchase-narrative.customerNarrative.career.career-plan.v1"
+            ],
+            "evidence": [
+              {
+                "id": "chapter.career-plan.evidence.1",
+                "value": "day pillar 辛未. Stem 辛: 本元 (starting point); branch 未: 偏印 (Independent learning)."
+              },
+              {
+                "id": "chapter.career-plan.evidence.2",
+                "value": "month pillar 乙卯. Stem 乙: 偏財 (Opportunity and exchange); branch 卯: 偏財 (Opportunity and exchange)."
+              },
+              {
+                "id": "chapter.career-plan.evidence.3",
+                "value": "day branch 未 (principal stem): 偏印 (specialist insight)."
+              },
+              {
+                "id": "chapter.career-plan.evidence.4",
+                "value": "month stem 乙: 偏財 (opportunities and wider money)."
+              },
+              {
+                "id": "chapter.career-plan.evidence.5",
+                "value": "month branch 卯 (principal stem): 偏財 (opportunities and wider money)."
+              },
+              {
+                "id": "chapter.career-plan.evidence.6",
+                "value": "year stem 戊: 正印 (learning and dependable support)."
+              },
+              {
+                "id": "chapter.career-plan.evidence.7",
+                "value": "year branch 寅 (principal stem): 正財 (regular money and commitments)."
+              },
+              {
+                "id": "chapter.career-plan.evidence.8",
+                "value": "Ten-year cycle 戊午; calculated start 2021-11-07; stem 正印; branch 偏官."
+              },
+              {
+                "id": "chapter.career-plan.evidence.9",
+                "value": "Ten-year cycle 己未; calculated start 2031-11-07; stem 偏印; branch 偏印."
+              },
+              {
+                "id": "chapter.career-plan.evidence.10",
+                "value": "Ten-year cycle 庚申; calculated start 2041-11-07; stem 劫財; branch 劫財."
+              },
+              {
+                "id": "chapter.career-plan.evidence.11",
+                "value": "Reference 2026-07-15 at 12:00 Asia/Seoul: 丙午; year 丙午; day stem 辛; reference stem 丙 = 正官; principal inner stem 丁 = 偏官."
+              },
+              {
+                "id": "chapter.career-plan.evidence.12",
+                "value": "Reference / birth day: 丙午 / 辛未: stem 合 (water); branch 合 (fire)."
+              },
+              {
+                "id": "chapter.career-plan.evidence.13",
+                "value": "Reference / birth month: 丙午 / 乙卯: branch 破."
+              },
+              {
+                "id": "chapter.career-plan.evidence.14",
+                "value": "Reference / birth year: 丙午 / 戊寅: branch 半合 (fire)."
+              },
+              {
+                "id": "chapter.career-plan.evidence.15",
+                "value": "Assessment FATE-qualitative-r1: natal deferred; reference 丙午 (正官 / 偏官); direction unresolved; friction true."
+              },
+              {
+                "id": "chapter.career-plan.evidence.16",
+                "value": "Active cycle at 2026-07-15 12:00 shared comparison wall clock: 戊午; approximate calculated start (birth hour unknown) 2021-11-07T03:33:18.000Z."
+              },
+              {
+                "id": "chapter.career-plan.evidence.17",
+                "value": "Reference / active ten-year cycle: 丙午 / 戊午: branch 刑 (自刑)."
+              },
+              {
+                "id": "chapter.career-plan.evidence.18",
+                "value": "2026-07-15: No judgement about whether the period may be easier or harder is assigned: the balance of support and demands in your birth chart or a current longer period is unresolved. A checked clash, punishment, harm or break adds competing demands; a supportive balance reading therefore still has a caution."
+              },
+              {
+                "id": "chapter.career-plan.evidence.19",
+                "value": "Reference 2027-07-15 at 12:00 Asia/Seoul: 丁未; year 丁未; day stem 辛; reference stem 丁 = 偏官; principal inner stem 己 = 偏印."
+              },
+              {
+                "id": "chapter.career-plan.evidence.20",
+                "value": "Reference / birth day: 丁未 / 辛未: no pattern in the checked pair tables."
+              },
+              {
+                "id": "chapter.career-plan.evidence.21",
+                "value": "Reference / birth month: 丁未 / 乙卯: branch 半合 (tree)."
+              },
+              {
+                "id": "chapter.career-plan.evidence.22",
+                "value": "Reference / birth year: 丁未 / 戊寅: branch 鬼門."
+              },
+              {
+                "id": "chapter.career-plan.evidence.23",
+                "value": "Assessment FATE-qualitative-r1: natal deferred; reference 丁未 (偏官 / 偏印); direction unresolved; friction false."
+              },
+              {
+                "id": "chapter.career-plan.evidence.24",
+                "value": "Active cycle at 2027-07-15 12:00 shared comparison wall clock: 戊午; approximate calculated start (birth hour unknown) 2021-11-07T03:33:18.000Z."
+              },
+              {
+                "id": "chapter.career-plan.evidence.25",
+                "value": "Reference / active ten-year cycle: 丁未 / 戊午: branch 合 (fire)."
+              },
+              {
+                "id": "chapter.career-plan.evidence.26",
+                "value": "2027-07-15: No judgement about whether the period may be easier or harder is assigned: the balance of support and demands in your birth chart or a current longer period is unresolved. No checked clash, punishment, harm or break adds a separate sign of competing demands at this comparison date; this is not a guarantee of an easy period."
+              },
+              {
+                "id": "chapter.career-plan.evidence.27",
+                "value": "Reference 2028-07-15 at 12:00 Asia/Seoul: 戊申; year 戊申; day stem 辛; reference stem 戊 = 正印; principal inner stem 庚 = 劫財."
+              },
+              {
+                "id": "chapter.career-plan.evidence.28",
+                "value": "Reference / birth day: 戊申 / 辛未: no pattern in the checked pair tables."
+              },
+              {
+                "id": "chapter.career-plan.evidence.29",
+                "value": "Reference / birth month: 戊申 / 乙卯: branch 怨嗔; branch 鬼門."
+              },
+              {
+                "id": "chapter.career-plan.evidence.30",
+                "value": "Reference / birth year: 戊申 / 戊寅: branch 沖."
+              },
+              {
+                "id": "chapter.career-plan.evidence.31",
+                "value": "Assessment FATE-qualitative-r1: natal deferred; reference 戊申 (正印 / 劫財); direction unresolved; friction true."
+              },
+              {
+                "id": "chapter.career-plan.evidence.32",
+                "value": "Active cycle at 2028-07-15 12:00 shared comparison wall clock: 戊午; approximate calculated start (birth hour unknown) 2021-11-07T03:33:18.000Z."
+              },
+              {
+                "id": "chapter.career-plan.evidence.33",
+                "value": "Reference / active ten-year cycle: 戊申 / 戊午: no pattern in the checked pair tables."
+              },
+              {
+                "id": "chapter.career-plan.evidence.34",
+                "value": "2028-07-15: No judgement about whether the period may be easier or harder is assigned: the balance of support and demands in your birth chart or a current longer period is unresolved. A checked clash, punishment, harm or break adds competing demands; a supportive balance reading therefore still has a caution."
+              },
+              {
+                "id": "chapter.career-plan.evidence.35",
+                "value": "Reference 2029-07-15 at 12:00 Asia/Seoul: 己酉; year 己酉; day stem 辛; reference stem 己 = 偏印; principal inner stem 辛 = 比肩."
+              },
+              {
+                "id": "chapter.career-plan.evidence.36",
+                "value": "Reference / birth day: 己酉 / 辛未: no pattern in the checked pair tables."
+              },
+              {
+                "id": "chapter.career-plan.evidence.37",
+                "value": "Reference / birth month: 己酉 / 乙卯: branch 沖."
+              },
+              {
+                "id": "chapter.career-plan.evidence.38",
+                "value": "Reference / birth year: 己酉 / 戊寅: branch 怨嗔."
+              },
+              {
+                "id": "chapter.career-plan.evidence.39",
+                "value": "Assessment FATE-qualitative-r1: natal deferred; reference 己酉 (偏印 / 比肩); direction unresolved; friction true."
+              },
+              {
+                "id": "chapter.career-plan.evidence.40",
+                "value": "Active cycle at 2029-07-15 12:00 shared comparison wall clock: 戊午; approximate calculated start (birth hour unknown) 2021-11-07T03:33:18.000Z."
+              },
+              {
+                "id": "chapter.career-plan.evidence.41",
+                "value": "Reference / active ten-year cycle: 己酉 / 戊午: no pattern in the checked pair tables."
+              },
+              {
+                "id": "chapter.career-plan.evidence.42",
+                "value": "2029-07-15: No judgement about whether the period may be easier or harder is assigned: the balance of support and demands in your birth chart or a current longer period is unresolved. A checked clash, punishment, harm or break adds competing demands; a supportive balance reading therefore still has a caution."
+              },
+              {
+                "id": "chapter.career-plan.evidence.43",
+                "value": "Reference 2030-07-15 at 12:00 Asia/Seoul: 庚戌; year 庚戌; day stem 辛; reference stem 庚 = 劫財; principal inner stem 戊 = 正印."
+              },
+              {
+                "id": "chapter.career-plan.evidence.44",
+                "value": "Reference / birth day: 庚戌 / 辛未: branch 破."
+              },
+              {
+                "id": "chapter.career-plan.evidence.45",
+                "value": "Reference / birth month: 庚戌 / 乙卯: stem 合 (metal); branch 合 (fire)."
+              },
+              {
+                "id": "chapter.career-plan.evidence.46",
+                "value": "Reference / birth year: 庚戌 / 戊寅: no pattern in the checked pair tables."
+              },
+              {
+                "id": "chapter.career-plan.evidence.47",
+                "value": "Assessment FATE-qualitative-r1: natal deferred; reference 庚戌 (劫財 / 正印); direction unresolved; friction true."
+              },
+              {
+                "id": "chapter.career-plan.evidence.48",
+                "value": "Active cycle at 2030-07-15 12:00 shared comparison wall clock: 戊午; approximate calculated start (birth hour unknown) 2021-11-07T03:33:18.000Z."
+              },
+              {
+                "id": "chapter.career-plan.evidence.49",
+                "value": "Reference / active ten-year cycle: 庚戌 / 戊午: branch 半合 (fire)."
+              },
+              {
+                "id": "chapter.career-plan.evidence.50",
+                "value": "2030-07-15: No judgement about whether the period may be easier or harder is assigned: the balance of support and demands in your birth chart or a current longer period is unresolved. A checked clash, punishment, harm or break adds competing demands; a supportive balance reading therefore still has a caution."
+              },
+              {
+                "id": "chapter.career-plan.evidence.51",
+                "value": "Reference 2031-07-15 at 12:00 Asia/Seoul: 辛亥; year 辛亥; day stem 辛; reference stem 辛 = 比肩; principal inner stem 壬 = 傷官."
+              },
+              {
+                "id": "chapter.career-plan.evidence.52",
+                "value": "Reference / birth day: 辛亥 / 辛未: no pattern in the checked pair tables."
+              },
+              {
+                "id": "chapter.career-plan.evidence.53",
+                "value": "Reference / birth month: 辛亥 / 乙卯: stem 沖; branch 半合 (tree)."
+              },
+              {
+                "id": "chapter.career-plan.evidence.54",
+                "value": "Reference / birth year: 辛亥 / 戊寅: branch 合 (tree); branch 破."
+              },
+              {
+                "id": "chapter.career-plan.evidence.55",
+                "value": "Assessment FATE-qualitative-r1: natal deferred; reference 辛亥 (比肩 / 傷官); direction unresolved; friction true."
+              },
+              {
+                "id": "chapter.career-plan.evidence.56",
+                "value": "Active cycle at 2031-07-15 12:00 shared comparison wall clock: 戊午; approximate calculated start (birth hour unknown) 2021-11-07T03:33:18.000Z."
+              },
+              {
+                "id": "chapter.career-plan.evidence.57",
+                "value": "Reference / active ten-year cycle: 辛亥 / 戊午: no pattern in the checked pair tables."
+              },
+              {
+                "id": "chapter.career-plan.evidence.58",
+                "value": "2031-07-15: No judgement about whether the period may be easier or harder is assigned: the balance of support and demands in your birth chart or a current longer period is unresolved. A checked clash, punishment, harm or break adds competing demands; a supportive balance reading therefore still has a caution."
+              },
+              {
+                "id": "chapter.career-plan.evidence.59",
+                "value": "Reference 2032-07-15 at 12:00 Asia/Seoul: 壬子; year 壬子; day stem 辛; reference stem 壬 = 傷官; principal inner stem 癸 = 食神."
+              },
+              {
+                "id": "chapter.career-plan.evidence.60",
+                "value": "Reference / birth day: 壬子 / 辛未: branch 害; branch 怨嗔."
+              },
+              {
+                "id": "chapter.career-plan.evidence.61",
+                "value": "Reference / birth month: 壬子 / 乙卯: branch 刑 (無禮)."
+              },
+              {
+                "id": "chapter.career-plan.evidence.62",
+                "value": "Reference / birth year: 壬子 / 戊寅: no pattern in the checked pair tables."
+              },
+              {
+                "id": "chapter.career-plan.evidence.63",
+                "value": "Assessment FATE-qualitative-r1: natal deferred; reference 壬子 (傷官 / 食神); direction unresolved; friction true."
+              },
+              {
+                "id": "chapter.career-plan.evidence.64",
+                "value": "Active cycle at 2032-07-15 12:00 shared comparison wall clock: 己未; approximate calculated start (birth hour unknown) 2031-11-07T03:33:18.000Z."
+              },
+              {
+                "id": "chapter.career-plan.evidence.65",
+                "value": "Reference / active ten-year cycle: 壬子 / 己未: branch 害; branch 怨嗔."
+              },
+              {
+                "id": "chapter.career-plan.evidence.66",
+                "value": "2032-07-15: No judgement about whether the period may be easier or harder is assigned: the balance of support and demands in your birth chart or a current longer period is unresolved. A checked clash, punishment, harm or break adds competing demands; a supportive balance reading therefore still has a caution."
+              },
+              {
+                "id": "chapter.career-plan.evidence.67",
+                "value": "Reference 2033-07-15 at 12:00 Asia/Seoul: 癸丑; year 癸丑; day stem 辛; reference stem 癸 = 食神; principal inner stem 己 = 偏印."
+              },
+              {
+                "id": "chapter.career-plan.evidence.68",
+                "value": "Reference / birth day: 癸丑 / 辛未: branch 沖."
+              },
+              {
+                "id": "chapter.career-plan.evidence.69",
+                "value": "Reference / birth month: 癸丑 / 乙卯: no pattern in the checked pair tables."
+              },
+              {
+                "id": "chapter.career-plan.evidence.70",
+                "value": "Reference / birth year: 癸丑 / 戊寅: stem 合 (fire)."
+              },
+              {
+                "id": "chapter.career-plan.evidence.71",
+                "value": "Assessment FATE-qualitative-r1: natal deferred; reference 癸丑 (食神 / 偏印); direction unresolved; friction true."
+              },
+              {
+                "id": "chapter.career-plan.evidence.72",
+                "value": "Active cycle at 2033-07-15 12:00 shared comparison wall clock: 己未; approximate calculated start (birth hour unknown) 2031-11-07T03:33:18.000Z."
+              },
+              {
+                "id": "chapter.career-plan.evidence.73",
+                "value": "Reference / active ten-year cycle: 癸丑 / 己未: branch 沖."
+              },
+              {
+                "id": "chapter.career-plan.evidence.74",
+                "value": "2033-07-15: No judgement about whether the period may be easier or harder is assigned: the balance of support and demands in your birth chart or a current longer period is unresolved. A checked clash, punishment, harm or break adds competing demands; a supportive balance reading therefore still has a caution."
+              },
+              {
+                "id": "chapter.career-plan.evidence.75",
+                "value": "Reference 2034-07-15 at 12:00 Asia/Seoul: 甲寅; year 甲寅; day stem 辛; reference stem 甲 = 正財; principal inner stem 甲 = 正財."
+              },
+              {
+                "id": "chapter.career-plan.evidence.76",
+                "value": "Reference / birth day: 甲寅 / 辛未: branch 鬼門."
+              },
+              {
+                "id": "chapter.career-plan.evidence.77",
+                "value": "Reference / birth month: 甲寅 / 乙卯: no pattern in the checked pair tables."
+              },
+              {
+                "id": "chapter.career-plan.evidence.78",
+                "value": "Reference / birth year: 甲寅 / 戊寅: no pattern in the checked pair tables."
+              },
+              {
+                "id": "chapter.career-plan.evidence.79",
+                "value": "Assessment FATE-qualitative-r1: natal deferred; reference 甲寅 (正財 / 正財); direction unresolved; friction false."
+              },
+              {
+                "id": "chapter.career-plan.evidence.80",
+                "value": "Active cycle at 2034-07-15 12:00 shared comparison wall clock: 己未; approximate calculated start (birth hour unknown) 2031-11-07T03:33:18.000Z."
+              },
+              {
+                "id": "chapter.career-plan.evidence.81",
+                "value": "Reference / active ten-year cycle: 甲寅 / 己未: stem 合 (earth); branch 鬼門."
+              },
+              {
+                "id": "chapter.career-plan.evidence.82",
+                "value": "2034-07-15: No judgement about whether the period may be easier or harder is assigned: the balance of support and demands in your birth chart or a current longer period is unresolved. No checked clash, punishment, harm or break adds a separate sign of competing demands at this comparison date; this is not a guarantee of an easy period."
+              },
+              {
+                "id": "chapter.career-plan.evidence.83",
+                "value": "Reference 2035-07-15 at 12:00 Asia/Seoul: 乙卯; year 乙卯; day stem 辛; reference stem 乙 = 偏財; principal inner stem 乙 = 偏財."
+              },
+              {
+                "id": "chapter.career-plan.evidence.84",
+                "value": "Reference / birth day: 乙卯 / 辛未: stem 沖; branch 半合 (tree)."
+              },
+              {
+                "id": "chapter.career-plan.evidence.85",
+                "value": "Reference / birth month: 乙卯 / 乙卯: no pattern in the checked pair tables."
+              },
+              {
+                "id": "chapter.career-plan.evidence.86",
+                "value": "Reference / birth year: 乙卯 / 戊寅: no pattern in the checked pair tables."
+              },
+              {
+                "id": "chapter.career-plan.evidence.87",
+                "value": "Assessment FATE-qualitative-r1: natal deferred; reference 乙卯 (偏財 / 偏財); direction unresolved; friction true."
+              },
+              {
+                "id": "chapter.career-plan.evidence.88",
+                "value": "Active cycle at 2035-07-15 12:00 shared comparison wall clock: 己未; approximate calculated start (birth hour unknown) 2031-11-07T03:33:18.000Z."
+              },
+              {
+                "id": "chapter.career-plan.evidence.89",
+                "value": "Reference / active ten-year cycle: 乙卯 / 己未: branch 半合 (tree)."
+              },
+              {
+                "id": "chapter.career-plan.evidence.90",
+                "value": "2035-07-15: No judgement about whether the period may be easier or harder is assigned: the balance of support and demands in your birth chart or a current longer period is unresolved. A checked clash, punishment, harm or break adds competing demands; a supportive balance reading therefore still has a caution."
+              },
+              {
+                "id": "chapter.career-plan.evidence.91",
+                "value": "Policy FATE-qualitative-r1. Month branch 卯; principal stem 乙; relationship 偏財; seasonal support false."
+              },
+              {
+                "id": "chapter.career-plan.evidence.92",
+                "value": "Exposed month stem 乙: 偏財; output, management or control."
+              },
+              {
+                "id": "chapter.career-plan.evidence.93",
+                "value": "Exposed year stem 戊: 正印; support."
+              },
+              {
+                "id": "chapter.career-plan.evidence.94",
+                "value": "No same-element root in the supplied branches."
+              },
+              {
+                "id": "chapter.career-plan.evidence.95",
+                "value": "Month hidden stem 甲: 正財; exposed at no checked non-day stem."
+              },
+              {
+                "id": "chapter.career-plan.evidence.96",
+                "value": "Month hidden stem 乙: 偏財; exposed at month."
+              },
+              {
+                "id": "chapter.career-plan.evidence.97",
+                "value": "The birth hour is unknown; the missing support or demand could change the assessment."
+              }
+            ],
+            "answerType": "product02.career-and-money-priority"
+          },
+          "content_score_100": null,
+          "evaluation_status": "PASS",
+          "deductions": [],
+          "content_review": "Read against its question, chart evidence and the other answers in this profile."
+        }
+      ],
+      "manual_content_review": {
+        "score": 95,
+        "breakdown": {
+          "direct_answer": 34,
+          "personalization": 24,
+          "easy_english": 14,
+          "repetition_and_generalities": 9,
+          "evidence_consistency": 14
+        },
+        "deductions": [
+          "Q5: no improvement date can be named from the checked comparison; the answer appropriately states that limit.",
+          "Q4: the chart identifies a pattern to check but cannot establish a real-world financial cause.",
+          "Q5–Q7: cautious limits recur, though the underlying answers serve different questions."
+        ],
+        "scale": "100-point content-only review; PDF design excluded",
+        "method": "Manual review of generated text; not a third-party evaluation",
+        "evaluation_status": "PASS"
+      }
+    },
+    {
+      "product_id": "02",
+      "product_name": "Success, Money & Your Future",
+      "profile_number": 4,
+      "profile_id": "sydney-1990",
+      "chart_data_used": {
+        "birthTimeKnown": true,
+        "pillars": [
+          {
+            "ganzi": "壬辰",
+            "stemRole": "傷官",
+            "branchRole": "正印"
+          },
+          {
+            "ganzi": "辛亥",
+            "stemRole": "本元",
+            "branchRole": "傷官"
+          },
+          {
+            "ganzi": "甲申",
+            "stemRole": "正財",
+            "branchRole": "劫財"
+          },
+          {
+            "ganzi": "庚午",
+            "stemRole": "劫財",
+            "branchRole": "偏官"
+          }
+        ]
+      },
+      "answers": [
+        {
+          "question_id": "two-work-layers",
+          "question_number": 1,
+          "official_title": "Which careers suit me best?",
+          "actual_answer": "Your Answer: Operations, account management or resource coordination fits the value your chart places on reliable delivery.\n\nWhat This Means for You: Duties, hours and pay need to be clear together. An organised workplace can suit you, but being the reliable person should not mean carrying every unfinished task.\n\nBottom Line: Operations and coordination make the strongest use of your reliable delivery. Clear duties help prevent reliability from becoming extra unpaid work.\n\n02 · Am I Better Suited to Employment or Independent Work?",
+          "chart_evidence": {
+            "questionId": "two-work-layers",
+            "sourceChapterId": "two-work-layers",
+            "ruleIds": [
+              "purchase-narrative.customerNarrative.career.two-work-layers.v1"
+            ],
+            "evidence": [
+              {
+                "id": "chapter.two-work-layers.evidence.1",
+                "value": "day pillar 辛亥. Stem 辛: 本元 (starting point); branch 亥: 傷官 (Original expression)."
+              },
+              {
+                "id": "chapter.two-work-layers.evidence.2",
+                "value": "month pillar 甲申. Stem 甲: 正財 (Steady resources); branch 申: 劫財 (Peers and competition)."
+              },
+              {
+                "id": "chapter.two-work-layers.evidence.3",
+                "value": "hour stem 壬: 傷官 (expression and challenge)."
+              },
+              {
+                "id": "chapter.two-work-layers.evidence.4",
+                "value": "hour branch 辰 (principal stem): 正印 (learning and dependable support)."
+              },
+              {
+                "id": "chapter.two-work-layers.evidence.5",
+                "value": "day branch 亥 (principal stem): 傷官 (expression and challenge)."
+              },
+              {
+                "id": "chapter.two-work-layers.evidence.6",
+                "value": "month stem 甲: 正財 (regular money and commitments)."
+              },
+              {
+                "id": "chapter.two-work-layers.evidence.7",
+                "value": "month branch 申 (principal stem): 劫財 (competition and shared resources)."
+              },
+              {
+                "id": "chapter.two-work-layers.evidence.8",
+                "value": "year stem 庚: 劫財 (competition and shared resources)."
+              },
+              {
+                "id": "chapter.two-work-layers.evidence.9",
+                "value": "year branch 午 (principal stem): 偏官 (pressure and decisive action)."
+              },
+              {
+                "id": "chapter.two-work-layers.evidence.10",
+                "value": "2026-07-15: The active cycle and this reference do not give one consistent balance between help and added responsibility. The reading keeps the opportunity and its burden separate. A checked clash, punishment, harm or break adds competing demands; a supportive balance reading therefore still has a caution."
+              },
+              {
+                "id": "chapter.two-work-layers.evidence.11",
+                "value": "2027-07-15: The active cycle and this reference do not give one consistent balance between help and added responsibility. The reading keeps the opportunity and its burden separate. No checked clash, punishment, harm or break adds a separate sign of competing demands at this comparison date; this is not a guarantee of an easy period."
+              },
+              {
+                "id": "chapter.two-work-layers.evidence.12",
+                "value": "2028-07-15: Both shorter and longer periods add support to a chart that already leans supported. The caution is reinforcing preparation, independence or competition without a clear outlet; more support is not automatically a better financial period. A checked clash, punishment, harm or break adds competing demands; a supportive balance reading therefore still has a caution."
+              },
+              {
+                "id": "chapter.two-work-layers.evidence.13",
+                "value": "2029-07-15: Both shorter and longer periods add support to a chart that already leans supported. The caution is reinforcing preparation, independence or competition without a clear outlet; more support is not automatically a better financial period. No checked clash, punishment, harm or break adds a separate sign of competing demands at this comparison date; this is not a guarantee of an easy period."
+              },
+              {
+                "id": "chapter.two-work-layers.evidence.14",
+                "value": "2030-07-15: Both shorter and longer periods add support to a chart that already leans supported. The caution is reinforcing preparation, independence or competition without a clear outlet; more support is not automatically a better financial period. A checked clash, punishment, harm or break adds competing demands; a supportive balance reading therefore still has a caution."
+              },
+              {
+                "id": "chapter.two-work-layers.evidence.15",
+                "value": "Policy FATE-qualitative-r1. Month branch 申; principal stem 庚; relationship 劫財; seasonal support true."
+              },
+              {
+                "id": "chapter.two-work-layers.evidence.16",
+                "value": "Exposed hour stem 壬: 傷官; output, management or control."
+              },
+              {
+                "id": "chapter.two-work-layers.evidence.17",
+                "value": "Exposed month stem 甲: 正財; output, management or control."
+              },
+              {
+                "id": "chapter.two-work-layers.evidence.18",
+                "value": "Exposed year stem 庚: 劫財; support."
+              },
+              {
+                "id": "chapter.two-work-layers.evidence.19",
+                "value": "Root: 庚 inside month branch 申; principal hidden stem."
+              },
+              {
+                "id": "chapter.two-work-layers.evidence.20",
+                "value": "Month hidden stem 戊: 正印; exposed at no checked non-day stem."
+              },
+              {
+                "id": "chapter.two-work-layers.evidence.21",
+                "value": "Month hidden stem 壬: 傷官; exposed at hour."
+              },
+              {
+                "id": "chapter.two-work-layers.evidence.22",
+                "value": "Month hidden stem 庚: 劫財; exposed at year."
+              },
+              {
+                "id": "chapter.two-work-layers.evidence.23",
+                "value": "The day element leans well supported under this conservative rule: the month supports it, a principal root is present and support also appears in an exposed stem."
+              },
+              {
+                "id": "chapter.two-work-layers.evidence.24",
+                "value": "The month is peer-led. An ordinary money, authority, output or resource structure is not assigned; peer-month and special-structure rules need separate judgement."
+              },
+              {
+                "id": "chapter.two-work-layers.evidence.25",
+                "value": "Under a support-versus-demand balancing approach, output, money-management and responsibility relationships are candidates for using the available support. They are a candidate group, not three confirmed favourable elements or a unique useful element."
+              },
+              {
+                "id": "chapter.two-work-layers.evidence.26",
+                "value": "The month-led structure and a balancing element answer different questions. A working preference below applies only to the stated ordinary-chart rule; it is not a universal lucky element or an outcome guarantee."
+              },
+              {
+                "id": "chapter.two-work-layers.evidence.27",
+                "value": "A complete ordinary month-led structure is not assigned from the available evidence. The reading retains the seasonal relationship without forcing a structure label."
+              },
+              {
+                "id": "chapter.two-work-layers.evidence.28",
+                "value": "Skill and expression sit alongside a money relationship. This supports reading how an offer reaches a paying customer, without proving a successful wealth-producing structure."
+              },
+              {
+                "id": "chapter.two-work-layers.evidence.29",
+                "value": "Responsibility and resource relationships are both present. Training, support or a method for handling the role matters alongside the demand itself."
+              },
+              {
+                "id": "chapter.two-work-layers.evidence.30",
+                "value": "No single balancing element is selected: a checked friction pattern touches the month branch; no single rooted and exposed route meets this policy. An absent element is not automatically the answer."
+              }
+            ],
+            "answerType": "productcareer.career-fit"
+          },
+          "content_score_100": null,
+          "evaluation_status": "PASS",
+          "deductions": [],
+          "content_review": "Read against its question, chart evidence and the other answers in this profile."
+        },
+        {
+          "question_id": "proof-of-skill",
+          "question_number": 2,
+          "official_title": "Am I better suited to employment or independent work?",
+          "actual_answer": "Your Answer: Your chart supports both employment and independent work; it does not show a clear winner.\n\nWhat This Means for You: For a structured job, your chart shows clear responsibility and training or specialist support. For independent work, your chart links useful output to payment and also shows independent or shared-work signals.\n\nPractical Check: For a real choice, compare confirmed salary, hours and support in a job with paying customers, costs and payment terms in independent work.\n\nBottom Line: Neither work setting has a clear chart advantage. Compare actual salary, support, customer demand, costs, and payment terms.\n\n03 · How Do I Naturally Make Money?",
+          "chart_evidence": {
+            "questionId": "proof-of-skill",
+            "sourceChapterId": "proof-of-skill",
+            "ruleIds": [
+              "purchase-narrative.customerNarrative.career.proof-of-skill.v1"
+            ],
+            "evidence": [
+              {
+                "id": "chapter.proof-of-skill.evidence.1",
+                "value": "month pillar 甲申. Stem 甲: 正財 (Steady resources); branch 申: 劫財 (Peers and competition)."
+              },
+              {
+                "id": "chapter.proof-of-skill.evidence.2",
+                "value": "year pillar 庚午. Stem 庚: 劫財 (Peers and competition); branch 午: 偏官 (Challenge and pressure)."
+              },
+              {
+                "id": "chapter.proof-of-skill.evidence.3",
                 "value": "hour stem 壬: 傷官 (expression and challenge)."
               },
               {
@@ -3493,14 +5546,15 @@ Total output lines: 8845
             "answerType": "productcareer.work-structure-fit"
           },
           "content_score_100": null,
-          "evaluation_status": "VERIFY",
-          "deductions": []
+          "evaluation_status": "PASS",
+          "deductions": [],
+          "content_review": "Read against its question, chart evidence and the other answers in this profile."
         },
         {
           "question_id": "money-commitments",
           "question_number": 3,
           "official_title": "How do I naturally make money?",
-          "actual_answer": "Your Answer: Regular pay and dependable repeat work are your clearer income pattern. A role with defined hours and duties makes that pattern easier to evaluate.\n\nWhat This Means for You: Steady pay is linked to day-to-day work and shared commitments. Customer or project income is linked to long-term plans. These are possible earning routes, not expected pay.\n\nBottom Line: Repeatable paid work has clearer support than relying on a single large deal. Clear hours and repeatable duties match this pattern.\n\n04 · What Tends to Block My Financial Progress?",
+          "actual_answer": "Your Answer: Regular pay and dependable repeat work are your clearer income pattern. A role with defined hours and duties makes that pattern easier to evaluate.\n\nWhat This Means for You: Steady pay is linked to day-to-day work and shared commitments. Customer or project income is linked to long-term plans. These are possible earning routes, not expected pay.\n\nBottom Line: Regular pay and dependable repeat work are the clearest earning route. Defined hours and repeatable duties make this pattern easier to assess.\n\n04 · What Tends to Block My Financial Progress?",
           "chart_evidence": {
             "questionId": "money-commitments",
             "sourceChapterId": "money-commitments",
@@ -3624,14 +5678,15 @@ Total output lines: 8845
             "answerType": "productcareer.earning-route"
           },
           "content_score_100": null,
-          "evaluation_status": "VERIFY",
-          "deductions": []
+          "evaluation_status": "PASS",
+          "deductions": [],
+          "content_review": "Read against its question, chart evidence and the other answers in this profile."
         },
         {
           "question_id": "working-style",
           "question_number": 4,
           "official_title": "What tends to block my financial progress?",
-          "actual_answer": "Your Answer: Your chart connects useful work with customers or pay, so it does not point to a broken earning route. That link cannot explain your actual income or rule out other obstacles.\n\nBottom Line: The checked signs do not point to a broken income route. Real-world barriers still need to be checked separately.\n\n05 · When Might My Career or Money Situation Improve?",
+          "actual_answer": "Your Answer: Your chart connects useful work with customers or pay, so it does not point to a broken earning route. That link cannot explain your actual income or rule out other obstacles.\n\nBottom Line: The chart does not show a broken route from useful work to payment. Your actual income and outside costs still need to be considered.\n\n05 · When Might My Career or Money Situation Improve?",
           "chart_evidence": {
             "questionId": "working-style",
             "sourceChapterId": "working-style",
@@ -3711,14 +5766,15 @@ Total output lines: 8845
             "answerType": "productcareer.financial-blocker"
           },
           "content_score_100": null,
-          "evaluation_status": "VERIFY",
-          "deductions": []
+          "evaluation_status": "PASS",
+          "deductions": [],
+          "content_review": "Read against its question, chart evidence and the other answers in this profile."
         },
         {
           "question_id": "feedback-and-boundaries",
           "question_number": 5,
           "official_title": "When might my career or money situation improve?",
-          "actual_answer": "Your Answer: No year in 2026–2035 has a verified signal for career or money improvement. The checked work themes are 2026: defined responsibilities; 2027: demanding assignments; 2028: training and guidance; they do not establish a pay rise.\n\nBottom Line: The chart does not name a reliable date for improvement. Real opportunities may still arise outside this calculation.\n\n06 · What Do the Next Ten Years Suggest for My Work and Money?",
+          "actual_answer": "Your Answer: No year in 2026–2035 has a verified signal for career or money improvement. The checked work themes are 2026: defined responsibilities; 2027: demanding assignments; 2028: training and guidance; they do not establish a pay rise.\n\nBottom Line: No checked year gives a reliable date for improvement. The work themes 2026: defined responsibilities; 2027: demanding assignments describe focus, not income outcomes.\n\n06 · What Do the Next Ten Years Suggest for My Work and Money?",
           "chart_evidence": {
             "questionId": "feedback-and-boundaries",
             "sourceChapterId": "feedback-and-boundaries",
@@ -4146,14 +6202,15 @@ Total output lines: 8845
             "answerType": "productcareer.career-timing"
           },
           "content_score_100": null,
-          "evaluation_status": "VERIFY",
-          "deductions": []
+          "evaluation_status": "PASS",
+          "deductions": [],
+          "content_review": "Read against its question, chart evidence and the other answers in this profile."
         },
         {
           "question_id": "work-chapters",
           "question_number": 6,
           "official_title": "What do the next ten years suggest for my work and money?",
-          "actual_answer": "Your Answer: Your 2026–2035 outlook is mixed: work themes change, but the comparisons do not show a steady rise in income. The main themes include defined responsibilities, demanding assignments, and training and guidance. Year by year: 2026: defined responsibilities; 2027: demanding assignments; 2028: training and guidance; 2029: independent problem-solving; 2030: shared work; 2031: independent work; 2032: improving methods; 2033: reliable production; 2034: predictable pay; 2035: new customers and deals.\n\nImportant Timing: Work may feel more demanding in 2030, 2031, 2034. Treat these as review points, not predicted setbacks.\n\nBottom Line: The decade moves from defined responsibilities toward new customers and deals. The chart does not show a steady rise in income.\n\n07 · What Is the Most Important Insight for My Future?",
+          "actual_answer": "Your Answer: Your 2026–2035 outlook is mixed: work themes change, but the comparisons do not show a steady rise in income. The main themes include defined responsibilities, demanding assignments, and training and guidance. Year by year: 2026: defined responsibilities; 2027: demanding assignments; 2028: training and guidance; 2029: independent problem-solving; 2030: shared work; 2031: independent work; 2032: improving methods; 2033: reliable production; 2034: predictable pay; 2035: new customers and deals.\n\nImportant Timing: Work may feel more demanding in 2030, 2031, 2034. Treat these as review points, not predicted setbacks.\n\nBottom Line: Your work pattern shifts from defined responsibilities toward new customers and deals. That change does not establish a steady increase in pay.\n\n07 · What Is the Most Important Insight for My Future?",
           "chart_evidence": {
             "questionId": "work-chapters",
             "sourceChapterId": "work-chapters",
@@ -4577,14 +6634,15 @@ Total output lines: 8845
             "answerType": "productcareer.long-cycle-work-theme"
           },
           "content_score_100": null,
-          "evaluation_status": "VERIFY",
-          "deductions": []
+          "evaluation_status": "PASS",
+          "deductions": [],
+          "content_review": "Read against its question, chart evidence and the other answers in this profile."
         },
         {
           "question_id": "career-plan",
           "question_number": 7,
           "official_title": "What is my most important career and money insight?",
-          "actual_answer": "Your Answer: Your chart links operations and resource management at work with steady pay as possible ways of earning. That connects the themes, but it cannot estimate your pay.\n\nBottom Line: Your chart connects operations and resource management at work with steady pay as an earning route. The chart cannot set your pay or guarantee a career result.",
+          "actual_answer": "Your Answer: Your chart links operations and resource management at work with steady pay as possible ways of earning. That connects the themes, but it cannot estimate your pay.\n\nBottom Line: A role involving operations and resource management gives the work and earning clues a chance to meet. Defined duties and reliable output may help turn that pattern into steady pay.",
           "chart_evidence": {
             "questionId": "career-plan",
             "sourceChapterId": "career-plan",
@@ -5036,10 +7094,29 @@ Total output lines: 8845
             "answerType": "product02.career-and-money-priority"
           },
           "content_score_100": null,
-          "evaluation_status": "VERIFY",
-          "deductions": []
+          "evaluation_status": "PASS",
+          "deductions": [],
+          "content_review": "Read against its question, chart evidence and the other answers in this profile."
         }
-      ]
+      ],
+      "manual_content_review": {
+        "score": 96,
+        "breakdown": {
+          "direct_answer": 35,
+          "personalization": 24,
+          "easy_english": 14,
+          "repetition_and_generalities": 9,
+          "evidence_consistency": 14
+        },
+        "deductions": [
+          "Q4: the chart describes a useful-work-to-payment link but cannot identify actual outside barriers.",
+          "Q5–Q6: both timing answers are cautious; one summarizes years and one lists the full decade.",
+          "Some chart language could be more conversational."
+        ],
+        "scale": "100-point content-only review; PDF design excluded",
+        "method": "Manual review of generated text; not a third-party evaluation",
+        "evaluation_status": "PASS"
+      }
     },
     {
       "product_id": "02",
@@ -5076,7 +7153,7 @@ Total output lines: 8845
           "question_id": "two-work-layers",
           "question_number": 1,
           "official_title": "Which careers suit me best?",
-          "actual_answer": "Your Answer: Operations, account management or resource coordination fits the value your chart places on reliable delivery.\n\nWhat This Means for You: Duties, hours and pay need to be clear together. An organised workplace can suit you, but being the reliable person should not mean carrying every unfinished task.\n\nBottom Line: Clear duties, hours and pay belong together in your best fit. Clear duties and realistic hours are part of that fit.\n\n02 · Am I Better Suited to Employment or Independent Work?",
+          "actual_answer": "Your Answer: Operations, account management or resource coordination fits the value your chart places on reliable delivery.\n\nWhat This Means for You: Duties, hours and pay need to be clear together. An organised workplace can suit you, but being the reliable person should not mean carrying every unfinished task.\n\nBottom Line: Operations and coordination make the strongest use of your reliable delivery. Clear duties help prevent reliability from becoming extra unpaid work.\n\n02 · Am I Better Suited to Employment or Independent Work?",
           "chart_evidence": {
             "questionId": "two-work-layers",
             "sourceChapterId": "two-work-layers",
@@ -5212,14 +7289,15 @@ Total output lines: 8845
             "answerType": "productcareer.career-fit"
           },
           "content_score_100": null,
-          "evaluation_status": "VERIFY",
-          "deductions": []
+          "evaluation_status": "PASS",
+          "deductions": [],
+          "content_review": "Read against its question, chart evidence and the other answers in this profile."
         },
         {
           "question_id": "proof-of-skill",
           "question_number": 2,
           "official_title": "Am I better suited to employment or independent work?",
-          "actual_answer": "Your Answer: Your chart supports both employment and independent work; it does not show a clear winner.\n\nWhat This Means for You: For a structured job, your chart shows training or specialist support. For independent work, your chart links useful output to payment and also shows independent or shared-work signals.\n\nPractical Check: For a real choice, compare confirmed salary, hours and support in a job with paying customers, costs and payment terms in independent work.\n\nBottom Line: Neither route has a clear edge in this chart. The independent route also shows links between useful work and payment.\n\n03 · How Do I Naturally Make Money?",
+          "actual_answer": "Your Answer: Your chart supports both employment and independent work; it does not show a clear winner.\n\nWhat This Means for You: For a structured job, your chart shows training or specialist support. For independent work, your chart links useful output to payment and also shows independent or shared-work signals.\n\nPractical Check: For a real choice, compare confirmed salary, hours and support in a job with paying customers, costs and payment terms in independent work.\n\nBottom Line: Neither work setting has a clear chart advantage. Compare actual salary, support, customer demand, costs, and payment terms.\n\n03 · How Do I Naturally Make Money?",
           "chart_evidence": {
             "questionId": "proof-of-skill",
             "sourceChapterId": "proof-of-skill",
@@ -5303,14 +7381,15 @@ Total output lines: 8845
             "answerType": "productcareer.work-structure-fit"
           },
           "content_score_100": null,
-          "evaluation_status": "VERIFY",
-          "deductions": []
+          "evaluation_status": "PASS",
+          "deductions": [],
+          "content_review": "Read against its question, chart evidence and the other answers in this profile."
         },
         {
           "question_id": "money-commitments",
           "question_number": 3,
           "official_title": "How do I naturally make money?",
-          "actual_answer": "Your Answer: Regular pay and dependable repeat work are your clearer income pattern. A role with defined hours and duties makes that pattern easier to evaluate.\n\nWhat This Means for You: Steady pay is linked to shared commitments and day-to-day work. Customer or project income is linked to shared commitments. These are possible earning routes, not expected pay.\n\nBottom Line: Repeatable paid work has clearer support than relying on a single large deal. Clear hours and repeatable duties match this pattern.\n\n04 · What Tends to Block My Financial Progress?",
+          "actual_answer": "Your Answer: Regular pay and dependable repeat work are your clearer income pattern. A role with defined hours and duties makes that pattern easier to evaluate.\n\nWhat This Means for You: Steady pay is linked to shared commitments and day-to-day work. Customer or project income is linked to shared commitments. These are possible earning routes, not expected pay.\n\nBottom Line: Regular pay and dependable repeat work are the clearest earning route. Defined hours and repeatable duties make this pattern easier to assess.\n\n04 · What Tends to Block My Financial Progress?",
           "chart_evidence": {
             "questionId": "money-commitments",
             "sourceChapterId": "money-commitments",
@@ -5434,14 +7513,15 @@ Total output lines: 8845
             "answerType": "productcareer.earning-route"
           },
           "content_score_100": null,
-          "evaluation_status": "VERIFY",
-          "deductions": []
+          "evaluation_status": "PASS",
+          "deductions": [],
+          "content_review": "Read against its question, chart evidence and the other answers in this profile."
         },
         {
           "question_id": "working-style",
           "question_number": 4,
           "official_title": "What tends to block my financial progress?",
-          "actual_answer": "Your Answer: The main pressure to check is whether training or support is taking time or money away from paid work. Your chart links these themes, but cannot confirm this is limiting your finances. Compare training costs and hours with income-producing work.\n\nBottom Line: The chart does not identify a specific financial blockage. Real-world barriers still need to be checked separately.\n\n05 · When Might My Career or Money Situation Improve?",
+          "actual_answer": "Your Answer: The main pressure to check is whether training or support is taking time or money away from paid work. Your chart links these themes, but cannot confirm this is limiting your finances. Compare training costs and hours with income-producing work.\n\nBottom Line: The chart does not identify a specific financial blockage. Your actual income and outside costs still need to be considered.\n\n05 · When Might My Career or Money Situation Improve?",
           "chart_evidence": {
             "questionId": "working-style",
             "sourceChapterId": "working-style",
@@ -5525,14 +7605,15 @@ Total output lines: 8845
             "answerType": "productcareer.financial-blocker"
           },
           "content_score_100": null,
-          "evaluation_status": "VERIFY",
-          "deductions": []
+          "evaluation_status": "PASS",
+          "deductions": [],
+          "content_review": "Read against its question, chart evidence and the other answers in this profile."
         },
         {
           "question_id": "feedback-and-boundaries",
           "question_number": 5,
           "official_title": "When might my career or money situation improve?",
-          "actual_answer": "Your Answer: No year in 2026–2035 has a verified signal for career or money improvement. The checked work themes are 2026: new customers and deals; 2027: predictable pay; 2028: demanding assignments; they do not establish a pay rise.\n\nBottom Line: The chart does not name a reliable date for improvement. Real opportunities may still arise outside this calculation.\n\n06 · What Do the Next Ten Years Suggest for My Work and Money?",
+          "actual_answer": "Your Answer: No year in 2026–2035 has a verified signal for career or money improvement. The checked work themes are 2026: new customers and deals; 2027: predictable pay; 2028: demanding assignments; they do not establish a pay rise.\n\nBottom Line: No checked year gives a reliable date for improvement. The work themes 2026: new customers and deals; 2027: predictable pay describe focus, not income outcomes.\n\n06 · What Do the Next Ten Years Suggest for My Work and Money?",
           "chart_evidence": {
             "questionId": "feedback-and-boundaries",
             "sourceChapterId": "feedback-and-boundaries",
@@ -5964,14 +8045,15 @@ Total output lines: 8845
             "answerType": "productcareer.career-timing"
           },
           "content_score_100": null,
-          "evaluation_status": "VERIFY",
-          "deductions": []
+          "evaluation_status": "PASS",
+          "deductions": [],
+          "content_review": "Read against its question, chart evidence and the other answers in this profile."
         },
         {
           "question_id": "work-chapters",
           "question_number": 6,
           "official_title": "What do the next ten years suggest for my work and money?",
-          "actual_answer": "Your Answer: Your 2026–2035 outlook is mixed: work themes change, but the comparisons do not show a steady rise in income. The main themes include new customers and deals, predictable pay, and demanding assignments. Year by year: 2026: new customers and deals; 2027: predictable pay; 2028: demanding assignments; 2029: defined responsibilities; 2030: independent problem-solving; 2031: training and guidance; 2032: independent work; 2033: shared work; 2034: reliable production; 2035: improving methods.\n\nImportant Timing: Work may feel more demanding in 2028, 2031, 2033, 2034. Treat these as review points, not predicted setbacks.\n\nBottom Line: The decade moves from new customers and deals toward improving methods. The chart does not show a steady rise in income.\n\n07 · What Is the Most Important Insight for My Future?",
+          "actual_answer": "Your Answer: Your 2026–2035 outlook is mixed: work themes change, but the comparisons do not show a steady rise in income. The main themes include new customers and deals, predictable pay, and demanding assignments. Year by year: 2026: new customers and deals; 2027: predictable pay; 2028: demanding assignments; 2029: defined responsibilities; 2030: independent problem-solving; 2031: training and guidance; 2032: independent work; 2033: shared work; 2034: reliable production; 2035: improving methods.\n\nImportant Timing: Work may feel more demanding in 2028, 2031, 2033, 2034. Treat these as review points, not predicted setbacks.\n\nBottom Line: Your work pattern shifts from new customers and deals toward improving methods. That change does not establish a steady increase in pay.\n\n07 · What Is the Most Important Insight for My Future?",
           "chart_evidence": {
             "questionId": "work-chapters",
             "sourceChapterId": "work-chapters",
@@ -6395,14 +8477,15 @@ Total output lines: 8845
             "answerType": "productcareer.long-cycle-work-theme"
           },
           "content_score_100": null,
-          "evaluation_status": "VERIFY",
-          "deductions": []
+          "evaluation_status": "PASS",
+          "deductions": [],
+          "content_review": "Read against its question, chart evidence and the other answers in this profile."
         },
         {
           "question_id": "career-plan",
           "question_number": 7,
           "official_title": "What is my most important career and money insight?",
-          "actual_answer": "Your Answer: Your chart links operations and resource management at work with steady pay as possible ways of earning. That connects the themes, but it cannot estimate your pay.\n\nBottom Line: Your chart connects operations and resource management at work with steady pay as an earning route. The chart cannot set your pay or guarantee a career result.",
+          "actual_answer": "Your Answer: Your chart links operations and resource management at work with steady pay as possible ways of earning. That connects the themes, but it cannot estimate your pay.\n\nBottom Line: A role involving operations and resource management gives the work and earning clues a chance to meet. Defined duties and reliable output may help turn that pattern into steady pay.",
           "chart_evidence": {
             "questionId": "career-plan",
             "sourceChapterId": "career-plan",
@@ -6858,11 +8941,36 @@ Total output lines: 8845
             "answerType": "product02.career-and-money-priority"
           },
           "content_score_100": null,
-          "evaluation_status": "VERIFY",
-          "deductions": []
+          "evaluation_status": "PASS",
+          "deductions": [],
+          "content_review": "Read against its question, chart evidence and the other answers in this profile."
         }
-      ]
+      ],
+      "manual_content_review": {
+        "score": 95,
+        "breakdown": {
+          "direct_answer": 34,
+          "personalization": 24,
+          "easy_english": 14,
+          "repetition_and_generalities": 9,
+          "evidence_consistency": 14
+        },
+        "deductions": [
+          "Q4: training/support is a possible pressure to check, not a confirmed financial blocker.",
+          "Q5: no improvement date can be supported by the checked comparison.",
+          "Similar work-fit and earning signals recur in Q1, Q3, and Q7; this reflects the chart pattern and was not penalized as a defect."
+        ],
+        "scale": "100-point content-only review; PDF design excluded",
+        "method": "Manual review of generated text; not a third-party evaluation",
+        "evaluation_status": "PASS"
+      }
     }
   ],
-  "source_code_sha": "75c078484d70b573774ec4377b188abff430755f"
+  "manual_review_summary": {
+    "evaluated_answer_count": 35,
+    "evaluated_report_count": 5,
+    "all_profiles_at_least_95": true,
+    "independence_note": "Manual reviewer was the assistant; no outside human reviewer was used."
+  },
+  "source_code_sha": "611ead81095e12794817966a86a8ea3f94e9c8bb"
 }
