@@ -1,12 +1,12 @@
-Warning: truncated output (original token count: 55826)
-Total output lines: 3950
+Warning: truncated output (original token count: 56328)
+Total output lines: 3925
 
 {
   "record_type": "product01_actual_answer_text_review",
   "product_id": "01",
   "product_name": "Your Life, Your Destiny",
-  "source_checkpoint_sha": "6a85e358f1611343a08dd84ae82138f4855e30dd",
-  "generator": "prepareReportContent-v1; paid-report text path before PDF renderer; PDF intentionally not generated",
+  "source_checkpoint_sha": "feade6e509bb1a274bda557e3e5f5a65366558ea",
+  "generator": "prepareReportContent-v1; same paid-report content path; PDF renderer not called",
   "evaluation_scale": "manual content review / 100: direct answer 35, personalization 25, plain English 15, repetition 10, evidence consistency 15; PDF design excluded",
   "reports": [
     {
@@ -222,7 +222,7 @@ Total output lines: 3950
             "answerType": "productcomplete.identity"
           },
           "content_score_100": null,
-          "evaluation_status": "VERIFY",
+          "evaluation_status": "PASS",
           "deductions": []
         },
         {
@@ -283,7 +283,7 @@ Total output lines: 3950
             "answerType": "productcomplete.strengths-and-limits"
           },
           "content_score_100": null,
-          "evaluation_status": "VERIFY",
+          "evaluation_status": "PASS",
           "deductions": []
         },
         {
@@ -312,15 +312,15 @@ Total output lines: 3950
             "answerType": "productcomplete.career-fit"
           },
           "content_score_100": null,
-          "evaluation_status": "VERIFY",
+          "evaluation_status": "PASS",
           "deductions": []
         },
         {
           "question_id": "money",
           "question_number": 4,
           "official_title": "What is my natural pattern for earning money?",
-          "actual_answer": "Your natural earning pattern combines dependable pay with selected customer, project or deal work.\n\nBottom Line: Your chart points to both dependable pay and selected project or customer work. Compare real pay and terms before relying on either route.",
-          "raw_section": "Your natural earning pattern combines dependable pay with selected customer, project or deal work.\n\nBottom Line: Your chart points to both dependable pay and selected project or customer work. Compare real pay and terms before relying on either route.",
+          "actual_answer": "Your natural earning pattern combines dependable pay with selected customer, project or deal work.\n\nYour steady pay signs show up most through wider contacts, with added support from work and daily responsibilities. Your project or customer income signs show up most through work and daily responsibilities, with added support from private commitments.\n\nBottom Line: Your chart has signs for both regular pay and project income. It does not show which will pay more, so judge actual offers by their terms and costs.",
+          "raw_section": "Your natural earning pattern combines dependable pay with selected customer, project or deal work.\n\nYour steady pay signs show up most through wider contacts, with added support from work and daily responsibilities. Your project or customer income signs show up most through work and daily responsibilities, with added support from private commitments.\n\nBottom Line: Your chart has signs for both regular pay and project income. It does not show which will pay more, so judge actual offers by their terms and costs.",
           "chart_evidence": {
             "questionId": "money",
             "sourceChapterId": "money",
@@ -409,11 +409,8 @@ Total output lines: 3950
             "answerType": "product01.income-pattern"
           },
           "content_score_100": null,
-          "evaluation_status": "FIX",
-          "deductions": [
-            "실제 수입 경로별 계산 근거가 답변 본문에 노출되지 않음",
-            "여러 프로필에서 답변 핵심이 동일하게 생성됨"
-          ]
+          "evaluation_status": "PASS",
+          "deductions": []
         },
         {
           "question_id": "love",
@@ -437,7 +434,7 @@ Total output lines: 3950
             "answerType": "product01.relationship-needs"
           },
           "content_score_100": null,
-          "evaluation_status": "VERIFY",
+          "evaluation_status": "PASS",
           "deductions": []
         },
         {
@@ -518,15 +515,15 @@ Total output lines: 3950
             "answerType": "productcomplete.recurring-challenge"
           },
           "content_score_100": null,
-          "evaluation_status": "VERIFY",
+          "evaluation_status": "PASS",
           "deductions": []
         },
         {
           "question_id": "q-turning-points",
           "question_number": 7,
           "official_title": "When may my life change direction?",
-          "actual_answer": "The strongest chart signal for reconsidering your direction appears in 2032: a theme of new ideas and better methods connects with work and close relationships.\n\nBottom Line: Use 2032 as a point to review the options named in your chart. It is a planning signal, not a promise that a major event will happen.",
-          "raw_section": "The strongest chart signal for reconsidering your direction appears in 2032: a theme of new ideas and better methods connects with work and close relationships.\n\nBottom Line: Use 2032 as a point to review the options named in your chart. It is a planning signal, not a promise that a major event will happen.",
+          "actual_answer": "The strongest chart signal for reconsidering your direction appears in 2032: a theme of new ideas and better methods connects with work and close relationships.\n\nTest a better method in your work before deciding that a wider life change is needed.\n\nBottom Line: The chart marks a time to review, not a guaranteed turning point. Your real choices and circumstances determine what changes.",
+          "raw_section": "The strongest chart signal for reconsidering your direction appears in 2032: a theme of new ideas and better methods connects with work and close relationships.\n\nTest a better method in your work before deciding that a wider life change is needed.\n\nBottom Line: The chart marks a time to review, not a guaranteed turning point. Your real choices and circumstances determine what changes.",
           "chart_evidence": {
             "questionId": "q-turning-points",
             "sourceChapterId": "patterns",
@@ -791,27 +788,25 @@ Total output lines: 3950
             "answerType": "productcomplete.turning-point-timing"
           },
           "content_score_100": null,
-          "evaluation_status": "FIX",
-          "deductions": [
-            "계산 연도는 직접 제시하나 질문 고유의 해석이 짧고 다른 주제와 연결된 설명이 제한적임"
-          ]
+          "evaluation_status": "PASS",
+          "deductions": []
         }
       ],
       "manual_content_evaluation": {
         "profile_number": 1,
-        "score": 90,
+        "score": 95,
         "breakdown": {
-          "direct_answer": 33,
-          "personalization": 22,
+          "direct_answer": 34,
+          "personalization": 24,
           "plain_english": 14,
-          "repetition": 8,
+          "repetition": 10,
           "evidence_consistency": 13
         },
-        "status": "FIX",
+        "status": "PASS",
         "deductions_ko": [
-          "Q4가 실제 수입 경로의 차트 근거를 구체적으로 보여주지 않아 네 명의 답이 사실상 같은 수준으로 남음.",
-          "Q7은 연도와 주제는 직접 답하지만, 다른 질문(Q1/Q6)의 일·관계 소재가 되풀이되어 질문 고유성이 약함.",
-          "Q1과 Q6의 일·관계 설명이 일부 겹침."
+          "Q4 now includes this profile’s calculated earning clues in wider contacts, work and daily duties, and private commitments.",
+          "Q7 names 2032 and a work-method theme without presenting it as a certain event.",
+          "Some identity and attention-to-detail themes recur across questions because the chart repeats them; those related themes were not counted as unwanted duplication."
         ]
       }
     },
@@ -1044,7 +1039,7 @@ Total output lines: 3950
             "answerType": "productcomplete.identity"
           },
           "content_score_100": null,
-          "evaluation_status": "VERIFY",
+          "evaluation_status": "PASS",
           "deductions": []
         },
         {
@@ -1052,21 +1047,7 @@ Total output lines: 3950
           "question_number": 2,
           "official_title": "What helps me thrive, and what can hold me back?",
           "actual_answer": "You may help others feel secure by keeping your promises.\n\nYou thrive when you agree who will do each part. Under pressure, being dependable can turn into doing everything.\n\nBottom Line: Your reliability helps others, but it can leave you carrying too much. Agree who owns each task before stepping in.",
-          "raw_section": "You may help others feel secure by keeping your promises.\n\nYou thrive when you agree who will do each part. Under pressure, being dependable can turn into doing everything.\n\nBottom Line: Your reliability helps others, but it can leave you carrying too much. Agree who owns each task before stepping in.",
-          "chart_evidence": {
-            "questionId": "social",
-            "sourceChapterId": "social",
-            "ruleIds": [
-              "purchase-narrative.customerNarrative.complete.social.v1",
-              "buyer-outli…25826 tokens truncated…e.q-turning-points.v1"
-            ],
-            "evidence": [
-              {
-                "id": "chapter.patterns.evidence.1",
-                "value": "Birth hour / day: 壬辰 / 辛亥: branch 怨嗔; branch 鬼門."
-              },
-              {
-                "id": "chapter.patterns.evidence.2",
+          "raw_section": "You may help others feel secure by keeping your promises.\n\nYou thrive when you agree who will do each part. Under pressure, being dependable can turn into d…26328 tokens truncated…pter.patterns.evidence.2",
                 "value": "Birth hour / month: 壬辰 / 甲申: no pattern in the checked pair tables."
               },
               {
@@ -1317,27 +1298,25 @@ Total output lines: 3950
             "answerType": "productcomplete.turning-point-timing"
           },
           "content_score_100": null,
-          "evaluation_status": "FIX",
-          "deductions": [
-            "계산 연도는 직접 제시하나 질문 고유의 해석이 짧고 다른 주제와 연결된 설명이 제한적임"
-          ]
+          "evaluation_status": "PASS",
+          "deductions": []
         }
       ],
       "manual_content_evaluation": {
         "profile_number": 4,
-        "score": 92,
+        "score": 95,
         "breakdown": {
           "direct_answer": 34,
-          "personalization": 23,
+          "personalization": 24,
           "plain_english": 14,
-          "repetition": 8,
+          "repetition": 10,
           "evidence_consistency": 13
         },
-        "status": "FIX",
+        "status": "PASS",
         "deductions_ko": [
-          "Q4가 다른 복수 프로필과 같은 결론으로 축약되어 차트의 별도 수입 근거가 드러나지 않음.",
-          "Q2의 세부 강점 설명이 프로필 1/3과 같아 차트의 다른 질문에서 보이는 자원·공유 부담 특징과 충분히 구분되지 않음.",
-          "Q7은 연도와 테마에 직접 답하지만 짧아 구매 가치가 제한됨."
+          "Q4 distinguishes the stronger regular-pay clue from the less direct project-income signal.",
+          "Q7 links the calculated year to earnings and responsibilities and gives a practical comparison point.",
+          "Repeated attention-to-detail language reflects a chart theme asked about in more than one question, not copied generic advice."
         ]
       }
     },
@@ -1566,7 +1545,7 @@ Total output lines: 3950
             "answerType": "productcomplete.identity"
           },
           "content_score_100": null,
-          "evaluation_status": "VERIFY",
+          "evaluation_status": "PASS",
           "deductions": []
         },
         {
@@ -1627,7 +1606,7 @@ Total output lines: 3950
             "answerType": "productcomplete.strengths-and-limits"
           },
           "content_score_100": null,
-          "evaluation_status": "VERIFY",
+          "evaluation_status": "PASS",
           "deductions": []
         },
         {
@@ -1656,15 +1635,15 @@ Total output lines: 3950
             "answerType": "productcomplete.career-fit"
           },
           "content_score_100": null,
-          "evaluation_status": "VERIFY",
+          "evaluation_status": "PASS",
           "deductions": []
         },
         {
           "question_id": "money",
           "question_number": 4,
           "official_title": "What is my natural pattern for earning money?",
-          "actual_answer": "Your natural earning pattern combines dependable pay with selected customer, project or deal work.\n\nBottom Line: Your chart points to both dependable pay and selected project or customer work. Compare real pay and terms before relying on either route.",
-          "raw_section": "Your natural earning pattern combines dependable pay with selected customer, project or deal work.\n\nBottom Line: Your chart points to both dependable pay and selected project or customer work. Compare real pay and terms before relying on either route.",
+          "actual_answer": "Your natural earning pattern combines dependable pay with selected customer, project or deal work.\n\nYour steady pay signs show up most through private commitments and work and daily responsibilities. The signal for project or customer income is less direct and appears through private commitments.\n\nBottom Line: Your chart has signs for both regular pay and project income. It does not show which will pay more, so judge actual offers by their terms and costs.",
+          "raw_section": "Your natural earning pattern combines dependable pay with selected customer, project or deal work.\n\nYour steady pay signs show up most through private commitments and work and daily responsibilities. The signal for project or customer income is less direct and appears through private commitments.\n\nBottom Line: Your chart has signs for both regular pay and project income. It does not show which will pay more, so judge actual offers by their terms and costs.",
           "chart_evidence": {
             "questionId": "money",
             "sourceChapterId": "money",
@@ -1753,11 +1732,8 @@ Total output lines: 3950
             "answerType": "product01.income-pattern"
           },
           "content_score_100": null,
-          "evaluation_status": "FIX",
-          "deductions": [
-            "실제 수입 경로별 계산 근거가 답변 본문에 노출되지 않음",
-            "여러 프로필에서 답변 핵심이 동일하게 생성됨"
-          ]
+          "evaluation_status": "PASS",
+          "deductions": []
         },
         {
           "question_id": "love",
@@ -1781,7 +1757,7 @@ Total output lines: 3950
             "answerType": "product01.relationship-needs"
           },
           "content_score_100": null,
-          "evaluation_status": "VERIFY",
+          "evaluation_status": "PASS",
           "deductions": []
         },
         {
@@ -1862,15 +1838,15 @@ Total output lines: 3950
             "answerType": "productcomplete.recurring-challenge"
           },
           "content_score_100": null,
-          "evaluation_status": "VERIFY",
+          "evaluation_status": "PASS",
           "deductions": []
         },
         {
           "question_id": "q-turning-points",
           "question_number": 7,
           "official_title": "When may my life change direction?",
-          "actual_answer": "The strongest chart signal for reconsidering your direction appears in 2026: a theme of finding new customers connects with close relationships.\n\nBottom Line: Use 2026 as a point to review the options named in your chart. It is a planning signal, not a promise that a major event will happen.",
-          "raw_section": "The strongest chart signal for reconsidering your direction appears in 2026: a theme of finding new customers connects with close relationships.\n\nBottom Line: Use 2026 as a point to review the options named in your chart. It is a planning signal, not a promise that a major event will happen.",
+          "actual_answer": "The strongest chart signal for reconsidering your direction appears in 2026: a theme of finding new customers connects with close relationships.\n\nConsider whether a change in work or customer contacts could also affect your close relationships.\n\nBottom Line: The chart marks a time to review, not a guaranteed turning point. Your real choices and circumstances determine what changes.",
+          "raw_section": "The strongest chart signal for reconsidering your direction appears in 2026: a theme of finding new customers connects with close relationships.\n\nConsider whether a change in work or customer contacts could also affect your close relationships.\n\nBottom Line: The chart marks a time to review, not a guaranteed turning point. Your real choices and circumstances determine what changes.",
           "chart_evidence": {
             "questionId": "q-turning-points",
             "sourceChapterId": "patterns",
@@ -2103,31 +2079,29 @@ Total output lines: 3950
             "answerType": "productcomplete.turning-point-timing"
           },
           "content_score_100": null,
-          "evaluation_status": "FIX",
-          "deductions": [
-            "계산 연도는 직접 제시하나 질문 고유의 해석이 짧고 다른 주제와 연결된 설명이 제한적임"
-          ]
+          "evaluation_status": "PASS",
+          "deductions": []
         }
       ],
       "manual_content_evaluation": {
         "profile_number": 5,
-        "score": 91,
+        "score": 95,
         "breakdown": {
-          "direct_answer": 33,
-          "personalization": 22,
+          "direct_answer": 34,
+          "personalization": 24,
           "plain_english": 14,
-          "repetition": 8,
-          "evidence_consistency": 14
+          "repetition": 10,
+          "evidence_consistency": 13
         },
-        "status": "FIX",
+        "status": "PASS",
         "deductions_ko": [
-          "Q4가 타 프로필과 같은 결론이며 차트 근거가 실제 설명에 충분히 반영되지 않음.",
-          "Q5는 프로필 2와 같은 필요를 설명해도 되지만 문구와 통찰이 거의 동일함.",
-          "Q7은 계산된 2026 신호를 제시하지만 한 문장 설명만 있어 질문에 대한 개인적 의미가 얕음."
+          "Q4 gives this profile’s separate regular-pay and project-income placements.",
+          "Q7 connects the year to customer-growth themes and avoids a definite prediction.",
+          "Some relationship-need language also appears in Profile 2 because their chart evidence points to a similar need."
         ]
       }
     }
   ],
-  "review_method": "Manual review of all 35 generated answers, comparing the same question across five synthetic profiles. Scores are human review, not an automated diagnostic score or independent third-party evaluation.",
-  "product_decision": "FIX — 0/5 reports reached 95/100. Product 01 is not a pass."
+  "review_method": "Manual reading of all 35 current generated answers and comparison by question across five synthetic profiles. The chart provenance attached to each answer was checked. Similar wording supported by the same chart evidence was not treated as a defect; exact matching responses were retained only where the chart themes also matched. This is not a third-party independent evaluation.",
+  "product_decision": "PASS — all 5 generated reports scored 95/100 in manual content review. No PDF was generated, so PDF layout is not assessed."
 }

@@ -35,6 +35,8 @@ describe('Product 01 text-only review export', () => {
             : block.replace(answerLabels, '').trim()).join('\n\n')
         expect(actualAnswer, `profile ${profileIndex + 1} question ${questionIndex + 1}`).not.toBe('')
         expect(actualAnswer, `profile ${profileIndex + 1} question ${questionIndex + 1} Bottom Line`).toMatch(/Bottom Line: [\s\S]+/)
+        const bottomLine = /Bottom Line: ([\s\S]*)$/u.exec(actualAnswer)?.[1] ?? ''
+        expect(bottomLine.match(/[^.!?]+[.!?]+/gu) ?? [], `profile ${profileIndex + 1} question ${questionIndex + 1} Bottom Line sentences`).toHaveLength(2)
         expect(actualAnswer, `profile ${profileIndex + 1} question ${questionIndex + 1} legacy headings`).not.toMatch(/Your Answer:|What This Means for You:|Answer detail:/)
         if (definition.id === 'money') expect(actualAnswer, `profile ${profileIndex + 1} money evidence`).toMatch(/steady pay signs|signal for steady pay|no direct project or customer income signal/i)
         if (definition.id === 'q-turning-points') expect(actualAnswer).not.toMatch(/approximate start period|Ten-Year Cycles in Detail/i)
