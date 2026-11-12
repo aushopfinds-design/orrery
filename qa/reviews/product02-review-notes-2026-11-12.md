@@ -1,16 +1,17 @@
 # Product 02 text review checkpoint — 2026-11-12
 
-Source: actual paid-report content path (`prepareReportContent`), five saved synthetic profiles, 35 answers. PDF renderer was not called. Source code SHA: `b9f7ccae396a2dbf93ee25f2d23d1a2a20d0ba8a`.
+Five profiles produced 35 answers through the paid-report content path (`prepareReportContent`). The PDF renderer was not called. Every answer remains `VERIFY`; no content score or PASS is assigned.
 
-All 35 answer entries remain `VERIFY`; no content scores are assigned in this checkpoint. Automated report diagnostics passed for all five profiles, but this is not a human content score.
+## Fix applied
 
-## Issues observed in the actual text
+- Added a two-sentence Bottom Line to all seven Product 02 answers, including the career-period and ten-year sections that previously omitted it.
+- The added sentences use each profile's work fit, earning route, or calculated year themes where available. Similar chart results may still produce similar wording; that is not treated as a defect by itself.
+- Added a text-only regression test that checks the seven official titles, five profiles, 35 non-empty answers, and exactly two Bottom Line sentences per answer.
 
-- Q4 (`What Tends to Block My Financial Progress?`) produced the same full answer for profiles 1, 3, and 5. Profiles 1 and 3 share the same date chart apart from the unknown hour in profile 3; profile 5 has a different chart. Check whether the shared wording reflects the same calculated signal before changing it.
-- Q5 says no year has a verified improvement signal for profiles 1, 3, 4, and 5, while Q6 lists themes such as predictable pay or new customers. Clarify that a work theme is not a guaranteed improvement date, so these answers do not sound contradictory.
-- Q7's “most important insight” largely recombines the career-fit and earning-route conclusions. It needs a distinct, chart-grounded synthesis rather than another short restatement.
-- Several answers omit a Bottom Line. Where the section is used, confirm it contains two clear sentences without repeating the lead.
+## Remaining review
 
-## Next action
+- Some Bottom Lines still repeat the lead's meaning. Re-read the full answers before scoring; shorten or revise only where it adds no useful takeaway.
+- Q5 distinguishes work themes from guaranteed improvement dates, but verify the full Q5/Q6 pair reads clearly together.
+- The automated report diagnostic passing is not an independent content score. All five reports remain unscored and require manual review before any quality PASS.
 
-Improve only the Product 02 answer-generation rules for the flagged questions, regenerate the same 35 text answers, and re-read them. Do not vary answers merely to make similar charts sound different. No PDF or deployment is part of this review checkpoint.
+No PDF, site deployment, Production release, pricing, or payment setting was changed.

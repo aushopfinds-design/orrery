@@ -646,12 +646,15 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
           const yearThemes = years.map(item => `${item.year}: ${(themeLanguage[item.stemGod] ?? item.stemGod.toLowerCase()).toLowerCase()}`)
           const themeYears = yearThemes.length ? `Year by year: ${yearThemes.join('; ')}.` : 'The checked years show different work demands.'
           const conclusion = `Your ${yearRange} outlook is mixed: work themes change, but the comparisons do not show a steady rise in income. The main themes include ${themeList.toLowerCase() || 'different work demands'}. ${themeYears}`
+          const firstTheme = yearThemes[0]?.replace(/^\d{4}: /, '')
+          const lastTheme = yearThemes.at(-1)?.replace(/^\d{4}: /, '')
           const importantTiming = changedYears.length
             ? `Work may feel more demanding in ${changedYears.join(', ')}. Treat these as review points, not predicted setbacks.`
             : 'No year stands out for a stronger work challenge in the checked comparisons.'
           return [
             `Your Answer: ${conclusion}`,
             ...(changedYears.length ? [`Important Timing: ${importantTiming}`] : []),
+            `Bottom Line: The decade moves from ${firstTheme || 'one work theme'} toward ${lastTheme || 'another work theme'}. The chart does not show a steady rise in income.`,
           ]
         }
         if (question.id === 'feedback-and-boundaries') {
@@ -673,6 +676,9 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
             `Your Answer: ${supportYears.length
               ? `The clearest periods for work support are ${supportThemes.join('; ') || supportYears.join(', ')}. These years may help you use the named work theme, but they do not predict a raise or job change.`
               : `No year${checkedRange ? ` in ${checkedRange}` : ''} has a verified signal for career or money improvement. The checked work themes are ${checkedThemes.join('; ') || 'not clear enough to name'}; they do not establish a pay rise.`}`,
+            `Bottom Line: ${supportYears.length
+              ? 'Review these years when work support may be easier to use. They do not guarantee a raise or job change.'
+              : 'The chart does not name a reliable date for improvement. Real opportunities may still arise outside this calculation.'}`,
           ]
         }
         if (question.id === 'career-plan') {
@@ -684,7 +690,14 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
             : separated
               ? `Your work fit centres on ${separated[1]}, while the chart points to ${separated[2]} as a separate earning clue. Neither theme estimates your pay.`
               : careerLead
-          return [`Your Answer: ${insight}`]
+          return [
+            `Your Answer: ${insight}`,
+            `Bottom Line: ${linked
+              ? `Your chart connects ${linked[2]} at work with ${linked[1]} as an earning route.`
+              : separated
+                ? `Your work fit centres on ${separated[1]}, while your earning clue points to ${separated[2]}.`
+                : 'Your chart offers a work direction and an earning clue.'} The chart cannot set your pay or guarantee a career result.`,
+          ]
         }
         const details = question.id === 'q-risk'
           ? [sourceChapter.lead, ...sourceChapter.paragraphs]
@@ -784,6 +797,15 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
         const workSettingCheck = question.id === 'proof-of-skill'
           ? 'For a real choice, compare confirmed salary, hours and support in a job with paying customers, costs and payment terms in independent work.'
           : undefined
+        const simpleTheme: Record<string, string> = {
+          Independence: 'independent work', 'Shared resources': 'shared work', 'Steady output': 'reliable production',
+          Expression: 'improving methods', 'Regular income': 'predictable pay', 'Commercial openings': 'new customers and deals',
+          'Formal responsibility': 'defined responsibilities', 'Decisive pressure': 'demanding assignments',
+          'Learning and support': 'training and guidance', 'Specialist insight': 'independent problem-solving',
+        }
+        const reviewThemes = [...new Map(careerYears.filter(item => item.year >= 1900).sort((a, b) => a.year - b.year)
+          .map(item => [item.year, simpleTheme[item.stemGod] ?? item.stemGod.toLowerCase()]))]
+          .slice(0, 3).map(([year, theme]) => `${year}: ${theme.toLowerCase()}`)
         const answerText = question.id === 'feedback-and-boundaries'
           ? supportYears.length
             ? 'The chart shows possible periods of work support, but it cannot identify a guaranteed improvement date.'
@@ -796,13 +818,40 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
           : undefined
         const repeatFinancialAnswer=question.id==='working-style'
         const limitedIncomeAnswer=question.id==='money-commitments'&&/limited (?:sign|clue)(?: for| toward) (?:regular pay|customer or project income)/i.test(leadText)
-        const omitBottomLine=question.id==='proof-of-skill'||question.id==='career-plan'||repeatFinancialAnswer||limitedIncomeAnswer
+        const bottomLineSecondSentence: Record<string, string> = {
+          'two-work-layers': leadText.includes('finding customers')
+            ? 'Look for control over delivery alongside the customer work.'
+            : leadText.includes('dependable products')
+              ? 'Constant last-minute changes would work against that strength.'
+              : leadText.includes('reliable delivery')
+                ? 'Clear duties and realistic hours are part of that fit.'
+                : 'Choose a role where the named strength is part of the daily work.',
+          'proof-of-skill': lead.includes('Structured employment is better supported')
+            ? 'The chart also points to training or specialist support in that setting.'
+            : lead.includes('supports both employment and independent work')
+              ? 'The independent route also shows links between useful work and payment.'
+              : 'Check the real pay and terms before choosing either route.',
+          'money-commitments': lead.includes('two routes')
+            ? 'The chart does not point to just one earning style.'
+            : lead.includes('Regular pay')
+              ? 'Clear hours and repeatable duties match this pattern.'
+              : 'The available clue is not enough to name a dependable income source.',
+          'working-style': lead.includes('training and support')
+            ? 'Check whether those costs or hours actually reduce paid work.'
+            : lead.includes('less direct') || lead.includes('less-visible')
+              ? 'That chart clue cannot explain the cause of a real delay.'
+              : 'Real-world barriers still need to be checked separately.',
+          'feedback-and-boundaries': supportYears.length
+            ? 'The listed work themes may be easier to use in those years.'
+            : `Themes such as ${reviewThemes.slice(0, 2).map(item => item.split(': ').at(-1)).filter(Boolean).join(' and ') || 'changing work demands'} do not confirm income growth.`,
+        }
+        const bottomLine = `${conclusions[question.id] ?? 'Compare the chart theme with actual work, terms, and costs.'} ${bottomLineSecondSentence[question.id] ?? 'The chart offers a planning lens, not a guaranteed outcome.'}`
         const lines = [
           `Your Answer: ${answerText}`,
           ...(!repeatFinancialAnswer&&!limitedIncomeAnswer&&explanation && clean(explanation) !== answerText ? [`What This Means for You: ${clean(explanation)}`] : !repeatFinancialAnswer&&!limitedIncomeAnswer ? [`What This Means for You: Your chart's ${sourceChapter.id === 'feedback-and-boundaries' ? 'calculated work-period comparisons' : 'work pattern'} is the basis for this reading.`] : []),
           ...(workSettingCheck ? [`Practical Check: ${workSettingCheck}`] : []),
           ...(questionTiming ? [questionTiming] : readableTiming.map(line => `Important Timing: ${line}`)),
-          ...(!omitBottomLine ? [`Bottom Line: ${conclusions[question.id] ?? 'Compare the chart theme with the actual work, terms and costs.'}`] : []),
+          `Bottom Line: ${bottomLine}`,
         ]
         return lines
       }

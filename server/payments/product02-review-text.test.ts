@@ -28,6 +28,9 @@ describe('Product 02 text-only review export', () => {
         const end = Math.min(nextQuestion, ...appendixOffsets)
         const actualAnswer = report.text.slice(start, end).trim()
         expect(actualAnswer, `profile ${profileIndex + 1} question ${questionIndex + 1}`).not.toBe('')
+        const bottomLines = [...actualAnswer.matchAll(/^Bottom Line: (.+)$/gmu)].map(match => match[1])
+        expect(bottomLines, `profile ${profileIndex + 1} question ${questionIndex + 1} Bottom Line`).toHaveLength(1)
+        expect(bottomLines[0].match(/[^.!?]+[.!?]+/gu) ?? [], `profile ${profileIndex + 1} question ${questionIndex + 1} Bottom Line sentences`).toHaveLength(2)
         return {
           question_id: definition.id,
           question_number: questionIndex + 1,
@@ -61,7 +64,7 @@ describe('Product 02 text-only review export', () => {
         product_id: '02',
         product_name: 'Success, Money & Your Future',
         source_checkpoint_sha: process.env.REVIEW_SOURCE_SHA ?? 'b9f7ccae396a2dbf93ee25f2d23d1a2a20d0ba8a',
-        generator: 'prepareReportContent-v1; same paid-report content path; PDF renderer not called',
+        generator: 'prepareReportContent-v1; Product 02 letter-bottom-line rules v2; PDF renderer not called',
         evaluation_scale: 'manual content only / 100 points: direct answer 35, personalization 25, easy English 15, repetition 10, evidence consistency 15; PDF design excluded',
         reports,
       }, null, 2) + '\n', 'utf8')
