@@ -209,8 +209,16 @@ export async function prepareReportContent(input: OrderInput, orderId: string, r
       const raw = report.text.slice(match.index! + match[0].length, matches[index + 1]?.index ?? report.text.length)
       const blocks: string[] = []
       for (const block of raw.split(/\n\s*\n/).map(value => value.trim()).filter(Boolean)) {
-        if (!answerLabel.test(block)) break
-        blocks.push(block.replace(answerLabel, ''))
+        if (/^(?:Your Ten-Year|Your Everyday Compass|Calculation notes|Chart evidence for these answers|How this reading is prepared)\b/i.test(block)) break
+        if (answerLabel.test(block)) {
+          blocks.push(block.replace(answerLabel, ''))
+          continue
+        }
+        // Product 01's letter format intentionally places the direct answer
+        // first without an "Answer:" label. Preserve its body for the quality
+        // gate instead of treating the rest of the section as empty.
+        if (input.kind === 'complete') blocks.push(block)
+        else break
       }
       return { question: match[1].trim(), answer: blocks.join('\n\n') }
     })

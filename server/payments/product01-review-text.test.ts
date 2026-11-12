@@ -20,6 +20,7 @@ describe('Product 01 text-only review export', () => {
         'test',
       )
       expect(report.pdf).toBe('')
+      expect(report.qualityAudit?.findings.some(finding => finding.code === 'EMPTY_ANSWER')).toBe(false)
       const matches = [...report.text.matchAll(/(?:^|\n)Question: ([^\n]+)\n/g)]
       expect(matches.map(match => match[1])).toEqual(definitions.map(question => question.title))
       const answers = definitions.map((definition, questionIndex) => {
