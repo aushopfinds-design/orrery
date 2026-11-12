@@ -1,0 +1,2133 @@
+Warning: truncated output (original token count: 55826)
+Total output lines: 3950
+
+{
+  "record_type": "product01_actual_answer_text_review",
+  "product_id": "01",
+  "product_name": "Your Life, Your Destiny",
+  "source_checkpoint_sha": "6a85e358f1611343a08dd84ae82138f4855e30dd",
+  "generator": "prepareReportContent-v1; paid-report text path before PDF renderer; PDF intentionally not generated",
+  "evaluation_scale": "manual content review / 100: direct answer 35, personalization 25, plain English 15, repetition 10, evidence consistency 15; PDF design excluded",
+  "reports": [
+    {
+      "product_id": "01",
+      "product_name": "Your Life, Your Destiny",
+      "profile_number": 1,
+      "profile_id": "new-york-london",
+      "chart_data_used": {
+        "birthTimeKnown": true,
+        "pillars": [
+          {
+            "ganzi": "己丑",
+            "stemRole": "偏印",
+            "branchRole": "偏印"
+          },
+          {
+            "ganzi": "辛未",
+            "stemRole": "本元",
+            "branchRole": "偏印"
+          },
+          {
+            "ganzi": "乙卯",
+            "stemRole": "偏財",
+            "branchRole": "偏財"
+          },
+          {
+            "ganzi": "戊寅",
+            "stemRole": "正印",
+            "branchRole": "正財"
+          }
+        ]
+      },
+      "answers": [
+        {
+          "question_id": "personality",
+          "question_number": 1,
+          "official_title": "What kind of person am I?",
+          "actual_answer": "Your core style is quality and attention to detail.\n\nOne way it may show up is when your work is ready, but you keep changing one small part. At work, your chart adds finding new customers. In close relationships, it points to a need for being heard before someone offers a solution.\n\nBottom Line: Your chart centres on quality and attention to detail, alongside a need for being heard before someone offers a solution. Those parts may ask different things of you.",
+          "raw_section": "Your core style is quality and attention to detail.\n\nOne way it may show up is when your work is ready, but you keep changing one small part. At work, your chart adds finding new customers. In close relationships, it points to a need for being heard before someone offers a solution.\n\nBottom Line: Your chart centres on quality and attention to detail, alongside a need for being heard before someone offers a solution. Those parts may ask different things of you.",
+          "chart_evidence": {
+            "questionId": "personality",
+            "sourceChapterId": "personality",
+            "ruleIds": [
+              "purchase-narrative.customerNarrative.complete.personality.v1",
+              "buyer-outline.applyBuyerQuestions.complete.personality.v1"
+            ],
+            "evidence": [
+              {
+                "id": "chapter.personality.evidence.1",
+                "value": "day pillar 辛未. Stem 辛: 本元 (starting point); branch 未: 偏印 (Independent learning)."
+              },
+              {
+                "id": "chapter.personality.evidence.2",
+                "value": "month pillar 乙卯. Stem 乙: 偏財 (Opportunity and exchange); branch 卯: 偏財 (Opportunity and exchange)."
+              },
+              {
+                "id": "chapter.personality.evidence.3",
+                "value": "hour stem 己: 偏印 (specialist insight)."
+              },
+              {
+                "id": "chapter.personality.evidence.4",
+                "value": "hour branch 丑 (principal stem): 偏印 (specialist insight)."
+              },
+              {
+                "id": "chapter.personality.evidence.5",
+                "value": "day branch 未 (principal stem): 偏印 (specialist insight)."
+              },
+              {
+                "id": "chapter.personality.evidence.6",
+                "value": "month stem 乙: 偏財 (opportunities and wider money)."
+              },
+              {
+                "id": "chapter.personality.evidence.7",
+                "value": "month branch 卯 (principal stem): 偏財 (opportunities and wider money)."
+              },
+              {
+                "id": "chapter.personality.evidence.8",
+                "value": "year stem 戊: 正印 (learning and dependable support)."
+              },
+              {
+                "id": "chapter.personality.evidence.9",
+                "value": "year branch 寅 (principal stem): 正財 (regular money and commitments)."
+              },
+              {
+                "id": "chapter.personality.evidence.10",
+                "value": "癸 within hour branch 丑: 食神 (steady output)."
+              },
+              {
+                "id": "chapter.personality.evidence.11",
+                "value": "辛 within hour branch 丑: 比肩 (independence)."
+              },
+              {
+                "id": "chapter.personality.evidence.12",
+                "value": "己 within hour branch 丑: 偏印 (specialist insight)."
+              },
+              {
+                "id": "chapter.personality.evidence.13",
+                "value": "丁 within day branch 未: 偏官 (pressure and decisive action)."
+              },
+              {
+                "id": "chapter.personality.evidence.14",
+                "value": "乙 within day branch 未: 偏財 (opportunities and wider money)."
+              },
+              {
+                "id": "chapter.personality.evidence.15",
+                "value": "己 within day branch 未: 偏印 (specialist insight)."
+              },
+              {
+                "id": "chapter.personality.evidence.16",
+                "value": "甲 within month branch 卯: 正財 (regular money and commitments)."
+              },
+              {
+                "id": "chapter.personality.evidence.17",
+                "value": "乙 within month branch 卯: 偏財 (opportunities and wider money)."
+              },
+              {
+                "id": "chapter.personality.evidence.18",
+                "value": "戊 within year branch 寅: 正印 (learning and dependable support)."
+              },
+              {
+                "id": "chapter.personality.evidence.19",
+                "value": "丙 within year branch 寅: 正官 (responsibility and recognised roles)."
+              },
+              {
+                "id": "chapter.personality.evidence.20",
+                "value": "甲 within year branch 寅: 正財 (regular money and commitments)."
+              },
+              {
+                "id": "chapter.personality.evidence.21",
+                "value": "Your Yin Metal day stem has same-element roots in hour branch 丑. In traditional terms, that gives the day element a foothold within the branches; the roots are not all equally strong."
+              },
+              {
+                "id": "chapter.personality.evidence.22",
+                "value": "Only within the hidden stems, the chart also contains steady output, independence, pressure and decisive action, responsibility and recognised roles. These are less visible in this comparison and may be expressed through the responsibilities or setting rather than the first impression."
+              },
+              {
+                "id": "chapter.personality.evidence.23",
+                "value": "2026-07-15: No judgement about whether the period may be easier or harder is assigned: the balance of support and demands in your birth chart or a current longer period is unresolved. A checked clash, punishment, harm or break adds competing demands; a supportive balance reading therefore still has a caution."
+              },
+              {
+                "id": "chapter.personality.evidence.24",
+                "value": "2027-07-15: No judgement about whether the period may be easier or harder is assigned: the balance of support and demands in your birth chart or a current longer period is unresolved. A checked clash, punishment, harm or break adds competing demands; a supportive balance reading therefore still has a caution."
+              },
+              {
+                "id": "chapter.personality.evidence.25",
+                "value": "2028-07-15: No judgement about whether the period may be easier or harder is assigned: the balance of support and demands in your birth chart or a current longer period is unresolved. A checked clash, punishment, harm or break adds competing demands; a supportive balance reading therefore still has a caution."
+              },
+              {
+                "id": "chapter.personality.evidence.26",
+                "value": "2029-07-15: No judgement about whether the period may be easier or harder is assigned: the balance of support and demands in your birth chart or a current longer period is unresolved. A checked clash, punishment, harm or break adds competing demands; a supportive balance reading therefore still has a caution."
+              },
+              {
+                "id": "chapter.personality.evidence.27",
+                "value": "2030-07-15: No judgement about whether the period may be easier or harder is assigned: the balance of support and demands in your birth chart or a current longer period is unresolved. A checked clash, punishment, harm or break adds competing demands; a supportive balance reading therefore still has a caution."
+              },
+              {
+                "id": "chapter.personality.evidence.28",
+                "value": "Policy FATE-qualitative-r1. Month branch 卯; principal stem 乙; relationship 偏財; seasonal support false."
+              },
+              {
+                "id": "chapter.personality.evidence.29",
+                "value": "Exposed hour stem 己: 偏印; support."
+              },
+              {
+                "id": "chapter.personality.evidence.30",
+                "value": "Exposed month stem 乙: 偏財; output, management or control."
+              },
+              {
+                "id": "chapter.personality.evidence.31",
+                "value": "Exposed year stem 戊: 正印; support."
+              },
+              {
+                "id": "chapter.personality.evidence.32",
+                "value": "Root: 辛 inside hour branch 丑; secondary hidden stem."
+              },
+              {
+                "id": "chapter.personality.evidence.33",
+                "value": "Month hidden stem 甲: 正財; exposed at no checked non-day stem."
+              },
+              {
+                "id": "chapter.personality.evidence.34",
+                "value": "Month hidden stem 乙: 偏財; exposed at month."
+              },
+              {
+                "id": "chapter.personality.evidence.35",
+                "value": "The support signals are mixed. This rule does not reduce the chart to a strong-or-weak label when season, roots and exposed relationships do not agree."
+              },
+              {
+                "id": "chapter.personality.evidence.36",
+                "value": "A provisional month-led structure candidate is opportunities and wider money: hidden stem 乙 also appears in the month stem. This is a candidate, not confirmation that the structure succeeds or that its element is beneficial."
+              },
+              {
+                "id": "chapter.personality.evidence.37",
+                "value": "No balancing-element preference is assigned while the support judgement is unresolved. A missing element is not automatically a useful element."
+              },
+              {
+                "id": "chapter.personality.evidence.38",
+                "value": "The month-led structure and a balancing element answer different questions. A working preference below applies only to the stated ordinary-chart rule; it is not a universal lucky element or an outcome guarantee."
+              },
+              {
+                "id": "chapter.personality.evidence.39",
+                "value": "The month-hidden stem 乙 is exposed at month: the structure is anchored to opportunities and wider money. The checks below describe supporting and competing relationships; they do not certify full structure success."
+              },
+              {
+                "id": "chapter.personality.evidence.40",
+                "value": "Money and resource relationships are both exposed. Commercial commitments and the time or support needed to prepare can pull in different directions; their positions still matter."
+              },
+              {
+                "id": "chapter.personality.evidence.41",
+                "value": "No single balancing element is selected: support and demand do not resolve into one direction; competing exposed relationships remain; no single rooted and exposed route meets this policy. An absent element is not automatically the answer."
+              }
+            ],
+            "answerType": "productcomplete.identity"
+          },
+          "content_score_100": null,
+          "evaluation_status": "VERIFY",
+          "deductions": []
+        },
+        {
+          "question_id": "social",
+          "question_number": 2,
+          "official_title": "What helps me thrive, and what can hold me back?",
+          "actual_answer": "You may have a sharp eye for small details.\n\nYou thrive when you choose the few details that truly matter. Under pressure, you may keep fixing small details, even when the work is already good enough.\n\nBottom Line: Your eye for detail is a strength when you set a clear stopping point. Otherwise, polishing can delay finishing.",
+          "raw_section": "You may have a sharp eye for small details.\n\nYou thrive when you choose the few details that truly matter. Under pressure, you may keep fixing small details, even when the work is already good enough.\n\nBottom Line: Your eye for detail is a strength when you set a clear stopping point. Otherwise, polishing can delay finishing.",
+          "chart_evidence": {
+            "questionId": "social",
+            "sourceChapterId": "social",
+            "ruleIds": [
+              "purchase-narrative.customerNarrative.complete.social.v1",
+              "buyer-outline.applyBuyerQuestions.complete.social.v1"
+            ],
+            "evidence": [
+              {
+                "id": "chapter.social.evidence.1",
+                "value": "day pillar 辛未. Stem 辛: 本元 (starting point); branch 未: 偏印 (Independent learning)."
+              },
+              {
+                "id": "chapter.social.evidence.2",
+                "value": "month pillar 乙卯. Stem 乙: 偏財 (Opportunity and exchange); branch 卯: 偏財 (Opportunity and exchange)."
+              },
+              {
+                "id": "chapter.social.evidence.3",
+                "value": "year pillar 戊寅. Stem 戊: 正印 (Support and knowledge); branch 寅: 正財 (Steady resources)."
+              },
+              {
+                "id": "chapter.social.evidence.4",
+                "value": "hour stem 己: 偏印 (specialist insight)."
+              },
+              {
+                "id": "chapter.social.evidence.5",
+                "value": "hour branch 丑 (principal stem): 偏印 (specialist insight)."
+              },
+              {
+                "id": "chapter.social.evidence.6",
+                "value": "day branch 未 (principal stem): 偏印 (specialist insight)."
+              },
+              {
+                "id": "chapter.social.evidence.7",
+                "value": "month stem 乙: 偏財 (opportunities and wider money)."
+              },
+              {
+                "id": "chapter.social.evidence.8",
+                "value": "month branch 卯 (principal stem): 偏財 (opportunities and wider money)."
+              },
+              {
+                "id": "chapter.social.evidence.9",
+                "value": "year stem 戊: 正印 (learning and dependable support)."
+              },
+              {
+                "id": "chapter.social.evidence.10",
+                "value": "year branch 寅 (principal stem): 正財 (regular money and commitments)."
+              }
+            ],
+            "answerType": "productcomplete.strengths-and-limits"
+          },
+          "content_score_100": null,
+          "evaluation_status": "VERIFY",
+          "deductions": []
+        },
+        {
+          "question_id": "career",
+          "question_number": 3,
+          "official_title": "What kind of career suits me?",
+          "actual_answer": "Your chart points toward sales, business development or client growth, especially work such as finding buyers, developing accounts or opening a sales channel.\n\nBecause this work theme repeats in your chart, a role with clear duties and ownership should fit better than an unrelated catch-all job.\n\nBottom Line: Your clearest fit is customer growth work, such as sales or account development. Look for a role where those duties are a defined part of the week.",
+          "raw_section": "Your chart points toward sales, business development or client growth, especially work such as finding buyers, developing accounts or opening a sales channel.\n\nBecause this work theme repeats in your chart, a role with clear duties and ownership should fit better than an unrelated catch-all job.\n\nBottom Line: Your clearest fit is customer growth work, such as sales or account development. Look for a role where those duties are a defined part of the week.",
+          "chart_evidence": {
+            "questionId": "career",
+            "sourceChapterId": "career",
+            "ruleIds": [
+              "purchase-narrative.customerNarrative.complete.career.v1",
+              "buyer-outline.applyBuyerQuestions.complete.career.v1"
+            ],
+            "evidence": [
+              {
+                "id": "chapter.career.evidence.1",
+                "value": "month pillar 乙卯. Stem 乙: 偏財 (Opportunity and exchange); branch 卯: 偏財 (Opportunity and exchange)."
+              },
+              {
+                "id": "chapter.career.evidence.2",
+                "value": "year pillar 戊寅. Stem 戊: 正印 (Support and knowledge); branch 寅: 正財 (Steady resources)."
+              }
+            ],
+            "answerType": "productcomplete.career-fit"
+          },
+          "content_score_100": null,
+          "evaluation_status": "VERIFY",
+          "deductions": []
+        },
+        {
+          "question_id": "money",
+          "question_number": 4,
+          "official_title": "What is my natural pattern for earning money?",
+          "actual_answer": "Your natural earning pattern combines dependable pay with selected customer, project or deal work.\n\nBottom Line: Your chart points to both dependable pay and selected project or customer work. Compare real pay and terms before relying on either route.",
+          "raw_section": "Your natural earning pattern combines dependable pay with selected customer, project or deal work.\n\nBottom Line: Your chart points to both dependable pay and selected project or customer work. Compare real pay and terms before relying on either route.",
+          "chart_evidence": {
+            "questionId": "money",
+            "sourceChapterId": "money",
+            "ruleIds": [
+              "purchase-narrative.customerNarrative.complete.money.v1",
+              "buyer-outline.applyBuyerQuestions.complete.money.v1"
+            ],
+            "evidence": [
+              {
+                "id": "chapter.money.evidence.1",
+                "value": "hour stem 己: 偏印 (specialist insight)."
+              },
+              {
+                "id": "chapter.money.evidence.2",
+                "value": "hour branch 丑 (principal stem): 偏印 (specialist insight)."
+              },
+              {
+                "id": "chapter.money.evidence.3",
+                "value": "day branch 未 (principal stem): 偏印 (specialist insight)."
+              },
+              {
+                "id": "chapter.money.evidence.4",
+                "value": "month stem 乙: 偏財 (opportunities and wider money)."
+              },
+              {
+                "id": "chapter.money.evidence.5",
+                "value": "month branch 卯 (principal stem): 偏財 (opportunities and wider money)."
+              },
+              {
+                "id": "chapter.money.evidence.6",
+                "value": "year stem 戊: 正印 (learning and dependable support)."
+              },
+              {
+                "id": "chapter.money.evidence.7",
+                "value": "year branch 寅 (principal stem): 正財 (regular money and commitments)."
+              },
+              {
+                "id": "chapter.money.evidence.8",
+                "value": "癸 within hour branch 丑: 食神 (steady output)."
+              },
+              {
+                "id": "chapter.money.evidence.9",
+                "value": "辛 within hour branch 丑: 比肩 (independence)."
+              },
+              {
+                "id": "chapter.money.evidence.10",
+                "value": "己 within hour branch 丑: 偏印 (specialist insight)."
+              },
+              {
+                "id": "chapter.money.evidence.11",
+                "value": "丁 within day branch 未: 偏官 (pressure and decisive action)."
+              },
+              {
+                "id": "chapter.money.evidence.12",
+                "value": "乙 within day branch 未: 偏財 (opportunities and wider money)."
+              },
+              {
+                "id": "chapter.money.evidence.13",
+                "value": "己 within day branch 未: 偏印 (specialist insight)."
+              },
+              {
+                "id": "chapter.money.evidence.14",
+                "value": "甲 within month branch 卯: 正財 (regular money and commitments)."
+              },
+              {
+                "id": "chapter.money.evidence.15",
+                "value": "乙 within month branch 卯: 偏財 (opportunities and wider money)."
+              },
+              {
+                "id": "chapter.money.evidence.16",
+                "value": "戊 within year branch 寅: 正印 (learning and dependable support)."
+              },
+              {
+                "id": "chapter.money.evidence.17",
+                "value": "丙 within year branch 寅: 正官 (responsibility and recognised roles)."
+              },
+              {
+                "id": "chapter.money.evidence.18",
+                "value": "甲 within year branch 寅: 正財 (regular money and commitments)."
+              },
+              {
+                "id": "chapter.money.evidence.19",
+                "value": "The checked positions are month stem 乙 (opportunities and wider money); month branch 卯 (principal stem) (opportunities and wider money); year branch 寅 (principal stem) (regular money and commitments). The hidden check finds 乙 in the day branch 未; 甲 in the month branch 卯; 乙 in the month branch 卯; 甲 in the year branch 寅. Hidden entries are supporting evidence, not additional strength points."
+              }
+            ],
+            "answerType": "product01.income-pattern"
+          },
+          "content_score_100": null,
+          "evaluation_status": "FIX",
+          "deductions": [
+            "실제 수입 경로별 계산 근거가 답변 본문에 노출되지 않음",
+            "여러 프로필에서 답변 핵심이 동일하게 생성됨"
+          ]
+        },
+        {
+          "question_id": "love",
+          "question_number": 5,
+          "official_title": "What do I need most in a close relationship?",
+          "actual_answer": "You are most likely to feel secure with someone who makes room for being heard before someone offers a solution.\n\nIn everyday life, look for people who ask what kind of help you want.\n\nBottom Line: You need to feel heard before someone tries to fix the issue. Tell a partner whether you want listening, advice or practical help.",
+          "raw_section": "You are most likely to feel secure with someone who makes room for being heard before someone offers a solution.\n\nIn everyday life, look for people who ask what kind of help you want.\n\nBottom Line: You need to feel heard before someone tries to fix the issue. Tell a partner whether you want listening, advice or practical help.",
+          "chart_evidence": {
+            "questionId": "love",
+            "sourceChapterId": "love",
+            "ruleIds": [
+              "purchase-narrative.customerNarrative.complete.love.v1",
+              "buyer-outline.applyBuyerQuestions.complete.love.v1"
+            ],
+            "evidence": [
+              {
+                "id": "chapter.love.evidence.1",
+                "value": "day pillar 辛未. Stem 辛: 本元 (starting point); branch 未: 偏印 (Independent learning)."
+              }
+            ],
+            "answerType": "product01.relationship-needs"
+          },
+          "content_score_100": null,
+          "evaluation_status": "VERIFY",
+          "deductions": []
+        },
+        {
+          "question_id": "patterns",
+          "question_number": 6,
+          "official_title": "What are my biggest life challenges?",
+          "actual_answer": "Your main life challenge may be keeping repeated customer growth and business development work from crowding out what your private life needs: space to be heard before anyone gives advice.\n\nYour chart shows the same work theme in your main role and daily duties. Because it appears in both, it can take more time than your role allows.\n\nBottom Line: Your recurring challenge is balancing work with space to be heard before anyone gives advice. Set a practical boundary before accepting more responsibility.",
+          "raw_section": "Your main life challenge may be keeping repeated customer growth and business development work from crowding out what your private life needs: space to be heard before anyone gives advice.\n\nYour chart shows the same work theme in your main role and daily duties. Because it appears in both, it can take more time than your role allows.\n\nBottom Line: Your recurring challenge is balancing work with space to be heard before anyone gives advice. Set a practical boundary before accepting more responsibility.",
+          "chart_evidence": {
+            "questionId": "patterns",
+            "sourceChapterId": "life-challenges",
+            "ruleIds": [
+              "purchase-narrative.customerNarrative.complete.patterns.v1",
+              "buyer-outline.applyBuyerQuestions.complete.patterns.v1"
+            ],
+            "evidence": [
+              {
+                "id": "chapter.life-challenges.evidence.1",
+                "value": "day pillar 辛未. Stem 辛: 本元 (starting point); branch 未: 偏印 (Independent learning)."
+              },
+              {
+                "id": "chapter.life-challenges.evidence.2",
+                "value": "month pillar 乙卯. Stem 乙: 偏財 (Opportunity and exchange); branch 卯: 偏財 (Opportunity and exchange)."
+              },
+              {
+                "id": "chapter.life-challenges.evidence.3",
+                "value": "hour stem 己: 偏印 (specialist insight)."
+              },
+              {
+                "id": "chapter.life-challenges.evidence.4",
+                "value": "hour branch 丑 (principal stem): 偏印 (specialist insight)."
+              },
+              {
+                "id": "chapter.life-challenges.evidence.5",
+                "value": "day branch 未 (principal stem): 偏印 (specialist insight)."
+              },
+              {
+                "id": "chapter.life-challenges.evidence.6",
+                "value": "month stem 乙: 偏財 (opportunities and wider money)."
+              },
+              {
+                "id": "chapter.life-challenges.evidence.7",
+                "value": "month branch 卯 (principal stem): 偏財 (opportunities and wider money)."
+              },
+              {
+                "id": "chapter.life-challenges.evidence.8",
+                "value": "year stem 戊: 正印 (learning and dependable support)."
+              },
+              {
+                "id": "chapter.life-challenges.evidence.9",
+                "value": "year branch 寅 (principal stem): 正財 (regular money and commitments)."
+              },
+              {
+                "id": "chapter.life-challenges.evidence.10",
+                "value": "Birth hour / day: 己丑 / 辛未: branch 沖."
+              },
+              {
+                "id": "chapter.life-challenges.evidence.11",
+                "value": "Birth hour / month: 己丑 / 乙卯: no pattern in the checked pair tables."
+              },
+              {
+                "id": "chapter.life-challenges.evidence.12",
+                "value": "Birth hour / year: 己丑 / 戊寅: no pattern in the checked pair tables."
+              },
+              {
+                "id": "chapter.life-challenges.evidence.13",
+                "value": "Birth day / month: 辛未 / 乙卯: stem 沖; branch 半合 (tree)."
+              },
+              {
+                "id": "chapter.life-challenges.evidence.14",
+                "value": "Birth day / year: 辛未 / 戊寅: branch 鬼門."
+              },
+              {
+                "id": "chapter.life-challenges.evidence.15",
+                "value": "Birth month / year: 乙卯 / 戊寅: no pattern in the checked pair tables."
+              }
+            ],
+            "answerType": "productcomplete.recurring-challenge"
+          },
+          "content_score_100": null,
+          "evaluation_status": "VERIFY",
+          "deductions": []
+        },
+        {
+          "question_id": "q-turning-points",
+          "question_number": 7,
+          "official_title": "When may my life change direction?",
+          "actual_answer": "The strongest chart signal for reconsidering your direction appears in 2032: a theme of new ideas and better methods connects with work and close relationships.\n\nBottom Line: Use 2032 as a point to review the options named in your chart. It is a planning signal, not a promise that a major event will happen.",
+          "raw_section": "The strongest chart signal for reconsidering your direction appears in 2032: a theme of new ideas and better methods connects with work and close relationships.\n\nBottom Line: Use 2032 as a point to review the options named in your chart. It is a planning signal, not a promise that a major event will happen.",
+          "chart_evidence": {
+            "questionId": "q-turning-points",
+            "sourceChapterId": "patterns",
+            "ruleIds": [
+              "purchase-narrative.customerNarrative.complete.q-turning-points.v1",
+              "buyer-outline.applyBuyerQuestions.complete.q-turning-points.v1"
+            ],
+            "evidence": [
+              {
+                "id": "chapter.patterns.evidence.1",
+                "value": "Birth hour / day: 己丑 / 辛未: branch 沖."
+              },
+              {
+                "id": "chapter.patterns.evidence.2",
+                "value": "Birth hour / month: 己丑 / 乙卯: no pattern in the checked pair tables."
+              },
+              {
+                "id": "chapter.patterns.evidence.3",
+                "value": "Birth hour / year: 己丑 / 戊寅: no pattern in the checked pair tables."
+              },
+              {
+                "id": "chapter.patterns.evidence.4",
+                "value": "Birth day / month: 辛未 / 乙卯: stem 沖; branch 半合 (tree)."
+              },
+              {
+                "id": "chapter.patterns.evidence.5",
+                "value": "Birth day / year: 辛未 / 戊寅: branch 鬼門."
+              },
+              {
+                "id": "chapter.patterns.evidence.6",
+                "value": "Birth month / year: 乙卯 / 戊寅: no pattern in the checked pair tables."
+              },
+              {
+                "id": "chapter.patterns.evidence.7",
+                "value": "Ten-year cycle 戊午; calculated start 2021-12-22; stem 正印; branch 偏官."
+              },
+              {
+                "id": "chapter.patterns.evidence.8",
+                "value": "Ten-year cycle 己未; calculated start 2031-12-22; stem 偏印; branch 偏印."
+              },
+              {
+                "id": "chapter.patterns.evidence.9",
+                "value": "Ten-year cycle 庚申; calculated start 2041-12-22; stem 劫財; branch 劫財."
+              },
+              {
+                "id": "chapter.patterns.evidence.10",
+                "value": "Reference 2026-07-15 at 12:00 Asia/Seoul: 丙午; year 丙午; day stem 辛; reference stem 丙 = 正官; principal inner stem 丁 = 偏官."
+              },
+              {
+                "id": "chapter.patterns.evidence.11",
+                "value": "Reference / birth hour: 丙午 / 己丑: branch 害; branch 怨嗔; branch 鬼門."
+              },
+              {
+                "id": "chapter.patterns.evidence.12",
+                "value": "Reference / birth day: 丙午 / 辛未: stem 合 (water); branch 合 (fire)."
+              },
+              {
+                "id": "chapter.patterns.evidence.13",
+                "value": "Reference / birth month: 丙午 / 乙卯: branch 破."
+              },
+              {
+                "id": "chapter.patterns.evidence.14",
+                "value": "Reference / birth year: 丙午 / 戊寅: branch 半合 (fire)."
+              },
+              {
+                "id": "chapter.patterns.evidence.15",
+                "value": "Assessment FATE-qualitative-r1: natal mixed; reference 丙午 (正官 / 偏官); direction unresolved; friction true."
+              },
+              {
+                "id": "chapter.patterns.evidence.16",
+                "value": "Active cycle at 2026-07-15 12:00 shared comparison wall clock: 戊午; calculated start 2021-12-22T10:16:54.000Z."
+              },
+              {
+                "id": "chapter.patterns.evidence.17",
+                "value": "Reference / active ten-year cycle: 丙午 / 戊午: branch 刑 (自刑)."
+              },
+              {
+                "id": "chapter.patterns.evidence.18",
+                "value": "2026-07-15: No judgement about whether the period may be easier or harder is assigned: the balance of support and demands in your birth chart or a current longer period is unresolved. A checked clash, punishment, harm or break adds competing demands; a supportive balance reading therefore still has a caution."
+              },
+              {
+                "id": "chapter.patterns.evidence.19",
+                "value": "Reference 2027-07-15 at 12:00 Asia/Seoul: 丁未; year 丁未; day stem 辛; reference stem 丁 = 偏官; principal inner stem 己 = 偏印."
+              },
+              {
+                "id": "chapter.patterns.evidence.20",
+                "value": "Reference / birth hour: 丁未 / 己丑: branch 沖."
+              },
+              {
+                "id": "chapter.patterns.evidence.21",
+                "value": "Reference / birth day: 丁未 / 辛未: no pattern in the checked pair tables."
+              },
+              {
+                "id": "chapter.patterns.evidence.22",
+                "value": "Reference / birth month: 丁未 / 乙卯: branch 半合 (tree)."
+              },
+              {
+                "id": "chapter.patterns.evidence.23",
+                "value": "Reference / birth year: 丁未 / 戊寅: branch 鬼門."
+              },
+              {
+                "id": "chapter.patterns.evidence.24",
+                "value": "Assessment FATE-qualitative-r1: natal mixed; reference 丁未 (偏官 / 偏印); direction unresolved; friction true."
+              },
+              {
+                "id": "chapter.patterns.evidence.25",
+                "value": "Active cycle at 2027-07-15 12:00 shared comparison wall clock: 戊午; calculated start 2021-12-22T10:16:54.000Z."
+              },
+              {
+                "id": "chapter.patterns.evidence.26",
+                "value": "Reference / active ten-year cycle: 丁未 / 戊午: branch 合 (fire)."
+              },
+              {
+                "id": "chapter.patterns.evidence.27",
+                "value": "2027-07-15: No judgement about whether the period may be easier or harder is assigned: the balance of support and demands in your birth chart or a current longer period is unresolved. A checked clash, punishment, harm or break adds competing demands; a supportive balance reading therefore still has a caution."
+              },
+              {
+                "id": "chapter.patterns.evidence.28",
+                "value": "Reference 2028-07-15 at 12:00 Asia/Seoul: 戊申; year 戊申; day stem 辛; reference stem 戊 = 正印; principal inner stem 庚 = 劫財."
+              },
+              {
+                "id": "chapter.patterns.evidence.29",
+                "value": "Reference / birth hour: 戊申 / 己丑: no pattern in the checked pair tables."
+              },
+              {
+                "id": "chapter.patterns.evidence.30",
+                "value": "Reference / birth day: 戊申 / 辛未: no pattern in the checked pair tables."
+              },
+              {
+                "id": "chapter.patterns.evidence.31",
+                "value": "Reference / birth month: 戊申 / 乙卯: branch 怨嗔; branch 鬼門."
+              },
+              {
+                "id": "chapter.patterns.evidence.32",
+                "value": "Reference / birth year: 戊申 / 戊寅: branch 沖."
+              },
+              {
+                "id": "chapter.patterns.evidence.33",
+                "value": "Assessment FATE-qualitative-r1: natal mixed; reference 戊申 (正印 / 劫財); direction unresolved; friction true."
+              },
+              {
+                "id": "chapter.patterns.evidence.34",
+                "value": "Active cycle at 2028-07-15 12:00 shared comparison wall clock: 戊午; calculated start 2021-12-22T10:16:54.000Z."
+              },
+              {
+                "id": "chapter.patterns.evidence.35",
+                "value": "Reference / active ten-year cycle: 戊申 / 戊午: no pattern in the checked pair tables."
+              },
+              {
+                "id": "chapter.patterns.evidence.36",
+                "value": "2028-07-15: No judgement about whether the period may be easier or harder is assigned: the balance of support and demands in your birth chart or a current longer period is unresolved. A checked clash, punishment, harm or break adds competing demands; a supportive balance reading therefore still has a caution."
+              },
+              {
+                "id": "chapter.patterns.evidence.37",
+                "value": "Reference 2029-07-15 at 12:00 Asia/Seoul: 己酉; year 己酉; day stem 辛; reference stem 己 = 偏印; principal inner stem 辛 = 比肩."
+              },
+              {
+                "id": "chapter.patterns.evidence.38",
+                "value": "Reference / birth hour: 己酉 / 己丑: branch 半合 (metal)."
+              },
+              {
+                "id": "chapter.patterns.evidence.39",
+                "value": "Reference / birth day: 己酉 / 辛未: no pattern in the checked pair tables."
+              },
+              {
+                "id": "chapter.patterns.evidence.40",
+                "value": "Reference / birth month: 己酉 / 乙卯: branch 沖."
+              },
+              {
+                "id": "chapter.patterns.evidence.41",
+                "value": "Reference / birth year: 己酉 / 戊寅: branch 怨嗔."
+              },
+              {
+                "id": "chapter.patterns.evidence.42",
+                "value": "Assessment FATE-qualitative-r1: natal mixed; reference 己酉 (偏印 / 比肩); direction unresolved; friction true."
+              },
+              {
+                "id": "chapter.patterns.evidence.43",
+                "value": "Active cycle at 2029-07-15 12:00 shared comparison wall clock: 戊午; calculated start 2021-12-22T10:16:54.000Z."
+              },
+              {
+                "id": "chapter.patterns.evidence.44",
+                "value": "Reference / active ten-year cycle: 己酉 / 戊午: no pattern in the checked pair tables."
+              },
+              {
+                "id": "chapter.patterns.evidence.45",
+                "value": "2029-07-15: No judgement about whether the period may be easier or harder is assigned: the balance of support and demands in your birth chart or a current longer period is unresolved. A checked clash, punishment, harm or break adds competing demands; a supportive balance reading therefore still has a caution."
+              },
+              {
+                "id": "chapter.patterns.evidence.46",
+                "value": "Reference 2030-07-15 at 12:00 Asia/Seoul: 庚戌; year 庚戌; day stem 辛; reference stem 庚 = 劫財; principal inner stem 戊 = 正印."
+              },
+              {
+                "id": "chapter.patterns.evidence.47",
+                "value": "Reference / birth hour: 庚戌 / 己丑: no pattern in the checked pair tables."
+              },
+              {
+                "id": "chapter.patterns.evidence.48",
+                "value": "Reference / birth day: 庚戌 / 辛未: branch 破."
+              },
+              {
+                "id": "chapter.patterns.evidence.49",
+                "value": "Reference / birth month: 庚戌 / 乙卯: stem 合 (metal); branch 合 (fire)."
+              },
+              {
+                "id": "chapter.patterns.evidence.50",
+                "value": "Reference / birth year: 庚戌 / 戊寅: no pattern in the checked pair tables."
+              },
+              {
+                "id": "chapter.patterns.evidence.51",
+                "value": "Assessment FATE-qualitative-r1: natal mixed; reference 庚戌 (劫財 / 正印); direction unresolved; friction true."
+              },
+              {
+                "id": "chapter.patterns.evidence.52",
+                "value": "Active cycle at 2030-07-15 12:00 shared comparison wall clock: 戊午; calculated start 2021-12-22T10:16:54.000Z."
+              },
+              {
+                "id": "chapter.patterns.evidence.53",
+                "value": "Reference / active ten-year cycle: 庚戌 / 戊午: branch 半合 (fire)."
+              },
+              {
+                "id": "chapter.patterns.evidence.54",
+                "value": "2030-07-15: No judgement about whether the period may be easier or harder is assigned: the balance of support and demands in your birth chart or a current longer period is unresolved. A checked clash, punishment, harm or break adds competing demands; a supportive balance reading therefore still has a caution."
+              },
+              {
+                "id": "chapter.patterns.evidence.55",
+                "value": "Reference 2032-07-15 at 12:00 Asia/Seoul: 壬子; year 壬子; day stem 辛; reference stem 壬 = 傷官; principal inner stem 癸 = 食神."
+              },
+              {
+                "id": "chapter.patterns.evidence.56",
+                "value": "Reference / birth hour: 壬子 / 己丑: branch 合 (earth)."
+              },
+              {
+                "id": "chapter.patterns.evidence.57",
+                "value": "Reference / birth day: 壬子 / 辛未: branch 害; branch 怨嗔."
+              },
+              {
+                "id": "chapter.patterns.evidence.58",
+                "value": "Reference / birth month: 壬子 / 乙卯: branch 刑 (無禮)."
+              },
+              {
+                "id": "chapter.patterns.evidence.59",
+                "value": "Reference / birth year: 壬子 / 戊寅: no pattern in the checked pair tables."
+              },
+              {
+                "id": "chapter.patterns.evidence.60",
+                "value": "Assessment FATE-qualitative-r1: natal mixed; reference 壬子 (傷官 / 食神); direction unresolved; friction true."
+              },
+              {
+                "id": "chapter.patterns.evidence.61",
+                "value": "Active cycle at 2032-07-15 12:00 shared comparison wall clock: 己未; calculated start 2031-12-22T10:16:54.000Z."
+              },
+              {
+                "id": "chapter.patterns.evidence.62",
+                "value": "Reference / active ten-year cycle: 壬子 / 己未: branch 害; branch 怨嗔."
+              },
+              {
+                "id": "chapter.patterns.evidence.63",
+                "value": "Activity policy FATE-activity-r1: area life; route none; status extra-care; capacity mixed; natal roles 偏印/偏財/正印/偏印/偏印/偏財/正財; reference roles 傷官/食神; longer roles 偏印/偏印; no overall luck judgement from a matched activity."
+              }
+            ],
+            "answerType": "productcomplete.turning-point-timing"
+          },
+          "content_score_100": null,
+          "evaluation_status": "FIX",
+          "deductions": [
+            "계산 연도는 직접 제시하나 질문 고유의 해석이 짧고 다른 주제와 연결된 설명이 제한적임"
+          ]
+        }
+      ],
+      "manual_content_evaluation": {
+        "profile_number": 1,
+        "score": 90,
+        "breakdown": {
+          "direct_answer": 33,
+          "personalization": 22,
+          "plain_english": 14,
+          "repetition": 8,
+          "evidence_consistency": 13
+        },
+        "status": "FIX",
+        "deductions_ko": [
+          "Q4가 실제 수입 경로의 차트 근거를 구체적으로 보여주지 않아 네 명의 답이 사실상 같은 수준으로 남음.",
+          "Q7은 연도와 주제는 직접 답하지만, 다른 질문(Q1/Q6)의 일·관계 소재가 되풀이되어 질문 고유성이 약함.",
+          "Q1과 Q6의 일·관계 설명이 일부 겹침."
+        ]
+      }
+    },
+    {
+      "product_id": "01",
+      "product_name": "Your Life, Your Destiny",
+      "profile_number": 2,
+      "profile_id": "seoul-sydney",
+      "chart_data_used": {
+        "birthTimeKnown": true,
+        "pillars": [
+          {
+            "ganzi": "丙辰",
+            "stemRole": "偏印",
+            "branchRole": "比肩"
+          },
+          {
+            "ganzi": "戊午",
+            "stemRole": "本元",
+            "branchRole": "正印"
+          },
+          {
+            "ganzi": "庚戌",
+            "stemRole": "食神",
+            "branchRole": "比肩"
+          },
+          {
+            "ganzi": "丁卯",
+            "stemRole": "正印",
+            "branchRole": "正官"
+          }
+        ]
+      },
+      "answers": [
+        {
+          "question_id": "personality",
+          "question_number": 1,
+          "official_title": "What kind of person am I?",
+          "actual_answer": "Your core style is stability and keeping promises.\n\nOne way it may show up is when a job goes wrong, so you fill the gaps. That solves today's problem. At work, your chart adds practised skills and dependable results. In close relationships, it points to a need for warm attention and time for your own interests.\n\nBottom Line: Your chart centres on stability and keeping promises, alongside a need for warm attention and time for your own interests. Those parts may ask different things of you.",
+          "raw_section": "Your core style is stability and keeping promises.\n\nOne way it may show up is when a job goes wrong, so you fill the gaps. That solves today's problem. At work, your chart adds practised skills and dependable results. In close relationships, it points to a need for warm attention and time for your own interests.\n\nBottom Line: Your chart centres on stability and keeping promises, alongside a need for warm attention and time for your own interests. Those parts may ask different things of you.",
+          "chart_evidence": {
+            "questionId": "personality",
+            "sourceChapterId": "personality",
+            "ruleIds": [
+              "purchase-narrative.customerNarrative.complete.personality.v1",
+              "buyer-outline.applyBuyerQuestions.complete.personality.v1"
+            ],
+            "evidence": [
+              {
+                "id": "chapter.personality.evidence.1",
+                "value": "day pillar 戊午. Stem 戊: 本元 (starting point); branch 午: 正印 (Support and knowledge)."
+              },
+              {
+                "id": "chapter.personality.evidence.2",
+                "value": "month pillar 庚戌. Stem 庚: 食神 (Craft and consistency); branch 戌: 比肩 (Independence)."
+              },
+              {
+                "id": "chapter.personality.evidence.3",
+                "value": "hour stem 丙: 偏印 (specialist insight)."
+              },
+              {
+                "id": "chapter.personality.evidence.4",
+                "value": "hour branch 辰 (principal stem): 比肩 (independence)."
+              },
+              {
+                "id": "chapter.personality.evidence.5",
+                "value": "day branch 午 (principal stem): 正印 (learning and dependable support)."
+              },
+              {
+                "id": "chapter.personality.evidence.6",
+                "value": "month stem 庚: 食神 (steady output)."
+              },
+              {
+                "id": "chapter.personality.evidence.7",
+                "value": "month branch 戌 (principal stem): 比肩 (independence)."
+              },
+              {
+                "id": "chapter.personality.evidence.8",
+                "value": "year stem 丁: 正印 (learning and dependable support)."
+              },
+              {
+                "id": "chapter.personality.evidence.9",
+                "value": "year branch 卯 (principal stem): 正官 (responsibility and recognised roles)."
+              },
+              {
+                "id": "chapter.personality.evidence.10",
+                "value": "乙 within hour branch 辰: 正官 (responsibility and recognised roles)."
+              },
+              {
+                "id": "chapter.personality.evidence.11",
+                "value": "癸 within hour branch 辰: 正財 (regular money and commitments)."
+              },
+              {
+                "id": "chapter.personality.evidence.12",
+                "value": "戊 within hour branch 辰: 比肩 (independence)."
+              },
+              {
+                "id": "chapter.personality.evidence.13",
+                "value": "丙 within day branch 午: 偏印 (specialist insight)."
+              },
+              {
+                "id": "chapter.personality.evidence.14",
+                "value": "己 within day branch 午: 劫財 (competition and shared resources)."
+              },
+              {
+                "id": "chapter.personality.evidence.15",
+                "value": "丁 within day branch 午: 正印 (learning and dependable support)."
+              },
+              {
+                "id": "chapter.personality.evidence.16",
+                "value": "辛 within month branch 戌: 傷官 (expression and challenge)."
+              },
+              {
+                "id": "chapter.personality.evidence.17",
+                "value": "丁 within month branch 戌: 正印 (learning and dependable support)."
+              },
+              {
+                "id": "chapter.personality.evidence.18",
+                "value": "戊 within month branch 戌: 比肩 (independence)."
+              },
+              {
+                "id": "chapter.personality.evidence.19",
+                "value": "甲 within year branch 卯: 偏官 (pressure and decisive action)."
+              },
+              {
+                "id": "chapter.personality.evidence.20",
+                "value": "乙 within year branch 卯: 正官 (responsibility and recognised roles)."
+              },
+              {
+                "id": "chapter.personality.evidence.21",
+                "value": "Your Yang Earth day stem has same-element roots in hour branch 辰, day branch 午, month branch 戌. In traditional terms, that gives the day element a foothold within the branches; the roots are not all equally strong."
+              },
+              {
+                "id": "chapter.personality.evidence.22",
+                "value": "Only within the hidden stems, the chart also contains regular money and commitments, competition and shared resources, expression and challenge, pressure and decisive action. These are less visible in this comparison and may be expressed through the responsibilities or setting rather than the first impression."
+              },
+              {
+                "id": "chapter.personality.evidence.23",
+                "value": "2026-07-15: The active cycle and this reference do not give one consistent balance between help and added responsibility. The reading keeps the opportunity and its burden separate. A checked clash, punishment, harm or break adds competing demands; a supportive balance reading therefore still has a caution."
+              },
+              {
+                "id": "chapter.personality.evidence.24",
+                "value": "2027-07-15: The active cycle and this reference do not give one consistent balance between help and added responsibility. The reading keeps the opportunity and its burden separate. A checked clash, punishment, harm or break adds competing demands; a supportive balance reading therefore still has a caution."
+              },
+              {
+                "id": "chapter.personality.evidence.25",
+                "value": "2028-07-15: The active cycle and this reference do not give one consistent balance between help and added responsibility. The reading keeps the opportunity and its burden separate. A checked clash, punishment, harm or break adds competing demands; a supportive balance reading therefore still has a caution."
+              },
+              {
+                "id": "chapter.personality.evidence.26",
+                "value": "2029-07-15: The active cycle and this reference do not give one consistent balance between help and added responsibility. The reading keeps the opportunity and its burden separate. A checked clash, punishment, harm or break adds competing demands; a supportive balance reading therefore still has a caution."
+              },
+              {
+                "id": "chapter.personality.evidence.27",
+                "value": "2030-07-15: The active cycle and this reference do not give one consistent balance between help and added responsibility. The reading keeps the opportunity and its burden separate. A checked clash, punishment, harm or break adds competing demands; a supportive balance reading therefore still has a caution."
+              },
+              {
+                "id": "chapter.personality.evidence.28",
+                "value": "Policy FATE-qualitative-r1. Month branch 戌; principal stem 戊; relationship 比肩; seasonal support true."
+              },
+              {
+                "id": "chapter.personality.evidence.29",
+                "value": "Exposed hour stem 丙: 偏印; support."
+              },
+              {
+                "id": "chapter.personality.evidence.30",
+                "value": "Exposed month stem 庚: 食神; output, management or control."
+              },
+              {
+                "id": "chapter.personality.evidence.31",
+                "value": "Exposed year stem 丁: 正印; support."
+              },
+              {
+                "id": "chapter.personality.evidence.32",
+                "value": "Root: 戊 inside hour branch 辰; principal hidden stem."
+              },
+              {
+                "id": "chapter.personality.evidence.33",
+                "value": "Root: 己 inside day branch 午; secondary hidden stem."
+              },
+              {
+                "id": "chapter.personality.evidence.34",
+                "value": "Root: 戊 inside month branch 戌; principal hidden stem."
+              },
+              {
+                "id": "chapter.personality.evidence.35",
+                "value": "Month hidden stem 辛: 傷官; exposed at no checked non-day stem."
+              },
+              {
+                "id": "chapter.personality.evidence.36",
+                "value": "Month hidden stem 丁: 正印; exposed at year."
+              },
+              {
+                "id": "chapter.personality.evidence.37",
+                "value": "Month hidden stem 戊: 比肩; exposed at no checked non-day stem."
+              },
+              {
+                "id": "chapter.personality.evidence.38",
+                "value": "The day element leans well supported under this conservative rule: the month supports it, a principal root is present and support also appears in an exposed stem."
+              },
+              {
+                "id": "chapter.personality.evidence.39",
+                "value": "The month is peer-led. An ordinary money, authority, output or resource structure is not assigned; peer-month and special-structure rules need separate judgement."
+              },
+              {
+                "id": "chapter.personality.evidence.40",
+                "value": "Under a support-versus-demand balancing approach, output, money-management and responsibility relationships are candidates for using the available support. They are a candidate group, not three confirmed favourable elements or a unique useful element."
+              },
+              {
+                "id": "chapter.personality.evidence.41",
+                "value": "The month-led structure and a balancing element answer different questions. A working preference below applies only to the stated ordinary-chart rule; it is not a universal lucky element or an outcome guarantee."
+              },
+              {
+                "id": "chapter.personality.evidence.42",
+                "value": "A complete ordinary month-led structure is not assigned from the available evidence. The reading retains the seasonal relationship without forcing a structure label."
+              },
+              {
+                "id": "chapter.personality.evidence.43",
+                "value": "Responsibility and resource relationships are both present. Training, support or a method for handling the role matters alongside the demand itself."
+              },
+              {
+                "id": "chapter.personality.evidence.44",
+                "value": "Specialised preparation and steady production are both exposed. Continuing to analyse can compete with delivering usable work; this is not proof that output is destroyed."
+              },
+              {
+                "id": "chapter.personality.evidence.45",
+                "value": "No single balancing element is selected: competing exposed relationships remain; a checked friction pattern touches the month branch; no single rooted and exposed route meets this policy. An absent element is not automatically the answer."
+              }
+            ],
+            "answerType": "productcomplete.identity"
+          },
+          "content_score_100": null,
+          "evaluation_status": "VERIFY",
+          "deductions": []
+        },
+        {
+          "question_id": "social",
+          "question_number": 2,
+          "official_title": "What helps me thrive, and what can hold me back?",
+          "actual_answer": "You may help others feel secure by keeping your promises.\n\nYou thrive when you agree who will do each part. Under pressure, being dependable can turn into doing everything.\n\nBottom Line: Your reliability helps others, but it can leave you carrying too much. Agree who owns each task before stepping in.",
+          "raw_section": "You may help others feel secure by keeping your promises.\n\nYou thrive when you agree who will do each part. Under pressure, being dependable can turn into doing everything.\n\nBottom Line: Your reliability helps others, but it can leave you carrying too much. Agree who owns each task before stepping in.",
+          "chart_evidence": {
+            "questionId": "social",
+            "sourceChapterId": "social",
+            "ruleIds": [
+              "purchase-narrative.customerNarrative.complete.social.v1",
+              "buyer-outli…25826 tokens truncated…e.q-turning-points.v1"
+            ],
+            "evidence": [
+              {
+                "id": "chapter.patterns.evidence.1",
+                "value": "Birth hour / day: 壬辰 / 辛亥: branch 怨嗔; branch 鬼門."
+              },
+              {
+                "id": "chapter.patterns.evidence.2",
+                "value": "Birth hour / month: 壬辰 / 甲申: no pattern in the checked pair tables."
+              },
+              {
+                "id": "chapter.patterns.evidence.3",
+                "value": "Birth hour / year: 壬辰 / 庚午: no pattern in the checked pair tables."
+              },
+              {
+                "id": "chapter.patterns.evidence.4",
+                "value": "Birth day / month: 辛亥 / 甲申: branch 害."
+              },
+              {
+                "id": "chapter.patterns.evidence.5",
+                "value": "Birth day / year: 辛亥 / 庚午: no pattern in the checked pair tables."
+              },
+              {
+                "id": "chapter.patterns.evidence.6",
+                "value": "Birth month / year: 甲申 / 庚午: stem 沖."
+              },
+              {
+                "id": "chapter.patterns.evidence.7",
+                "value": "Ten-year cycle 庚辰; calculated start 2022-09-06; stem 劫財; branch 正印."
+              },
+              {
+                "id": "chapter.patterns.evidence.8",
+                "value": "Ten-year cycle 己卯; calculated start 2032-09-06; stem 偏印; branch 偏財."
+              },
+              {
+                "id": "chapter.patterns.evidence.9",
+                "value": "Ten-year cycle 戊寅; calculated start 2042-09-06; stem 正印; branch 正財."
+              },
+              {
+                "id": "chapter.patterns.evidence.10",
+                "value": "Reference 2026-07-15 at 12:00 Asia/Seoul: 丙午; year 丙午; day stem 辛; reference stem 丙 = 正官; principal inner stem 丁 = 偏官."
+              },
+              {
+                "id": "chapter.patterns.evidence.11",
+                "value": "Reference / birth hour: 丙午 / 壬辰: stem 沖."
+              },
+              {
+                "id": "chapter.patterns.evidence.12",
+                "value": "Reference / birth day: 丙午 / 辛亥: stem 合 (water)."
+              },
+              {
+                "id": "chapter.patterns.evidence.13",
+                "value": "Reference / birth month: 丙午 / 甲申: no pattern in the checked pair tables."
+              },
+              {
+                "id": "chapter.patterns.evidence.14",
+                "value": "Reference / birth year: 丙午 / 庚午: branch 刑 (自刑)."
+              },
+              {
+                "id": "chapter.patterns.evidence.15",
+                "value": "Assessment FATE-qualitative-r1: natal supported; reference 丙午 (正官 / 偏官); direction mixed; friction true."
+              },
+              {
+                "id": "chapter.patterns.evidence.16",
+                "value": "Active cycle at 2026-07-15 12:00 shared comparison wall clock: 庚辰; calculated start 2022-09-06T14:18:32.000Z."
+              },
+              {
+                "id": "chapter.patterns.evidence.17",
+                "value": "Reference / active ten-year cycle: 丙午 / 庚辰: no pattern in the checked pair tables."
+              },
+              {
+                "id": "chapter.patterns.evidence.18",
+                "value": "2026-07-15: The active cycle and this reference do not give one consistent balance between help and added responsibility. The reading keeps the opportunity and its burden separate. A checked clash, punishment, harm or break adds competing demands; a supportive balance reading therefore still has a caution."
+              },
+              {
+                "id": "chapter.patterns.evidence.19",
+                "value": "Reference 2027-07-15 at 12:00 Asia/Seoul: 丁未; year 丁未; day stem 辛; reference stem 丁 = 偏官; principal inner stem 己 = 偏印."
+              },
+              {
+                "id": "chapter.patterns.evidence.20",
+                "value": "Reference / birth hour: 丁未 / 壬辰: stem 合 (tree)."
+              },
+              {
+                "id": "chapter.patterns.evidence.21",
+                "value": "Reference / birth day: 丁未 / 辛亥: no pattern in the checked pair tables."
+              },
+              {
+                "id": "chapter.patterns.evidence.22",
+                "value": "Reference / birth month: 丁未 / 甲申: no pattern in the checked pair tables."
+              },
+              {
+                "id": "chapter.patterns.evidence.23",
+                "value": "Reference / birth year: 丁未 / 庚午: branch 合 (fire)."
+              },
+              {
+                "id": "chapter.patterns.evidence.24",
+                "value": "Assessment FATE-qualitative-r1: natal supported; reference 丁未 (偏官 / 偏印); direction mixed; friction false."
+              },
+              {
+                "id": "chapter.patterns.evidence.25",
+                "value": "Active cycle at 2027-07-15 12:00 shared comparison wall clock: 庚辰; calculated start 2022-09-06T14:18:32.000Z."
+              },
+              {
+                "id": "chapter.patterns.evidence.26",
+                "value": "Reference / active ten-year cycle: 丁未 / 庚辰: no pattern in the checked pair tables."
+              },
+              {
+                "id": "chapter.patterns.evidence.27",
+                "value": "2027-07-15: The active cycle and this reference do not give one consistent balance between help and added responsibility. The reading keeps the opportunity and its burden separate. No checked clash, punishment, harm or break adds a separate sign of competing demands at this comparison date; this is not a guarantee of an easy period."
+              },
+              {
+                "id": "chapter.patterns.evidence.28",
+                "value": "Reference 2028-07-15 at 12:00 Asia/Seoul: 戊申; year 戊申; day stem 辛; reference stem 戊 = 正印; principal inner stem 庚 = 劫財."
+              },
+              {
+                "id": "chapter.patterns.evidence.29",
+                "value": "Reference / birth hour: 戊申 / 壬辰: no pattern in the checked pair tables."
+              },
+              {
+                "id": "chapter.patterns.evidence.30",
+                "value": "Reference / birth day: 戊申 / 辛亥: branch 害."
+              },
+              {
+                "id": "chapter.patterns.evidence.31",
+                "value": "Reference / birth month: 戊申 / 甲申: no pattern in the checked pair tables."
+              },
+              {
+                "id": "chapter.patterns.evidence.32",
+                "value": "Reference / birth year: 戊申 / 庚午: no pattern in the checked pair tables."
+              },
+              {
+                "id": "chapter.patterns.evidence.33",
+                "value": "Assessment FATE-qualitative-r1: natal supported; reference 戊申 (正印 / 劫財); direction added-support; friction true."
+              },
+              {
+                "id": "chapter.patterns.evidence.34",
+                "value": "Active cycle at 2028-07-15 12:00 shared comparison wall clock: 庚辰; calculated start 2022-09-06T14:18:32.000Z."
+              },
+              {
+                "id": "chapter.patterns.evidence.35",
+                "value": "Reference / active ten-year cycle: 戊申 / 庚辰: no pattern in the checked pair tables."
+              },
+              {
+                "id": "chapter.patterns.evidence.36",
+                "value": "2028-07-15: Both shorter and longer periods add support to a chart that already leans supported. The caution is reinforcing preparation, independence or competition without a clear outlet; more support is not automatically a better financial period. A checked clash, punishment, harm or break adds competing demands; a supportive balance reading therefore still has a caution."
+              },
+              {
+                "id": "chapter.patterns.evidence.37",
+                "value": "Reference 2029-07-15 at 12:00 Asia/Seoul: 己酉; year 己酉; day stem 辛; reference stem 己 = 偏印; principal inner stem 辛 = 比肩."
+              },
+              {
+                "id": "chapter.patterns.evidence.38",
+                "value": "Reference / birth hour: 己酉 / 壬辰: branch 合 (metal)."
+              },
+              {
+                "id": "chapter.patterns.evidence.39",
+                "value": "Reference / birth day: 己酉 / 辛亥: no pattern in the checked pair tables."
+              },
+              {
+                "id": "chapter.patterns.evidence.40",
+                "value": "Reference / birth month: 己酉 / 甲申: stem 合 (earth)."
+              },
+              {
+                "id": "chapter.patterns.evidence.41",
+                "value": "Reference / birth year: 己酉 / 庚午: no pattern in the checked pair tables."
+              },
+              {
+                "id": "chapter.patterns.evidence.42",
+                "value": "Assessment FATE-qualitative-r1: natal supported; reference 己酉 (偏印 / 比肩); direction added-support; friction false."
+              },
+              {
+                "id": "chapter.patterns.evidence.43",
+                "value": "Active cycle at 2029-07-15 12:00 shared comparison wall clock: 庚辰; calculated start 2022-09-06T14:18:32.000Z."
+              },
+              {
+                "id": "chapter.patterns.evidence.44",
+                "value": "Reference / active ten-year cycle: 己酉 / 庚辰: branch 合 (metal)."
+              },
+              {
+                "id": "chapter.patterns.evidence.45",
+                "value": "2029-07-15: Both shorter and longer periods add support to a chart that already leans supported. The caution is reinforcing preparation, independence or competition without a clear outlet; more support is not automatically a better financial period. No checked clash, punishment, harm or break adds a separate sign of competing demands at this comparison date; this is not a guarantee of an easy period."
+              },
+              {
+                "id": "chapter.patterns.evidence.46",
+                "value": "Reference 2030-07-15 at 12:00 Asia/Seoul: 庚戌; year 庚戌; day stem 辛; reference stem 庚 = 劫財; principal inner stem 戊 = 正印."
+              },
+              {
+                "id": "chapter.patterns.evidence.47",
+                "value": "Reference / birth hour: 庚戌 / 壬辰: branch 沖."
+              },
+              {
+                "id": "chapter.patterns.evidence.48",
+                "value": "Reference / birth day: 庚戌 / 辛亥: no pattern in the checked pair tables."
+              },
+              {
+                "id": "chapter.patterns.evidence.49",
+                "value": "Reference / birth month: 庚戌 / 甲申: stem 沖."
+              },
+              {
+                "id": "chapter.patterns.evidence.50",
+                "value": "Reference / birth year: 庚戌 / 庚午: branch 半合 (fire)."
+              },
+              {
+                "id": "chapter.patterns.evidence.51",
+                "value": "Assessment FATE-qualitative-r1: natal supported; reference 庚戌 (劫財 / 正印); direction added-support; friction true."
+              },
+              {
+                "id": "chapter.patterns.evidence.52",
+                "value": "Active cycle at 2030-07-15 12:00 shared comparison wall clock: 庚辰; calculated start 2022-09-06T14:18:32.000Z."
+              },
+              {
+                "id": "chapter.patterns.evidence.53",
+                "value": "Reference / active ten-year cycle: 庚戌 / 庚辰: branch 沖."
+              },
+              {
+                "id": "chapter.patterns.evidence.54",
+                "value": "2030-07-15: Both shorter and longer periods add support to a chart that already leans supported. The caution is reinforcing preparation, independence or competition without a clear outlet; more support is not automatically a better financial period. A checked clash, punishment, harm or break adds competing demands; a supportive balance reading therefore still has a caution."
+              },
+              {
+                "id": "chapter.patterns.evidence.55",
+                "value": "Reference 2034-07-15 at 12:00 Asia/Seoul: 甲寅; year 甲寅; day stem 辛; reference stem 甲 = 正財; principal inner stem 甲 = 正財."
+              },
+              {
+                "id": "chapter.patterns.evidence.56",
+                "value": "Reference / birth hour: 甲寅 / 壬辰: no pattern in the checked pair tables."
+              },
+              {
+                "id": "chapter.patterns.evidence.57",
+                "value": "Reference / birth day: 甲寅 / 辛亥: branch 合 (tree); branch 破."
+              },
+              {
+                "id": "chapter.patterns.evidence.58",
+                "value": "Reference / birth month: 甲寅 / 甲申: branch 沖."
+              },
+              {
+                "id": "chapter.patterns.evidence.59",
+                "value": "Reference / birth year: 甲寅 / 庚午: stem 沖; branch 半合 (fire)."
+              },
+              {
+                "id": "chapter.patterns.evidence.60",
+                "value": "Assessment FATE-qualitative-r1: natal supported; reference 甲寅 (正財 / 正財); direction mixed; friction true."
+              },
+              {
+                "id": "chapter.patterns.evidence.61",
+                "value": "Active cycle at 2034-07-15 12:00 shared comparison wall clock: 己卯; calculated start 2032-09-06T14:18:32.000Z."
+              },
+              {
+                "id": "chapter.patterns.evidence.62",
+                "value": "Reference / active ten-year cycle: 甲寅 / 己卯: stem 合 (earth)."
+              },
+              {
+                "id": "chapter.patterns.evidence.63",
+                "value": "Activity policy FATE-activity-r1: area life; route skill-to-customers; status opening-with-caution; capacity supported; natal roles 傷官/正財/劫財/正印/傷官/劫財/偏官; reference roles 正財/正財; longer roles 偏印/偏財; no overall luck judgement from a matched activity."
+              }
+            ],
+            "answerType": "productcomplete.turning-point-timing"
+          },
+          "content_score_100": null,
+          "evaluation_status": "FIX",
+          "deductions": [
+            "계산 연도는 직접 제시하나 질문 고유의 해석이 짧고 다른 주제와 연결된 설명이 제한적임"
+          ]
+        }
+      ],
+      "manual_content_evaluation": {
+        "profile_number": 4,
+        "score": 92,
+        "breakdown": {
+          "direct_answer": 34,
+          "personalization": 23,
+          "plain_english": 14,
+          "repetition": 8,
+          "evidence_consistency": 13
+        },
+        "status": "FIX",
+        "deductions_ko": [
+          "Q4가 다른 복수 프로필과 같은 결론으로 축약되어 차트의 별도 수입 근거가 드러나지 않음.",
+          "Q2의 세부 강점 설명이 프로필 1/3과 같아 차트의 다른 질문에서 보이는 자원·공유 부담 특징과 충분히 구분되지 않음.",
+          "Q7은 연도와 테마에 직접 답하지만 짧아 구매 가치가 제한됨."
+        ]
+      }
+    },
+    {
+      "product_id": "01",
+      "product_name": "Your Life, Your Destiny",
+      "profile_number": 5,
+      "profile_id": "la-1975",
+      "chart_data_used": {
+        "birthTimeKnown": true,
+        "pillars": [
+          {
+            "ganzi": "辛亥",
+            "stemRole": "正印",
+            "branchRole": "比肩"
+          },
+          {
+            "ganzi": "壬午",
+            "stemRole": "本元",
+            "branchRole": "正財"
+          },
+          {
+            "ganzi": "丁亥",
+            "stemRole": "正財",
+            "branchRole": "比肩"
+          },
+          {
+            "ganzi": "乙卯",
+            "stemRole": "傷官",
+            "branchRole": "傷官"
+          }
+        ]
+      },
+      "answers": [
+        {
+          "question_id": "personality",
+          "question_number": 1,
+          "official_title": "What kind of person am I?",
+          "actual_answer": "Your core style is seeing connections and exploring options.\n\nOne way it may show up is when you find three ways to improve a project and research all of them. The task still needs one result. At work, your chart adds steady income and practical commitments. In close relationships, it points to a need for warm attention and time for your own interests.\n\nBottom Line: Your chart centres on seeing connections and exploring options, alongside a need for warm attention and time for your own interests. Those parts may ask different things of you.",
+          "raw_section": "Your core style is seeing connections and exploring options.\n\nOne way it may show up is when you find three ways to improve a project and research all of them. The task still needs one result. At work, your chart adds steady income and practical commitments. In close relationships, it points to a need for warm attention and time for your own interests.\n\nBottom Line: Your chart centres on seeing connections and exploring options, alongside a need for warm attention and time for your own interests. Those parts may ask different things of you.",
+          "chart_evidence": {
+            "questionId": "personality",
+            "sourceChapterId": "personality",
+            "ruleIds": [
+              "purchase-narrative.customerNarrative.complete.personality.v1",
+              "buyer-outline.applyBuyerQuestions.complete.personality.v1"
+            ],
+            "evidence": [
+              {
+                "id": "chapter.personality.evidence.1",
+                "value": "day pillar 壬午. Stem 壬: 本元 (starting point); branch 午: 正財 (Steady resources)."
+              },
+              {
+                "id": "chapter.personality.evidence.2",
+                "value": "month pillar 丁亥. Stem 丁: 正財 (Steady resources); branch 亥: 比肩 (Independence)."
+              },
+              {
+                "id": "chapter.personality.evidence.3",
+                "value": "hour stem 辛: 正印 (learning and dependable support)."
+              },
+              {
+                "id": "chapter.personality.evidence.4",
+                "value": "hour branch 亥 (principal stem): 比肩 (independence)."
+              },
+              {
+                "id": "chapter.personality.evidence.5",
+                "value": "day branch 午 (principal stem): 正財 (regular money and commitments)."
+              },
+              {
+                "id": "chapter.personality.evidence.6",
+                "value": "month stem 丁: 正財 (regular money and commitments)."
+              },
+              {
+                "id": "chapter.personality.evidence.7",
+                "value": "month branch 亥 (principal stem): 比肩 (independence)."
+              },
+              {
+                "id": "chapter.personality.evidence.8",
+                "value": "year stem 乙: 傷官 (expression and challenge)."
+              },
+              {
+                "id": "chapter.personality.evidence.9",
+                "value": "year branch 卯 (principal stem): 傷官 (expression and challenge)."
+              },
+              {
+                "id": "chapter.personality.evidence.10",
+                "value": "戊 within hour branch 亥: 偏官 (pressure and decisive action)."
+              },
+              {
+                "id": "chapter.personality.evidence.11",
+                "value": "甲 within hour branch 亥: 食神 (steady output)."
+              },
+              {
+                "id": "chapter.personality.evidence.12",
+                "value": "壬 within hour branch 亥: 比肩 (independence)."
+              },
+              {
+                "id": "chapter.personality.evidence.13",
+                "value": "丙 within day branch 午: 偏財 (opportunities and wider money)."
+              },
+              {
+                "id": "chapter.personality.evidence.14",
+                "value": "己 within day branch 午: 正官 (responsibility and recognised roles)."
+              },
+              {
+                "id": "chapter.personality.evidence.15",
+                "value": "丁 within day branch 午: 正財 (regular money and commitments)."
+              },
+              {
+                "id": "chapter.personality.evidence.16",
+                "value": "戊 within month branch 亥: 偏官 (pressure and decisive action)."
+              },
+              {
+                "id": "chapter.personality.evidence.17",
+                "value": "甲 within month branch 亥: 食神 (steady output)."
+              },
+              {
+                "id": "chapter.personality.evidence.18",
+                "value": "壬 within month branch 亥: 比肩 (independence)."
+              },
+              {
+                "id": "chapter.personality.evidence.19",
+                "value": "甲 within year branch 卯: 食神 (steady output)."
+              },
+              {
+                "id": "chapter.personality.evidence.20",
+                "value": "乙 within year branch 卯: 傷官 (expression and challenge)."
+              },
+              {
+                "id": "chapter.personality.evidence.21",
+                "value": "Your Yang Water day stem has same-element roots in hour branch 亥, month branch 亥. In traditional terms, that gives the day element a foothold within the branches; the roots are not all equally strong."
+              },
+              {
+                "id": "chapter.personality.evidence.22",
+                "value": "Only within the hidden stems, the chart also contains pressure and decisive action, steady output, opportunities and wider money, responsibility and recognised roles. These are less visible in this comparison and may be expressed through the responsibilities or setting rather than the first impression."
+              },
+              {
+                "id": "chapter.personality.evidence.23",
+                "value": "2026-07-15: The active cycle and this reference do not give one consistent balance between help and added responsibility. The reading keeps the opportunity and its burden separate. A checked clash, punishment, harm or break adds competing demands; a supportive balance reading therefore still has a caution."
+              },
+              {
+                "id": "chapter.personality.evidence.24",
+                "value": "2027-07-15: The active cycle and this reference do not give one consistent balance between help and added responsibility. The reading keeps the opportunity and its burden separate. No checked clash, punishment, harm or break adds a separate sign of competing demands at this comparison date; this is not a guarantee of an easy period."
+              },
+              {
+                "id": "chapter.personality.evidence.25",
+                "value": "2028-07-15: The active cycle and this reference do not give one consistent balance between help and added responsibility. The reading keeps the opportunity and its burden separate. A checked clash, punishment, harm or break adds competing demands; a supportive balance reading therefore still has a caution."
+              },
+              {
+                "id": "chapter.personality.evidence.26",
+                "value": "2029-07-15: The active cycle and this reference do not give one consistent balance between help and added responsibility. The reading keeps the opportunity and its burden separate. A checked clash, punishment, harm or break adds competing demands; a supportive balance reading therefore still has a caution."
+              },
+              {
+                "id": "chapter.personality.evidence.27",
+                "value": "2030-07-15: The active cycle and this reference do not give one consistent balance between help and added responsibility. The reading keeps the opportunity and its burden separate. No checked clash, punishment, harm or break adds a separate sign of competing demands at this comparison date; this is not a guarantee of an easy period."
+              },
+              {
+                "id": "chapter.personality.evidence.28",
+                "value": "Policy FATE-qualitative-r1. Month branch 亥; principal stem 壬; relationship 比肩; seasonal support true."
+              },
+              {
+                "id": "chapter.personality.evidence.29",
+                "value": "Exposed hour stem 辛: 正印; support."
+              },
+              {
+                "id": "chapter.personality.evidence.30",
+                "value": "Exposed month stem 丁: 正財; output, management or control."
+              },
+              {
+                "id": "chapter.personality.evidence.31",
+                "value": "Exposed year stem 乙: 傷官; output, management or control."
+              },
+              {
+                "id": "chapter.personality.evidence.32",
+                "value": "Root: 壬 inside hour branch 亥; principal hidden stem."
+              },
+              {
+                "id": "chapter.personality.evidence.33",
+                "value": "Root: 壬 inside month branch 亥; principal hidden stem."
+              },
+              {
+                "id": "chapter.personality.evidence.34",
+                "value": "Month hidden stem 戊: 偏官; exposed at no checked non-day stem."
+              },
+              {
+                "id": "chapter.personality.evidence.35",
+                "value": "Month hidden stem 甲: 食神; exposed at no checked non-day stem."
+              },
+              {
+                "id": "chapter.personality.evidence.36",
+                "value": "Month hidden stem 壬: 比肩; exposed at no checked non-day stem."
+              },
+              {
+                "id": "chapter.personality.evidence.37",
+                "value": "The day element leans well supported under this conservative rule: the month supports it, a principal root is present and support also appears in an exposed stem."
+              },
+              {
+                "id": "chapter.personality.evidence.38",
+                "value": "The month is peer-led. An ordinary money, authority, output or resource structure is not assigned; peer-month and special-structure rules need separate judgement."
+              },
+              {
+                "id": "chapter.personality.evidence.39",
+                "value": "Under a support-versus-demand balancing approach, output, money-management and responsibility relationships are candidates for using the available support. They are a candidate group, not three confirmed favourable elements or a unique useful element."
+              },
+              {
+                "id": "chapter.personality.evidence.40",
+                "value": "The month-led structure and a balancing element answer different questions. A working preference below applies only to the stated ordinary-chart rule; it is not a universal lucky element or an outcome guarantee."
+              },
+              {
+                "id": "chapter.personality.evidence.41",
+                "value": "A complete ordinary month-led structure is not assigned from the available evidence. The reading retains the seasonal relationship without forcing a structure label."
+              },
+              {
+                "id": "chapter.personality.evidence.42",
+                "value": "Skill and expression sit alongside a money relationship. This supports reading how an offer reaches a paying customer, without proving a successful wealth-producing structure."
+              },
+              {
+                "id": "chapter.personality.evidence.43",
+                "value": "Money and resource relationships are both exposed. Commercial commitments and the time or support needed to prepare can pull in different directions; their positions still matter."
+              },
+              {
+                "id": "chapter.personality.evidence.44",
+                "value": "No single balancing element is selected: seasonal climate may change the priority; competing exposed relationships remain; a checked friction pattern touches the month branch. An absent element is not automatically the answer."
+              }
+            ],
+            "answerType": "productcomplete.identity"
+          },
+          "content_score_100": null,
+          "evaluation_status": "VERIFY",
+          "deductions": []
+        },
+        {
+          "question_id": "social",
+          "question_number": 2,
+          "official_title": "What helps me thrive, and what can hold me back?",
+          "actual_answer": "You may be good at connecting ideas.\n\nYou thrive when you keep a note of the other ideas. Under pressure, every new option can look worth trying.\n\nBottom Line: Seeing several options is useful when you choose one next step. Keep the other ideas for later instead of letting them delay action.",
+          "raw_section": "You may be good at connecting ideas.\n\nYou thrive when you keep a note of the other ideas. Under pressure, every new option can look worth trying.\n\nBottom Line: Seeing several options is useful when you choose one next step. Keep the other ideas for later instead of letting them delay action.",
+          "chart_evidence": {
+            "questionId": "social",
+            "sourceChapterId": "social",
+            "ruleIds": [
+              "purchase-narrative.customerNarrative.complete.social.v1",
+              "buyer-outline.applyBuyerQuestions.complete.social.v1"
+            ],
+            "evidence": [
+              {
+                "id": "chapter.social.evidence.1",
+                "value": "day pillar 壬午. Stem 壬: 本元 (starting point); branch 午: 正財 (Steady resources)."
+              },
+              {
+                "id": "chapter.social.evidence.2",
+                "value": "month pillar 丁亥. Stem 丁: 正財 (Steady resources); branch 亥: 比肩 (Independence)."
+              },
+              {
+                "id": "chapter.social.evidence.3",
+                "value": "year pillar 乙卯. Stem 乙: 傷官 (Original expression); branch 卯: 傷官 (Original expression)."
+              },
+              {
+                "id": "chapter.social.evidence.4",
+                "value": "hour stem 辛: 正印 (learning and dependable support)."
+              },
+              {
+                "id": "chapter.social.evidence.5",
+                "value": "hour branch 亥 (principal stem): 比肩 (independence)."
+              },
+              {
+                "id": "chapter.social.evidence.6",
+                "value": "day branch 午 (principal stem): 正財 (regular money and commitments)."
+              },
+              {
+                "id": "chapter.social.evidence.7",
+                "value": "month stem 丁: 正財 (regular money and commitments)."
+              },
+              {
+                "id": "chapter.social.evidence.8",
+                "value": "month branch 亥 (principal stem): 比肩 (independence)."
+              },
+              {
+                "id": "chapter.social.evidence.9",
+                "value": "year stem 乙: 傷官 (expression and challenge)."
+              },
+              {
+                "id": "chapter.social.evidence.10",
+                "value": "year branch 卯 (principal stem): 傷官 (expression and challenge)."
+              }
+            ],
+            "answerType": "productcomplete.strengths-and-limits"
+          },
+          "content_score_100": null,
+          "evaluation_status": "VERIFY",
+          "deductions": []
+        },
+        {
+          "question_id": "career",
+          "question_number": 3,
+          "official_title": "What kind of career suits me?",
+          "actual_answer": "Your strongest fit combines operations, account service or resource planning with specialist or technical roles.\n\nIn practice, this can mean managing repeat customers, stock, schedules or ongoing accounts. It can also include owning a specialist assignment from start to finish. Look for a role that gives both parts time and clear responsibility.\n\nBottom Line: Your chart combines operations with specialist or technical work. Check that the role gives you ownership of both the running work and a skilled task.",
+          "raw_section": "Your strongest fit combines operations, account service or resource planning with specialist or technical roles.\n\nIn practice, this can mean managing repeat customers, stock, schedules or ongoing accounts. It can also include owning a specialist assignment from start to finish. Look for a role that gives both parts time and clear responsibility.\n\nBottom Line: Your chart combines operations with specialist or technical work. Check that the role gives you ownership of both the running work and a skilled task.",
+          "chart_evidence": {
+            "questionId": "career",
+            "sourceChapterId": "career",
+            "ruleIds": [
+              "purchase-narrative.customerNarrative.complete.career.v1",
+              "buyer-outline.applyBuyerQuestions.complete.career.v1"
+            ],
+            "evidence": [
+              {
+                "id": "chapter.career.evidence.1",
+                "value": "month pillar 丁亥. Stem 丁: 正財 (Steady resources); branch 亥: 比肩 (Independence)."
+              },
+              {
+                "id": "chapter.career.evidence.2",
+                "value": "year pillar 乙卯. Stem 乙: 傷官 (Original expression); branch 卯: 傷官 (Original expression)."
+              }
+            ],
+            "answerType": "productcomplete.career-fit"
+          },
+          "content_score_100": null,
+          "evaluation_status": "VERIFY",
+          "deductions": []
+        },
+        {
+          "question_id": "money",
+          "question_number": 4,
+          "official_title": "What is my natural pattern for earning money?",
+          "actual_answer": "Your natural earning pattern combines dependable pay with selected customer, project or deal work.\n\nBottom Line: Your chart points to both dependable pay and selected project or customer work. Compare real pay and terms before relying on either route.",
+          "raw_section": "Your natural earning pattern combines dependable pay with selected customer, project or deal work.\n\nBottom Line: Your chart points to both dependable pay and selected project or customer work. Compare real pay and terms before relying on either route.",
+          "chart_evidence": {
+            "questionId": "money",
+            "sourceChapterId": "money",
+            "ruleIds": [
+              "purchase-narrative.customerNarrative.complete.money.v1",
+              "buyer-outline.applyBuyerQuestions.complete.money.v1"
+            ],
+            "evidence": [
+              {
+                "id": "chapter.money.evidence.1",
+                "value": "hour stem 辛: 正印 (learning and dependable support)."
+              },
+              {
+                "id": "chapter.money.evidence.2",
+                "value": "hour branch 亥 (principal stem): 比肩 (independence)."
+              },
+              {
+                "id": "chapter.money.evidence.3",
+                "value": "day branch 午 (principal stem): 正財 (regular money and commitments)."
+              },
+              {
+                "id": "chapter.money.evidence.4",
+                "value": "month stem 丁: 正財 (regular money and commitments)."
+              },
+              {
+                "id": "chapter.money.evidence.5",
+                "value": "month branch 亥 (principal stem): 比肩 (independence)."
+              },
+              {
+                "id": "chapter.money.evidence.6",
+                "value": "year stem 乙: 傷官 (expression and challenge)."
+              },
+              {
+                "id": "chapter.money.evidence.7",
+                "value": "year branch 卯 (principal stem): 傷官 (expression and challenge)."
+              },
+              {
+                "id": "chapter.money.evidence.8",
+                "value": "戊 within hour branch 亥: 偏官 (pressure and decisive action)."
+              },
+              {
+                "id": "chapter.money.evidence.9",
+                "value": "甲 within hour branch 亥: 食神 (steady output)."
+              },
+              {
+                "id": "chapter.money.evidence.10",
+                "value": "壬 within hour branch 亥: 比肩 (independence)."
+              },
+              {
+                "id": "chapter.money.evidence.11",
+                "value": "丙 within day branch 午: 偏財 (opportunities and wider money)."
+              },
+              {
+                "id": "chapter.money.evidence.12",
+                "value": "己 within day branch 午: 正官 (responsibility and recognised roles)."
+              },
+              {
+                "id": "chapter.money.evidence.13",
+                "value": "丁 within day branch 午: 正財 (regular money and commitments)."
+              },
+              {
+                "id": "chapter.money.evidence.14",
+                "value": "戊 within month branch 亥: 偏官 (pressure and decisive action)."
+              },
+              {
+                "id": "chapter.money.evidence.15",
+                "value": "甲 within month branch 亥: 食神 (steady output)."
+              },
+              {
+                "id": "chapter.money.evidence.16",
+                "value": "壬 within month branch 亥: 比肩 (independence)."
+              },
+              {
+                "id": "chapter.money.evidence.17",
+                "value": "甲 within year branch 卯: 食神 (steady output)."
+              },
+              {
+                "id": "chapter.money.evidence.18",
+                "value": "乙 within year branch 卯: 傷官 (expression and challenge)."
+              },
+              {
+                "id": "chapter.money.evidence.19",
+                "value": "The checked positions are day branch 午 (principal stem) (regular money and commitments); month stem 丁 (regular money and commitments). The hidden check finds 丙 in the day branch 午; 丁 in the day branch 午. Hidden entries are supporting evidence, not additional strength points."
+              }
+            ],
+            "answerType": "product01.income-pattern"
+          },
+          "content_score_100": null,
+          "evaluation_status": "FIX",
+          "deductions": [
+            "실제 수입 경로별 계산 근거가 답변 본문에 노출되지 않음",
+            "여러 프로필에서 답변 핵심이 동일하게 생성됨"
+          ]
+        },
+        {
+          "question_id": "love",
+          "question_number": 5,
+          "official_title": "What do I need most in a close relationship?",
+          "actual_answer": "You are most likely to feel secure with someone who makes room for warm attention and time for your own interests.\n\nIn everyday life, look for people who make time for you and respect your interests.\n\nBottom Line: You need regular attention without giving up your own interests. Make room for both shared time and independent time.",
+          "raw_section": "You are most likely to feel secure with someone who makes room for warm attention and time for your own interests.\n\nIn everyday life, look for people who make time for you and respect your interests.\n\nBottom Line: You need regular attention without giving up your own interests. Make room for both shared time and independent time.",
+          "chart_evidence": {
+            "questionId": "love",
+            "sourceChapterId": "love",
+            "ruleIds": [
+              "purchase-narrative.customerNarrative.complete.love.v1",
+              "buyer-outline.applyBuyerQuestions.complete.love.v1"
+            ],
+            "evidence": [
+              {
+                "id": "chapter.love.evidence.1",
+                "value": "day pillar 壬午. Stem 壬: 本元 (starting point); branch 午: 正財 (Steady resources)."
+              }
+            ],
+            "answerType": "product01.relationship-needs"
+          },
+          "content_score_100": null,
+          "evaluation_status": "VERIFY",
+          "deductions": []
+        },
+        {
+          "question_id": "patterns",
+          "question_number": 6,
+          "official_title": "What are my biggest life challenges?",
+          "actual_answer": "Your main life challenge may be balancing two work demands with what your private life needs: time for your own interests.\n\nYour chart pairs a main role focused on operations and resource management with daily duties that add independent judgement. Pressure can rise if the second duty has no clear time or authority.\n\nBottom Line: Your chart pairs operations and resource management with added demands around independent judgement. Protect time for your own interests with a clear limit on time, duties or responsibility.",
+          "raw_section": "Your main life challenge may be balancing two work demands with what your private life needs: time for your own interests.\n\nYour chart pairs a main role focused on operations and resource management with daily duties that add independent judgement. Pressure can rise if the second duty has no clear time or authority.\n\nBottom Line: Your chart pairs operations and resource management with added demands around independent judgement. Protect time for your own interests with a clear limit on time, duties or responsibility.",
+          "chart_evidence": {
+            "questionId": "patterns",
+            "sourceChapterId": "life-challenges",
+            "ruleIds": [
+              "purchase-narrative.customerNarrative.complete.patterns.v1",
+              "buyer-outline.applyBuyerQuestions.complete.patterns.v1"
+            ],
+            "evidence": [
+              {
+                "id": "chapter.life-challenges.evidence.1",
+                "value": "day pillar 壬午. Stem 壬: 本元 (starting point); branch 午: 正財 (Steady resources)."
+              },
+              {
+                "id": "chapter.life-challenges.evidence.2",
+                "value": "month pillar 丁亥. Stem 丁: 正財 (Steady resources); branch 亥: 比肩 (Independence)."
+              },
+              {
+                "id": "chapter.life-challenges.evidence.3",
+                "value": "hour stem 辛: 正印 (learning and dependable support)."
+              },
+              {
+                "id": "chapter.life-challenges.evidence.4",
+                "value": "hour branch 亥 (principal stem): 比肩 (independence)."
+              },
+              {
+                "id": "chapter.life-challenges.evidence.5",
+                "value": "day branch 午 (principal stem): 正財 (regular money and commitments)."
+              },
+              {
+                "id": "chapter.life-challenges.evidence.6",
+                "value": "month stem 丁: 正財 (regular money and commitments)."
+              },
+              {
+                "id": "chapter.life-challenges.evidence.7",
+                "value": "month branch 亥 (principal stem): 比肩 (independence)."
+              },
+              {
+                "id": "chapter.life-challenges.evidence.8",
+                "value": "year stem 乙: 傷官 (expression and challenge)."
+              },
+              {
+                "id": "chapter.life-challenges.evidence.9",
+                "value": "year branch 卯 (principal stem): 傷官 (expression and challenge)."
+              },
+              {
+                "id": "chapter.life-challenges.evidence.10",
+                "value": "Birth hour / day: 辛亥 / 壬午: no pattern in the checked pair tables."
+              },
+              {
+                "id": "chapter.life-challenges.evidence.11",
+                "value": "Birth hour / month: 辛亥 / 丁亥: branch 刑 (自刑)."
+              },
+              {
+                "id": "chapter.life-challenges.evidence.12",
+                "value": "Birth hour / year: 辛亥 / 乙卯: stem 沖; branch 半合 (tree)."
+              },
+              {
+                "id": "chapter.life-challenges.evidence.13",
+                "value": "Birth day / month: 壬午 / 丁亥: stem 合 (tree)."
+              },
+              {
+                "id": "chapter.life-challenges.evidence.14",
+                "value": "Birth day / year: 壬午 / 乙卯: branch 破."
+              },
+              {
+                "id": "chapter.life-challenges.evidence.15",
+                "value": "Birth month / year: 丁亥 / 乙卯: branch 半合 (tree)."
+              }
+            ],
+            "answerType": "productcomplete.recurring-challenge"
+          },
+          "content_score_100": null,
+          "evaluation_status": "VERIFY",
+          "deductions": []
+        },
+        {
+          "question_id": "q-turning-points",
+          "question_number": 7,
+          "official_title": "When may my life change direction?",
+          "actual_answer": "The strongest chart signal for reconsidering your direction appears in 2026: a theme of finding new customers connects with close relationships.\n\nBottom Line: Use 2026 as a point to review the options named in your chart. It is a planning signal, not a promise that a major event will happen.",
+          "raw_section": "The strongest chart signal for reconsidering your direction appears in 2026: a theme of finding new customers connects with close relationships.\n\nBottom Line: Use 2026 as a point to review the options named in your chart. It is a planning signal, not a promise that a major event will happen.",
+          "chart_evidence": {
+            "questionId": "q-turning-points",
+            "sourceChapterId": "patterns",
+            "ruleIds": [
+              "purchase-narrative.customerNarrative.complete.q-turning-points.v1",
+              "buyer-outline.applyBuyerQuestions.complete.q-turning-points.v1"
+            ],
+            "evidence": [
+              {
+                "id": "chapter.patterns.evidence.1",
+                "value": "Birth hour / day: 辛亥 / 壬午: no pattern in the checked pair tables."
+              },
+              {
+                "id": "chapter.patterns.evidence.2",
+                "value": "Birth hour / month: 辛亥 / 丁亥: branch 刑 (自刑)."
+              },
+              {
+                "id": "chapter.patterns.evidence.3",
+                "value": "Birth hour / year: 辛亥 / 乙卯: stem 沖; branch 半合 (tree)."
+              },
+              {
+                "id": "chapter.patterns.evidence.4",
+                "value": "Birth day / month: 壬午 / 丁亥: stem 合 (tree)."
+              },
+              {
+                "id": "chapter.patterns.evidence.5",
+                "value": "Birth day / year: 壬午 / 乙卯: branch 破."
+              },
+              {
+                "id": "chapter.patterns.evidence.6",
+                "value": "Birth month / year: 丁亥 / 乙卯: branch 半合 (tree)."
+              },
+              {
+                "id": "chapter.patterns.evidence.7",
+                "value": "Ten-year cycle 壬午; calculated start 2024-02-03; stem 比肩; branch 正財."
+              },
+              {
+                "id": "chapter.patterns.evidence.8",
+                "value": "Ten-year cycle 辛巳; calculated start 2034-02-03; stem 正印; branch 偏財."
+              },
+              {
+                "id": "chapter.patterns.evidence.9",
+                "value": "Ten-year cycle 庚辰; calculated start 2044-02-03; stem 偏印; branch 偏官."
+              },
+              {
+                "id": "chapter.patterns.evidence.10",
+                "value": "Reference 2026-07-15 at 12:00 Asia/Seoul: 丙午; year 丙午; day stem 壬; reference stem 丙 = 偏財; principal inner stem 丁 = 正財."
+              },
+              {
+                "id": "chapter.patterns.evidence.11",
+                "value": "Reference / birth hour: 丙午 / 辛亥: stem 合 (water)."
+              },
+              {
+                "id": "chapter.patterns.evidence.12",
+                "value": "Reference / birth day: 丙午 / 壬午: stem 沖; branch 刑 (自刑)."
+              },
+              {
+                "id": "chapter.patterns.evidence.13",
+                "value": "Reference / birth month: 丙午 / 丁亥: no pattern in the checked pair tables."
+              },
+              {
+                "id": "chapter.patterns.evidence.14",
+                "value": "Reference / birth year: 丙午 / 乙卯: branch 破."
+              },
+              {
+                "id": "chapter.patterns.evidence.15",
+                "value": "Assessment FATE-qualitative-r1: natal supported; reference 丙午 (偏財 / 正財); direction mixed; friction true."
+              },
+              {
+                "id": "chapter.patterns.evidence.16",
+                "value": "Active cycle at 2026-07-15 12:00 shared comparison wall clock: 壬午; calculated start 2024-02-03T14:37:40.000Z."
+              },
+              {
+                "id": "chapter.patterns.evidence.17",
+                "value": "Reference / active ten-year cycle: 丙午 / 壬午: stem 沖; branch 刑 (自刑)."
+              },
+              {
+                "id": "chapter.patterns.evidence.18",
+                "value": "2026-07-15: The active cycle and this reference do not give one consistent balance between help and added responsibility. The reading keeps the opportunity and its burden separate. A checked clash, punishment, harm or break adds competing demands; a supportive balance reading therefore still has a caution."
+              },
+              {
+                "id": "chapter.patterns.evidence.19",
+                "value": "Reference 2027-07-15 at 12:00 Asia/Seoul: 丁未; year 丁未; day stem 壬; reference stem 丁 = 正財; principal inner stem 己 = 正官."
+              },
+              {
+                "id": "chapter.patterns.evidence.20",
+                "value": "Reference / birth hour: 丁未 / 辛亥: no pattern in the checked pair tables."
+              },
+              {
+                "id": "chapter.patterns.evidence.21",
+                "value": "Reference / birth day: 丁未 / 壬午: stem 合 (tree); branch 合 (fire)."
+              },
+              {
+                "id": "chapter.patterns.evidence.22",
+                "value": "Reference / birth month: 丁未 / 丁亥: no pattern in the checked pair tables."
+              },
+              {
+                "id": "chapter.patterns.evidence.23",
+                "value": "Reference / birth year: 丁未 / 乙卯: branch 半合 (tree)."
+              },
+              {
+                "id": "chapter.patterns.evidence.24",
+                "value": "Assessment FATE-qualitative-r1: natal supported; reference 丁未 (正財 / 正官); direction mixed; friction false."
+              },
+              {
+                "id": "chapter.patterns.evidence.25",
+                "value": "Active cycle at 2027-07-15 12:00 shared comparison wall clock: 壬午; calculated start 2024-02-03T14:37:40.000Z."
+              },
+              {
+                "id": "chapter.patterns.evidence.26",
+                "value": "Reference / active ten-year cycle: 丁未 / 壬午: stem 合 (tree); branch 合 (fire)."
+              },
+              {
+                "id": "chapter.patterns.evidence.27",
+                "value": "2027-07-15: The active cycle and this reference do not give one consistent balance between help and added responsibility. The reading keeps the opportunity and its burden separate. No checked clash, punishment, harm or break adds a separate sign of competing demands at this comparison date; this is not a guarantee of an easy period."
+              },
+              {
+                "id": "chapter.patterns.evidence.28",
+                "value": "Reference 2028-07-15 at 12:00 Asia/Seoul: 戊申; year 戊申; day stem 壬; reference stem 戊 = 偏官; principal inner stem 庚 = 偏印."
+              },
+              {
+                "id": "chapter.patterns.evidence.29",
+                "value": "Reference / birth hour: 戊申 / 辛亥: branch 害."
+              },
+              {
+                "id": "chapter.patterns.evidence.30",
+                "value": "Reference / birth day: 戊申 / 壬午: no pattern in the checked pair tables."
+              },
+              {
+                "id": "chapter.patterns.evidence.31",
+                "value": "Reference / birth month: 戊申 / 丁亥: branch 害."
+              },
+              {
+                "id": "chapter.patterns.evidence.32",
+                "value": "Reference / birth year: 戊申 / 乙卯: branch 怨嗔; branch 鬼門."
+              },
+              {
+                "id": "chapter.patterns.evidence.33",
+                "value": "Assessment FATE-qualitative-r1: natal supported; reference 戊申 (偏官 / 偏印); direction mixed; friction true."
+              },
+              {
+                "id": "chapter.patterns.evidence.34",
+                "value": "Active cycle at 2028-07-15 12:00 shared comparison wall clock: 壬午; calculated start 2024-02-03T14:37:40.000Z."
+              },
+              {
+                "id": "chapter.patterns.evidence.35",
+                "value": "Reference / active ten-year cycle: 戊申 / 壬午: no pattern in the checked pair tables."
+              },
+              {
+                "id": "chapter.patterns.evidence.36",
+                "value": "2028-07-15: The active cycle and this reference do not give one consistent balance between help and added responsibility. The reading keeps the opportunity and its burden separate. A checked clash, punishment, harm or break adds competing demands; a supportive balance reading therefore still has a caution."
+              },
+              {
+                "id": "chapter.patterns.evidence.37",
+                "value": "Reference 2029-07-15 at 12:00 Asia/Seoul: 己酉; year 己酉; day stem 壬; reference stem 己 = 正官; principal inner stem 辛 = 正印."
+              },
+              {
+                "id": "chapter.patterns.evidence.38",
+                "value": "Reference / birth hour: 己酉 / 辛亥: no pattern in the checked pair tables."
+              },
+              {
+                "id": "chapter.patterns.evidence.39",
+                "value": "Reference / birth day: 己酉 / 壬午: no pattern in the checked pair tables."
+              },
+              {
+                "id": "chapter.patterns.evidence.40",
+                "value": "Reference / birth month: 己酉 / 丁亥: no pattern in the checked pair tables."
+              },
+              {
+                "id": "chapter.patterns.evidence.41",
+                "value": "Reference / birth year: 己酉 / 乙卯: branch 沖."
+              },
+              {
+                "id": "chapter.patterns.evidence.42",
+                "value": "Assessment FATE-qualitative-r1: natal supported; reference 己酉 (正官 / 正印); direction mixed; friction true."
+              },
+              {
+                "id": "chapter.patterns.evidence.43",
+                "value": "Active cycle at 2029-07-15 12:00 shared comparison wall clock: 壬午; calculated start 2024-02-03T14:37:40.000Z."
+              },
+              {
+                "id": "chapter.patterns.evidence.44",
+                "value": "Reference / active ten-year cycle: 己酉 / 壬午: no pattern in the checked pair tables."
+              },
+              {
+                "id": "chapter.patterns.evidence.45",
+                "value": "2029-07-15: The active cycle and this reference do not give one consistent balance between help and added responsibility. The reading keeps the opportunity and its burden separate. A checked clash, punishment, harm or break adds competing demands; a supportive balance reading therefore still has a caution."
+              },
+              {
+                "id": "chapter.patterns.evidence.46",
+                "value": "Reference 2030-07-15 at 12:00 Asia/Seoul: 庚戌; year 庚戌; day stem 壬; reference stem 庚 = 偏印; principal inner stem 戊 = 偏官."
+              },
+              {
+                "id": "chapter.patterns.evidence.47",
+                "value": "Reference / birth hour: 庚戌 / 辛亥: no pattern in the checked pair tables."
+              },
+              {
+                "id": "chapter.patterns.evidence.48",
+                "value": "Reference / birth day: 庚戌 / 壬午: branch 半合 (fire)."
+              },
+              {
+                "id": "chapter.patterns.evidence.49",
+                "value": "Reference / birth month: 庚戌 / 丁亥: no pattern in the checked pair tables."
+              },
+              {
+                "id": "chapter.patterns.evidence.50",
+                "value": "Reference / birth year: 庚戌 / 乙卯: stem 合 (metal); branch 合 (fire)."
+              },
+              {
+                "id": "chapter.patterns.evidence.51",
+                "value": "Assessment FATE-qualitative-r1: natal supported; reference 庚戌 (偏印 / 偏官); direction mixed; friction false."
+              },
+              {
+                "id": "chapter.patterns.evidence.52",
+                "value": "Active cycle at 2030-07-15 12:00 shared comparison wall clock: 壬午; calculated start 2024-02-03T14:37:40.000Z."
+              },
+              {
+                "id": "chapter.patterns.evidence.53",
+                "value": "Reference / active ten-year cycle: 庚戌 / 壬午: branch 半合 (fire)."
+              },
+              {
+                "id": "chapter.patterns.evidence.54",
+                "value": "2030-07-15: The active cycle and this reference do not give one consistent balance between help and added responsibility. The reading keeps the opportunity and its burden separate. No checked clash, punishment, harm or break adds a separate sign of competing demands at this comparison date; this is not a guarantee of an easy period."
+              },
+              {
+                "id": "chapter.patterns.evidence.55",
+                "value": "Activity policy FATE-activity-r1: area life; route skill-to-customers; status opening-with-caution; capacity supported; natal roles 正印/正財/傷官/比肩/正財/比肩/傷官; reference roles 偏財/正財; longer roles 比肩/正財; no overall luck judgement from a matched activity."
+              }
+            ],
+            "answerType": "productcomplete.turning-point-timing"
+          },
+          "content_score_100": null,
+          "evaluation_status": "FIX",
+          "deductions": [
+            "계산 연도는 직접 제시하나 질문 고유의 해석이 짧고 다른 주제와 연결된 설명이 제한적임"
+          ]
+        }
+      ],
+      "manual_content_evaluation": {
+        "profile_number": 5,
+        "score": 91,
+        "breakdown": {
+          "direct_answer": 33,
+          "personalization": 22,
+          "plain_english": 14,
+          "repetition": 8,
+          "evidence_consistency": 14
+        },
+        "status": "FIX",
+        "deductions_ko": [
+          "Q4가 타 프로필과 같은 결론이며 차트 근거가 실제 설명에 충분히 반영되지 않음.",
+          "Q5는 프로필 2와 같은 필요를 설명해도 되지만 문구와 통찰이 거의 동일함.",
+          "Q7은 계산된 2026 신호를 제시하지만 한 문장 설명만 있어 질문에 대한 개인적 의미가 얕음."
+        ]
+      }
+    }
+  ],
+  "review_method": "Manual review of all 35 generated answers, comparing the same question across five synthetic profiles. Scores are human review, not an automated diagnostic score or independent third-party evaluation.",
+  "product_decision": "FIX — 0/5 reports reached 95/100. Product 01 is not a pass."
+}

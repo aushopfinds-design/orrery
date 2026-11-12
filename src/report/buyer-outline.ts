@@ -532,6 +532,10 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
         lead = chapter.lead
         paragraphs = chapter.paragraphs.slice(0, 2)
         chapter.paragraphs.forEach(line => used.add(line))
+      } else if (kind === 'complete' && question.role === 'earning-pattern') {
+        const placement = chapter.paragraphs.find(line => /^For regular pay,/i.test(line))
+        paragraphs = placement ? readableEarningClues(placement) : []
+        chapter.paragraphs.forEach(line => used.add(line))
       } else if (kind === 'business' && question.id === 'business-plan') {
         const timingLines = chapter.paragraphs.filter(line => /^Why \d{4} is highlighted here/.test(line))
         const years = [...new Set(timingLines.map(line => /^Why (\d{4})/.exec(line)?.[1]).filter((year): year is string => Boolean(year)))]
@@ -809,7 +813,7 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
     const extraAnswers = questions.slice(1).map(question => ({ question, lines: answer(question) }))
     const firstLines = [
       ...(set === 'collection' ? [chapter.lead] : firstAnswer),
-      ...(kind === 'career' && set === 'standalone' ? [] : chapter.paragraphs.filter(line => !used.has(line) && !(kind === 'complete' && source === 'personality' && chapter.guidance.watchFor.includes(line)))),
+      ...(kind === 'career' && set === 'standalone' || kind === 'complete' && set === 'standalone' ? [] : chapter.paragraphs.filter(line => !used.has(line) && !(kind === 'complete' && source === 'personality' && chapter.guidance.watchFor.includes(line)))),
     ]
     const answeredLines = [...firstLines, ...extraAnswers.flatMap(item => item.lines)]
     const practicalOnly = (kind === 'business' && ['partner-fit', 'expansion-timing'].includes(questions[0].role))
@@ -818,6 +822,7 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
       || (kind === 'wellbeing' && ['pressure-response', 'relationship-need'].includes(questions.at(-1)?.role ?? ''))
     const suppressAllGuidance = kind === 'compatibility' && ['attraction', 'overall-fit'].includes(questions[0].role)
       || kind === 'compatibility' && questions[0].role === 'overall-fit'
+      || kind === 'complete' && questions.some(question => question.role === 'turning-point-timing')
     const suppressRepeatedRelationshipAdvice = kind === 'compatibility'
       && questions.some(question => ['care-expression', 'closeness-vs-routine', 'relationship-timing', 'mutual-adjustment'].includes(question.role))
     const suppressGuidance = kind === 'year' && ['annual-work', 'annual-money', 'annual-connections', 'annual-cycle-context'].includes(source)
@@ -842,7 +847,7 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
       ...extraAnswers.flatMap(({ question, lines }) => [`Question: ${questionTitles[question.id] ?? question.question}`, ...lines.map((line, index) => `${kind === 'career' && set === 'standalone' ? '' : index ? 'Answer detail: ' : 'Answer: '}${line}`)]),
     ]
     const replacement = [
-      ...(kind === 'compatibility' && set === 'standalone' ? [] : [chapter.title]),
+      ...(kind === 'compatibility' && set === 'standalone' || kind === 'complete' && set === 'standalone' ? [] : [chapter.title]),
       ...qas,
       ...guidance,
     ].join('\n\n')
@@ -850,7 +855,123 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
     if (!text.includes(original)) throw new Error(`Missing delivered source: ${kind}/${source}`)
     text = text.replace(original, replacement)
   }
-  return kind === 'compatibility' && set === 'standalone' ? formatCompatibilityPersonalLetters(text) : text
+  if (kind === 'compatibility' && set === 'standalone') return formatCompatibilityPersonalLetters(text)
+  return kind === 'complete' && set === 'standalone' ? formatCompletePersonalLetters(text) : text
+}
+
+function completeBottomLine(questionId: string, source: string): string {
+  if (questionId === 'personality') {
+    const style = /Your core style is (.+?)\./iu.exec(source)?.[1]
+    const relationshipNeed = /it points to a need for (.+?)\./iu.exec(source)?.[1]
+    return style && relationshipNeed
+      ? `Your chart centres on ${style.toLowerCase()}, alongside a need for ${relationshipNeed}. Those parts may ask different things of you.`
+      : 'Your chart describes a personal pattern, not a fixed label. Check how it fits your choices at work and in close relationships.'
+  }
+  if (questionId === 'social') {
+    if (/sharp eye for small details/iu.test(source)) return 'Your eye for detail is a strength when you set a clear stopping point. Otherwise, polishing can delay finishing.'
+    if (/keeping your promises/iu.test(source)) return 'Your reliability helps others, but it can leave you carrying too much. Agree who owns each task before stepping in.'
+    if (/connecting ideas/iu.test(source)) return 'Seeing several options is useful when you choose one next step. Keep the other ideas for later instead of letting them delay action.'
+    return 'Your strength is useful when you choose where to apply it. Watch for the point where that same habit starts slowing you down.'
+  }
+  if (questionId === 'career') {
+    const first = source.split(/(?<=[.!?])\s+/u)[0] ?? ''
+    if (/sales, business development or client growth/iu.test(first)) return 'Your clearest fit is customer growth work, such as sales or account development. Look for a role where those duties are a defined part of the week.'
+    if (/craft, teaching or production/iu.test(first)) return 'Your chart combines dependable making or teaching with specialist work. Choose a role that gives both enough time and clear ownership.'
+    if (/operations, account service or resource planning/iu.test(first) && /partnerships, negotiation or project coordination/iu.test(first)) return 'Your chart combines operations with partnership or project work. Check that the role includes both managing ongoing work and coordinating new work.'
+    if (/operations, account service or resource planning/iu.test(first)) return 'Your chart combines operations with specialist or technical work. Check that the role gives you ownership of both the running work and a skilled task.'
+    return 'Look for a role that uses the work strengths named in your chart. Clear duties and ownership will help you judge whether the day-to-day fit is real.'
+  }
+  if (questionId === 'money') return /Regular work or repeat fees are the clearer route/i.test(source)
+    ? 'Steady pay is the clearer chart-supported route for you. Judge any project offer by its actual costs and payment terms.'
+    : 'Your chart points to both dependable pay and selected project or customer work. Compare real pay and terms before relying on either route.'
+  if (questionId === 'love') {
+    if (/being heard before someone offers a solution/iu.test(source)) return 'You need to feel heard before someone tries to fix the issue. Tell a partner whether you want listening, advice or practical help.'
+    if (/warm attention and time for your own interests/iu.test(source)) return 'You need regular attention without giving up your own interests. Make room for both shared time and independent time.'
+    if (/time to share a feeling without being rushed/iu.test(source)) return 'You need time to express a feeling at your own pace. Ask for a calm conversation before the moment becomes pressured.'
+    return 'Name the kind of support that helps you feel secure. This makes your need easier to understand in an actual relationship.'
+  }
+  if (questionId === 'patterns') {
+    const need = /what your private life needs: (.+?)\./iu.exec(source)?.[1]
+    const work = /main role focused on (.+?) with daily duties that add (.+?)\./iu.exec(source)
+    if (need && work) return `Your chart pairs ${work[1]} with added demands around ${work[2]}. Protect ${need} with a clear limit on time, duties or responsibility.`
+    if (need) return `Your recurring challenge is balancing work with ${need}. Set a practical boundary before accepting more responsibility.`
+    return 'The pressure comes from a recurring work demand meeting a personal need. Decide what must change in your workload or boundaries to make room for both.'
+  }
+  if (questionId === 'q-turning-points') {
+    const year = /\b(20\d{2})\b/.exec(source)?.[1]
+    return year
+      ? `Use ${year} as a point to review the options named in your chart. It is a planning signal, not a promise that a major event will happen.`
+      : 'No specific turning-point year is supported by the checked chart data. Do not treat a general life-cycle date as a forecast.'
+  }
+  return ''
+}
+
+function readableEarningClues(source: string): string[] {
+  const routes = ['regular pay', 'customer or project income']
+  return routes.map(route => {
+    const start = source.toLowerCase().indexOf(`for ${route},`)
+    if (start < 0) return ''
+    const end = source.indexOf('.', start)
+    const clause = source.slice(start, end >= 0 ? end : undefined)
+    if (/no direct chart clue appears/i.test(clause)) return `The checked chart positions show no direct clue for ${route}.`
+    const direct = /(?:the clearest clues are in|the clues appear less directly in) (.+?)(?:; additional clues appear in (.+))?$/iu.exec(clause)
+    if (!direct) return ''
+    const clarity = /less directly/i.test(clause) ? 'a less direct clue' : 'a clearer clue'
+    const second = direct[2] ? `, with another clue through ${direct[2]}` : ''
+    return `Your chart gives ${clarity} for ${route} through ${direct[1]}${second}.`
+  }).filter(Boolean)
+}
+
+function formatCompletePersonalLetters(text: string): string {
+  const definitions = BUYER_QUESTIONS.complete
+  const sections = /Question: ([^\n]+)\n\n([\s\S]*?)(?=\n\nQuestion: |\n\nYour Ten-Year|\n\nYour Everyday Compass|\n\nCalculation notes|\n\nChart evidence for these answers|\n\nHow this reading is prepared|$)/gu
+  let sectionIndex = 0
+  return text.replace(sections, (match, title: string, raw: string) => {
+    const question = definitions[sectionIndex++]
+    if (!question) return match
+    let answer = raw.split(/\n\s*\n/).map(block => block.trim())
+      .filter(block => /^(?:Answer|Answer detail|Important Timing):/i.test(block))
+      .map(block => block.replace(/^(?:Answer|Answer detail|Important Timing):\s*/i, '').trim())
+      .join(' ')
+    answer = answer.replace(/\s+/gu, ' ').trim()
+    if (question.id === 'money') {
+      const first = answer.split(/(?<=[.!?])\s+/u)[0] ?? answer
+      const details = readableEarningClues(answer)
+      answer = [first, ...details].join(' ')
+    }
+    if (question.id === 'q-turning-points') {
+      const direct = answer.split(/(?<=[.!?])\s+/u)[0] ?? answer
+      const followUp = answer.match(/(?:List the work change and relationship choice separately\.|Use the year-by-year relationship notes[^.]*\.)/iu)?.[0] ?? ''
+      answer = [direct, followUp].filter(Boolean).join(' ')
+    }
+    if (question.id === 'personality') {
+      answer = answer.replace(/ This is a chart-based illustration, not a fact about your personal history\./iu, '')
+        .replace(/ These parts can ask different things of you, so your work role is only one part of your wider pattern\./iu, '')
+    }
+    if (question.id === 'social') {
+      const direct = answer.split(/(?<=[.!?])\s+/u)[0] ?? answer
+      const thrive = /You thrive when [^.]+\./iu.exec(answer)?.[0] ?? ''
+      const pressure = /Under pressure, [^.]+\./iu.exec(answer)?.[0] ?? ''
+      answer = [direct, thrive, pressure].filter(Boolean).join(' ')
+    }
+    if (question.id === 'career') {
+      answer = answer.replace(/ If one takes over, the job may use only half of your work strengths\./iu, '')
+    }
+    if (question.id === 'love') {
+      answer = answer.replace(/ This describes what helps you; it does not predict another person's character\./iu, '')
+        .replace(/ This is the tension behind the need above, not a prediction about a partner\./iu, '')
+    }
+    if (question.id === 'patterns') {
+      answer = answer.replace(/ This is a pattern to manage, not a fixed outcome\./iu, '')
+    }
+    answer = answer.replace(/\s+/gu, ' ').trim()
+    const sentences = answer.match(/[^.!?]+[.!?]+(?:[”’"])?/gu)?.map(sentence => sentence.trim()) ?? [answer]
+    const direct = sentences.shift() ?? answer
+    const explanation = sentences.join(' ').trim()
+    const bottomLine = completeBottomLine(question.id, answer)
+    const body = [direct, ...(explanation ? [explanation] : []), `Bottom Line: ${bottomLine}`].join('\n\n')
+    return `Question: ${title.trim()}\n\n${body}`
+  })
 }
 
 function compatibilityBottomLine(questionId: string, source: string): string {
