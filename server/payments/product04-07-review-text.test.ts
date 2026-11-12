@@ -50,6 +50,13 @@ describe('Products 04–07 text-only review export', () => {
             deductions: [],
           }
         })
+        if (product.kind === 'bundle') {
+          const fulfillment = answers[8].actual_answer
+          const finalMessage = answers[9].actual_answer
+          expect(finalMessage).toMatch(/^Your Answer: Your personal style centres on .+; use it to shape how you approach .+ at work\./u)
+          expect(finalMessage).not.toContain(fulfillment.split('\n\n')[0].replace(/^Your Answer: /u, ''))
+          expect(finalMessage).toMatch(/Bottom Line: Let .+ guide how you use .+ at work\. Make room to ask clearly for .+ in close relationships\./u)
+        }
         reports.push({
           product_id: product.id,
           product_name: product.name,

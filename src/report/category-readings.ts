@@ -109,7 +109,7 @@ export function buildBundleFromPlans(plans: ReturnType<typeof bundleInterpretati
   const threeInsights = `Three chart-linked themes stand out: your core style is ${coreProfile.focus}; your work fit centres on ${workTheme}; and close relationships work best when your need for ${privateNeed} is understood.`
   const repeatingPatternText = plainReadingText(coreProfile.watchFor.at(-1) ?? coreProfile.watchFor[0])
   const repeatingPattern = `A pattern that may repeat is ${repeatingPatternText.charAt(0).toLowerCase()}${repeatingPatternText.slice(1)} Your chart links this tendency to a work style centred on ${workTheme}; it is a pattern to notice, not a fixed outcome.`
-  const finalMessage = `Your chart points to a clear theme: ${workTheme} at work and your need for ${privateNeed} both matter in the life you build. Treat this as a personal pattern to weigh alongside your real circumstances, not as a fixed outcome.`
+  const finalMessage = `Your personal style centres on ${coreProfile.focus}; use it to shape how you approach ${workTheme} at work. In close relationships, make room for ${privateNeed} instead of assuming your work strengths meet that need too. These are separate chart clues, not a fixed outcome.`
   const turningPointThemes = longTerm.paragraphs
     .map(line => /^Why (\d{4})(?:\s+\([^)]*\))? is highlighted here:\s*(.+)$/u.exec(line))
     .filter((match): match is RegExpExecArray => Boolean(match))
@@ -142,7 +142,7 @@ export function buildBundleFromPlans(plans: ReturnType<typeof bundleInterpretati
       `Question: ${DESTINY_COLLECTION_QUESTIONS[9]}`,
       `Your Answer: ${plainReadingText(finalMessage)}`,
       `Answer detail: Your work theme is ${workTheme}; your close-relationship need is ${privateNeed}. These are distinct chart clues, not a prediction that one will determine the other.`,
-      `Bottom Line: ${plainReadingText(`Build around ${workTheme} while making room for ${privateNeed}. Let your real circumstances shape how that balance looks.`)}`,
+      `Bottom Line: ${plainReadingText(`Let ${coreProfile.focus} guide how you use ${workTheme} at work. Make room to ask clearly for ${privateNeed} in close relationships.`)}`,
     ].join('\n\n'),
   ]
   const includedReports = [complete, compatibility, career, annual, love]
