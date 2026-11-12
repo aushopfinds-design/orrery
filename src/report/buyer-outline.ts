@@ -595,6 +595,7 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
           // The lead already names the selected year and explains its theme;
           // retain only the follow-up implication, not a second restatement.
           paragraphs = selectedYears.map(line => line.replace(/^Why \d{4}[^:]*:\s*/, '').split(/(?<=[.!?])\s/).slice(1).join(' ')).filter(Boolean)
+          if (chapter.tryThis && !paragraphs.includes(chapter.tryThis)) paragraphs.push(chapter.tryThis)
           chapter.paragraphs.forEach(line => used.add(line))
         } else {
           lead = chapter.lead
@@ -882,8 +883,8 @@ function completeBottomLine(questionId: string, source: string): string {
     return 'Look for a role that uses the work strengths named in your chart. Clear duties and ownership will help you judge whether the day-to-day fit is real.'
   }
   if (questionId === 'money') return /Regular work or repeat fees are the clearer route/i.test(source)
-    ? 'Steady pay is the clearer chart-supported route for you. Judge any project offer by its actual costs and payment terms.'
-    : 'Your chart points to both dependable pay and selected project or customer work. Compare real pay and terms before relying on either route.'
+    ? 'Repeat work has the stronger chart signal; project income has less direct support. Check real fees and costs before relying on a project offer.'
+    : 'Your chart has signs for both regular pay and project income. It does not show which will pay more, so judge actual offers by their terms and costs.'
   if (questionId === 'love') {
     if (/being heard before someone offers a solution/iu.test(source)) return 'You need to feel heard before someone tries to fix the issue. Tell a partner whether you want listening, advice or practical help.'
     if (/warm attention and time for your own interests/iu.test(source)) return 'You need regular attention without giving up your own interests. Make room for both shared time and independent time.'
@@ -898,9 +899,8 @@ function completeBottomLine(questionId: string, source: string): string {
     return 'The pressure comes from a recurring work demand meeting a personal need. Decide what must change in your workload or boundaries to make room for both.'
   }
   if (questionId === 'q-turning-points') {
-    const year = /\b(20\d{2})\b/.exec(source)?.[1]
-    return year
-      ? `Use ${year} as a point to review the options named in your chart. It is a planning signal, not a promise that a major event will happen.`
+    return /\b20\d{2}\b/.test(source)
+      ? 'The chart marks a time to review, not a guaranteed turning point. Your real choices and circumstances determine what changes.'
       : 'No specific turning-point year is supported by the checked chart data. Do not treat a general life-cycle date as a forecast.'
   }
   return ''
@@ -913,12 +913,13 @@ function readableEarningClues(source: string): string[] {
     if (start < 0) return ''
     const end = source.indexOf('.', start)
     const clause = source.slice(start, end >= 0 ? end : undefined)
-    if (/no direct chart clue appears/i.test(clause)) return `The checked chart positions show no direct clue for ${route}.`
+    const routeName = route === 'regular pay' ? 'steady pay' : 'project or customer income'
+    if (/no direct chart clue appears/i.test(clause)) return `The checked positions show no direct ${routeName} signal.`
     const direct = /(?:the clearest clues are in|the clues appear less directly in) (.+?)(?:; additional clues appear in (.+))?$/iu.exec(clause)
     if (!direct) return ''
-    const clarity = /less directly/i.test(clause) ? 'a less direct clue' : 'a clearer clue'
-    const second = direct[2] ? `, with another clue through ${direct[2]}` : ''
-    return `Your chart gives ${clarity} for ${route} through ${direct[1]}${second}.`
+    if (/less directly/i.test(clause)) return `The signal for ${routeName} is less direct and appears through ${direct[1]}.`
+    const second = direct[2] ? `, with added support from ${direct[2]}` : ''
+    return `Your ${routeName} signs show up most through ${direct[1]}${second}.`
   }).filter(Boolean)
 }
 
@@ -935,14 +936,23 @@ function formatCompletePersonalLetters(text: string): string {
       .join(' ')
     answer = answer.replace(/\s+/gu, ' ').trim()
     if (question.id === 'money') {
-      const first = answer.split(/(?<=[.!?])\s+/u)[0] ?? answer
-      const details = readableEarningClues(answer)
-      answer = [first, ...details].join(' ')
+      const sentences = answer.match(/[^.!?]+[.!?]+(?:[”’"])?/gu)?.map(sentence => sentence.trim()) ?? [answer]
+      const direct = sentences.shift() ?? answer
+      const details = sentences.filter(sentence => !/Your chart marks both routes, but actual earnings depend/i.test(sentence))
+      answer = [direct, ...details].join(' ')
     }
     if (question.id === 'q-turning-points') {
-      const direct = answer.split(/(?<=[.!?])\s+/u)[0] ?? answer
-      const followUp = answer.match(/(?:List the work change and relationship choice separately\.|Use the year-by-year relationship notes[^.]*\.)/iu)?.[0] ?? ''
-      answer = [direct, followUp].filter(Boolean).join(' ')
+      const sentences = answer.match(/[^.!?]+[.!?]+(?:[”’"])?/gu)?.map(sentence => sentence.trim()) ?? [answer]
+      const direct = sentences.shift() ?? answer
+      const followUp = /new ideas and better methods/i.test(direct)
+        ? 'Test a better method in your work before deciding that a wider life change is needed.'
+        : /finding new customers/i.test(direct)
+          ? 'Consider whether a change in work or customer contacts could also affect your close relationships.'
+          : /steady earnings and responsibilities/i.test(direct)
+            ? 'Compare the responsibility attached to an opportunity with the earnings it actually offers.'
+            : sentences.find(sentence => !/approximate start period|cycle start dates are estimates|ten-year cycle/i.test(sentence))
+              ?? 'The signal touches work and close relationships, so review those choices separately rather than assuming one predicts the other.'
+      answer = [direct, followUp].join(' ')
     }
     if (question.id === 'personality') {
       answer = answer.replace(/ This is a chart-based illustration, not a fact about your personal history\./iu, '')
