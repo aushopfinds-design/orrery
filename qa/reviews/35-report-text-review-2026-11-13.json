@@ -1,0 +1,2497 @@
+{
+  "record_type": "fate_key_35_report_manual_text_review",
+  "reviewed_date": "2026-11-13",
+  "source_branch": "work/final-report-repair-20261111",
+  "source_sha": "ec771a52e80dd1a62bb3b118b1a098f7d41e769f",
+  "generator": "prepareReportContent paid-report text path; PDF renderer not called",
+  "assessment": "Manual review of all current answer text by assistant; not an external reviewer. Similar language from similar chart patterns was not penalized by itself.",
+  "scale": "Text-only /100: direct answer 35, personalization 25, easy English 15, repetition/generic advice 10, evidence and relevance 15. PDF design/card 5-point section was not checked and is excluded. Scores are not full PDF scores.",
+  "products": {
+    "01": {
+      "product_name": "Your Life, Your Destiny",
+      "reviewed_answers": 35,
+      "reports": [
+        {
+          "profile_number": 1,
+          "profile_id": "new-york-london",
+          "score_text_only_100": 93,
+          "score_breakdown": {
+            "direct_answer_35": 34,
+            "personalization_25": 23,
+            "easy_english_15": 14,
+            "repetition_and_generic_advice_10": 9,
+            "evidence_and_relevance_15": 13
+          },
+          "status": "FIX",
+          "pdf_layout_score": "NOT_CHECKED",
+          "answers_reviewed": 7,
+          "answers": [
+            {
+              "question_id": "personality",
+              "question_number": 1,
+              "official_title": "What kind of person am I?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "social",
+              "question_number": 2,
+              "official_title": "What helps me thrive, and what can hold me back?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "career",
+              "question_number": 3,
+              "official_title": "What kind of career suits me?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "money",
+              "question_number": 4,
+              "official_title": "What is my natural pattern for earning money?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "love",
+              "question_number": 5,
+              "official_title": "What do I need most in a close relationship?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "patterns",
+              "question_number": 6,
+              "official_title": "What are my biggest life challenges?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "q-turning-points",
+              "question_number": 7,
+              "official_title": "When may my life change direction?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            }
+          ]
+        },
+        {
+          "profile_number": 2,
+          "profile_id": "seoul-sydney",
+          "score_text_only_100": 93,
+          "score_breakdown": {
+            "direct_answer_35": 34,
+            "personalization_25": 23,
+            "easy_english_15": 14,
+            "repetition_and_generic_advice_10": 9,
+            "evidence_and_relevance_15": 13
+          },
+          "status": "FIX",
+          "pdf_layout_score": "NOT_CHECKED",
+          "answers_reviewed": 7,
+          "answers": [
+            {
+              "question_id": "personality",
+              "question_number": 1,
+              "official_title": "What kind of person am I?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "social",
+              "question_number": 2,
+              "official_title": "What helps me thrive, and what can hold me back?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "career",
+              "question_number": 3,
+              "official_title": "What kind of career suits me?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "money",
+              "question_number": 4,
+              "official_title": "What is my natural pattern for earning money?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "love",
+              "question_number": 5,
+              "official_title": "What do I need most in a close relationship?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "patterns",
+              "question_number": 6,
+              "official_title": "What are my biggest life challenges?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "q-turning-points",
+              "question_number": 7,
+              "official_title": "When may my life change direction?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            }
+          ]
+        },
+        {
+          "profile_number": 3,
+          "profile_id": "unknown-hour",
+          "score_text_only_100": 93,
+          "score_breakdown": {
+            "direct_answer_35": 34,
+            "personalization_25": 23,
+            "easy_english_15": 14,
+            "repetition_and_generic_advice_10": 9,
+            "evidence_and_relevance_15": 13
+          },
+          "status": "FIX",
+          "pdf_layout_score": "NOT_CHECKED",
+          "answers_reviewed": 7,
+          "answers": [
+            {
+              "question_id": "personality",
+              "question_number": 1,
+              "official_title": "What kind of person am I?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "social",
+              "question_number": 2,
+              "official_title": "What helps me thrive, and what can hold me back?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "career",
+              "question_number": 3,
+              "official_title": "What kind of career suits me?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "money",
+              "question_number": 4,
+              "official_title": "What is my natural pattern for earning money?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "love",
+              "question_number": 5,
+              "official_title": "What do I need most in a close relationship?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "patterns",
+              "question_number": 6,
+              "official_title": "What are my biggest life challenges?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "q-turning-points",
+              "question_number": 7,
+              "official_title": "When may my life change direction?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            }
+          ]
+        },
+        {
+          "profile_number": 4,
+          "profile_id": "sydney-1990",
+          "score_text_only_100": 90,
+          "score_breakdown": {
+            "direct_answer_35": 33,
+            "personalization_25": 22,
+            "easy_english_15": 14,
+            "repetition_and_generic_advice_10": 9,
+            "evidence_and_relevance_15": 12
+          },
+          "status": "FIX",
+          "pdf_layout_score": "NOT_CHECKED",
+          "answers_reviewed": 7,
+          "answers": [
+            {
+              "question_id": "personality",
+              "question_number": 1,
+              "official_title": "What kind of person am I?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "social",
+              "question_number": 2,
+              "official_title": "What helps me thrive, and what can hold me back?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "career",
+              "question_number": 3,
+              "official_title": "What kind of career suits me?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "money",
+              "question_number": 4,
+              "official_title": "What is my natural pattern for earning money?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "love",
+              "question_number": 5,
+              "official_title": "What do I need most in a close relationship?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "patterns",
+              "question_number": 6,
+              "official_title": "What are my biggest life challenges?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "q-turning-points",
+              "question_number": 7,
+              "official_title": "When may my life change direction?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            }
+          ]
+        },
+        {
+          "profile_number": 5,
+          "profile_id": "la-1975",
+          "score_text_only_100": 90,
+          "score_breakdown": {
+            "direct_answer_35": 33,
+            "personalization_25": 22,
+            "easy_english_15": 14,
+            "repetition_and_generic_advice_10": 9,
+            "evidence_and_relevance_15": 12
+          },
+          "status": "FIX",
+          "pdf_layout_score": "NOT_CHECKED",
+          "answers_reviewed": 7,
+          "answers": [
+            {
+              "question_id": "personality",
+              "question_number": 1,
+              "official_title": "What kind of person am I?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "social",
+              "question_number": 2,
+              "official_title": "What helps me thrive, and what can hold me back?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "career",
+              "question_number": 3,
+              "official_title": "What kind of career suits me?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "money",
+              "question_number": 4,
+              "official_title": "What is my natural pattern for earning money?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "love",
+              "question_number": 5,
+              "official_title": "What do I need most in a close relationship?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "patterns",
+              "question_number": 6,
+              "official_title": "What are my biggest life challenges?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "q-turning-points",
+              "question_number": 7,
+              "official_title": "When may my life change direction?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            }
+          ]
+        }
+      ],
+      "main_findings": [
+        "Q4 repeats the same broad earning-pattern lead across customers; chart-specific earning routes are present below, but the opening can be more direct about which route is clearer.",
+        "Q6 uses the same general two-sentence caution across profiles; timing themes themselves vary by chart. Similar outputs for Profiles 1 and 3 are not penalized because their relevant chart signals match."
+      ]
+    },
+    "02": {
+      "product_name": "Success, Money & Your Future",
+      "reviewed_answers": 35,
+      "reports": [
+        {
+          "profile_number": 1,
+          "profile_id": "new-york-london",
+          "score_text_only_100": 95,
+          "score_breakdown": {
+            "direct_answer_35": 34,
+            "personalization_25": 24,
+            "easy_english_15": 14,
+            "repetition_and_generic_advice_10": 9,
+            "evidence_and_relevance_15": 14
+          },
+          "status": "PASS",
+          "pdf_layout_score": "NOT_CHECKED",
+          "answers_reviewed": 7,
+          "answers": [
+            {
+              "question_id": "two-work-layers",
+              "question_number": 1,
+              "official_title": "Which careers suit me best?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "proof-of-skill",
+              "question_number": 2,
+              "official_title": "Am I better suited to employment or independent work?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "money-commitments",
+              "question_number": 3,
+              "official_title": "How do I naturally make money?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "working-style",
+              "question_number": 4,
+              "official_title": "What tends to block my financial progress?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "feedback-and-boundaries",
+              "question_number": 5,
+              "official_title": "When might my career or money situation improve?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "work-chapters",
+              "question_number": 6,
+              "official_title": "What do the next ten years suggest for my work and money?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "career-plan",
+              "question_number": 7,
+              "official_title": "What is my most important career and money insight?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            }
+          ]
+        },
+        {
+          "profile_number": 2,
+          "profile_id": "seoul-sydney",
+          "score_text_only_100": 94,
+          "score_breakdown": {
+            "direct_answer_35": 34,
+            "personalization_25": 23,
+            "easy_english_15": 14,
+            "repetition_and_generic_advice_10": 9,
+            "evidence_and_relevance_15": 14
+          },
+          "status": "FIX",
+          "pdf_layout_score": "NOT_CHECKED",
+          "answers_reviewed": 7,
+          "answers": [
+            {
+              "question_id": "two-work-layers",
+              "question_number": 1,
+              "official_title": "Which careers suit me best?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "proof-of-skill",
+              "question_number": 2,
+              "official_title": "Am I better suited to employment or independent work?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "money-commitments",
+              "question_number": 3,
+              "official_title": "How do I naturally make money?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "working-style",
+              "question_number": 4,
+              "official_title": "What tends to block my financial progress?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "feedback-and-boundaries",
+              "question_number": 5,
+              "official_title": "When might my career or money situation improve?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "work-chapters",
+              "question_number": 6,
+              "official_title": "What do the next ten years suggest for my work and money?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "career-plan",
+              "question_number": 7,
+              "official_title": "What is my most important career and money insight?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            }
+          ]
+        },
+        {
+          "profile_number": 3,
+          "profile_id": "unknown-hour",
+          "score_text_only_100": 95,
+          "score_breakdown": {
+            "direct_answer_35": 34,
+            "personalization_25": 24,
+            "easy_english_15": 14,
+            "repetition_and_generic_advice_10": 9,
+            "evidence_and_relevance_15": 14
+          },
+          "status": "PASS",
+          "pdf_layout_score": "NOT_CHECKED",
+          "answers_reviewed": 7,
+          "answers": [
+            {
+              "question_id": "two-work-layers",
+              "question_number": 1,
+              "official_title": "Which careers suit me best?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "proof-of-skill",
+              "question_number": 2,
+              "official_title": "Am I better suited to employment or independent work?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "money-commitments",
+              "question_number": 3,
+              "official_title": "How do I naturally make money?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "working-style",
+              "question_number": 4,
+              "official_title": "What tends to block my financial progress?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "feedback-and-boundaries",
+              "question_number": 5,
+              "official_title": "When might my career or money situation improve?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "work-chapters",
+              "question_number": 6,
+              "official_title": "What do the next ten years suggest for my work and money?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "career-plan",
+              "question_number": 7,
+              "official_title": "What is my most important career and money insight?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            }
+          ]
+        },
+        {
+          "profile_number": 4,
+          "profile_id": "sydney-1990",
+          "score_text_only_100": 94,
+          "score_breakdown": {
+            "direct_answer_35": 34,
+            "personalization_25": 23,
+            "easy_english_15": 14,
+            "repetition_and_generic_advice_10": 9,
+            "evidence_and_relevance_15": 14
+          },
+          "status": "FIX",
+          "pdf_layout_score": "NOT_CHECKED",
+          "answers_reviewed": 7,
+          "answers": [
+            {
+              "question_id": "two-work-layers",
+              "question_number": 1,
+              "official_title": "Which careers suit me best?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "proof-of-skill",
+              "question_number": 2,
+              "official_title": "Am I better suited to employment or independent work?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "money-commitments",
+              "question_number": 3,
+              "official_title": "How do I naturally make money?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "working-style",
+              "question_number": 4,
+              "official_title": "What tends to block my financial progress?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "feedback-and-boundaries",
+              "question_number": 5,
+              "official_title": "When might my career or money situation improve?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "work-chapters",
+              "question_number": 6,
+              "official_title": "What do the next ten years suggest for my work and money?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "career-plan",
+              "question_number": 7,
+              "official_title": "What is my most important career and money insight?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            }
+          ]
+        },
+        {
+          "profile_number": 5,
+          "profile_id": "la-1975",
+          "score_text_only_100": 94,
+          "score_breakdown": {
+            "direct_answer_35": 34,
+            "personalization_25": 23,
+            "easy_english_15": 14,
+            "repetition_and_generic_advice_10": 9,
+            "evidence_and_relevance_15": 14
+          },
+          "status": "FIX",
+          "pdf_layout_score": "NOT_CHECKED",
+          "answers_reviewed": 7,
+          "answers": [
+            {
+              "question_id": "two-work-layers",
+              "question_number": 1,
+              "official_title": "Which careers suit me best?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "proof-of-skill",
+              "question_number": 2,
+              "official_title": "Am I better suited to employment or independent work?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "money-commitments",
+              "question_number": 3,
+              "official_title": "How do I naturally make money?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "working-style",
+              "question_number": 4,
+              "official_title": "What tends to block my financial progress?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "feedback-and-boundaries",
+              "question_number": 5,
+              "official_title": "When might my career or money situation improve?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "work-chapters",
+              "question_number": 6,
+              "official_title": "What do the next ten years suggest for my work and money?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "career-plan",
+              "question_number": 7,
+              "official_title": "What is my most important career and money insight?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            }
+          ]
+        }
+      ],
+      "main_findings": [
+        "Q4 carefully avoids inventing a real-world financial cause, but several profiles receive a generic bottom line that does not name a chart-specific blocker.",
+        "Q6 is informative but long; some timing themes are repeated in Q5 and Q6."
+      ]
+    },
+    "03": {
+      "product_name": "Are We Meant to Be?",
+      "reviewed_answers": 35,
+      "reports": [
+        {
+          "profile_number": 1,
+          "profile_id": "new-york-london",
+          "score_text_only_100": 89,
+          "score_breakdown": {
+            "direct_answer_35": 33,
+            "personalization_25": 22,
+            "easy_english_15": 14,
+            "repetition_and_generic_advice_10": 8,
+            "evidence_and_relevance_15": 12
+          },
+          "status": "FIX",
+          "pdf_layout_score": "NOT_CHECKED",
+          "answers_reviewed": 7,
+          "answers": [
+            {
+              "question_id": "two-styles",
+              "question_number": 1,
+              "official_title": "What makes us compatible?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "two-directions",
+              "question_number": 2,
+              "official_title": "Why are we attracted to each other?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "q-conflict",
+              "question_number": 3,
+              "official_title": "What tends to cause friction between us?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "q-love-language",
+              "question_number": 4,
+              "official_title": "How do we express love differently?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "chart-patterns",
+              "question_number": 5,
+              "official_title": "How do emotional closeness and everyday compatibility differ?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "support-each-other",
+              "question_number": 6,
+              "official_title": "Which upcoming periods may affect our relationship themes?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "shared-week",
+              "question_number": 7,
+              "official_title": "What does this connection ask of each of us?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            }
+          ]
+        },
+        {
+          "profile_number": 2,
+          "profile_id": "seoul-sydney",
+          "score_text_only_100": 89,
+          "score_breakdown": {
+            "direct_answer_35": 33,
+            "personalization_25": 22,
+            "easy_english_15": 14,
+            "repetition_and_generic_advice_10": 8,
+            "evidence_and_relevance_15": 12
+          },
+          "status": "FIX",
+          "pdf_layout_score": "NOT_CHECKED",
+          "answers_reviewed": 7,
+          "answers": [
+            {
+              "question_id": "two-styles",
+              "question_number": 1,
+              "official_title": "What makes us compatible?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "two-directions",
+              "question_number": 2,
+              "official_title": "Why are we attracted to each other?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "q-conflict",
+              "question_number": 3,
+              "official_title": "What tends to cause friction between us?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "q-love-language",
+              "question_number": 4,
+              "official_title": "How do we express love differently?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "chart-patterns",
+              "question_number": 5,
+              "official_title": "How do emotional closeness and everyday compatibility differ?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "support-each-other",
+              "question_number": 6,
+              "official_title": "Which upcoming periods may affect our relationship themes?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "shared-week",
+              "question_number": 7,
+              "official_title": "What does this connection ask of each of us?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            }
+          ]
+        },
+        {
+          "profile_number": 3,
+          "profile_id": "unknown-hour",
+          "score_text_only_100": 89,
+          "score_breakdown": {
+            "direct_answer_35": 33,
+            "personalization_25": 22,
+            "easy_english_15": 14,
+            "repetition_and_generic_advice_10": 8,
+            "evidence_and_relevance_15": 12
+          },
+          "status": "FIX",
+          "pdf_layout_score": "NOT_CHECKED",
+          "answers_reviewed": 7,
+          "answers": [
+            {
+              "question_id": "two-styles",
+              "question_number": 1,
+              "official_title": "What makes us compatible?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "two-directions",
+              "question_number": 2,
+              "official_title": "Why are we attracted to each other?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "q-conflict",
+              "question_number": 3,
+              "official_title": "What tends to cause friction between us?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "q-love-language",
+              "question_number": 4,
+              "official_title": "How do we express love differently?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "chart-patterns",
+              "question_number": 5,
+              "official_title": "How do emotional closeness and everyday compatibility differ?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "support-each-other",
+              "question_number": 6,
+              "official_title": "Which upcoming periods may affect our relationship themes?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "shared-week",
+              "question_number": 7,
+              "official_title": "What does this connection ask of each of us?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            }
+          ]
+        },
+        {
+          "profile_number": 4,
+          "profile_id": "sydney-1990",
+          "score_text_only_100": 89,
+          "score_breakdown": {
+            "direct_answer_35": 33,
+            "personalization_25": 22,
+            "easy_english_15": 14,
+            "repetition_and_generic_advice_10": 8,
+            "evidence_and_relevance_15": 12
+          },
+          "status": "FIX",
+          "pdf_layout_score": "NOT_CHECKED",
+          "answers_reviewed": 7,
+          "answers": [
+            {
+              "question_id": "two-styles",
+              "question_number": 1,
+              "official_title": "What makes us compatible?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "two-directions",
+              "question_number": 2,
+              "official_title": "Why are we attracted to each other?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "q-conflict",
+              "question_number": 3,
+              "official_title": "What tends to cause friction between us?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "q-love-language",
+              "question_number": 4,
+              "official_title": "How do we express love differently?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "chart-patterns",
+              "question_number": 5,
+              "official_title": "How do emotional closeness and everyday compatibility differ?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "support-each-other",
+              "question_number": 6,
+              "official_title": "Which upcoming periods may affect our relationship themes?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "shared-week",
+              "question_number": 7,
+              "official_title": "What does this connection ask of each of us?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            }
+          ]
+        },
+        {
+          "profile_number": 5,
+          "profile_id": "la-1975",
+          "score_text_only_100": 90,
+          "score_breakdown": {
+            "direct_answer_35": 33,
+            "personalization_25": 23,
+            "easy_english_15": 14,
+            "repetition_and_generic_advice_10": 8,
+            "evidence_and_relevance_15": 12
+          },
+          "status": "FIX",
+          "pdf_layout_score": "NOT_CHECKED",
+          "answers_reviewed": 7,
+          "answers": [
+            {
+              "question_id": "two-styles",
+              "question_number": 1,
+              "official_title": "What makes us compatible?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "two-directions",
+              "question_number": 2,
+              "official_title": "Why are we attracted to each other?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "q-conflict",
+              "question_number": 3,
+              "official_title": "What tends to cause friction between us?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "q-love-language",
+              "question_number": 4,
+              "official_title": "How do we express love differently?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "chart-patterns",
+              "question_number": 5,
+              "official_title": "How do emotional closeness and everyday compatibility differ?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "support-each-other",
+              "question_number": 6,
+              "official_title": "Which upcoming periods may affect our relationship themes?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "shared-week",
+              "question_number": 7,
+              "official_title": "What does this connection ask of each of us?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            }
+          ]
+        }
+      ],
+      "main_findings": [
+        "Q2 uses essentially the same two attraction descriptions across different couples, with chart context changing only in the second paragraph. This weakens couple-specific personalization.",
+        "Q1, Q3, Q4 and Q5 otherwise distinguish needs, conflict, care expression and routine patterns; Profiles 1 and 3 have matching chart inputs and similar answers are acceptable."
+      ]
+    },
+    "04": {
+      "product_name": "Your Next 12 Months",
+      "reviewed_answers": 35,
+      "reports": [
+        {
+          "profile_number": 1,
+          "profile_id": "new-york-london",
+          "score_text_only_100": 79,
+          "score_breakdown": {
+            "direct_answer_35": 31,
+            "personalization_25": 20,
+            "easy_english_15": 13,
+            "repetition_and_generic_advice_10": 6,
+            "evidence_and_relevance_15": 9
+          },
+          "status": "FIX",
+          "pdf_layout_score": "NOT_CHECKED",
+          "answers_reviewed": 7,
+          "answers": [
+            {
+              "question_id": "annual-theme",
+              "question_number": 1,
+              "official_title": "What is the overall theme of my next 12 months?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "q-year-focus",
+              "question_number": 2,
+              "official_title": "What should I focus on most this year?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "annual-money",
+              "question_number": 3,
+              "official_title": "What does it suggest for money?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "annual-work",
+              "question_number": 4,
+              "official_title": "What does this period suggest for my career?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "annual-connections",
+              "question_number": 5,
+              "official_title": "What does it suggest for love?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "annual-cycle-context",
+              "question_number": 6,
+              "official_title": "Which months have more supportive chart relationships?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "annual-plan",
+              "question_number": 7,
+              "official_title": "Which months require closer attention?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            }
+          ]
+        },
+        {
+          "profile_number": 2,
+          "profile_id": "seoul-sydney",
+          "score_text_only_100": 82,
+          "score_breakdown": {
+            "direct_answer_35": 32,
+            "personalization_25": 21,
+            "easy_english_15": 13,
+            "repetition_and_generic_advice_10": 6,
+            "evidence_and_relevance_15": 10
+          },
+          "status": "FIX",
+          "pdf_layout_score": "NOT_CHECKED",
+          "answers_reviewed": 7,
+          "answers": [
+            {
+              "question_id": "annual-theme",
+              "question_number": 1,
+              "official_title": "What is the overall theme of my next 12 months?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "q-year-focus",
+              "question_number": 2,
+              "official_title": "What should I focus on most this year?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "annual-money",
+              "question_number": 3,
+              "official_title": "What does it suggest for money?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "annual-work",
+              "question_number": 4,
+              "official_title": "What does this period suggest for my career?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "annual-connections",
+              "question_number": 5,
+              "official_title": "What does it suggest for love?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "annual-cycle-context",
+              "question_number": 6,
+              "official_title": "Which months have more supportive chart relationships?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "annual-plan",
+              "question_number": 7,
+              "official_title": "Which months require closer attention?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            }
+          ]
+        },
+        {
+          "profile_number": 3,
+          "profile_id": "unknown-hour",
+          "score_text_only_100": 78,
+          "score_breakdown": {
+            "direct_answer_35": 31,
+            "personalization_25": 19,
+            "easy_english_15": 13,
+            "repetition_and_generic_advice_10": 6,
+            "evidence_and_relevance_15": 9
+          },
+          "status": "FIX",
+          "pdf_layout_score": "NOT_CHECKED",
+          "answers_reviewed": 7,
+          "answers": [
+            {
+              "question_id": "annual-theme",
+              "question_number": 1,
+              "official_title": "What is the overall theme of my next 12 months?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "q-year-focus",
+              "question_number": 2,
+              "official_title": "What should I focus on most this year?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "annual-money",
+              "question_number": 3,
+              "official_title": "What does it suggest for money?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "annual-work",
+              "question_number": 4,
+              "official_title": "What does this period suggest for my career?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "annual-connections",
+              "question_number": 5,
+              "official_title": "What does it suggest for love?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "annual-cycle-context",
+              "question_number": 6,
+              "official_title": "Which months have more supportive chart relationships?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "annual-plan",
+              "question_number": 7,
+              "official_title": "Which months require closer attention?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            }
+          ]
+        },
+        {
+          "profile_number": 4,
+          "profile_id": "sydney-1990",
+          "score_text_only_100": 78,
+          "score_breakdown": {
+            "direct_answer_35": 31,
+            "personalization_25": 19,
+            "easy_english_15": 13,
+            "repetition_and_generic_advice_10": 6,
+            "evidence_and_relevance_15": 9
+          },
+          "status": "FIX",
+          "pdf_layout_score": "NOT_CHECKED",
+          "answers_reviewed": 7,
+          "answers": [
+            {
+              "question_id": "annual-theme",
+              "question_number": 1,
+              "official_title": "What is the overall theme of my next 12 months?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "q-year-focus",
+              "question_number": 2,
+              "official_title": "What should I focus on most this year?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "annual-money",
+              "question_number": 3,
+              "official_title": "What does it suggest for money?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "annual-work",
+              "question_number": 4,
+              "official_title": "What does this period suggest for my career?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "annual-connections",
+              "question_number": 5,
+              "official_title": "What does it suggest for love?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "annual-cycle-context",
+              "question_number": 6,
+              "official_title": "Which months have more supportive chart relationships?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "annual-plan",
+              "question_number": 7,
+              "official_title": "Which months require closer attention?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            }
+          ]
+        },
+        {
+          "profile_number": 5,
+          "profile_id": "la-1975",
+          "score_text_only_100": 82,
+          "score_breakdown": {
+            "direct_answer_35": 32,
+            "personalization_25": 21,
+            "easy_english_15": 13,
+            "repetition_and_generic_advice_10": 6,
+            "evidence_and_relevance_15": 10
+          },
+          "status": "FIX",
+          "pdf_layout_score": "NOT_CHECKED",
+          "answers_reviewed": 7,
+          "answers": [
+            {
+              "question_id": "annual-theme",
+              "question_number": 1,
+              "official_title": "What is the overall theme of my next 12 months?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "q-year-focus",
+              "question_number": 2,
+              "official_title": "What should I focus on most this year?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "annual-money",
+              "question_number": 3,
+              "official_title": "What does it suggest for money?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "annual-work",
+              "question_number": 4,
+              "official_title": "What does this period suggest for my career?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "annual-connections",
+              "question_number": 5,
+              "official_title": "What does it suggest for love?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "annual-cycle-context",
+              "question_number": 6,
+              "official_title": "Which months have more supportive chart relationships?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "annual-plan",
+              "question_number": 7,
+              "official_title": "Which months require closer attention?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            }
+          ]
+        }
+      ],
+      "main_findings": [
+        "Q4 can mix a career conclusion with a different work theme. Example: Q1 says crisis handling, competitive sales and technical work, while Q4 says specialist research, analysis and strategy.",
+        "The legacy Answer / Answer detail blocks remain and several questions repeat adjacent chapter material. Q2 and Q7 contain generic cautions."
+      ]
+    },
+    "05": {
+      "product_name": "Born to Build a Business?",
+      "reviewed_answers": 35,
+      "reports": [
+        {
+          "profile_number": 1,
+          "profile_id": "new-york-london",
+          "score_text_only_100": 69,
+          "score_breakdown": {
+            "direct_answer_35": 22,
+            "personalization_25": 20,
+            "easy_english_15": 13,
+            "repetition_and_generic_advice_10": 6,
+            "evidence_and_relevance_15": 8
+          },
+          "status": "FIX",
+          "pdf_layout_score": "NOT_CHECKED",
+          "answers_reviewed": 7,
+          "answers": [
+            {
+              "question_id": "founder-style",
+              "question_number": 1,
+              "official_title": "Am I naturally suited to running a business?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "offer-test",
+              "question_number": 2,
+              "official_title": "What kind of business work suits me?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "team-decisions",
+              "question_number": 3,
+              "official_title": "Am I better suited to working alone or with partners?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "delivery-capacity",
+              "question_number": 4,
+              "official_title": "What financial risks should I understand?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "customer-communication",
+              "question_number": 5,
+              "official_title": "When might expansion deserve a closer look?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "business-chapters",
+              "question_number": 6,
+              "official_title": "What do my upcoming cycles suggest about business activity?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "business-plan",
+              "question_number": 7,
+              "official_title": "What should I be careful about in business?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            }
+          ]
+        },
+        {
+          "profile_number": 2,
+          "profile_id": "seoul-sydney",
+          "score_text_only_100": 73,
+          "score_breakdown": {
+            "direct_answer_35": 24,
+            "personalization_25": 21,
+            "easy_english_15": 13,
+            "repetition_and_generic_advice_10": 6,
+            "evidence_and_relevance_15": 9
+          },
+          "status": "FIX",
+          "pdf_layout_score": "NOT_CHECKED",
+          "answers_reviewed": 7,
+          "answers": [
+            {
+              "question_id": "founder-style",
+              "question_number": 1,
+              "official_title": "Am I naturally suited to running a business?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "offer-test",
+              "question_number": 2,
+              "official_title": "What kind of business work suits me?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "team-decisions",
+              "question_number": 3,
+              "official_title": "Am I better suited to working alone or with partners?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "delivery-capacity",
+              "question_number": 4,
+              "official_title": "What financial risks should I understand?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "customer-communication",
+              "question_number": 5,
+              "official_title": "When might expansion deserve a closer look?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "business-chapters",
+              "question_number": 6,
+              "official_title": "What do my upcoming cycles suggest about business activity?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "business-plan",
+              "question_number": 7,
+              "official_title": "What should I be careful about in business?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            }
+          ]
+        },
+        {
+          "profile_number": 3,
+          "profile_id": "unknown-hour",
+          "score_text_only_100": 69,
+          "score_breakdown": {
+            "direct_answer_35": 22,
+            "personalization_25": 20,
+            "easy_english_15": 13,
+            "repetition_and_generic_advice_10": 6,
+            "evidence_and_relevance_15": 8
+          },
+          "status": "FIX",
+          "pdf_layout_score": "NOT_CHECKED",
+          "answers_reviewed": 7,
+          "answers": [
+            {
+              "question_id": "founder-style",
+              "question_number": 1,
+              "official_title": "Am I naturally suited to running a business?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "offer-test",
+              "question_number": 2,
+              "official_title": "What kind of business work suits me?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "team-decisions",
+              "question_number": 3,
+              "official_title": "Am I better suited to working alone or with partners?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "delivery-capacity",
+              "question_number": 4,
+              "official_title": "What financial risks should I understand?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "customer-communication",
+              "question_number": 5,
+              "official_title": "When might expansion deserve a closer look?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "business-chapters",
+              "question_number": 6,
+              "official_title": "What do my upcoming cycles suggest about business activity?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "business-plan",
+              "question_number": 7,
+              "official_title": "What should I be careful about in business?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            }
+          ]
+        },
+        {
+          "profile_number": 4,
+          "profile_id": "sydney-1990",
+          "score_text_only_100": 72,
+          "score_breakdown": {
+            "direct_answer_35": 23,
+            "personalization_25": 21,
+            "easy_english_15": 13,
+            "repetition_and_generic_advice_10": 6,
+            "evidence_and_relevance_15": 9
+          },
+          "status": "FIX",
+          "pdf_layout_score": "NOT_CHECKED",
+          "answers_reviewed": 7,
+          "answers": [
+            {
+              "question_id": "founder-style",
+              "question_number": 1,
+              "official_title": "Am I naturally suited to running a business?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "offer-test",
+              "question_number": 2,
+              "official_title": "What kind of business work suits me?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "team-decisions",
+              "question_number": 3,
+              "official_title": "Am I better suited to working alone or with partners?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "delivery-capacity",
+              "question_number": 4,
+              "official_title": "What financial risks should I understand?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "customer-communication",
+              "question_number": 5,
+              "official_title": "When might expansion deserve a closer look?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "business-chapters",
+              "question_number": 6,
+              "official_title": "What do my upcoming cycles suggest about business activity?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "business-plan",
+              "question_number": 7,
+              "official_title": "What should I be careful about in business?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            }
+          ]
+        },
+        {
+          "profile_number": 5,
+          "profile_id": "la-1975",
+          "score_text_only_100": 73,
+          "score_breakdown": {
+            "direct_answer_35": 24,
+            "personalization_25": 21,
+            "easy_english_15": 13,
+            "repetition_and_generic_advice_10": 6,
+            "evidence_and_relevance_15": 9
+          },
+          "status": "FIX",
+          "pdf_layout_score": "NOT_CHECKED",
+          "answers_reviewed": 7,
+          "answers": [
+            {
+              "question_id": "founder-style",
+              "question_number": 1,
+              "official_title": "Am I naturally suited to running a business?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "offer-test",
+              "question_number": 2,
+              "official_title": "What kind of business work suits me?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "team-decisions",
+              "question_number": 3,
+              "official_title": "Am I better suited to working alone or with partners?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "delivery-capacity",
+              "question_number": 4,
+              "official_title": "What financial risks should I understand?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "customer-communication",
+              "question_number": 5,
+              "official_title": "When might expansion deserve a closer look?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "business-chapters",
+              "question_number": 6,
+              "official_title": "What do my upcoming cycles suggest about business activity?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "business-plan",
+              "question_number": 7,
+              "official_title": "What should I be careful about in business?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            }
+          ]
+        }
+      ],
+      "main_findings": [
+        "The generated question roles do not match the previously approved business topics for Q4–Q6. Q4 answers financial risk instead of business strengths; Q5 answers expansion timing instead of what could make the business struggle; Q6 discusses ten-year cycles instead of whether the buyer is better at starting or growing.",
+        "The partner-fit lead is repeated across several profiles, and lengthy Answer detail text dilutes the direct answer."
+      ]
+    },
+    "06": {
+      "product_name": "The Real You",
+      "reviewed_answers": 35,
+      "reports": [
+        {
+          "profile_number": 1,
+          "profile_id": "new-york-london",
+          "score_text_only_100": 76,
+          "score_breakdown": {
+            "direct_answer_35": 26,
+            "personalization_25": 21,
+            "easy_english_15": 13,
+            "repetition_and_generic_advice_10": 7,
+            "evidence_and_relevance_15": 9
+          },
+          "status": "FIX",
+          "pdf_layout_score": "NOT_CHECKED",
+          "answers_reviewed": 7,
+          "answers": [
+            {
+              "question_id": "everyday-pace",
+              "question_number": 1,
+              "official_title": "What is my core personality?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "visible-elements",
+              "question_number": 2,
+              "official_title": "Which parts of my nature stand out?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "workload-rhythm",
+              "question_number": 3,
+              "official_title": "What tends to put me under pressure?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "q-pressure",
+              "question_number": 4,
+              "official_title": "How do I tend to respond when I feel under pressure?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "support-and-space",
+              "question_number": 5,
+              "official_title": "What do I need most in relationships?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "balance-week",
+              "question_number": 6,
+              "official_title": "How can my strengths become blind spots?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "q-balance-action",
+              "question_number": 7,
+              "official_title": "What boundary could help protect my everyday balance?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            }
+          ]
+        },
+        {
+          "profile_number": 2,
+          "profile_id": "seoul-sydney",
+          "score_text_only_100": 76,
+          "score_breakdown": {
+            "direct_answer_35": 26,
+            "personalization_25": 21,
+            "easy_english_15": 13,
+            "repetition_and_generic_advice_10": 7,
+            "evidence_and_relevance_15": 9
+          },
+          "status": "FIX",
+          "pdf_layout_score": "NOT_CHECKED",
+          "answers_reviewed": 7,
+          "answers": [
+            {
+              "question_id": "everyday-pace",
+              "question_number": 1,
+              "official_title": "What is my core personality?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "visible-elements",
+              "question_number": 2,
+              "official_title": "Which parts of my nature stand out?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "workload-rhythm",
+              "question_number": 3,
+              "official_title": "What tends to put me under pressure?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "q-pressure",
+              "question_number": 4,
+              "official_title": "How do I tend to respond when I feel under pressure?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "support-and-space",
+              "question_number": 5,
+              "official_title": "What do I need most in relationships?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "balance-week",
+              "question_number": 6,
+              "official_title": "How can my strengths become blind spots?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "q-balance-action",
+              "question_number": 7,
+              "official_title": "What boundary could help protect my everyday balance?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            }
+          ]
+        },
+        {
+          "profile_number": 3,
+          "profile_id": "unknown-hour",
+          "score_text_only_100": 76,
+          "score_breakdown": {
+            "direct_answer_35": 26,
+            "personalization_25": 21,
+            "easy_english_15": 13,
+            "repetition_and_generic_advice_10": 7,
+            "evidence_and_relevance_15": 9
+          },
+          "status": "FIX",
+          "pdf_layout_score": "NOT_CHECKED",
+          "answers_reviewed": 7,
+          "answers": [
+            {
+              "question_id": "everyday-pace",
+              "question_number": 1,
+              "official_title": "What is my core personality?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "visible-elements",
+              "question_number": 2,
+              "official_title": "Which parts of my nature stand out?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "workload-rhythm",
+              "question_number": 3,
+              "official_title": "What tends to put me under pressure?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "q-pressure",
+              "question_number": 4,
+              "official_title": "How do I tend to respond when I feel under pressure?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "support-and-space",
+              "question_number": 5,
+              "official_title": "What do I need most in relationships?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "balance-week",
+              "question_number": 6,
+              "official_title": "How can my strengths become blind spots?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "q-balance-action",
+              "question_number": 7,
+              "official_title": "What boundary could help protect my everyday balance?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            }
+          ]
+        },
+        {
+          "profile_number": 4,
+          "profile_id": "sydney-1990",
+          "score_text_only_100": 75,
+          "score_breakdown": {
+            "direct_answer_35": 26,
+            "personalization_25": 20,
+            "easy_english_15": 13,
+            "repetition_and_generic_advice_10": 7,
+            "evidence_and_relevance_15": 9
+          },
+          "status": "FIX",
+          "pdf_layout_score": "NOT_CHECKED",
+          "answers_reviewed": 7,
+          "answers": [
+            {
+              "question_id": "everyday-pace",
+              "question_number": 1,
+              "official_title": "What is my core personality?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "visible-elements",
+              "question_number": 2,
+              "official_title": "Which parts of my nature stand out?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "workload-rhythm",
+              "question_number": 3,
+              "official_title": "What tends to put me under pressure?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "q-pressure",
+              "question_number": 4,
+              "official_title": "How do I tend to respond when I feel under pressure?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "support-and-space",
+              "question_number": 5,
+              "official_title": "What do I need most in relationships?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "balance-week",
+              "question_number": 6,
+              "official_title": "How can my strengths become blind spots?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "q-balance-action",
+              "question_number": 7,
+              "official_title": "What boundary could help protect my everyday balance?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            }
+          ]
+        },
+        {
+          "profile_number": 5,
+          "profile_id": "la-1975",
+          "score_text_only_100": 75,
+          "score_breakdown": {
+            "direct_answer_35": 26,
+            "personalization_25": 20,
+            "easy_english_15": 13,
+            "repetition_and_generic_advice_10": 7,
+            "evidence_and_relevance_15": 9
+          },
+          "status": "FIX",
+          "pdf_layout_score": "NOT_CHECKED",
+          "answers_reviewed": 7,
+          "answers": [
+            {
+              "question_id": "everyday-pace",
+              "question_number": 1,
+              "official_title": "What is my core personality?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "visible-elements",
+              "question_number": 2,
+              "official_title": "Which parts of my nature stand out?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "workload-rhythm",
+              "question_number": 3,
+              "official_title": "What tends to put me under pressure?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "q-pressure",
+              "question_number": 4,
+              "official_title": "How do I tend to respond when I feel under pressure?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "support-and-space",
+              "question_number": 5,
+              "official_title": "What do I need most in relationships?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "balance-week",
+              "question_number": 6,
+              "official_title": "How can my strengths become blind spots?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "q-balance-action",
+              "question_number": 7,
+              "official_title": "What boundary could help protect my everyday balance?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            }
+          ]
+        }
+      ],
+      "main_findings": [
+        "Question roles do not match the approved The Real You topics. Q2 does not give three strengths; Q3 describes a pressure trigger rather than the biggest weakness; Q4 describes the buyer’s own pressure response rather than how others experience them; the environment question is absent; the final boundary question displaces the approved relationship-needs role.",
+        "The current answers are often readable and chart-linked, but they answer the wrong buyer questions, so relevance is materially reduced."
+      ]
+    },
+    "07": {
+      "product_name": "Your Destiny Collection",
+      "reviewed_answers": 50,
+      "reports": [
+        {
+          "profile_number": 1,
+          "profile_id": "new-york-london",
+          "score_text_only_100": 80,
+          "score_breakdown": {
+            "direct_answer_35": 28,
+            "personalization_25": 22,
+            "easy_english_15": 13,
+            "repetition_and_generic_advice_10": 6,
+            "evidence_and_relevance_15": 11
+          },
+          "status": "FIX",
+          "pdf_layout_score": "NOT_CHECKED",
+          "answers_reviewed": 10,
+          "answers": [
+            {
+              "question_id": "collection-q1",
+              "question_number": 1,
+              "official_title": "What are the three most important things about my destiny?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "collection-q2",
+              "question_number": 2,
+              "official_title": "What is my greatest opportunity in life?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "collection-q3",
+              "question_number": 3,
+              "official_title": "What is my biggest challenge?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "collection-q4",
+              "question_number": 4,
+              "official_title": "How do my personality, career, money and love connect?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "collection-q5",
+              "question_number": 5,
+              "official_title": "What patterns keep repeating in my life?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "collection-q6",
+              "question_number": 6,
+              "official_title": "Which years are most important for me?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "collection-q7",
+              "question_number": 7,
+              "official_title": "What should I prioritise over the next three years?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "collection-q8",
+              "question_number": 8,
+              "official_title": "What am I not seeing about my potential?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "collection-q9",
+              "question_number": 9,
+              "official_title": "What will help me build a fulfilling life?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "collection-q10",
+              "question_number": 10,
+              "official_title": "What is the most important message from my chart?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            }
+          ]
+        },
+        {
+          "profile_number": 2,
+          "profile_id": "seoul-sydney",
+          "score_text_only_100": 80,
+          "score_breakdown": {
+            "direct_answer_35": 28,
+            "personalization_25": 22,
+            "easy_english_15": 13,
+            "repetition_and_generic_advice_10": 6,
+            "evidence_and_relevance_15": 11
+          },
+          "status": "FIX",
+          "pdf_layout_score": "NOT_CHECKED",
+          "answers_reviewed": 10,
+          "answers": [
+            {
+              "question_id": "collection-q1",
+              "question_number": 1,
+              "official_title": "What are the three most important things about my destiny?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "collection-q2",
+              "question_number": 2,
+              "official_title": "What is my greatest opportunity in life?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "collection-q3",
+              "question_number": 3,
+              "official_title": "What is my biggest challenge?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "collection-q4",
+              "question_number": 4,
+              "official_title": "How do my personality, career, money and love connect?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "collection-q5",
+              "question_number": 5,
+              "official_title": "What patterns keep repeating in my life?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "collection-q6",
+              "question_number": 6,
+              "official_title": "Which years are most important for me?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "collection-q7",
+              "question_number": 7,
+              "official_title": "What should I prioritise over the next three years?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "collection-q8",
+              "question_number": 8,
+              "official_title": "What am I not seeing about my potential?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "collection-q9",
+              "question_number": 9,
+              "official_title": "What will help me build a fulfilling life?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "collection-q10",
+              "question_number": 10,
+              "official_title": "What is the most important message from my chart?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            }
+          ]
+        },
+        {
+          "profile_number": 3,
+          "profile_id": "unknown-hour",
+          "score_text_only_100": 77,
+          "score_breakdown": {
+            "direct_answer_35": 27,
+            "personalization_25": 22,
+            "easy_english_15": 13,
+            "repetition_and_generic_advice_10": 6,
+            "evidence_and_relevance_15": 9
+          },
+          "status": "FIX",
+          "pdf_layout_score": "NOT_CHECKED",
+          "answers_reviewed": 10,
+          "answers": [
+            {
+              "question_id": "collection-q1",
+              "question_number": 1,
+              "official_title": "What are the three most important things about my destiny?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "collection-q2",
+              "question_number": 2,
+              "official_title": "What is my greatest opportunity in life?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "collection-q3",
+              "question_number": 3,
+              "official_title": "What is my biggest challenge?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "collection-q4",
+              "question_number": 4,
+              "official_title": "How do my personality, career, money and love connect?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "collection-q5",
+              "question_number": 5,
+              "official_title": "What patterns keep repeating in my life?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "collection-q6",
+              "question_number": 6,
+              "official_title": "Which years are most important for me?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "collection-q7",
+              "question_number": 7,
+              "official_title": "What should I prioritise over the next three years?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "collection-q8",
+              "question_number": 8,
+              "official_title": "What am I not seeing about my potential?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "collection-q9",
+              "question_number": 9,
+              "official_title": "What will help me build a fulfilling life?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "collection-q10",
+              "question_number": 10,
+              "official_title": "What is the most important message from my chart?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            }
+          ]
+        },
+        {
+          "profile_number": 4,
+          "profile_id": "sydney-1990",
+          "score_text_only_100": 80,
+          "score_breakdown": {
+            "direct_answer_35": 28,
+            "personalization_25": 22,
+            "easy_english_15": 13,
+            "repetition_and_generic_advice_10": 6,
+            "evidence_and_relevance_15": 11
+          },
+          "status": "FIX",
+          "pdf_layout_score": "NOT_CHECKED",
+          "answers_reviewed": 10,
+          "answers": [
+            {
+              "question_id": "collection-q1",
+              "question_number": 1,
+              "official_title": "What are the three most important things about my destiny?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "collection-q2",
+              "question_number": 2,
+              "official_title": "What is my greatest opportunity in life?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "collection-q3",
+              "question_number": 3,
+              "official_title": "What is my biggest challenge?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "collection-q4",
+              "question_number": 4,
+              "official_title": "How do my personality, career, money and love connect?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "collection-q5",
+              "question_number": 5,
+              "official_title": "What patterns keep repeating in my life?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "collection-q6",
+              "question_number": 6,
+              "official_title": "Which years are most important for me?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "collection-q7",
+              "question_number": 7,
+              "official_title": "What should I prioritise over the next three years?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "collection-q8",
+              "question_number": 8,
+              "official_title": "What am I not seeing about my potential?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "collection-q9",
+              "question_number": 9,
+              "official_title": "What will help me build a fulfilling life?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "collection-q10",
+              "question_number": 10,
+              "official_title": "What is the most important message from my chart?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            }
+          ]
+        },
+        {
+          "profile_number": 5,
+          "profile_id": "la-1975",
+          "score_text_only_100": 80,
+          "score_breakdown": {
+            "direct_answer_35": 28,
+            "personalization_25": 22,
+            "easy_english_15": 13,
+            "repetition_and_generic_advice_10": 6,
+            "evidence_and_relevance_15": 11
+          },
+          "status": "FIX",
+          "pdf_layout_score": "NOT_CHECKED",
+          "answers_reviewed": 10,
+          "answers": [
+            {
+              "question_id": "collection-q1",
+              "question_number": 1,
+              "official_title": "What are the three most important things about my destiny?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "collection-q2",
+              "question_number": 2,
+              "official_title": "What is my greatest opportunity in life?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "collection-q3",
+              "question_number": 3,
+              "official_title": "What is my biggest challenge?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "collection-q4",
+              "question_number": 4,
+              "official_title": "How do my personality, career, money and love connect?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "collection-q5",
+              "question_number": 5,
+              "official_title": "What patterns keep repeating in my life?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "collection-q6",
+              "question_number": 6,
+              "official_title": "Which years are most important for me?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "collection-q7",
+              "question_number": 7,
+              "official_title": "What should I prioritise over the next three years?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "collection-q8",
+              "question_number": 8,
+              "official_title": "What am I not seeing about my potential?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "collection-q9",
+              "question_number": 9,
+              "official_title": "What will help me build a fulfilling life?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            },
+            {
+              "question_id": "collection-q10",
+              "question_number": 10,
+              "official_title": "What is the most important message from my chart?",
+              "review_status": "REVIEWED",
+              "answer_fully_read": true
+            }
+          ]
+        }
+      ],
+      "main_findings": [
+        "Q7 asks for a three-year priority, but the answer uses one annual theme and says it is not a separate forecast for the three years. It does not actually compare or prioritize the three years.",
+        "Q2 uses “make your contribution visible” as a generic opportunity instead of identifying a distinct life opportunity. Q3 and Q5 overlap; Q9 and Q10 still share much of the same work/relationship synthesis."
+      ]
+    }
+  },
+  "pdfs_generated_for_this_review": false
+}
