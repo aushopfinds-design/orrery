@@ -1,12 +1,12 @@
-Warning: truncated output (original token count: 128599)
-Total output lines: 8844
+Warning: truncated output (original token count: 129719)
+Total output lines: 8845
 
 {
   "record_type": "product02_actual_answer_text_review",
   "product_id": "02",
   "product_name": "Success, Money & Your Future",
-  "source_checkpoint_sha": "b9f7ccae396a2dbf93ee25f2d23d1a2a20d0ba8a",
-  "generator": "prepareReportContent-v1; same paid-report content path; PDF renderer not called",
+  "source_checkpoint_sha": "d46bec08a9d9fa94d7591abeaf85dbc7f208dabd",
+  "generator": "prepareReportContent-v1; Product 02 letter-bottom-line rules v2; PDF renderer not called",
   "evaluation_scale": "manual content only / 100 points: direct answer 35, personalization 25, easy English 15, repetition 10, evidence consistency 15; PDF design excluded",
   "reports": [
     {
@@ -44,7 +44,7 @@ Total output lines: 8844
           "question_id": "two-work-layers",
           "question_number": 1,
           "official_title": "Which careers suit me best?",
-          "actual_answer": "Your Answer: Business development, sales or account growth matches your chart’s emphasis on finding customers and openings.\n\nWhat This Means for You: A role with room to build relationships and act on an opportunity fits you. A system that adds sales targets without control over delivery creates a sharper mismatch.\n\nBottom Line: Customer growth fits best when delivery stays within your control.\n\n02 · Am I Better Suited to Employment or Independent Work?",
+          "actual_answer": "Your Answer: Business development, sales or account growth matches your chart’s emphasis on finding customers and openings.\n\nWhat This Means for You: A role with room to build relationships and act on an opportunity fits you. A system that adds sales targets without control over delivery creates a sharper mismatch.\n\nBottom Line: Customer growth fits best when delivery stays within your control. Look for control over delivery alongside the customer work.\n\n02 · Am I Better Suited to Employment or Independent Work?",
           "chart_evidence": {
             "questionId": "two-work-layers",
             "sourceChapterId": "two-work-layers",
@@ -175,7 +175,7 @@ Total output lines: 8844
           "question_id": "proof-of-skill",
           "question_number": 2,
           "official_title": "Am I better suited to employment or independent work?",
-          "actual_answer": "Your Answer: Structured employment is better supported by the chart.\n\nWhat This Means for You: For a structured job, your chart shows training or specialist support. For independent work, a customer-income marker appears, but the chart does not show a complete link from useful work to paid customers.\n\nPractical Check: For a real choice, compare confirmed salary, hours and support in a job with paying customers, costs and payment terms in independent work.\n\n03 · How Do I Naturally Make Money?",
+          "actual_answer": "Your Answer: Structured employment is better supported by the chart.\n\nWhat This Means for You: For a structured job, your chart shows training or specialist support. For independent work, a customer-income marker appears, but the chart does not show a complete link from useful work to paid customers.\n\nPractical Check: For a real choice, compare confirmed salary, hours and support in a job with paying customers, costs and payment terms in independent work.\n\nBottom Line: The chart gives the clearer edge to a structured role. The chart also points to training or specialist support in that setting.\n\n03 · How Do I Naturally Make Money?",
           "chart_evidence": {
             "questionId": "proof-of-skill",
             "sourceChapterId": "proof-of-skill",
@@ -258,7 +258,7 @@ Total output lines: 8844
           "question_id": "money-commitments",
           "question_number": 3,
           "official_title": "How do I naturally make money?",
-          "actual_answer": "Your Answer: Your income pattern has two routes: regular pay or repeat work, and additional income from projects or new customers. Both appear in your chart, rather than a single fixed earning style.\n\nWhat This Means for You: Customer or project income is linked to day-to-day work and shared commitments. Steady pay is linked to your wider network and day-to-day work. These are possible earning routes, not expected pay.\n\nBottom Line: Your chart supports a dependable base plus a second route through projects or customers.\n\n04 · What Tends to Block My Financial Progress?",
+          "actual_answer": "Your Answer: Your income pattern has two routes: regular pay or repeat work, and additional income from projects or new customers. Both appear in your chart, rather than a single fixed earning style.\n\nWhat This Means for You: Customer or project income is linked to day-to-day work and shared commitments. Steady pay is linked to your wider network and day-to-day work. These are possible earning routes, not expected pay.\n\nBottom Line: Your chart supports a dependable base plus a second route through projects or customers. The chart does not point to just one earning style.\n\n04 · What Tends to Block My Financial Progress?",
           "chart_evidence": {
             "questionId": "money-commitments",
             "sourceChapterId": "money-commitments",
@@ -381,7 +381,7 @@ Total output lines: 8844
           "question_id": "working-style",
           "question_number": 4,
           "official_title": "What tends to block my financial progress?",
-          "actual_answer": "Your Answer: The main pressure to check is whether training or support is taking time or money away from paid work. Your chart links these themes, but cannot confirm this is limiting your finances. Compare training costs and hours with income-producing work.\n\n05 · When Might My Career or Money Situation Improve?",
+          "actual_answer": "Your Answer: The main pressure to check is whether training or support is taking time or money away from paid work. Your chart links these themes, but cannot confirm this is limiting your finances. Compare training costs and hours with income-producing work.\n\nBottom Line: The chart does not identify a specific financial blockage. Real-world barriers still need to be checked separately.\n\n05 · When Might My Career or Money Situation Improve?",
           "chart_evidence": {
             "questionId": "working-style",
             "sourceChapterId": "working-style",
@@ -464,7 +464,7 @@ Total output lines: 8844
           "question_id": "feedback-and-boundaries",
           "question_number": 5,
           "official_title": "When might my career or money situation improve?",
-          "actual_answer": "Your Answer: No year in 2026–2035 has a verified signal for career or money improvement. The checked work themes are 2026: defined responsibilities; 2027: demanding assignments; 2028: training and guidance; they do not establish a pay rise.\n\n06 · What Do the Next Ten Years Suggest for My Work and Money?",
+          "actual_answer": "Your Answer: No year in 2026–2035 has a verified signal for career or money improvement. The checked work themes are 2026: defined responsibilities; 2027: demanding assignments; 2028: training and guidance; they do not establish a pay rise.\n\nBottom Line: The chart does not name a reliable date for improvement. Real opportunities may still arise outside this calculation.\n\n06 · What Do the Next Ten Years Suggest for My Work and Money?",
           "chart_evidence": {
             "questionId": "feedback-and-boundaries",
             "sourceChapterId": "feedback-and-boundaries",
@@ -903,7 +903,7 @@ Total output lines: 8844
           "question_id": "work-chapters",
           "question_number": 6,
           "official_title": "What do the next ten years suggest for my work and money?",
-          "actual_answer": "Your Answer: Your 2026–2035 outlook is mixed: work themes change, but the comparisons do not show a steady rise in income. The main themes include defined responsibilities, demanding assignments, and training and guidance. Year by year: 2026: defined responsibilities; 2027: demanding assignments; 2028: training and guidance; 2029: independent problem-solving; 2030: shared work; 2031: independent work; 2032: improving methods; 2033: reliable production; 2034: predictable pay; 2035: new customers and deals.\n\nImportant Timing: Work may feel more demanding in 2026, 2029, 2031, 2032. Treat these as review points, not predicted setbacks.\n\n07 · What Is the Most Important Insight for My Future?",
+          "actual_answer": "Your Answer: Your 2026–2035 outlook is mixed: work themes change, but the comparisons do not show a steady rise in income. The main themes include defined responsibilities, demanding assignments, and training and guidance. Year by year: 2026: defined responsibilities; 2027: demanding assignments; 2028: training and guidance; 2029: independent problem-solving; 2030: shared work; 2031: independent work; 2032: improving methods; 2033: reliable production; 2034: predictable pay; 2035: new customers and deals.\n\nImportant Timing: Work may feel more demanding in 2026, 2029, 2031, 2032. Treat these as review points, not predicted setbacks.\n\nBottom Line: The decade moves from defined responsibilities toward new customers and deals. The chart does not show a steady rise in income.\n\n07 · What Is the Most Important Insight for My Future?",
           "chart_evidence": {
             "questionId": "work-chapters",
             "sourceChapterId": "work-chapters",
@@ -1334,7 +1334,7 @@ Total output lines: 8844
           "question_id": "career-plan",
           "question_number": 7,
           "official_title": "What is my most important career and money insight?",
-          "actual_answer": "Your Answer: Your chart links customer growth and business development at work with steady pay and income from customers or projects as possible ways of earning. That connects the themes, but it cannot estimate your pay.",
+          "actual_answer": "Your Answer: Your chart links customer growth and business development at work with steady pay and income from customers or projects as possible ways of earning. That connects the themes, but it cannot estimate your pay.\n\nBottom Line: Your chart connects customer growth and business development at work with steady pay and income from customers or projects as an earning route. The chart cannot set your pay or guarantee a career result.",
           "chart_evidence": {
             "questionId": "career-plan",
             "sourceChapterId": "career-plan",
@@ -1822,7 +1822,7 @@ Total output lines: 8844
           "question_id": "two-work-layers",
           "question_number": 1,
           "official_title": "Which careers suit me best?",
-          "actual_answer": "Your Answer: A career built on dependable products, teaching or repeatable service fits your stronger work style.\n\nWhat This Means for You: A job with enough time to do the work properly fits better than one built around constant last-minute changes.\n\nBottom Line: Protect the time needed to deliver reliable work.\n\n02 · Am I Better Suited to Employment or Independent Work?",
+          "actual_answer": "Your Answer: A career built on dependable products, teaching or repeatable service fits your stronger work style.\n\nWhat This Means for You: A job with enough time to do the work properly fits better than one built around constant last-minute changes.\n\nBottom Line: Protect the time needed to deliver reliable work. Constant last-minute changes would work against that strength.\n\n02 · Am I Better Suited to Employment or Independent Work?",
           "chart_evidence": {
             "questionId": "two-work-layers",
             "sourceChapterId": "two-work-layers",
@@ -1969,7 +1969,7 @@ Total output lines: 8844
           "question_id": "proof-of-skill",
           "question_number": 2,
           "official_title": "Am I better suited to employment or independent work?",
-          "actual_answer": "Your Answer: Structured employment is better supported by the chart.\n\nWhat This Means for You: For a structured job, your chart shows clear responsibility and training or specialist support. For independent work, your chart supports making useful products or services and working independently or with others. It does not show a complete link from useful work to paid customers.\n\nPractical Check: For a real choice, compare confirmed salary, hours and support in a job with paying customers, costs and payment terms in independent work.\n\n03 · How Do I Naturally Make Money?",
+          "actual_answer": "Your Answer: Structured employment is better supported by the chart.\n\nWhat This Means for You: For a structured job, your chart shows clear responsibility and training or specialist support. For independent work, your chart supports making useful products or services and working independently or with others. It does not show a complete link from useful work to paid customers.\n\nPractical Check: For a real choice, compare confirmed salary, hours and support in a job with paying customers, costs and payment terms in independent work.\n\nBottom Line: The chart gives the clearer edge to a structured role. The chart also points to training or specialist support in that setting.\n\n03 · How Do I Naturally Make Money?",
           "chart_evidence": {
             "questionId": "proof-of-skill",
             "sourceChapterId": "proof-of-skill",
@@ -2064,7 +2064,7 @@ Total output lines: 8844
           "question_id": "money-commitments",
           "question_number": 3,
           "official_title": "How do I naturally make money?",
-          "actual_answer": "Your Answer: The chart offers a limited clue toward regular pay, tied to long-term plans. Treat it as a possible route, not a pay forecast; compare actual salary, hours and work costs with independent work.\n\n04 · What Tends to Block My Financial Progress?",
+          "actual_answer": "Your Answer: The chart offers a limited clue toward regular pay, tied to long-term plans. Treat it as a possible route, not a pay forecast; compare actual salary, hours and work costs with independent work.\n\nBottom Line: The chart does not settle an income route; use actual skills, demand and terms. The available clue is not enough to name a dependable income source.\n\n04 · What Tends to Block My Financial Progress?",
           "chart_evidence": {
             "questionId": "money-commitments",
             "sourceChapterId": "money-commitments",
@@ -2199,7 +2199,7 @@ Total output lines: 8844
           "question_id": "working-style",
           "question_number": 4,
           "official_title": "What tends to block my financial progress?",
-          "actual_answer": "Your Answer: Your limited money signs sit in less visible areas linked to long-term plans. This makes the earning route less direct, but it cannot show why progress slowed in real life.\n\n05 · When Might My Career or Money Situation Improve?",
+          "actual_answer": "Your Answer: Your limited money signs sit in less visible areas linked to long-term plans. This makes the earning route less direct, but it cannot show why progress slowed in real life.\n\nBottom Line: The chart shows a less direct earning route, not a confirmed financial cause. That chart clue cannot explain the cause of a real delay.\n\n05 · When Might My Career or Money Situation Improve?",
           "chart_evidence": {
             "questionId": "working-style",
             "sourceChapterId": "working-style",
@@ -2294,7 +2294,7 @@ Total output lines: 8844
           "question_id": "feedback-and-boundaries",
           "question_number": 5,
           "official_title": "When might my career or money situation improve?",
-          "actual_answer": "Your Answer: The clearest periods for work support are 2031: improving methods; 2032: new customers and deals; 2034: demanding assignments. These years may help you use the named work theme, but they do not predict a raise or job change.\n\n06 · What Do the Next Ten Years Suggest for My Work and Money?",
+          "actual_answer": "Your Answer: The clearest periods for work support are 2031: improving methods; 2032: new customers and deals; 2034: demanding assignments. These years may help you use the named work theme, but they do not predict a raise or job change.\n\nBottom Line: Review these years when work support may be easier to use. They do not guarantee a raise or job change.\n\n06 · What Do the Next Ten Years Suggest for My Work and Money?",
           "chart_evidence": {
             "questionId": "feedback-and-boundaries",
             "sourceChapterId": "feedback-and-boundaries",
@@ -2729,7 +2729,7 @@ Total output lines: 8844
           "question_id": "work-chapters",
           "question_number": 6,
           "official_title": "What do the next ten years suggest for my work and money?",
-          "actual_answer": "Your Answer: Your 2026–2035 outlook is mixed: work themes change, but the comparisons do not show a steady rise in income. The main themes include independent problem-solving, training and guidance, and independent work. Year by year: 2026: independent problem-solving; 2027: training and guidance; 2028: independent work; 2029: shared work; 2030: reliable production; 2031: improving methods; 2032: new customers and deals; 2033: predictable pay; 2034: demanding assignments; 2035: defined responsibilities.\n\nImportant Timing: Work may feel more demanding in 2027, 2029, 2034. Treat these as review points, not predicted setbacks.\n\n07 · What Is the Most Important Insight for My Future?",
+          "actual_answer": "Your Answer: Your 2026–2035 outlook is mixed: work themes change, but the comparisons do not show a steady rise in income. The main themes include independent problem-solving, training and guidance, and independent work. Year by year: 2026: independent problem-solving; 2027: training and guidance; 2028: independent work; 2029: shared work; 2030: reliable production; 2031: improving methods; 2032: new customers and deals; 2033: predictable pay; 2034: demanding assignments; 2035: defined responsibilities.\n\nImportant Timing: Work may feel more demanding in 2027, 2029, 2034. Treat these as review points, not predicted setbacks.\n\nBottom Line: The decade moves from independent problem-solving toward defined responsibilities. The chart does not show a steady rise in income.\n\n07 · What Is the Most Important Insight for My Future?",
           "chart_evidence": {
             "questionId": "work-chapters",
             "sourceChapterId": "work-chapters",
@@ -3160,7 +3160,7 @@ Total output lines: 8844
           "question_id": "career-plan",
           "question_number": 7,
           "official_title": "What is my most important career and money insight?",
-          "actual_answer": "Your Answer: Your work fit centres on reliable products and repeatable service, while the chart points to long-term plans as a separate earning clue. Neither theme estimates your pay.",
+          "actual_answer": "Your Answer: Your work fit centres on reliable products and repeatable service, while the chart points to long-term plans as a separate earning clue. Neither theme estimates your pay.\n\nBottom Line: Your work fit centres on reliable products and repeatable service, while your earning clue points to long-term plans. The chart cannot set your pay or guarantee a career result.",
           "chart_evidence": {
             "questionId": "career-plan",
             "sourceChapterId": "career-plan",
@@ -3430,64 +3430,7 @@ Total output lines: 8844
               },
               {
                 "id": "chapter.career-plan.evidence.66",
-                "value": "2031-07-15: Both the active cycle and this reference add output, management or responsibility to a chart that leans supported. This can provide an outlet for its support, provided real skills and capacity match the obligation. A checked clash, punishment, harm or break adds competing demands; a supportive balance reading therefore still has a caution."
-              },
-              {
-                "id": "chapter.career-plan.evidence.67",
-                "value": "Reference 2032-07-15 at 12:00 Asia/Seoul: 壬子; year 壬子; day stem 戊; reference stem 壬 = 偏財; principal inner stem 癸 = 正財."
-              },
-              {
-                "id": "chapter.career-plan.evidence.68",
-                "value": "Reference / birth hour: 壬子 / 丙辰: stem 沖; branch 半合 (water)."
-              },
-              {
-                "id": "chapter.career-plan.evidence.69",
-                "value": "Reference / birth day: 壬子 / 戊午: branch 沖."
-              },
-              {
-                "id": "chapter.career-plan.evidence.70",
-                "value": "Reference / birth month: 壬子 / 庚戌: no pattern in the checked pair tables."
-              },
-              {
-                "id": "chapter.career-plan.evidence.71",
-                "value": "Reference / birth year: 壬子 / 丁卯: stem 合 (tree); branch 刑 (無禮)."
-              },
-              {
-                "id": "chapter.career-plan.evidence.72",
-                "value": "Assessment FATE-qualitative-r1: natal supported; reference 壬子 (偏財 / 正財); direction potential-outlet; friction true."
-              },
-              {
-                "id": "chapter.career-plan.evidence.73",
-                "value": "Active cycle at 2032-07-15 12:00 shared comparison wall clock: 乙卯; calculated start 2028-10-29T00:47:27.000Z."
-              },
-              {
-                "id": "chapter.career-plan.evidence.74",
-                "value": "Reference / active ten-year cycle: 壬子 / 乙卯: branch 刑 (無禮)."
-              },
-    …28599 tokens truncated…     "deductions": []
-        },
-        {
-          "question_id": "proof-of-skill",
-          "question_number": 2,
-          "official_title": "Am I better suited to employment or independent work?",
-          "actual_answer": "Your Answer: Your chart supports both employment and independent work; it does not show a clear winner.\n\nWhat This Means for You: For a structured job, your chart shows clear responsibility and training or specialist support. For independent work, your chart links useful output to payment and also shows independent or shared-work signals.\n\nPractical Check: For a real choice, compare confirmed salary, hours and support in a job with paying customers, costs and payment terms in independent work.\n\n03 · How Do I Naturally Make Money?",
-          "chart_evidence": {
-            "questionId": "proof-of-skill",
-            "sourceChapterId": "proof-of-skill",
-            "ruleIds": [
-              "purchase-narrative.customerNarrative.career.proof-of-skill.v1"
-            ],
-            "evidence": [
-              {
-                "id": "chapter.proof-of-skill.evidence.1",
-                "value": "month pillar 甲申. Stem 甲: 正財 (Steady resources); branch 申: 劫財 (Peers and competition)."
-              },
-              {
-                "id": "chapter.proof-of-skill.evidence.2",
-                "value": "year pillar 庚午. Stem 庚: 劫財 (Peers and competition); branch 午: 偏官 (Challenge and pressure)."
-              },
-              {
-                "id": "chapter.proof-of-skill.evidence.3",
+                "value": "2031-07-15: Both the active cycle and this reference add output, management or responsibility to a chart that leans supported. This can provide an outlet for its support, pr…29719 tokens truncated…": "chapter.proof-of-skill.evidence.3",
                 "value": "hour stem 壬: 傷官 (expression and challenge)."
               },
               {
@@ -3557,7 +3500,7 @@ Total output lines: 8844
           "question_id": "money-commitments",
           "question_number": 3,
           "official_title": "How do I naturally make money?",
-          "actual_answer": "Your Answer: Regular pay and dependable repeat work are your clearer income pattern. A role with defined hours and duties makes that pattern easier to evaluate.\n\nWhat This Means for You: Steady pay is linked to day-to-day work and shared commitments. Customer or project income is linked to long-term plans. These are possible earning routes, not expected pay.\n\nBottom Line: Repeatable paid work has clearer support than relying on a single large deal.\n\n04 · What Tends to Block My Financial Progress?",
+          "actual_answer": "Your Answer: Regular pay and dependable repeat work are your clearer income pattern. A role with defined hours and duties makes that pattern easier to evaluate.\n\nWhat This Means for You: Steady pay is linked to day-to-day work and shared commitments. Customer or project income is linked to long-term plans. These are possible earning routes, not expected pay.\n\nBottom Line: Repeatable paid work has clearer support than relying on a single large deal. Clear hours and repeatable duties match this pattern.\n\n04 · What Tends to Block My Financial Progress?",
           "chart_evidence": {
             "questionId": "money-commitments",
             "sourceChapterId": "money-commitments",
@@ -3688,7 +3631,7 @@ Total output lines: 8844
           "question_id": "working-style",
           "question_number": 4,
           "official_title": "What tends to block my financial progress?",
-          "actual_answer": "Your Answer: Your chart connects useful work with customers or pay, so it does not point to a broken earning route. That link cannot explain your actual income or rule out other obstacles.\n\n05 · When Might My Career or Money Situation Improve?",
+          "actual_answer": "Your Answer: Your chart connects useful work with customers or pay, so it does not point to a broken earning route. That link cannot explain your actual income or rule out other obstacles.\n\nBottom Line: The checked signs do not point to a broken income route. Real-world barriers still need to be checked separately.\n\n05 · When Might My Career or Money Situation Improve?",
           "chart_evidence": {
             "questionId": "working-style",
             "sourceChapterId": "working-style",
@@ -3775,7 +3718,7 @@ Total output lines: 8844
           "question_id": "feedback-and-boundaries",
           "question_number": 5,
           "official_title": "When might my career or money situation improve?",
-          "actual_answer": "Your Answer: No year in 2026–2035 has a verified signal for career or money improvement. The checked work themes are 2026: defined responsibilities; 2027: demanding assignments; 2028: training and guidance; they do not establish a pay rise.\n\n06 · What Do the Next Ten Years Suggest for My Work and Money?",
+          "actual_answer": "Your Answer: No year in 2026–2035 has a verified signal for career or money improvement. The checked work themes are 2026: defined responsibilities; 2027: demanding assignments; 2028: training and guidance; they do not establish a pay rise.\n\nBottom Line: The chart does not name a reliable date for improvement. Real opportunities may still arise outside this calculation.\n\n06 · What Do the Next Ten Years Suggest for My Work and Money?",
           "chart_evidence": {
             "questionId": "feedback-and-boundaries",
             "sourceChapterId": "feedback-and-boundaries",
@@ -4210,7 +4153,7 @@ Total output lines: 8844
           "question_id": "work-chapters",
           "question_number": 6,
           "official_title": "What do the next ten years suggest for my work and money?",
-          "actual_answer": "Your Answer: Your 2026–2035 outlook is mixed: work themes change, but the comparisons do not show a steady rise in income. The main themes include defined responsibilities, demanding assignments, and training and guidance. Year by year: 2026: defined responsibilities; 2027: demanding assignments; 2028: training and guidance; 2029: independent problem-solving; 2030: shared work; 2031: independent work; 2032: improving methods; 2033: reliable production; 2034: predictable pay; 2035: new customers and deals.\n\nImportant Timing: Work may feel more demanding in 2030, 2031, 2034. Treat these as review points, not predicted setbacks.\n\n07 · What Is the Most Important Insight for My Future?",
+          "actual_answer": "Your Answer: Your 2026–2035 outlook is mixed: work themes change, but the comparisons do not show a steady rise in income. The main themes include defined responsibilities, demanding assignments, and training and guidance. Year by year: 2026: defined responsibilities; 2027: demanding assignments; 2028: training and guidance; 2029: independent problem-solving; 2030: shared work; 2031: independent work; 2032: improving methods; 2033: reliable production; 2034: predictable pay; 2035: new customers and deals.\n\nImportant Timing: Work may feel more demanding in 2030, 2031, 2034. Treat these as review points, not predicted setbacks.\n\nBottom Line: The decade moves from defined responsibilities toward new customers and deals. The chart does not show a steady rise in income.\n\n07 · What Is the Most Important Insight for My Future?",
           "chart_evidence": {
             "questionId": "work-chapters",
             "sourceChapterId": "work-chapters",
@@ -4641,7 +4584,7 @@ Total output lines: 8844
           "question_id": "career-plan",
           "question_number": 7,
           "official_title": "What is my most important career and money insight?",
-          "actual_answer": "Your Answer: Your chart links operations and resource management at work with steady pay as possible ways of earning. That connects the themes, but it cannot estimate your pay.",
+          "actual_answer": "Your Answer: Your chart links operations and resource management at work with steady pay as possible ways of earning. That connects the themes, but it cannot estimate your pay.\n\nBottom Line: Your chart connects operations and resource management at work with steady pay as an earning route. The chart cannot set your pay or guarantee a career result.",
           "chart_evidence": {
             "questionId": "career-plan",
             "sourceChapterId": "career-plan",
@@ -5133,7 +5076,7 @@ Total output lines: 8844
           "question_id": "two-work-layers",
           "question_number": 1,
           "official_title": "Which careers suit me best?",
-          "actual_answer": "Your Answer: Operations, account management or resource coordination fits the value your chart places on reliable delivery.\n\nWhat This Means for You: Duties, hours and pay need to be clear together. An organised workplace can suit you, but being the reliable person should not mean carrying every unfinished task.\n\nBottom Line: Clear duties, hours and pay belong together in your best fit.\n\n02 · Am I Better Suited to Employment or Independent Work?",
+          "actual_answer": "Your Answer: Operations, account management or resource coordination fits the value your chart places on reliable delivery.\n\nWhat This Means for You: Duties, hours and pay need to be clear together. An organised workplace can suit you, but being the reliable person should not mean carrying every unfinished task.\n\nBottom Line: Clear duties, hours and pay belong together in your best fit. Clear duties and realistic hours are part of that fit.\n\n02 · Am I Better Suited to Employment or Independent Work?",
           "chart_evidence": {
             "questionId": "two-work-layers",
             "sourceChapterId": "two-work-layers",
@@ -5276,7 +5219,7 @@ Total output lines: 8844
           "question_id": "proof-of-skill",
           "question_number": 2,
           "official_title": "Am I better suited to employment or independent work?",
-          "actual_answer": "Your Answer: Your chart supports both employment and independent work; it does not show a clear winner.\n\nWhat This Means for You: For a structured job, your chart shows training or specialist support. For independent work, your chart links useful output to payment and also shows independent or shared-work signals.\n\nPractical Check: For a real choice, compare confirmed salary, hours and support in a job with paying customers, costs and payment terms in independent work.\n\n03 · How Do I Naturally Make Money?",
+          "actual_answer": "Your Answer: Your chart supports both employment and independent work; it does not show a clear winner.\n\nWhat This Means for You: For a structured job, your chart shows training or specialist support. For independent work, your chart links useful output to payment and also shows independent or shared-work signals.\n\nPractical Check: For a real choice, compare confirmed salary, hours and support in a job with paying customers, costs and payment terms in independent work.\n\nBottom Line: Neither route has a clear edge in this chart. The independent route also shows links between useful work and payment.\n\n03 · How Do I Naturally Make Money?",
           "chart_evidence": {
             "questionId": "proof-of-skill",
             "sourceChapterId": "proof-of-skill",
@@ -5367,7 +5310,7 @@ Total output lines: 8844
           "question_id": "money-commitments",
           "question_number": 3,
           "official_title": "How do I naturally make money?",
-          "actual_answer": "Your Answer: Regular pay and dependable repeat work are your clearer income pattern. A role with defined hours and duties makes that pattern easier to evaluate.\n\nWhat This Means for You: Steady pay is linked to shared commitments and day-to-day work. Customer or project income is linked to shared commitments. These are possible earning routes, not expected pay.\n\nBottom Line: Repeatable paid work has clearer support than relying on a single large deal.\n\n04 · What Tends to Block My Financial Progress?",
+          "actual_answer": "Your Answer: Regular pay and dependable repeat work are your clearer income pattern. A role with defined hours and duties makes that pattern easier to evaluate.\n\nWhat This Means for You: Steady pay is linked to shared commitments and day-to-day work. Customer or project income is linked to shared commitments. These are possible earning routes, not expected pay.\n\nBottom Line: Repeatable paid work has clearer support than relying on a single large deal. Clear hours and repeatable duties match this pattern.\n\n04 · What Tends to Block My Financial Progress?",
           "chart_evidence": {
             "questionId": "money-commitments",
             "sourceChapterId": "money-commitments",
@@ -5498,7 +5441,7 @@ Total output lines: 8844
           "question_id": "working-style",
           "question_number": 4,
           "official_title": "What tends to block my financial progress?",
-          "actual_answer": "Your Answer: The main pressure to check is whether training or support is taking time or money away from paid work. Your chart links these themes, but cannot confirm this is limiting your finances. Compare training costs and hours with income-producing work.\n\n05 · When Might My Career or Money Situation Improve?",
+          "actual_answer": "Your Answer: The main pressure to check is whether training or support is taking time or money away from paid work. Your chart links these themes, but cannot confirm this is limiting your finances. Compare training costs and hours with income-producing work.\n\nBottom Line: The chart does not identify a specific financial blockage. Real-world barriers still need to be checked separately.\n\n05 · When Might My Career or Money Situation Improve?",
           "chart_evidence": {
             "questionId": "working-style",
             "sourceChapterId": "working-style",
@@ -5589,7 +5532,7 @@ Total output lines: 8844
           "question_id": "feedback-and-boundaries",
           "question_number": 5,
           "official_title": "When might my career or money situation improve?",
-          "actual_answer": "Your Answer: No year in 2026–2035 has a verified signal for career or money improvement. The checked work themes are 2026: new customers and deals; 2027: predictable pay; 2028: demanding assignments; they do not establish a pay rise.\n\n06 · What Do the Next Ten Years Suggest for My Work and Money?",
+          "actual_answer": "Your Answer: No year in 2026–2035 has a verified signal for career or money improvement. The checked work themes are 2026: new customers and deals; 2027: predictable pay; 2028: demanding assignments; they do not establish a pay rise.\n\nBottom Line: The chart does not name a reliable date for improvement. Real opportunities may still arise outside this calculation.\n\n06 · What Do the Next Ten Years Suggest for My Work and Money?",
           "chart_evidence": {
             "questionId": "feedback-and-boundaries",
             "sourceChapterId": "feedback-and-boundaries",
@@ -6028,7 +5971,7 @@ Total output lines: 8844
           "question_id": "work-chapters",
           "question_number": 6,
           "official_title": "What do the next ten years suggest for my work and money?",
-          "actual_answer": "Your Answer: Your 2026–2035 outlook is mixed: work themes change, but the comparisons do not show a steady rise in income. The main themes include new customers and deals, predictable pay, and demanding assignments. Year by year: 2026: new customers and deals; 2027: predictable pay; 2028: demanding assignments; 2029: defined responsibilities; 2030: independent problem-solving; 2031: training and guidance; 2032: independent work; 2033: shared work; 2034: reliable production; 2035: improving methods.\n\nImportant Timing: Work may feel more demanding in 2028, 2031, 2033, 2034. Treat these as review points, not predicted setbacks.\n\n07 · What Is the Most Important Insight for My Future?",
+          "actual_answer": "Your Answer: Your 2026–2035 outlook is mixed: work themes change, but the comparisons do not show a steady rise in income. The main themes include new customers and deals, predictable pay, and demanding assignments. Year by year: 2026: new customers and deals; 2027: predictable pay; 2028: demanding assignments; 2029: defined responsibilities; 2030: independent problem-solving; 2031: training and guidance; 2032: independent work; 2033: shared work; 2034: reliable production; 2035: improving methods.\n\nImportant Timing: Work may feel more demanding in 2028, 2031, 2033, 2034. Treat these as review points, not predicted setbacks.\n\nBottom Line: The decade moves from new customers and deals toward improving methods. The chart does not show a steady rise in income.\n\n07 · What Is the Most Important Insight for My Future?",
           "chart_evidence": {
             "questionId": "work-chapters",
             "sourceChapterId": "work-chapters",
@@ -6459,7 +6402,7 @@ Total output lines: 8844
           "question_id": "career-plan",
           "question_number": 7,
           "official_title": "What is my most important career and money insight?",
-          "actual_answer": "Your Answer: Your chart links operations and resource management at work with steady pay as possible ways of earning. That connects the themes, but it cannot estimate your pay.",
+          "actual_answer": "Your Answer: Your chart links operations and resource management at work with steady pay as possible ways of earning. That connects the themes, but it cannot estimate your pay.\n\nBottom Line: Your chart connects operations and resource management at work with steady pay as an earning route. The chart cannot set your pay or guarantee a career result.",
           "chart_evidence": {
             "questionId": "career-plan",
             "sourceChapterId": "career-plan",
@@ -6920,5 +6863,6 @@ Total output lines: 8844
         }
       ]
     }
-  ]
+  ],
+  "source_code_sha": "75c078484d70b573774ec4377b188abff430755f"
 }
