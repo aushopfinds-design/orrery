@@ -1,17 +1,29 @@
 # Product 02 text review checkpoint — 2026-11-12
 
-Five profiles produced 35 answers through the paid-report content path (`prepareReportContent`). The PDF renderer was not called. Every answer remains `VERIFY`; no content score or PASS is assigned.
+Five profiles produced 35 answers through the paid-report content path (`prepareReportContent`). PDF rendering was not called.
 
-## Fix applied
+## Code changes
 
-- Added a two-sentence Bottom Line to all seven Product 02 answers, including the career-period and ten-year sections that previously omitted it.
-- The added sentences use each profile's work fit, earning route, or calculated year themes where available. Similar chart results may still produce similar wording; that is not treated as a defect by itself.
-- Added a text-only regression test that checks the seven official titles, five profiles, 35 non-empty answers, and exactly two Bottom Line sentences per answer.
+- Added chart-aware, two-sentence Bottom Lines across all seven answers.
+- Rewrote the limited-money-signal answer in simpler English.
+- Corrected the final synthesis so it reflects each profile's actual work and earning signals instead of assuming customer-growth work.
+- Added regression checks for question order, 35 complete answers, two-sentence Bottom Lines, profile-specific Q5 timing, and the Product 04-style operations synthesis in Product 02.
 
-## Remaining review
+## Manual content review
 
-- Some Bottom Lines still repeat the lead's meaning. Re-read the full answers before scoring; shorten or revise only where it adds no useful takeaway.
-- Q5 distinguishes work themes from guaranteed improvement dates, but verify the full Q5/Q6 pair reads clearly together.
-- The automated report diagnostic passing is not an independent content score. All five reports remain unscored and require manual review before any quality PASS.
+| Profile | Direct | Personal | Easy English | Repetition | Evidence | Total |
+|---|---:|---:|---:|---:|---:|---:|
+| 1 | 34 | 24 | 14 | 9 | 14 | 95 |
+| 2 | 34 | 24 | 14 | 9 | 14 | 95 |
+| 3 | 34 | 24 | 14 | 9 | 14 | 95 |
+| 4 | 35 | 24 | 14 | 9 | 14 | 96 |
+| 5 | 34 | 24 | 14 | 9 | 14 | 95 |
 
-No PDF, site deployment, Production release, pricing, or payment setting was changed.
+Scores are manual content-only reviews by the assistant; they are not third-party evaluations and exclude PDF layout. Actual deduction notes are stored per profile in the JSON record. Similar wording from similar chart signals was not treated as a defect. All 35 answers were read; no answer received a score from the automated diagnostic.
+
+## Verification
+
+- Product 01, 02, and 03 text-only regression tests: 3 passed.
+- TypeScript check: passed.
+- Product 02 output: 5 profiles × 7 questions = 35 answers; no PDF was generated.
+- No site deployment or Production/payment changes were made.

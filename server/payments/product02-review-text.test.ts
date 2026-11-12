@@ -56,6 +56,8 @@ describe('Product 02 text-only review export', () => {
     }
     expect(reports).toHaveLength(5)
     expect(reports.reduce((sum, report) => sum + report.answers.length, 0)).toBe(35)
+    expect(reports[0].answers[4].actual_answer).not.toBe(reports[1].answers[4].actual_answer)
+    expect(reports[3].answers[6].actual_answer).toMatch(/operations and resource management/i)
     const path = process.env.FATE_PRODUCT02_REVIEW_TEXT_PATH
     if (path) {
       await mkdir(dirname(path), { recursive: true })
