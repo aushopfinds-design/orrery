@@ -443,12 +443,11 @@ async function reportPdf(report: BuyerReport, emphasis: string[], mode: 'test' |
   const blocks = pdfText.split(/\n+/).map(block => block.trim()).filter(Boolean)
   for (const [blockIndex, block] of blocks.entries()) {
     const rawValue = block.trim()
-    const compatibilityDirect = report.kind === 'compatibility' && rawValue.startsWith('Answer: ')
-    const compatibilityDetail = report.kind === 'compatibility' && rawValue.startsWith('Answer detail: ')
-    const compatibilityBottomLine = report.kind === 'compatibility' && rawValue.startsWith('Bottom Line: ')
-    const value = report.kind === 'compatibility'
-      ? rawValue.replace(/^(?:Answer|Answer detail):\s*/i, '')
-      : rawValue
+    const directAnswer = /^(?:Your Answer|Answer):\s*/i.test(rawValue)
+    const bottomLine = /^Bottom Line:\s*/i.test(rawValue)
+    // These are report-model labels, not customer-facing section headings.
+    // Remove them consistently so every paid product reads like a letter.
+    const value = rawValue.replace(/^(?:Your Answer|Answer detail|Answer|What This Means for You|Important Timing|Bottom Line|Practical point|Main caution):\s*/i, '')
     if (!value) continue
     // Product 03 answers can be long when both partners have distinct chart
     // patterns. Keep a question and its answer off the footer-safe area.
@@ -483,11 +482,10 @@ async function reportPdf(report: BuyerReport, emphasis: string[], mode: 'test' |
       y -= 10
       paragraph(value.slice('Question: '.length), 15, gold, true)
       y -= 5
-    } else if (compatibilityBottomLine) {
-      const conclusion = value.slice('Bottom Line: '.length)
+    } else if (bottomLine) {
       if (y < 145) addPage()
       paragraph('Bottom Line', 11.5, gold, true)
-      paragraph(conclusion, 13.2, ink, false)
+      paragraph(value, 13.2, ink, false)
     } else if (heading) {
       if (/^\d{2} [·-]/.test(value)) {
         const destinationTitle = value.replace(/^\d{2} [·-]\s*/, '').trim()
@@ -503,7 +501,7 @@ async function reportPdf(report: BuyerReport, emphasis: string[], mode: 'test' |
       const top = rowBaseline + 11
       const tocLabel = toc ? value.split(' — ', 1)[0].trim() : ''
       const tocPage = page
-      paragraph(value, note ? 10.2 : 13.4, note ? muted : ink, compatibilityDirect || !compatibilityDetail && !note)
+      paragraph(value, note ? 10.2 : 13.4, note ? muted : ink, directAnswer && !note)
       if (toc) { tocRows.push({ label: tocLabel, page: tocPage, bottom: rowBaseline - 4, top }); tocRowsRemaining-- }
     }
   }
