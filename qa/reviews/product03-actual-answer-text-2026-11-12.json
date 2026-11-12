@@ -299,8 +299,14 @@
             "answerType": "productcompatibility.attraction"
           },
           "content_score_95": null,
-          "evaluation_status": "VERIFY",
-          "deductions": []
+          "evaluation_status": "FIX",
+          "deductions": [
+            {
+              "problem_sentence": "The chart cannot confirm either person’s actual feelings.",
+              "reason_ko": "끌림 가능성을 설명한 직후 차트가 감정을 확인할 수 없다고 경고하며, 5명 중 4명의 본문이 사실상 동일합니다.",
+              "fix_direction": "프로필별 차트 근거의 차이를 먼저 보여주고 불확실성 문구는 짧게 한 번만 둡니다."
+            }
+          ]
         },
         {
           "question_id": "q-conflict",
@@ -338,8 +344,14 @@
             "answerType": "productcompatibility.conflict-trigger"
           },
           "content_score_95": null,
-          "evaluation_status": "VERIFY",
-          "deductions": []
+          "evaluation_status": "FIX",
+          "deductions": [
+            {
+              "problem_sentence": "Ask what kind of response is wanted before moving to the next step.",
+              "reason_ko": "Q7도 먼저 듣고 해결책을 미루라는 내용이라 두 질문의 역할과 조언이 겹칩니다.",
+              "fix_direction": "Q3은 갈등이 생기는 반응 순서를 설명하고, Q7은 두 사람의 차트별 필요에 맞춘 상호 조정으로 분리합니다."
+            }
+          ]
         },
         {
           "question_id": "q-love-language",
@@ -468,8 +480,14 @@
             "answerType": "productcompatibility.closeness-vs-routine"
           },
           "content_score_95": null,
-          "evaluation_status": "VERIFY",
-          "deductions": []
+          "evaluation_status": "FIX",
+          "deductions": [
+            {
+              "problem_sentence": "Neither chart comparison shows a clear bond or conflict; your personal routine patterns are the clearest point of comparison.",
+              "reason_ko": "첫 문장의 중립 결론 뒤에 루틴 차이가 다시 나오고, Bottom Line은 차트의 한계만 반복합니다.",
+              "fix_direction": "차트 신호의 유무와 실제로 다른 두 사람의 루틴 특징을 한 흐름으로 연결하고 Bottom Line은 그 차이의 의미를 요약합니다."
+            }
+          ]
         },
         {
           "question_id": "support-each-other",
@@ -847,8 +865,14 @@
             "answerType": "productcompatibility.relationship-timing"
           },
           "content_score_95": null,
-          "evaluation_status": "VERIFY",
-          "deductions": []
+          "evaluation_status": "FIX",
+          "deductions": [
+            {
+              "problem_sentence": "Treat the listed year as a personal planning prompt. It does not mark a shared relationship event.",
+              "reason_ko": "다섯 프로필에서 동일한 주의 문장이 되풀이되어 관계 질문에 대한 해석보다 면책 설명이 두드러집니다.",
+              "fix_direction": "계산된 개인별 시기 주제를 관계 맥락에 바로 연결하고 공통 제한 문구는 한 번만 짧게 둡니다."
+            }
+          ]
         },
         {
           "question_id": "shared-week",
@@ -890,8 +914,14 @@
             "answerType": "productcompatibility.mutual-adjustment"
           },
           "content_score_95": null,
-          "evaluation_status": "VERIFY",
-          "deductions": []
+          "evaluation_status": "FIX",
+          "deductions": [
+            {
+              "problem_sentence": "Your partner can hear your concern first, then ask before offering advice.",
+              "reason_ko": "Q3에서 이미 해결책보다 감정을 먼저 듣는 조언이 제시되어 반복됩니다. Bottom Line도 앞 답을 다시 씁니다.",
+              "fix_direction": "각자의 차트 기반 필요를 구분해 적고 마지막 두 문장은 서로에게 필요한 조정의 핵심을 새롭게 요약합니다."
+            }
+          ]
         }
       ]
     },
@@ -1212,8 +1242,14 @@
             "answerType": "productcompatibility.attraction"
           },
           "content_score_95": null,
-          "evaluation_status": "VERIFY",
-          "deductions": []
+          "evaluation_status": "FIX",
+          "deductions": [
+            {
+              "problem_sentence": "The chart cannot confirm either person’s actual feelings.",
+              "reason_ko": "끌림 가능성을 설명한 직후 차트가 감정을 확인할 수 없다고 경고하며, 5명 중 4명의 본문이 사실상 동일합니다.",
+              "fix_direction": "프로필별 차트 근거의 차이를 먼저 보여주고 불확실성 문구는 짧게 한 번만 둡니다."
+            }
+          ]
         },
         {
           "question_id": "q-conflict",
@@ -1251,8 +1287,14 @@
             "answerType": "productcompatibility.conflict-trigger"
           },
           "content_score_95": null,
-          "evaluation_status": "VERIFY",
-          "deductions": []
+          "evaluation_status": "FIX",
+          "deductions": [
+            {
+              "problem_sentence": "Ask what kind of response is wanted before moving to the next step.",
+              "reason_ko": "Q7도 먼저 듣고 해결책을 미루라는 내용이라 두 질문의 역할과 조언이 겹칩니다.",
+              "fix_direction": "Q3은 갈등이 생기는 반응 순서를 설명하고, Q7은 두 사람의 차트별 필요에 맞춘 상호 조정으로 분리합니다."
+            }
+          ]
         },
         {
           "question_id": "q-love-language",
@@ -1381,8 +1423,14 @@
             "answerType": "productcompatibility.closeness-vs-routine"
           },
           "content_score_95": null,
-          "evaluation_status": "VERIFY",
-          "deductions": []
+          "evaluation_status": "FIX",
+          "deductions": [
+            {
+              "problem_sentence": "Neither chart comparison shows a clear bond or conflict; your personal routine patterns are the clearest point of comparison.",
+              "reason_ko": "첫 문장의 중립 결론 뒤에 루틴 차이가 다시 나오고, Bottom Line은 차트의 한계만 반복합니다.",
+              "fix_direction": "차트 신호의 유무와 실제로 다른 두 사람의 루틴 특징을 한 흐름으로 연결하고 Bottom Line은 그 차이의 의미를 요약합니다."
+            }
+          ]
         },
         {
           "question_id": "support-each-other",
@@ -1760,8 +1808,14 @@
             "answerType": "productcompatibility.relationship-timing"
           },
           "content_score_95": null,
-          "evaluation_status": "VERIFY",
-          "deductions": []
+          "evaluation_status": "FIX",
+          "deductions": [
+            {
+              "problem_sentence": "Treat the listed year as a personal planning prompt. It does not mark a shared relationship event.",
+              "reason_ko": "다섯 프로필에서 동일한 주의 문장이 되풀이되어 관계 질문에 대한 해석보다 면책 설명이 두드러집니다.",
+              "fix_direction": "계산된 개인별 시기 주제를 관계 맥락에 바로 연결하고 공통 제한 문구는 한 번만 짧게 둡니다."
+            }
+          ]
         },
         {
           "question_id": "shared-week",
@@ -1803,8 +1857,14 @@
             "answerType": "productcompatibility.mutual-adjustment"
           },
           "content_score_95": null,
-          "evaluation_status": "VERIFY",
-          "deductions": []
+          "evaluation_status": "FIX",
+          "deductions": [
+            {
+              "problem_sentence": "Your partner can hear your concern first, then ask before offering advice.",
+              "reason_ko": "Q3에서 이미 해결책보다 감정을 먼저 듣는 조언이 제시되어 반복됩니다. Bottom Line도 앞 답을 다시 씁니다.",
+              "fix_direction": "각자의 차트 기반 필요를 구분해 적고 마지막 두 문장은 서로에게 필요한 조정의 핵심을 새롭게 요약합니다."
+            }
+          ]
         }
       ]
     },
@@ -2101,8 +2161,14 @@
             "answerType": "productcompatibility.attraction"
           },
           "content_score_95": null,
-          "evaluation_status": "VERIFY",
-          "deductions": []
+          "evaluation_status": "FIX",
+          "deductions": [
+            {
+              "problem_sentence": "The chart cannot confirm either person’s actual feelings.",
+              "reason_ko": "끌림 가능성을 설명한 직후 차트가 감정을 확인할 수 없다고 경고하며, 5명 중 4명의 본문이 사실상 동일합니다.",
+              "fix_direction": "프로필별 차트 근거의 차이를 먼저 보여주고 불확실성 문구는 짧게 한 번만 둡니다."
+            }
+          ]
         },
         {
           "question_id": "q-conflict",
@@ -2140,8 +2206,14 @@
             "answerType": "productcompatibility.conflict-trigger"
           },
           "content_score_95": null,
-          "evaluation_status": "VERIFY",
-          "deductions": []
+          "evaluation_status": "FIX",
+          "deductions": [
+            {
+              "problem_sentence": "Ask what kind of response is wanted before moving to the next step.",
+              "reason_ko": "Q7도 먼저 듣고 해결책을 미루라는 내용이라 두 질문의 역할과 조언이 겹칩니다.",
+              "fix_direction": "Q3은 갈등이 생기는 반응 순서를 설명하고, Q7은 두 사람의 차트별 필요에 맞춘 상호 조정으로 분리합니다."
+            }
+          ]
         },
         {
           "question_id": "q-love-language",
@@ -2254,8 +2326,14 @@
             "answerType": "productcompatibility.closeness-vs-routine"
           },
           "content_score_95": null,
-          "evaluation_status": "VERIFY",
-          "deductions": []
+          "evaluation_status": "FIX",
+          "deductions": [
+            {
+              "problem_sentence": "Neither chart comparison shows a clear bond or conflict; your personal routine patterns are the clearest point of comparison.",
+              "reason_ko": "첫 문장의 중립 결론 뒤에 루틴 차이가 다시 나오고, Bottom Line은 차트의 한계만 반복합니다.",
+              "fix_direction": "차트 신호의 유무와 실제로 다른 두 사람의 루틴 특징을 한 흐름으로 연결하고 Bottom Line은 그 차이의 의미를 요약합니다."
+            }
+          ]
         },
         {
           "question_id": "support-each-other",
@@ -2613,8 +2691,14 @@
             "answerType": "productcompatibility.relationship-timing"
           },
           "content_score_95": null,
-          "evaluation_status": "VERIFY",
-          "deductions": []
+          "evaluation_status": "FIX",
+          "deductions": [
+            {
+              "problem_sentence": "Treat the listed year as a personal planning prompt. It does not mark a shared relationship event.",
+              "reason_ko": "다섯 프로필에서 동일한 주의 문장이 되풀이되어 관계 질문에 대한 해석보다 면책 설명이 두드러집니다.",
+              "fix_direction": "계산된 개인별 시기 주제를 관계 맥락에 바로 연결하고 공통 제한 문구는 한 번만 짧게 둡니다."
+            }
+          ]
         },
         {
           "question_id": "shared-week",
@@ -2656,8 +2740,14 @@
             "answerType": "productcompatibility.mutual-adjustment"
           },
           "content_score_95": null,
-          "evaluation_status": "VERIFY",
-          "deductions": []
+          "evaluation_status": "FIX",
+          "deductions": [
+            {
+              "problem_sentence": "Your partner can hear your concern first, then ask before offering advice.",
+              "reason_ko": "Q3에서 이미 해결책보다 감정을 먼저 듣는 조언이 제시되어 반복됩니다. Bottom Line도 앞 답을 다시 씁니다.",
+              "fix_direction": "각자의 차트 기반 필요를 구분해 적고 마지막 두 문장은 서로에게 필요한 조정의 핵심을 새롭게 요약합니다."
+            }
+          ]
         }
       ]
     },
@@ -2970,8 +3060,14 @@
             "answerType": "productcompatibility.attraction"
           },
           "content_score_95": null,
-          "evaluation_status": "VERIFY",
-          "deductions": []
+          "evaluation_status": "FIX",
+          "deductions": [
+            {
+              "problem_sentence": "The chart cannot confirm either person’s actual feelings.",
+              "reason_ko": "끌림 가능성을 설명한 직후 차트가 감정을 확인할 수 없다고 경고하며, 5명 중 4명의 본문이 사실상 동일합니다.",
+              "fix_direction": "프로필별 차트 근거의 차이를 먼저 보여주고 불확실성 문구는 짧게 한 번만 둡니다."
+            }
+          ]
         },
         {
           "question_id": "q-conflict",
@@ -3009,8 +3105,14 @@
             "answerType": "productcompatibility.conflict-trigger"
           },
           "content_score_95": null,
-          "evaluation_status": "VERIFY",
-          "deductions": []
+          "evaluation_status": "FIX",
+          "deductions": [
+            {
+              "problem_sentence": "Ask what kind of response is wanted before moving to the next step.",
+              "reason_ko": "Q7도 먼저 듣고 해결책을 미루라는 내용이라 두 질문의 역할과 조언이 겹칩니다.",
+              "fix_direction": "Q3은 갈등이 생기는 반응 순서를 설명하고, Q7은 두 사람의 차트별 필요에 맞춘 상호 조정으로 분리합니다."
+            }
+          ]
         },
         {
           "question_id": "q-love-language",
@@ -3139,8 +3241,14 @@
             "answerType": "productcompatibility.closeness-vs-routine"
           },
           "content_score_95": null,
-          "evaluation_status": "VERIFY",
-          "deductions": []
+          "evaluation_status": "FIX",
+          "deductions": [
+            {
+              "problem_sentence": "Neither chart comparison shows a clear bond or conflict; your personal routine patterns are the clearest point of comparison.",
+              "reason_ko": "첫 문장의 중립 결론 뒤에 루틴 차이가 다시 나오고, Bottom Line은 차트의 한계만 반복합니다.",
+              "fix_direction": "차트 신호의 유무와 실제로 다른 두 사람의 루틴 특징을 한 흐름으로 연결하고 Bottom Line은 그 차이의 의미를 요약합니다."
+            }
+          ]
         },
         {
           "question_id": "support-each-other",
@@ -3518,8 +3626,14 @@
             "answerType": "productcompatibility.relationship-timing"
           },
           "content_score_95": null,
-          "evaluation_status": "VERIFY",
-          "deductions": []
+          "evaluation_status": "FIX",
+          "deductions": [
+            {
+              "problem_sentence": "Treat the listed year as a personal planning prompt. It does not mark a shared relationship event.",
+              "reason_ko": "다섯 프로필에서 동일한 주의 문장이 되풀이되어 관계 질문에 대한 해석보다 면책 설명이 두드러집니다.",
+              "fix_direction": "계산된 개인별 시기 주제를 관계 맥락에 바로 연결하고 공통 제한 문구는 한 번만 짧게 둡니다."
+            }
+          ]
         },
         {
           "question_id": "shared-week",
@@ -3561,8 +3675,14 @@
             "answerType": "productcompatibility.mutual-adjustment"
           },
           "content_score_95": null,
-          "evaluation_status": "VERIFY",
-          "deductions": []
+          "evaluation_status": "FIX",
+          "deductions": [
+            {
+              "problem_sentence": "Your partner can hear your concern first, then ask before offering advice.",
+              "reason_ko": "Q3에서 이미 해결책보다 감정을 먼저 듣는 조언이 제시되어 반복됩니다. Bottom Line도 앞 답을 다시 씁니다.",
+              "fix_direction": "각자의 차트 기반 필요를 구분해 적고 마지막 두 문장은 서로에게 필요한 조정의 핵심을 새롭게 요약합니다."
+            }
+          ]
         }
       ]
     },
@@ -3851,8 +3971,14 @@
             "answerType": "productcompatibility.attraction"
           },
           "content_score_95": null,
-          "evaluation_status": "VERIFY",
-          "deductions": []
+          "evaluation_status": "FIX",
+          "deductions": [
+            {
+              "problem_sentence": "The chart cannot confirm either person’s actual feelings.",
+              "reason_ko": "끌림 가능성을 설명한 직후 차트가 감정을 확인할 수 없다고 경고하며, 5명 중 4명의 본문이 사실상 동일합니다.",
+              "fix_direction": "프로필별 차트 근거의 차이를 먼저 보여주고 불확실성 문구는 짧게 한 번만 둡니다."
+            }
+          ]
         },
         {
           "question_id": "q-conflict",
@@ -3890,8 +4016,14 @@
             "answerType": "productcompatibility.conflict-trigger"
           },
           "content_score_95": null,
-          "evaluation_status": "VERIFY",
-          "deductions": []
+          "evaluation_status": "FIX",
+          "deductions": [
+            {
+              "problem_sentence": "Ask what kind of response is wanted before moving to the next step.",
+              "reason_ko": "Q7도 먼저 듣고 해결책을 미루라는 내용이라 두 질문의 역할과 조언이 겹칩니다.",
+              "fix_direction": "Q3은 갈등이 생기는 반응 순서를 설명하고, Q7은 두 사람의 차트별 필요에 맞춘 상호 조정으로 분리합니다."
+            }
+          ]
         },
         {
           "question_id": "q-love-language",
@@ -4020,8 +4152,14 @@
             "answerType": "productcompatibility.closeness-vs-routine"
           },
           "content_score_95": null,
-          "evaluation_status": "VERIFY",
-          "deductions": []
+          "evaluation_status": "FIX",
+          "deductions": [
+            {
+              "problem_sentence": "Neither chart comparison shows a clear bond or conflict; your personal routine patterns are the clearest point of comparison.",
+              "reason_ko": "첫 문장의 중립 결론 뒤에 루틴 차이가 다시 나오고, Bottom Line은 차트의 한계만 반복합니다.",
+              "fix_direction": "차트 신호의 유무와 실제로 다른 두 사람의 루틴 특징을 한 흐름으로 연결하고 Bottom Line은 그 차이의 의미를 요약합니다."
+            }
+          ]
         },
         {
           "question_id": "support-each-other",
@@ -4399,8 +4537,14 @@
             "answerType": "productcompatibility.relationship-timing"
           },
           "content_score_95": null,
-          "evaluation_status": "VERIFY",
-          "deductions": []
+          "evaluation_status": "FIX",
+          "deductions": [
+            {
+              "problem_sentence": "Treat the listed year as a personal planning prompt. It does not mark a shared relationship event.",
+              "reason_ko": "다섯 프로필에서 동일한 주의 문장이 되풀이되어 관계 질문에 대한 해석보다 면책 설명이 두드러집니다.",
+              "fix_direction": "계산된 개인별 시기 주제를 관계 맥락에 바로 연결하고 공통 제한 문구는 한 번만 짧게 둡니다."
+            }
+          ]
         },
         {
           "question_id": "shared-week",
@@ -4442,10 +4586,22 @@
             "answerType": "productcompatibility.mutual-adjustment"
           },
           "content_score_95": null,
-          "evaluation_status": "VERIFY",
-          "deductions": []
+          "evaluation_status": "FIX",
+          "deductions": [
+            {
+              "problem_sentence": "Your partner can hear your concern first, then ask before offering advice.",
+              "reason_ko": "Q3에서 이미 해결책보다 감정을 먼저 듣는 조언이 제시되어 반복됩니다. Bottom Line도 앞 답을 다시 씁니다.",
+              "fix_direction": "각자의 차트 기반 필요를 구분해 적고 마지막 두 문장은 서로에게 필요한 조정의 핵심을 새롭게 요약합니다."
+            }
+          ]
         }
       ]
     }
-  ]
+  ],
+  "manual_review": {
+    "date": "2026-11-12",
+    "method": "manual content comparison against the requested rubric; no numeric scores assigned",
+    "status": "FIX/VERIFY — not passed",
+    "scope": "35 generated answer bodies read; issues marked FIX have concrete repeat or relevance concerns; remaining answers need criterion-by-criterion scored review. No PDFs generated."
+  }
 }
