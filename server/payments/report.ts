@@ -131,8 +131,8 @@ export function reportEmphasis(source: unknown): string[] {
   visit(source)
   return [...phrases].filter(x => x.length >= 6 && x.length <= 240)
 }
-/** All report content is calculated from the encrypted order, never from the return URL. */
-export async function issueReport(input: OrderInput, orderId: string, referenceYear: number, mode: 'test' | 'live' = 'test'): Promise<BuyerReport> {
+/** Prepare the exact paid-report text and evidence without rendering a PDF. */
+export async function prepareReportContent(input: OrderInput, orderId: string, referenceYear: number, mode: 'test' | 'live' = 'test'): Promise<BuyerReport> {
   const a = calculateSaju(input.first), b = input.second ? calculateSaju(input.second) : undefined
   let text: string, documents: string[], source: unknown, answerProvenance: AnswerProvenance[] | undefined
   let calculationVerification: CalculationVerification | undefined
@@ -244,7 +244,13 @@ export async function issueReport(input: OrderInput, orderId: string, referenceY
     console.warn('report_quality_diagnostic_unavailable', { orderId, kind: input.kind, mode })
     if (mode === 'live') throw new ReportQualityGateError('report_quality_gate_unavailable')
   }
-  const pdf = await reportPdf(report, reportEmphasis(source), mode)
+  return report
+}
+
+/** All report content is calculated from the encrypted order, never from the return URL. */
+export async function issueReport(input: OrderInput, orderId: string, referenceYear: number, mode: 'test' | 'live' = 'test'): Promise<BuyerReport> {
+  const report = await prepareReportContent(input, orderId, referenceYear, mode)
+  const pdf = await reportPdf(report, report.emphasis ?? [], mode)
   report.pdf = Buffer.from(pdf).toString('base64')
   return report
 }

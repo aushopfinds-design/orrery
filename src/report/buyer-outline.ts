@@ -326,12 +326,24 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
               : /^Your everyday patterns link together/u.test(routineLead)
                 ? 'Your daily patterns show a link that may help you coordinate routines.'
                 : routineLead.replace(/[.!?]+$/u, '')
-        const personalComparison = noRoutineSignal && noEmotionalSignal
-          ? 'Neither comparison shows a clear link or conflict, so your day-to-day styles offer the clearest point of comparison.'
-          : undefined
         const yourRoutine = routine?.paragraphs.find(line => /^Your everyday pattern: /u.test(line))?.replace(/^Your everyday pattern: /u, '').replace(/[.!?]+$/u, '')
         const partnerRoutine = routine?.paragraphs.find(line => /^Your partner(?:'|’)s everyday pattern: /u.test(line))?.replace(/^Your partner(?:'|’)s everyday pattern: /u, '').replace(/[.!?]+$/u, '')
-        const direct = 'Emotional closeness depends on how you meet each other’s needs; everyday compatibility depends on how your routines work together.'
+        const emotionalSummary = noEmotionalSignal
+          ? 'no clear link or conflict in emotional closeness'
+          : emotionalFinding?.replace(/^Your private-life comparison shows a link that may support shared plans\.?$/iu, 'a private-life link that may support shared plans')
+            .replace(/[.!?]+$/u, '').replace(/^./u, char => char.toLocaleLowerCase()) ?? 'an area where your emotional needs may differ'
+        const routineSummary = noRoutineSignal
+          ? 'no clear link or conflict in daily routines'
+          : routineFinding.replace(/^Your daily routines may differ over /iu, 'differences in ')
+            .replace(/^The chart shows no clear link or conflict between your daily routines\.?$/iu, 'no clear link or conflict')
+            .replace(/[.!?]+$/u, '').replace(/^./u, char => char.toLocaleLowerCase())
+        const direct = noEmotionalSignal
+          ? noRoutineSignal
+            ? 'Neither chart comparison shows a clear bond or conflict; your personal routine patterns are the clearest point of comparison.'
+            : `The chart is neutral about emotional closeness but points to ${routineSummary} in daily routines.`
+          : noRoutineSignal
+            ? `Your chart shows ${emotionalSummary}, but no clear link or conflict in daily routines.`
+            : `Your chart shows ${emotionalSummary}; daily routines show ${routineSummary}.`
         const lowerFirst = (value: string) => value.charAt(0).toLowerCase() + value.slice(1)
         const sameRoutine = Boolean(yourRoutine && partnerRoutine && yourRoutine.replace(/\s+/gu, ' ').trim().toLocaleLowerCase() === partnerRoutine.replace(/\s+/gu, ' ').trim().toLocaleLowerCase())
         const routineExamples = yourRoutine && partnerRoutine
@@ -339,9 +351,10 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
             ? `You share a routine pattern: ${lowerFirst(yourRoutine)}.`
             : `For you, ${lowerFirst(yourRoutine)}. For your partner, ${lowerFirst(partnerRoutine)}.`
           : ''
-        const sentenceCase = (value: string) => value.charAt(0).toLocaleUpperCase() + value.slice(1)
-        const finishSentence = (value: string) => /[.!?]$/u.test(value) ? value : `${value}.`
-        lead = [direct, personalComparison ?? (emotionalFinding && finishSentence(sentenceCase(emotionalFinding))), personalComparison ? undefined : routineFinding && finishSentence(sentenceCase(routineFinding)), routineExamples].filter(Boolean).join(' ').replace(/\s+/gu, ' ').trim()
+        const comparison = noEmotionalSignal
+          ? routineExamples
+          : [emotionalFinding && `For emotional closeness, ${emotionalFinding.replace(/[.!?]+$/u, '')}`, routineFinding && `for everyday compatibility, ${routineFinding.replace(/[.!?]+$/u, '')}`].filter(Boolean).join('; ')
+        lead = [direct, comparison].filter(Boolean).join(' ').replace(/\s+/gu, ' ').trim()
         lead = lead.replace(/\s+/gu, ' ').trim()
         paragraphs = []
         chapter.paragraphs.forEach(line => used.add(line))
@@ -884,9 +897,10 @@ function compatibilityBottomLine(questionId: string, source: string): string {
   }
   if (questionId === 'chart-patterns') {
     if (/Your private-life comparison shows a link that may support shared plans/iu.test(source)) return 'An emotional connection does not guarantee that everyday routines will fit. Discuss daily expectations separately from the plans that bring you closer.'
-    if (/Small differences in private expectations may become recurring irritations/iu.test(source)) return 'Your chart points to possible differences in both areas. The useful question is how each of you handles those needs in real life.'
+    if (/Small differences in private expectations may become recurring irritations/iu.test(source)) return 'Your charts suggest tension around private expectations and daily routines. Compare how you share schedules and responsibilities in practice.'
     if (/Neither comparison shows a clear link or conflict/iu.test(source) && /variety can be energising/iu.test(source) && /steady rhythm can help/iu.test(source)) return 'The chart is neutral on both comparisons, while your routine styles differ. Your shared habits will show more than a chart signal here.'
     if (/Neither comparison shows a clear link or conflict/iu.test(source) && /busy social obligations/iu.test(source)) return 'Neither comparison settles your fit. Your routines suggest different pressures around social time and shared tasks, so those details matter most.'
+    if (/neither a direct bond nor a direct conflict stands out|no clear private-life link or clash|no clear emotional link or (?:conflict|clash)/iu.test(source)) return 'Neither chart comparison settles emotional or daily fit. Your distinct routine needs offer a more useful way to compare how everyday life may feel.'
     return 'The chart does not settle either question on its own. Your everyday experience is needed to judge how well closeness and routine fit together.'
   }
   if (questionId === 'support-each-other') {
