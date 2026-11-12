@@ -4,7 +4,7 @@
   "source_branch": "work/final-report-repair-20261111",
   "source_sha": "ec771a52e80dd1a62bb3b118b1a098f7d41e769f",
   "generator": "prepareReportContent paid-report text path; PDF renderer not called",
-  "assessment": "Manual review of all current answer text by assistant; not an external reviewer. Similar language from similar chart patterns was not penalized by itself.",
+  "assessment": "Manual review of all current answer text by assistant; not an external reviewer. Similar language from similar chart patterns was not penalized by itself. Scores for Products 04 and 07 were invalidated after subsequent generator edits; Products 05 and 06 were invalidated because the prior review applied mismatched proposed question roles. These products remain VERIFY, not scored or passed.",
   "scale": "Text-only /100: direct answer 35, personalization 25, easy English 15, repetition/generic advice 10, evidence and relevance 15. PDF design/card 5-point section was not checked and is excluded. Scores are not full PDF scores.",
   "products": {
     "01": {
@@ -1034,15 +1034,9 @@
         {
           "profile_number": 1,
           "profile_id": "new-york-london",
-          "score_text_only_100": 79,
-          "score_breakdown": {
-            "direct_answer_35": 31,
-            "personalization_25": 20,
-            "easy_english_15": 13,
-            "repetition_and_generic_advice_10": 6,
-            "evidence_and_relevance_15": 9
-          },
-          "status": "FIX",
+          "score_text_only_100": null,
+          "score_breakdown": null,
+          "status": "VERIFY",
           "pdf_layout_score": "NOT_CHECKED",
           "answers_reviewed": 7,
           "answers": [
@@ -1095,20 +1089,15 @@
               "review_status": "REVIEWED",
               "answer_fully_read": true
             }
-          ]
+          ],
+          "score_invalidated": true
         },
         {
           "profile_number": 2,
           "profile_id": "seoul-sydney",
-          "score_text_only_100": 82,
-          "score_breakdown": {
-            "direct_answer_35": 32,
-            "personalization_25": 21,
-            "easy_english_15": 13,
-            "repetition_and_generic_advice_10": 6,
-            "evidence_and_relevance_15": 10
-          },
-          "status": "FIX",
+          "score_text_only_100": null,
+          "score_breakdown": null,
+          "status": "VERIFY",
           "pdf_layout_score": "NOT_CHECKED",
           "answers_reviewed": 7,
           "answers": [
@@ -1161,20 +1150,15 @@
               "review_status": "REVIEWED",
               "answer_fully_read": true
             }
-          ]
+          ],
+          "score_invalidated": true
         },
         {
           "profile_number": 3,
           "profile_id": "unknown-hour",
-          "score_text_only_100": 78,
-          "score_breakdown": {
-            "direct_answer_35": 31,
-            "personalization_25": 19,
-            "easy_english_15": 13,
-            "repetition_and_generic_advice_10": 6,
-            "evidence_and_relevance_15": 9
-          },
-          "status": "FIX",
+          "score_text_only_100": null,
+          "score_breakdown": null,
+          "status": "VERIFY",
           "pdf_layout_score": "NOT_CHECKED",
           "answers_reviewed": 7,
           "answers": [
@@ -1227,20 +1211,15 @@
               "review_status": "REVIEWED",
               "answer_fully_read": true
             }
-          ]
+          ],
+          "score_invalidated": true
         },
         {
           "profile_number": 4,
           "profile_id": "sydney-1990",
-          "score_text_only_100": 78,
-          "score_breakdown": {
-            "direct_answer_35": 31,
-            "personalization_25": 19,
-            "easy_english_15": 13,
-            "repetition_and_generic_advice_10": 6,
-            "evidence_and_relevance_15": 9
-          },
-          "status": "FIX",
+          "score_text_only_100": null,
+          "score_breakdown": null,
+          "status": "VERIFY",
           "pdf_layout_score": "NOT_CHECKED",
           "answers_reviewed": 7,
           "answers": [
@@ -1293,20 +1272,15 @@
               "review_status": "REVIEWED",
               "answer_fully_read": true
             }
-          ]
+          ],
+          "score_invalidated": true
         },
         {
           "profile_number": 5,
           "profile_id": "la-1975",
-          "score_text_only_100": 82,
-          "score_breakdown": {
-            "direct_answer_35": 32,
-            "personalization_25": 21,
-            "easy_english_15": 13,
-            "repetition_and_generic_advice_10": 6,
-            "evidence_and_relevance_15": 10
-          },
-          "status": "FIX",
+          "score_text_only_100": null,
+          "score_breakdown": null,
+          "status": "VERIFY",
           "pdf_layout_score": "NOT_CHECKED",
           "answers_reviewed": 7,
           "answers": [
@@ -1359,13 +1333,16 @@
               "review_status": "REVIEWED",
               "answer_fully_read": true
             }
-          ]
+          ],
+          "score_invalidated": true
         }
       ],
       "main_findings": [
         "Q4 can mix a career conclusion with a different work theme. Example: Q1 says crisis handling, competitive sales and technical work, while Q4 says specialist research, analysis and strategy.",
         "The legacy Answer / Answer detail blocks remain and several questions repeat adjacent chapter material. Q2 and Q7 contain generic cautions."
-      ]
+      ],
+      "invalidated_reason": "The answer-generation code changed after this review; previous scores no longer represent the current generated text and require reassessment.",
+      "review_status": "VERIFY"
     },
     "05": {
       "product_name": "Born to Build a Business?",
@@ -1374,15 +1351,9 @@
         {
           "profile_number": 1,
           "profile_id": "new-york-london",
-          "score_text_only_100": 69,
-          "score_breakdown": {
-            "direct_answer_35": 22,
-            "personalization_25": 20,
-            "easy_english_15": 13,
-            "repetition_and_generic_advice_10": 6,
-            "evidence_and_relevance_15": 8
-          },
-          "status": "FIX",
+          "score_text_only_100": null,
+          "score_breakdown": null,
+          "status": "VERIFY",
           "pdf_layout_score": "NOT_CHECKED",
           "answers_reviewed": 7,
           "answers": [
@@ -1435,20 +1406,15 @@
               "review_status": "REVIEWED",
               "answer_fully_read": true
             }
-          ]
+          ],
+          "score_invalidated": true
         },
         {
           "profile_number": 2,
           "profile_id": "seoul-sydney",
-          "score_text_only_100": 73,
-          "score_breakdown": {
-            "direct_answer_35": 24,
-            "personalization_25": 21,
-            "easy_english_15": 13,
-            "repetition_and_generic_advice_10": 6,
-            "evidence_and_relevance_15": 9
-          },
-          "status": "FIX",
+          "score_text_only_100": null,
+          "score_breakdown": null,
+          "status": "VERIFY",
           "pdf_layout_score": "NOT_CHECKED",
           "answers_reviewed": 7,
           "answers": [
@@ -1501,20 +1467,15 @@
               "review_status": "REVIEWED",
               "answer_fully_read": true
             }
-          ]
+          ],
+          "score_invalidated": true
         },
         {
           "profile_number": 3,
           "profile_id": "unknown-hour",
-          "score_text_only_100": 69,
-          "score_breakdown": {
-            "direct_answer_35": 22,
-            "personalization_25": 20,
-            "easy_english_15": 13,
-            "repetition_and_generic_advice_10": 6,
-            "evidence_and_relevance_15": 8
-          },
-          "status": "FIX",
+          "score_text_only_100": null,
+          "score_breakdown": null,
+          "status": "VERIFY",
           "pdf_layout_score": "NOT_CHECKED",
           "answers_reviewed": 7,
           "answers": [
@@ -1567,20 +1528,15 @@
               "review_status": "REVIEWED",
               "answer_fully_read": true
             }
-          ]
+          ],
+          "score_invalidated": true
         },
         {
           "profile_number": 4,
           "profile_id": "sydney-1990",
-          "score_text_only_100": 72,
-          "score_breakdown": {
-            "direct_answer_35": 23,
-            "personalization_25": 21,
-            "easy_english_15": 13,
-            "repetition_and_generic_advice_10": 6,
-            "evidence_and_relevance_15": 9
-          },
-          "status": "FIX",
+          "score_text_only_100": null,
+          "score_breakdown": null,
+          "status": "VERIFY",
           "pdf_layout_score": "NOT_CHECKED",
           "answers_reviewed": 7,
           "answers": [
@@ -1633,20 +1589,15 @@
               "review_status": "REVIEWED",
               "answer_fully_read": true
             }
-          ]
+          ],
+          "score_invalidated": true
         },
         {
           "profile_number": 5,
           "profile_id": "la-1975",
-          "score_text_only_100": 73,
-          "score_breakdown": {
-            "direct_answer_35": 24,
-            "personalization_25": 21,
-            "easy_english_15": 13,
-            "repetition_and_generic_advice_10": 6,
-            "evidence_and_relevance_15": 9
-          },
-          "status": "FIX",
+          "score_text_only_100": null,
+          "score_breakdown": null,
+          "status": "VERIFY",
           "pdf_layout_score": "NOT_CHECKED",
           "answers_reviewed": 7,
           "answers": [
@@ -1699,13 +1650,16 @@
               "review_status": "REVIEWED",
               "answer_fully_read": true
             }
-          ]
+          ],
+          "score_invalidated": true
         }
       ],
       "main_findings": [
         "The generated question roles do not match the previously approved business topics for Q4–Q6. Q4 answers financial risk instead of business strengths; Q5 answers expansion timing instead of what could make the business struggle; Q6 discusses ten-year cycles instead of whether the buyer is better at starting or growing.",
         "The partner-fit lead is repeated across several profiles, and lengthy Answer detail text dilutes the direct answer."
-      ]
+      ],
+      "invalidated_reason": "The previous review mapped these answers against proposed question topics rather than the locked paid-report question set; those scores are not valid and must be reassessed against current official questions.",
+      "review_status": "VERIFY"
     },
     "06": {
       "product_name": "The Real You",
@@ -1714,15 +1668,9 @@
         {
           "profile_number": 1,
           "profile_id": "new-york-london",
-          "score_text_only_100": 76,
-          "score_breakdown": {
-            "direct_answer_35": 26,
-            "personalization_25": 21,
-            "easy_english_15": 13,
-            "repetition_and_generic_advice_10": 7,
-            "evidence_and_relevance_15": 9
-          },
-          "status": "FIX",
+          "score_text_only_100": null,
+          "score_breakdown": null,
+          "status": "VERIFY",
           "pdf_layout_score": "NOT_CHECKED",
           "answers_reviewed": 7,
           "answers": [
@@ -1775,20 +1723,15 @@
               "review_status": "REVIEWED",
               "answer_fully_read": true
             }
-          ]
+          ],
+          "score_invalidated": true
         },
         {
           "profile_number": 2,
           "profile_id": "seoul-sydney",
-          "score_text_only_100": 76,
-          "score_breakdown": {
-            "direct_answer_35": 26,
-            "personalization_25": 21,
-            "easy_english_15": 13,
-            "repetition_and_generic_advice_10": 7,
-            "evidence_and_relevance_15": 9
-          },
-          "status": "FIX",
+          "score_text_only_100": null,
+          "score_breakdown": null,
+          "status": "VERIFY",
           "pdf_layout_score": "NOT_CHECKED",
           "answers_reviewed": 7,
           "answers": [
@@ -1841,20 +1784,15 @@
               "review_status": "REVIEWED",
               "answer_fully_read": true
             }
-          ]
+          ],
+          "score_invalidated": true
         },
         {
           "profile_number": 3,
           "profile_id": "unknown-hour",
-          "score_text_only_100": 76,
-          "score_breakdown": {
-            "direct_answer_35": 26,
-            "personalization_25": 21,
-            "easy_english_15": 13,
-            "repetition_and_generic_advice_10": 7,
-            "evidence_and_relevance_15": 9
-          },
-          "status": "FIX",
+          "score_text_only_100": null,
+          "score_breakdown": null,
+          "status": "VERIFY",
           "pdf_layout_score": "NOT_CHECKED",
           "answers_reviewed": 7,
           "answers": [
@@ -1907,20 +1845,15 @@
               "review_status": "REVIEWED",
               "answer_fully_read": true
             }
-          ]
+          ],
+          "score_invalidated": true
         },
         {
           "profile_number": 4,
           "profile_id": "sydney-1990",
-          "score_text_only_100": 75,
-          "score_breakdown": {
-            "direct_answer_35": 26,
-            "personalization_25": 20,
-            "easy_english_15": 13,
-            "repetition_and_generic_advice_10": 7,
-            "evidence_and_relevance_15": 9
-          },
-          "status": "FIX",
+          "score_text_only_100": null,
+          "score_breakdown": null,
+          "status": "VERIFY",
           "pdf_layout_score": "NOT_CHECKED",
           "answers_reviewed": 7,
           "answers": [
@@ -1973,20 +1906,15 @@
               "review_status": "REVIEWED",
               "answer_fully_read": true
             }
-          ]
+          ],
+          "score_invalidated": true
         },
         {
           "profile_number": 5,
           "profile_id": "la-1975",
-          "score_text_only_100": 75,
-          "score_breakdown": {
-            "direct_answer_35": 26,
-            "personalization_25": 20,
-            "easy_english_15": 13,
-            "repetition_and_generic_advice_10": 7,
-            "evidence_and_relevance_15": 9
-          },
-          "status": "FIX",
+          "score_text_only_100": null,
+          "score_breakdown": null,
+          "status": "VERIFY",
           "pdf_layout_score": "NOT_CHECKED",
           "answers_reviewed": 7,
           "answers": [
@@ -2039,13 +1967,16 @@
               "review_status": "REVIEWED",
               "answer_fully_read": true
             }
-          ]
+          ],
+          "score_invalidated": true
         }
       ],
       "main_findings": [
         "Question roles do not match the approved The Real You topics. Q2 does not give three strengths; Q3 describes a pressure trigger rather than the biggest weakness; Q4 describes the buyer’s own pressure response rather than how others experience them; the environment question is absent; the final boundary question displaces the approved relationship-needs role.",
         "The current answers are often readable and chart-linked, but they answer the wrong buyer questions, so relevance is materially reduced."
-      ]
+      ],
+      "invalidated_reason": "The previous review mapped these answers against proposed question topics rather than the locked paid-report question set; those scores are not valid and must be reassessed against current official questions.",
+      "review_status": "VERIFY"
     },
     "07": {
       "product_name": "Your Destiny Collection",
@@ -2054,15 +1985,9 @@
         {
           "profile_number": 1,
           "profile_id": "new-york-london",
-          "score_text_only_100": 80,
-          "score_breakdown": {
-            "direct_answer_35": 28,
-            "personalization_25": 22,
-            "easy_english_15": 13,
-            "repetition_and_generic_advice_10": 6,
-            "evidence_and_relevance_15": 11
-          },
-          "status": "FIX",
+          "score_text_only_100": null,
+          "score_breakdown": null,
+          "status": "VERIFY",
           "pdf_layout_score": "NOT_CHECKED",
           "answers_reviewed": 10,
           "answers": [
@@ -2136,20 +2061,15 @@
               "review_status": "REVIEWED",
               "answer_fully_read": true
             }
-          ]
+          ],
+          "score_invalidated": true
         },
         {
           "profile_number": 2,
           "profile_id": "seoul-sydney",
-          "score_text_only_100": 80,
-          "score_breakdown": {
-            "direct_answer_35": 28,
-            "personalization_25": 22,
-            "easy_english_15": 13,
-            "repetition_and_generic_advice_10": 6,
-            "evidence_and_relevance_15": 11
-          },
-          "status": "FIX",
+          "score_text_only_100": null,
+          "score_breakdown": null,
+          "status": "VERIFY",
           "pdf_layout_score": "NOT_CHECKED",
           "answers_reviewed": 10,
           "answers": [
@@ -2223,20 +2143,15 @@
               "review_status": "REVIEWED",
               "answer_fully_read": true
             }
-          ]
+          ],
+          "score_invalidated": true
         },
         {
           "profile_number": 3,
           "profile_id": "unknown-hour",
-          "score_text_only_100": 77,
-          "score_breakdown": {
-            "direct_answer_35": 27,
-            "personalization_25": 22,
-            "easy_english_15": 13,
-            "repetition_and_generic_advice_10": 6,
-            "evidence_and_relevance_15": 9
-          },
-          "status": "FIX",
+          "score_text_only_100": null,
+          "score_breakdown": null,
+          "status": "VERIFY",
           "pdf_layout_score": "NOT_CHECKED",
           "answers_reviewed": 10,
           "answers": [
@@ -2310,20 +2225,15 @@
               "review_status": "REVIEWED",
               "answer_fully_read": true
             }
-          ]
+          ],
+          "score_invalidated": true
         },
         {
           "profile_number": 4,
           "profile_id": "sydney-1990",
-          "score_text_only_100": 80,
-          "score_breakdown": {
-            "direct_answer_35": 28,
-            "personalization_25": 22,
-            "easy_english_15": 13,
-            "repetition_and_generic_advice_10": 6,
-            "evidence_and_relevance_15": 11
-          },
-          "status": "FIX",
+          "score_text_only_100": null,
+          "score_breakdown": null,
+          "status": "VERIFY",
           "pdf_layout_score": "NOT_CHECKED",
           "answers_reviewed": 10,
           "answers": [
@@ -2397,20 +2307,15 @@
               "review_status": "REVIEWED",
               "answer_fully_read": true
             }
-          ]
+          ],
+          "score_invalidated": true
         },
         {
           "profile_number": 5,
           "profile_id": "la-1975",
-          "score_text_only_100": 80,
-          "score_breakdown": {
-            "direct_answer_35": 28,
-            "personalization_25": 22,
-            "easy_english_15": 13,
-            "repetition_and_generic_advice_10": 6,
-            "evidence_and_relevance_15": 11
-          },
-          "status": "FIX",
+          "score_text_only_100": null,
+          "score_breakdown": null,
+          "status": "VERIFY",
           "pdf_layout_score": "NOT_CHECKED",
           "answers_reviewed": 10,
           "answers": [
@@ -2484,13 +2389,16 @@
               "review_status": "REVIEWED",
               "answer_fully_read": true
             }
-          ]
+          ],
+          "score_invalidated": true
         }
       ],
       "main_findings": [
         "Q7 asks for a three-year priority, but the answer uses one annual theme and says it is not a separate forecast for the three years. It does not actually compare or prioritize the three years.",
         "Q2 uses “make your contribution visible” as a generic opportunity instead of identifying a distinct life opportunity. Q3 and Q5 overlap; Q9 and Q10 still share much of the same work/relationship synthesis."
-      ]
+      ],
+      "invalidated_reason": "The answer-generation code changed after this review; previous scores no longer represent the current generated text and require reassessment.",
+      "review_status": "VERIFY"
     }
   },
   "pdfs_generated_for_this_review": false

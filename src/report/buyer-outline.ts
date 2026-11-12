@@ -209,9 +209,20 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
         lead = [`This year, focus on ${cleanPriority.charAt(0).toLowerCase()}${cleanPriority.slice(1)}.`, comparisonText, 'Take on extra responsibility only when you have the time and authority to deliver the result.'].filter(Boolean).join(' ')
         paragraphs = []
       } else if (kind === 'year' && question.role === 'career-theme') {
-        // Keep the yearly career conclusion, its annual work reason and the
-        // personal baseline. The separate timing question keeps its own date.
-        paragraphs = chapter.paragraphs.slice(0, 2)
+        // Separate the temporary annual demand from the buyer's usual work
+        // pattern so two different chart layers do not read as conflicting
+        // career recommendations.
+        const workPattern = chapter.paragraphs.find(line => /^Your work side centres on /u.test(line))
+          ?? chapter.paragraphs.find(line => /^Your natal work stem remains /u.test(line))
+        const baselineText = workPattern
+          ?.replace(/^Your work side centres on /u, 'Your usual work pattern centres on ')
+          .replace(/^Your natal work stem remains [^.]+\.\s*/u, 'Your usual work pattern is ')
+        const annualFit = chapter.paragraphs.find(line => /^Specialist research, analysis and strategy fit this pattern\./u.test(line))
+        paragraphs = [
+          annualFit,
+          baselineText ? `${baselineText} This differs from this period’s demanding-work theme, so treat extra urgency as a temporary demand rather than a change to your usual career fit.` : undefined,
+        ].filter((line): line is string => Boolean(line))
+        if (!paragraphs.length) paragraphs = chapter.paragraphs.slice(0, 2)
         chapter.paragraphs.forEach(line => used.add(line))
       } else if (kind === 'year' && question.role === 'year-overview') {
         paragraphs = []

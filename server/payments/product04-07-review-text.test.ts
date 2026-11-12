@@ -51,11 +51,19 @@ describe('Products 04–07 text-only review export', () => {
           }
         })
         if (product.kind === 'bundle') {
+          const threeYearPriority = answers[6].actual_answer
           const fulfillment = answers[8].actual_answer
           const finalMessage = answers[9].actual_answer
+          expect(threeYearPriority).toMatch(/For the next three years, let .+ guide your work choices and make room for/u)
+          expect(threeYearPriority).toContain('The chart gives a separate annual comparison for 2027 only')
+          expect(threeYearPriority).not.toContain('prioritise crisis handling')
           expect(finalMessage).toMatch(/^Your Answer: Your personal style centres on .+; use it to shape how you approach .+ at work\./u)
           expect(finalMessage).not.toContain(fulfillment.split('\n\n')[0].replace(/^Your Answer: /u, ''))
           expect(finalMessage).toMatch(/Bottom Line: Let .+ guide how you use .+ at work\. Make room to ask clearly for .+ in close relationships\./u)
+        }
+        if (product.kind === 'year') {
+          expect(answers[3].actual_answer).toContain('Your usual work pattern centres on')
+          expect(answers[3].actual_answer).toContain('treat extra urgency as a temporary demand')
         }
         reports.push({
           product_id: product.id,
