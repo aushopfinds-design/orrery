@@ -60,6 +60,15 @@ export class ReportQualityGateError extends Error {
 
 type PdfAnswerSummary = { id: string; title: string; answer: string }
 
+/** Convert internal answer labels into customer-facing letter paragraphs. */
+export function pdfTextPresentation(rawValue: string): { value: string; directAnswer: boolean; bottomLine: boolean } {
+  return {
+    value: rawValue.replace(/^(?:Your Answer|Answer detail|Answer|What This Means for You|Important Timing|Bottom Line|Practical point|Main caution):\s*/i, ''),
+    directAnswer: /^(?:Your Answer|Answer):\s*/i.test(rawValue),
+    bottomLine: /^Bottom Line:\s*/i.test(rawValue),
+  }
+}
+
 /** Extract only first-answer text that already exists in the paid report. */
 function pdfAnswerSummaries(report: BuyerReport): PdfAnswerSummary[] {
   const definitions = productQuestions(report.kind)
@@ -443,11 +452,9 @@ async function reportPdf(report: BuyerReport, emphasis: string[], mode: 'test' |
   const blocks = pdfText.split(/\n+/).map(block => block.trim()).filter(Boolean)
   for (const [blockIndex, block] of blocks.entries()) {
     const rawValue = block.trim()
-    const directAnswer = /^(?:Your Answer|Answer):\s*/i.test(rawValue)
-    const bottomLine = /^Bottom Line:\s*/i.test(rawValue)
     // These are report-model labels, not customer-facing section headings.
     // Remove them consistently so every paid product reads like a letter.
-    const value = rawValue.replace(/^(?:Your Answer|Answer detail|Answer|What This Means for You|Important Timing|Bottom Line|Practical point|Main caution):\s*/i, '')
+    const { value, directAnswer, bottomLine } = pdfTextPresentation(rawValue)
     if (!value) continue
     // Product 03 answers can be long when both partners have distinct chart
     // patterns. Keep a question and its answer off the footer-safe area.
