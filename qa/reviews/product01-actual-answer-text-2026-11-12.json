@@ -1,11 +1,11 @@
-Warning: truncated output (original token count: 56328)
-Total output lines: 3925
+Warning: truncated output (original token count: 56266)
+Total output lines: 3934
 
 {
   "record_type": "product01_actual_answer_text_review",
   "product_id": "01",
   "product_name": "Your Life, Your Destiny",
-  "source_checkpoint_sha": "feade6e509bb1a274bda557e3e5f5a65366558ea",
+  "source_checkpoint_sha": "8137112e9516f9acf9baf6d89b5357b2f2cad42e",
   "generator": "prepareReportContent-v1; same paid-report content path; PDF renderer not called",
   "evaluation_scale": "manual content review / 100: direct answer 35, personalization 25, plain English 15, repetition 10, evidence consistency 15; PDF design excluded",
   "reports": [
@@ -804,9 +804,8 @@ Total output lines: 3925
         },
         "status": "PASS",
         "deductions_ko": [
-          "Q4 now includes this profile’s calculated earning clues in wider contacts, work and daily duties, and private commitments.",
-          "Q7 names 2032 and a work-method theme without presenting it as a certain event.",
-          "Some identity and attention-to-detail themes recur across questions because the chart repeats them; those related themes were not counted as unwanted duplication."
+          "Q4 now states this profile’s separate calculated signals for regular pay and project/customer income.",
+          "Q7 names 2032, explains the work-method theme, and avoids promising an event."
         ]
       }
     },
@@ -1047,8 +1046,9 @@ Total output lines: 3925
           "question_number": 2,
           "official_title": "What helps me thrive, and what can hold me back?",
           "actual_answer": "You may help others feel secure by keeping your promises.\n\nYou thrive when you agree who will do each part. Under pressure, being dependable can turn into doing everything.\n\nBottom Line: Your reliability helps others, but it can leave you carrying too much. Agree who owns each task before stepping in.",
-          "raw_section": "You may help others feel secure by keeping your promises.\n\nYou thrive when you agree who will do each part. Under pressure, being dependable can turn into d…26328 tokens truncated…pter.patterns.evidence.2",
-                "value": "Birth hour / month: 壬辰 / 甲申: no pattern in the checked pair tables."
+          "raw_section": "You may help others feel secure by keeping your promises.\n\nYou thrive when you agree who will do each part. Under pressure, being dependable can turn into doing everything.\n\nBottom Line: Your reliability helps others, but it can leave you carrying too much. Agree who owns each task before stepping in.",
+          "chart_evidence": {
+            "quest…26266 tokens truncated…甲申: no pattern in the checked pair tables."
               },
               {
                 "id": "chapter.patterns.evidence.3",
@@ -1314,9 +1314,8 @@ Total output lines: 3925
         },
         "status": "PASS",
         "deductions_ko": [
-          "Q4 distinguishes the stronger regular-pay clue from the less direct project-income signal.",
-          "Q7 links the calculated year to earnings and responsibilities and gives a practical comparison point.",
-          "Repeated attention-to-detail language reflects a chart theme asked about in more than one question, not copied generic advice."
+          "Q4 distinguishes the clearer regular-pay signal from the less direct project-income signal.",
+          "Q7 connects the calculated year to earnings and responsibilities and offers a concrete comparison point."
         ]
       }
     },
@@ -2095,13 +2094,25 @@ Total output lines: 3925
         },
         "status": "PASS",
         "deductions_ko": [
-          "Q4 gives this profile’s separate regular-pay and project-income placements.",
-          "Q7 connects the year to customer-growth themes and avoids a definite prediction.",
-          "Some relationship-need language also appears in Profile 2 because their chart evidence points to a similar need."
+          "Q4 reflects this profile’s regular-pay and project-income placements.",
+          "Q7 ties the year to customer-growth themes and avoids a definite prediction."
         ]
       }
     }
   ],
-  "review_method": "Manual reading of all 35 current generated answers and comparison by question across five synthetic profiles. The chart provenance attached to each answer was checked. Similar wording supported by the same chart evidence was not treated as a defect; exact matching responses were retained only where the chart themes also matched. This is not a third-party independent evaluation.",
-  "product_decision": "PASS — all 5 generated reports scored 95/100 in manual content review. No PDF was generated, so PDF layout is not assessed."
+  "review_method": "Manual review of all 35 generated answers, with chart provenance checked and the same question compared across five synthetic profiles. Similar phrasing supported by matching chart themes was not treated as a defect. This score is a manual content review, not a third-party assessment and not the automated structural gate score.",
+  "automated_structure_gate": {
+    "profile_scores": [
+      100,
+      70,
+      100,
+      100,
+      100
+    ],
+    "passed_profiles": 4,
+    "failed_profiles": 1,
+    "profile_2_status": "BLOCKED",
+    "profile_2_reason": "PARTIAL_CALCULATION_VERIFICATION; score 70 is a structural/calculation gate result, not a content score."
+  },
+  "product_decision": "CONTENT PASS 5/5 at 95/100 manual review. Operational readiness remains blocked for the profile-2 test case by partial calculation verification; no PDF was generated and nothing was deployed."
 }
