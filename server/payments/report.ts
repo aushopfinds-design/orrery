@@ -245,6 +245,8 @@ async function reportPdf(report: BuyerReport, emphasis: string[], mode: 'test' |
   pdf.registerFontkit(fontkit)
   fontBytes ??= readFile(new URL('./assets/NotoSansSC-Report.ttf', import.meta.url))
   const font = await pdf.embedFont(await fontBytes, { subset: true })
+  const englishRegular = await pdf.embedFont(await readFile(new URL('./assets/NotoSans-Report-Regular.ttf', import.meta.url)), { subset: true })
+  const englishBold = await pdf.embedFont(await readFile(new URL('./assets/NotoSans-Report-Bold.ttf', import.meta.url)), { subset: true })
   artworkBytes ??= readFile(new URL('./assets/HomepageArtwork.jpg', import.meta.url))
   const artwork = await pdf.embedJpg(await artworkBytes)
   const letterStationery = await pdf.embedJpg(await readFile(new URL('./assets/fate-letter-stationery.jpg', import.meta.url)))
@@ -256,7 +258,12 @@ async function reportPdf(report: BuyerReport, emphasis: string[], mode: 'test' |
   pdf.setTitle(report.title + ' | THE FATE KEY')
   pdf.setAuthor('THE FATE KEY')
   pdf.setSubject((mode === 'test' ? 'Private Sandbox purchase report - ' : 'Purchased report - ') + report.edition + (report.reference ? ' | ' + report.reference : ''))
-  const supported = new Set(font.getCharacterSet())
+  const cjkSupported = new Set(font.getCharacterSet())
+  const englishSupported = new Set(englishRegular.getCharacterSet())
+  const supported = new Set([...cjkSupported, ...englishSupported])
+  const paragraphFont = (text: string, bold = false) => Array.from(text).every(c => englishSupported.has(c.codePointAt(0)!))
+    ? (bold ? englishBold : englishRegular)
+    : font
   const clean = (text: string) => Array.from(text.replace(/\*\*/g, '').replace(/[\u2010-\u2015]/g, '-').replace(/[\u2018\u2019]/g, "'"))
     .map(c => supported.has(c.codePointAt(0)!) ? c : c === '\t' ? ' ' : '?').join('')
   const phrases = [...new Set(emphasis.map(clean))].sort((a, b) => b.length - a.length)
@@ -332,11 +339,13 @@ async function reportPdf(report: BuyerReport, emphasis: string[], mode: 'test' |
   const addPage = () => {
     page = pdf.addPage([W, H]); y = 620; frame()
   }
-  const paragraph = (text: string, size = 12.4, color = ink, emphasise = false, compact = false) => {
+  const paragraph = (text: string, size = 12.4, color = ink, emphasise = false, compact = false, boldAll = false) => {
     const value = clean(text)
     const parts: { text: string; bold: boolean }[] = []
     let last = 0
-    if (emphasise && emphasisPattern) {
+    if (boldAll) {
+      parts.push({ text: value, bold: true }); last = value.length
+    } else if (emphasise && emphasisPattern) {
       emphasisPattern.lastIndex = 0
       for (const match of value.matchAll(emphasisPattern)) {
         if (match.index! > last) parts.push({ text: value.slice(last, match.index), bold: false })
@@ -344,7 +353,7 @@ async function reportPdf(report: BuyerReport, emphasis: string[], mode: 'test' |
       }
     }
     if (last < value.length) parts.push({ text: value.slice(last), bold: false })
-    let runs: { text: string; bold: boolean }[] = [], width = 0
+    let runs: { text: string; bold: boolean; face: typeof font }[] = [], width = 0
     const flush = () => {
       if (!runs.length) return
       if (y < 83) addPage()
@@ -354,9 +363,8 @@ async function reportPdf(report: BuyerReport, emphasis: string[], mode: 'test' |
         // embedded CJK-capable face with PDF standard Helvetica caused visible
         // tracking changes in bold phrases on some mobile PDF viewers.
         const runColor = run.bold ? rgb(.47, .30, .12) : color
-        page.drawText(run.text, { x, y, size, font, color: runColor })
-        const runWidth = font.widthOfTextAtSize(run.text, size)
-        if (run.bold) page.drawText(run.text, { x: x + .34, y, size, font, color: runColor })
+        page.drawText(run.text, { x, y, size, font: run.face, color: runColor })
+        const runWidth = run.face.widthOfTextAtSize(run.text, size)
         x += runWidth
       }
       y -= size * (compact ? 1.35 : 1.65); runs = []; width = 0
@@ -364,14 +372,15 @@ async function reportPdf(report: BuyerReport, emphasis: string[], mode: 'test' |
     for (const part of parts) {
       for (const token of part.text.match(/\S+|\s+/g) ?? []) {
         if (!width && !token.trim()) continue
-        const tokenWidth = font.widthOfTextAtSize(token, size)
+        const tokenFace = paragraphFont(token, part.bold)
+        const tokenWidth = tokenFace.widthOfTextAtSize(token, size)
         if (width + tokenWidth > textWidth && width) {
           flush()
           if (!token.trim()) continue
         }
         const previous = runs.at(-1)
-        if (previous?.bold === part.bold) previous.text += token
-        else runs.push({ text: token, bold: part.bold })
+        if (previous?.bold === part.bold && previous.face === tokenFace) previous.text += token
+        else runs.push({ text: token, bold: part.bold, face: tokenFace })
         width += tokenWidth
       }
     }
@@ -441,6 +450,7 @@ async function reportPdf(report: BuyerReport, emphasis: string[], mode: 'test' |
   }
   const pdfText = shortPdfAppendix(report.text)
   const blocks = pdfText.split(/\n+/).map(block => block.trim()).filter(Boolean)
+  let answerTextNext = false
   for (const [blockIndex, block] of blocks.entries()) {
     const value = block.trim()
     if (!value) continue
@@ -466,6 +476,8 @@ async function reportPdf(report: BuyerReport, emphasis: string[], mode: 'test' |
     }
     const heading = /^(\d{2} [·-]|THE FATE KEY|Your Ten-Year|Your reading at a glance|Your Everyday Compass|Calculation notes|Symbolic colours & numbers|Chart terms in plain English|How this reading is prepared)/.test(value)
     const note = inAppendix || /^(From (your|the) chart:|Why this focus:|Report edition|Sources|Method|Calculated start:)/.test(value)
+    const questionPrompt = value.startsWith('Question: ')
+    if (questionPrompt || (/^\d{2} [·-]/.test(value) && !inAppendix)) answerTextNext = true
     if (heading && !inAppendix && value !== 'Your reading at a glance' && y < 350) addPage()
     if (heading) {
       if (/^\d{2} [·-]/.test(value)) {
@@ -482,7 +494,9 @@ async function reportPdf(report: BuyerReport, emphasis: string[], mode: 'test' |
       const top = rowBaseline + 11
       const tocLabel = toc ? value.split(' — ', 1)[0].trim() : ''
       const tocPage = page
-      paragraph(value, note ? 10.2 : 13.4, note ? muted : ink, !note)
+      const highlightAnswer = !note && !questionPrompt && answerTextNext
+      paragraph(value, note ? 10.2 : highlightAnswer ? 17 : 15.2, note ? muted : ink, highlightAnswer || !note, false, highlightAnswer)
+      if (answerTextNext && !questionPrompt && !heading && !note) answerTextNext = false
       if (toc) { tocRows.push({ label: tocLabel, page: tocPage, bottom: rowBaseline - 4, top }); tocRowsRemaining-- }
     }
   }
