@@ -65,6 +65,10 @@ describe('Products 04–07 text-only review export', () => {
           expect(answers[3].actual_answer).toContain('Your usual work pattern centres on')
           expect(answers[3].actual_answer).toContain('treat extra urgency as a temporary demand')
         }
+        if (product.kind === 'wellbeing') {
+          expect(answers[4].actual_answer).toContain('In close relationships, your chart points to a need for')
+          expect(answers[4].actual_answer).not.toContain('Name the kind of support you want and the choices you want to keep for yourself.')
+        }
         reports.push({
           product_id: product.id,
           product_name: product.name,

@@ -1975,7 +1975,7 @@
         "Question roles do not match the approved The Real You topics. Q2 does not give three strengths; Q3 describes a pressure trigger rather than the biggest weakness; Q4 describes the buyer’s own pressure response rather than how others experience them; the environment question is absent; the final boundary question displaces the approved relationship-needs role.",
         "The current answers are often readable and chart-linked, but they answer the wrong buyer questions, so relevance is materially reduced."
       ],
-      "invalidated_reason": "The previous review mapped these answers against proposed question topics rather than the locked paid-report question set; those scores are not valid and must be reassessed against current official questions.",
+      "invalidated_reason": "The previous review mapped these answers against proposed question topics rather than the locked paid-report question set; those scores are not valid and must be reassessed against current official questions. The relationship-needs answer was also changed to remove a repeated generic instruction; the updated paid-path text has not received a new manual content score.",
       "review_status": "VERIFY"
     },
     "07": {

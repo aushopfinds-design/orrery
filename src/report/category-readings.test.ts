@@ -212,7 +212,7 @@ describe('Bundle and public report navigation', () => {
       return tenAnswerFront.slice(start, next > -1 ? next : undefined)
     }
     expect(answer(1)).toContain('Three chart-linked themes stand out:')
-    expect(answer(2)).toContain('Your strongest opportunity is a work path centred on')
+    expect(answer(2)).toContain('Your strongest opportunity is to use')
     expect(answer(3)).toContain('A recurring challenge is that')
     expect(answer(5)).toContain('A pattern that may repeat is')
     expect(answer(5)).not.toMatch(/pattern that may repeat is [A-Z]/)
