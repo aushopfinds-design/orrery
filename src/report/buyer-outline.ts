@@ -184,6 +184,7 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
     }
   }
   for (const [source, questions] of questionsBySource) {
+    const useLetterBody = set === 'standalone' && ['year', 'business', 'wellbeing'].includes(kind)
     const chapter = byId.get(source)!, used = new Set<string>()
     const answer = (question: BuyerQuestion) => {
       let lead = chapter.lead
@@ -950,13 +951,13 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
       ]
     const qas = [
       `Question: ${questionTitles[questions[0].id] ?? questions[0].question}`,
-      ...firstLines.map((line, index) => `${kind === 'career' && set === 'standalone' ? '' : index ? 'Answer detail: ' : 'Answer: '}${line}`),
-      ...extraAnswers.flatMap(({ question, lines }) => [`Question: ${questionTitles[question.id] ?? question.question}`, ...lines.map((line, index) => `${kind === 'career' && set === 'standalone' ? '' : index ? 'Answer detail: ' : 'Answer: '}${line}`)]),
+      ...firstLines.map(line => `${useLetterBody || kind === 'career' && set === 'standalone' ? '' : 'Answer: '}${line}`),
+      ...extraAnswers.flatMap(({ question, lines }) => [`Question: ${questionTitles[question.id] ?? question.question}`, ...lines.map(line => `${useLetterBody || kind === 'career' && set === 'standalone' ? '' : 'Answer: '}${line}`)]),
     ]
     const replacement = [
-      ...(kind === 'compatibility' && set === 'standalone' || kind === 'complete' && set === 'standalone' ? [] : [chapter.title]),
+      ...(useLetterBody || kind === 'compatibility' && set === 'standalone' || kind === 'complete' && set === 'standalone' ? [] : [chapter.title]),
       ...qas,
-      ...guidance,
+      ...guidance.map(line => useLetterBody ? line.replace(/^(?:Practical point|Main caution):\s*/u, '') : line),
     ].join('\n\n')
     const original = deliveredChapter(chapter).join('\n\n')
     if (!text.includes(original)) throw new Error(`Missing delivered source: ${kind}/${source}`)
