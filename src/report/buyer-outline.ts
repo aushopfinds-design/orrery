@@ -1107,9 +1107,9 @@ function compatibilityBottomLine(questionId: string, source: string): string {
   }
   if (questionId === 'two-directions') {
     const shared = /Both directions point to a shared draw: you may each be drawn to (.+?) in the connection\./iu.exec(source)
-    if (shared) return 'A shared preference may explain what catches your attention in each other. It cannot tell you how strongly either person feels.'
+    if (shared) return `You may recognise the same quality in each other: ${shared[1]}. That shared theme can explain interest, but it cannot measure commitment.`
     const different = /You may be drawn to what your partner brings: (.+?)\. Your partner may be drawn to what you bring: (.+?)\./iu.exec(source)
-    if (different) return 'Each of you may notice a different quality in the other. The chart cannot measure attraction or commitment.'
+    if (different) return `You may value your partner’s ${different[1]}, while they may value your ${different[2]}. These are possible sources of interest, not proof of equal feelings.`
     return 'The chart suggests possible points of interest between you. Your conversations and choices show whether those qualities matter to either of you.'
   }
   if (questionId === 'q-conflict') {

@@ -496,6 +496,7 @@ describe('Buyer questions, not a repeated six-part technical template', () => {
     expect(attraction).not.toContain('comparison is made in both directions')
     expect(attraction).not.toContain('Practical point: Ask one clear question.')
     expect(attraction).not.toContain('private-life comparison')
+    expect(attraction).toContain('Bottom Line: You may value your partner’s reassurance and feeling understood, while they may value your fresh ideas and direct speech. These are possible sources of interest, not proof of equal feelings.')
 
     const sharedDirectionChapters = chapters.map(chapter => chapter.id === 'two-directions'
       ? { ...chapter, lead: 'From your side: Reassurance and feeling understood stand out.', paragraphs: ["From your partner’s side: Reassurance and feeling understood stand out."] }
@@ -505,6 +506,7 @@ describe('Buyer questions, not a repeated six-part technical template', () => {
       'compatibility', sharedDirectionChapters,
     )
     expect(sharedDirectionReport).toContain('Answer: Both directions point to a shared draw: you may each be drawn to reassurance and feeling understood in the connection.')
+    expect(sharedDirectionReport).toContain('Bottom Line: You may recognise the same quality in each other: reassurance and feeling understood. That shared theme can explain interest, but it cannot measure commitment.')
     expect(sharedDirectionReport).not.toContain('two different possible draws')
 
     expect(report.match(/^Question:/gm)).toHaveLength(7)
