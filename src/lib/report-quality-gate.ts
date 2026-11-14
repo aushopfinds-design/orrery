@@ -1,3 +1,5 @@
+import { REPORT_ANSWER_STANDARD } from '../report/report-answer-standard.ts'
+
 /**
  * Deterministic pre-delivery report quality gate.
  * Does not alter the Saju calculation engine, Stripe, or PDF rendering.
@@ -19,9 +21,9 @@ export type QualityFinding = { code: string; message: string; blocking: boolean 
 export type QualityResult = { score: number; passed: boolean; requiresHumanReview: boolean; findings: QualityFinding[] };
 
 const NORMALIZE = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
-const GENERIC = /(?:keep moving forward|trust the process|believe in yourself|take small steps|stay positive)/gi;
-const GUARANTEED_OUTCOME = /\b(?:you will definitely|you are guaranteed to|you will (?:become rich|get married|succeed|meet your soulmate)|your (?:marriage|success|wealth) is guaranteed|destined to (?:marry|succeed|become rich))\b/i;
-const BACKGROUND_OPENING = /^(?:in saju|traditionally,|your chart contains|this report will|before we look at|first, let us look at)\b/i;
+const GENERIC = REPORT_ANSWER_STANDARD.automatedReviewPatterns.genericAdvice;
+const GUARANTEED_OUTCOME = REPORT_ANSWER_STANDARD.automatedReviewPatterns.guaranteedOutcome;
+const BACKGROUND_OPENING = REPORT_ANSWER_STANDARD.automatedReviewPatterns.backgroundOpening;
 const LABEL = /^(?:your answer|answer|answer detail|what this means for you|important timing|bottom line|practical point|main caution):\s*/i;
 const words = (text: string) => text.trim().split(/\s+/).filter(Boolean).length;
 export function inspectReport(input: ReportQualityInput): QualityResult {

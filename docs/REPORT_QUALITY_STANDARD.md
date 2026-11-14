@@ -85,6 +85,23 @@ The revision preserves the prior safeguards against invented chart evidence, uns
 
 **Final principle:** The customer should understand the answer, recognize its connection to their own chart, and receive a distinct, meaningful response to each question.
 
+## Shared rule source and 35-answer regression
+
+The code-level source shared by all products is [`src/report/report-answer-standard.ts`](../src/report/report-answer-standard.ts). The report quality gate and review manifest use that source. Product-specific questions remain in their question definitions; answers must follow the same shared principles above.
+
+For every report-content or shared answer-rule change:
+
+1. Save the pre-change answer manifest before editing.
+2. Run `FATE_MASTER_PDF_OUTPUT=docs/generated-pdfs/report-regression bun run report:regression`. This regenerates 5 synthetic profiles × 7 products = 35 test-mode PDFs and records every question and answer with the shared human-review checklist.
+3. Compare the saved manifest with the new one using `bun scripts/compare-report-answers.ts <before.json> <after.json> [comparison.md]`.
+4. Review changed answers using the same checklist. The generated comparison is evidence of what changed, not a semantic approval or a quality score.
+5. Keep the PDF and comparison artifacts with the change. CI repeats the 35-report generation on report-related pushes and pull requests and uploads the PDFs, answer manifest, and comparison.
+
+The committed [`docs/report-regression-baseline/answers.json`](report-regression-baseline/answers.json) is the current comparison baseline. Update it only after reviewing and accepting the new answer set. The five fixtures are synthetic QA profiles; their dates and locations are not customer records. PDFs are generated in test mode and contain sandbox markings.
+
+`bun run report:regression` can validate generation, question coverage, and structural output. It cannot decide whether a reader feels understood; the checklist remains a human review step.
+Record each completed answer-rule change in [`docs/REPORT_ANSWER_CHANGELOG.md`](REPORT_ANSWER_CHANGELOG.md), including what changed, the comparison counts, and what was not checked.
+
 ## Customer-facing concise-writing defaults
 
 Use **LESS SAJU. MORE ANSWERS.** as the editing default for new reports and previews, while preserving the twelve absolute rules above:

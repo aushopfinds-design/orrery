@@ -14,7 +14,8 @@
     "preview": "vite preview",
     "generate-icons": "bun scripts/generate-icons.ts",
     "generate-og-image": "bun scripts/generate-og-image.ts",
-    "test": "vitest run"
+    "test": "vitest run",
+    "report:regression": "vitest run server/payments/master-report-pdfs.test.ts"
   },
   "dependencies": {
     "@orrery/core": "workspace:*",

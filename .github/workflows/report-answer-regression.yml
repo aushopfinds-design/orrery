@@ -1,0 +1,50 @@
+name: THE FATE KEY 35-answer regression
+
+on:
+  pull_request:
+    paths:
+      - 'src/report/**'
+      - 'src/lib/report-quality-gate.ts'
+      - 'server/payments/report.ts'
+      - 'server/payments/master-report-pdfs.test.ts'
+      - 'scripts/compare-report-answers.ts'
+      - 'docs/REPORT_QUALITY_STANDARD.md'
+      - 'docs/report-regression-baseline/**'
+      - '.github/workflows/report-answer-regression.yml'
+  push:
+    paths:
+      - 'src/report/**'
+      - 'src/lib/report-quality-gate.ts'
+      - 'server/payments/report.ts'
+      - 'server/payments/master-report-pdfs.test.ts'
+      - 'scripts/compare-report-answers.ts'
+      - 'docs/REPORT_QUALITY_STANDARD.md'
+      - 'docs/report-regression-baseline/**'
+      - '.github/workflows/report-answer-regression.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  generate-and-compare-35:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+      - name: Regenerate all 35 test reports with one shared standard
+        env:
+          FATE_MASTER_PDF_OUTPUT: docs/generated-pdfs/report-regression
+        run: bun run report:regression
+      - name: Compare every question answer with the reviewed baseline
+        run: bun scripts/compare-report-answers.ts docs/report-regression-baseline/answers.json docs/generated-pdfs/report-regression/answers.json docs/generated-pdfs/report-regression/comparison.md
+      - name: Upload all PDFs, answers, and comparison
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: fate-key-35-answer-regression
+          path: docs/generated-pdfs/report-regression/
+          if-no-files-found: error
+          retention-days: 14
