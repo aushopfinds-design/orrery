@@ -1,1 +1,148 @@
-YªçŠx-®éÜj×¢ëiºÚ+Š§j[h‘éÜ¢éí×nuN‹Z–‹­¦ëeŠw¬Õ¥µÁ½ÉĞìÍÁ±¥Ñ•±¥Ù•É•‘I•…‘¥¹œ°1U1Q%=9}9=QLô™É½´€œ¸½É•Á½ÉĞµ‘•±¥Ù•Éä¹ÑÌœ)¥µÁ½ÉĞì‰Õ¹‘±•9…ÉÉ…Ñ¥Ù”ô™É½´€œ¸½ÁÕÉ¡…Í”µ¹…ÉÉ…Ñ¥Ù”¹ÑÌœ()¥µÁ½ÉĞì‰Õ¹‘±•%¹Ñ•ÉÁÉ•Ñ…Ñ¥½¹A±…¹Ìô™É½´€œ¸½¥¹Ñ•ÉÁÉ•Ñ…Ñ¥½¸µÁ±…¸¹ÑÌœ)¥µÁ½ÉĞì‰Õ¥±‘QÉ…‘¥Ñ¥½¹…±½µÁ±•Ñ•É½µA±…¸°‰Õ¥±‘QÉ…‘¥Ñ¥½¹…±…Ñ•½Éä°‰Õ¥±‘QÉ…‘¥Ñ¥½¹…±…Ñ•½ÉåÉ½µA±…¸ô™É½´€œ¸½ÑÉ…‘¥Ñ¥½¹…°µÉ•…‘¥¹œ¹ÑÌœ)¥µÁ½ÉĞÑåÁ”ìI•Á½ÉÑ¡…ÁÑ•Èô™É½´€œ¸½½µÁ±•Ñ”µÉ•…‘¥¹œ¹ÑÌœ)¥µÁ½ÉĞÑåÁ”ìM…©ÕI•ÍÕ±Ğô™É½´€½ÉÉ•Éä½½É”½ÑåÁ•Ìœ()¥µÁ½ÉĞÑåÁ”ì½ÕÍ…Ñ•½Éäô™É½´€œ¸½…Ñ•½Éäµ…Ñ…±½œ¹ÑÌœ)¥µÁ½ÉĞì‰Õ¥±‘½µÁ…Ñ¥‰¥±¥ÑåI•…‘¥¹œô™É½´€œ¸½½µÁ…Ñ¥‰¥±¥ÑäµÉ•…‘¥¹œ¹ÑÌœ)¥µÁ½ÉĞì‰Õ¥±‘…É••ÉI•…‘¥¹œ°‰Õ¥±‘	ÕÍ¥¹•ÍÍI•…‘¥¹œô™É½´€œ¸½İ½É¬µ™½ÕÌµÉ•…‘¥¹Ì¹ÑÌœ)¥µÁ½ÉĞì‰Õ¥±‘e•…É¡•…‘I•…‘¥¹œô™É½´€œ¸½å•…Èµ…¡•…µÉ•…‘¥¹œ¹ÑÌœ)¥µÁ½ÉĞì‰Õ¥±‘	…±…¹•I•…‘¥¹œô™É½´€œ¸½‰…±…¹”µÉ•…‘¥¹œ¹ÑÌœ)¥µÁ½ÉĞìÁ±…¥¹I•…‘¥¹Q•áĞô™É½´€œ¸½É•…‘¥¹œµÑ•áĞ¹ÑÌœ)¥µÁ½ÉĞìAIM=91}AI=%1L°I1Q%=9M!%A}AI=%1Lô™É½´€œ¸½É•…‘¥¹œµÁÉ½™¥±•Ì¹ÑÌœ)¥µÁ½ÉĞìİ½É­Q…Í¬ô™É½´€œ¸½Á•ÉÍ½¹…±¥Í•µ¡½¥•Ì¹ÑÌœ)¥µÁ½ÉĞì]=I-%9}19U…Ì19Uô™É½´€œ¸½ÁÕÉ¡…Í”µ±…¹Õ…”¹ÑÌœ)¥µÁ½ÉĞìMQ%9e}=11Q%=9}EUMQ%=9Lô™É½´€œ¸½ÁÉ½‘ÕĞµÅÕ•ÍÑ¥½¹Ì¹ÑÌœ()•áÁ½ÉĞìMQ%9e}=11Q%=9}EUMQ%=9Lô™É½´€œ¸½ÁÉ½‘ÕĞµÅÕ•ÍÑ¥½¹Ì¹ÑÌœ()•áÁ½ÉĞì‰Õ¥±‘½µÁ…Ñ¥‰¥±¥ÑåI•…‘¥¹œ°‰Õ¥±‘…É••ÉI•…‘¥¹œ°‰Õ¥±‘	ÕÍ¥¹•ÍÍI•…‘¥¹œ°‰Õ¥±‘e•…É¡•…‘I•…‘¥¹œ°‰Õ¥±‘	…±…¹•I•…‘¥¹œô)•áÁ½ÉĞ™Õ¹Ñ¥½¸‰Õ¥±‘…Ñ•½ÉåI•…‘¥¹œ¡­¥¹è½ÕÍ…Ñ•½Éä°™¥ÉÍĞèM…©ÕI•ÍÕ±Ğ°½ÁÑ¥½¹ÌèìÍ•½¹üèM…©ÕI•ÍÕ±Ğìå•…Èüè¹Õµ‰•ÈìÁ•É¥½‘MÑ…ÉĞüèÍÑÉ¥¹œìÁ•É¥½‘Q¥µ•é½¹”üèÍÑÉ¥¹œô€ôíô¤ì(€¿nu¶‰ËkºwµçR‚’ævWDgVÆÅ–V"‚’²Â&VfW&Væ6U–V"ÒæWrFFR‚’ævWDgVÆÅ–V"‚’ÂW&–öE7F'Có¢7G&–ærÂW&–öEF–ÖW¦öæSó¢7G&–ær’°¢&WGW&â'V–ÆD'VæFÆTg&öÕÆç2†'VæFÆT–çFW'&WFF–öåÆç2†f—'7BÂ6V6öæBÂæçVÅ–V"Â&VfW&Væ6U–V"ÂW&–öE7F'BÂW&–öEF–ÖW¦öæR’§Ğ¦W‡÷'BgVæ7F–öâ'V–ÆD'VæFÆTg&öÕÆç2‡Æç3¢&WGW&åG—SÇG—Vöb'VæFÆT–çFW'&WFF–öåÆç3â’°¢òò&öGV7Br&W6W'fW2F†R–æ6ÇVFVB&öGV7BVF—F–öã²F&vWFVB&ö÷BÖ6W6P¢òòæ'&F—fR6†ævW2&RÆ–VBöæÇ’Fò7FæFÆöæR&öGV7B&W÷'G2à¢6öç7B6ö×ÆWFRÒ'V–ÆEG&F—F–öæÄ6ö×ÆWFTg&öÕÆâ‡Æç2æ6ö×ÆWFRÂG'VRÂfÇ6R¢6öç7B6ö×F–&–Æ—G’Ò'V–ÆEG&F—F–öæÄ6FVv÷'”g&öÕÆâ‡Æç2æ6ö×F–&–Æ—G’¢6öç7BæçVÂÒ'V–ÆEG&F—F–öæÄ6FVv÷'”g&öÕÆâ‡Æç2ææçVÂ¢6öç7B6&VW"Ò'V–ÆEG&F—F–öæÄ6FVv÷'”g&öÕÆâ‡Æç2æ6&VW"¢6öç7BÆ÷fRÒ'V–ÆEG&F—F–öæÄ6FVv÷'”g&öÕÆâ‡Æç2æÆ÷fR¢òòF†RÆ–fR&W÷'B÷vç2F†R6†&VBvÆ÷76'’ÂÖWF†öBæB7–Ö&öÆ–2¶VW6¶RVæF—‚à¢òòF†R&VÆF–öç6†—æBæçVÂ6V7F–öç2&WF–âF†V—"÷vâ6Æ7VÆFVBWf–FVæ6Rà¢f÷"†6öç7B&W÷'Böb¶6ö×F–&–Æ—G’ÂæçVÂÂ6&VW"ÂÆ÷fUÒ’°¢&W÷'Bç6†&VDVæF—„–äÆ–fU&W÷'BÒG'VP¢6öç7B'G2Ò7Æ—DFVÆ—fW&VE&VF–ær‡&W÷'BægVÆÅFW‡B¢&W÷'BægVÆÅFW‡BÒ'G2æ&öG’ç7Æ—B‚uÆåÆå–÷W"WfW'–F’6ö×72r•³Ò²uÆåÆâr²4Ä5TÄD”ôåôäõDU2²uÆåÆâr²'G2æVæF—‚ç7Æ—B‚uÆåÆä6†'BFW&×2–âÆ–âVævÆ—6‚r•³Ğ¢&W÷'Bçv÷&D6÷VçBÒ&W÷'BægVÆÅFW‡Bç7Æ—B‚õÇ2²ò’æÆVæwF€¢Ğ¢6öç7B÷fW'f–WuF—FÆRÒt†÷rFò–÷W"Æ–fRÂÆ÷fRÂv÷&²æB–V"6öææV7Còp¢6öç7B÷fW'f–Wu&w&
+import { splitDeliveredReading, CALCULATION_NOTES } from './report-delivery.ts'
+import { bundleNarrative } from './purchase-narrative.ts'
+
+import { bundleInterpretationPlans } from './interpretation-plan.ts'
+import { buildTraditionalCompleteFromPlan, buildTraditionalCategory, buildTraditionalCategoryFromPlan } from './traditional-reading.ts'
+import type { ReportChapter } from './complete-reading.ts'
+import type { SajuResult } from '@orrery/core/types'
+
+import type { FocusCategory } from './category-catalog.ts'
+import { buildCompatibilityReading } from './compatibility-reading.ts'
+import { buildCareerReading, buildBusinessReading } from './work-focus-readings.ts'
+import { buildYearAheadReading } from './year-ahead-reading.ts'
+import { buildBalanceReading } from './balance-reading.ts'
+import { plainReadingText } from './reading-text.ts'
+import { PERSONAL_PROFILES, RELATIONSHIP_PROFILES } from './reading-profiles.ts'
+import { workTask } from './personalised-choices.ts'
+import { WORKING_LANGUAGE as LANGUAGE } from './purchase-language.ts'
+import { DESTINY_COLLECTION_QUESTIONS } from './product-questions.ts'
+
+export { DESTINY_COLLECTION_QUESTIONS } from './product-questions.ts'
+
+export { buildCompatibilityReading, buildCareerReading, buildBusinessReading, buildYearAheadReading, buildBalanceReading }
+export function buildCategoryReading(kind: FocusCategory, first: SajuResult, options: { second?: SajuResult; year?: number; periodStart?: string; periodTimezone?: string } = {}) {
+  const year = options.year ?? new Date().getFullYear()
+  switch (kind) {
+    case 'compatibility':
+      if (!options.second) throw new Error('Two birth charts are needed for compatibility')
+      return buildCompatibilityReading(first, options.second, year)
+    case 'year': return buildYearAheadReading(first, options.year ?? new Date().getFullYear() + 1, options.periodStart, options.periodTimezone)
+    case 'career': return buildCareerReading(first, year)
+    case 'love': return buildTraditionalCategory(kind, first, year)
+    case 'business': return buildBusinessReading(first, year)
+    case 'wellbeing': return buildBalanceReading(first, year)
+  }
+}
+export function buildBundleReading(first: SajuResult, second: SajuResult, annualYear = new Date().getFullYear() + 1, referenceYear = new Date().getFullYear(), periodStart?: string, periodTimezone?: string) {
+  return buildBundleFromPlans(bundleInterpretationPlans(first, second, annualYear, referenceYear, periodStart, periodTimezone))
+}
+export function buildBundleFromPlans(plans: ReturnType<typeof bundleInterpretationPlans>) {
+  // Product 07 preserves the included Product 01 edition; targeted root-cause
+  // narrative changes are applied only to standalone Product 01 reports.
+  const complete = buildTraditionalCompleteFromPlan(plans.complete, true, false)
+  const compatibility = buildTraditionalCategoryFromPlan(plans.compatibility)
+  const annual = buildTraditionalCategoryFromPlan(plans.annual)
+  const career = buildTraditionalCategoryFromPlan(plans.career)
+  const love = buildTraditionalCategoryFromPlan(plans.love)
+  // The life report owns the shared glossary, method and symbolic keepsake appendix.
+  // The relationship and annual sections retain their own calculated evidence.
+  for (const report of [compatibility, annual, career, love]) {
+    report.sharedAppendixInLifeReport = true
+    const parts = splitDeliveredReading(report.fullText)
+    report.fullText = parts.body.split('\n\nYour Everyday Compass')[0] + '\n\n' + CALCULATION_NOTES + '\n\n' + parts.appendix.split('\n\nChart terms in plain English')[0]
+    report.wordCount = report.fullText.split(/\s+/).length
+  }
+  const overviewTitle = 'How Do Your Life, Love, Work and Year Connect?'
+  const overviewParagraphs = bundleNarrative(plans).map(line=>line.en)
+  const synthesis = plainReadingText(overviewParagraphs.join('\n\n'))
+  const overview = { title: overviewTitle, fullText: [overviewTitle, synthesis].join('\n\n'), paragraphs: overviewParagraphs }
+  const chapter = (report: { chapters: ReportChapter[] }, id: string) => {
+    const found = report.chapters.find(item => item.id === id)
+    if (!found) throw new Error(`Missing collection answer source: ${id}`)
+    return found
+  }
+  const answer = (number: number, question: string, source: ReportChapter, timing?: string, collectionLead?: string) => {
+    return [
+      `${String(number).padStart(2, '0')} Â· ${question}`,
+      `Question: ${question}`,
+      `Your Answer: ${plainReadingText(collectionLead ?? source.lead)}`,
+      ...(timing ? [`Important Timing: ${plainReadingText(timing)}`] : []),
+    ].join('\n\n')
+  }
+  const life = chapter(complete, 'personality')
+  const social = chapter(complete, 'social')
+  const strengthsOverview = {
+    ...life,
+    title: 'Your Strengths and Blind Spots',
+    lead: social.lead,
+    paragraphs: [social.paragraphs[0] ?? social.tryThis, life.paragraphs[0] ?? life.tryThis],
+    tryThis: social.tryThis,
+  }
+  const careerFit = chapter(career, 'two-work-layers')
+  const moneyFit = chapter(career, 'money-commitments')
+  const challenge = chapter(complete, 'life-challenges')
+  const yearTheme = chapter(annual, 'annual-theme')
+  const longTerm = chapter(complete, 'patterns')
+  const lifeTimeline = complete.periods.length
+    ? complete.periods.map(period => `${period.period} Â· ${period.pillar}: ${period.paragraphs.join(' ')}`)
+    : ['No ten-year cycle falls within the available calculated range.']
+  const coreProfile = PERSONAL_PROFILES[plans.complete.primary.dayStem]
+  const privateNeed = RELATIONSHIP_PROFILES[plans.complete.primary.dayBranch].need
+  const workTheme = LANGUAGE[plans.complete.primary.monthStemGod].name.en
+  const workTaskText = workTask(plans.complete.primary)
+  const pressurePattern = plainReadingText(coreProfile.pressure).replace(/[.!?]+$/u, '').replace(/^[A-Z]/u, letter => letter.toLowerCase())
+  const challengeAnswer = `A recurring challenge is that ${pressurePattern}. It can crowd out your need for ${privateNeed}, linking your chart's work and private-life themes. This is a pattern to notice, not a fixed outcome.`
+  const primaryMoney = plans.complete.primary
+  const hasSteadyIncome = (items: { god: string }[]) => items.some(item => item.god === 'æ­£è²¡')
+  const hasVariableIncome = (items: { god: string }[]) => items.some(item => item.god === 'åè²¡')
+  const visibleSteady = hasSteadyIncome(primaryMoney.visibleMoney), visibleVariable = hasVariableIncome(primaryMoney.visibleMoney)
+  const hiddenSteady = hasSteadyIncome(primaryMoney.hiddenMoney), hiddenVariable = hasVariableIncome(primaryMoney.hiddenMoney)
+  const incomeSummary = visibleSteady && visibleVariable
+    ? 'repeat income and new deals both appear in the visible chart, so cash planning needs to account for both'
+    : visibleSteady ? 'repeat income is the clearer visible route'
+      : visibleVariable ? 'new customers or project fees are the clearer visible route'
+        : hiddenSteady && hiddenVariable ? 'repeat and project income appear in less visible signs, without a clear amount'
+          : hiddenSteady ? 'a possible repeat-pay route appears in less visible signs'
+            : hiddenVariable ? 'a possible project-income route appears in less visible signs'
+              : 'the chart gives clearer work-fit clues than direct income clues'
+  const integratedCollectionAnswer = `Your work pattern centres on ${workTheme}, while ${incomeSummary}. They connect through delivery: opportunities help only when you can complete the work and collect payment. Your close relationships have a separate need: ${privateNeed}. These are related parts of your life, but the chart does not show that one causes another or guarantee an event.`
+  const threeInsights = `Three chart-linked themes stand out: your core style is ${coreProfile.focus}; your work fit centres on ${workTheme}; and close relationships work best when your need for ${privateNeed} is understood.`
+  const repeatingPatternText = plainReadingText(coreProfile.watchFor.at(-1) ?? coreProfile.watchFor[0])
+  const repeatingPattern = `A pattern that may repeat is ${repeatingPatternText.charAt(0).toLowerCase()}${repeatingPatternText.slice(1)} Your chart links this tendency to a work style centred on ${workTheme}; it is a pattern to notice, not a fixed outcome.`
+  const finalMessage = `Your chart points to a clear theme: ${workTheme} at work and your need for ${privateNeed} both matter in the life you build. Treat this as a personal pattern to weigh alongside your real circumstances, not as a fixed outcome.`
+  const collectionQuestions = [
+    answer(1, DESTINY_COLLECTION_QUESTIONS[0], life, undefined, threeInsights),
+    answer(2, DESTINY_COLLECTION_QUESTIONS[1], careerFit, undefined, `Your clearest opportunity is to use ${workTheme} as a regular part of your work, where it can shape the value you offer.`),
+    answer(3, DESTINY_COLLECTION_QUESTIONS[2], challenge, undefined, challengeAnswer),
+    answer(4, DESTINY_COLLECTION_QUESTIONS[3], moneyFit, undefined, integratedCollectionAnswer),
+    answer(5, DESTINY_COLLECTION_QUESTIONS[4], life, undefined, repeatingPattern),
+    answer(6, DESTINY_COLLECTION_QUESTIONS[5], longTerm, undefined, `No verified timing calculation identifies specific important years. Use a yearly check-in to see whether ${workTaskText} leaves room for your need for ${privateNeed}. Let real changes guide your next step.`),
+    answer(7, DESTINY_COLLECTION_QUESTIONS[6], yearTheme, undefined, `Over the next three years, focus on building a sustainable routine for ${workTaskText} while protecting your need for ${privateNeed}. Start by deciding which responsibility needs a clearer limit. This is a practical focus based on your chart themes, not a year-by-year forecast.`),
+    answer(8, DESTINY_COLLECTION_QUESTIONS[7], strengthsOverview, undefined, `A strength you may overlook is this: ${plainReadingText(coreProfile.strength)} The chart links this trait to your natural way of approaching work and close relationships.`),
+    answer(9, DESTINY_COLLECTION_QUESTIONS[8], life, undefined, `A more fulfilling life is supported when work that involves ${workTheme} leaves room for the close relationships that meet your need for ${privateNeed}. Your chart describes tendencies; your choices and circumstances still matter.`),
+    [
+      `10 Â· ${DESTINY_COLLECTION_QUESTIONS[9]}`,
+      `Question: ${DESTINY_COLLECTION_QUESTIONS[9]}`,
+      `Your Answer: ${plainReadingText(finalMessage)}`,
+    ].join('\n\n'),
+  ]
+  const includedReports = [complete, compatibility, career, annual, love]
+  const deliveredReports = includedReports.map(report => splitDeliveredReading(report.fullText))
+  const deliveredBodies = deliveredReports.map(report => report.body.split('\n\n').filter(block => !block.includes('From the chart:')).join('\n\n'))
+  const fullText = [
+    'THE FATE KEY Â· Your Destiny Collection',
+    overview.fullText,
+    'Birth details', complete.birthSummary, ...complete.pillarSummary,
+    "Your partner's birth details", compatibility.subjects[1].birthSummary,
+    'Your Ten Questions', ...collectionQuestions,
+    'Your Included Reports',
+    ...deliveredBodies,
+    CALCULATION_NOTES,
+    'Chart evidence for these answers',
+    ...deliveredReports.map(report => report.appendix),
+    'Longer-term timing reference', ...lifeTimeline,
+    'How this reading is prepared', ...complete.methodNotes,
+  ].join('\n\n')
+  const summary = [{ label: 'Your Life, Your Destiny', text: complete.summary[0].text }, { label: 'Your Next 12 Months', text: annual.summary[0].text }, { label: 'Are We Meant to Be?', text: compatibility.summary[0].text }, { label: 'Success, Money & Your Future', text: career.summary[0].text }, { label: 'Relationship Needs', text: love.summary[0].text }]
+  return { title: 'Your Destiny Collection', complete, compatibility, annual, career, love, overview, summary, synthesis, fullText, wordCount: fullText.split(/\s+/).length }
+}

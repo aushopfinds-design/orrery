@@ -1,1 +1,85 @@
-YªçŠx-®éÜj×¢ëiºÚ+Š§j[h‘éÜ¢éí×nuN‹Z–‹­¦ëeŠw¬Õ¥µÁ½ÉÐì‘•ÍÉ¥‰”±¥Ð±•áÁ•Ðô™É½´€Ù¥Ñ•ÍÐœ)¥µÁ½ÉÐì…±Õ±…Ñ•M…©Ôô™É½´€½ÉÉ•Éä½½É”½Í…©Ôœ)¥µÁ½ÉÐìQ=Ie}M9I%=Lô™É½´€œ¸½…Ñ•½Éäµ…Ñ…±½œ¹ÑÌœ)¥µÁ½ÉÐì‰Õ¥±‘%¹Ñ•ÉÁÉ•Ñ…Ñ¥½¹A±…¸°‰Õ¹‘±•%¹Ñ•ÉÁÉ•Ñ…Ñ¥½¹A±…¹Ìô™É½´€œ¸½¥¹Ñ•ÉÁÉ•Ñ…Ñ¥½¸µÁ±…¸¹ÑÌœ)¥µÁ½ÉÐìÕÍÑ½µ•É9…ÉÉ…Ñ¥Ù”°‰Õ¹‘±•9…ÉÉ…Ñ¥Ù”ô™É½´€œ¸½ÁÕÉ¡…Í”µ¹…ÉÉ…Ñ¥Ù”¹ÑÌœ)¥µÁ½ÉÐìÉ½±•¡½¥”°‰ÕÍ¥¹•ÍÍ¥Ù¥Í¥½¸°É•±…Ñ¥½¹Í¡¥ÁI•Á…¥È°Á•ÉÍ½¹…±	½Õ¹‘…Éä°µ½¹Ñ¡±å¥Ðô™É½´€œ¸½Á•ÉÍ½¹…±¥Í•µ¡½¥•Ì¹ÑÌœ)½¹ÍÐ„õ…±Õ±…Ñ•M…©Ô¡Q=Ie}M9I%=MlÁt¹™¥ÉÍÐ¤±ˆõ…±Õ±…Ñ•M…©Ô¡Q=Ie}M9I%=MlÁt¹Í•½¹¤)½¹ÍÐÁ±…¸õ‰Õ¥±‘%¹Ñ•ÉÁÉ•Ñ…Ñ¥½¹A±…¸ å•…Èœ±„°ÈÀÈØ¤)‘•ÍÉ¥‰” ÈÈÐ¡…ÉÐµÍÁ•¥™¥ŒÕÍÑ½µ•È¡½¥•Ìœ° ¤ôùì(¥Ð ÕÍ•Ì‰½Ñ ½‰Í•ÉÙ•Ý½É¬É½±•Ì…¹¡…¹•ÌÑ¡”…¹ÍÝ•ÈÝ¡•¸½¹±ä‘…¥±äÝ½É¬¡…¹•Ìœ° ¤ôùì(€½¹ÍÐÀõÁ±…¸¹ÁÉ¥µ…Éä±Í…µ”õì¸¸¹À±µ½¹Ñ¡	É…¹¡½éÀ¹µ½¹Ñ¡MÑ•µ½‘ô(€½¹ÍÐ½Ñ¡•Èõì¸¸¹Í…µ”±µ½¹Ñ¡	É…¹¡½éÀ¹µ½¹Ñ¡MÑ•µ½ôôôŸ¦Žž–xœüŸ–?–6ÀœèŸ¦Žž–xô(€•áÁ•Ð¡É½±•¡½¥”¡Í…µ”¤¹•¸¤¹Ñ½½¹Ñ…¥¸ ±•…ÈÉ•µ¥Ðœ¤(€•áÁ•Ð¡É½±•¡½¥”¡Í…µ”±ÑÉÕ”¤¹•¸¤¹Ñ½½¹Ñ…¥¸ ±•…ÈÉ½±”Ý¥Ñ ‘•™¥¹•‘ÕÑ¥•Ìœ¤(€•áÁ•Ð¡É½±•¡½¥”¡½Ñ¡•È¤¹•¸¤¹Ñ½½¹Ñ…¥¸ µ½ÍÐ½˜å½ÕÈÝ••¬¥ÌÍÁ•¹Ð½¸œ¤(€•áÁ•Ð¡É½±•¡½¥”¡½Ñ¡•È¤¹•¸¤¹Ñ½½¹Ñ…¥¸ Ù•¸„É½±”Ñ¡…ÐÕÍ•Ìœ¤(€•áÁ•Ð¡É½±•¡½¥”¡½Ñ¡•È¤¹•¸¤¹¹½Ð¹Ñ½½¹Ñ…¥¸ ‰•¥¹œ¡¥É•™½ÈÑ¡”™¥ÉÍÐœ¤(€•áÁ•Ð¡É½±•¡½¥”¡Í…µ”¤¹•¸¤¹¹½Ð¹Ñ½	”¡É½±•¡½¥”¡½Ñ¡•È¤¹•¸¤(€•áÁ•Ð¡É½±•¡½¥”¡Í…µ”¤¹­¼¤¹¹½Ð¹Ñ½	”¡É½±•¡½¥”¡½Ñ¡•È¤¹­¼¤(€•áÁ•Ð¡É½±•¡½¥”¡½Ñ¡•È±ÑÉÕ”±ÑÉÕ”¤¹•¸¤¹Ñ½½¹Ñ…¥¸ e½ÕÈÍÑÉ½¹•ÍÐ™¥Ð½µ‰¥¹•Ìœ¤(€•áÁ•Ð¡É½±•¡½¥”¡½Ñ¡•È±ÑÉÕ”±ÑÉÕ”¤¹•¸¤¹Ñ½½¹Ñ…¥¸ %¸ÁÉ…nu¶‰žËkºwµçfW74F—f—6–öâ†Æ–æ¶VB’æVâ’çFô6öçF–â‚v†æF÷fW"r¢W‡V7B†'W6–æW74F—f—6–öâ††–FFVâ’æVâ’çFô6öçF–â‚vÆW72f—6–&ÆRr¢W‡V7B†'W6–æW74F—f—6–öâ†Æ–æ¶VB’æ¶ò’ææ÷BçFô&R†'W6–æW74F—f—6–öâ††–FFVâ’æ¶ò¢Ò¢—B‚vv—fW2V6‚'FæW"F†R&÷&–FR&W7öç6Rv—F†÷WB6ÆÆ–ær6†&VBæVVG2F–ffW&VçBrÂ‚“Óç°¢6öç7B×Æâç&–Ö'¢6öç7B&W—#×&VÆF–öç6†—&W—"‡²ââçÆF”'&æ6ƒ¢~ZÙwÒÇ²ââçÆF”'&æ6ƒ¢~XØ‚wÒ¢W‡V7B‡&W—"æVâ’çFôÖF6‚‚õåFò&V6‚–÷RÂò¢W‡V7B‡&W—"æVâ’çFô6öçF–â‚wF–ÖRFòF†–æ²r“¶W‡V7B‡&W—"æVâ’çFô6öçF–â‚wVæF—f–FVBGFVçF–öâr¢W‡V7B‡&VÆF–öç6†—&W—"‡²ââçÆF”'&æ6ƒ¢~iÊ¢wÒÇ²ââçÆF”'&æ6ƒ¢~yK2wÒ’æVâ’çFô6öçF–â‚vf—'7B&W7öç6R6â&R6–Ö–Æ"r¢W‡V7B‡&VÆF–öç6†—&W—"‡²ââçÆF”'&æ6ƒ¢~XØ‚wÒÇ²ââçÆF”'&æ6ƒ¢~ZÙwÒ’æVâ’ææ÷BçFô&R‡&W—"æVâ¢Ò¢—B‚v¶VW2ÖöçF†Ç’g&–7F–öâ66÷VBFòö'6W'fVB÷6—F–öç2æB6W&FW2&WWF—F–öâg&öÒæWrF†VÖRrÂ‚“Óç°¢6öç7B×Æâç&–Ö'’ÆÓ×ÆâæÖöçF‡5³Ð¢6öç7BæWWG&Ã×²ââæÒÆvöC§æÖöçF…7FVÔvöBÆ6ö×&—6öç3¥µ×Ð¢W‡V7B†ÖöçF†Ç”f—B‡ÆæWWG&Â’æVâ’çFô6öçF–â‚w&WVG2r¢W‡V7B†ÖöçF†Ç”f—B‡ÆæWWG&Â’æVâ’ææ÷BçFô6öçF–â‚tæòF—&V7Bg&–7F–öâr¢6öç7Bv÷&³×²ââææWWG&ÂÆ6ö×&—6öç3¥··÷6—F–öã¢vÖöçF‚rÇGFW&ç3¥··G—S¢~k)brÆFWF–Ã¢rrÆÆ–W#¢v'&æ6‚wÕ×Õ×Ò2G—VöbÐ¢W‡V7B†ÖöçF†Ç”f—B‡Çv÷&²’æVâ’çFô6öçF–â‚vF§W7FÖVçB6öæ6W&ç2–÷W"v÷&¶–ær'&ævVÖVçG2r¢W‡V7B†ÖöçF†Ç”f—B‡Çv÷&²’æVâ’ææ÷BçFô6öçF–â‚vF§W7FÖVçB6öæ6W&ç2&÷F‚r¢6öç7B6V7F–öç3Ö7W7FöÖW$æ'&F—fR‡Æâ¢f÷"†ÆWB“Ó¶“ÃÓ#¶’²²–W‡V7B‡6V7F–öç5²vÖöçF‚Òr¶•ÒæÆ–æW2ç6öÖR†ÃÓæÂæVâç7F'G5v—F‚‚t6
+import { describe,it,expect } from 'vitest'
+import { calculateSaju } from '@orrery/core/saju'
+import { CATEGORY_SCENARIOS } from './category-catalog.ts'
+import { buildInterpretationPlan, bundleInterpretationPlans } from './interpretation-plan.ts'
+import { customerNarrative, bundleNarrative } from './purchase-narrative.ts'
+import { roleChoice, businessDivision, relationshipRepair, personalBoundary, monthlyFit } from './personalised-choices.ts'
+const a=calculateSaju(CATEGORY_SCENARIOS[0].first),b=calculateSaju(CATEGORY_SCENARIOS[0].second)
+const plan=buildInterpretationPlan('year',a,2026)
+describe('r24 chart-specific customer choices',()=>{
+ it('uses both observed work roles and changes the answer when only daily work changes',()=>{
+  const p=plan.primary,same={...p,monthBranchGod:p.monthStemGod}
+  const other={...same,monthBranchGod:p.monthStemGod==='é£Ÿç¥ž'?'åå°':'é£Ÿç¥ž'}
+  expect(roleChoice(same).en).toContain('clear remit')
+  expect(roleChoice(same,true).en).toContain('clear role with defined duties')
+  expect(roleChoice(other).en).toContain('most of your week is spent on')
+  expect(roleChoice(other).en).toContain('Even a role that uses')
+  expect(roleChoice(other).en).not.toContain('being hired for the first')
+  expect(roleChoice(same).en).not.toBe(roleChoice(other).en)
+  expect(roleChoice(same).ko).not.toBe(roleChoice(other).ko)
+  expect(roleChoice(other,true,true).en).toContain('Your strongest fit combines')
+  expect(roleChoice(other,true,true).en).toContain('In practice, this can mean')
+  expect(roleChoice(other,true,true).en).toContain('It can also include')
+  expect(roleChoice(other,true,true).en).not.toContain('most of your week is spent on')
+  expect(roleChoice(same,true,true).en).toContain('Your chart points toward')
+  expect(customerNarrative(buildInterpretationPlan('career',a,2026))['two-work-layers'].lines.some(l=>l.en===roleChoice(p).en)).toBe(true)
+ })
+ it('distinguishes an observed skill-to-sales link from absent outward money',()=>{
+  const p=plan.primary
+  const linked={...p,resolution:{...p.resolution,circuits:[{code:'output-to-money'}]}} as typeof p
+  const hidden={...p,resolution:{...p.resolution,circuits:[]},visibleMoney:[],hiddenMoney:[p.hiddenMoney[0]??{}]} as typeof p
+  expect(businessDivision(linked).en).toContain('handover')
+  expect(businessDivision(hidden).en).toContain('less visible')
+  expect(businessDivision(linked).ko).not.toBe(businessDivision(hidden).ko)
+ })
+ it('gives each partner the appropriate response without calling shared needs different',()=>{
+  const p=plan.primary
+  const repair=relationshipRepair({...p,dayBranch:'å­'},{...p,dayBranch:'åˆ'})
+  expect(repair.en).toMatch(/^To reach you,/)
+  expect(repair.en).toContain('time to think');expect(repair.en).toContain('undivided attention')
+  expect(relationshipRepair({...p,dayBranch:'æœª'},{...p,dayBranch:'ç”³'}).en).toContain('first response can be similar')
+  expect(relationshipRepair({...p,dayBranch:'åˆ'},{...p,dayBranch:'å­'}).en).not.toBe(repair.en)
+ })
+ it('keeps monthly friction scoped to observed positions and separates repetition from a new theme',()=>{
+  const p=plan.primary,m=plan.months[0]
+  const neutral={...m,god:p.monthStemGod,comparisons:[]}
+  expect(monthlyFit(p,neutral).en).toContain('repeats')
+  expect(monthlyFit(p,neutral).en).not.toContain('No direct friction')
+  const work={...neutral,comparisons:[{position:'month',patterns:[{type:'æ²–',detail:'',layer:'branch'}]}]} as typeof m
+  expect(monthlyFit(p,work).en).toContain('adjustment concerns your working arrangements')
+  expect(monthlyFit(p,work).en).not.toContain('adjustment concerns both')
+  const sections=customerNarrative(plan)
+  for(let i=1;i<=12;i++)expect(sections['month-'+i].lines.some(l=>l.en.startsWith('Compared with your usual emphasis'))).toBe(true)
+ })
+ it('makes the temperament boundary depend on private as well as work roles and gives the collection a joint question',()=>{
+  const p=plan.primary
+  const shared=personalBoundary({...p,dayBranchGod:p.monthStemGod}).en
+  expect(shared).toContain('The same pattern appears in your work and private life:')
+  expect(shared).not.toContain('while your private-life pattern adds')
+  expect(shared).toContain('the very thing you need a break from')
+  const different=personalBoundary({...p,dayBranchGod:p.monthStemGod==='æ­£è²¡'?'é£Ÿç¥ž':'æ­£è²¡'}).en
+  expect(different).toContain('while your private-life pattern adds')
+  expect(different).toContain('more than simply leaving')
+  const collection=bundleNarrative(bundleInterpretationPlans(a,b,2026,2026))
+  expect(collection[0].en).toContain('shared time')
+  for(const passage of [...collection,roleChoice(p),businessDivision(p),personalBoundary(p)]){expect(passage.ko).toMatch(/[ê°€-íž£]/);expect(passage.en).not.toMatch(/undefined|NaN/)}
+ })
+ it('keeps the new passages usable across four different known and unknown-hour charts',()=>{
+  const inputs=[...CATEGORY_SCENARIOS.map(x=>x.first),{year:1980,month:3,day:25,hour:0,minute:0,unknownTime:true,gender:'M' as const,timezone:'Asia/Seoul',latitude:37.5665,longitude:126.978}]
+  const choices=new Set<string>()
+  for(const input of inputs){
+   const chart=calculateSaju(input),year=buildInterpretationPlan('year',chart,2026)
+   choices.add(roleChoice(year.primary).en)
+   for(const kind of ['complete','career','business','wellbeing','compatibility','year'] as const){
+    const sections=customerNarrative(buildInterpretationPlan(kind,chart,2026,b))
+    for(const section of Object.values(sections))for(const line of section.lines){
+     expect(line.en).not.toMatch(/undefined|NaN|signes|must fit around (.*)must fit around/)
+     expect(line.ko).toMatch(/[ê°€-íž£]/)
+    }
+   }
+   if(input.unknownTime)expect(year.primary.positions.some(p=>p.position==='hour')).toBe(false)
+  }
+  expect(choices.size).toBeGreaterThan(2)
+ })
+
+})
