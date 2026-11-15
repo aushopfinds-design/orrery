@@ -157,25 +157,25 @@ function buildSections(plan:InterpretationPlan,targetedProduct01=true,rootCauseF
   const overlapNotes=overlap.map(row=>{
    const opening=row.lines.find(line=>line.id.endsWith('.opening'))?.en
    const caution=row.lines.find(line=>line.id.endsWith('.caution'))?.en
-   return `${labels([row])} appears in both lists. Activity opening: ${opening?.replace(/[.!?]+$/,'')??'the activity check identifies an opening'}. Extra-care note: ${caution?.replace(/[.!?]+$/,'')??'the separate check also identifies competing demands'}.`
+   return `${labels([row])} appears in both lists. The chart shows a possible opening: ${opening?.replace(/[.!?]+$/,'')??'a possible opportunity to act'}. It also flags an added concern: ${caution?.replace(/[.!?]+$/,'')??'extra demands to consider'}.`
   })
   const supportBasis=good.length
-   ? `These are conditional activity openings, not a ranking of lucky months. The extra-care list separately checks friction and competing demands. ${overlapNotes.length?overlapNotes.join(' '):'None of these selected months also meets the extra-care check.'}`
+   ? `These are chart-based opportunities, not guaranteed lucky months. A separate caution check looks for relationship tension and added responsibilities. ${overlapNotes.length?overlapNotes.join(' '):'The caution check did not flag these selected months.'}`
    : ''
   const supportiveLead=cleanGood.length
-   ? `The clearest conditional activity openings are ${labels(selected)}. ${supportBasis}`
+   ? `The clearest months to move a plan forward are ${labels(selected)}. ${supportBasis}`
    : good.length
-    ? `The full activity check identifies ${labels(good)}, but each also meets the separate extra-care check. The opening and the added demands should be considered together. ${overlapNotes.join(' ')}`
+    ? `The chart points to a possible opening in ${labels(good)}, but these months also carry added demands. Consider both before committing. ${overlapNotes.join(' ')}`
    : selected.length
-    ? `The chart does not show a month meeting the combined conditions for a clear opening. This does not mean no opportunities will arise. Quieter work-and-relationship themes appear in ${labels(selected)}; they are separate from the months with a checked friction or added-demand signal.`
-    : 'The chart does not show a month meeting the combined conditions for a clear opening, and no quieter comparison stands out. This is not a forecast of no opportunities; use the monthly readings to identify the specific commitments to adjust.'
+    ? `No month stands out as especially supportive in this reading. This does not mean no opportunities will come up. Quieter work-and-relationship themes appear in ${labels(selected)}; they do not meet the check for a clear opening or added responsibilities.`
+    : 'No month stands out as especially supportive, and no quieter pattern is clear. This does not mean no opportunities will come up. Use the monthly notes to decide which commitments you can adjust.'
   const supportiveLeadKo=cleanGood.length
-   ? `${koLabels(selected)}월은 조건부 활동 기회입니다. 행운 순위가 아닙니다. ${overlap.length?`${koLabels(overlap)}월은 두 목록에 모두 있습니다. 활동의 기회와 별도의 부담을 함께 살핍니다.`:'주의 목록은 마찰과 겹치는 부담을 별도 기준으로 확인합니다.'}`
+   ? `계획을 추진하기에 비교적 나은 흐름이 보이는 달은 ${koLabels(selected)}월입니다. 확정된 행운의 달이라는 뜻은 아닙니다. ${overlap.length?`${koLabels(overlap)}월에는 기회와 추가 부담이 함께 보이므로 둘 다 살펴보세요.`:'별도의 주의 기준에서도 이 달들의 부담이 두드러지지 않았습니다.'}`
    : good.length
-    ? `전체 활동 기회 기준을 통과한 ${koLabels(good)}월은 별도의 주의 기준도 충족합니다. 기회와 추가 부담을 함께 고려해야 합니다.`
+    ? `차트에서 기회가 보이는 ${koLabels(good)}월에는 추가 부담도 함께 나타납니다. 결정하기 전에 두 흐름을 함께 살펴보세요.`
    : selected.length
-    ? '전체 활동 기회 기준을 통과한 달은 없습니다. 상대적으로 조용한 일·관계 주제가 나타난 달은 아래와 같으며, 활동 기회로 분류한 것은 아닙니다. 주의 목록은 마찰이나 겹치는 부담을 별도 기준으로 확인합니다.'
-    : '전체 활동 기회 기준을 통과한 달도, 상대적으로 조용한 달도 뚜렷하지 않습니다. 전체 월별 풀이에서 조정할 약속을 확인합니다.'
+    ? `뚜렷한 기회가 두드러지는 달은 없습니다. 그렇다고 기회가 없다는 뜻은 아닙니다. 상대적으로 차분한 일·관계 흐름은 ${koLabels(selected)}월에 나타나지만, 뚜렷한 기회 기준에는 해당하지 않습니다.`
+    : '뚜렷한 기회가 보이는 달도, 상대적으로 차분한 달도 없습니다. 그렇다고 기회가 없다는 뜻은 아닙니다. 월별 안내를 보고 조정할 약속을 확인하세요.'
   put('annual-cycle-context',supportiveLead,supportiveLeadKo)
   for(const [i,pick] of picks.entries())out['annual-cycle-context'].lines.push({id:'annual-cycle-context.pick-'+i,...pick})
 

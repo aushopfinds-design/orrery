@@ -42,7 +42,7 @@ describe('six final English product reports', () => {
           expect(risk, `profile ${profileIndex + 1} business risk answer`).not.toBeNull()
           businessRiskOpenings.push(risk![1])
           const cycleAnswer = report.text.split('Question: What do my upcoming cycles suggest about business activity?')[1]?.split('\n\nQuestion: ')[0] ?? ''
-          expect(cycleAnswer).toMatch(/business-year comparisons cover \d{4}–\d{4}/)
+          expect(cycleAnswer).toMatch(/yearly comparisons for \d{4}–\d{4} still offer shorter-term themes to review/)
           expect(cycleAnswer).toMatch(/\d{4}: (?:Opening|Adjustment|extra pressure|caution)/i)
         }
         if (kind === 'year') {

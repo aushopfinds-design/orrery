@@ -98,18 +98,18 @@ export function buildBundleFromPlans(plans: ReturnType<typeof bundleInterpretati
   const visibleSteady = hasSteadyIncome(primaryMoney.visibleMoney), visibleVariable = hasVariableIncome(primaryMoney.visibleMoney)
   const hiddenSteady = hasSteadyIncome(primaryMoney.hiddenMoney), hiddenVariable = hasVariableIncome(primaryMoney.hiddenMoney)
   const incomeSummary = visibleSteady && visibleVariable
-    ? 'repeat income and new deals both appear in the visible chart, so cash planning needs to account for both'
-    : visibleSteady ? 'repeat income is the clearer visible route'
-      : visibleVariable ? 'new customers or project fees are the clearer visible route'
-        : hiddenSteady && hiddenVariable ? 'repeat and project income appear in less visible signs, without a clear amount'
-          : hiddenSteady ? 'a possible repeat-pay route appears in less visible signs'
-            : hiddenVariable ? 'a possible project-income route appears in less visible signs'
+    ? 'your chart points to both repeat income and new deals, so cash planning needs to account for both'
+    : visibleSteady ? 'repeat income is the clearer route in your chart'
+      : visibleVariable ? 'new customers or project fees are the clearer route in your chart'
+        : hiddenSteady && hiddenVariable ? 'your chart gives small clues toward both repeat and project income, without showing an amount'
+          : hiddenSteady ? 'your chart gives a small clue toward repeat income, but no amount'
+            : hiddenVariable ? 'your chart gives a small clue toward project income, but no amount'
               : 'the chart gives clearer work-fit clues than direct income clues'
   const integratedCollectionAnswer = `Your work pattern centres on ${workTheme}, while ${incomeSummary}. They connect through delivery: opportunities help only when you can complete the work and collect payment. Your close relationships have a separate need: ${privateNeed}. These are related parts of your life, but the chart does not show that one causes another or guarantee an event.`
   const threeInsights = `Three chart-linked themes stand out: your core style is ${coreProfile.focus}; your work fit centres on ${workTheme}; and close relationships work best when your need for ${privateNeed} is understood.`
   const repeatingPatternText = plainReadingText(coreProfile.watchFor.at(-1) ?? coreProfile.watchFor[0])
   const repeatingPattern = `A pattern that may repeat is ${repeatingPatternText.charAt(0).toLowerCase()}${repeatingPatternText.slice(1)} Your chart links this tendency to a work style centred on ${workTheme}; it is a pattern to notice, not a fixed outcome.`
-  const finalMessage = `Your chart points to a clear theme: ${workTheme} at work and your need for ${privateNeed} both matter in the life you build. Treat this as a personal pattern to weigh alongside your real circumstances, not as a fixed outcome.`
+  const finalMessage = `Before saying yes to a new work commitment, check whether its hours and duties leave room for your need for ${privateNeed}. If they compete, discuss what support or limit would make the commitment workable. Use this as a prompt for a real conversation, not as a fixed outcome.`
   const collectionQuestions = [
     answer(1, DESTINY_COLLECTION_QUESTIONS[0], life, undefined, threeInsights),
     answer(2, DESTINY_COLLECTION_QUESTIONS[1], careerFit, undefined, `Your clearest opportunity is to use ${workTheme} as a regular part of your work, where it can shape the value you offer.`),

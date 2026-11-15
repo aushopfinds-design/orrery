@@ -86,12 +86,14 @@ describe('Targeted customer-answer revisions',()=>{
   expect(note).toContain('Your birth time is unknown, so this reading uses your year, month and day signs only. It does not guess an hour.')
   expect(note).not.toMatch(/Opening marks|Adjustment marks|money, responsibility or learning/)
  })
- it('explains the chart-linked income and support conflict without claiming a real setback',()=>{
-  const answers=CATEGORY_SCENARIOS.map(profile=>customerNarrative(buildInterpretationPlan('career',calculateSaju(profile.first),2026))['working-style'].lines.map(line=>line.en))
-  const answer=answers.flat().find(line=>/learning or support/i.test(line))!
+ it('describes the chart-linked income and support conflict without claiming a real setback',()=>{
+  const plans=CATEGORY_SCENARIOS.map(profile=>buildInterpretationPlan('career',calculateSaju(profile.first),2026))
+  const plan=plans.find(item=>item.primary.resolution.risks.some(risk=>risk.code==='money-versus-resource'))
+  expect(plan).toBeDefined()
+  const answer=customerNarrative(plan!)['working-style'].lines.map(line=>line.en).find(line=>/training or support/i.test(line))
   expect(answer).toBeDefined()
-  expect(answer).toContain('the chart cannot confirm that it is limiting your finances')
-  expect((answer.match(/learning or support/gi) ?? [])).toHaveLength(1)
+  expect(answer).toContain('cannot confirm this is limiting your finances')
+  expect(answer).toContain('Compare training costs and hours with income-producing work')
   expect(answer).not.toContain('This is a possible overlap in demands')
  })
  it('keeps Product 01 income limits concise and separates its life-challenge answer from the relationship answer',()=>{
@@ -190,10 +192,10 @@ describe('r15 paid-content review fixes',()=>{
   const text=Object.values(s).flatMap(x=>[...x.lines.map(l=>l.en),x.action.en,x.caution.en]).join(' ')
   expect(text).not.toMatch(/personal context|The period brings|The focus is|day-of-birth temperament|In 2027-\d\d/)
   expect(s['month-1'].action.en).toContain('In January 2027')
-  expect(s['annual-cycle-context'].lines[0].en).not.toContain('The clearest conditional activity openings are May 2027, June 2027, July 2027')
-  expect(s['annual-cycle-context'].lines[0].en).toContain('extra-care list separately checks friction and competing demands')
+  expect(s['annual-cycle-context'].lines[0].en).toContain('The clearest months to move a plan forward are')
+  expect(s['annual-cycle-context'].lines[0].en).not.toMatch(/conditional activity openings|friction and competing demands|extra-care list/)
   expect(s['annual-theme'].lines[0].en).toMatch(/^For January 2027 through December 2027, the chart points to .+ at work; in close relationships, .+/)
-  expect(s['annual-cycle-context'].lines[0].en).toContain('not a ranking of lucky months')
+  expect(s['annual-cycle-context'].lines[0].en).toContain('not guaranteed lucky months')
   expect(s['month-7'].lines[0].en).toContain('Opening —')
   expect(text).not.toContain('manage..')
   for(const id of ['month-5','month-6'])expect(s[id].lines[0].en).toContain('Opening + pressure')

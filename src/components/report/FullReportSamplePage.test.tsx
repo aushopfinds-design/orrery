@@ -22,7 +22,7 @@ describe('full product sample pages', () => {
   it('uses the buyer-facing answer text for the public career example', () => {
     const html = renderToStaticMarkup(createElement(FullReportSamplePage, { kind: 'career' }))
     expect(html).toContain('What Tends to Block My Financial Progress?')
-    expect(html).toContain('The chart points to a possible squeeze between paid work and the preparation or help needed to do it well')
+    expect(html).toContain('The main pressure to check is whether training or support is taking time or money away from paid work')
     expect(html).not.toContain('Practical point: This is a possible chart pressure')
   })
 })

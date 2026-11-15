@@ -59,7 +59,7 @@ describe('r23 customer review regressions',()=>{
   const plan=buildInterpretationPlan('year',a,2027),sections=customerNarrative(plan)
   const highlights=sections['annual-cycle-context'].lines
   expect(highlights.length).toBeGreaterThan(1);expect(highlights.length).toBeLessThanOrEqual(4)
-  expect(highlights[0].en).toContain('not a ranking of lucky months')
+  expect(highlights[0].en).toContain('not guaranteed lucky months')
   expect(new Set(highlights.slice(1).map(x=>x.en.split(': ').slice(1).join(': '))).size).toBe(highlights.length-1)
   for(let i=1;i<=12;i++)expect(sections['month-'+i].lines[0].en).toMatch(/Opening|Adjustment|Focus/)
  })

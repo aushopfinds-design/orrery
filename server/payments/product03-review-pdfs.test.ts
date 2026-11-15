@@ -29,10 +29,10 @@ describe('Product 03 review PDF batch', () => {
       for (const question of productQuestions('compatibility')) expect(report.text).toContain(`Question: ${question.title}`)
       const q1 = report.text.split('Question: What makes us compatible?')[1]?.split('\n\nQuestion: ')[0] ?? ''
       const q1ByProfile = [
-        'This shared care is your clearest point of fit; the chart shows no clear personal-life link or conflict.',
+        'This shared care is your clearest point of fit.',
         'This is your clearest common ground, while the chart also points to a difference in personal choices.',
-        'This shared care is your clearest point of fit; the chart shows no clear personal-life link or conflict.',
-        'Your fit comes from giving both needs room; the chart adds no clear personal-life link or conflict.',
+        'This shared care is your clearest point of fit.',
+        'Your fit comes from giving both needs room.',
         'Your private-life chart link may support shared plans, while your care needs differ; this is a positive signal, not a promise.',
       ]
       expect(q1).toContain(q1ByProfile[index])
@@ -59,7 +59,7 @@ describe('Product 03 review PDF batch', () => {
       ]
       expect(q4).toContain(q4Examples[index])
       const q5 = report.text.split('Question: How do emotional closeness and everyday compatibility differ?')[1]?.split('\n\nQuestion: ')[0] ?? ''
-      expect(q5).toMatch(/(?:Your daily chart pattern:|You share this daily chart pattern:)/)
+      expect(q5).toMatch(/(?:Your daily routine:|You share this everyday tendency:)/)
       const q5Examples = [
         'Everyday example: Keep one shared plan fixed, then leave room for an extra plan without crowding the week.',
         'Everyday example: For a recurring task, decide who owns it and when to ask for help.',
@@ -70,13 +70,13 @@ describe('Product 03 review PDF batch', () => {
       expect(q5).toContain(q5Examples[index])
       if (index === 1) {
         expect(q5).toContain('You both value warm attention and time for your own interests.')
-        expect(q5).toContain('You share this daily chart pattern: Independence becomes tiring when every task has to be handled alone.')
-        expect(q5).not.toContain("Your partner's daily chart pattern: Independence becomes tiring when every task has to be handled alone.")
+        expect(q5).toContain('You share this everyday tendency: Independence becomes tiring when every task has to be handled alone.')
+        expect(q5).not.toContain("Your partner's daily routine: Independence becomes tiring when every task has to be handled alone.")
         const q7 = report.text.split('Question: What does this connection ask of each of us?')[1]?.split('\n\nQuestion: ')[0] ?? ''
         expect(q7).toContain('each of you can give focused attention while protecting time for separate interests')
         expect(q7).toContain('make room for both connection and independence')
       } else {
-        expect(q5).toContain("Your partner's daily chart pattern:")
+        expect(q5).toContain("Your partner's daily routine:")
       }
       expect(q5).toContain('Emotional closeness depends more on how you respond to each other’s needs')
       expect(q5).not.toContain('day-sign comparison')
@@ -91,11 +91,11 @@ describe('Product 03 review PDF batch', () => {
       }
       const q2 = report.text.split('Question: Why are we attracted to each other?')[1]?.split('\n\nQuestion: ')[0] ?? ''
       expect(q2).toContain('The chart cannot confirm either person’s actual feelings.')
-      expect(q2).toMatch(/The private-life comparison (?:adds no clear connection or conflict|points to different instincts about personal choices|shows a link that may support closeness)/)
+      expect(q2).not.toContain('The private-life comparison adds no clear connection or conflict')
       q2Answers.push(q2)
       if (output) await writeFile(`${output}/${String(index + 1).padStart(2, '0')}-compatibility.pdf`, bytes)
     }
-    expect(q2Answers.some(answer => answer.includes('adds no clear connection or conflict'))).toBe(true)
+    expect(q2Answers.some(answer => !answer.includes('private-life comparison'))).toBe(true)
     expect(q2Answers.some(answer => answer.includes('different instincts about personal choices'))).toBe(true)
     expect(q2Answers.some(answer => answer.includes('shows a link that may support closeness'))).toBe(true)
   }, 120_000)

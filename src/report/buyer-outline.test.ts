@@ -11,7 +11,7 @@ describe('Buyer questions, not a repeated six-part technical template', () => {
   it('explains the chart context for attraction in plain language', () => {
     const reading = buildCategoryReading('compatibility', a, { second: b, year: 2026 })
     const report = applyBuyerQuestions(reading.fullText, 'compatibility', reading.chapters, [], 'standalone')
-    expect(report).toContain('The private-life comparison adds no clear connection or conflict')
+    expect(report).not.toContain('private-life comparison adds no clear connection or conflict')
     expect(report).toMatch(/Question: Why are we attracted to each other\?[\s\S]*Answer: You may be drawn to what your partner brings:/)
     expect(report).toContain('Your partner may be drawn to what you bring: fresh ideas and open communication.')
     expect(report).not.toContain('during a disagreement in you')
@@ -79,10 +79,10 @@ describe('Buyer questions, not a repeated six-part technical template', () => {
   it('does not call quieter monthly themes supportive openings when none pass the full check', () => {
     const report = buildCategoryReading('year', calculateSaju(CATEGORY_SCENARIOS[2].first), { year: 2026, periodStart: '2026-11' })
     const answer = report.chapters.find(chapter => chapter.id === 'annual-cycle-context')!.lead
-    expect(answer).toContain('The chart does not show a month meeting the combined conditions for a clear opening.')
-    expect(answer).not.toContain('The clearest conditional activity openings are')
-    expect(answer).toContain('This does not mean no opportunities will arise.')
-    expect(answer).toContain('separate from the months with a checked friction')
+    expect(answer).toContain('No month stands out as especially supportive in this reading.')
+    expect(answer).not.toMatch(/conditional activity openings|combined conditions/)
+    expect(answer).toContain('This does not mean no opportunities will come up.')
+    expect(answer).toContain('do not meet the check for a clear opening')
   })
   it('answers work and money questions while keeping career and business topics separate', () => {
     const career = buildCategoryReading('career', a, { year: 2026 }), business = buildCategoryReading('business', a, { year: 2026 })
@@ -127,7 +127,7 @@ describe('Buyer questions, not a repeated six-part technical template', () => {
     expect(q5).toContain('Emotional closeness depends more on how you respond to each other’s needs')
     expect(q5).toContain('You value being heard before someone offers a solution')
     expect(q5).toContain('your partner values listening as well as practical help')
-    expect(q5).toContain('Your daily chart pattern: Careful work benefits from a steady pace.')
+    expect(q5).toContain('Your daily routine: Careful work benefits from a steady pace.')
     expect(q5.match(/Careful work benefits from a steady pace\./g)).toHaveLength(1)
     expect(report).toMatch(/Question: Why are we attracted to each other\?[\s\S]*Answer: You may be drawn to what your partner brings: a direct conversation that feels exciting\. Your partner may be drawn to what you bring: practical care that feels reassuring\./)
     expect(report).toContain('Question: How do we express love differently?\n\nAnswer: You may express love by making space for an honest conversation and staying with the other person’s point of view; your partner may express it through practical help, after checking what kind of support is wanted. For example, stay with the concern first, then offer practical help once your partner asks for it.')
@@ -155,7 +155,7 @@ describe('Buyer questions, not a repeated six-part technical template', () => {
     expect(timing).not.toContain('Main caution:')
     expect(report).toContain('Question: How do emotional closeness and everyday compatibility differ?\n\nAnswer: Emotional closeness depends more on how you respond to each other’s needs; everyday compatibility depends more on how your routines work together.')
     const closeness = report.slice(report.indexOf('Question: How do emotional closeness and everyday compatibility differ?')).split('\n\nshared-routine')[0].split('\n\nQuestion: ')[0]
-    expect(closeness).toContain('Your daily chart pattern: Careful work benefits from a steady pace. Your partner\'s daily chart pattern: Creative projects need room for new ideas.')
+    expect(closeness).toContain('Your daily routine: Careful work benefits from a steady pace. Your partner\'s daily routine: Creative projects need room for new ideas.')
     expect(closeness).not.toContain('likely tension')
     expect(closeness).toContain('You value being heard before someone offers a solution')
     expect(closeness).not.toContain('Practical point:')
@@ -182,9 +182,9 @@ describe('Buyer questions, not a repeated six-part technical template', () => {
     const report = applyBuyerQuestions(reading.fullText, 'compatibility', reading.chapters, [], 'standalone')
     const q5 = report.split('Question: How do emotional closeness and everyday compatibility differ?')[1]?.split('\n\nQuestion: ')[0] ?? ''
     expect(q5).toContain('You both value warm attention and time for your own interests.')
-    expect(q5).toContain('You share this daily chart pattern: Independence becomes tiring when every task has to be handled alone.')
+    expect(q5).toContain('You share this everyday tendency: Independence becomes tiring when every task has to be handled alone.')
     expect(q5).not.toContain('your partner values warm attention and time for your own interests')
-    expect(q5).not.toContain("Your partner's daily chart pattern: Independence becomes tiring when every task has to be handled alone.")
+    expect(q5).not.toContain("Your partner's daily routine: Independence becomes tiring when every task has to be handled alone.")
   })
   it('keeps ten collection questions and maps relationship answers to their matching details', () => {
     expect(COLLECTION_BUYER_QUESTIONS.compatibility).toHaveLength(10)
@@ -417,7 +417,7 @@ describe('Buyer questions, not a repeated six-part technical template', () => {
       : make(source))
     const source = chapters.map(chapter => deliveredChapter(chapter).join('\n\n')).join('\n\n')
     const report = applyBuyerQuestions(source, 'business', chapters)
-    expect(report).toContain('No ten-year cycle starts within this chart’s calculated range. The available business-year comparisons cover 2026–2035; they offer annual context, not a supported long-range business phase or a launch date.')
+    expect(report).toContain('I cannot identify a clear new long-term business phase in the dates covered here. The yearly comparisons for 2026–2035 still offer shorter-term themes to review, but they do not set a launch date.')
     expect(report).toContain('2026: Opening signals appear in the annual comparison.')
     expect(report).toContain('2035: Extra pressure calls for a closer review.')
   })

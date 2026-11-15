@@ -29,7 +29,7 @@ describe('r24 chart-specific customer choices',()=>{
   const linked={...p,resolution:{...p.resolution,circuits:[{code:'output-to-money'}]}} as typeof p
   const hidden={...p,resolution:{...p.resolution,circuits:[]},visibleMoney:[],hiddenMoney:[p.hiddenMoney[0]??{}]} as typeof p
   expect(businessDivision(linked).en).toContain('handover')
-  expect(businessDivision(hidden).en).toContain('less visible')
+  expect(businessDivision(hidden).en).toContain('does not show how customers will find you or what they will pay')
   expect(businessDivision(linked).ko).not.toBe(businessDivision(hidden).ko)
  })
  it('gives each partner the appropriate response without calling shared needs different',()=>{
