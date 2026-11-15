@@ -522,7 +522,7 @@ export function customerNarrative(plan:InterpretationPlan,targetedProduct01=true
      if(you&&partner&&you===partner)return `${row.year}: for both of you, ${you}.`
      return `${row.year}: ${[you?`for you, ${you}`:'',partner?`for your partner, ${partner}`:''].filter(Boolean).join('; ')}.`
     }).join(' ')} This timing prompt is based on each person’s chart; it does not predict a shared event.`
-   : `No year in the five-year comparison has a checked day-branch change signal for either person. That does not predict an easy period; the calculation simply does not single out a year for relationship timing.`
+   : `I cannot single out a year for relationship changes in this five-year reading. That does not mean the next five years will be easy or difficult; the chart simply gives no clear timing clue.`
   const timingAction=relationshipChanges.length
    ? pair(`Before ${relationshipChanges.map(row=>`${row.year} ${relationshipPeople(row)}`).join(' and ')}, agree on when to check whether those chart themes are affecting time together. Use the check-in to discuss plans, not predict an event.`,`표시된 각자의 시기 전에 해당 주제가 함께 보내는 시간에 영향을 주는지 살펴볼 시점을 정합니다. 사건을 예측하는 대신 실제 계획을 이야기합니다.`)
    : pair('No relationship year is singled out here. If work or personal responsibilities change, discuss what that changes for time together.','관계 시기가 특정되지 않았습니다. 업무나 개인적인 책임이 실제로 달라지면 함께 보내는 시간에 어떤 변화가 있는지 이야기합니다.')

@@ -62,3 +62,19 @@
 - **Changed files/rules:** Updated the expectations in `src/report/complete-personalization.test.ts`, `src/report/complete-reading.test.ts`, `src/report/purchase-narrative.test.ts`, `src/report/revision-r6.test.ts`, and `server/payments/product03-review-pdfs.test.ts`. They now check direct customer language, matching chart themes, and supported uncertainty rather than exact legacy phrases.
 - **Before/after:** No customer answers changed in this step. The complete tracked test suite passed: 83 test files and 950 tests. TypeScript project check passed; `git diff --check` passed. The temporary 35-report text review test was removed.
 - **Not changed:** Report content, Saju calculations, payment behavior, and live deployment.
+
+## 2026-11-15 — Product 03 relationship timing wording
+
+- **Problem and cause:** When neither partner had a flagged relationship period, Product 03 said “checked day-branch change signal.” This was internal chart language passed through the shared timing fallback.
+- **Changed files/rule:** `src/report/purchase-narrative.ts` now says directly that the reading cannot single out a year, and clarifies that this does not predict an easy or difficult period. `src/report/purchase-narrative.test.ts` now checks the customer-facing sentence.
+- **Before/after:** 1 of 260 answers changed (Product 03, profile 4, question 6); the other 259 were unchanged. The internal phrase appeared 0 times after the edit.
+- **Evidence:** Regenerated 35 reports and compared all 260 answers; no PDFs were saved. The related narrative checks passed (28 tests).
+- **Not changed:** Relationship timing calculations, Saju logic, PDF layout, payment behavior, and live deployment.
+
+## 2026-11-15 — Plain-English income explanation
+
+- **Problem and cause:** The annual money answer used “Specialist insight” and “paying audience,” labels that make a simple money question harder to understand. A shared chart-language template exposed the internal category name directly.
+- **Changed files/rule:** `src/report/purchase-language.ts` now explains the income idea as solving a clear problem customers will pay to fix. `src/report/traditional-analysis.ts` uses the same plain explanation in traditional analysis text. `src/report/purchase-narrative.test.ts` checks the customer wording.
+- **Before/after:** 3 of 260 answers changed, all Product 04 question 3 for profiles 2, 4 and 5; 257 were unchanged. The target phrase appeared 0 times in the generated answers after the edit.
+- **Evidence:** Regenerated 35 reports and compared all 260 answers; no PDFs were saved. Related tests passed (29 tests).
+- **Not changed:** Saju calculations, money-theme selection, PDF layout, payment behavior, and live deployment.

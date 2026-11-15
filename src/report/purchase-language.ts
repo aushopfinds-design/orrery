@@ -77,7 +77,7 @@ export const WORKING_LANGUAGE:Record<string,{name:Passage;work:Passage;money:Pas
  偏印:{
   name:pair('specialist knowledge and independent thought','전문 지식과 독립적인 생각'),
   work:pair('Specialist research, analysis and strategy fit this pattern. Protected thinking time matters more than a job filled with immediate responses.','전문 연구와 분석, 전략을 다루는 일에 맞는 흐름입니다. 즉시 대응하는 일로 가득한 업무보다 생각할 시간을 지킬 수 있는 조건이 중요합니다.'),
-  money:pair('Specialist insight needs a clear use and a paying audience before it becomes an income source. Knowing something unusual is different from offering a result someone will buy.','전문 지식이 수입이 되려면 분명한 용도와 돈을 낼 고객이 필요합니다. 남다른 것을 아는 일과 누군가 구매할 결과를 제공하는 일은 다릅니다.'),
+  money:pair('Your knowledge can bring in money when it solves a clear problem people will pay to have fixed. Knowing something unusual is not enough; customers also need to understand the result.','아는 지식이 분명한 문제를 해결하고 실제로 돈을 내는 사람이 있을 때 수입으로 이어질 수 있습니다. 남다른 지식만으로 돈이 생기지는 않으므로 고객이 얻는 결과가 분명한지 살펴보세요.'),
   love:pair('Privacy and being understood without constant explanation can matter. Withdrawing to think may look like distance to someone waiting for an immediate answer.','계속 설명하지 않아도 이해받는 느낌과 사생활이 중요할 수 있습니다. 즉시 답을 기다리는 상대에게는 생각하려고 물러난 행동이 거리 두기로 보일 수 있습니다.'),
   business:pair('A specialist method or a focused advisory service fits this pattern. The difficulty is turning complex knowledge into a result a customer understands and can use.','전문적인 방법이나 특정 분야의 자문 서비스에 맞는 흐름입니다. 복잡한 지식을 고객이 이해하고 사용할 결과로 바꾸는 점이 어려움이 될 수 있습니다.'),
   pressure:pair('The blind spot is reopening the explanation instead of making a limited decision with the facts available.','현재 정보로 범위를 정해 결정하기보다 설명과 가능성을 계속 다시 여는 점이 약점으로 나타날 수 있습니다.'),

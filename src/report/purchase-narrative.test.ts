@@ -7,10 +7,15 @@ import { buildTraditionalCompleteFromPlan, buildTraditionalCategoryFromPlan } fr
 import { RELATIONSHIP_PROFILES } from './reading-profiles.ts'
 import { koreanReadingFromPlan } from '../../server/admin-review/korean-reading.ts'
 import { buildBundleFromPlans } from './category-readings.ts'
+import { WORKING_LANGUAGE } from './purchase-language.ts'
 const a=calculateSaju(CATEGORY_SCENARIOS[0].first),b=calculateSaju(CATEGORY_SCENARIOS[0].second)
 const customerSample=calculateSaju({year:1992,month:6,day:15,hour:9,minute:30,gender:'F',latitude:-33.8688,longitude:151.2093,timezone:'Australia/Sydney'})
 const normal=(s:string)=>s.replace(/\s+/g,' ').trim()
 describe('Complete customer narrative language coverage, rather than only selected claims',()=>{
+ it('explains the knowledge-to-income theme in plain English',()=>{
+  expect(WORKING_LANGUAGE['偏印'].money.en).toContain('people will pay to have fixed')
+  expect(WORKING_LANGUAGE['偏印'].money.en).not.toMatch(/specialist insight|paying audience/i)
+ })
  it.each(['complete','career','business','compatibility','year','wellbeing'] as const)('%s has no unpaired chapter, month or practical point',kind=>{
   const plan=buildInterpretationPlan(kind,a,kind==='year'?2027:2026,kind==='compatibility'?b:undefined)
   const report=kind==='complete'?buildTraditionalCompleteFromPlan(plan):buildTraditionalCategoryFromPlan(plan)
@@ -72,9 +77,9 @@ describe('Targeted customer-answer revisions',()=>{
  it('keeps relationship timing chart-based while using plain language for the personal theme',()=>{
   const answers=CATEGORY_SCENARIOS.map(profile=>customerNarrative(buildInterpretationPlan('compatibility',calculateSaju(profile.first),2026,calculateSaju(profile.second)))['support-each-other'].lines[0].en)
   for(const answer of answers){
-   expect(answer).toMatch(/(?:period|periods) flagged|No year in the five-year comparison/)
+   expect(answer).toMatch(/(?:period|periods) flagged|cannot single out a year for relationship changes/)
    expect(answer).not.toMatch(/Specialist knowledge and independent thought|Contacts, competition and shared resources|Training and dependable support/)
-   expect(answer).toMatch(/does not predict a shared event|does not predict an easy period/)
+   expect(answer).toMatch(/does not predict a shared event|does not mean the next five years will be easy or difficult/)
    expect(answer).not.toContain('Check whether it affects time together or personal choice')
    expect(answer).toMatch(/Discuss (?:what work time|which social plans|how study|whether new work contacts|where each person|how practical duties|which new plans|how work and money|who owns|which decisions)/)
   }
