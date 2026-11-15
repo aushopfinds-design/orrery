@@ -107,7 +107,7 @@ export function customerNarrative(plan:InterpretationPlan,targetedProduct01=true
  }
  const moneyPlacement=targetedProduct01&&plan.kind==='complete'?pair(`${moneyRouteEvidence('regular pay','正財')} ${moneyRouteEvidence('customer or project income','偏財')} These chart clues do not show an amount or guarantee.`,`명식에서 ${p.visibleMoney.some(item=>item.god==='正財')||p.hiddenMoney.some(item=>item.god==='正財')?`정기 수입의 단서는 ${[...new Set([...p.visibleMoney,...p.hiddenMoney].filter(item=>item.god==='正財').map(item=>moneyAreas[item.position]).filter(Boolean))].join('·')}에 나타납니다`:'확인한 위치에서 직접적인 정기 수입 단서는 나타나지 않습니다'}. ${p.visibleMoney.some(item=>item.god==='偏財')||p.hiddenMoney.some(item=>item.god==='偏財')?`고객·프로젝트 수입의 단서는 ${[...new Set([...p.visibleMoney,...p.hiddenMoney].filter(item=>item.god==='偏財').map(item=>moneyAreas[item.position]).filter(Boolean))].join('·')}에 나타납니다`:'확인한 위치에서 직접적인 고객·프로젝트 수입 단서는 나타나지 않습니다'}. 이는 수입의 크기나 보장을 보여주지 않습니다.`):moneyBasis(plan.primary,true)
  const earning=targetedProduct01&&plan.kind==='complete'&&rootCauseFix?[moneyAnswer,moneyPlacement]:targetedProduct01&&plan.kind==='complete'?[earningMode,moneyPlacement,moneyDepth(p,'life')]:[money,...(targetedProduct01?[earningMode]:[]),moneyDepth(p,'life'),moneyBasis(plan.primary),capacityBasis(p)]
- const business=[businessVerdict(p),pair(`This comes from ${m.name.en} in the work-related part of your chart${p.monthStemGod===p.monthBranchGod?', repeated in both layers of the birth month':''}.`,`사주에서 일과 연결해 읽는 부분의 ${m.name.ko}에서 나온 풀이입니다.${p.monthStemGod===p.monthBranchGod?' 태어난 달의 두 부분에 같은 주제가 반복됩니다.':''}`)]
+ const business=[businessVerdict(p),pair('The chart links responsibility with learning or specialist support in your work area. This supports a skill-based service, but does not confirm customer demand.','일 영역에서 책임과 학습·전문 지원이 연결됩니다. 기술 기반 서비스를 고려할 근거지만 고객 수요를 확인해 주지는 않습니다.')]
  const keepWork=pair('Before changing jobs, ask what you will do each week, which decisions you control and what you will be paid. Move when those terms improve the part of work that is causing pressure.','이직 전에 매주 할 일과 직접 정할 수 있는 결정, 급여를 묻습니다. 부담을 만드는 업무 조건이 나아지는 자리를 고릅니다.')
  const moneyWatch=p.strength.tendency==='support-needed'?pair('More paid work can still leave you short of time or cash if you must carry the costs first.','유료 업무가 늘어도 비용을 먼저 감당하면 시간이나 현금이 부족해질 수 있습니다.'):pair('A new source of income can bring continuing costs and responsibilities with it.','새 수입 통로에는 계속 내야 할 비용과 책임도 따를 수 있습니다.')
  const relationshipWatch=pair('Being useful to each other can hide a difference in what each person wants emotionally.','서로에게 도움이 되어도 감정적으로 원하는 것이 다르다는 점은 가려질 수 있습니다.')
@@ -228,22 +228,28 @@ export function customerNarrative(plan:InterpretationPlan,targetedProduct01=true
    const names=moneyPositionNames[item.position]??['the available chart areas','확인된 사주 위치']
    groupedMoneyPositions.get(type)!.en.add(names[0]);groupedMoneyPositions.get(type)!.ko.add(names[1])
   }
-  const joinAreas=(areas:string[])=>areas.length===2?`${areas[0]} and ${areas[1]}`:areas.join(', ')
+  const joinAreas=(areas:string[])=>areas.length<2?areas.join(''):areas.length===2?`${areas[0]} and ${areas[1]}`:`${areas.slice(0,-1).join(', ')}, and ${areas.at(-1)}`
   const careerMoneyEvidence=[...groupedMoneyPositions].map(([type,positions])=>({type,areas:joinAreas([...positions.en])}))
   const careerMoneyEvidenceKo=[...groupedMoneyPositions].map(([type,positions])=>({type,areas:[...positions.ko].join('·')}))
   const hiddenMoneyAreas=[...new Set(p.hiddenMoney.map(item=>moneyPositionNames[item.position]?.[0]).filter((area):area is string=>Boolean(area)))]
+  const allMoneyAreas=[...new Set([...p.visibleMoney,...p.hiddenMoney].map(item=>moneyPositionNames[item.position]?.[0]).filter((area):area is string=>Boolean(area)))]
+  const hasBothHiddenRoutes=!p.visibleMoney.length&&p.hiddenMoney.some(item=>item.god==='正財')&&p.hiddenMoney.some(item=>item.god==='偏財')
   const englishMoneyLinks=careerMoneyEvidence.map(item=>item.type==='regular pay'?`Steady pay is linked to ${item.areas}`:`Customer or project income is linked to ${item.areas}`).join('. ')
   const koreanMoneyLinks=careerMoneyEvidenceKo.map(item=>`${item.areas}에서 ${item.type==='regular pay'?'정기 수입':'고객·프로젝트 수입'}의 표시가 확인됩니다`).join('. ')
   const careerMoneyAnswer=pair(
    careerMoneyEvidence.length
-    ? plan.kind==='career'&&!p.visibleMoney.length&&p.hiddenMoney.length
-      ? `The chart gives a small income clue connected with ${careerMoneyEvidence.map(item=>item.areas).join(' and ')}, but not a clear earning pattern.`
-      : `${englishMoneyLinks}. These are possible earning routes, not expected pay.`
+    ? hasBothHiddenRoutes
+      ? `These signs do not show how much either route could bring or how regularly it would pay. Treat them as possibilities to check against real job offers and project terms.`
+      : plan.kind==='career'&&!p.visibleMoney.length&&p.hiddenMoney.length
+        ? `The chart gives a small income clue connected with ${careerMoneyEvidence.map(item=>item.areas).join(' and ')}, but not a clear earning pattern.`
+        : `${englishMoneyLinks}. These are possible earning routes, not expected pay.`
     : 'The checked chart positions do not show a direct money route, so the report does not assign one.',
    careerMoneyEvidence.length
-    ? plan.kind==='career'&&!p.visibleMoney.length&&p.hiddenMoney.length
-      ? `차트에서 ${careerMoneyEvidenceKo.map(item=>item.areas).join('·')}와 연결된 작은 수입 단서는 보이지만, 분명한 수입 방식으로 보기는 어렵습니다.`
-      : `${koreanMoneyLinks}. 실제 수입액이 아니라 가능한 업무 통로를 보여 주는 사주 표시입니다.`
+    ? hasBothHiddenRoutes
+      ? `이 단서만으로는 어느 통로가 얼마를 벌거나 얼마나 꾸준히 지급될지 알 수 없습니다. 실제 구직 제안과 프로젝트 조건에 비춰 확인할 가능성으로 보세요.`
+      : plan.kind==='career'&&!p.visibleMoney.length&&p.hiddenMoney.length
+        ? `차트에서 ${careerMoneyEvidenceKo.map(item=>item.areas).join('·')}와 연결된 작은 수입 단서는 보이지만, 분명한 수입 방식으로 보기는 어렵습니다.`
+        : `${koreanMoneyLinks}. 실제 수입액이 아니라 가능한 업무 통로를 보여 주는 사주 표시입니다.`
     : '확인한 사주 위치에 직접적인 재물 흐름이 나타나지 않아 특정 수입 방식을 정하지 않습니다.')
   const moneyRiskCodes=new Set(p.resolution.risks.map(risk=>risk.code))
   const financialBlock=moneyRiskCodes.has('money-versus-resource')
@@ -400,8 +406,7 @@ export function customerNarrative(plan:InterpretationPlan,targetedProduct01=true
  if(plan.kind==='year'){
   const y=plan.annual[0],yg=LANGUAGE[y.god],yi=LANGUAGE[y.innerGod]
   const windowLabel=plan.months.length?`${humanMonth(plan.months[0].date)} through ${humanMonth(plan.months.at(-1)!.date)}`:`the twelve months following ${plan.referenceYear}`
-  const annualWorkText=yg.work.en[0].toUpperCase()+yg.work.en.slice(1).replace(/[.!?]+$/u,'')
-  const annualWorkFocus=annualWorkText.split(/(?<=[.!?])\s/)[0].replace(/ fit this pattern\.?$/i,'').toLowerCase()
+  const annualWorkFocus=yg.name.en
   const relationshipThemeText=yi.love.en.split(/(?<=[.!?])\s/)[0]
   const relationshipTheme=(relationshipThemeText.charAt(0).toLowerCase()+relationshipThemeText.slice(1)).replace(/[.!?]+$/u,'')
   const annualTheme=pair(`For ${windowLabel}, the chart points to ${annualWorkFocus} at work; in close relationships, ${relationshipTheme}. Compared with your usual pattern of ${m.name.en}, this work direction ${y.god===p.monthStemGod?'repeats a familiar demand':'adds a different demand'}. These are chart themes to consider, not promised events.`,`앞으로 12개월(${windowLabel})의 중심 주제는 업무에서 ${yg.work.ko}, 가까운 관계에서 ${yi.love.ko}입니다. 업무 방향은 타고난 ${m.name.ko} 특징과 비교해 ${y.god===p.monthStemGod?'익숙한 요구가 반복되거나':'다른 요구가 더해집니다'}. 일어날 일을 약속하는 예측이 아니라 살펴볼 사주 주제입니다.`)
@@ -494,7 +499,7 @@ export function customerNarrative(plan:InterpretationPlan,targetedProduct01=true
    const relationshipPrompt=theme.startsWith('time for focused work')
     ? 'Discuss what work time and personal projects leave available for time together, then agree which shared plan to protect.'
     : theme.startsWith('social commitments and decisions about shared time or resources')
-     ? 'Discuss which social plans and shared costs fit the time and resources you both want to commit. This is the specific shared-time theme flagged for the year.'
+     ? 'Discuss which social plans and shared costs fit the time and resources you both want to commit.'
      : theme.startsWith('study, training or support responsibilities')
       ? 'Discuss how study or support duties fit alongside shared time and practical responsibilities. Decide what help is realistic before making extra plans.'
       : theme.startsWith('finding customers and building work contacts')
@@ -612,7 +617,7 @@ function moneyPassage(p:InterpretationPlan['primary'],area:'life'|'career'|'busi
  const hiddenAreaNames:Record<string,[string,string]>={month:['day-to-day work','일상 업무'],day:['private commitments','개인적인 약속'],year:['wider contacts','주변 인맥'],hour:['long-term plans','장기 계획']}
  const hiddenAreas=[...new Set(p.hiddenMoney.filter(x=>x.god==='正財'||x.god==='偏財').map(x=>hiddenAreaNames[x.position]?.[0]).filter((x):x is string=>Boolean(x)))]
  const hiddenAreasKo=[...new Set(p.hiddenMoney.filter(x=>x.god==='正財'||x.god==='偏財').map(x=>hiddenAreaNames[x.position]?.[1]).filter((x):x is string=>Boolean(x)))]
- const joinHiddenAreas=(items:string[])=>items.length===2?`${items[0]} and ${items[1]}`:items.join(', ')
+ const joinHiddenAreas=(items:string[])=>items.length<2?items.join(''):items.length===2?`${items[0]} and ${items[1]}`:`${items.slice(0,-1).join(', ')}, and ${items.at(-1)}`
  if(area==='business')return steady&&variable?pair('Your business money pattern combines repeat customers with new deals. Recurring sales provide continuity, while new buyers bring a less predictable income stream.','사업 재물에서는 반복 고객과 새 거래가 함께 나타납니다. 반복 판매가 수입을 이어 주고 새 구매자는 수입의 변동을 더하는 방식입니다.')
  :steady?pair('Repeat sales and clearly priced ongoing work are the stronger business money theme. The pressure is how much continuing service each sale requires.','반복 판매와 가격이 분명한 지속 업무가 사업 재물의 더 강한 주제입니다. 판매 뒤 계속 제공해야 할 서비스가 부담이 될 수 있습니다.')
  :variable?pair('The business money theme favours finding buyers and making deals over simply maintaining a fixed book of work. Cash can arrive unevenly when the fees depend on new sales.','정해진 업무를 유지하기보다 구매자를 찾고 거래하는 일이 사업 재물의 중심입니다. 새 판매에 수입이 달리면 수금의 간격도 달라질 수 있습니다.')
@@ -621,6 +626,7 @@ function moneyPassage(p:InterpretationPlan['primary'],area:'life'|'career'|'busi
  if(area==='career')return steady&&variable?pair('Your income pattern has two routes: regular pay or repeat work, and additional income from projects or new customers. Both appear in your chart, rather than a single fixed earning style.','수입 통로는 정기 급여·반복 업무와 프로젝트·새 고객을 통한 추가 수입으로 나뉩니다. 한 가지 고정된 돈벌이보다 두 방식이 함께 나타납니다.')
  :steady?pair('Regular pay and dependable repeat work are your clearer income pattern. A role with defined hours and duties makes that pattern easier to evaluate.','정기 급여와 꾸준한 반복 업무가 더 분명한 수입 방식입니다. 시간과 담당이 정해진 자리에서 그 방식을 판단하기 쉽습니다.')
  :variable?pair('Customer-facing or project-based income stands out more than a purely fixed routine. Your income question is closely tied to access to buyers and control over the terms of the work.','고정된 일상만으로 버는 방식보다 고객이나 프로젝트를 통한 수입이 더 두드러집니다. 구매자를 만날 기회와 업무 조건을 정할 권한이 수입 질문에 중요합니다.')
+ :area==='career'&&!steady&&!variable&&hiddenSteady&&hiddenVariable?pair(`Your chart has faint signs of both steady pay and customer or project income. They appear around ${joinHiddenAreas(hiddenAreas)}. The clues are too limited to choose one route, so compare actual pay, hours and costs.`,`명식에는 정기 급여와 고객·프로젝트 수입의 희미한 단서가 함께 있습니다. ${joinHiddenAreas(hiddenAreasKo)}와 연결되지만 어느 쪽이 더 나은 통로인지 정할 만큼 강하지는 않습니다. 실제 보수와 시간, 비용을 비교하세요.`)
  :hiddenSteady&&hiddenVariable?pair(`The chart gives small clues toward both regular pay and customer or project income${hiddenAreas.length?`, connected with ${joinHiddenAreas(hiddenAreas)}`:''}. These are possibilities, not an income forecast.`,`차트에서 정기 급여와 고객·프로젝트 수입 양쪽의 작은 단서가 보입니다${hiddenAreasKo.length?`. ${joinHiddenAreas(hiddenAreasKo)}와 연결됩니다`:''}. 가능한 경로이지 예상 수입은 아닙니다.`)
  :hiddenSteady?pair(`The chart offers a limited clue toward regular pay${hiddenAreas.length?`, tied to ${joinHiddenAreas(hiddenAreas)}`:''}. Treat it as a possible route, not a pay forecast; compare actual salary, hours and work costs with independent work.`,`명식은 정기 수입 쪽에 제한적인 단서를 보여 줍니다${hiddenAreasKo.length?`. 확인된 위치는 ${joinHiddenAreas(hiddenAreasKo)}입니다`:''}. 예상 수입이 아니라 가능한 경로이므로 독립 업무와 비교할 때 실제 급여와 근무 시간, 업무 비용을 살펴보세요.`)
  :hiddenVariable?pair(`The chart offers a limited clue toward customer or project income${hiddenAreas.length?`, linked to ${joinHiddenAreas(hiddenAreas)}`:''}. Treat it as a possible route, not a pay forecast; check actual fees, costs and customer demand before relying on it.`,`명식은 고객·프로젝트 수입 쪽에 제한적인 단서를 보여 줍니다${hiddenAreasKo.length?`. 확인된 위치는 ${joinHiddenAreas(hiddenAreasKo)}입니다`:''}. 예상 수입이 아니라 가능한 경로이므로, 이에 의존하기 전에 실제 수수료와 비용, 고객 수요를 확인하세요.`)

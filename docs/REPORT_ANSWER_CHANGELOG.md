@@ -78,3 +78,18 @@
 - **Before/after:** 3 of 260 answers changed, all Product 04 question 3 for profiles 2, 4 and 5; 257 were unchanged. The target phrase appeared 0 times in the generated answers after the edit.
 - **Evidence:** Regenerated 35 reports and compared all 260 answers; no PDFs were saved. Related tests passed (29 tests).
 - **Not changed:** Saju calculations, money-theme selection, PDF layout, payment behavior, and live deployment.
+
+## 2026-11-15 — Targeted plain-English revision for low-scoring reports
+
+- **Issue and cause:** The latest independent review found dense repeated themes in Product 07, unclear business timing labels, and a weak distinction between career-fit and future-priority answers. The career money answer also used an awkward list of chart areas.
+- **Changed files/rules:** `src/report/category-readings.ts` gives Product 07 questions 1, 7, 8, 9, and 10 more distinct roles. `src/report/buyer-outline.ts` translates business timing labels into practical checks and separates the career future insight from the career-fit conclusion. `src/report/purchase-narrative.ts` fixes multi-item list punctuation and makes the business-fit explanation match the general commercial theme.
+- **Evidence:** Regenerated 35 English text reports and extracted all 260 answers. `git diff --check` passed. Two blind evaluations found no fatal defects. The primary review scored 32/35 reports at 90+ and none at 95+; the second review placed five reports below 90, with some different borderline cases. No PDFs were created.
+- **Not changed:** Saju calculations, profile data, report questions, PDF layout, payment behavior, or production deployment.
+
+## 2026-11-15 — Final recheck of remaining low-score answers
+
+- **Issue and cause:** Career profile 4 repeated weak earning clues across its money and blocker answers. Remaining reviewer deductions also noted limited real-world checks for Career profile 2, a work-only annual focus for Year profile 3, and weak chart grounding for Business profile 2.
+- **Changed files/rules:** `src/report/purchase-narrative.ts` separates faint earning signs from practical earning limits and makes the Business evidence note readable. `src/report/buyer-outline.ts` turns the financial blocker answer into a bounded real-world check and adds the relationship theme to the yearly focus. The business evidence selector now accepts the customer-facing wording. `src/report/chart-verdicts.ts` gives the business fit answer a small paid-trial test.
+- **Before/after:** 10 of 260 answers changed in this round. Final independent recheck: 35/35 reports scored 90 or higher; 0 scored 95 or higher; no fatal issues found.
+- **Evidence:** Regenerated 35 text reports and extracted all 260 answers; `git diff --check` passed. No PDFs were created.
+- **Not changed:** Saju calculations, report questions, PDF layout, payment behavior, or production deployment.

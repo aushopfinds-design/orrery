@@ -174,32 +174,47 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
           lead = lead.replace(/^Focus on the chart-linked work theme for this year: /i, 'The chart’s main work theme is ')
           lead = lead.replace(/ Check that duties and standards are clear\.?$/i, '').replace(/ Check that roles define your duties and standards, while leaving time for close relationships\.?$/i, '')
         }
+        const relationshipLine = byId.get('annual-connections')?.paragraphs.find(line => /setting the pace so firmly that the other person has too little room to disagree/i.test(line))
+        if (relationshipLine) lead += ' In close relationships, ask the other person what pace feels right before settling plans.'
         paragraphs = []
       } else if (kind === 'year' && question.role === 'career-theme') {
-        // Keep the yearly career conclusion, its annual work reason and the
-        // personal baseline. The separate timing question keeps its own date.
-        paragraphs = chapter.paragraphs.slice(0, 2)
+        // Keep the annual work reason; the natal work-fit detail is answered
+        // separately and should not pull this answer back to the usual pattern.
+        paragraphs = chapter.paragraphs.slice(0, 1)
         chapter.paragraphs.forEach(line => used.add(line))
       } else if (kind === 'year' && question.role === 'year-overview') {
         paragraphs = []
         chapter.paragraphs.forEach(line => used.add(line))
+      } else if (kind === 'year' && question.role === 'caution-months') {
+        // Keep the month list and its plain limit; the monthly chapters hold
+        // each month's detailed themes.
+        lead = chapter.lead.split(/(?<=[.!?])\s/u).slice(0, 2).join(' ')
+        paragraphs = []
+        chapter.paragraphs.forEach(line => used.add(line))
       } else if (kind === 'year' && question.role === 'money-theme') {
         const annualBasis = chapter.paragraphs[0]
-        const monthTheme = chapter.paragraphs[2]
+        const chartBasis = chapter.paragraphs[1]
         lead = lead.replace(
           /^For (.+?), Income is linked indirectly with dependable work and recognised responsibility\. A title that adds duties without matching pay is the financial pressure to notice\./,
           'For $1, the clearest money pressure to watch is accepting extra duties without matching pay. Your chart links income indirectly to dependable work and recognised responsibility.',
         )
-        paragraphs = annualBasis && monthTheme ? [`${annualBasis} ${monthTheme}`] : [annualBasis ?? monthTheme].filter((line): line is string => Boolean(line))
+        lead = lead.replace(/^(For \w+ \d{4} through \w+ \d{4}, )Your knowledge/u, '$1your knowledge')
+        paragraphs = [annualBasis, chartBasis].filter((line): line is string => Boolean(line))
         chapter.paragraphs.forEach(line => used.add(line))
       } else if (kind === 'year' && question.role === 'relationship-theme') {
-        paragraphs = chapter.paragraphs.slice(0, 2)
+        paragraphs = chapter.paragraphs.slice(0, 1)
         chapter.paragraphs.forEach(line => used.add(line))
       } else if (kind === 'year' && question.role === 'supportive-months') {
-        paragraphs = chapter.paragraphs.length ? [chapter.paragraphs.slice(0, 3).join(' ')] : []
+        lead = lead.replace(/\s+A separate caution check[\s\S]*?selected months\.?/iu, '')
+        const monthDetails = chapter.paragraphs
+          .flatMap(line => line.split(/(?<=\.)\s+(?=[A-Z][a-z]+ 20\d{2}:)/u))
+          .filter(line => /^[A-Z][a-z]+ 20\d{2}:/u.test(line))
+          .slice(0, 3)
+          .map(line => line.split(/(?<=[.!?])\s/u)[0])
+        paragraphs = monthDetails.length ? [monthDetails.join(' ')] : []
         chapter.paragraphs.forEach(line => used.add(line))
       } else if (kind === 'business' && question.role === 'partner-fit') {
-        paragraphs = chapter.paragraphs.slice(0, 1)
+        paragraphs = chapter.paragraphs.slice(0, 1).map(line => line.split(/(?<=[.!?])\s/u)[0])
         chapter.paragraphs.forEach(line => used.add(line))
       } else if (kind === 'business' && question.role === 'expansion-timing') {
         paragraphs = chapter.paragraphs.slice(0, 1)
@@ -253,35 +268,24 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
         paragraphs = []
         chapter.paragraphs.forEach(line => used.add(line))
       } else if (kind === 'compatibility' && question.role === 'closeness-vs-routine' && set === 'standalone') {
-        // Keep the personal closeness needs in this answer. Replace the generic
-        // routine passage with the chart's routine finding and each person's pattern.
-        lead = lead.replace(/\s+For everyday compatibility,[\s\S]*$/u, '')
-        lead = lead.replace(/\s+Your everyday pattern:\s*[^.!?]+[.!?]/u, '')
+        // Separate emotional closeness from daily fit in a few personal lines.
+        const closeness = /For emotional closeness,\s*(.*?)(?:\.|$)/iu.exec(lead)?.[1]
         const routine = byId.get('shared-routine')
         const noRoutineSignal = /^The chart does not show a clear routine you naturally share\./u.test(routine?.lead ?? '')
-        const routineFinding = noRoutineSignal
-          ? 'The chart does not show a clear routine you naturally share. Compare your actual pace, schedules and task-sharing.'
-          : routine?.lead
-        if (routineFinding) lead += ` ${routineFinding}`
-        const yourRoutine = routine?.paragraphs.find(line => /^Your everyday pattern: /u.test(line))?.replace(/^Your everyday pattern: /u, '').replace(/[.!?]+$/u, '')
-        const partnerRoutine = routine?.paragraphs.find(line => /^Your partner(?:'|’)s everyday pattern: /u.test(line))?.replace(/^Your partner(?:'|’)s everyday pattern: /u, '').replace(/[.!?]+$/u, '')
-        if (yourRoutine && partnerRoutine) {
-          const sameRoutine = yourRoutine.replace(/\s+/gu, ' ').trim().toLocaleLowerCase() === partnerRoutine.replace(/\s+/gu, ' ').trim().toLocaleLowerCase()
-          lead += sameRoutine
-            ? ` You share this everyday tendency: ${yourRoutine}.`
-            : ` Your daily routine: ${yourRoutine}. Your partner's daily routine: ${partnerRoutine}.`
-          const routinePair = `${yourRoutine} ${partnerRoutine}`
-          const routineExample = /Variety can be energising/u.test(routinePair) && /A steady rhythm can help/u.test(routinePair)
-            ? 'Keep one shared plan fixed, then leave room for an extra plan without crowding the week.'
-            : /Busy social obligations can crowd out/u.test(routinePair) && /Independence becomes tiring/u.test(routinePair)
-              ? 'Protect one block of personal time and agree who owns each recurring task.'
-              : /Variety can be energising/u.test(routinePair) && /Independence becomes tiring/u.test(routinePair)
-                ? 'Give recurring tasks a clear owner while leaving some time open for new plans.'
-                : /Independence becomes tiring/u.test(routinePair)
-                  ? 'For a recurring task, decide who owns it and when to ask for help.'
-                  : 'Compare one fixed plan with one flexible plan to see how your routines fit together.'
-          lead += ` Everyday example: ${routineExample}`
-        }
+        const yourRoutine = routine?.paragraphs.find(line => /^Your everyday pattern: /u.test(line))?.replace(/^Your everyday pattern: /u, '').split(/(?<=[.!?])\s/u)[0].replace(/[.!?]+$/u, '')
+        const partnerRoutine = routine?.paragraphs.find(line => /^Your partner(?:'|’)s everyday pattern: /u.test(line))?.replace(/^Your partner(?:'|’)s everyday pattern: /u, '').split(/(?<=[.!?])\s/u)[0].replace(/[.!?]+$/u, '')
+        const lowerFirst = (value: string) => value ? value.charAt(0).toLowerCase() + value.slice(1) : value
+        const sameRoutine = yourRoutine && partnerRoutine
+          && yourRoutine.replace(/\s+/gu, ' ').trim().toLocaleLowerCase() === partnerRoutine.replace(/\s+/gu, ' ').trim().toLocaleLowerCase()
+        const routineSummary = noRoutineSignal
+          ? 'Your charts do not point to one shared daily routine.'
+          : yourRoutine && partnerRoutine
+            ? sameRoutine
+              ? `You share this daily pattern: ${lowerFirst(yourRoutine)}.`
+              : `For you, ${lowerFirst(yourRoutine)}. For your partner, ${lowerFirst(partnerRoutine)}.`
+            : routine?.lead?.split(/(?<=[.!?])\s/u)[0] ?? ''
+        lead = [closeness ? `Emotionally, ${closeness}.` : lead.split(/(?<=[.!?])\s/u)[0], routineSummary,
+          'Agree who owns one recurring task and when to ask for help.'].filter(Boolean).join(' ')
         paragraphs = []
         chapter.paragraphs.forEach(line => used.add(line))
       } else if (kind === 'compatibility' && question.role === 'mutual-adjustment' && set === 'standalone') {
@@ -303,10 +307,12 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
         paragraphs = []
         chapter.paragraphs.forEach(line => used.add(line))
       } else if (kind === 'wellbeing' && question.role === 'daily-boundary') {
-        lead = chapter.tryThis
+        lead = chapter.tryThis.replace(/^Protect time for .*?\. Before accepting a new request, decide which current task will move\.?$/u,
+          'Before accepting anything new, name your limit and ask which current task can move.')
         paragraphs = []
         chapter.paragraphs.forEach(line => used.add(line))
       } else if (kind === 'wellbeing' && question.role === 'pressure-trigger') {
+        lead = chapter.lead.split(/(?<=[.!?])\s/u)[0]
         paragraphs = []
         chapter.paragraphs.forEach(line => used.add(line))
       } else if (kind === 'business' && question.role === 'financial-risk') {
@@ -323,6 +329,19 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
                 ? 'Your main financial risk is taking on fixed costs before a direct business income route is clear.'
                 : 'Your main financial risk is counting a promising deal as income before payment arrives.'
         paragraphs = chapter.paragraphs.filter(line => line !== chapter.lead).slice(0, 2)
+      } else if (kind === 'business' && question.role === 'business-fit') {
+        const evidence = chapter.paragraphs.find(line => /^(?:This comes from|Your work pattern|Your chart connects|The chart links|The work-related chart signs connect)/i.test(line))
+        lead = chapter.lead.replace(/An expertise-led service/gi, 'A service built around a skill you know well')
+          .replace(/expertise-led service/gi, 'a service built around a skill you know well')
+          .replace(/the commercial side/gi, 'finding paying customers')
+        paragraphs = [evidence, chapter.tryThis].filter((line): line is string => Boolean(line))
+        chapter.paragraphs.forEach(line => used.add(line))
+      } else if (kind === 'business' && question.role === 'offer-and-work-style') {
+        // Keep this answer about the kind of work that fits; expansion timing
+        // and broad-launch cautions belong in the later business questions.
+        lead = chapter.lead
+        paragraphs = []
+        chapter.paragraphs.forEach(line => used.add(line))
       } else if (kind === 'compatibility' && question.role === 'conflict-trigger') {
         const friction = chapter.paragraphs.find(line => /^(?:Your likely friction is|The practical tension for Person A is)/.test(line))
         lead = friction?.startsWith('Your likely friction is')
@@ -433,6 +452,7 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
           ?? chapter.lead
         lead = warning.replace(/^The pressure to watch is that\s*/i, 'As pressure builds, ').replace(/^The pressure to watch is\s*/i, 'As pressure builds, ').replace(/^Under pressure, watch for\s*/i, 'As pressure builds, ').replace(/\s+This theme appears in both parts of your birth-month reading, so it may keep coming up in your routine\./i, '. This can recur in your routine because the same theme appears in both parts of your birth-month reading.')
           .replace(/^A distinct daily pressure response is /i, 'As pressure builds, ')
+        lead = lead.split(/(?<=[.!?])\s/u)[0]
         paragraphs = []
         chapter.paragraphs.forEach(line => used.add(line))
       } else if (kind === 'wellbeing' && question.role === 'relationship-need') {
@@ -443,13 +463,28 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
         lead = chapter.lead
         paragraphs = chapter.paragraphs.slice(0, 2)
         chapter.paragraphs.forEach(line => used.add(line))
+      } else if (kind === 'complete' && question.role === 'earning-pattern' && set === 'standalone') {
+        // The lead already states the chart-supported earning route and its limit.
+        // Omit internal chart-location detail that made this answer harder to use.
+        paragraphs = []
+        chapter.paragraphs.forEach(line => used.add(line))
       } else if (kind === 'business' && question.id === 'business-plan') {
         const timingLines = chapter.paragraphs.filter(line => /^Why \d{4} is highlighted here/.test(line))
         const years = [...new Set(timingLines.map(line => /^Why (\d{4})/.exec(line)?.[1]).filter((year): year is string => Boolean(year)))]
         lead = years.length
           ? `Review ${years.join(', ')} before taking on larger business commitments; the checked annual comparison flags added demands in those years, not a forecast of failure.`
           : chapter.paragraphs.find(line => /^Give commitments in|^No period stands out/.test(line)) ?? chapter.guidance.watchFor[0] ?? chapter.lead
-        paragraphs = timingLines.slice(0, 3).map(line => line.replace(/^Why (\d{4}) is highlighted here: /, '$1: '))
+        paragraphs = timingLines.slice(0, 3).map((line, index) => {
+          const year = /^Why (\d{4})/.exec(line)?.[1] ?? 'This year'
+          const plain = line.replace(/^Why \d{4} is highlighted here: /, `${year}: `)
+          if (/An adjustment pattern links this period with your work side\./i.test(plain)) {
+            const check = index === 0
+              ? 'Check whether duties, decision rights and deadlines match before adding work.'
+              : 'Check payment timing and available capacity before accepting linked commitments.'
+            return plain.replace(/An adjustment pattern links this period with your work side\./i, check)
+          }
+          return plain.replace(/A direct clash links this period with your work side\./i, 'The comparison puts pressure on your work setup; check capacity, deadlines and payment terms before expanding.').replace(/This period brings /i, 'This year adds ')
+        })
         chapter.paragraphs.forEach(line => used.add(line))
       } else if (kind === 'business' && question.id === 'business-chapters') {
         const cycles = chapter.paragraphs.filter(line => /^From the calculated start |^No current or upcoming ten-year cycle/.test(line))
@@ -459,7 +494,7 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
         lead = cycles.length
           ? `The calculated business-cycle emphasis is: ${cycles.slice(0, 2).join(' ')}`
           : `I cannot identify a clear new long-term business phase in the dates covered here. The yearly comparisons for ${annualRange} still offer shorter-term themes to review, but they do not set a launch date.`
-        paragraphs = years.filter(line => /Opening|extra pressure|extra-care|caution/i.test(line)).slice(0, 3).map(line => line.replace(/^(\d{4}) yearly comparison:/, '$1:').split(/(?<=[.!?])\s/).slice(0, 2).join(' '))
+        paragraphs = years.filter(line => /Opening|extra pressure|extra-care|caution/i.test(line)).slice(0, 3).map(line => line.replace(/^(\d{4}) yearly comparison:/, '$1:').replace(/An adjustment pattern links this period with your work side\./i, 'The comparison points to changes in work arrangements; clarify roles and deadlines.').replace(/A direct clash links this period with your work side\./i, 'The comparison puts pressure on the work setup; check capacity, deadlines and payment terms.').split(/(?<=[.!?])\s/).slice(0, 2).join(' '))
         chapter.paragraphs.forEach(line => used.add(line))
       } else if (question.part === 'lead-with-caution') {
         lead = chapter.lead
@@ -530,9 +565,12 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
           const themeList = importantThemes.length < 2 ? importantThemes.join('')
             : importantThemes.length === 2 ? `${importantThemes[0]} and ${importantThemes[1]}`
               : `${importantThemes.slice(0, -1).join(', ')}, and ${importantThemes.at(-1)}`
-          const yearThemes = years.map(item => `${item.year}: ${(themeLanguage[item.stemGod] ?? item.stemGod.toLowerCase()).toLowerCase()}`)
-          const themeYears = yearThemes.length ? `Year by year: ${yearThemes.join('; ')}.` : 'The checked years show different work demands.'
-          const conclusion = `Your ${yearRange} outlook is mixed: work themes change, but the comparisons do not show a steady rise in income. The main themes include ${themeList.toLowerCase() || 'different work demands'}. ${themeYears}`
+          const anchorYears = years.length ? [...new Set([years[0], years[Math.floor((years.length - 1) / 2)], years.at(-1)])] : []
+          const anchorThemes = anchorYears.map(item => `${item.year}: ${themeLanguage[item.stemGod] ?? item.stemGod.toLowerCase()}`)
+          const progression = anchorThemes.length
+            ? `Across the period, themes shift from ${anchorThemes.join(' to ')}.`
+            : 'The checked years show changing work demands.'
+          const conclusion = `Your ${yearRange} outlook is mixed: the comparisons do not show a steady rise in income. Main themes include ${themeList.toLowerCase() || 'changing work demands'}. ${progression}`
           const importantTiming = changedYears.length
             ? `Work may feel more demanding in ${changedYears.join(', ')}. Treat these as review points, not predicted setbacks.`
             : 'No year stands out for a stronger work challenge in the checked comparisons.'
@@ -559,6 +597,13 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
               ? `I cannot confirm a date when your career or finances will improve. Within the checked years${checkedRange ? ` (${checkedRange})` : ''}, ${supportYears.join(', ')} show possible support for work efforts, not a promised raise or job change.`
               : `I cannot identify a reliable improvement year${checkedRange ? ` within ${checkedRange}` : ''}. No checked year stands out. ${context}, which describe work themes but do not establish a pay rise.`}`,
           ]
+        }
+        if (question.id === 'career-plan') {
+          const careerLead = clean(lead)
+          const fit = /work style of (.+?)(?:\.|,)/i.exec(careerLead)?.[1]
+            ?? /work strength is (.+?), while/i.exec(careerLead)?.[1]
+            ?? 'the daily work that suits you'
+          return [`Your Answer: Your chart points to ${fit} as a work fit, but a good fit does not guarantee higher pay. Check the hours and confirmed pay before accepting a role.`]
         }
         const details = question.id === 'q-risk'
           ? [sourceChapter.lead, ...sourceChapter.paragraphs]
@@ -658,11 +703,18 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
         const workSettingCheck = question.id === 'proof-of-skill'
           ? 'For a real choice, compare confirmed salary, hours and support in a job with paying customers, costs and payment terms in independent work.'
           : undefined
+        const thinIncomeClue = question.id === 'working-style' && /small income clue connected with (.+?)(?:\.|$)/i.exec(leadText)
+        const thinIncomeFocus = thinIncomeClue?.[1]?.replace(/, and /g, ' and ')
         const answerText = question.id === 'feedback-and-boundaries'
           ? supportYears.length
             ? 'The chart shows possible periods of work support, but it cannot identify a guaranteed improvement date.'
             : 'The checked annual data do not show a clear period when career or money is likely to improve.'
-          : question.id === 'q-risk' ? clean(practicalAction) : clean(lead)
+          : question.id === 'q-risk' ? clean(practicalAction)
+            : thinIncomeFocus
+              ? thinIncomeFocus.includes(',') || thinIncomeFocus.split(/\s+and\s+/i).length >= 1
+                ? `The chart cannot identify a financial blocker. It offers only a small clue tied to ${thinIncomeFocus}. Compare one month of payments, unpaid work hours and costs to see what is actually slowing progress.`
+                : clean(lead)
+              : clean(lead)
         const questionTiming = question.id === 'feedback-and-boundaries'
           ? supportYears.length
             ? `Important Timing: The annual comparison flags ${supportYears.join(', ')} for possible support or useful output; this is not a promise of higher pay.`
@@ -670,7 +722,7 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
           : undefined
         const repeatFinancialAnswer=question.id==='working-style'
         const limitedIncomeAnswer=question.id==='money-commitments'&&/limited (?:sign|clue)(?: for| toward) (?:regular pay|customer or project income)/i.test(leadText)
-        const omitBottomLine=question.id==='proof-of-skill'||question.id==='career-plan'||repeatFinancialAnswer||limitedIncomeAnswer
+        const omitBottomLine=question.id==='proof-of-skill'||question.id==='career-plan'||question.id==='money-commitments'||repeatFinancialAnswer||limitedIncomeAnswer
         const lines = [
           `Your Answer: ${answerText}`,
           ...(!repeatFinancialAnswer&&!limitedIncomeAnswer&&explanation && clean(explanation) !== answerText ? [`What This Means for You: ${clean(explanation)}`] : !repeatFinancialAnswer&&!limitedIncomeAnswer ? [`What This Means for You: Your chart's ${sourceChapter.id === 'feedback-and-boundaries' ? 'calculated work-period comparisons' : 'work pattern'} is the basis for this reading.`] : []),
@@ -705,6 +757,10 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
       || kind === 'business' && questions[0].role === 'financial-risk'
       || kind === 'business' && questions[0].role === 'business-cycle'
       || kind === 'business' && questions[0].role === 'business-caution'
+      || kind === 'business' && questions[0].role === 'business-fit'
+      || kind === 'business' && questions[0].role === 'offer-and-work-style'
+      || kind === 'complete' && set === 'standalone' && source === 'patterns'
+      || kind === 'wellbeing' && questions.some(question => question.role === 'daily-boundary')
     const guidance = kind === 'career' && set === 'standalone' || suppressGuidance || suppressAllGuidance || suppressRepeatedRelationshipAdvice
       || kind === 'wellbeing' && ['core-personality', 'distinctive-traits', 'pressure-trigger'].includes(questions[0].role)
       ? [] : chapter.showGuidance === false ? [] : [

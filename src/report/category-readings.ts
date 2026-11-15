@@ -90,8 +90,7 @@ export function buildBundleFromPlans(plans: ReturnType<typeof bundleInterpretati
   const privateNeed = RELATIONSHIP_PROFILES[plans.complete.primary.dayBranch].need
   const workTheme = LANGUAGE[plans.complete.primary.monthStemGod].name.en
   const workTaskText = workTask(plans.complete.primary)
-  const pressurePattern = plainReadingText(coreProfile.pressure).replace(/[.!?]+$/u, '').replace(/^[A-Z]/u, letter => letter.toLowerCase())
-  const challengeAnswer = `A recurring challenge is that ${pressurePattern}. It can crowd out your need for ${privateNeed}, linking your chart's work and private-life themes. This is a pattern to notice, not a fixed outcome.`
+  const challengeAnswer = `A major challenge is balancing ${workTaskText} with your need for ${privateNeed}. When work takes more time or attention, the personal need can be pushed aside; noticing that trade-off gives you room to choose differently.`
   const primaryMoney = plans.complete.primary
   const hasSteadyIncome = (items: { god: string }[]) => items.some(item => item.god === '正財')
   const hasVariableIncome = (items: { god: string }[]) => items.some(item => item.god === '偏財')
@@ -106,20 +105,20 @@ export function buildBundleFromPlans(plans: ReturnType<typeof bundleInterpretati
             : hiddenVariable ? 'your chart gives a small clue toward project income, but no amount'
               : 'the chart gives clearer work-fit clues than direct income clues'
   const integratedCollectionAnswer = `Your work pattern centres on ${workTheme}, while ${incomeSummary}. They connect through delivery: opportunities help only when you can complete the work and collect payment. Your close relationships have a separate need: ${privateNeed}. These are related parts of your life, but the chart does not show that one causes another or guarantee an event.`
-  const threeInsights = `Three chart-linked themes stand out: your core style is ${coreProfile.focus}; your work fit centres on ${workTheme}; and close relationships work best when your need for ${privateNeed} is understood.`
+  const threeInsights = `Your chart brings together three distinct themes: ${coreProfile.focus} describes your personal starting style; ${workTheme} describes the work pattern; and in close relationships, ${privateNeed} matters most. They are separate clues, not a single fixed story.`
   const repeatingPatternText = plainReadingText(coreProfile.watchFor.at(-1) ?? coreProfile.watchFor[0])
-  const repeatingPattern = `A pattern that may repeat is ${repeatingPatternText.charAt(0).toLowerCase()}${repeatingPatternText.slice(1)} Your chart links this tendency to a work style centred on ${workTheme}; it is a pattern to notice, not a fixed outcome.`
-  const finalMessage = `Before saying yes to a new work commitment, check whether its hours and duties leave room for your need for ${privateNeed}. If they compete, discuss what support or limit would make the commitment workable. Use this as a prompt for a real conversation, not as a fixed outcome.`
+  const repeatingPattern = `A pattern that may repeat is ${repeatingPatternText.charAt(0).toLowerCase()}${repeatingPatternText.slice(1)} This is a habit to notice, not a fixed outcome.`
+  const finalMessage = `Let the chart be a prompt to notice your choices, not a rule that decides for you. Use the work, money and relationship themes as separate questions, then choose the next step that fits your real circumstances.`
   const collectionQuestions = [
     answer(1, DESTINY_COLLECTION_QUESTIONS[0], life, undefined, threeInsights),
-    answer(2, DESTINY_COLLECTION_QUESTIONS[1], careerFit, undefined, `Your clearest opportunity is to use ${workTheme} as a regular part of your work, where it can shape the value you offer.`),
+    answer(2, DESTINY_COLLECTION_QUESTIONS[1], careerFit, undefined, `Your clearest opportunity is to use your chart's work pattern—${workTheme}—to solve a clear customer problem. Start with one offer you can deliver reliably.`),
     answer(3, DESTINY_COLLECTION_QUESTIONS[2], challenge, undefined, challengeAnswer),
     answer(4, DESTINY_COLLECTION_QUESTIONS[3], moneyFit, undefined, integratedCollectionAnswer),
     answer(5, DESTINY_COLLECTION_QUESTIONS[4], life, undefined, repeatingPattern),
-    answer(6, DESTINY_COLLECTION_QUESTIONS[5], longTerm, undefined, `No verified timing calculation identifies specific important years. Use a yearly check-in to see whether ${workTaskText} leaves room for your need for ${privateNeed}. Let real changes guide your next step.`),
-    answer(7, DESTINY_COLLECTION_QUESTIONS[6], yearTheme, undefined, `Over the next three years, focus on building a sustainable routine for ${workTaskText} while protecting your need for ${privateNeed}. Start by deciding which responsibility needs a clearer limit. This is a practical focus based on your chart themes, not a year-by-year forecast.`),
-    answer(8, DESTINY_COLLECTION_QUESTIONS[7], strengthsOverview, undefined, `A strength you may overlook is this: ${plainReadingText(coreProfile.strength)} The chart links this trait to your natural way of approaching work and close relationships.`),
-    answer(9, DESTINY_COLLECTION_QUESTIONS[8], life, undefined, `A more fulfilling life is supported when work that involves ${workTheme} leaves room for the close relationships that meet your need for ${privateNeed}. Your chart describes tendencies; your choices and circumstances still matter.`),
+    answer(6, DESTINY_COLLECTION_QUESTIONS[5], longTerm, undefined, 'No specific year stands out in the verified timing check. Use actual changes in work, money or relationships to decide when a new direction is worth considering.'),
+    answer(7, DESTINY_COLLECTION_QUESTIONS[6], yearTheme, undefined, 'For the next three years, keep one simple record of time spent, costs and money received for your main work. Review it every month and change the offer or workload when the numbers do not support it. This is a practical check, not a prediction.'),
+    answer(8, DESTINY_COLLECTION_QUESTIONS[7], strengthsOverview, undefined, `A strength you may overlook is this: ${plainReadingText(coreProfile.strength)} It can help you make a useful contribution even when the situation is uncertain.`),
+    answer(9, DESTINY_COLLECTION_QUESTIONS[8], life, undefined, `A more fulfilling life gives you room to use your work strengths and still protect time for what restores you. Choose a weekly limit for extra duties, then keep one regular period for rest or the people who matter to you.`),
     [
       `10 · ${DESTINY_COLLECTION_QUESTIONS[9]}`,
       `Question: ${DESTINY_COLLECTION_QUESTIONS[9]}`,
