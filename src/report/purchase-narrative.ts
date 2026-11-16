@@ -232,7 +232,6 @@ export function customerNarrative(plan:InterpretationPlan,targetedProduct01=true
   const careerMoneyEvidence=[...groupedMoneyPositions].map(([type,positions])=>({type,areas:joinAreas([...positions.en])}))
   const careerMoneyEvidenceKo=[...groupedMoneyPositions].map(([type,positions])=>({type,areas:[...positions.ko].join('·')}))
   const hiddenMoneyAreas=[...new Set(p.hiddenMoney.map(item=>moneyPositionNames[item.position]?.[0]).filter((area):area is string=>Boolean(area)))]
-  const allMoneyAreas=[...new Set([...p.visibleMoney,...p.hiddenMoney].map(item=>moneyPositionNames[item.position]?.[0]).filter((area):area is string=>Boolean(area)))]
   const hasBothHiddenRoutes=!p.visibleMoney.length&&p.hiddenMoney.some(item=>item.god==='正財')&&p.hiddenMoney.some(item=>item.god==='偏財')
   const englishMoneyLinks=careerMoneyEvidence.map(item=>item.type==='regular pay'?`Steady pay is linked to ${item.areas}`:`Customer or project income is linked to ${item.areas}`).join('. ')
   const koreanMoneyLinks=careerMoneyEvidenceKo.map(item=>`${item.areas}에서 ${item.type==='regular pay'?'정기 수입':'고객·프로젝트 수입'}의 표시가 확인됩니다`).join('. ')

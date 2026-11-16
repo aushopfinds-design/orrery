@@ -565,7 +565,7 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
           const themeList = importantThemes.length < 2 ? importantThemes.join('')
             : importantThemes.length === 2 ? `${importantThemes[0]} and ${importantThemes[1]}`
               : `${importantThemes.slice(0, -1).join(', ')}, and ${importantThemes.at(-1)}`
-          const anchorYears = years.length ? [...new Set([years[0], years[Math.floor((years.length - 1) / 2)], years.at(-1)])] : []
+          const anchorYears = years.length ? [...new Map([years[0], years[Math.floor((years.length - 1) / 2)], years.at(-1)].filter((item): item is (typeof years)[number] => Boolean(item)).map(item => [item.year, item])).values()] : []
           const anchorThemes = anchorYears.map(item => `${item.year}: ${themeLanguage[item.stemGod] ?? item.stemGod.toLowerCase()}`)
           const progression = anchorThemes.length
             ? `Across the period, themes shift from ${anchorThemes.join(' to ')}.`
@@ -703,7 +703,7 @@ export function applyBuyerQuestions(text: string, kind: BuyerOutlineKind, chapte
         const workSettingCheck = question.id === 'proof-of-skill'
           ? 'For a real choice, compare confirmed salary, hours and support in a job with paying customers, costs and payment terms in independent work.'
           : undefined
-        const thinIncomeClue = question.id === 'working-style' && /small income clue connected with (.+?)(?:\.|$)/i.exec(leadText)
+        const thinIncomeClue = question.id === 'working-style' ? /small income clue connected with (.+?)(?:\.|$)/i.exec(leadText) : null
         const thinIncomeFocus = thinIncomeClue?.[1]?.replace(/, and /g, ' and ')
         const answerText = question.id === 'feedback-and-boundaries'
           ? supportYears.length
