@@ -8,6 +8,7 @@ export interface Order extends Record<string, unknown> {
   id: string; request_key_hash: string; input_hash: string; kind: PreviewKind; amount: number; currency: string
   input_encrypted: string; checkout_session_id: string | null; payment_intent_id: string | null
   payment_state: 'pending' | 'paid' | 'failed' | 'expired'; expires_at: Date | string
+  personal_data_deleted_at?: Date | string | null
 }
 export interface PaymentUpdate {
   eventId: string; eventType: string; orderId: string; sessionId: string; paymentIntent: string | null
@@ -17,6 +18,31 @@ export interface PaymentUpdate {
 export class OrderStore {
   private readonly db: Database
   constructor(db: Database) { this.db = db }
+  /** Erase birth inputs, generated reports, and linked customer records after five years.
+   * Minimal payment/order facts and provider event IDs remain for accounting and disputes.
+   */
+  async eraseExpiredPersonalData(batchSize = 500): Promise<number> {
+    return this.db.transaction(async client => {
+      const selected = await client.query<{id:string}>(`SELECT id FROM fate_payment_orders
+        WHERE personal_data_deleted_at IS NULL AND COALESCE(paid_at,created_at) <= now() - interval '5 years'
+        ORDER BY COALESCE(paid_at,created_at) LIMIT $1 FOR UPDATE SKIP LOCKED`, [batchSize])
+      const ids = selected.rows.map(row => row.id)
+      if (!ids.length) return 0
+      await client.query('DELETE FROM fate_order_artifacts WHERE order_id = ANY($1::uuid[])', [ids])
+      await client.query('DELETE FROM fate_customer_purchases WHERE order_id = ANY($1::uuid[])', [ids])
+      await client.query(`DELETE FROM fate_payment_settings WHERE key = ANY($1::text[])`, [ids.map(id => 'report-email-state:' + id)])
+      await client.query(`UPDATE fate_payment_orders SET input_encrypted='', input_hash='', personal_data_deleted_at=now()
+        WHERE id = ANY($1::uuid[])`, [ids])
+      const orphaned = await client.query<{id:string}>(`SELECT c.id FROM fate_customer_contacts c
+        WHERE NOT EXISTS (SELECT 1 FROM fate_customer_purchases p WHERE p.contact_id=c.id) FOR UPDATE`)
+      const contactIds = orphaned.rows.map(row => row.id)
+      if (contactIds.length) {
+        await client.query('DELETE FROM fate_customer_consent_events WHERE contact_id = ANY($1::text[])', [contactIds])
+        await client.query('DELETE FROM fate_customer_contacts WHERE id = ANY($1::text[])', [contactIds])
+      }
+      return ids.length
+    })
+  }
   async claimReportEmail(id:string):Promise<{state:string;lease?:string}> {
     return this.db.transaction(async client=>{
       const key='report-email-state:'+id

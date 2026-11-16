@@ -277,7 +277,7 @@ export const koWebsiteCopy: Record<string, string> = {
   'site.privacy.search.text': '출생지 검색에는 검색한 장소 이름과 국가가 지도 검색 서비스로 전송됩니다.',
   'site.privacy.connections.text': '검색 결과를 선택하기 전까지 출생 정보 전체를 전송하지 않습니다.',
   'site.privacy.purchase.title': '구매 관련 정보',
-  'site.privacy.purchase.text': '유료 주문 시 주문 처리와 고객 지원에 필요한 정보가 안전하게 처리됩니다. 선택적 상품 안내 이메일은 별도 동의가 필요합니다.',
+  'site.privacy.purchase.text': '유료 주문의 암호화된 출생 정보, 생성된 리포트와 연결된 고객 연락처는 결제 후 최대 5년 동안 서버에 보관한 뒤 자동 삭제합니다. 세금·회계, 환불과 분쟁 처리를 위해 필요한 최소 거래 정보는 법에서 정한 기간 동안 별도로 보관하며, 일부 세금 기록은 더 오래 보관할 수 있습니다. 고객이 내려받거나 이메일로 받은 리포트 사본과 Stripe·이메일 업체의 기록은 각 업체의 보관 정책을 따릅니다. 상품 안내 이메일은 별도 동의가 있어야 보냅니다.',
   'site.privacy.clear.title': '이 기기의 정보 삭제',
   'site.privacy.clear.text': '이 브라우저에 저장된 출생 정보, 미리보기와 프로필을 삭제할 수 있습니다.',
   'site.privacy.tabs.text': '삭제하면 이 기기에서 저장한 정보를 복구하지 못할 수 있습니다.',

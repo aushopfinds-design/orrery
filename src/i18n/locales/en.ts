@@ -282,7 +282,7 @@ const en: Record<string, string> = {
   "purchase.key.saved": "I have saved my private recovery code",
   "purchase.key.private": "Anyone with this code can access the purchased report. Keep it private. Saving a code does not complete a payment.",
   "purchase.preview.opening": "Your first personal focus",
-  "purchase.live.data": "The birth details confirmed above are sent to our server and stored encrypted to prepare your report. Stripe handles card details.",
+  "purchase.live.data": "The birth details confirmed above are sent to our server and stored encrypted to prepare your report. We keep the birth details and report for up to five years after payment, then delete them. Stripe handles card details; its records follow Stripe’s retention policy.",
   "purchase.live.reading": "Your purchased reading",
 }
 

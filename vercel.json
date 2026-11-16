@@ -1,5 +1,8 @@
 {
   "functions": {
+    "api/retention-cleanup.ts": {
+      "maxDuration": 60
+    },
     "api/admin-review.ts": {
       "maxDuration": 90
     },
@@ -8,6 +11,12 @@
       "maxDuration": 120
     }
   },
+  "crons": [
+    {
+      "path": "/api/retention-cleanup",
+      "schedule": "17 3 * * *"
+    }
+  ],
   "headers": [
     {
       "source": "/",

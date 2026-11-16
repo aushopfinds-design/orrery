@@ -12,7 +12,7 @@ import type { PaymentService } from './service.ts'
 const config={mode:'test' as const,stripeKey:'sk_test_fixture',webhookSecret:'whsec_fixture',databaseUrl:'postgres://unused',origin:'https://test.example.com',dataKey:'11'.repeat(32),accessKey:'22'.repeat(32),testToken:'fixture'}
 const first={year:1992,month:8,day:17,hour:0,minute:0,unknownTime:true,gender:'M' as const,latitude:-33.8688,longitude:151.2093,timezone:'Australia/Sydney'}
 let db:PGlite,store:OrderStore,records:CustomerRecords
-beforeAll(async()=>{db=await PGlite.create();for(const file of ['001_test_orders.sql','002_report_artifacts.sql','003_customer_records.sql','004_love_report_kind.sql'])await db.exec(readFileSync(new URL('./migrations/'+file,import.meta.url),'utf8'))},120000)
+beforeAll(async()=>{db=await PGlite.create();for(const file of ['001_test_orders.sql','002_report_artifacts.sql','003_customer_records.sql','004_love_report_kind.sql','005_five_year_personal_data_retention.sql'])await db.exec(readFileSync(new URL('./migrations/'+file,import.meta.url),'utf8'))},120000)
 beforeEach(async()=>{await db.exec('TRUNCATE fate_customer_consent_events,fate_customer_purchases,fate_customer_contacts,fate_fulfillment_jobs,fate_payment_events,fate_order_artifacts,fate_payment_orders');store=new OrderStore(db as unknown as Database);records=new CustomerRecords(config,store)})
 afterAll(async()=>{await db.close()})
 async function purchase(consent=false,email='buyer@example.com',id=randomUUID()){
@@ -21,6 +21,18 @@ async function purchase(consent=false,email='buyer@example.com',id=randomUUID())
  await records.record(id,email,input,new Date().toISOString());return id
 }
 describe('Encrypted customer records and separate marketing consent',()=>{
+ it('redacts inputs and removes report/contact data after five years while retaining the order record',async()=>{
+  const id=await purchase(false)
+  await db.query("UPDATE fate_payment_orders SET paid_at=now()-interval '6 years',payment_state='paid' WHERE id=$1",[id])
+  await db.query("UPDATE fate_customer_contacts SET created_at=now()-interval '6 years' WHERE id IN (SELECT contact_id FROM fate_customer_purchases WHERE order_id=$1)",[id])
+  await db.query("INSERT INTO fate_order_artifacts(order_id,payload_encrypted,content_hash) VALUES($1,'encrypted-report','hash')",[id])
+  expect(await store.eraseExpiredPersonalData()).toBe(1)
+  const order=(await store.get(id))!
+  expect(order.input_encrypted).toBe('');expect(order.input_hash).toBe('');expect(order.personal_data_deleted_at).toBeTruthy()
+  expect(await store.artifact(id)).toBeUndefined()
+  expect((await db.query<{n:number}>('SELECT count(*)::int AS n FROM fate_customer_contacts')).rows[0].n).toBe(0)
+  expect(await store.eraseExpiredPersonalData()).toBe(0)
+ })
  it('stores purchase contacts without putting birth data or plain emails in the contacts table',async()=>{
   await purchase();const raw=(await db.query<{email_encrypted:string;marketing_status:string}>('SELECT * FROM fate_customer_contacts')).rows[0]
   expect(raw.email_encrypted).not.toContain('buyer@example.com');expect(raw.email_encrypted).not.toMatch(/1992|Sydney/)

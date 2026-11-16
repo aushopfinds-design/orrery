@@ -51,7 +51,8 @@ export class PaymentService {
   private get integration() { return this.mode === 'live' ? 'fate-key-live-v1' : 'fate-key-test-v1' }
   private matchesMode(live: boolean) { return live === (this.mode === 'live') }
   private sessionId(id: string) { return id.startsWith(this.mode === 'live' ? 'cs_live_' : 'cs_test_') }
-  async available() { return this.mode === 'test' || (this.config.checkoutOpen === true && await this.store.setting('live-schema-version') === '1' && Boolean(await this.stripe.accountReady?.())) }
+  async available() { return this.mode === 'test' || (this.config.checkoutOpen === true && await this.store.setting('live-schema-version') === '1' &&
+    await this.store.setting('personal-data-retention-version') === '1' && Boolean(await this.stripe.accountReady?.())) }
 
   async customerRecordsReady() { return this.config.customerRecordsEnabled === true && await this.store.setting('customer-records-schema-version') === '1' }
 
@@ -152,6 +153,7 @@ export class PaymentService {
     const state = paid ? 'paid' : session.status === 'expired' ? 'expired' : eventType === 'checkout.session.async_payment_failed' ? 'failed' : 'pending'
     const duplicate = await this.store.recordPayment({ eventId, eventType, orderId, sessionId: session.id,
       paymentIntent, state, amount: session.amount_total!, currency: session.currency! }) === 'duplicate'
+    if (paid && order.personal_data_deleted_at) return duplicate
     if (paid && await this.customerRecordsReady()) await new CustomerRecords(this.config,this.store).record(orderId, session.customer_details?.email ?? session.customer_email,
       orderInput(openOrder(this.config.dataKey,orderId,order.input_encrypted)),new Date(String(order.created_at)).toISOString())
     return duplicate
@@ -189,6 +191,7 @@ export class PaymentService {
 
   private async fulfill(id: string) {
     if (await this.store.setting('full-refund:' + id) || await this.store.artifact(id)) return
+    if ((await this.store.get(id))?.personal_data_deleted_at) return
     const lease = randomUUID()
     if (!await this.store.claimFulfillment(id, lease)) return
     try {
@@ -201,6 +204,7 @@ export class PaymentService {
   }
 
   async report(id: string): Promise<BuyerReport> {
+    if ((await this.store.get(id))?.personal_data_deleted_at) throw new PaymentError('report_retention_expired', 410)
     const status = await this.reconcile(id)
     if (status?.refund_state === 'full') throw new PaymentError('purchase_refunded', 403)
     if (status?.payment_state !== 'paid') throw new PaymentError('payment_not_complete', 402)

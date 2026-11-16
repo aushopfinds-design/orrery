@@ -14,8 +14,12 @@ CREATE TABLE IF NOT EXISTS fate_payment_orders (
   created_at timestamptz NOT NULL DEFAULT now(),
   expires_at timestamptz NOT NULL,
   paid_at timestamptz,
+  personal_data_deleted_at timestamptz,
   CHECK ((payment_state = 'paid') = (paid_at IS NOT NULL))
 );
+CREATE INDEX IF NOT EXISTS fate_payment_orders_personal_data_retention
+  ON fate_payment_orders (COALESCE(paid_at, created_at))
+  WHERE personal_data_deleted_at IS NULL;
 
 CREATE TABLE IF NOT EXISTS fate_payment_events (
   event_id text PRIMARY KEY,
@@ -63,6 +67,7 @@ CREATE TABLE IF NOT EXISTS fate_checkout_quota (
 );
 REVOKE ALL ON fate_checkout_quota FROM PUBLIC;
 INSERT INTO fate_payment_settings(key,value_encrypted) VALUES ('live-schema-version','1') ON CONFLICT DO NOTHING;
+INSERT INTO fate_payment_settings(key,value_encrypted) VALUES ('personal-data-retention-version','1') ON CONFLICT DO NOTHING;
 -- Operational cleanup: DELETE FROM fate_checkout_quota WHERE created_at < now() - interval '2 days';
 
 -- Contact records are separate from encrypted birth-chart inputs.

@@ -23,7 +23,7 @@ const config: PaymentConfig = {
   origin: 'https://test.example.com', dataKey: '11'.repeat(32), accessKey: '22'.repeat(32), testToken: 'test-only-fixture-token-'.repeat(3),
 }
 const verifier = new Stripe(config.stripeKey)
-const migration = ['001_test_orders.sql','002_report_artifacts.sql','003_customer_records.sql','004_love_report_kind.sql'].map(file=>readFileSync(new URL('./migrations/'+file, import.meta.url), 'utf8')).join('\n')
+const migration = ['001_test_orders.sql','002_report_artifacts.sql','003_customer_records.sql','004_love_report_kind.sql','005_five_year_personal_data_retention.sql'].map(file=>readFileSync(new URL('./migrations/'+file, import.meta.url), 'utf8')).join('\n')
 let db: PGlite
 let store: OrderStore
 
@@ -405,6 +405,14 @@ describe('seven products: paid reports, PDFs and access isolation', () => {
 })
 
 describe('launch gates and verified full refunds', () => {
+  it('keeps live checkout closed until the five-year retention migration is installed', async () => {
+    await store.saveSetting('live-schema-version','1')
+    const provider = gateway()
+    const live = new PaymentService({ ...config, mode: 'live', checkoutOpen: true }, store, { ...provider, accountReady: async () => true })
+    expect(await live.available()).toBe(false)
+    await store.saveSetting('personal-data-retention-version','1')
+    expect(await live.available()).toBe(true)
+  })
   it('keeps public checkout closed independently of existing live purchase access', () => {
     const env = { FATE_PAYMENTS_MODE: 'live', VERCEL_ENV: 'production', STRIPE_LIVE_SECRET_KEY: 'sk_live_fixture',
       STRIPE_LIVE_WEBHOOK_SECRET: 'whsec_fixture', FATE_PAYMENTS_LIVE_DATABASE_URL: 'postgres://live:live@localhost/fate_live?sslmode=verify-full',
