@@ -17,7 +17,7 @@ export const LIVE_CATALOG: Partial<Record<PricedReportKind, { product: string; p
 export function livePriceMatches(kind: PricedReportKind, price: Stripe.Price): boolean {
   const product = price.product, expected = LIVE_CATALOG[kind]
   return Boolean(expected) && price.id === expected!.price && price.livemode && price.currency === 'usd' &&
-    price.unit_amount === REPORT_PRICE_CENTS[kind] && price.type === 'one_time' &&
+    price.unit_amount === REPORT_PRICE_CENTS[kind] && price.tax_behavior === 'inclusive' && price.type === 'one_time' &&
     typeof product === 'object' && product !== null && !('deleted' in product) && product.id === expected!.product &&
     product.livemode && product.metadata.report_kind === kind
 }
