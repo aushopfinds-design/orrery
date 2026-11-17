@@ -81,7 +81,7 @@ export class PaymentService {
     const session = order.checkout_session_id ? await this.stripe.retrieveSession(order.checkout_session_id) :
       await this.stripe.createSession({
         mode: 'payment', allowed_payment_method_types: ['card'],
-        adaptive_pricing: { enabled: false }, automatic_tax: { enabled: false }, allow_promotion_codes: false,
+        adaptive_pricing: { enabled: false }, automatic_tax: { enabled: true }, allow_promotion_codes: false,
         client_reference_id: order.id, metadata: { fate_order_id: order.id, fate_kind: order.kind, integration },
         payment_intent_data: { metadata: { fate_order_id: order.id, fate_kind: order.kind, integration } },
         line_items: this.mode === 'live' ? [{ quantity: 1, price: LIVE_CATALOG[order.kind]!.price }] : [{ quantity: 1, price_data: { currency: 'usd', unit_amount: order.amount,
@@ -138,9 +138,12 @@ export class PaymentService {
     const item = lines?.data[0], price = item?.price, product = price?.product
     if (!order || !this.matchesMode(session.livemode) || session.mode !== 'payment' || !this.sessionId(session.id) || !uuid(orderId) ||
         orderId !== expectedId || session.client_reference_id !== orderId || session.metadata?.integration !== this.integration ||
-        session.metadata?.fate_kind !== order.kind || session.amount_total !== order.amount || session.currency !== order.currency ||
+        session.metadata?.fate_kind !== order.kind || session.amount_subtotal !== order.amount ||
+        !Number.isInteger(session.amount_total) || session.amount_total! < order.amount ||
+        session.total_details?.amount_tax !== session.amount_total! - order.amount || session.currency !== order.currency ||
         (order.checkout_session_id && order.checkout_session_id !== session.id) ||
-        !lines || lines.has_more || lines.data.length !== 1 || item?.quantity !== 1 || item.amount_total !== order.amount ||
+        !lines || lines.has_more || lines.data.length !== 1 || item?.quantity !== 1 ||
+        item.amount_subtotal !== order.amount || item.amount_total !== session.amount_total ||
         item.currency !== order.currency || price?.unit_amount !== order.amount || price.currency !== order.currency ||
         (this.mode === 'live' ? !price || !livePriceMatches(order.kind, price) :
           typeof product !== 'object' || !product || !('metadata' in product) || product.deleted || product.metadata?.fate_kind !== order.kind || product.metadata?.integration !== this.integration)) {
@@ -151,7 +154,7 @@ export class PaymentService {
     if (paid && !paymentIntent?.startsWith('pi_')) throw new PaymentError('invalid_payment_event')
     const state = paid ? 'paid' : session.status === 'expired' ? 'expired' : eventType === 'checkout.session.async_payment_failed' ? 'failed' : 'pending'
     const duplicate = await this.store.recordPayment({ eventId, eventType, orderId, sessionId: session.id,
-      paymentIntent, state, amount: session.amount_total!, currency: session.currency! }) === 'duplicate'
+      paymentIntent, state, amount: order.amount, currency: session.currency! }) === 'duplicate'
     if (paid && await this.customerRecordsReady()) await new CustomerRecords(this.config,this.store).record(orderId, session.customer_details?.email ?? session.customer_email,
       orderInput(openOrder(this.config.dataKey,orderId,order.input_encrypted)),new Date(String(order.created_at)).toISOString())
     return duplicate
@@ -219,7 +222,7 @@ export class PaymentService {
     const paymentIntent = typeof charge.payment_intent === 'string' ? charge.payment_intent : charge.payment_intent?.id
     if (!order || !this.matchesMode(charge.livemode) || !this.matchesMode(intent.livemode) ||
         paymentIntent !== intent.id || (order.payment_intent_id && order.payment_intent_id !== intent.id) ||
-        intent.amount !== order.amount || charge.amount !== order.amount || intent.currency !== order.currency || charge.currency !== order.currency ||
+        intent.amount !== charge.amount || charge.amount < order.amount || intent.currency !== order.currency || charge.currency !== order.currency ||
         intent.metadata.fate_kind !== order.kind || !Number.isInteger(charge.amount_refunded) || charge.amount_refunded < 0 || charge.amount_refunded > order.amount) {
       throw new PaymentError('payment_order_mismatch', 409)
     }
