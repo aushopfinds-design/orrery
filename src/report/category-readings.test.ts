@@ -216,7 +216,7 @@ describe('Bundle and public report navigation', () => {
     expect(answer(3)).toContain('A major challenge is balancing')
     expect(answer(5)).toContain('A pattern that may repeat is')
     expect(answer(5)).not.toMatch(/pattern that may repeat is [A-Z]/)
-    expect(answer(5)).toMatch(/Your chart links this tendency to a work style centred on .+; it is a pattern to notice/i)
+    expect(answer(5)).toMatch('This is a habit to notice, not a fixed outcome.')
     expect(answer(5)).not.toMatch(/-centred work style/i)
     expect(answer(5)).not.toContain('main cross-life challenge')
     expect(answer(6)).toContain('No specific year stands out in the verified timing check.')
