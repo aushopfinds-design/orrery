@@ -39,7 +39,7 @@ describe('My Money & Career customer-first delivery', () => {
       expect(buyerSection).toMatch(/Your 2026–2035 outlook is mixed: the comparisons do not show a steady rise in income/i)
       expect(buyerSection).toMatch(/do not show a steady rise in income/i)
       const tenYearAnswer = buyerSection.split('Question: What do the next ten years suggest for my work and money?')[1].split('\n\nQuestion:')[0]
-      expect(tenYearAnswer).toContain('Year by year:')
+      expect(tenYearAnswer).toContain('Across the period, themes shift from 2026:')
       for (let year = 2026; year <= 2035; year++) expect(tenYearAnswer).toContain(`${year}:`)
       expect(buyerSection).not.toMatch(/added work friction/i)
       const q1 = buyerSection.match(/Question: Which careers suit me best\?\n\nYour Answer: ([^\n]+)/)?.[1]
