@@ -127,7 +127,7 @@ describe('Buyer questions, not a repeated six-part technical template', () => {
     expect(q5).toContain('Answer: Emotionally, neither a direct bond nor a direct conflict stands out.')
     expect(q5).toContain('For you, careful work benefits from a steady pace.')
     expect(q5).toContain('For your partner, creative projects need room for new ideas.')
-    expect(q5.match(/Careful work benefits from a steady pace\./g)).toHaveLength(1)
+    expect(q5.match(/Careful work benefits from a steady pace\./gi)).toHaveLength(1)
     expect(report).toMatch(/Question: Why are we attracted to each other\?[\s\S]*Answer: You may be drawn to what your partner brings: a direct conversation that feels exciting\. Your partner may be drawn to what you bring: practical care that feels reassuring\./)
     expect(report).toContain('Question: How do we express love differently?\n\nAnswer: You may express love by making space for an honest conversation and staying with the other person’s point of view; your partner may express it through practical help, after checking what kind of support is wanted. For example, stay with the concern first, then offer practical help once your partner asks for it.')
     expect(report).not.toContain('These are chart-based tendencies, not proof of how either person behaves.')
