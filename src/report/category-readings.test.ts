@@ -213,7 +213,7 @@ describe('Bundle and public report navigation', () => {
     }
     expect(answer(1)).toContain('Your chart brings together three distinct themes:')
     expect(answer(2)).toContain('Your clearest opportunity is')
-    expect(answer(3)).toContain('A recurring challenge is that')
+    expect(answer(3)).toContain('A major challenge is balancing')
     expect(answer(5)).toContain('A pattern that may repeat is')
     expect(answer(5)).not.toMatch(/pattern that may repeat is [A-Z]/)
     expect(answer(5)).toMatch(/Your chart links this tendency to a work style centred on .+; it is a pattern to notice/i)
