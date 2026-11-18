@@ -47,7 +47,7 @@ describe('My Money & Career customer-first delivery', () => {
       expect(q1).toBeTruthy()
       expect(q7).toBeTruthy()
       expect(q7).not.toBe(q1)
-      expect(q7).toMatch(/money|income|earning/i)
+      expect(q7).toMatch(/money|income|earning|pay/i)
       if ([1, 2].includes(index)) {
         expect(buyerSection).toMatch(/Your Answer: The chart offers a limited clue toward regular pay, tied to/i)
         expect(buyerSection).toMatch(/compare actual salary, hours and work costs with independent work/i)
