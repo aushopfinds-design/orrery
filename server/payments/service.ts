@@ -43,7 +43,11 @@ export class PaymentService {
       if(!saved||!order||order.payment_state!=='paid'||await this.store.setting('full-refund:'+id))return 'not_ready'
       const report=openOrder(this.config.dataKey,id+':report',saved.payload_encrypted) as BuyerReport
       if(hash(JSON.stringify(report))!==saved.content_hash)throw new Error('report_integrity_error')
-      return await new ReportEmailDelivery(this.config,this.store,this.mail).deliver(id,session.customer_details?.email??session.customer_email,report,orderInput(openOrder(this.config.dataKey,id,order.input_encrypted)),await this.customerRecordsReady())
+      return await new ReportEmailDelivery(this.config,this.store,this.mail).deliver(id,session.customer_details?.email??session.customer_email,report,orderInput(openOrder(this.config.dataKey,id,order.input_encrypted)),await this.customerRecordsReady(),{
+        totalAmount: session.amount_total ?? order.amount,
+        taxAmount: session.total_details?.amount_tax ?? 0,
+        currency: session.currency ?? order.currency,
+      })
     }catch{console.warn('Report email will require retry');return 'pending'}
   }
 
