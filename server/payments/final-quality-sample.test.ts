@@ -31,7 +31,7 @@ describe('final six-product representative PDF review', () => {
       }
       if (kind === 'year') {
         expect(report.text).toMatch(/Question: What is the overall theme of my next 12 months\?\n\nAnswer: For November 2026 through October 2027, the chart points to/)
-        expect(report.text).toMatch(/(?:\w+ 20\d\d appears in both lists|The caution check did not flag these selected months\.)/)
+        expect(report.text).toMatch(/What Should You Focus on Each Month\? — The clearest months to move a plan forward are [A-Z][a-z]+ 20\d\d/)
         expect(report.text).toContain('June 2027: Ask whether the authority and pay match the responsibility attached to a role.')
       }
       if (output) await writeFile(`${output}/sample-${kind}.pdf`, bytes)
