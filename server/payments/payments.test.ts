@@ -138,6 +138,8 @@ describe('checkout retry and price ownership', () => {
     expect(await count('fate_payment_orders')).toBe(1)
     const params = provider.createSession.mock.calls[0][0]
     expect(params.line_items![0].price_data!.unit_amount).toBe(1999)
+    expect(params.automatic_tax?.enabled).toBe(true)
+    expect(params.invoice_creation).toEqual({ enabled: true, invoice_data: { rendering_options: { amount_tax_display: 'include_inclusive_tax' } } })
     expect(JSON.stringify(params)).not.toMatch(/Sydney|1992|latitude/)
     expect(params.client_reference_id).not.toContain('1992')
   })
