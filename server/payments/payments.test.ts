@@ -453,7 +453,7 @@ describe('launch gates and verified full refunds', () => {
       const provider = gateway(), create = provider.createSession
       const kind = 'career', catalog = LIVE_CATALOG[kind]
       if (!catalog) throw new Error('Missing test price mapping')
-      const livePrice = { id: catalog.price, livemode: true, active: true, type: 'one_time', currency: 'usd', unit_amount: REPORT_PRICE_CENTS[kind],
+      const livePrice = { id: catalog.price, livemode: true, active: true, type: 'one_time', currency: 'usd', tax_behavior: 'inclusive', unit_amount: REPORT_PRICE_CENTS[kind],
         product: { id: catalog.product, livemode: true, active: true, default_price: catalog.price, metadata: { report_kind: kind } } } as unknown as Stripe.Price
       provider.createSession = vi.fn(async (params, key) => {
         expect(params.line_items![0]).toEqual({ quantity: 1, price: catalog.price })
