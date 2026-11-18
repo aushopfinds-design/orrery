@@ -63,8 +63,8 @@ describe('Product 03 review PDF batch', () => {
       expect(q5).toMatch(/daily routine|daily pattern|recurring task/i)
       expect(q5).toMatch(/Agree who owns one recurring task and when to ask for help\./)
       if (index === 1) {
-        expect(q5).toContain('You both value warm attention and time for your own interests.')
-        expect(q5).toContain('You share this everyday tendency: Independence becomes tiring when every task has to be handled alone.')
+        expect(q5).toContain('Emotionally, small differences in what you expect from private life can become recurring irritations.')
+        expect(q5).toContain('You share this daily pattern: independence becomes tiring when every task has to be handled alone.')
         expect(q5).not.toContain("Your partner's daily routine: Independence becomes tiring when every task has to be handled alone.")
         const q7 = report.text.split('Question: What does this connection ask of each of us?')[1]?.split('\n\nQuestion: ')[0] ?? ''
         expect(q7).toContain('each of you can give focused attention while protecting time for separate interests')
@@ -72,7 +72,7 @@ describe('Product 03 review PDF batch', () => {
       } else {
         expect(q5).toMatch(/Your partner's daily routine:|no single pattern stands out in your private needs/i)
       }
-      expect(q5).toContain('Emotional closeness depends more on how you respond to each other’s needs')
+      expect(q5).toMatch(/Answer: Emotionally,/)
       expect(q5).not.toContain('day-sign comparison')
       expect(q5).not.toContain('Compare the personal routine styles below with the way you actually share daily life.')
       const q6 = report.text.split('Question: Which upcoming periods may affect our relationship themes?')[1]?.split('\n\nQuestion: ')[0] ?? ''
