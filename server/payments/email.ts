@@ -46,7 +46,7 @@ export function purchaseMail(config:PaymentConfig,id:string,email:string,report:
     title+' is attached as a PDF.', 'Report ID: '+(report.reference??id),
     'To open your report and included cards again, visit '+url+' and enter this private recovery code:',recovery,
     'Keep this email private. Anyone with the recovery code can open the report. Online access is checked against payment and refund status.',
-    'You can download the PDF, card image and animated card directly from your purchased-report page. Email is a backup; you do not have to wait for it to save your files.']
+    'You can download the PDF, card image and animated card directly from your purchased-report page. Email is a backup; you do not have to wait for it to save your files.')
   if(consent){
     const contact=fingerprint(config.dataKey,'customer-email:v1:'+email)
     const link=(purpose:'confirm'|'unsubscribe')=>config.origin+'/api/payments?action=subscription&preference='+purpose+'&contact='+contact+'&token='+customerConsentToken(config,contact,purpose)
