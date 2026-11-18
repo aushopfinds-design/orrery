@@ -67,7 +67,7 @@ describe('My Money & Career customer-first delivery', () => {
       expect(q2).toMatch(/Practical Check: For a real choice, compare confirmed salary, hours and support/i)
       expect(q2).toMatch(/paying customers, costs and payment terms/i)
       const q7Section = buyerSection.split('Question: What is my most important career and money insight?')[1].split('\n\nQuestion:')[0]
-      expect(q7Section).toMatch(/Check the hours and confirmed pay before accepting a role\\./i)
+      expect(q7Section).toMatch(/Check the hours and confirmed pay before accepting a role\./i)
       expect(pdf.subarray(0, 5).toString()).toBe('%PDF-')
       reports.push(report)
       if (process.env.CAREER_PDF_DIR) {
