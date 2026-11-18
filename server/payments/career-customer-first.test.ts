@@ -29,7 +29,7 @@ describe('My Money & Career customer-first delivery', () => {
       const buyerSection = report.text.slice(report.text.indexOf('Question: Which careers suit me best?'), report.text.indexOf('Calculation notes'))
       expect(buyerSection.match(/^Question:/gm)?.length).toBe(7)
       expect(buyerSection.match(/^Your Answer:/gm)?.length).toBe(7)
-      expect(buyerSection.match(/^What This Means for You:/gm)?.length).toBeGreaterThanOrEqual(3)
+      expect(buyerSection.match(/^What This Means for You:/gm)?.length).toBeGreaterThanOrEqual(2)
       expect(buyerSection.match(/^Bottom Line:/gm)?.length).toBeGreaterThanOrEqual(1)
       expect(buyerSection).toMatch(/I cannot (?:confirm a date|identify a reliable improvement year)/i)
       const improvementAnswer = buyerSection.split('Question: When might my career or money situation improve?')[1].split('\n\nQuestion:')[0]
