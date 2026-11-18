@@ -23,6 +23,7 @@ export type QualityResult = { score: number; passed: boolean; requiresHumanRevie
 const NORMALIZE = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
 const GENERIC = REPORT_ANSWER_STANDARD.automatedReviewPatterns.genericAdvice;
 const GUARANTEED_OUTCOME = REPORT_ANSWER_STANDARD.automatedReviewPatterns.guaranteedOutcome;
+const CERTAIN_FUTURE_EVENT = REPORT_ANSWER_STANDARD.automatedReviewPatterns.certainFutureEvent;
 const BACKGROUND_OPENING = REPORT_ANSWER_STANDARD.automatedReviewPatterns.backgroundOpening;
 const LABEL = /^(?:your answer|answer|answer detail|what this means for you|important timing|bottom line|practical point|main caution):\s*/i;
 const words = (text: string) => text.trim().split(/\s+/).filter(Boolean).length;
@@ -62,6 +63,7 @@ export function inspectReport(input: ReportQualityInput): QualityResult {
     const lead = firstText.replace(LABEL, '').split(/[.!?](?:\s|$)/, 1)[0] ?? '';
     if (lead.length < 25 || BACKGROUND_OPENING.test(lead)) flag("ANSWER_FIRST_REVIEW", `Answer ${i + 1} may begin with background instead of a direct conclusion`, 0);
     if (GUARANTEED_OUTCOME.test(answer)) flag("GUARANTEED_OUTCOME", `Answer ${i + 1} contains wording that may promise a future result`, 20, true);
+    if (CERTAIN_FUTURE_EVENT.test(answer)) flag("CERTAIN_FUTURE_EVENT", `Answer ${i + 1} states a chart-based future event as certain`, 20, true);
     const sentences = answer.split(/(?<=[.!?])\s+/).map(sentence => NORMALIZE(sentence.replace(LABEL, ''))).filter(sentence => words(sentence) >= 8);
     for (const sentence of sentences) {
       const prior = seenSentences.get(sentence);
@@ -96,7 +98,7 @@ export function inspectReport(input: ReportQualityInput): QualityResult {
   if (input.pdfBytes !== undefined && input.pdfBytes < 1024)
     flag("PDF_TOO_SMALL", "PDF appears empty or truncated", 25, true);
   score = Math.max(0, score);
-  const reviewCodes = new Set(['LENGTH_REVIEW', 'PARAGRAPH_REVIEW', 'ANSWER_FIRST_REVIEW', 'GENERIC_ADVICE', 'REPEATED_SENTENCE', 'REPEATED_OPENING']);
+  const reviewCodes = new Set(['LENGTH_REVIEW', 'PARAGRAPH_REVIEW', 'ANSWER_FIRST_REVIEW', 'GENERIC_ADVICE', 'REPEATED_SENTENCE', 'REPEATED_OPENING', 'CERTAIN_FUTURE_EVENT']);
   return {
     score,
     // This is a structural pre-delivery check only. It is never a semantic
