@@ -26,7 +26,9 @@ export function resendTransport(env:NodeJS.ProcessEnv, fetcher:typeof fetch=fetc
 }
 
 /** The immutable PDF and recovery code go only to the paid checkout email. */
-export function purchaseMail(config:PaymentConfig,id:string,email:string,report:BuyerReport,consent=false):ReportMail {
+export interface PurchasePaymentSummary { totalAmount:number; taxAmount:number; currency:string }
+const money=(amount:number,currency:string)=>new Intl.NumberFormat('en-US',{style:'currency',currency:currency.toUpperCase()}).format(amount/100)
+export function purchaseMail(config:PaymentConfig,id:string,email:string,report:BuyerReport,consent=false,payment?:PurchasePaymentSummary):ReportMail {
   const test=(config.mode??'test')==='test'
   // Sandbox defaults to Resend's sink. Only an explicit Preview config can route
   // this test receipt to the operator's allowlisted inbox; live mode uses checkout email.
@@ -34,11 +36,17 @@ export function purchaseMail(config:PaymentConfig,id:string,email:string,report:
   const title=report.title
   const recovery=`FK1.${id}.${orderAccessToken(config.accessKey,id)}`
   const url=config.origin+'/#purchase'
-  const lines=[test?'SANDBOX TEST — no real payment charged.':'Thank you for your purchase.',
+  const lines=[test?'SANDBOX TEST — no real payment charged.':'Thank you for your purchase.']
+  if(payment&&Number.isInteger(payment.totalAmount)&&payment.totalAmount>=0&&Number.isInteger(payment.taxAmount)&&payment.taxAmount>=0&&payment.taxAmount<=payment.totalAmount&&/^[a-z]{3}$/i.test(payment.currency)){
+    lines.push('Payment summary:',
+      'Total paid: '+money(payment.totalAmount,payment.currency),
+      'Tax included in total: '+money(payment.taxAmount,payment.currency))
+  }
+  lines.push(
     title+' is attached as a PDF.', 'Report ID: '+(report.reference??id),
     'To open your report and included cards again, visit '+url+' and enter this private recovery code:',recovery,
     'Keep this email private. Anyone with the recovery code can open the report. Online access is checked against payment and refund status.',
-    'You can download the PDF, card image and animated card directly from your purchased-report page. Email is a backup; you do not have to wait for it to save your files.']
+    'You can download the PDF, card image and animated card directly from your purchased-report page. Email is a backup; you do not have to wait for it to save your files.')
   if(consent){
     const contact=fingerprint(config.dataKey,'customer-email:v1:'+email)
     const link=(purpose:'confirm'|'unsubscribe')=>config.origin+'/api/payments?action=subscription&preference='+purpose+'&contact='+contact+'&token='+customerConsentToken(config,contact,purpose)
@@ -57,13 +65,13 @@ export class ReportEmailDelivery {
   private store:OrderStore
   private transport:MailTransport
   constructor(config:PaymentConfig,store:OrderStore,transport:MailTransport){this.config=config;this.store=store;this.transport=transport}
-  async deliver(id:string,emailValue:unknown,report:BuyerReport,input:OrderInput,consentReady:boolean){
+  async deliver(id:string,emailValue:unknown,report:BuyerReport,input:OrderInput,consentReady:boolean,payment?:PurchasePaymentSummary){
     const email=customerEmail(emailValue)
     if(!email)return 'missing_email'
     if(await this.store.setting('full-refund:'+id))return 'refunded'
     // Persist the exact recipient/body once: a retry always has an identical payload.
     const payloadKey='report-email-payload:'+id
-    await this.store.saveSetting(payloadKey,sealOrder(this.config.dataKey,payloadKey,purchaseMail(this.config,id,email,report,consentReady&&input.marketingConsent===true)))
+    await this.store.saveSetting(payloadKey,sealOrder(this.config.dataKey,payloadKey,purchaseMail(this.config,id,email,report,consentReady&&input.marketingConsent===true,payment)))
     const claim=await this.store.claimReportEmail(id)
     if(!claim.lease)return claim.state
     try {

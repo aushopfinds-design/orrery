@@ -19,6 +19,12 @@ it('attaches the purchased PDF, support reference and private recovery, without 
  expect(mail.text).not.toContain('1992');expect(mail.html).not.toContain('<script>')
  expect(mail.reply_to).toEqual(['thefatekey@gmail.com'])
 })
+it('shows the Stripe-calculated included tax as a separate line without changing the amount paid',()=>{
+ const mail=purchaseMail(config,randomUUID(),'buyer@example.org',report,false,{totalAmount:1999,taxAmount:181,currency:'usd'})
+ expect(mail.text).toContain('Total paid: $19.99')
+ expect(mail.text).toContain('Tax included in total: $1.81')
+ expect(mail.html).toContain('Tax included in total: $1.81')
+})
 it('routes every Sandbox receipt to the official test inbox, never an arbitrary buyer',()=>{
  const mail=purchaseMail({...config,mode:'test'},randomUUID(),'someone@gmail.com',report)
  expect(mail.to).toEqual(['delivered@resend.dev']);expect(mail.subject).toContain('[Sandbox]')
