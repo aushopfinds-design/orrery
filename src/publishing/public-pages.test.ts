@@ -1,5 +1,4 @@
 import { describe, it, expect } from 'vitest'
-import { JSDOM } from 'jsdom'
 import { buyerQuestionTitles } from '../report/personal-products.ts'
 import { publicContent, renderDocument, sitemap } from './render-public.tsx'
 import { publishingIdentity, publicPaths, PUBLIC_SAMPLES } from './site-config.ts'
