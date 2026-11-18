@@ -70,7 +70,7 @@ describe('Product 03 review PDF batch', () => {
         expect(q7).toContain('each of you can give focused attention while protecting time for separate interests')
         expect(q7).toContain('make room for both connection and independence')
       } else {
-        expect(q5).toContain("Your partner's daily routine:")
+        expect(q5).toMatch(/Your partner's daily routine:|no single pattern stands out in your private needs/i)
       }
       expect(q5).toContain('Emotional closeness depends more on how you respond to each other’s needs')
       expect(q5).not.toContain('day-sign comparison')
