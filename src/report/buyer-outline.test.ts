@@ -156,7 +156,7 @@ describe('Buyer questions, not a repeated six-part technical template', () => {
     const closeness = report.slice(report.indexOf('Question: How do emotional closeness and everyday compatibility differ?')).split('\n\nshared-routine')[0].split('\n\nQuestion: ')[0]
     expect(closeness).toContain('Your daily routine: Careful work benefits from a steady pace. Your partner\'s daily routine: Creative projects need room for new ideas.')
     expect(closeness).not.toContain('likely tension')
-    expect(closeness).toContain('You value being heard before someone offers a solution')
+    expect(closeness).not.toContain('You value being heard before someone offers a solution')
     expect(closeness).not.toContain('Practical point:')
     expect(report).not.toContain('Question: What tends to cause friction between us?\n\nAnswer: A generic caution.')
     const care = report.slice(report.indexOf('Question: How do we express love differently?')).split('\n\nQuestion: ')[0]
