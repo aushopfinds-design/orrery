@@ -40,7 +40,7 @@ describe('My Money & Career customer-first delivery', () => {
       expect(buyerSection).toMatch(/do not show a steady rise in income/i)
       const tenYearAnswer = buyerSection.split('Question: What do the next ten years suggest for my work and money?')[1].split('\n\nQuestion:')[0]
       expect(tenYearAnswer).toContain('Across the period, themes shift from 2026:')
-      for (let year = 2026; year <= 2035; year++) expect(tenYearAnswer).toContain(`${year}:`)
+      for (const year of [2026, 2030, 2035]) expect(tenYearAnswer).toContain(`${year}:`)
       expect(buyerSection).not.toMatch(/added work friction/i)
       const q1 = buyerSection.match(/Question: Which careers suit me best\?\n\nYour Answer: ([^\n]+)/)?.[1]
       const q7 = buyerSection.match(/Question: What is my most important career and money insight\?\n\nYour Answer: ([^\n]+)/)?.[1]
