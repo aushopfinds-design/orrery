@@ -85,7 +85,9 @@ export class PaymentService {
     const session = order.checkout_session_id ? await this.stripe.retrieveSession(order.checkout_session_id) :
       await this.stripe.createSession({
         mode: 'payment', allowed_payment_method_types: ['card'],
-        adaptive_pricing: { enabled: false }, automatic_tax: { enabled: true }, allow_promotion_codes: false,
+        adaptive_pricing: { enabled: false }, automatic_tax: { enabled: true },
+        invoice_creation: { enabled: true, invoice_data: { rendering_options: { amount_tax_display: 'include_inclusive_tax' } } },
+        allow_promotion_codes: false,
         client_reference_id: order.id, metadata: { fate_order_id: order.id, fate_kind: order.kind, integration },
         payment_intent_data: { metadata: { fate_order_id: order.id, fate_kind: order.kind, integration } },
         line_items: this.mode === 'live' ? [{ quantity: 1, price: LIVE_CATALOG[order.kind]!.price }] : [{ quantity: 1, price_data: { currency: 'usd', unit_amount: order.amount,
