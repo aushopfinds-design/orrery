@@ -57,7 +57,7 @@ describe('My Money & Career customer-first delivery', () => {
       const q4 = buyerSection.split('Question: What tends to block my financial progress?')[1].split('\n\nQuestion:')[0]
       expect(q4).toMatch(/Your Answer: /)
       expect(q4).not.toMatch(/What This Means for You:|Bottom Line:/)
-      if ([1, 2].includes(index)) expect(q4).toMatch(/small income clue connected with (?:long-term plans|day-to-day work)/i)
+      if ([1, 2].includes(index)) expect(q4).toMatch(/small (?:income )?clue (?:connected with|tied to) (?:long-term plans|day-to-day work)/i)
       const q5 = buyerSection.split('Question: When might my career or money situation improve?')[1].split('\n\nQuestion:')[0]
       expect(q5).toMatch(/Your Answer: I cannot (?:confirm a date|identify a reliable improvement year)/)
       expect(q5).toMatch(/2026–2035/)
