@@ -211,7 +211,7 @@ describe('Bundle and public report navigation', () => {
       const next = tenAnswerFront.indexOf(`${String(number + 1).padStart(2, '0')} ·`, start + 1)
       return tenAnswerFront.slice(start, next > -1 ? next : undefined)
     }
-    expect(answer(1)).toContain('Three chart-linked themes stand out:')
+    expect(answer(1)).toContain('Your chart brings together three distinct themes:')
     expect(answer(2)).toContain('Your clearest opportunity is')
     expect(answer(3)).toContain('A recurring challenge is that')
     expect(answer(5)).toContain('A pattern that may repeat is')
