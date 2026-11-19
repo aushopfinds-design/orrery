@@ -35,8 +35,8 @@ function gateway() {
     createSession: vi.fn(async (params: Stripe.Checkout.SessionCreateParams, key: string) => {
       if (keys.has(key)) return keys.get(key)!
       const session = { id: 'cs_test_' + randomUUID(), livemode: false, mode: 'payment', status: 'open', payment_status: 'unpaid',
-        client_reference_id: params.client_reference_id, metadata: params.metadata, amount_total: params.line_items![0].price_data!.unit_amount,
-        line_items: { has_more: false, data: [{ quantity: 1, amount_total: params.line_items![0].price_data!.unit_amount, currency: 'usd', price: { unit_amount: params.line_items![0].price_data!.unit_amount, currency: 'usd', product: { metadata: params.line_items![0].price_data!.product_data!.metadata } } }] }, currency: 'usd', payment_intent: null, url: 'https://checkout.stripe.com/c/pay/cs_test_fixture' } as Stripe.Checkout.Session
+        client_reference_id: params.client_reference_id, metadata: params.metadata, amount_subtotal: params.line_items![0].price_data!.unit_amount, amount_total: params.line_items![0].price_data!.unit_amount, total_details: { amount_tax: 0 },
+        line_items: { has_more: false, data: [{ quantity: 1, amount_subtotal: params.line_items![0].price_data!.unit_amount, amount_total: params.line_items![0].price_data!.unit_amount, currency: 'usd', price: { unit_amount: params.line_items![0].price_data!.unit_amount, currency: 'usd', product: { metadata: params.line_items![0].price_data!.product_data!.metadata } } }] }, currency: 'usd', payment_intent: null, url: 'https://checkout.stripe.com/c/pay/cs_test_fixture' } as Stripe.Checkout.Session
       sessions.set(session.id, session); keys.set(key, session); return session
     }),
     retrieveSession: vi.fn(async (id: string) => { const session = sessions.get(id); if (!session) throw new Error('Simulated provider outage'); return session }),
@@ -303,6 +303,9 @@ describe('seven products: paid reports, PDFs and access isolation', () => {
     const line = provider.createSession.mock.calls[0][0].line_items![0].price_data!
     expect(line.unit_amount).toBe(expected)
     expect(line.currency).toBe('usd')
+    expect(line.tax_behavior).toBe('exclusive')
+    expect(provider.createSession.mock.calls[0][0].automatic_tax).toEqual({ enabled: true })
+    expect(provider.createSession.mock.calls[0][0].billing_address_collection).toBe('required')
     expect(line.product_data!.metadata!.fate_kind).toBe(kind)
     expect(order.amount).toBe(expected)
     const session = provider.sessions.get(order.checkout_session_id!)!
