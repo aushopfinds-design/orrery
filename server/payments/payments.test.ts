@@ -364,6 +364,21 @@ describe('seven products: paid reports, PDFs and access isolation', () => {
     expect((await handler(request('report', 'forged-token'))).status).toBe(404)
   }, 120000)
 
+  it('accepts separately calculated tax while preserving the report base price', async () => {
+    const { service, provider, order, session } = await prepare()
+    session.amount_subtotal = order.amount
+    session.total_details = { amount_tax: 200 } as Stripe.Checkout.Session.TotalDetails
+    session.amount_total = order.amount + 200
+    session.line_items!.data[0].amount_subtotal = order.amount
+    session.line_items!.data[0].amount_total = order.amount + 200
+    session.status = 'complete'; session.payment_status = 'paid'; session.payment_intent = 'pi_' + randomUUID()
+    const event = signed(session)
+    await service.receiveWebhook(event.body, event.signature)
+    expect((await store.status(order.id))?.payment_state).toBe('paid')
+    expect((await store.status(order.id))?.amount).toBe(order.amount)
+    expect((await service.report(order.id)).kind).toBe('complete')
+  })
+
   it('rejects same-priced product substitution, quantity changes and wrong product metadata', async () => {
     const { service, provider } = await prepare()
     const checkout = await service.createCheckout({ kind: 'career', first: birth }, randomUUID())
