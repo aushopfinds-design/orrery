@@ -524,6 +524,10 @@ describe('paid report email integration',()=>{
     const checkout=await service.createCheckout({kind:'career',first:birth},randomUUID())
     const order=(await store.get(checkout.orderId))!, session=provider.sessions.get(order.checkout_session_id!)!
     session.customer_email='delivered@resend.dev'
+    session.customer_details={address:{country:'AU'}} as NonNullable<Stripe.Checkout.Session['customer_details']>
+    session.total_details={amount_tax:150} as Stripe.Checkout.Session.TotalDetails
+    session.amount_total=order.amount+150
+    session.line_items!.data[0].amount_total=order.amount+150
     let event=signed(session)
     await service.receiveWebhook(event.body,event.signature)
     expect(send).not.toHaveBeenCalled()
@@ -536,6 +540,9 @@ describe('paid report email integration',()=>{
     const mail=(send.mock.calls as unknown as [[{attachments:{content:string}[];text:string}]])[0][0]
     expect(Buffer.from(mail.attachments[0].content,'base64').subarray(0,4).toString()).toBe('%PDF')
     expect(mail.text).toContain('Report ID: FK-')
+    expect(mail.text).toContain('Subtotal: $14.99')
+    expect(mail.text).toContain('GST: $1.50')
+    expect(mail.text).toContain('Total paid: $16.49 USD')
     expect((await store.status(order.id))?.fulfillment_state).toBe('complete')
   })
 })
