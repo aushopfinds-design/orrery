@@ -3,7 +3,6 @@ import { calculateSaju } from '@orrery/core/saju'
 import { CATEGORY_SCENARIOS } from './category-catalog.ts'
 import { buildCompleteReading } from './complete-reading.ts'
 import { buildCategoryReading } from './category-readings.ts'
-import { applyBuyerQuestions } from './buyer-outline.ts'
 import { buildPersonalPreview, personalPreviewText } from './personal-preview.ts'
 import { PREVIEW_KINDS } from './personal-products.ts'
 import { plainReadingText } from './reading-text.ts'
@@ -84,7 +83,6 @@ describe('A continuous preview before checkout', () => {
       const full = buildCategoryReading('year', calculateSaju(first), { year, periodStart, periodTimezone: 'UTC' })
       expect(preview.brief).toBeNull()
       expect(preview.monthly).toEqual([])
-      const customerReportText = applyBuyerQuestions(full.fullText, 'year', full.chapters)
       expect(personalPreviewText(preview)).not.toContain(plainReadingText(full.focus.headline))
     }
     expect(buildPersonalPreview('year', { first, year: 2027, periodStart: '2027-01' }).monthly).toEqual(buildPersonalPreview('year', { first, year: 2028, periodStart: '2028-01' }).monthly)

@@ -124,11 +124,10 @@ describe('Buyer questions, not a repeated six-part technical template', () => {
     const report = applyBuyerQuestions(source, 'compatibility', chapters)
     expect((report.match(/^Question:/gm) ?? [])).toHaveLength(7)
     const q5 = report.split('Question: How do emotional closeness and everyday compatibility differ?')[1]?.split('\n\nshared-routine')[0]?.split('\n\nQuestion: ')[0] ?? ''
-    expect(q5).toContain('Emotional closeness depends more on how you respond to each other’s needs')
-    expect(q5).toContain('You value being heard before someone offers a solution')
-    expect(q5).toContain('your partner values listening as well as practical help')
-    expect(q5).toContain('Your daily routine: Careful work benefits from a steady pace.')
-    expect(q5.match(/Careful work benefits from a steady pace\./g)).toHaveLength(1)
+    expect(q5).toContain('Answer: Emotionally, neither a direct bond nor a direct conflict stands out.')
+    expect(q5).toContain('For you, careful work benefits from a steady pace.')
+    expect(q5).toContain('For your partner, creative projects need room for new ideas.')
+    expect(q5.match(/Careful work benefits from a steady pace\./gi)).toHaveLength(1)
     expect(report).toMatch(/Question: Why are we attracted to each other\?[\s\S]*Answer: You may be drawn to what your partner brings: a direct conversation that feels exciting\. Your partner may be drawn to what you bring: practical care that feels reassuring\./)
     expect(report).toContain('Question: How do we express love differently?\n\nAnswer: You may express love by making space for an honest conversation and staying with the other person’s point of view; your partner may express it through practical help, after checking what kind of support is wanted. For example, stay with the concern first, then offer practical help once your partner asks for it.')
     expect(report).not.toContain('These are chart-based tendencies, not proof of how either person behaves.')
@@ -153,11 +152,11 @@ describe('Buyer questions, not a repeated six-part technical template', () => {
     expect(timing).not.toContain('Practical point:')
     expect(timing).not.toContain('Answer detail:')
     expect(timing).not.toContain('Main caution:')
-    expect(report).toContain('Question: How do emotional closeness and everyday compatibility differ?\n\nAnswer: Emotional closeness depends more on how you respond to each other’s needs; everyday compatibility depends more on how your routines work together.')
+    expect(report).toContain('Question: How do emotional closeness and everyday compatibility differ?\n\nAnswer: Emotionally, neither a direct bond nor a direct conflict stands out. For you, careful work benefits from a steady pace. For your partner, creative projects need room for new ideas. Agree who owns one recurring task and when to ask for help.')
     const closeness = report.slice(report.indexOf('Question: How do emotional closeness and everyday compatibility differ?')).split('\n\nshared-routine')[0].split('\n\nQuestion: ')[0]
-    expect(closeness).toContain('Your daily routine: Careful work benefits from a steady pace. Your partner\'s daily routine: Creative projects need room for new ideas.')
+    expect(closeness).toContain('For you, careful work benefits from a steady pace. For your partner, creative projects need room for new ideas.')
     expect(closeness).not.toContain('likely tension')
-    expect(closeness).toContain('You value being heard before someone offers a solution')
+    expect(closeness).not.toContain('You value being heard before someone offers a solution')
     expect(closeness).not.toContain('Practical point:')
     expect(report).not.toContain('Question: What tends to cause friction between us?\n\nAnswer: A generic caution.')
     const care = report.slice(report.indexOf('Question: How do we express love differently?')).split('\n\nQuestion: ')[0]
@@ -181,8 +180,8 @@ describe('Buyer questions, not a repeated six-part technical template', () => {
     const reading = buildCategoryReading('compatibility', first, { second, year: 2026 })
     const report = applyBuyerQuestions(reading.fullText, 'compatibility', reading.chapters, [], 'standalone')
     const q5 = report.split('Question: How do emotional closeness and everyday compatibility differ?')[1]?.split('\n\nQuestion: ')[0] ?? ''
-    expect(q5).toContain('You both value warm attention and time for your own interests.')
-    expect(q5).toContain('You share this everyday tendency: Independence becomes tiring when every task has to be handled alone.')
+    expect(q5).toContain('Emotionally, small differences in what you expect from private life can become recurring irritations.')
+    expect(q5).toContain('You share this daily pattern: independence becomes tiring when every task has to be handled alone.')
     expect(q5).not.toContain('your partner values warm attention and time for your own interests')
     expect(q5).not.toContain("Your partner's daily routine: Independence becomes tiring when every task has to be handled alone.")
   })
@@ -348,7 +347,7 @@ describe('Buyer questions, not a repeated six-part technical template', () => {
     expect(answer.match(/The 2032 theme/g)).toBeNull()
   })
 
-  it('keeps the yearly career answer to its distinct annual and personal chart reasons', () => {
+  it('keeps the yearly career answer focused on the annual reason', () => {
     const make = (id: string, lead: string, paragraphs: string[] = [], tryThis = 'Review your priorities.') => ({
       id, title: id, lead, paragraphs, evidence: ['checked chart relationship'], tryThis,
       guidance: { keepClose: ['Generic advice.'], watchFor: ['Repeated caution.'] }, icon: 'personality' as const,
@@ -370,7 +369,7 @@ describe('Buyer questions, not a repeated six-part technical template', () => {
     const career = report.split('annual-work\n\n')[1].split('\n\nannual-money')[0]
     expect(career).toContain('Answer: For the fixed period, clear responsibility and standards are the strongest career theme.')
     expect(career).toContain('Answer detail: The annual comparison points to defined duties and enough authority to use them.')
-    expect(career).toContain('Answer detail: Your birth-chart work pattern centres on finding new customers.')
+    expect(career).not.toContain('Your birth-chart work pattern centres on finding new customers.')
     expect(career).not.toContain('A sales channel is repeated again')
     expect(career).not.toContain('The same blind spot appears')
     expect(report.match(/^Question:/gm)).toHaveLength(7)

@@ -5,7 +5,8 @@ import ReportIcon from './report/ReportIcon.tsx'
 const SUBJECTS = ['personality', 'career', 'love'] as const
 
 /** Public report preview shows layout and titles only; no calculated paid chapter. */
-export default function HomeReportPreview({}: { input: BirthInput }) {
+export default function HomeReportPreview(props: { input: BirthInput }) {
+  void props
   const { t } = useLocale()
   return <section id="report-preview" className="fate-section fate-look-inside" aria-labelledby="report-preview-title">
     <div className="fate-section-heading">

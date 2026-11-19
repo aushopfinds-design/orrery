@@ -1,8 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { calculateSaju } from '@orrery/core/saju'
 import { CATEGORY_SCENARIOS } from './category-catalog.ts'
-import { buildCompleteReading } from './complete-reading.ts'
-import { buildBundleReading, buildCategoryReading } from './category-readings.ts'
+import { buildCategoryReading } from './category-readings.ts'
 import { buildPersonalPreview, personalPreviewText } from './personal-preview.ts'
 import { PREVIEW_KINDS } from './personal-products.ts'
 import { workExample, compatibilityExample, relationshipExample } from './personal-examples.ts'
@@ -13,15 +12,6 @@ const charts = Array.from({ length: 120 }, (_, index) => calculateSaju({
   ...CATEGORY_SCENARIOS[index % 2].first,
   year: 1960 + Math.floor(index / 12), month: index % 12 + 1, day: index % 21 + 5,
 }))
-
-function fullReports(kind: typeof PREVIEW_KINDS[number]) {
-  if (kind === 'complete') return [buildCompleteReading(a, 2026)]
-  if (kind === 'bundle') {
-    const bundle = buildBundleReading(a, b, 2030, 2026, '2030-01', 'UTC')
-    return [bundle.complete, bundle.annual, bundle.compatibility, bundle.career, bundle.love]
-  }
-  return [buildCategoryReading(kind, a, { second: b, year: kind === 'year' ? 2030 : 2026, ...(kind === 'year' ? { periodStart: '2030-01', periodTimezone: 'UTC' } : {}) })]
-}
 
 describe('Concrete examples use several chart features', () => {
   it('changes the follow-up when the second month theme changes, even with the same day style and main work theme', () => {

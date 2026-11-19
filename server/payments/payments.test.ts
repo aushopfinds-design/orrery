@@ -35,8 +35,13 @@ function gateway() {
     createSession: vi.fn(async (params: Stripe.Checkout.SessionCreateParams, key: string) => {
       if (keys.has(key)) return keys.get(key)!
       const session = { id: 'cs_test_' + randomUUID(), livemode: false, mode: 'payment', status: 'open', payment_status: 'unpaid',
-        client_reference_id: params.client_reference_id, metadata: params.metadata, amount_total: params.line_items![0].price_data!.unit_amount,
-        line_items: { has_more: false, data: [{ quantity: 1, amount_total: params.line_items![0].price_data!.unit_amount, currency: 'usd', price: { unit_amount: params.line_items![0].price_data!.unit_amount, currency: 'usd', product: { metadata: params.line_items![0].price_data!.product_data!.metadata } } }] }, currency: 'usd', payment_intent: null, url: 'https://checkout.stripe.com/c/pay/cs_test_fixture' } as Stripe.Checkout.Session
+        client_reference_id: params.client_reference_id, metadata: params.metadata,
+        amount_subtotal: params.line_items![0].price_data!.unit_amount, amount_total: params.line_items![0].price_data!.unit_amount,
+        total_details: { amount_tax: 0, amount_discount: 0, amount_shipping: 0 },
+        line_items: { has_more: false, data: [{ quantity: 1, amount_subtotal: params.line_items![0].price_data!.unit_amount,
+          amount_total: params.line_items![0].price_data!.unit_amount, currency: 'usd', price: { unit_amount: params.line_items![0].price_data!.unit_amount,
+            currency: 'usd', tax_behavior: 'inclusive', product: { metadata: params.line_items![0].price_data!.product_data!.metadata } } }] },
+        currency: 'usd', payment_intent: null, url: 'https://checkout.stripe.com/c/pay/cs_test_fixture' } as Stripe.Checkout.Session
       sessions.set(session.id, session); keys.set(key, session); return session
     }),
     retrieveSession: vi.fn(async (id: string) => { const session = sessions.get(id); if (!session) throw new Error('Simulated provider outage'); return session }),
@@ -448,7 +453,7 @@ describe('launch gates and verified full refunds', () => {
       const provider = gateway(), create = provider.createSession
       const kind = 'career', catalog = LIVE_CATALOG[kind]
       if (!catalog) throw new Error('Missing test price mapping')
-      const livePrice = { id: catalog.price, livemode: true, active: true, type: 'one_time', currency: 'usd', unit_amount: REPORT_PRICE_CENTS[kind],
+      const livePrice = { id: catalog.price, livemode: true, active: true, type: 'one_time', currency: 'usd', tax_behavior: 'inclusive', unit_amount: REPORT_PRICE_CENTS[kind],
         product: { id: catalog.product, livemode: true, active: true, default_price: catalog.price, metadata: { report_kind: kind } } } as unknown as Stripe.Price
       provider.createSession = vi.fn(async (params, key) => {
         expect(params.line_items![0]).toEqual({ quantity: 1, price: catalog.price })
