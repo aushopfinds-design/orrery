@@ -75,6 +75,12 @@ describe('sandbox configuration and private input', () => {
       expect(() => paymentConfig({ ...env(), ...patch })).toThrow(PaymentError)
     }
   })
+  it('uses the stable Vercel branch URL for preview checkout origin', () => {
+    const preview = paymentConfig({ ...env(), VERCEL_ENV: 'preview',
+      VERCEL_URL: 'saju-english-report-preview-random123-shopping-shorts-ai.vercel.app',
+      VERCEL_BRANCH_URL: 'saju-english-report-preview-git-fix-q-096423-shopping-shorts-ai.vercel.app' })
+    expect(preview.origin).toBe('https://saju-english-report-preview-git-fix-q-096423-shopping-shorts-ai.vercel.app')
+  })
   it('refuses a browser-provided price, bad dates, missing time zones and missing partner/year', () => {
     for (const value of [{ kind: 'complete', first: birth, amount: 1 }, { kind: 'complete', first: { ...birth, day: 32 } },
       { kind: 'complete', first: { ...birth, timezone: undefined } }, { kind: 'complete', first: { ...birth, longitude: undefined } }, { kind: 'compatibility', first: birth }, { kind: 'year', first: birth }]) {
