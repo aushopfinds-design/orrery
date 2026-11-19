@@ -7,6 +7,14 @@ import type { OrderStore } from './store.ts'
 
 export interface ReportMail { to:string[]; from:string; reply_to:string[]; subject:string; text:string; html:string; attachments:{filename:string;content:string}[] }
 export interface MailTransport { send(mail:ReportMail,key:string):Promise<string> }
+export interface PaymentReceiptSummary {
+  subtotal: number
+  tax: number
+  total: number
+  currency: string
+  country: string
+}
+const formatMoney=(cents:number,currency:string)=>new Intl.NumberFormat('en-US',{style:'currency',currency:currency.toUpperCase()}).format(cents/100)
 export class MailError extends Error { readonly retryable:boolean; constructor(retryable:boolean){super('report_email_failed');this.retryable=retryable} }
 const escape = (s:string) => s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]!))
 
@@ -26,7 +34,7 @@ export function resendTransport(env:NodeJS.ProcessEnv, fetcher:typeof fetch=fetc
 }
 
 /** The immutable PDF and recovery code go only to the paid checkout email. */
-export function purchaseMail(config:PaymentConfig,id:string,email:string,report:BuyerReport,consent=false):ReportMail {
+export function purchaseMail(config:PaymentConfig,id:string,email:string,report:BuyerReport,consent=false,receipt?:PaymentReceiptSummary):ReportMail {
   const test=(config.mode??'test')==='test'
   // Sandbox defaults to Resend's sink. Only an explicit Preview config can route
   // this test receipt to the operator's allowlisted inbox; live mode uses checkout email.
@@ -34,8 +42,15 @@ export function purchaseMail(config:PaymentConfig,id:string,email:string,report:
   const title=report.title
   const recovery=`FK1.${id}.${orderAccessToken(config.accessKey,id)}`
   const url=config.origin+'/#purchase'
-  const lines=[test?'SANDBOX TEST — no real payment charged.':'Thank you for your purchase.',
-    title+' is attached as a PDF.', 'Report ID: '+(report.reference??id),
+  const lines=[test?'SANDBOX TEST — no real payment charged.':'Thank you for your purchase.']
+  if(receipt){
+    const label=receipt.country==='AU'?'GST':'Tax'
+    lines.push('Payment receipt:',
+      'Subtotal: '+formatMoney(receipt.subtotal,receipt.currency),
+      label+': '+formatMoney(receipt.tax,receipt.currency),
+      'Total paid: '+formatMoney(receipt.total,receipt.currency)+' '+receipt.currency.toUpperCase())
+  }
+  lines.push(title+' is attached as a PDF.', 'Report ID: '+(report.reference??id),
     'To open your report and included cards again, visit '+url+' and enter this private recovery code:',recovery,
     'Keep this email private. Anyone with the recovery code can open the report. Online access is checked against payment and refund status.',
     'You can download the PDF, card image and animated card directly from your purchased-report page. Email is a backup; you do not have to wait for it to save your files.']
