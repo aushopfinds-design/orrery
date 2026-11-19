@@ -151,7 +151,7 @@ export class PaymentService {
     if (paid && !paymentIntent?.startsWith('pi_')) throw new PaymentError('invalid_payment_event')
     const state = paid ? 'paid' : session.status === 'expired' ? 'expired' : eventType === 'checkout.session.async_payment_failed' ? 'failed' : 'pending'
     const duplicate = await this.store.recordPayment({ eventId, eventType, orderId, sessionId: session.id,
-      paymentIntent, state, amount: session.amount_total!, currency: session.currency! }) === 'duplicate'
+      paymentIntent, state, amount: order.amount, currency: session.currency! }) === 'duplicate'
     if (paid && await this.customerRecordsReady()) await new CustomerRecords(this.config,this.store).record(orderId, session.customer_details?.email ?? session.customer_email,
       orderInput(openOrder(this.config.dataKey,orderId,order.input_encrypted)),new Date(String(order.created_at)).toISOString())
     return duplicate
