@@ -72,13 +72,13 @@ export class ReportEmailDelivery {
   private store:OrderStore
   private transport:MailTransport
   constructor(config:PaymentConfig,store:OrderStore,transport:MailTransport){this.config=config;this.store=store;this.transport=transport}
-  async deliver(id:string,emailValue:unknown,report:BuyerReport,input:OrderInput,consentReady:boolean){
+  async deliver(id:string,emailValue:unknown,report:BuyerReport,input:OrderInput,consentReady:boolean,receipt?:PaymentReceiptSummary){
     const email=customerEmail(emailValue)
     if(!email)return 'missing_email'
     if(await this.store.setting('full-refund:'+id))return 'refunded'
     // Persist the exact recipient/body once: a retry always has an identical payload.
     const payloadKey='report-email-payload:'+id
-    await this.store.saveSetting(payloadKey,sealOrder(this.config.dataKey,payloadKey,purchaseMail(this.config,id,email,report,consentReady&&input.marketingConsent===true)))
+    await this.store.saveSetting(payloadKey,sealOrder(this.config.dataKey,payloadKey,purchaseMail(this.config,id,email,report,consentReady&&input.marketingConsent===true,receipt)))
     const claim=await this.store.claimReportEmail(id)
     if(!claim.lease)return claim.state
     try {
