@@ -27,8 +27,11 @@ export function paymentConfig(env: NodeJS.ProcessEnv): PaymentConfig {
   const stripeKey = live ? env.STRIPE_LIVE_SECRET_KEY ?? '' : env.STRIPE_TEST_SECRET_KEY ?? env.STRIPE_SECRET_KEY ?? ''
   const webhookSecret = (live ? env.STRIPE_LIVE_WEBHOOK_SECRET : env.STRIPE_WEBHOOK_SECRET) ?? ''
   const databaseUrl = (live ? env.FATE_PAYMENTS_LIVE_DATABASE_URL : env.FATE_PAYMENTS_DATABASE_URL) ?? ''
-  const origin = live ? 'https://thefatekey.com' : env.VERCEL_ENV === 'preview' && env.VERCEL_URL
-    ? `https://${env.VERCEL_URL}` : env.FATE_PAYMENTS_ORIGIN ?? ''
+  // Preview browsers use Vercel's stable branch alias, while VERCEL_URL names one deployment.
+  // Use the branch alias for Stripe redirects and the exact-origin check on checkout POSTs.
+  const previewHost = env.VERCEL_BRANCH_URL || env.VERCEL_URL
+  const origin = live ? 'https://thefatekey.com' : env.VERCEL_ENV === 'preview' && previewHost
+    ? `https://${previewHost}` : env.FATE_PAYMENTS_ORIGIN ?? ''
   const dataKey = (live ? env.FATE_LIVE_ORDER_DATA_KEY : env.FATE_ORDER_DATA_KEY) ?? ''
   const accessKey = (live ? env.FATE_LIVE_ORDER_ACCESS_KEY : env.FATE_ORDER_ACCESS_KEY) ?? ''
   const testToken = env.FATE_CHECKOUT_TEST_TOKEN ?? ''
