@@ -365,7 +365,7 @@ describe('seven products: paid reports, PDFs and access isolation', () => {
   }, 120000)
 
   it('accepts separately calculated tax while preserving the report base price', async () => {
-    const { service, provider, order, session } = await prepare()
+    const { service, order, session } = await prepare()
     session.amount_subtotal = order.amount
     session.total_details = { amount_tax: 200 } as Stripe.Checkout.Session.TotalDetails
     session.amount_total = order.amount + 200
