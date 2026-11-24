@@ -92,7 +92,7 @@ export default function PersonalPreviewPage({ kind, input, onFirstBirth }: { kin
     </section> : <>
       {needsPartner ? <section className="fate-personal-birth-form"><h2 id="personal-partner-heading" tabIndex={-1}>{t('buyer.preview.partner')}</h2><p>{t('buyer.preview.partnerText')}</p><BirthForm key="partner" onSubmit={submitSecond} initialInput={second} rememberInput={false} submitLabel={t(checkoutIntent ? 'purchase.continue' : second ? 'buyer.preview.update' : 'buyer.preview.compare')} />{second && <button type="button" className="fate-outline-button" onClick={() => { setEditing(null); requestAnimationFrame(() => focusSection('personal-opening-heading')) }}>{t('buyer.preview.cancel')}</button>}</section> : null}
       <section className="fate-personal-subjects" aria-label={t('buyer.preview.details')}>
-        <div><p className="fate-eyebrow">{t('buyer.preview.details')}</p><p>Birth details are used to prepare the paid reading after purchase. This free preview does not calculate or display personal conclusions.</p><button type="button" className="fate-outline-button" onClick={() => editPerson('first')}>{t('buyer.preview.change')}</button></div>
+        <div><p className="fate-eyebrow">{t('buyer.preview.details')}</p><p>{locale === 'ko' ? '입력한 생년월일로 지금 개인 운명 카드와 리포트 답변 미리보기를 만들어요. 구매 후 전체 리포트를 받을 수 있어요.' : 'Your birth details generate this personal card and report preview now. The full report is available after purchase.'}</p><button type="button" className="fate-outline-button" onClick={() => editPerson('first')}>{t('buyer.preview.change')}</button></div>
       </section>
       {needsPartner || editing === 'second' ? <section className="fate-personal-birth-form">
         <h2 id="personal-partner-heading" tabIndex={-1}>{t('buyer.preview.partner')}</h2><p>{t('buyer.preview.partnerText')}</p>
@@ -115,7 +115,7 @@ export default function PersonalPreviewPage({ kind, input, onFirstBirth }: { kin
           <button type="button" onClick={() => focusSection('personal-preview-contents')} aria-controls="personal-preview-contents">{t('buyer.preview.contents')}</button>
         </nav>
         <section className="fate-personal-opening"><p className="fate-eyebrow">{t('buyer.preview.fromChart')}</p><h2 id="personal-opening-heading" tabIndex={-1}>{t('purchase.preview.opening')}</h2>
-          <p>{t('buyer.preview.sampleDisclosure')}</p>
+          <p>{locale === 'ko' ? '아래 답변은 입력한 출생 정보로 생성된 개인 리포트 내용이에요.' : 'The answers below are personal report content generated from the birth details you entered.'}</p>
         </section>
         <div className="fate-personal-preview-layout"><div>
           <section className="fate-personal-excerpts" aria-labelledby="personal-preview-excerpts"><p className="fate-eyebrow">{t('buyer.preview.excerpts')}</p><h2 id="personal-preview-excerpts" tabIndex={-1}>{t('buyer.preview.excerptsTitle')}</h2><p>{locale === 'ko' ? '질문 답변 내용 중 약 20%만 보여드려요. 나머지 답변은 전체 리포트에서 확인할 수 있어요.' : 'This preview shows about 20% of the report’s question-answer content. The remaining answers are included in the full report.'}</p>{preview.excerpts.map(section => <section id={`personal-excerpt-${section.id}`} tabIndex={-1} key={section.id} className="fate-personal-excerpt"><div><ReportIcon kind={section.icon ?? product.icon} /><h3>{section.title}</h3></div><p><ReadingText text={section.lead} /></p></section>)}</section>
