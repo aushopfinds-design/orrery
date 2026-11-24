@@ -68,7 +68,7 @@ export default function SandboxCheckout({ order }: { order: OrderInput }) {
       {contactRecordsReady && <label lang="en"><input type="checkbox" checked={marketingConsent} onChange={e => setMarketingConsent(e.target.checked)} disabled={busy} />{t('purchase.marketingConsent')}</label>}
       <label><input type="checkbox" checked={remember} onChange={e => setRemember(e.target.checked)} disabled={busy} />{t('purchase.recovery.remember')}</label>
       <p>{t('purchase.recovery.private')}</p>{contactRecordsReady && <p>{t('purchase.contactData')}</p>}<p><a href="/purchases/">{t('purchase.live.terms')}</a></p>
-      <button type="button" className="fate-complete-primary" onClick={checkout} disabled={busy || (mode === 'test' && access.length < 32)} aria-describedby={mode === 'test' ? 'checkout-access-help' : undefined}>{t(busy ? 'sandbox.opening' : mode === 'test' ? 'sandbox.buy' : 'purchase.live.prepare')}</button>
+      <button type="button" className="fate-complete-primary" onClick={checkout} disabled={busy || (mode === 'test' && access.length < 32)} aria-describedby={mode === 'test' ? 'checkout-access-help' : undefined}>{t(busy ? 'sandbox.opening' : mode === 'test' ? 'sandbox.buy' : 'purchase.live.continue')}</button>
     </>
     {message && <p role="alert">{message}</p>}
   </section>
