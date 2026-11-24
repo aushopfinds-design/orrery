@@ -5,7 +5,7 @@ import type { PreviewKind } from '../report/personal-products.ts'
 import ReportChoiceDetails from './report/ReportChoiceDetails.tsx'
 import ReportPrice from './report/ReportPrice.tsx'
 
-const QUESTIONS: PreviewKind[] = ['complete', 'career', 'compatibility', 'year', 'business', 'wellbeing', 'bundle']
+const QUESTIONS: PreviewKind[] = ['year', 'complete', 'career', 'compatibility', 'business', 'wellbeing', 'bundle']
 
 export default function ReportFinder() {
   const { t, locale } = useLocale()
