@@ -72,7 +72,6 @@ export default function SandboxCheckout({ order }: { order: OrderInput }) {
       <button type="button" className="fate-complete-primary" onClick={checkout} disabled={busy || (mode === 'test' && access.length < 32)} aria-describedby={mode === 'test' ? 'checkout-access-help' : undefined}>{t(busy ? 'sandbox.opening' : mode === 'test' ? 'sandbox.buy' : 'purchase.live.prepare')}</button>
     </> : <div className="fate-recovery-backup">
       <h4>{t('purchase.key.title')}</h4><p>{t('purchase.key.before')}</p>
-      <label>{t('purchase.recovery.code')}<input type="password" readOnly autoComplete="off" value={recoveryCode(prepared.orderId, prepared.accessToken)} /></label>
       <button type="button" className="fate-outline-button" onClick={() => downloadRecovery(prepared.orderId, prepared.accessToken)}>{t('purchase.key.save')}</button>
       <label><input type="checkbox" checked={saved} onChange={e => setSaved(e.target.checked)} />{t('purchase.key.saved')}</label>
       <button type="button" className="fate-complete-primary" disabled={!saved} onClick={() => { recordJourney('checkout_started', order.kind); window.location.assign(prepared.checkoutUrl) }}>{t('purchase.live.continue')}</button>
