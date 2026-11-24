@@ -140,18 +140,13 @@ export default function App() {
             <h1>{t('home.hero.title')}<br /><em>{t('home.hero.highlight')}</em></h1>
             <p className="fate-hero-description">{t('home.hero.text')}</p>
             <div className="fate-hero-reading-actions">
-              <a href="#birth-details" className="fate-complete-primary">{t('preview.home.start')} <span aria-hidden="true">→</span></a>
+              <a href="#reports" className="fate-complete-primary">{t('home.nav.reports')} <span aria-hidden="true">→</span></a>
               <a href="#report-preview" className="fate-hero-example-link">{t('preview.home.look')} <span aria-hidden="true">↗</span></a>
             </div>
             {window.location.hostname.endsWith('.vercel.app') && <><div className="fate-hero-reading-actions"><a href="#my-report" className="fate-complete-primary">{t('sandbox.home')}</a></div>
             <p className="fate-reading-small-note">{t('sandbox.note')}</p></>}
             <div className="fate-hero-promises">{['free', 'card'].map(key => <span key={key}>{t(`buyer.hero.${key}`)}</span>)}</div>
           </div>
-          <section id="birth-details" className="fate-birth-panel" aria-labelledby="birth-heading">
-            <div className="fate-birth-heading"><span aria-hidden="true">✦</span><h2 id="birth-heading">{t('home.form.title')}</h2></div>
-            <p className="fate-birth-description">{t('home.form.text')}</p>
-            {showingHome && <BirthForm compact ref={birthFormRef} onSubmit={handleSubmit} externalState={externalFormState} onExternalStateConsumed={() => setExternalFormState(null)} />}
-          </section>
           {showingHome && <HeroDestinyCard />}
         </div>
       </header>
@@ -159,6 +154,11 @@ export default function App() {
         <ReportBoundary key={route}><Suspense fallback={<p role="status" className="fate-reading-loading">{t('reading.loading')}</p>}>
         {showingHome && <>
           <ProductCatalog />
+          <section id="birth-details" className="fate-birth-panel fate-birth-panel-after-catalog" aria-labelledby="birth-heading">
+            <div className="fate-birth-heading"><span aria-hidden="true">✦</span><h2 id="birth-heading">{t('home.form.title')}</h2></div>
+            <p className="fate-birth-description">{t('home.form.text')}</p>
+            <BirthForm compact ref={birthFormRef} onSubmit={handleSubmit} externalState={externalFormState} onExternalStateConsumed={() => setExternalFormState(null)} />
+          </section>
           <HomeBenefits />
           <Suspense fallback={<section id="report-preview" className="fate-section"><p role="status">{t('reading.loading')}</p></section>}>
             <HomeReportPreview input={SAMPLE_BIRTH} />
