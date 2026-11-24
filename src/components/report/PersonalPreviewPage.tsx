@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import type { BirthInput } from '@orrery/core/types'
+import { buildDestinyCard } from '../../report/destiny-card.ts'
 import { useLocale } from '../../i18n/index.ts'
 import BirthForm from '../BirthForm.tsx'
 import { FateEmblem } from '../HomeOverview.tsx'
@@ -10,9 +11,9 @@ import type { PreviewKind } from '../../report/personal-products.ts'
 import ReadingText from './ReadingText.tsx'
 import ReportIcon from './ReportIcon.tsx'
 import FateKeyMark from './FateKeyMark.tsx'
+import DestinyCardPreview from './DestinyCardPreview.tsx'
 import ReportPrice from './ReportPrice.tsx'
 import ReportChoiceDetails, { reportScope } from './ReportChoiceDetails.tsx'
-import DestinyCardBonus from './DestinyCardBonus.tsx'
 import BuyReportLink from './BuyReportLink.tsx'
 import SandboxCheckout from './SandboxCheckout.tsx'
 
@@ -34,6 +35,7 @@ export default function PersonalPreviewPage({ kind, input, onFirstBirth }: { kin
   const product = localizedPreviewProduct(kind, locale, t)
   const preview = useMemo(() => input ? buildPersonalPreview(kind, { first: input, second, year }) : null, [kind, input, second, year])
   const paired = kind === 'compatibility' || kind === 'bundle'
+  const destinyCards = useMemo(() => input ? [buildDestinyCard(input), ...(paired && second ? [buildDestinyCard(second)] : [])] : [], [input, second, paired])
   const needsPartner = Boolean(preview?.needsPartner)
   const ready = Boolean(preview && !needsPartner && !editing)
   const pageTitle = locale === 'ko' ? product.title : preview?.title ?? product.title
@@ -46,7 +48,7 @@ export default function PersonalPreviewPage({ kind, input, onFirstBirth }: { kin
   useEffect(() => {
     if (focusAfterSubmit.current && !editing) {
       focusAfterSubmit.current = false
-      focusSection(needsPartner ? 'personal-partner-heading' : checkoutIntent ? 'personal-checkout' : 'personal-opening-heading')
+      focusSection(needsPartner ? 'personal-partner-heading' : checkoutIntent ? 'personal-checkout' : 'personal-destiny-card')
     }
   }, [input, second, editing, needsPartner, checkoutIntent])
 
@@ -76,16 +78,16 @@ export default function PersonalPreviewPage({ kind, input, onFirstBirth }: { kin
     <a href="#reports" className="fate-product-back">← {t('complete.back')}</a>
     <header className="fate-personal-preview-heading"><FateKeyMark /><div><p className="fate-eyebrow">{t(checkoutIntent ? 'purchase.checkout' : 'buyer.preview.eyebrow')}</p><h1 id="personal-preview-title">{pageTitle}</h1>{!checkoutIntent && <p>{t('buyer.preview.intro')}</p>}</div></header>
     <div className="fate-personal-preview-controls"><div><label htmlFor="personal-report-kind">{t('buyer.preview.kind')}</label><select id="personal-report-kind" value={kind} onChange={event => window.location.assign(checkoutIntent ? checkoutHash(event.target.value as PreviewKind) : previewHash(event.target.value as PreviewKind))}>{PREVIEW_KINDS.map(value => <option key={value} value={value}>{localizedPreviewProduct(value, locale, t).title}</option>)}</select></div></div>
-    <section id="personal-checkout" className="fate-checkout-summary" tabIndex={-1} aria-labelledby="personal-checkout-title">
+    {(!input || checkoutIntent) && <section id="personal-checkout" className="fate-checkout-summary" tabIndex={-1} aria-labelledby="personal-checkout-title">
       <div><p className="fate-eyebrow">{t('purchase.heading')}</p><h2 id="personal-checkout-title">{product.title}</h2><ReportPrice kind={kind} /></div>
       {checkoutIntent ? ready && input ? <SandboxCheckout order={{ kind, first: input, ...(paired ? { second } : {}), ...((kind === 'year' || kind === 'bundle') ? { year } : {}) }} /> : <p role="status">{t('purchase.needDetails')}</p> : <BuyReportLink kind={kind} />}
-    </section>
-    {checkoutIntent ? <details className="fate-checkout-contents"><summary>{t('buyer.preview.contents')}</summary><ReportChoiceDetails kind={kind} /></details> : <ReportChoiceDetails kind={kind} />}
+    </section>}
+    {checkoutIntent ? <details className="fate-checkout-contents"><summary>{t('buyer.preview.contents')}</summary><ReportChoiceDetails kind={kind} /></details> : !input ? <ReportChoiceDetails kind={kind} /> : null}
 
     {!input || editing === 'first' ? <section className="fate-personal-birth-form">
       <h2 id="personal-first-heading" tabIndex={-1}>{t(input ? 'buyer.preview.change' : 'buyer.preview.enter')}</h2><p>{t('buyer.preview.enterText')}</p>
       <BirthForm key={input ? 'edit-first' : 'new-first'} initialInput={input ?? undefined} onSubmit={submitFirst} submitLabel={t(checkoutIntent ? 'purchase.continue' : input ? 'buyer.preview.update' : 'buyer.preview.calculate')} />
-      {input && <button type="button" className="fate-outline-button" onClick={() => { setEditing(null); requestAnimationFrame(() => focusSection(needsPartner ? 'personal-partner-heading' : checkoutIntent ? 'personal-checkout' : 'personal-opening-heading')) }}>{t('buyer.preview.cancel')}</button>}
+      {input && <button type="button" className="fate-outline-button" onClick={() => { setEditing(null); requestAnimationFrame(() => focusSection(needsPartner ? 'personal-partner-heading' : checkoutIntent ? 'personal-checkout' : 'personal-destiny-card')) }}>{t('buyer.preview.cancel')}</button>}
     </section> : <>
       {needsPartner ? <section className="fate-personal-birth-form"><h2 id="personal-partner-heading" tabIndex={-1}>{t('buyer.preview.partner')}</h2><p>{t('buyer.preview.partnerText')}</p><BirthForm key="partner" onSubmit={submitSecond} initialInput={second} rememberInput={false} submitLabel={t(checkoutIntent ? 'purchase.continue' : second ? 'buyer.preview.update' : 'buyer.preview.compare')} />{second && <button type="button" className="fate-outline-button" onClick={() => { setEditing(null); requestAnimationFrame(() => focusSection('personal-opening-heading')) }}>{t('buyer.preview.cancel')}</button>}</section> : null}
       <section className="fate-personal-subjects" aria-label={t('buyer.preview.details')}>
@@ -97,6 +99,15 @@ export default function PersonalPreviewPage({ kind, input, onFirstBirth }: { kin
         {second && <button type="button" className="fate-outline-button" onClick={() => { setEditing(null); requestAnimationFrame(() => focusSection('personal-opening-heading')) }}>{t('buyer.preview.cancel')}</button>}
       </section> : preview ? <>
         {(input.unknownTime || (paired && second?.unknownTime)) && <p role="status" className="fate-personal-pending">{t('buyer.preview.unknown')}</p>}
+        <section id="personal-destiny-card" className="fate-personal-card-preview-section" aria-label={t('destiny.preview.title')}>
+          {destinyCards.map((card, index) => <article className="fate-personal-card-preview-item" key={index}>
+            <div style={{ position: 'relative', width: '100%', maxWidth: '420px', marginInline: 'auto' }}>
+              <DestinyCardPreview card={card} />
+              <span className="fate-personal-card-lock-stamp">🔒 {locale === 'ko' ? '미리보기 · 구매 후 표시 해제' : 'PREVIEW · unlock with purchase'}</span>
+            </div>
+            <div className="fate-personal-card-meaning"><p className="fate-eyebrow">{locale === 'ko' ? '내 운명 카드' : 'YOUR DESTINY CARD'}</p><h2>{card.title}</h2><p>{card.sentence}</p><p className="fate-reading-small-note">{locale === 'ko' ? '이 카드는 구매 후 잠금 표시 없는 SNS용 4:5 이미지로 제공돼요.' : 'Your purchased report includes this card without the preview mark, ready to share in 4:5 format.'}</p></div>
+          </article>)}
+        </section>
         <section className="fate-preview-access" aria-labelledby="preview-access-title"><div><p className="fate-eyebrow">{t('buyer.preview.ready')}</p><h2 id="preview-access-title">{t('buyer.preview.accessTitle')}</h2><p>{t('buyer.preview.accessText')}</p></div><span>{t('buyer.preview.freeBadge')}</span></section>
         <nav className="fate-preview-tools" aria-label={t('buyer.preview.tools')}>
           <button type="button" onClick={() => focusSection('personal-preview-excerpts')} aria-controls="personal-preview-excerpts">{t('buyer.preview.read')}</button>
@@ -106,13 +117,12 @@ export default function PersonalPreviewPage({ kind, input, onFirstBirth }: { kin
           <p>{t('buyer.preview.sampleDisclosure')}</p>
         </section>
         <div className="fate-personal-preview-layout"><div>
-          <section className="fate-personal-excerpts" aria-labelledby="personal-preview-excerpts"><p className="fate-eyebrow">{t('buyer.preview.excerpts')}</p><h2 id="personal-preview-excerpts" tabIndex={-1}>{t('buyer.preview.excerptsTitle')}</h2><p>{t('buyer.preview.excerptsText')}</p><p className="fate-preview-sample-disclosure">Illustrative sample wording only. This is not a personal chart interpretation.</p>{preview.excerpts.map(section => <section id={`personal-excerpt-${section.id}`} tabIndex={-1} key={section.id} className="fate-personal-excerpt"><div><ReportIcon kind={section.icon ?? product.icon} /><h3>{section.title}</h3></div><p><ReadingText text={section.lead} /></p></section>)}</section>
+          <section className="fate-personal-excerpts" aria-labelledby="personal-preview-excerpts"><p className="fate-eyebrow">{t('buyer.preview.excerpts')}</p><h2 id="personal-preview-excerpts" tabIndex={-1}>{t('buyer.preview.excerptsTitle')}</h2><p>{locale === 'ko' ? '질문 답변 내용 중 약 20%만 보여드려요. 나머지 답변은 전체 리포트에서 확인할 수 있어요.' : 'This preview shows about 20% of the report’s question-answer content. The remaining answers are included in the full report.'}</p>{preview.excerpts.map(section => <section id={`personal-excerpt-${section.id}`} tabIndex={-1} key={section.id} className="fate-personal-excerpt"><div><ReportIcon kind={section.icon ?? product.icon} /><h3>{section.title}</h3></div><p><ReadingText text={section.lead} /></p></section>)}</section>
         </div><aside className="fate-personal-order-summary" aria-labelledby="personal-preview-contents">
           <FateEmblem /><p className="fate-eyebrow">{t('buyer.preview.full')}</p><h2 id="personal-preview-contents" tabIndex={-1}>{preview.title}</h2><p className="fate-preview-full-scope">{reportScope(kind, t)}</p>
           <p className="fate-personal-price"><ReportPrice kind={kind} /></p><p className="fate-reading-small-note">{t('buyer.price.note')}</p><ul>{preview.contents.map(item => <li key={item.id}><span aria-hidden="true">✓</span>{item.title}</li>)}</ul><p className="fate-reading-small-note">{t('reading.extras.includes')}</p>
           <div className="fate-personal-delivery"><FateKeyMark /><p>{t('buyer.preview.delivery')}</p></div><BuyReportLink kind={kind} /><a href={product.sample} className="fate-outline-button">{t('buyer.preview.sample')}</a><p className="fate-reading-small-note">{t('buyer.preview.sampleNote')}</p>
         </aside></div>
-        <DestinyCardBonus kind={kind} />
         <section className="fate-personal-next"><h2>{t('buyer.preview.nextTitle')}</h2><p>{t('buyer.preview.nextText')}</p><div className="fate-preview-next-actions"><a href={product.sample} className="fate-complete-primary">{t('buyer.preview.sample')}</a><a href="#reports" className="fate-outline-button">{t('buyer.preview.otherReports')}</a></div></section>
       </> : null}
     </>}
