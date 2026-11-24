@@ -10,7 +10,7 @@ import { bundleSavings, reportPrice } from '../report/pricing.ts'
 import ReportFinder from './ReportFinder.tsx'
 import { destinyCardCount } from '../report/destiny-card.ts'
 
-const CATALOG_KINDS: PreviewKind[] = [...PREVIEW_KINDS]
+const CATALOG_KINDS: PreviewKind[] = [...PREVIEW_KINDS].sort((a, b) => a === 'year' ? -1 : b === 'year' ? 1 : 0)
 
 export default function ProductCatalog() {
   const { t, locale } = useLocale()
