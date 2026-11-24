@@ -82,6 +82,8 @@ function selectedExcerpts(kind: PreviewKind, draft: PreviewDraft, year: number) 
     passages = fromChapters(kind, reading.chapters)
   }
 
+  // Some paid questions intentionally point to the same shared chapter; show its answer once in the preview.
+  passages = passages.filter((item, index, all) => all.findIndex(candidate => candidate.text.trim() === item.text.trim()) === index)
   const totalWords = passages.reduce((sum, item) => sum + words(item.text).length, 0)
   if (!totalWords) return []
   let remaining = Math.max(1, Math.ceil(totalWords * PREVIEW_PERCENT / 100))
