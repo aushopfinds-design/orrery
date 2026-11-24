@@ -104,14 +104,14 @@ export default function PersonalPreviewPage({ kind, input, onFirstBirth }: { kin
           {destinyCards.map((card, index) => <article className="fate-personal-card-preview-item" key={index}>
             <div style={{ position: 'relative', width: '100%', maxWidth: '420px', marginInline: 'auto' }}>
               <DestinyCardPreview card={card} />
-              <span className="fate-personal-card-lock-stamp">🔒 {locale === 'ko' ? '미리보기 · 구매 후 표시 해제' : 'PREVIEW · unlock with purchase'}</span>
+              
             </div>
             <div className="fate-personal-card-meaning"><p className="fate-eyebrow">{locale === 'ko' ? '내 운명 카드' : 'YOUR DESTINY CARD'}</p><h2>{card.title}</h2><p>{card.sentence}</p><p className="fate-reading-small-note">{locale === 'ko' ? '이 카드는 구매 후 잠금 표시 없는 SNS용 4:5 이미지로 제공돼요.' : 'Your purchased report includes this card without the preview mark, ready to share in 4:5 format.'}</p></div>
           </article>)}
         </section>
         <section className="fate-preview-access" aria-labelledby="preview-access-title"><div><p className="fate-eyebrow">{locale === 'ko' ? '내 리포트 미리보기' : 'YOUR REPORT PREVIEW'}</p><h2 id="preview-access-title">{locale === 'ko' ? '내 답변을 먼저 확인해 보세요' : 'Preview your personal answers'}</h2><p>{locale === 'ko' ? '내 운명 카드와 리포트 답변 일부를 먼저 보고, 전체 내용은 구매 후 확인할 수 있어요.' : 'See your Destiny Card and selected answers first. The complete report is available after purchase.'}</p></div><span>{locale === 'ko' ? '무료 미리보기' : 'FREE PREVIEW'}</span></section>
         <nav className="fate-preview-tools" aria-label={t('buyer.preview.tools')}>
-          <button type="button" onClick={() => focusSection('personal-preview-excerpts')} aria-controls="personal-preview-excerpts">{t('buyer.preview.read')}</button>
+          <button type="button" onClick={() => focusSection('personal-preview-excerpts')} aria-controls="personal-preview-excerpts">{locale === 'ko' ? '내 답변 읽기' : 'Read your answers'}</button>
           <button type="button" onClick={() => focusSection('personal-preview-contents')} aria-controls="personal-preview-contents">{t('buyer.preview.contents')}</button>
         </nav>
         <section className="fate-personal-opening"><p className="fate-eyebrow">{locale === 'ko' ? '내 차트로 만든 내용' : 'MADE FROM YOUR BIRTH CHART'}</p><h2 id="personal-opening-heading" tabIndex={-1}>{locale === 'ko' ? '내 리포트 답변 미리보기' : 'A preview of your report answers'}</h2>
