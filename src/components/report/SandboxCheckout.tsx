@@ -5,7 +5,7 @@ import { recordJourney } from '../../utils/journey-events.ts'
 import { reportPrice } from '../../report/pricing.ts'
 
 import { isSandboxHost, isPurchaseHost } from '../../utils/purchase-client.ts'
-import { downloadRecovery, recoveryCode, rememberOrder, validOrderId } from '../../utils/order-access.ts'
+import { rememberOrder, validOrderId } from '../../utils/order-access.ts'
 export { PURCHASES_KEY } from '../../utils/purchase-client.ts'
 export const TEST_ACCESS_KEY = 'fate-sandbox-access-v1'
 export default function SandboxCheckout({ order }: { order: OrderInput }) {
@@ -16,8 +16,7 @@ export default function SandboxCheckout({ order }: { order: OrderInput }) {
   const [mode, setMode] = useState<'test' | 'live' | 'closed'>(() => isSandboxHost(window.location.hostname) ? 'test' : 'closed')
   const [contactRecordsReady, setContactRecordsReady] = useState(false)
   const [marketingConsent, setMarketingConsent] = useState(false)
-  const [remember, setRemember] = useState(false), [saved, setSaved] = useState(false)
-  const [prepared, setPrepared] = useState<{ orderId: string; accessToken: string; checkoutUrl: string } | null>(null)
+  const [remember, setRemember] = useState(false)
   const activeRequest = useRef<AbortController | null>(null)
   useEffect(() => {
     if (!isPurchaseHost(window.location.hostname)) return
@@ -51,8 +50,8 @@ export default function SandboxCheckout({ order }: { order: OrderInput }) {
       if (controller.signal.aborted) return
       if (!response.ok || result.mode !== mode || !validOrderId(result.orderId ?? '') || !/^[A-Za-z0-9_-]{43}$/.test(result.accessToken ?? '') || !/^https:\/\/checkout\.stripe\.com\//.test(result.checkoutUrl ?? '')) throw new Error('Checkout unavailable')
       rememberOrder(result.orderId, { accessToken: result.accessToken, kind: order.kind }, remember)
-      setPrepared({ orderId: result.orderId, accessToken: result.accessToken, checkoutUrl: result.checkoutUrl })
-
+      recordJourney('checkout_started', order.kind)
+      window.location.assign(result.checkoutUrl)
     } catch {
       if (activeRequest.current === controller) { setMessage(t('sandbox.error')); setBusy(false) }
     } finally { clearTimeout(timeout); if (activeRequest.current === controller) { activeRequest.current = null; setBusy(false) } }
@@ -61,22 +60,16 @@ export default function SandboxCheckout({ order }: { order: OrderInput }) {
   return <section className="fate-personal-delivery fate-checkout-form" aria-label={t(mode === 'test' ? 'sandbox.title' : 'purchase.live.title')}>
     <h3>{t(mode === 'test' ? 'sandbox.title' : 'purchase.live.title')} · {reportPrice(order.kind)}</h3>
     <p>{t(mode === 'test' ? 'sandbox.note' : 'purchase.live.note')}</p><p>{t(mode === 'test' ? 'sandbox.data' : 'purchase.live.data')}</p>
-    <label>{t('letter.name.label')}<input type="text" autoComplete="given-name" maxLength={40} value={recipientName} disabled={busy || Boolean(prepared)} onChange={event => setRecipientName(event.target.value)} aria-describedby="letter-name-note" /></label>
+    <label>{t('letter.name.label')}<input type="text" autoComplete="given-name" maxLength={40} value={recipientName} disabled={busy} onChange={event => setRecipientName(event.target.value)} aria-describedby="letter-name-note" /></label>
     <p id="letter-name-note">{t('letter.name.note')}</p>
-    {!prepared ? <>
+    <>
       {mode === 'test' && <><p id="checkout-access-help" className="fate-checkout-access-note">{t('purchase.testNote')}</p>
         <label>{t('sandbox.access')}<input type="password" autoComplete="off" value={access} onChange={event => setAccess(event.target.value)} /></label></>}
       {contactRecordsReady && <label lang="en"><input type="checkbox" checked={marketingConsent} onChange={e => setMarketingConsent(e.target.checked)} disabled={busy} />{t('purchase.marketingConsent')}</label>}
       <label><input type="checkbox" checked={remember} onChange={e => setRemember(e.target.checked)} disabled={busy} />{t('purchase.recovery.remember')}</label>
       <p>{t('purchase.recovery.private')}</p>{contactRecordsReady && <p>{t('purchase.contactData')}</p>}<p><a href="/purchases/">{t('purchase.live.terms')}</a></p>
       <button type="button" className="fate-complete-primary" onClick={checkout} disabled={busy || (mode === 'test' && access.length < 32)} aria-describedby={mode === 'test' ? 'checkout-access-help' : undefined}>{t(busy ? 'sandbox.opening' : mode === 'test' ? 'sandbox.buy' : 'purchase.live.prepare')}</button>
-    </> : <div className="fate-recovery-backup">
-      <h4>{t('purchase.key.title')}</h4><p>{t('purchase.key.before')}</p>
-      <button type="button" className="fate-outline-button" onClick={() => downloadRecovery(prepared.orderId, prepared.accessToken)}>{t('purchase.key.save')}</button>
-      <label><input type="checkbox" checked={saved} onChange={e => setSaved(e.target.checked)} />{t('purchase.key.saved')}</label>
-      <button type="button" className="fate-complete-primary" disabled={!saved} onClick={() => { recordJourney('checkout_started', order.kind); window.location.assign(prepared.checkoutUrl) }}>{t('purchase.live.continue')}</button>
-      <p>{t('purchase.key.private')}</p>
-    </div>}
+    </>
     {message && <p role="alert">{message}</p>}
   </section>
 }
