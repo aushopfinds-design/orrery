@@ -1,0 +1,53 @@
+.fate-personal-card-preview-section {
+  display: grid;
+  gap: 1.75rem;
+  max-width: 900px;
+  margin: 2rem auto;
+}
+.fate-personal-card-preview-item {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(220px, .8fr);
+  align-items: center;
+  gap: clamp(1rem, 4vw, 2.5rem);
+  padding: clamp(1rem, 3vw, 2rem);
+  border: 1px solid rgba(181, 139, 82, .42);
+  border-radius: 18px;
+  background: linear-gradient(145deg, rgba(255, 250, 240, .96), rgba(245, 236, 217, .9));
+  box-shadow: 0 16px 38px rgba(10, 27, 47, .12);
+}
+.fate-personal-card-lock-stamp {
+  position: absolute;
+  z-index: 2;
+  inset-inline-start: .75rem;
+  inset-block-end: 3.5rem;
+  max-width: calc(100% - 1.5rem);
+  padding: .55rem .85rem;
+  border: 1px solid rgba(234, 193, 138, .72);
+  border-radius: 999px;
+  color: #f7e7cb;
+  background: rgba(8, 28, 49, .92);
+  box-shadow: 0 5px 18px rgba(0, 0, 0, .3);
+  font-size: .76rem;
+  font-weight: 700;
+  letter-spacing: .04em;
+  text-align: center;
+}
+.fate-personal-card-meaning {
+  max-width: 38ch;
+  margin-inline: auto;
+}
+.fate-personal-card-meaning h2 {
+  margin-block: .4rem .75rem;
+}
+.fate-personal-card-meaning p {
+  line-height: 1.7;
+}
+@media (max-width: 700px) {
+  .fate-personal-card-preview-item {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1rem;
+  }
+  .fate-personal-card-meaning {
+    max-width: none;
+  }
+}
