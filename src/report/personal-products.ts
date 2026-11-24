@@ -20,13 +20,13 @@ export function resolvePreviewKind(hash: string): PreviewKind | undefined {
   return hash.startsWith('#my-report-') && isPreviewKind(kind) ? kind : undefined
 }
 export const PRODUCT_SUBTITLES: Record<PreviewKind, string> = {
-  complete: 'Your Life, Your Destiny', year: 'Your Next 12 Months', compatibility: 'Are We Meant to Be?',
+  complete: 'Your Life, Your Destiny', year: 'Your 2027 Forecast', compatibility: 'Are We Meant to Be?',
   career: 'Your Career, Money & Success', love: 'Personal Love Reading', bundle: 'Your Complete Destiny',
   business: 'Born to Build a Business?', wellbeing: 'The Real You: Strengths & Weaknesses',
 }
 const DESCRIPTIONS: Record<PreviewKind, string> = {
   complete: 'Discover your personality, strengths, and life path.',
-  year: 'Explore the next twelve calendar months, month by month.',
+  year: 'Explore the twelve months after your purchase, month by month.',
   compatibility: 'Discover your relationship strengths and challenges.',
   career: 'Explore your career strengths and money patterns.',
   love: 'Explore your love life and future relationship patterns.',
@@ -38,7 +38,7 @@ export function previewProduct(kind: PreviewKind) {
   if (kind === 'complete') return { subtitle: PRODUCT_SUBTITLES[kind], title: 'Your Life, Your Destiny', description: DESCRIPTIONS[kind], price: reportPrice(kind), sample: '#sample-report', chapters: 10, questions: productQuestions(kind).length, icon: 'personality' }
   if (kind === 'bundle') return { subtitle: PRODUCT_SUBTITLES[kind], title: 'Your Complete Destiny', description: DESCRIPTIONS[kind], price: reportPrice(kind), sample: '#complete-bundle-sample', chapters: 10, questions: productQuestions(kind).length, icon: 'patterns' }
   const info = categoryInfo(kind)
-  return { subtitle: PRODUCT_SUBTITLES[kind], title: kind === 'year' ? 'Your Next 12 Months' : info.title, description: DESCRIPTIONS[kind], price: reportPrice(kind), sample: `#${info.slug}-sample`, chapters: { compatibility: 8, year: 6, career: 7, love: 7, business: 7, wellbeing: 5 }[kind], questions: productQuestions(kind).length, icon: info.icon }
+  return { subtitle: PRODUCT_SUBTITLES[kind], title: kind === 'year' ? 'Your 2027 Forecast' : info.title, description: DESCRIPTIONS[kind], price: reportPrice(kind), sample: `#${info.slug}-sample`, chapters: { compatibility: 8, year: 6, career: 7, love: 7, business: 7, wellbeing: 5 }[kind], questions: productQuestions(kind).length, icon: info.icon }
 }
 
 export function buyerQuestionTitles(kind: PreviewKind) {
