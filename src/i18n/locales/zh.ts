@@ -277,7 +277,7 @@ const zh: Record<string, string> = {
   "purchase.live.continue": "Continue to Stripe",
   "purchase.live.delivered": "Your verified purchase includes this private online reading and a downloadable PDF.",
   "purchase.key.title": "Keep your report access safe",
-  "purchase.key.before": "Download your recovery code now. Use it to reopen this report on another device or after closing this tab. Keep it as a backup even if you receive your report by email.",
+  "purchase.key.before": "点击“下载恢复代码”将其保存为文件。无需手动输入或复制代码。请妥善保管文件，以便在其他设备上重新打开报告。",
   "purchase.key.save": "Download recovery code",
   "purchase.key.saved": "I have saved my private recovery code",
   "purchase.key.private": "Anyone with this code can access the purchased report. Keep it private. Saving a code does not complete a payment.",
