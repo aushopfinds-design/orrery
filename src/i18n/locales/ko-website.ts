@@ -110,7 +110,7 @@ export const koWebsiteCopy: Record<string, string> = {
   'buyer.checkout.pending': '현재 결제 주문은 열려 있지 않습니다.',
   'buyer.choice.question': '이 리포트가 다루는 질문', 'buyer.choice.includes': '리포트 안내',
   'buyer.choice.chapters': '{count}개 질문', 'buyer.choice.annualChapters': '{count}개 질문 + 12개월',
-  'buyer.choice.reports': '{count}개 전체 리포트', 'buyer.choice.bundlePeople': '나의 인생, 앞으로 12개월, 직업과 돈, 나의 사랑: 나 · 우리의 사랑: 나와 상대방',
+  'buyer.choice.reports': '{count}개 전체 리포트', 'buyer.choice.bundlePeople': '나의 인생, 2027년 운세, 직업과 돈, 나의 사랑: 나 · 우리의 사랑: 나와 상대방',
   'buyer.choice.example': '전체 예시 보기',
   'buyer.choice.complete.question': '내 삶의 여러 부분은 어떻게 연결될까요?',
   'buyer.choice.complete.1': '성격, 관계, 일과 돈을 한 번에 살펴봅니다.',
