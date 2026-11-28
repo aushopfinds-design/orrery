@@ -84,7 +84,7 @@ export const koWebsiteCopy: Record<string, string> = {
   'buyer.focus.eyebrow': '나에게 맞는 리포트', 'buyer.focus.title': '궁금한 주제를 골라보세요',
   'buyer.focus.text': '각 리포트의 전체 예시를 확인하고, 나에게 맞는 주제를 선택하세요.',
   'buyer.catalog.count': '단품 리포트 6종 + 번들 1종', 'buyer.catalog.quick': '상품 바로 보기',
-  'buyer.catalog.entry': '가장 먼저 살펴보기', 'buyer.catalog.pricePending': '가격 안내',
+  'buyer.catalog.entry': '주력 리포트', 'buyer.catalog.pricePending': '가격 안내',
   'buyer.price.note': '표시 가격은 미국 달러(USD)입니다.', 'buyer.price.short': '1회 결제 · USD',
   'buyer.price.collection': '운명 컬렉션', 'buyer.price.from': '{price}부터',
   'buyer.price.launch': '예정 가격', 'buyer.price.separately': '따로 구매하면',

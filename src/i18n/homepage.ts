@@ -634,7 +634,7 @@ export const homepageCopy: Record<string, string> = {
   "buyer.catalog.count": "6 individual reports + 1 bundle",
   "buyer.catalog.quick": "Go straight to a personal preview",
   "buyer.catalog.pricePending": "Price to be confirmed",
-  "buyer.catalog.entry": "Start with one question",
+  "buyer.catalog.entry": "THE FEATURED REPORT",
   "buyer.focus.complete.question": "Want to see the bigger picture?",
   "buyer.focus.complete.text": "Your personality, relationships, work, money habits and longer life chapters, connected in one nine-chapter reading.",
   "buyer.focus.compatibility.question": "How can we understand each other?",

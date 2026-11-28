@@ -4,7 +4,7 @@ export const REPORT_PRICE_CENTS = {
   // Current six-product catalog. Legacy kinds remain priced for stored orders,
   // but are no longer offered for new checkout.
   complete: 1999,
-  year: 899,
+  year: 1099,
   compatibility: 1499,
   career: 1499,
   love: 999,

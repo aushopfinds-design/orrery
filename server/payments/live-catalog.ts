@@ -7,7 +7,7 @@ import { PaymentError } from './config.ts'
 export const LIVE_CATALOG: Partial<Record<PricedReportKind, { product: string; price: string }>> = {
   complete: { product: 'prod_VTU4tKm4OYGJZK', price: 'price_1UX7BYGyUNAMaZunuvl56ylp' },
   compatibility: { product: 'fate_compatibility', price: 'price_1UX7BrGyUNAMaZunLhV3SOjW' },
-  year: { product: 'fate_year', price: 'price_1UX7BzGyUNAMaZunYWzpovUl' },
+  year: { product: 'fate_year', price: 'price_1Uge0aGyUNAMaZun64K22IIa' },
   career: { product: 'fate_career', price: 'price_1UX7BkGyUNAMaZunSThtfDoa' },
   business: { product: 'fate_business', price: 'price_1UV7E6GyUNAMaZun9HquBo1o' },
   wellbeing: { product: 'fate_wellbeing', price: 'price_1UV7EFGyUNAMaZuncutcKC5R' },

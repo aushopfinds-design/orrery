@@ -5,7 +5,7 @@ import { ACTIVE_PRODUCT_KINDS, BUNDLE_REPORTS, REPORT_PRICE_CENTS, bundleSavings
 
 describe('launch prices and genuine bundle comparison', () => {
   it('provides a positive integer-cent price for every offered report', () => {
-    expect(REPORT_PRICE_CENTS).toEqual({ complete:1999, year:899, compatibility:1499, career:1499, love:999, bundle:4827, business:1199, wellbeing:899 })
+    expect(REPORT_PRICE_CENTS).toEqual({ complete:1999, year:1099, compatibility:1499, career:1499, love:999, bundle:4827, business:1199, wellbeing:899 })
     expect([...ACTIVE_PRODUCT_KINDS].sort()).toEqual([...PREVIEW_KINDS].sort())
     for (const kind of PREVIEW_KINDS) {
       expect(Number.isInteger(REPORT_PRICE_CENTS[kind])).toBe(true)
