@@ -91,14 +91,20 @@
 .fate-sample-copy > p:not(.fate-eyebrow), .fate-about-card > p:not(.fate-eyebrow) { margin-top: 13px; font-size: 13px; line-height: 1.8; color: #695e50; }
 .fate-outline-button { display: inline-flex; justify-content: center; gap: 18px; align-items: center; border: 1px solid #b58a4d; color: #6b4b25; border-radius: 99px; padding: 11px 17px; margin-top: 19px; font-size: 12px; font-weight: 600; background: #fffaf144; }
 .fate-outline-button:hover { background: #fffaf1; }
-.fate-report-preview { position: absolute; right: 2%; bottom: 2%; width: 38%; height: 88%; display: flex; align-items: center; justify-content: center; }
-.fate-home-cover-page { width: min(100%, 205px) !important; height: 94% !important; transform: rotate(-7deg); }
-.fate-report-cover-page { position: relative; width: min(78%, 250px); height: 90%; margin: auto; overflow: hidden; border: 1px solid #c7a66b; border-radius: 4px; box-shadow: 0 12px 28px #1b24334a; background: #07172d; color: #f5e9d4; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 12% 9%; text-align: center; }
-.fate-report-cover-page img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-.fate-report-cover-page span, .fate-report-cover-page strong, .fate-report-cover-page small { position: relative; z-index: 1; text-shadow: 0 2px 8px #000b; }
-.fate-report-cover-page span { font: 8px/1.4 Georgia,serif; letter-spacing: .19em; }
-.fate-report-cover-page strong { display: block; margin: auto 0; font: 400 clamp(17px,2vw,25px)/1.2 Georgia,serif; }
-.fate-report-cover-page small { font-size: 6px; letter-spacing: .12em; }
+.fate-report-preview { position: absolute; right: -2px; bottom: 0; width: 45%; height: 90%; }
+.fate-preview-page { position: absolute; width: 170px; height: 247px; padding: 23px 16px; background: #fffcf6; border: 1px solid #ba9c73; box-shadow: 0 8px 30px #41260827; border-radius: 3px; }
+.fate-preview-page-front { left: 0; bottom: -23px; transform: rotate(-13deg); background: linear-gradient(#fcf3e1, #e7c894); text-align: center; color: #3c2918; }
+.fate-preview-page-back { left: 73px; bottom: -5px; transform: rotate(9deg); }
+.fate-preview-page span { display: block; font-size: 7px; letter-spacing: .13em; margin-bottom: 12px; }
+.fate-preview-page strong { display: block; font: 20px/1.35 Georgia,serif; }
+.fate-preview-page small { display: block; font-size: 6px; letter-spacing: .12em; margin-top: 20px; }
+.fate-preview-emblem { margin: 0 auto 12px; width: 45px; height: 45px; border-radius: 50%; }
+.fate-preview-lines { margin-top: 24px; }
+.fate-preview-lines i { display: block; width: 100%; height: 3px; margin: 9px 0; background: #b19a7e44; }
+.fate-preview-lines i:last-child { width: 65%; }
+.fate-preview-timeline { display: flex; flex-direction: column; gap: 22px; border-left: 2px solid #c49d65; margin: 20px 0 0 8px; padding-left: 14px; }
+.fate-preview-timeline i { height: 16px; position: relative; border-bottom: 2px solid #b19a7e44; }
+.fate-preview-timeline i::before { content: ''; position: absolute; left: -19px; width: 8px; height: 8px; border-radius: 50%; background: #c49d65; }
 .fate-about-card { padding: 30px; border: 1px solid #e5d1b4; border-radius: 16px; background: #fffaf4; scroll-margin-top: 20px; }
 .fate-how-steps { list-style: none; padding: 0; margin: 21px 0 0; display: grid; gap: 16px; }
 .fate-how-steps li { display: flex; gap: 13px; align-items: flex-start; }
@@ -812,8 +818,8 @@
 .fate-catalog-motion:hover { background: #eee0c8; border-color: #99713c; }
 .fate-catalog-motion:focus-visible { outline: 2px solid #80602e; outline-offset: 3px; }
 .fate-catalog-motion svg { width: 14px; height: 14px; fill: currentColor; }
-.fate-report-artwork { position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; aspect-ratio: 3 / 2; flex-shrink: 0; padding: 12px; background: radial-gradient(ellipse at center,#f4e8d1,#d9c7aa 74%,#c8b596); }
-.fate-report-artwork .fate-report-cover-page { width: auto; height: 92%; aspect-ratio: 2/3; }
+.fate-report-artwork { position: relative; isolation: isolate; overflow: hidden; aspect-ratio: 3 / 2; flex-shrink: 0; background: #071b2d; color: #f6dfb3; }
+.fate-report-artwork-image { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: cover; object-position: 65% 45%; transform-origin: 68% 42%; animation: fateReportScene 12s ease-in-out infinite alternate; }
 .fate-report-artwork[data-motion="running"] .fate-report-artwork-image { will-change: transform; }
 .fate-report-artwork-effects, .fate-report-artwork-shade { position: absolute; inset: 0; pointer-events: none; }
 .fate-report-artwork-effects { mix-blend-mode: screen; }
