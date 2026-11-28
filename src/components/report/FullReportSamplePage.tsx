@@ -53,6 +53,22 @@ export default function FullReportSamplePage({ kind }: { kind: FocusCategory | '
       </div>
     </header>
 
+    <section className="fate-sample-delivery" aria-label="Fictional sample report details">
+      <div className="fate-sample-delivery-copy">
+        <p className="fate-eyebrow">YOUR SAMPLE COPY · FICTIONAL PROFILE</p>
+        <h2>See how your report arrives.</h2>
+        <p>A complete, letter-style example with a clear contents page and answers arranged around the questions in this report.</p>
+      </div>
+      <dl className="fate-sample-delivery-facts">
+        <div><dt>REPORT</dt><dd>{title}</dd></div>
+        <div><dt>PREPARED FOR</dt><dd>Sample Reader</dd></div>
+        <div><dt>QUESTIONS SHOWN</dt><dd>{questions.length}</dd></div>
+        <div><dt>PROFILE</dt><dd>Fictional example</dd></div>
+      </dl>
+      <p className="fate-sample-delivery-note">The sample profile and reading are fictional. This is a format example, not a customer review or your personal report.</p>
+      <button type="button" className="fate-sample-print-button" onClick={() => window.print()}>Print or save this sample as a PDF</button>
+    </section>
+
     <section className="fate-reading-chapter fate-sample-introduction">
       <p className="fate-eyebrow">HOW TO READ THIS SAMPLE</p>
       <h2>Full report example</h2>
@@ -85,7 +101,7 @@ export default function FullReportSamplePage({ kind }: { kind: FocusCategory | '
       <p className="fate-eyebrow">END OF SAMPLE</p>
       <h2>Explore your own preview</h2>
       <p>This complete example uses a fictional profile. Your personal report is created from the birth details you provide.</p>
-      <a className="fate-complete-primary" href={`#my-report-${kind}`}>View the personal preview →</a>
+      <a className="fate-complete-primary" href={`#my-report-${kind}`}>View your personal preview</a>
     </section>
   </article>
 }
