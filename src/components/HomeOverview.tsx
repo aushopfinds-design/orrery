@@ -77,8 +77,10 @@ export default function HomeOverview({ onViewSample }: Props) {
             <button type="button" onClick={onViewSample} className="fate-outline-button">{t('home.sample.action')} <span aria-hidden="true">→</span></button>
           </div>
           <div className="fate-report-preview" aria-hidden="true">
-            <div className="fate-preview-page fate-preview-page-back"><span>YOUR LIFE CHAPTERS</span><div className="fate-preview-timeline"><i /><i /><i /><i /></div><div className="fate-preview-lines"><i /><i /><i /></div></div>
-            <div className="fate-preview-page fate-preview-page-front"><FateEmblem className="fate-preview-emblem" /><span>THE FATE KEY</span><strong>Your Personal<br />Life Reading</strong><div className="fate-preview-lines"><i /><i /><i /></div><small>YOUR STORY HOLDS THE KEY</small></div>
+            <div className="fate-report-cover-page fate-home-cover-page">
+              <img src="/images/reports/fate-letter-envelope-cover.jpg" alt="" loading="lazy" decoding="async" />
+              <span>THE FATE KEY</span><strong>Your Life, Your Destiny</strong><small>A PERSONAL SAJU READING</small>
+            </div>
           </div>
         </div>
         <div className="fate-about-card" id="about">
