@@ -807,6 +807,8 @@
 .fate-catalog-scope { display: block; font-size: 11px; color: #766044; margin-top: 9px; }
 .fate-catalog-entry { display: inline-block; align-self: flex-start; font-size: 11px; font-weight: 700; color: #fff8e9; background: linear-gradient(135deg,#10283a,#314e62); border: 1px solid #c7a16b; border-radius: 999px; padding: 6px 12px; margin-bottom: 10px; letter-spacing: .06em; text-transform: uppercase; }
 .fate-focus-product.fate-featured-report { position: relative; border: 2px solid #b58b4d; box-shadow: 0 18px 42px #6b4a2029, 0 0 0 5px #f1e2c7; transform: translateY(-4px); }
+.fate-personal-order-summary.fate-featured-report { position: relative; border: 2px solid #b58b4d; background: linear-gradient(155deg,#fff4dc,#fffaf1 55%,#fffdf9); box-shadow: 0 18px 42px #6b4a2029, 0 0 0 5px #f1e2c7; }
+.fate-personal-order-summary.fate-featured-report .fate-catalog-entry { margin-bottom: 4px; }
 .fate-featured-report .fate-report-artwork { border-bottom: 2px solid #b58b4d; }
 .fate-featured-report .fate-product-content { background: linear-gradient(180deg,#fff5e3 0%,#fffaf2 45%,#fffdf9 100%); }
 @media (max-width: 760px) { .fate-focus-product.fate-featured-report { transform: none; } }
